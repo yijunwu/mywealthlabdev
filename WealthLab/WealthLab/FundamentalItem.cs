@@ -19,7 +19,7 @@
         public const string attrPeriodWeekly = "weekly";
         public const string attrPeriodYearly = "yearly";
         public const string attrUnits = "units";
-        private static Bitmap bitmap_0 = Resources.FundamentalItem;
+        private static Bitmap bitmap_0 = Properties.Resources.FundamentalItem;
         private DateTime dateTime_0;
         private Dictionary<string, string> dictionary_0;
         private double double_0;

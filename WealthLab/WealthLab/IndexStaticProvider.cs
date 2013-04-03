@@ -16,7 +16,7 @@
         private BarDataStore barDataStore_0;
         private volatile bool bool_1;
         private bool bool_2 = true;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private int int_0;
 
         public override void CancelUpdate()

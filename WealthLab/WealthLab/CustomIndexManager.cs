@@ -65,8 +65,12 @@
 
         public CustomIndex CreateNewIndex(string symbol, string parameters, Guid indexDefinitionTypeID, string dataSourceName, BarScale scale, int barInterval, string dataSourceParentName, DataSource dataSourceParent)
         {
-            CustomIndex index;
-            return new CustomIndex(symbol, parameters, indexDefinitionTypeID, dataSourceName, scale, barInterval, dataSourceParentName, dataSourceParent) { IndexDefinition = this.GetIndexDefinition(index.IndexDefinitionTypeID), DataHost = this.idataHost_0 };
+            //CustomIndex index;
+            //return new CustomIndex(symbol, parameters, indexDefinitionTypeID, dataSourceName, scale, barInterval, dataSourceParentName, dataSourceParent) { IndexDefinition = this.GetIndexDefinition(index.IndexDefinitionTypeID), DataHost = this.idataHost_0 };
+            CustomIndex customIndex = new CustomIndex(symbol, parameters, indexDefinitionTypeID, dataSourceName, scale, barInterval, dataSourceParentName, dataSourceParent);
+            customIndex.IndexDefinition = this.GetIndexDefinition(customIndex.IndexDefinitionTypeID);
+            customIndex.DataHost = this.idataHost_0;
+            return customIndex;
         }
 
         public CustomIndex FindCustomIndex(string symbol)

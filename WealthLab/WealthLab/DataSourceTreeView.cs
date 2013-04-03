@@ -64,7 +64,8 @@
 
         public TreeNode FindNode(WealthLab.DataSource dataSource_0, string symbol)
         {
-            using (IEnumerator enumerator = base.Nodes.GetEnumerator())
+            //using (IEnumerator enumerator = base.Nodes.GetEnumerator())
+            IEnumerator enumerator = base.Nodes.GetEnumerator();
             {
                 TreeNode current;
                 while (enumerator.MoveNext())

@@ -9,6 +9,10 @@
 
     public abstract class AuthenticationProvider
     {
+        private AuthenticationProvider._DownloadFileCompleted _DownloadFileCompleted_0;
+        private AuthenticationProvider._DownloadProgressChanged _DownloadProgressChanged_0;
+
+
         private bool bool_0;
         private bool bool_1;
         private bool bool_2;

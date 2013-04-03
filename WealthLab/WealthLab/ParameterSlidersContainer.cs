@@ -14,6 +14,11 @@
         private Panel pnlParamHousing;
         private WealthLab.WealthScript wealthScript_0;
 
+        private EventHandler<EventArgs> eventHandler_0;
+
+        private EventHandler<EventArgs> eventHandler_1;
+
+
         public event EventHandler<EventArgs> SliderMouseDown;
 
         public event EventHandler<EventArgs> SliderValueChanged;

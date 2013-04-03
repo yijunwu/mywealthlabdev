@@ -9,6 +9,7 @@
     [ToolboxBitmap(typeof(ParameterSlider), "ParameterSlider")]
     public class ParameterSlider : UserControl
     {
+        private EventHandler<EventArgs> eventHandler_0;
         private bool bool_0;
         private Font font_0;
         private IContainer icontainer_0;

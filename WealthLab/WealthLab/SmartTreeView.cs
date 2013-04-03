@@ -66,7 +66,8 @@
             bool_0 = false;
             if (!flag)
             {
-                using (IEnumerator enumerator = base.Nodes.GetEnumerator())
+                //using (IEnumerator enumerator = base.Nodes.GetEnumerator())
+                IEnumerator enumerator = base.Nodes.GetEnumerator();
                 {
                     TreeNode current;
                     while (enumerator.MoveNext())

@@ -26,7 +26,7 @@
         private double double_0;
         private double double_1;
         private IContainer icontainer_0;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private int int_0;
         private int int_1;
         private ISettingsHost isettingsHost_0;

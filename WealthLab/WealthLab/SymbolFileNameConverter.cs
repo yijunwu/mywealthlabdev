@@ -59,7 +59,8 @@
             }
             fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
             bool flag = false;
-            using (IDictionaryEnumerator enumerator = hashtable_0.GetEnumerator())
+            //using (IDictionaryEnumerator enumerator = hashtable_0.GetEnumerator())
+            IDictionaryEnumerator enumerator = hashtable_0.GetEnumerator();
             {
                 DictionaryEntry current;
                 while (enumerator.MoveNext())
@@ -114,7 +115,8 @@
             }
             if (!flag)
             {
-                using (IDictionaryEnumerator enumerator2 = hashtable_0.GetEnumerator())
+                //using (IDictionaryEnumerator enumerator2 = hashtable_0.GetEnumerator())
+                IDictionaryEnumerator enumerator2 = hashtable_0.GetEnumerator();
                 {
                     DictionaryEntry current;
                     while (enumerator2.MoveNext())
