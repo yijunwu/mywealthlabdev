@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>b72be635-4035-4b5a-8682-75b0f25a451f</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.Extensions.Agent</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Forms" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\Extensions\Agent\Properties\Settings.cs" />
+    <Compile Include="WealthLab\Extensions\Agent\Properties\Resources.cs" />
+    <Compile Include="WealthLab\Extensions\Agent\Remoting.cs" />
+    <Compile Include="WealthLab\Extensions\Agent\AppType.cs" />
+    <Compile Include="WealthLab\Extensions\Agent\InterProcessCopyData.cs" />
+    <Compile Include="WealthLab\Extensions\Agent\RemotingUpdateAction.cs" />
+    <Compile Include="Class38.cs" />
+    <EmbeddedResource Include="WealthLab.Extensions.Agent.Properties.Resources.resources" />
+  </ItemGroup>
+</Project>
