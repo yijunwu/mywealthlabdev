@@ -101,7 +101,11 @@ internal class FormatName : Form
         this.list_0 = list_1;
     }
 
-    void Form.Dispose(bool disposing)
+    /// <summary>
+    /// ///WYJ fix
+    /// </summary>
+    /// <param name="disposing"></param>
+    protected override void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_0 != null))
         {

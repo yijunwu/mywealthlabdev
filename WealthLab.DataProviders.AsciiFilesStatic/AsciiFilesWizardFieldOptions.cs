@@ -694,6 +694,7 @@ internal class AsciiFilesWizardFieldOptions : UserControl
         this.method_6(this.asciiFilesDataSet_0);
     }
 
+    /* code from Reflector ///WYJ fix
     private bool method_3(string string_0)
     {
         bool flag;
@@ -712,6 +713,19 @@ internal class AsciiFilesWizardFieldOptions : UserControl
             flag = true;
         }
         return flag;
+    } */
+
+    // ///WYJ fix, code from Telerik JustDecompile
+    private bool method_3(string string_0)
+    {
+        foreach (object item in this.lstFieldOrder.Items)
+        {
+            if ((item as Field).Name == string_0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void method_4(ToolStripMenuItem toolStripMenuItem_0)

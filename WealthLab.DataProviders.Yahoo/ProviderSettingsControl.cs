@@ -306,7 +306,8 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
         this.lblDataRange.Enabled = this.rbDataRangeConstant.Enabled = this.rbDataRangeIgnore.Enabled = this.cbDividendAdj.Checked || this.cbSplitAdj.Checked;
     }
 
-    void DataBehaviorUserControl.Dispose(bool disposing)
+    // ///WYJ fix, original signature void DataBehaviorUserControl.Dispose(bool disposing)
+    protected override void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_1 != null))
         {

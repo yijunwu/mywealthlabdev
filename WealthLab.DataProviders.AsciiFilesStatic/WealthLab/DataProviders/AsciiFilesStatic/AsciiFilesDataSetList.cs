@@ -97,23 +97,16 @@
 
         public AsciiFilesDataSet Search(string name)
         {
-            AsciiFilesDataSet set2;
-            using (IEnumerator enumerator = this.Items.GetEnumerator())
+            foreach (AsciiFilesDataSet item in this.Items)
             {
-                AsciiFilesDataSet current;
-                while (enumerator.MoveNext())
+                if (item.Name != name)
                 {
-                    current = (AsciiFilesDataSet) enumerator.Current;
-                    if (current.Name == name)
-                    {
-                        goto Label_0033;
-                    }
+                    continue;
                 }
-                return null;
-            Label_0033:
-                set2 = current;
+                AsciiFilesDataSet asciiFilesDataSet = item;
+                return asciiFilesDataSet;
             }
-            return set2;
+            return null;
         }
     }
 }

@@ -153,6 +153,7 @@ internal class Class17
         }
     }
 
+    /* ///WYJ fix code from Reflector 
     string object.ToString()
     {
         StringBuilder builder = new StringBuilder();
@@ -170,6 +171,24 @@ internal class Class17
             builder.Remove(builder.Length - 1, 1);
         }
         return builder.ToString();
+    } */
+    public override string ToString()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (this.bool_0)
+        {
+            this.list_0.Sort();
+        }
+        foreach (string list0 in this.list_0)
+        {
+            stringBuilder.Append(list0);
+            stringBuilder.Append(this.char_0);
+        }
+        if (stringBuilder.Length > 0)
+        {
+            stringBuilder.Remove(stringBuilder.Length - 1, 1);
+        }
+        return stringBuilder.ToString();
     }
 }
 

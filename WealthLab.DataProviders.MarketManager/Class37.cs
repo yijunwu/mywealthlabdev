@@ -52,7 +52,7 @@ internal class Class37 : MenuItemHook
         }
     }
 
-    void MenuItemHook.AddMenuItems(IMenuItemAdder adder)
+    public override void AddMenuItems(IMenuItemAdder adder)
     {
         adder.AddMenuItem("Market Manager", "&Tools", "Index-Lab \x00ae", new ClickMenuItem(this.method_0), Resources.clock);
     }

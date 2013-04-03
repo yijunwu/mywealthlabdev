@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>d807ebd8-3d1c-483f-860f-5ea26309776d</ProjectGuid>
+    <ProjectGuid>{E7820184-7838-4993-9EB0-DA962B2C9E57}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.DataProviders.MarketManager</AssemblyName>
     <OutputType>Library</OutputType>
@@ -33,32 +33,51 @@
   <ItemGroup>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="WealthLab" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\DataProviders\MarketManagerService\Properties\Resources.cs" />
-    <Compile Include="Class8.cs" />
+    <Compile Include="Class8.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Class37.cs" />
     <Compile Include="Class9.cs" />
     <Compile Include="Class10.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\DialogFormBase.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketNameDialogForm.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketMangerForm.cs" />
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\DialogFormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketNameDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketMangerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketManagerConfig.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\SpecialHoursDialogForm.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketManagerControl.cs" />
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\SpecialHoursDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketManagerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketManagerInfoAttribute.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\DataSetsForm.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\ProvidersForm.cs" />
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\DataSetsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\ProvidersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLab\DataProviders\MarketManagerService\Symbols.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\HolidayDateDialogForm.cs" />
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\HolidayDateDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketManager.cs" />
     <Compile Include="WealthLab\DataProviders\MarketManagerService\TimeZoneInfo.cs" />
     <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketInfoSettings.cs" />
     <Compile Include="WealthLab\DataProviders\MarketManagerService\MarketManagerInfo.cs" />
-    <Compile Include="WealthLab\DataProviders\MarketManagerService\DuplicateSymbolsDialogForm.cs" />
+    <Compile Include="WealthLab\DataProviders\MarketManagerService\DuplicateSymbolsDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLab\DataProviders\MarketManagerService\SupportedProviders.cs" />
     <Compile Include="WealthLab\DataProviders\MarketManagerService\DeleteDuplicateOption.cs" />
     <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.SpecialHoursDialogForm.resources" />
@@ -71,5 +90,11 @@
     <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.DuplicateSymbolsDialogForm.resources" />
     <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.MarketMangerForm.resources" />
     <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.Properties.Resources.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

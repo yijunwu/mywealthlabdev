@@ -147,8 +147,17 @@
         {
             get
             {
-                WealthLab.MarketSpecialHours hours;
-                return new WealthLab.MarketSpecialHours { Date = this.dtDate.Value.Date, OpenTimeNative = hours.Date.Add(this.dtOpenTime.Value.TimeOfDay), CloseTimeNative = hours.Date.Add(this.dtCloseTime.Value.TimeOfDay) };
+                ///WYJ fix, using code from Telerik JustDecompile
+                MarketSpecialHours marketSpecialHour = new MarketSpecialHours();
+                DateTime value = this.dtDate.Value;
+                marketSpecialHour.Date = value.Date;
+                DateTime date = marketSpecialHour.Date;
+                DateTime dateTime = this.dtOpenTime.Value;
+                marketSpecialHour.OpenTimeNative = date.Add(dateTime.TimeOfDay);
+                DateTime date1 = marketSpecialHour.Date;
+                DateTime value1 = this.dtCloseTime.Value;
+                marketSpecialHour.CloseTimeNative = date1.Add(value1.TimeOfDay);
+                return marketSpecialHour;
             }
             set
             {

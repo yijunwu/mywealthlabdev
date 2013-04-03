@@ -111,6 +111,7 @@ internal class Class26
         }
     }
 
+    /* ///WYJ fix, code from Reflector 
     private string method_15(string string_0, bool bool_1)
     {
         string str = null;
@@ -165,6 +166,66 @@ internal class Class26
             goto Label_0047;
         }
         return str;
+    } */
+
+    private string method_15(string string_0, bool bool_1)
+    {
+        string end = null;
+        int num = 0;
+        while (true)
+        {
+            num++;
+            object[] string0 = new object[] { string_0, bool_1, string.Concat("Attempt ", num) };
+            Class21.smethod_8(string0);
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(string_0);
+            if (bool_1)
+            {
+                if (Class18.smethod_0() == null)
+                {
+                    this.method_13();
+                }
+                if (Class18.smethod_0() != null)
+                {
+                    httpWebRequest.Headers.Add(HttpRequestHeader.Cookie, Class18.smethod_0());
+                }
+            }
+            httpWebRequest.Timeout = 10000;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)httpWebRequest.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                using (responseStream)
+                {
+                    using (StreamReader streamReader = new StreamReader(responseStream))
+                    {
+                        end = streamReader.ReadToEnd();
+                        Class21.smethod_2(string.Concat("Result  ", string_0, "\r\n", end));
+                    }
+                }
+            }
+            catch (Exception exception1)
+            {
+                Exception exception = exception1;
+                Class21.smethod_4(Enum2.const_3, exception.Message);
+                if (exception as WebException == null || num >= YahooStaticProvider.ClientSettings.AttemptCount)
+                {
+                    throw exception;
+                }
+                else
+                {
+                    Class21.smethod_4(Enum2.const_4, string.Concat("New attempt ", string_0));
+                }
+            }
+            if (end != null)
+            {
+                break;
+            }
+            if (num >= YahooStaticProvider.ClientSettings.AttemptCount)
+            {
+                break;
+            }
+        }
+        return end;
     }
 
     public Bars method_16(Class27 class27_0, bool bool_1)

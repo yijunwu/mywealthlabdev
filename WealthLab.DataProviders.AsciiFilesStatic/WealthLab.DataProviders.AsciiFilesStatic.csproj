@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>bb05affc-4944-4544-afbb-0682d4ad333d</ProjectGuid>
+    <ProjectGuid>{0956E845-8514-4E45-8A52-D811833FD95A}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.DataProviders.AsciiFilesStatic</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -34,21 +35,32 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
     <Reference Include="System" />
-    <Reference Include="WealthLab" />
-    <Reference Include="WealthLab.DataProviders.MarketManager" />
-    <Reference Include="WealthLab.Extensions.Attribute" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Xml" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="WealthLab\DataProviders\Helper\BorderLabel.cs" />
-    <Compile Include="TextFilesWizardPageScale.cs" />
-    <Compile Include="CustomFieldNameControl.cs" />
-    <Compile Include="AsciiFilesWizardFieldOptions.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\BorderLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextFilesWizardPageScale.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomFieldNameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AsciiFilesWizardFieldOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Class5.cs" />
-    <Compile Include="AsciiFilesWizardFolderPage.cs" />
-    <Compile Include="FormatName.cs" />
-    <Compile Include="TextFilesWizardPageData.cs" />
+    <Compile Include="AsciiFilesWizardFolderPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FormatName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextFilesWizardPageData.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Class6.cs" />
     <Compile Include="EventArgs0.cs" />
     <Compile Include="WealthLab\DataProviders\Helper\DataSetSettings.cs" />
@@ -56,7 +68,9 @@
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiFilesDataSetList.cs" />
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiFilesStaticProvider.cs" />
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\FormatOptions.cs" />
-    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiCacheControl.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiCacheControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\Field.cs" />
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\FieldList.cs" />
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\FieldType.cs" />
@@ -74,5 +88,19 @@
     <EmbeddedResource Include="TextFilesWizardPageData.resources" />
     <EmbeddedResource Include="WealthLab.DataProviders.AsciiFilesStatic.Resources.TextFiles.ico" />
     <EmbeddedResource Include="CustomFieldNameControl.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthLab.DataProviders.MarketManager\WealthLab.DataProviders.MarketManager.csproj">
+      <Project>{E7820184-7838-4993-9EB0-DA962B2C9E57}</Project>
+      <Name>WealthLab.DataProviders.MarketManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.Extensions.Attribute\WealthLab.Extensions.Attribute.csproj">
+      <Project>{DFE1C3EE-7DF9-4774-9AE8-CE078001E2CD}</Project>
+      <Name>WealthLab.Extensions.Attribute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WealthLab;
 
 internal class Class28
 {

@@ -346,7 +346,8 @@ internal class ProviderSettingsForm : Form
         this.method_0(settings);
     }
 
-    void Form.Dispose(bool disposing)
+    // ///WYJ fix, original signature void Form.Dispose(bool disposing)
+    protected override void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_0 != null))
         {
