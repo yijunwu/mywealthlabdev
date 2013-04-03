@@ -3794,7 +3794,7 @@
                 string path = MainModule.Instance.DataPath + @"\Workspaces\Default.ws";
                 if (System.IO.File.Exists(path))
                 {
-                    this.method_21(path);
+                    this.loadWorkSpace(path);
                     if (base.MdiChildren.Length == 0)
                     {
                         this.method_23("G");
@@ -4291,13 +4291,14 @@
             }
         }
 
-        private void method_21(string string_1)
+        //original signature: private void method_21(string string_1)
+        private void loadWorkSpace(string filePath)
         {
             string[] strArray2;
             this.bool_8 = false;
             try
             {
-                strArray2 = System.IO.File.ReadAllLines(string_1);
+                strArray2 = System.IO.File.ReadAllLines(filePath);
             }
             catch (Exception exception)
             {
@@ -4860,7 +4861,7 @@
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             string str = this.string_0 + @"\" + item.Text.Replace("&", "") + ".ws";
-            this.method_21(str);
+            this.loadWorkSpace(str);
         }
 
         private void method_41()
@@ -5370,7 +5371,7 @@
             {
                 string fileName = this.openFileDialog_0.FileName;
                 GC.Collect();
-                this.method_21(fileName);
+                this.loadWorkSpace(fileName);
             }
         }
 

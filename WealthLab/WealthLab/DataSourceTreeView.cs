@@ -205,7 +205,7 @@
 
         public DataSourceTreeView()
         {
-            this.method_1();
+            this.InitializeComponent();
             base.ImageList = this.imageList_0;
             base.HideSelection = false;
             this.ContextMenuStrip = this.popup;
@@ -359,7 +359,8 @@
             }
         }
 
-        private void method_1()
+        //original signature: private void method_1()
+        private void InitializeComponent()
         {
             this.icontainer_0 = new Container();
             ComponentResourceManager manager = new ComponentResourceManager(typeof(DataSourceTreeView));
