@@ -12,7 +12,7 @@
         [CompilerGenerated]
         private int int_2;
         private List<string> list_0 = new List<string>();
-        private List<Bars> list_1 = new List<Bars>();
+        private List<WealthLab.Bars> list_1 = new List<WealthLab.Bars>();
         private StrategyCenterItem strategyCenterItem_0;
 
         public StrategyCenterExecutionItem(StrategyCenterItem item, DateTime nextRun)
@@ -38,7 +38,7 @@
             return string.Concat(new object[] { "SCEI(SP=", this.SymbolsProcessing.Count, ",ID=", this.Counter });
         }
 
-        public List<Bars> BarsList
+        public List<WealthLab.Bars> BarsList
         {
             get
             {

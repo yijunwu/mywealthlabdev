@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>51d846a8-94cf-4f2a-a783-6b9db3e3e4c9</ProjectGuid>
+    <ProjectGuid>{ED6F8325-407F-4155-9990-261DB936B6EA}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLabDev</AssemblyName>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -33,96 +34,228 @@
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="WealthLab" />
+    <Reference Include="WealthLab">
+      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="QWhale.Editor" />
-    <Reference Include="QWhale.Syntax.Parsers" />
-    <Reference Include="log4net" />
-    <Reference Include="Fidelity.Components" />
-    <Reference Include="ControlLibrary" />
-    <Reference Include="WealthLab.ChartControl" />
-    <Reference Include="QWhale.Syntax" />
+    <Reference Include="QWhale.Editor">
+      <HintPath>..\ExternalLib\QWhale.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="QWhale.Syntax.Parsers">
+      <HintPath>..\ExternalLib\QWhale.Syntax.Parsers.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\log4net\bin\Debug\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="ControlLibrary">
+      <HintPath>..\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab.ChartControl">
+      <HintPath>..\ExternalLib\WealthLab.ChartControl.dll</HintPath>
+    </Reference>
+    <Reference Include="QWhale.Syntax">
+      <HintPath>..\ExternalLib\QWhale.Syntax.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="SyntaxSettingsConverter" />
+    <Reference Include="SyntaxSettingsConverter">
+      <HintPath>..\SyntaxSettingsConverter\bin\Debug\SyntaxSettingsConverter.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Configuration" />
-    <Reference Include="WealthLab.ChartStyles" />
-    <Reference Include="WealthLab.PosSizers" />
-    <Reference Include="WealthLab.Commissions" />
-    <Reference Include="WealthLab.IndexDefinitions" />
+    <Reference Include="WealthLab.ChartStyles">
+      <HintPath>..\WealthLab.ChartStyles\bin\Debug\WealthLab.ChartStyles.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab.PosSizers">
+      <HintPath>..\WealthLab.PosSizers\bin\Debug\WealthLab.PosSizers.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab.Commissions">
+      <HintPath>..\WealthLab.Commissions\bin\Debug\WealthLab.Commissions.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab.IndexDefinitions">
+      <HintPath>..\WealthLab.IndexDefinitions\bin\Debug\WealthLab.IndexDefinitions.dll</HintPath>
+    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="WealthLabPro\StrategySettingsForm.cs" />
+    <Compile Include="WealthLabPro\StrategySettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLabPro\Properties\Settings.cs" />
     <Compile Include="WealthLabPro\Properties\Resources.cs" />
     <Compile Include="Delegate21.cs" />
-    <Compile Include="AboutBox1.cs" />
+    <Compile Include="AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Class60.cs" />
     <Compile Include="Class61.cs" />
-    <Compile Include="WealthLabPro\RuleFundamentalsForm.cs" />
-    <Compile Include="WealthLabPro\QuickRefManager.cs" />
-    <Compile Include="WealthLabPro\DebugForm.cs" />
-    <Compile Include="WealthLabPro\ChartSettingsForm.cs" />
-    <Compile Include="WealthLabPro\StrategyDownload.cs" />
-    <Compile Include="WealthLabPro\DataManagerForm.cs" />
-    <Compile Include="WealthLabPro\AccountsPositionsForm.cs" />
-    <Compile Include="WealthLabPro\StrategyCenterForm.cs" />
-    <Compile Include="WealthLabPro\RuleIndicatorsForm.cs" />
-    <Compile Include="WealthLabPro\PositionSizeSelecterForm.cs" />
-    <Compile Include="WealthLabPro\Editor.cs" />
-    <Compile Include="WealthLabPro\CombinationStrategyBuilder.cs" />
-    <Compile Include="WealthLabPro\SymbolManagerForm.cs" />
+    <Compile Include="WealthLabPro\RuleFundamentalsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\QuickRefManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\ChartSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\StrategyDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\DataManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\AccountsPositionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\StrategyCenterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\RuleIndicatorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\PositionSizeSelecterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\Editor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\CombinationStrategyBuilder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\SymbolManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLabPro\StrategyCenterItem.cs" />
     <Compile Include="WealthLabPro\StrategyCenterExecutionItem.cs" />
     <Compile Include="WealthLabPro\StrategyCenterItemDataType.cs" />
-    <Compile Include="WealthLabPro\OptimizerSettings.cs" />
-    <Compile Include="WealthLabPro\MainForm.cs" />
-    <Compile Include="WealthLabPro\ChartForm.cs" />
-    <Compile Include="WealthLabPro\QuotesForm.cs" />
-    <Compile Include="WealthLabPro\EditOrderForm.cs" />
+    <Compile Include="WealthLabPro\OptimizerSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\ChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\QuotesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\EditOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLabPro\DynamicMenuItem.cs" />
-    <Compile Include="WealthLabPro\Builder.cs" />
-    <Compile Include="WealthLabPro\StrategyRanking.cs" />
+    <Compile Include="WealthLabPro\Builder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\StrategyRanking.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLabPro\StrategyRankingSettings.cs" />
     <Compile Include="WealthLabPro\StrategyRankingItem.cs" />
-    <Compile Include="WealthLabPro\ScaleSelecterForm.cs" />
-    <Compile Include="WealthLabPro\IndicatorsForm.cs" />
-    <Compile Include="WealthLabPro\Alerts.cs" />
+    <Compile Include="WealthLabPro\ScaleSelecterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\IndicatorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\Alerts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLabPro\AbortReason.cs" />
-    <Compile Include="WealthLabPro\OrdersAlertsForm.cs" />
-    <Compile Include="WealthLabPro\Optimization.cs" />
-    <Compile Include="WealthLabPro\StockSplitForm.cs" />
-    <Compile Include="WealthLabPro\SaveStrategyAsForm.cs" />
-    <Compile Include="WealthLabPro\PreferencesForm.cs" />
-    <Compile Include="WealthLabPro\FundamentalsForm.cs" />
-    <Compile Include="WealthLabPro\BarDataRangeSelecter.cs" />
-    <Compile Include="WealthLabPro\StrategyExplorerForm.cs" />
-    <Compile Include="WealthLabPro\HomeForm.cs" />
-    <Compile Include="WealthLabPro\EditAlertForm.cs" />
-    <Compile Include="WealthLabPro\Description.cs" />
-    <Compile Include="WealthLabPro\WLPException.cs" />
-    <Compile Include="WealthLabPro\MainModule.cs" />
-    <Compile Include="WealthLabPro\BarDataRangeSelecterForm.cs" />
-    <Compile Include="WealthLabPro\CsParserWealthScript.cs" />
-    <Compile Include="WealthLabPro\NewDataSourceForm.cs" />
-    <Compile Include="WealthLabPro\AccountTypeSelector.cs" />
+    <Compile Include="WealthLabPro\OrdersAlertsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\Optimization.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\StockSplitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\SaveStrategyAsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\PreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\FundamentalsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\BarDataRangeSelecter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\StrategyExplorerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\HomeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\EditAlertForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\Description.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\WLPException.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\MainModule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\BarDataRangeSelecterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\CsParserWealthScript.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\NewDataSourceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\AccountTypeSelector.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WealthLabPro\QuickRefEntry.cs" />
     <Compile Include="WealthLabPro\QuickRefCategory.cs" />
     <Compile Include="WealthLabPro\CategoryType.cs" />
     <Compile Include="WealthLabPro\EntryType.cs" />
-    <Compile Include="WealthLabPro\PositionSizeSelecter.cs" />
-    <Compile Include="WealthLabPro\EditDescriptionForm.cs" />
-    <Compile Include="WealthLabPro\DataWindowForm.cs" />
+    <Compile Include="WealthLabPro\PositionSizeSelecter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\EditDescriptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\DataWindowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLabPro\DataWindowType.cs" />
-    <Compile Include="WealthLabPro\AddPriceTriggerForm.cs" />
-    <Compile Include="WealthLabPro\WizardCodeForm.cs" />
-    <Compile Include="WealthLabPro\ReferencesForm.cs" />
-    <Compile Include="WealthLabPro\IndexManagerForm.cs" />
-    <Compile Include="WealthLabPro\QuickRefForm.cs" />
-    <Compile Include="WealthLabPro\StrategyAccountForm.cs" />
-    <Compile Include="WealthLabPro\ScaleSelecter.cs" />
+    <Compile Include="WealthLabPro\AddPriceTriggerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\WizardCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\ReferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\IndexManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\QuickRefForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\StrategyAccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WealthLabPro\ScaleSelecter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\WLPEmail.cs" />
-    <Compile Include="WealthLab\ChartControl\DataEditor.cs" />
+    <Compile Include="WealthLab\ChartControl\DataEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="WealthLabPro.PositionSizeSelecter.bmp" />
     <EmbeddedResource Include="WealthLabPro.ScaleSelecter.resources" />
     <EmbeddedResource Include="WealthLabPro.Description.resources" />
@@ -180,5 +313,14 @@
     <EmbeddedResource Include="WealthLabPro.Builder.resources" />
     <EmbeddedResource Include="WealthLabPro.AccountsPositionsForm.resources" />
     <EmbeddedResource Include="WealthLabPro.ChartForm.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QWhale.Common\QWhale.Common.csproj">
+      <Project>{00F8046C-A484-4170-8273-E80F22903A40}</Project>
+      <Name>QWhale.Common</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

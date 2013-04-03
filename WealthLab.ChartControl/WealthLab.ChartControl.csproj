@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>44585416-bbf9-4d5c-91a6-f9d9542ea203</ProjectGuid>
+    <ProjectGuid>{6822E234-082C-4756-89B7-D44634D8C013}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.ChartControl</AssemblyName>
     <OutputType>Library</OutputType>
@@ -33,36 +33,68 @@
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="Fidelity.Components" />
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="WealthLab" />
+    <Reference Include="WealthLab">
+      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="WealthLab\ChartControl\PolygonBasedObjectSettings.cs" />
+    <Compile Include="WealthLab\ChartControl\PolygonBasedObjectSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartControl\Properties\Resources.cs" />
-    <Compile Include="WealthLab\ChartControl\GeneralToolTip.cs" />
+    <Compile Include="WealthLab\ChartControl\GeneralToolTip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartControl\ChartDrawingObject.cs" />
     <Compile Include="WealthLab\ChartControl\CDOPolygonBased.cs" />
-    <Compile Include="WealthLab\ChartControl\ScaleSelector.cs" />
-    <Compile Include="WealthLab\ChartControl\DrawingObjectManager.cs" />
-    <Compile Include="WealthLab\ChartControl\LineBasedObjectSettings.cs" />
+    <Compile Include="WealthLab\ChartControl\ScaleSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartControl\DrawingObjectManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartControl\LineBasedObjectSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartControl\DraggedIndicatorHelper.cs" />
     <Compile Include="WealthLab\ChartControl\CDOLineBased.cs" />
-    <Compile Include="WealthLab\ChartControl\PriceToolTip.cs" />
+    <Compile Include="WealthLab\ChartControl\PriceToolTip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartControl\CDOTrendline.cs" />
     <Compile Include="WealthLab\ChartControl\DrawingObjectHelper.cs" />
     <Compile Include="WealthLab\ChartControl\TrendlineHelper.cs" />
-    <Compile Include="WealthLab\ChartControl\PointBasedObjectSettings.cs" />
-    <Compile Include="WealthLab\ChartControl\IndicatorParametersForm.cs" />
+    <Compile Include="WealthLab\ChartControl\PointBasedObjectSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartControl\IndicatorParametersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartControl\ChartMode.cs" />
-    <Compile Include="WealthLab\ChartControl\Chart.cs" />
+    <Compile Include="WealthLab\ChartControl\Chart.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartControl\BarNumberEventArgs.cs" />
     <Compile Include="WealthLab\ChartControl\ExceptionEventArgs.cs" />
-    <Compile Include="WealthLab\ChartControl\GlyphToolTip.cs" />
-    <Compile Include="WealthLab\ChartControl\IndicatorToolTip.cs" />
-    <Compile Include="WealthLab\ChartControl\IndicatorDragDropManager.cs" />
-    <Compile Include="WealthLab\ChartControl\TrendlineSettings.cs" />
-    <Compile Include="WealthLab\ChartControl\DrawingObjectProperties.cs" />
+    <Compile Include="WealthLab\ChartControl\GlyphToolTip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartControl\IndicatorToolTip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartControl\IndicatorDragDropManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartControl\TrendlineSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartControl\DrawingObjectProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartControl\IndicatorDescriptor.cs" />
     <Compile Include="WealthLab\ChartControl\IndicatorDescriptionString.cs" />
     <Compile Include="WealthLab\ChartControl\BarsDescriptorString.cs" />

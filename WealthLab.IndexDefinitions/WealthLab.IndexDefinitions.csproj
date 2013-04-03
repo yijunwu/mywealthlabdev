@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>7601dd7a-7ee6-48cd-9c19-2db921313011</ProjectGuid>
+    <ProjectGuid>{341100B2-A16F-4558-B977-21991E2D94C8}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.IndexDefinitions</AssemblyName>
     <OutputType>Library</OutputType>
@@ -31,13 +31,21 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="WealthLab" />
+    <Reference Include="WealthLab">
+      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="WealthLab.Indicators" />
-    <Reference Include="Fidelity.Components" />
+    <Reference Include="WealthLab.Indicators">
+      <HintPath>..\WealthLab.Indicators\bin\Debug\WealthLab.Indicators.dll</HintPath>
+    </Reference>
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="WealthLab.ChartControl" />
+    <Reference Include="WealthLab.ChartControl">
+      <HintPath>..\ExternalLib\WealthLab.ChartControl.dll</HintPath>
+    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\IndexDefinitions\RSIGeneral.cs" />
@@ -53,12 +61,16 @@
     <Compile Include="WealthLab\IndexDefinitions\DecliningIssues.cs" />
     <Compile Include="WealthLab\IndexDefinitions\TsokakisMACDBear.cs" />
     <Compile Include="WealthLab\IndexDefinitions\TsokakisMACDBull.cs" />
-    <Compile Include="WealthLab\IndexDefinitions\AggregateIndicatorIndexParameter.cs" />
+    <Compile Include="WealthLab\IndexDefinitions\AggregateIndicatorIndexParameter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\IndexDefinitions\AdvanceDeclineLine.cs" />
     <Compile Include="WealthLab\IndexDefinitions\EMAPCT.cs" />
     <Compile Include="WealthLab\IndexDefinitions\AdvancingVolume.cs" />
     <Compile Include="WealthLab\IndexDefinitions\RSI14.cs" />
-    <Compile Include="WealthLab\IndexDefinitions\NumericParameter.cs" />
+    <Compile Include="WealthLab\IndexDefinitions\NumericParameter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\IndexDefinitions\AdvancingIssues.cs" />
     <Compile Include="WealthLab\IndexDefinitions\AboveSMA.cs" />
     <EmbeddedResource Include="WealthLab.IndexDefinitions.AggregateIndicatorIndexParameter.resources" />

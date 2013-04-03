@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>1f313060-80e0-42d6-8f47-b41cb42f880e</ProjectGuid>
+    <ProjectGuid>{80E567A2-ACCA-4901-B842-89D2CF6F1DFC}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.Commissions</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -33,14 +34,24 @@
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="ControlLibrary" />
-    <Reference Include="WealthLab" />
-    <Reference Include="Fidelity.Components" />
+    <Reference Include="ControlLibrary">
+      <HintPath>..\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab">
+      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+    </Reference>
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="WealthLab\Commissions\PerShareCommissionSettings.cs" />
-    <Compile Include="WealthLab\Commissions\FidelityFlatRateSettings.cs" />
+    <Compile Include="WealthLab\Commissions\PerShareCommissionSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\Commissions\FidelityFlatRateSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\Commissions\FidelityFlatRate.cs" />
     <Compile Include="WealthLab\Commissions\PerShareCommission.cs" />
     <EmbeddedResource Include="WealthLab.Commissions.FidelityFlatRateSettings.resources" />

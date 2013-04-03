@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>b8ef5746-9b4b-40e2-b47e-67078c87bc57</ProjectGuid>
+    <ProjectGuid>{9E1AFBC9-F0EF-4E2D-9ED7-E86F9F83ED49}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.APaperProvider</AssemblyName>
     <OutputType>Library</OutputType>
@@ -33,13 +33,19 @@
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="WealthLab" />
+    <Reference Include="WealthLab">
+      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+    </Reference>
     <Reference Include="WealthLab.PaperProvider" />
     <Reference Include="System.Drawing" />
-    <Reference Include="Fidelity.Components" />
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="WealthLab\APaperProvider\ErrorForm.cs" />
+    <Compile Include="WealthLab\APaperProvider\ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="WealthLab\APaperProvider\ErrorMessage.cs" />
     <Compile Include="WealthLab\APaperProvider\APaperProvider.cs" />

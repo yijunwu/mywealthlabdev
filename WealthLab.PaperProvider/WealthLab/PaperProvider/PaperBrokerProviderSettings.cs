@@ -10,7 +10,7 @@
 
     public class PaperBrokerProviderSettings : UserControl
     {
-        private List<Account> _accounts = new List<Account>();
+        private List<WealthLab.Account> _accounts = new List<WealthLab.Account>();
         private Dictionary<Account, double> _accountValues = new Dictionary<Account, double>();
         private Button btnAddAccount;
         private Button btnDeleteAccount;

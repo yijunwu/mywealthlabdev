@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>6468487c-795b-4d28-9fbd-7b241a7c9de8</ProjectGuid>
+    <ProjectGuid>{70906CE1-54D3-44C0-A65C-F080EC84EECA}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.PosSizers</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -31,23 +32,39 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="WealthLab" />
-    <Reference Include="Fidelity.Components" />
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab">
+      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="ControlLibrary" />
+    <Reference Include="ControlLibrary">
+      <HintPath>..\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\PosSizers\BasicPosSizer.cs" />
     <Compile Include="WealthLab\PosSizers\OneTradePerSymbol.cs" />
-    <Compile Include="WealthLab\PosSizers\PosSizerSettingsBase.cs" />
-    <Compile Include="WealthLab\PosSizers\MaxEntriesPerDaySettings.cs" />
-    <Compile Include="WealthLab\PosSizers\AvgDownPctEquityLimitSettings.cs" />
+    <Compile Include="WealthLab\PosSizers\PosSizerSettingsBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\PosSizers\MaxEntriesPerDaySettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\PosSizers\AvgDownPctEquityLimitSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\PosSizers\PctWinnersPosSizing.cs" />
     <Compile Include="WealthLab\PosSizers\MaxEntriesPerDay.cs" />
-    <Compile Include="WealthLab\PosSizers\DoubleDownSettings.cs" />
-    <Compile Include="WealthLab\PosSizers\PctWinnersPosSizingSettings.cs" />
+    <Compile Include="WealthLab\PosSizers\DoubleDownSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\PosSizers\PctWinnersPosSizingSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\PosSizers\CompareByFriendlyName.cs" />
     <Compile Include="WealthLab\PosSizers\DoubleDown.cs" />
     <Compile Include="WealthLab\PosSizers\AvgDownPctEquityLimit.cs" />

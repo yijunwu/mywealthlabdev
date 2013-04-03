@@ -51,7 +51,7 @@
             pen = new Pen(Color.Black) {
                 Width = this.int_0,
                 StartCap = LineCap.Round,
-                EndCap = pen.StartCap
+                EndCap = LineCap.Round
             };
             for (int i = base.LeftEdgeBar + 1; i <= base.RightEdgeBar; i++)
             {

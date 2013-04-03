@@ -33,7 +33,7 @@
         private ToolStripMenuItem mniPrintAll;
         private PageSettings pageSettings_0 = new PageSettings();
         private ContextMenuStrip popup;
-        private static string string_0 = Resources.Descriptions;
+        private static string string_0 = Properties.Resources.Descriptions;
         private SystemPerformance systemPerformance_0;
         private ToolStrip toolbar;
         private ToolStripSeparator toolStripSeparator1;
