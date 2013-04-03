@@ -237,9 +237,9 @@
             {
                 if (flag2 && this.AuthProvider.ShowGracePeriodWarning)
                 {
-                    MessageBox.Show("You must log in to continue using " + Instance.AuthProvider.ApplicationName + ".", "Log In", MessageBoxButtons.OK);
+                    //MessageBox.Show("You must log in to continue using " + Instance.AuthProvider.ApplicationName + ".", "Log In", MessageBoxButtons.OK); ///WYJ fix
                 }
-                if (!this.Authenticate() && flag2)
+                if (!this.Authenticate() && false ) //&& flag2) ///WYJ fix
                 {
                     MessageBox.Show("Log in required, terminating");
                     this.authenticationProvider_0.Close();

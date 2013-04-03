@@ -53,7 +53,8 @@
             }
             else
             {
-                string_0 = form.method_2();
+                string_0 = form.method_2(); ///WYJ fix; for crack
+                string_0 = "";
             }
             return false;
         }

@@ -409,9 +409,9 @@
             MainModule.Instance.Settings.Set("ShowTradeTicket", this.mniViewTradeTicket.Checked);
         }
 
-        private void btnCrossHair_Click(object sender, EventArgs e)
+        public void btnCrossHair_Click(object sender, EventArgs e)
         {
-            if ((sender as ToolStripItem).Name == "btnCrossHair")
+            if (sender == null || (sender as ToolStripItem).Name == "btnCrossHair")
             {
                 this.btnCrossHair.Checked = !this.btnCrossHair.Checked;
             }
@@ -3313,6 +3313,7 @@
             base.Load += new EventHandler(this.MainForm_Load);
             base.MdiChildActivate += new EventHandler(this.MainForm_MdiChildActivate);
             base.KeyDown += new KeyEventHandler(this.MainForm_KeyDown);
+            base.PreviewKeyDown += new PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.status.ResumeLayout(false);
@@ -3602,6 +3603,61 @@
                 {
                     authProvider.Close();
                 }
+            }
+        }
+
+        /// <summary>
+        /// ///WYJ fix
+        /// </summary>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
+        protected override bool IsInputKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Right:
+                case Keys.Left:
+                case Keys.Up:
+                case Keys.Down:
+                    return true;
+                case Keys.Control | Keys.Right:
+                case Keys.Control | Keys.Left:
+                case Keys.Control | Keys.Up:
+                case Keys.Control | Keys.Down:
+                    return true;
+            }
+            return base.IsInputKey(keyData);
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.Up:
+                case Keys.Down:
+                    if (e.Control)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
+            }
+        }
+
+        private void MainForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Down:
+                case Keys.Up:
+                    e.IsInputKey = true;
+                    break;
             }
         }
 

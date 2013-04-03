@@ -10,16 +10,32 @@
     <OutputType>WinExe</OutputType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Program Files\Wealth-Lab Developer 6\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -30,8 +46,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Class61</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ico32512.ico</ApplicationIcon>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="ControlLibrary, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalLib\ControlLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Fidelity.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ExternalLib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="QWhale.Common">
       <HintPath>..\ExternalLib\QWhale.Common.dll</HintPath>
     </Reference>
@@ -50,18 +84,6 @@
       <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="log4net">
-      <HintPath>..\log4net\bin\Debug\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
-    <Reference Include="ControlLibrary">
-      <HintPath>..\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="WealthLab.ChartControl">
-      <HintPath>..\ExternalLib\WealthLab.ChartControl.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="SyntaxSettingsConverter">
       <HintPath>..\SyntaxSettingsConverter\bin\Debug\SyntaxSettingsConverter.dll</HintPath>
@@ -70,6 +92,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="WealthLab.ChartStyles">
       <HintPath>..\WealthLab.ChartStyles\bin\Debug\WealthLab.ChartStyles.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab.International, Version=1.0.36.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WealthLab.Crack\Win32.Cracked\WealthLab.International.dll</HintPath>
     </Reference>
     <Reference Include="WealthLab.PosSizers">
       <HintPath>..\WealthLab.PosSizers\bin\Debug\WealthLab.PosSizers.dll</HintPath>
@@ -320,5 +346,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ico32512.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthLab.ChartControl\WealthLab.ChartControl.csproj">
+      <Project>{6822E234-082C-4756-89B7-D44634D8C013}</Project>
+      <Name>WealthLab.ChartControl</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

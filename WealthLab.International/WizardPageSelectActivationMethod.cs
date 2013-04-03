@@ -28,7 +28,7 @@ internal class WizardPageSelectActivationMethod : WizardPage, Interface0
         this.lblSelectActivation.Name = "lblSelectActivation";
         this.lblSelectActivation.Size = new Size(0x1ba, 13);
         this.lblSelectActivation.TabIndex = 0;
-        this.lblSelectActivation.Text = "Thank you for using Wealth-Lab Developer. Which way would you like to unlock your copy?";
+        this.lblSelectActivation.Text = "Thank you for using Wealth-Lab Developer.--- Which way would you like to unlock your copy?";
         this.rbTrialVersion.AutoSize = true;
         this.rbTrialVersion.Location = new Point(12, 0x36);
         this.rbTrialVersion.Name = "rbTrialVersion";

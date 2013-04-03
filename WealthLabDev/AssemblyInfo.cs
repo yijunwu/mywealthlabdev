@@ -1,4 +1,5 @@
-﻿// Assembly WealthLabDev, Version 6.4.52.0
+﻿using System.Reflection;
+// Assembly WealthLabDev, Version 6.4.52.0
 
 [assembly: System.Reflection.AssemblyCompany("Fidelity Investments")]
 [assembly: System.Reflection.AssemblyConfiguration("")]
@@ -16,3 +17,4 @@
 [assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
 [assembly: System.Reflection.AssemblyTitle("WealthLabDev")]
 
+[assembly: AssemblyVersionAttribute("6.4.52")]

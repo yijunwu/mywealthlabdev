@@ -171,6 +171,95 @@
             this.chart.DataScaleChange += new EventHandler<ScaleChangeEventArgs>(this.method_0);
         }
 
+        /// <summary>
+        /// ///WYJ fix
+        /// </summary>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
+        protected override bool IsInputKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Right:
+                case Keys.Left:
+                case Keys.Up:
+                case Keys.Down:
+                    return true;
+                case Keys.Control | Keys.Right:
+                case Keys.Control | Keys.Left:
+                case Keys.Control | Keys.Up:
+                case Keys.Control | Keys.Down:
+                    return true;
+            }
+            return base.IsInputKey(keyData);
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            int moveBy = 0;
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    if (e.Control)
+                        moveBy = 40;
+                    else
+                        moveBy = 10;
+                    this.chart.ScrollBy(moveBy);
+                    break;
+                            
+                case Keys.Right:
+                    if (e.Control)
+                        moveBy = -40;
+                    else
+                        moveBy = -10;
+                    this.chart.ScrollBy(moveBy);///WYJ fix
+                    break;
+                case Keys.Up:
+                    this.IncreaseBarSpacing();
+                    break;
+                case Keys.Down:
+                    this.DecreaseBarSpacing();
+                    break;
+            }
+            if (e.KeyData == (Keys.Control | Keys.Q))
+            {
+                foreach (Form form in Application.OpenForms)
+                {
+                    if (form is MainForm)
+                    {
+                        (form as MainForm).btnCrossHair_Click(null, null);
+                    }
+                }
+            }
+                
+
+        }
+
+        /*private void MainForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Down:
+                case Keys.Up:
+                    e.IsInputKey = true;
+                    break;
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 0x1b)
+            {
+                return;
+                ChartForm activeChartWindow = null;
+                if (activeChartWindow != null)
+                {
+                    activeChartWindow.PressEscape();
+                }
+            }
+        } */
+
         public void AddToStrategyMonitor()
         {
             this.MyMainForm.CreateStrategyCenter();
@@ -1271,6 +1360,10 @@
             this.chart.OnException += new EventHandler<ExceptionEventArgs>(this.method_72);
             this.chart.KeyPress += new KeyPressEventHandler(this.chart_KeyPress);
             this.chart.MouseMoveBarNumber += new EventHandler<BarNumberEventArgs>(this.method_9);
+
+            //base.KeyDown += new KeyEventHandler(this.MainForm_KeyDown);
+            //base.PreviewKeyDown += new PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
+
             this.indicatorDragDropManager_0.Fundamentals = null;
             this.indicatorDragDropManager_0.IndicatorDropped += new EventHandler<DroppedIndicatorEventArgs>(this.method_42);
             this.drawingObjectManager_0.ChartBookName = "Standard";

@@ -49,6 +49,7 @@ internal static class Class61
                 Class61.smethod_0(str);
                 Application.Run(new MainForm());
                 Process.GetCurrentProcess().Kill();
+                //System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
             }
         }
     }

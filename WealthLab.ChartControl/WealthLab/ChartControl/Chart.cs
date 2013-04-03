@@ -221,7 +221,80 @@
             base.Controls.Add(this.scaleSelector_0);
             this.scaleSelector_0.ScaleChangeEvent += new EventHandler<ScaleChangeEventArgs>(this.method_4);
             this.MultiSymbolMode = false;
+
+            //base.KeyDown += new KeyEventHandler(this.MainForm_KeyDown);
+            //base.PreviewKeyDown += new PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
         }
+
+        /// <summary>
+        /// ///WYJ fix
+        /// </summary>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
+        protected override bool IsInputKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Right:
+                case Keys.Left:
+                case Keys.Up:
+                case Keys.Down:
+                    return true;
+                case Keys.Control | Keys.Right:
+                case Keys.Control | Keys.Left:
+                case Keys.Control | Keys.Up:
+                case Keys.Control | Keys.Down:
+                    return true;
+            }
+            return base.IsInputKey(keyData);
+        }
+
+        /*
+        protected override void OnKeyDown2(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.Up:
+                case Keys.Down:
+                    if (e.Control)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
+            }
+        }
+
+        private void MainForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Down:
+                case Keys.Up:
+                    e.IsInputKey = true;
+                    break;
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 0x1b)
+            {
+                //ChartForm activeChartWindow = this;
+                //if (activeChartWindow != null)
+                {
+                //    activeChartWindow.PressEscape();
+                    return;
+                }
+            }
+        }
+        */
 
         public void CancelScaleChange()
         {
@@ -1193,6 +1266,27 @@
                 this.hscrollBar_0.Value = newValue;
                 this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.EndScroll, newValue));
             }
+        }
+
+        /// <summary>
+        /// ///WYJ fix
+        /// </summary>
+        /// <param name="int_4"></param>
+        public void ScrollBy(int int_4)
+        {
+            int count = this.hscrollBar_0.Value - int_4;
+            if (count < 0)
+            {
+                count = 0;
+            }
+            if (count > this.bars_0.Count)
+            {
+                count = this.bars_0.Count;
+            }
+            
+            this.hscrollBar_0.Value = count;
+            this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.ThumbPosition, this.hscrollBar_0.Value));
+
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
