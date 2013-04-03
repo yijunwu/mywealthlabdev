@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>66a1d5a4-1dd3-4376-ad38-4f07b9bc3dd5</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.International.XmlSerializers</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Xml" />
+    <Reference Include="WealthLab.International" />
+    <Reference Include="System.Web.Services" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializationWriterCustomersWebService.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializationReaderCustomersWebService.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializer1.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer1.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer2.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer3.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer4.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer5.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer6.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer7.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer8.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer9.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer10.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer11.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer12.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer13.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer14.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer15.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer16.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer17.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer18.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer19.cs" />
+    <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializerContract.cs" />
+  </ItemGroup>
+</Project>
