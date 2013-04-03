@@ -80,9 +80,6 @@
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="WealthLab">
-      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="SyntaxSettingsConverter">
@@ -90,9 +87,6 @@
     </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Configuration" />
-    <Reference Include="WealthLab.ChartStyles">
-      <HintPath>..\WealthLab.ChartStyles\bin\Debug\WealthLab.ChartStyles.dll</HintPath>
-    </Reference>
     <Reference Include="WealthLab.International, Version=1.0.36.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\WealthLab.Crack\Win32.Cracked\WealthLab.International.dll</HintPath>
@@ -376,6 +370,14 @@
     <ProjectReference Include="..\WealthLab.ChartControl\WealthLab.ChartControl.csproj">
       <Project>{6822E234-082C-4756-89B7-D44634D8C013}</Project>
       <Name>WealthLab.ChartControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.ChartStyles\WealthLab.ChartStyles.csproj">
+      <Project>{1820912A-E2C5-4AEC-9E7D-BF37609874A3}</Project>
+      <Name>WealthLab.ChartStyles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
