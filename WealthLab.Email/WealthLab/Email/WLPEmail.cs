@@ -12,7 +12,7 @@
         private string credPass;
         private string credUser;
         private string host;
-        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private string messageText;
         private int port;
         private bool ssl;

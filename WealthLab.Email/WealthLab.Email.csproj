@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>846f926b-2385-40fc-8a5c-c46333347e8e</ProjectGuid>
+    <ProjectGuid>{AA84851F-A838-4F49-8C78-01C5B7FBCB25}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.Email</AssemblyName>
     <OutputType>Library</OutputType>
@@ -31,7 +31,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="log4net" />
+    <Reference Include="log4net">
+      <HintPath>..\ExternalLib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
