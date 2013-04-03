@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>d066542f-cfae-4441-a0cf-94142f73fb0b</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
+    <Reference Include="Fidelity.Components" />
+    <Reference Include="log4net" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\SmartTreeView.cs" />
+    <Compile Include="StrategyEventArgs.cs" />
+    <Compile Include="DataSourceLookupEventArgs.cs" />
+    <Compile Include="Class32.cs" />
+    <Compile Include="WealthLab\IUpdateRequestCompleted.cs" />
+    <Compile Include="Enum5.cs" />
+    <Compile Include="Class33.cs" />
+    <Compile Include="Class34.cs" />
+    <Compile Include="WealthLab\Strategies\WebServiceStrategyHelper.cs" />
+    <Compile Include="WealthLab\StrategyHelper.cs" />
+    <Compile Include="WealthLab\PlottedIndicator.cs" />
+    <Compile Include="WealthLab\Optimizer.cs" />
+    <Compile Include="WealthLab\IAuthenticationHost.cs" />
+    <Compile Include="WealthLab\ClickMenuItem.cs" />
+    <Compile Include="WealthLab\IIndexManagerUI.cs" />
+    <Compile Include="WealthLab\CustomIndexManager.cs" />
+    <Compile Include="WealthLab\StrategyParameter.cs" />
+    <Compile Include="WealthLab\IWealthScriptProvider.cs" />
+    <Compile Include="WealthLab\HistoricalProvider.cs" />
+    <Compile Include="WealthLab\FundamentalItem.cs" />
+    <Compile Include="WealthLab\ChartRenderer.cs" />
+    <Compile Include="WealthLab\INotifier.cs" />
+    <Compile Include="WealthLab\TradingSystemExecutor.cs" />
+    <Compile Include="WealthLab\Position.cs" />
+    <Compile Include="WealthLab\LoadSymbolFromDataSetEventArgs.cs" />
+    <Compile Include="WealthLab\LoadSymbolEventArgs.cs" />
+    <Compile Include="WealthLab\WSExceptionEventArgs.cs" />
+    <Compile Include="WealthLab\DebugStringEventArgs.cs" />
+    <Compile Include="WealthLab\ChartBitmapEventArgs.cs" />
+    <Compile Include="WealthLab\TrendLineEventArgs.cs" />
+    <Compile Include="WealthLab\StrategyParameterEventArgs.cs" />
+    <Compile Include="WealthLab\StrategyManager.cs" />
+    <Compile Include="WealthLab\Strategy.cs" />
+    <Compile Include="WealthLab\LineUtils.cs" />
+    <Compile Include="WealthLab\IStrategyHost.cs" />
+    <Compile Include="WealthLab\IndexInformationControl.cs" />
+    <Compile Include="WealthLab\DataStore.cs" />
+    <Compile Include="WealthLab\FundamentalDataStore.cs" />
+    <Compile Include="WealthLab\IDataHost.cs" />
+    <Compile Include="WealthLab\DataSourceManager.cs" />
+    <Compile Include="WealthLab\DataSource.cs" />
+    <Compile Include="WealthLab\CustomIndex.cs" />
+    <Compile Include="WealthLab\DataSetScaleMismatchException.cs" />
+    <Compile Include="WealthLab\DataSetNotFoundException.cs" />
+    <Compile Include="WealthLab\BrokerProvider.cs" />
+    <Compile Include="WealthLab\ProductionBrokerProvider.cs" />
+    <Compile Include="WealthLab\SymbolInfo.cs" />
+    <Compile Include="WealthLab\StrategyProvider.cs" />
+    <Compile Include="WealthLab\StrategyPubType.cs" />
+    <Compile Include="WealthLab\IMenuItemAdder.cs" />
+    <Compile Include="WealthLab\MenuItemHook.cs" />
+    <Compile Include="WealthLab\IPrintHost.cs" />
+    <Compile Include="WealthLab\IItemTracker!1.cs" />
+    <Compile Include="WealthLab\DataSourceTreeView.cs" />
+    <Compile Include="WealthLab\DataSourceEventArgs.cs" />
+    <Compile Include="WealthLab\DataSourceSymbolEventArgs.cs" />
+    <Compile Include="WealthLab\DataSourceListView.cs" />
+    <Compile Include="WealthLab\DataBehaviorUserControl.cs" />
+    <Compile Include="WealthLab\AccountPosition.cs" />
+    <Compile Include="WealthLab\IStreamingUpdate.cs" />
+    <Compile Include="WealthLab\StreamingQuoteManager.cs" />
+    <Compile Include="WealthLab\IBrokerHost.cs" />
+    <Compile Include="WealthLab\Commission.cs" />
+    <Compile Include="WealthLab\SystemResults.cs" />
+    <Compile Include="WealthLab\PrintReport.cs" />
+    <Compile Include="WealthLab\ParameterSlidersContainer.cs" />
+    <Compile Include="WealthLab\ParameterSlider.cs" />
+    <Compile Include="WealthLab\MarketInfo.cs" />
+    <Compile Include="WealthLab\MarketSpecialHours.cs" />
+    <Compile Include="WealthLab\IndicatorTreeView.cs" />
+    <Compile Include="WealthLab\IWizard.cs" />
+    <Compile Include="WealthLab\StaticDataProvider.cs" />
+    <Compile Include="WealthLab\IndexStaticProvider.cs" />
+    <Compile Include="WealthLab\FundamentalTreeView.cs" />
+    <Compile Include="WealthLab\ChartGlyph.cs" />
+    <Compile Include="WealthLab\BarGenerator.cs" />
+    <Compile Include="WealthLab\BarData.cs" />
+    <Compile Include="WealthLab\Alert.cs" />
+    <Compile Include="WealthLab\SymbolLock.cs" />
+    <Compile Include="WealthLab\OptimizationResult.cs" />
+    <Compile Include="WealthLab\IndexDefinition.cs" />
+    <Compile Include="WealthLab\HistoricalTrade.cs" />
+    <Compile Include="WealthLab\FundamentalsLoader.cs" />
+    <Compile Include="WealthLab\FundamentalDataProvider.cs" />
+    <Compile Include="WealthLab\ChartPane.cs" />
+    <Compile Include="WealthLab\BarScaleConverter.cs" />
+    <Compile Include="WealthLab\BarConversionException.cs" />
+    <Compile Include="WealthLab\SynchronizationException.cs" />
+    <Compile Include="WealthLab\SystemPerformance.cs" />
+    <Compile Include="WealthLab\StrategyType.cs" />
+    <Compile Include="WealthLab\OrderCancelSubmitGroup.cs" />
+    <Compile Include="WealthLab\BarsLoader.cs" />
+    <Compile Include="WealthLab\RuleParameter.cs" />
+    <Compile Include="WealthLab\RuleParamType.cs" />
+    <Compile Include="WealthLab\Rule.cs" />
+    <Compile Include="WealthLab\RuleType.cs" />
+    <Compile Include="WealthLab\PlottedSymbol.cs" />
+    <Compile Include="WealthLab\ListCompareIterator!1.cs" />
+    <Compile Include="WealthLab\ListCompareState.cs" />
+    <Compile Include="WealthLab\IOptimizationHost.cs" />
+    <Compile Include="WealthLab\FundamentalSelectedEventArgs.cs" />
+    <Compile Include="WealthLab\BarDataScale.cs" />
+    <Compile Include="WealthLab\SymbolParser.cs" />
+    <Compile Include="WealthLab\SymbolFileNameConverter.cs" />
+    <Compile Include="WealthLab\StreamingChartManager.cs" />
+    <Compile Include="WealthLab\IndicatorHelper.cs" />
+    <Compile Include="WealthLab\RangeBoundInt32.cs" />
+    <Compile Include="WealthLab\RangeBoundDouble.cs" />
+    <Compile Include="WealthLab\DecimalsManager.cs" />
+    <Compile Include="WealthLab\Bars.cs" />
+    <Compile Include="WealthLab\BarsEventArgs.cs" />
+    <Compile Include="WealthLab\BarsLockedException.cs" />
+    <Compile Include="WealthLab\StrategyRule.cs" />
+    <Compile Include="WealthLab\PrintPreview.cs" />
+    <Compile Include="WealthLab\CombinedStrategyInfo.cs" />
+    <Compile Include="WealthLab\TradeManager.cs" />
+    <Compile Include="WealthLab\OrderEventArgs.cs" />
+    <Compile Include="WealthLab\QuoteEventArgs.cs" />
+    <Compile Include="WealthLab\HistoricalTradeEventArgs.cs" />
+    <Compile Include="WealthLab\AccountEventArgs.cs" />
+    <Compile Include="WealthLab\AccountPositionEventArgs.cs" />
+    <Compile Include="WealthLab\StringEventArgs.cs" />
+    <Compile Include="WealthLab\AutoTradingMode.cs" />
+    <Compile Include="WealthLab\StreamingDataProvider.cs" />
+    <Compile Include="WealthLab\StreamingRequest.cs" />
+    <Compile Include="WealthLab\StreamingBarRequest.cs" />
+    <Compile Include="WealthLab\OptimizationResultList.cs" />
+    <Compile Include="WealthLab\ISettingsProvider.cs" />
+    <Compile Include="WealthLab\IndicatorEventArgs.cs" />
+    <Compile Include="WealthLab\BarDataStore.cs" />
+    <Compile Include="WealthLab\BarScale.cs" />
+    <Compile Include="WealthLab\BarDataType.cs" />
+    <Compile Include="WealthLab\CoreDataSeries.cs" />
+    <Compile Include="WealthLab\LineStyle.cs" />
+    <Compile Include="WealthLab\OrderType.cs" />
+    <Compile Include="WealthLab\PaintHookStage.cs" />
+    <Compile Include="WealthLab\PositionType.cs" />
+    <Compile Include="WealthLab\PosSizeMode.cs" />
+    <Compile Include="WealthLab\SecurityType.cs" />
+    <Compile Include="WealthLab\TradeType.cs" />
+    <Compile Include="WealthLab\OrderStatus.cs" />
+    <Compile Include="WealthLab\PVComboProhibitor.cs" />
+    <Compile Include="WealthLab\StrategyScorecard.cs" />
+    <Compile Include="WealthLab\StrategyBuilder.cs" />
+    <Compile Include="WealthLab\PosSizer.cs" />
+    <Compile Include="WealthLab\PositionSize.cs" />
+    <Compile Include="WealthLab\ParameterForm.cs" />
+    <Compile Include="WealthLab\IVisualizerHost.cs" />
+    <Compile Include="WealthLab\IPerformanceVisualizer.cs" />
+    <Compile Include="WealthLab\VisualizerAppliesTo.cs" />
+    <Compile Include="WealthLab\Account.cs" />
+    <Compile Include="WealthLab\Quote.cs" />
+    <Compile Include="WealthLab\MarketHours.cs" />
+    <Compile Include="WealthLab\LinearRegression.cs" />
+    <Compile Include="WealthLab\IDataUpdateMessage.cs" />
+    <Compile Include="WealthLab\StockSplitEventArgs.cs" />
+    <Compile Include="WealthLab\DataSourceException.cs" />
+    <Compile Include="WealthLab\SynchronizedBarIterator.cs" />
+    <Compile Include="WealthLab\DataSeries.cs" />
+    <Compile Include="WealthLab\DataSeriesOperatorException.cs" />
+    <Compile Include="WealthLab\ChartStyle.cs" />
+    <Compile Include="WealthLab\AuthenticationProvider.cs" />
+    <Compile Include="WealthLab\WealthScriptCompiler.cs" />
+    <Compile Include="WealthLab\WealthScript.cs" />
+    <Compile Include="WealthLab\AbortException.cs" />
+    <Compile Include="WealthLab\RuleVariable.cs" />
+    <Compile Include="WealthLab\Order.cs" />
+    <Compile Include="WealthLab\OrderMessage.cs" />
+    <Compile Include="WealthLab\WizardValidationException.cs" />
+    <Compile Include="WealthLab\ConnStatus.cs" />
+    <Compile Include="WealthLab\IConnectionStatus.cs" />
+    <Compile Include="WealthLab\IExtendedBehaviorHost.cs" />
+    <Compile Include="WealthLab\BarRange.cs" />
+    <Compile Include="WealthLab\BarDataRange.cs" />
+    <Compile Include="WealthLab\Properties\Resources.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDrawingObject.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDFilledBand.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDCircle2.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDDualColorFilledBand.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDPlottedFundamentalItem.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDLine.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDFilledOscillator.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDLabel.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDImage.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDChartAnnotation.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDHorzLine.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDText.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDPolygon.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDEllipse.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDCircle.cs" />
+    <Compile Include="WealthLab\WSDrawingObjects\WSDBarAnnotation.cs" />
+    <EmbeddedResource Include="WealthLab.TradingSystemExecutor.bmp" />
+    <EmbeddedResource Include="WealthLab.StrategyBuilder.bmp" />
+    <EmbeddedResource Include="WealthLab.DataSourceManager.bmp" />
+    <EmbeddedResource Include="WealthLab.BarsLoader.bmp" />
+    <EmbeddedResource Include="WealthLab.ParameterForm.resources" />
+    <EmbeddedResource Include="WealthLab.ParameterSlidersContainer.bmp" />
+    <EmbeddedResource Include="WealthLab.MarketHours.bmp" />
+    <EmbeddedResource Include="WealthLab.WealthScriptCompiler.bmp" />
+    <EmbeddedResource Include="WealthLab.FundamentalsLoader.bmp" />
+    <EmbeddedResource Include="WealthLab.Properties.Resources.resources" />
+    <EmbeddedResource Include="WealthLab.StreamingQuoteManager.bmp" />
+    <EmbeddedResource Include="WealthLab.ParameterSlider.bmp" />
+    <EmbeddedResource Include="WealthLab.ParameterSlidersContainer.resources" />
+    <EmbeddedResource Include="WealthLab.PrintPreview.resources" />
+    <EmbeddedResource Include="WealthLab.DataSourceTreeView.resources" />
+    <EmbeddedResource Include="WealthLab.SymbolParser.bmp" />
+    <EmbeddedResource Include="WealthLab.ParameterSlider.resources" />
+    <EmbeddedResource Include="WealthLab.IndicatorTreeView.resources" />
+    <EmbeddedResource Include="WealthLab.DataSourceListView.resources" />
+    <EmbeddedResource Include="WealthLab.StrategyManager.bmp" />
+    <EmbeddedResource Include="WealthLab.StreamingChartManager.bmp" />
+    <EmbeddedResource Include="WealthLab.TradeManager.bmp" />
+    <EmbeddedResource Include="WealthLab.DataSourceTreeView.bmp" />
+    <EmbeddedResource Include="WealthLab.FundamentalTreeView.resources" />
+    <EmbeddedResource Include="WealthLab.IndexInformationControl.resources" />
+    <EmbeddedResource Include="WealthLab.ChartRenderer.bmp" />
+    <EmbeddedResource Include="WealthLab.DataBehaviorUserControl.resources" />
+  </ItemGroup>
+</Project>
