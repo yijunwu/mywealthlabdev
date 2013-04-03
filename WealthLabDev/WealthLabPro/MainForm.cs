@@ -1721,6 +1721,8 @@
             this.sepDeleteDrawing = new ToolStripSeparator();
             this.btnTrendline = new ToolStripButton();
             this.splitter = new Splitter();
+            ///WYJ fix
+            this.splitter.DoubleClick += /*this.splitContainerDataPane_DoubleClick;*/ new EventHandler(this.mniViewDataPanel_Click);
             this.saveFileDialog_0 = new SaveFileDialog();
             this.openFileDialog_0 = new OpenFileDialog();
             this.timer_0 = new System.Windows.Forms.Timer(this.icontainer_0);
@@ -2723,6 +2725,9 @@
             this.btnDataWindow.Size = new Size(0x17, 0x16);
             this.btnDataWindow.Tag = "CS";
             this.btnDataWindow.Text = "Data Window";
+            
+            ///WYJ fix: 
+            //this.btnDataWindow.Short= "Data Window";
             this.btnDataWindow.Click += new EventHandler(this.btnDataWindow_Click);
             this.btnIndicatorsTB2.DisplayStyle = ToolStripItemDisplayStyle.Image;
             this.btnIndicatorsTB2.Image = (Image) manager.GetObject("btnIndicatorsTB2.Image");
@@ -2813,6 +2818,8 @@
             this.splitContainerDataPane.SplitterDistance = 0x97;
             this.splitContainerDataPane.TabIndex = 13;
             this.splitContainerDataPane.TabStop = false;
+            //this.splitContainerDataPane.DoubleClick += splitContainerDataPane_DoubleClick; ///WYJ fix
+
             this.treeDataSources.AllowDrop = true;
             this.treeDataSources.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
             this.treeDataSources.HideSelection = false;
@@ -2991,9 +2998,12 @@
             this.dataRange.Size = new Size(0x55, 20);
             this.dataRange.TabIndex = 1;
             this.dataRange.DataRangeChanged += new EventHandler<EventArgs>(this.method_9);
-            this.toolbarDrawing.Dock = DockStyle.Right;
+            this.toolbarDrawing.Dock = DockStyle.Right; ///WYJ fix
             this.toolbarDrawing.GripStyle = ToolStripGripStyle.Hidden;
-            this.toolbarDrawing.Items.AddRange(new ToolStripItem[] { this.btnClearDrawingObjects, this.btnCrossHair, this.sepDeleteDrawing, this.btnTrendline });
+            //this.toolbarDrawing.Items.AddRange(new ToolStripItem[] { this.btnClearDrawingObjects, this.btnCrossHair, this.sepDeleteDrawing, this.btnTrendline });
+            this.mniNewDataSetTB.Visible = false;
+            this.mniNewDataSetTB.ShortcutKeys = Keys.Control | Keys.P;
+            this.toolbarDrawing.Items.AddRange(new ToolStripItem[] { this.btnClearDrawingObjects, this.btnCrossHair, this.sepDeleteDrawing, this.btnTrendline, this.mniNewDataSetTB });
             this.toolbarDrawing.Location = new Point(0x3ec, 0x4a);
             this.toolbarDrawing.Name = "toolbarDrawing";
             this.toolbarDrawing.Size = new Size(0x18, 0x180);
@@ -3342,6 +3352,13 @@
             base.ResumeLayout(false);
             base.PerformLayout();
         }
+
+        // ///WYJ fix 
+        /*
+        private void splitContainerDataPane_DoubleClick(object sender, EventArgs e)
+        {
+            splitContainerDataPane.Panel1Collapsed = !splitContainerDataPane.Panel1Collapsed;
+        } */
 
         public void ItemAdded(ChartForm item)
         {
