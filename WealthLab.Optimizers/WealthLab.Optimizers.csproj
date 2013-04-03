@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>b4cf3f5b-788e-4f3d-8dec-2462053dfe77</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.Optimizers</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WealthLab" />
+    <Reference Include="Fidelity.Components" />
+    <Reference Include="System" />
+    <Reference Include="TeeChart" />
+    <Reference Include="System.Drawing" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\Optimizers\MonteCarloSettings.cs" />
+    <Compile Include="WealthLab\Optimizers\OptResultsGraph2D.cs" />
+    <Compile Include="WealthLab\Optimizers\OptResultsGraph1D.cs" />
+    <Compile Include="WealthLab\Optimizers\MonteCarloResult.cs" />
+    <Compile Include="WealthLab\Optimizers\MonteCarlo.cs" />
+    <Compile Include="WealthLab\Optimizers\MonteCarloRunInfo.cs" />
+    <Compile Include="WealthLab\Optimizers\Exhaustive.cs" />
+    <EmbeddedResource Include="WealthLab.Optimizers.OptResultsGraph2D.resources" />
+    <EmbeddedResource Include="WealthLab.Optimizers.OptResultsGraph1D.resources" />
+    <EmbeddedResource Include="WealthLab.Optimizers.dll.licenses" />
+    <EmbeddedResource Include="WealthLab.Optimizers.MonteCarloSettings.resources" />
+  </ItemGroup>
+</Project>
