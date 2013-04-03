@@ -115,6 +115,8 @@
             this.GenerateHeatMap();
         }
 
+        // ///WYJ fix, code from Reflector
+        /*
         public void CalculateAveragesMultipleStock()
         {
             this.txtSize.Text = "Number of trades for each stock.";
@@ -142,8 +144,39 @@
                 }
             }
             this.CalculateRange();
+        }*/
+
+        // ///WYJ fix, code from Telerik JustCompile
+        public void CalculateAveragesMultipleStock()
+        {
+            this.txtSize.Text = "Number of trades for each stock.";
+            this.txtColor.Text = "Average net profit percent of all trades.";
+            List<Position> positions = this._positions;
+            IEnumerable<IGrouping<string, Position>> groupings = positions.GroupBy<Position, string>((Position p) => p.Bars.Symbol);
+            foreach (IGrouping<string, Position> strs in groupings)
+            {
+                double netProfitPercent = 0;
+                double num = 0;
+                foreach (Position position in strs)
+                {
+                    netProfitPercent = netProfitPercent + position.NetProfitPercent;
+                }
+                num = netProfitPercent / (double)strs.Count<Position>();
+                if (num > this._max)
+                {
+                    this._max = num;
+                }
+                if (num >= this._min)
+                {
+                    continue;
+                }
+                this._min = num;
+            }
+            this.CalculateRange();
         }
 
+        // ///WYJ fix, code from Reflector
+        /*
         public void CalculateAveragesSingleStock()
         {
             this.txtSize.Text = "Dollar Size of Trade";
@@ -164,6 +197,31 @@
                     {
                         this._min = position.NetProfitPercent;
                     }
+                }
+            }
+            this.CalculateRange();
+        } */
+
+        // ///WYJ fix, code from Telerik JustCompile
+        public void CalculateAveragesSingleStock()
+        {
+            this.txtSize.Text = "Dollar Size of Trade";
+            this.txtColor.Text = "Net profit percent. Out of overall profit.";
+            List<Position> positions = this._positions;
+            IEnumerable<IGrouping<string, Position>> groupings = positions.GroupBy<Position, string>((Position p) => p.Bars.Symbol);
+            foreach (IGrouping<string, Position> strs in groupings)
+            {
+                foreach (Position position in strs)
+                {
+                    if (position.NetProfitPercent > this._max)
+                    {
+                        this._max = position.NetProfitPercent;
+                    }
+                    if (position.NetProfitPercent >= this._min)
+                    {
+                        continue;
+                    }
+                    this._min = position.NetProfitPercent;
                 }
             }
             this.CalculateRange();
@@ -492,6 +550,7 @@
             this.rectangle1.Fill = brush;
         }
 
+        /* ///WYJ fix, code from Reflector 
         public void GenerateHeatMap()
         {
             this.tmpHeatMap.Children.Clear();
@@ -560,6 +619,79 @@
                         this.MultipleStock(grouping2.Key, name, profit, num2 / ((double) grouping2.Count<Position>()), profit, grouping2.Count<Position>());
                         this.txtSize.Text = "Overall Profit or Loss for each stock.";
                         this.txtColor.Text = "Average Profit or Loss percentage of all trades.";
+                    }
+                }
+            }
+        } */
+
+        // ///WYJ fix, code for Telerik JustCompile
+        public void GenerateHeatMap()
+        {
+            this.tmpHeatMap.Children.Clear();
+            List<Position> positions = this._positions;
+            IEnumerable<IGrouping<string, Position>> groupings = positions.GroupBy<Position, string>((Position p) => p.Bars.Symbol);
+            if (groupings.Count<IGrouping<string, Position>>() > 1)
+            {
+                this.gbSearch.Visibility = Visibility.Visible;
+                this.btnSearch.Visibility = Visibility.Visible;
+                ComboBoxItem item = (ComboBoxItem)this.cmbView.Items[0];
+                item.Content = "Trades";
+                this.CalculateAveragesMultipleStock();
+                foreach (IGrouping<string, Position> strs in groupings)
+                {
+                    double netProfitPercent = 0;
+                    double netProfit = 0;
+                    string securityName = "";
+                    foreach (Position position in strs)
+                    {
+                        netProfitPercent = netProfitPercent + position.NetProfitPercent;
+                        netProfit = netProfit + position.NetProfit;
+                        securityName = position.Bars.SecurityName;
+                    }
+                    if (this.cmbView.SelectedIndex == 0)
+                    {
+                        this.MultipleStock(strs.Key, securityName, (double)strs.Count<Position>(), netProfitPercent / (double)strs.Count<Position>(), netProfit, strs.Count<Position>());
+                    }
+                    if (this.cmbView.SelectedIndex != 1)
+                    {
+                        continue;
+                    }
+                    if (netProfit < 0)
+                    {
+                        netProfit = netProfit * -1;
+                    }
+                    this.MultipleStock(strs.Key, securityName, netProfit, netProfitPercent / (double)strs.Count<Position>(), netProfit, strs.Count<Position>());
+                    this.txtSize.Text = "Overall Profit or Loss for each stock.";
+                    this.txtColor.Text = "Average Profit or Loss percentage of all trades.";
+                }
+            }
+            else
+            {
+                this.gbSearch.Visibility = Visibility.Hidden;
+                this.btnSearch.Visibility = Visibility.Hidden;
+                ComboBoxItem comboBoxItem = (ComboBoxItem)this.cmbView.Items[0];
+                comboBoxItem.Content = "Trade Size";
+                this.CalculateAveragesSingleStock();
+                foreach (IGrouping<string, Position> strs1 in groupings)
+                {
+                    foreach (Position position1 in strs1)
+                    {
+                        if (this.cmbView.SelectedIndex == 0)
+                        {
+                            this.SingleStock(strs1.Key, position1.Bars.SecurityName, position1.Shares * position1.EntryPrice, position1.NetProfit, position1.NetProfitPercent, position1.Shares);
+                        }
+                        if (this.cmbView.SelectedIndex != 1)
+                        {
+                            continue;
+                        }
+                        double num = position1.NetProfit;
+                        if (position1.NetProfit < 0)
+                        {
+                            num = position1.NetProfit * -1;
+                        }
+                        this.SingleStock(strs1.Key, position1.Bars.SecurityName, num, position1.NetProfit, position1.NetProfitPercent, position1.Shares);
+                        this.txtSize.Text = "Overall Profit or Loss for each individual trade.";
+                        this.txtColor.Text = "Average Profit or Loss percentage of each individual trade.";
                     }
                 }
             }

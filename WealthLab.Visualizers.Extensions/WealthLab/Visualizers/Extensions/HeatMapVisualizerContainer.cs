@@ -22,7 +22,7 @@
         private ToolStripMenuItem copyDataToClipboardToolStripMenuItem;
         private ElementHost elementHost1;
         private HeatMap heatmap;
-        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private PrintDialog pd;
         private PrintPreviewDialog ppd;
         private ToolStripMenuItem printAllToolStripMenuItem;
