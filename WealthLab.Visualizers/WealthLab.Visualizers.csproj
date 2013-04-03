@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>cfec3eed-808f-4988-92d7-ab89a62ac5ff</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.Visualizers</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WealthLab" />
+    <Reference Include="System" />
+    <Reference Include="Fidelity.Components" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="TeeChart" />
+    <Reference Include="WealthLab.Indicators" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\Visualizers\PVTradeList.cs" />
+    <Compile Include="WealthLab\Visualizers\PVEquityCurve.cs" />
+    <Compile Include="WealthLab\Visualizers\PVBySymbol.cs" />
+    <Compile Include="WealthLab\Visualizers\PVProfitDist.cs" />
+    <Compile Include="WealthLab\Visualizers\PVMaeMfe.cs" />
+    <Compile Include="WealthLab\Visualizers\PVDrawdown.cs" />
+    <Compile Include="WealthLab\Visualizers\BasicScorecard.cs" />
+    <Compile Include="WealthLab\Visualizers\PVReport.cs" />
+    <Compile Include="WealthLab\Visualizers\PVByStrategy.cs" />
+    <Compile Include="WealthLab\Visualizers\PVByPeriod.cs" />
+    <Compile Include="WealthLab\Visualizers\ExtendedScorecard.cs" />
+    <Compile Include="WealthLab\Visualizers\Properties\Resources.cs" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVDrawdown.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVByStrategy.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVMaeMfe.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVProfitDist.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVEquityCurve.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVTradeList.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVByPeriod.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.dll.licenses" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVReport.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.PVBySymbol.resources" />
+    <EmbeddedResource Include="WealthLab.Visualizers.Properties.Resources.resources" />
+  </ItemGroup>
+</Project>
