@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>de9fe9d2-eb3f-458e-8848-c47b1124ef60</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.DataProviders.WL4Files</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="WealthLab" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
+    <Reference Include="WealthLab.Extensions.Attribute" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\DataProviders\WL4Files\WL4StaticProvider.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\DataSetSettings.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\TraceEventType.cs" />
+    <Compile Include="WealthLab\DataProviders\WL4Files\WL4DataSetSettings.cs" />
+    <Compile Include="WealthLab\DataProviders\WL4Files\WL4DataSource.cs" />
+    <Compile Include="WealthLab\DataProviders\WL4Files\App.cs" />
+    <Compile Include="WealthLab\DataProviders\WL4Files\SelectMode.cs" />
+    <Compile Include="WealthLab\DataProviders\WL4Files\DBException.cs" />
+    <Compile Include="PageDataFolder.cs" />
+    <Compile Include="Class12.cs" />
+    <Compile Include="PageScale.cs" />
+    <Compile Include="PageApp.cs" />
+    <Compile Include="PageDataSources.cs" />
+    <Compile Include="Class13.cs" />
+    <Compile Include="Class14.cs" />
+    <Compile Include="PageSelectMode.cs" />
+    <Compile Include="WealthLab\DataProviders\WL4Files\Properties\Resources.cs" />
+    <EmbeddedResource Include="PageSelectMode.resources" />
+    <EmbeddedResource Include="PageApp.resources" />
+    <EmbeddedResource Include="PageScale.resources" />
+    <EmbeddedResource Include="PageDataSources.resources" />
+    <EmbeddedResource Include="WealthLab.DataProviders.WL4Files.Resources.WLD.bmp" />
+    <EmbeddedResource Include="PageDataFolder.resources" />
+    <EmbeddedResource Include="WealthLab.DataProviders.WL4Files.Properties.Resources.resources" />
+  </ItemGroup>
+</Project>
