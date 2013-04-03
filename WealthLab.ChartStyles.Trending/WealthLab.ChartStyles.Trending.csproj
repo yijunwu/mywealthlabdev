@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>4c2fec06-f4ca-4ab9-b8b6-70414481e6fc</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.ChartStyles.Trending</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="WealthLab" />
+    <Reference Include="Fidelity.Components" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="WealthLab.Indicators" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\Column.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\Renko.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\RenkoChartStyle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\uxRenkoChartStyle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\ColorFinder.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\DoubleComparer.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\uxLineBreakChartStyle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\TLineBreak.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\PnFChartStyle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\uxPnFChartStyle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\uxKagiChartStyle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\TRenko.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\ControlPrice.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\Direction.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\StepBackState.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\TPnF.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\LineBreak.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\LineBreakChartStyle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\KagiReverseType.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\TKagi.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\PnF.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\Kagi.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\KagiChartStyle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\TrendLine.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\PnFAngle.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\PnFTrendLine.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\PFTarget.cs" />
+    <Compile Include="WealthLab\ChartStyles\Trending\Properties\Resources.cs" />
+    <EmbeddedResource Include="WealthLab.ChartStyles.Trending.uxLineBreakChartStyle.resources" />
+    <EmbeddedResource Include="WealthLab.ChartStyles.Trending.uxRenkoChartStyle.resources" />
+    <EmbeddedResource Include="WealthLab.ChartStyles.Trending.uxKagiChartStyle.resources" />
+    <EmbeddedResource Include="WealthLab.ChartStyles.Trending.uxPnFChartStyle.resources" />
+    <EmbeddedResource Include="WealthLab.ChartStyles.Trending.Properties.Resources.resources" />
+  </ItemGroup>
+</Project>
