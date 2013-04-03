@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>aa66b685-8087-4af7-9d80-7ec16c3186ef</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.Extensions</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="WealthLab" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="WealthLab.Extensions.Attribute" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WealthLab.Extensions.Agent" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="UpdateExtensionsForm.cs" />
+    <Compile Include="WealthLab\Extensions\ExtensionManager.cs" />
+    <Compile Include="WealthLab\Cryptography\RSACryptography.cs" />
+    <Compile Include="WealthLab\Cryptography\RijndaelCryptography.cs" />
+    <Compile Include="WealthLab\Cryptography\HashAlgorithmEngine.cs" />
+    <Compile Include="WealthLab\Extensions\Server\ExtensionManager.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetMoreExtensionsUrlCompletedEventHandler.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetMoreExtensionsUrlCompletedEventArgs.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetChangeLogUrlCompletedEventHandler.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetChangeLogUrlCompletedEventArgs.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetExtensionVersionsCompletedEventHandler.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetExtensionVersionsCompletedEventArgs.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetExtensionInfoAttributesCompletedEventHandler.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetExtensionInfoAttributesCompletedEventArgs.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetDownloadUrlsCompletedEventHandler.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetDownloadUrlsCompletedEventArgs.cs" />
+    <Compile Include="WealthLab\Extensions\Server\RecordExtensionDownloadsCompletedEventHandler.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetExtensionKeyCompletedEventHandler.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetExtensionKeyCompletedEventArgs.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetExtensionIVCompletedEventHandler.cs" />
+    <Compile Include="WealthLab\Extensions\Server\GetExtensionIVCompletedEventArgs.cs" />
+    <Compile Include="WealthLab\Extensions\Config.cs" />
+    <Compile Include="UpdateActionControl.cs" />
+    <Compile Include="ExtensionManagerForm.cs" />
+    <Compile Include="Class39.cs" />
+    <Compile Include="Enum6.cs" />
+    <Compile Include="Enum7.cs" />
+    <Compile Include="EventArgs6.cs" />
+    <Compile Include="Enum8.cs" />
+    <Compile Include="Class40.cs" />
+    <Compile Include="Enum9.cs" />
+    <Compile Include="Enum10.cs" />
+    <Compile Include="EventArgs7.cs" />
+    <Compile Include="EventArgs8.cs" />
+    <Compile Include="EventArgs9.cs" />
+    <Compile Include="EventArgs10.cs" />
+    <Compile Include="Class41.cs" />
+    <Compile Include="ExtensionControl.cs" />
+    <Compile Include="Class42.cs" />
+    <Compile Include="CopyDataForm.cs" />
+    <Compile Include="Class43.cs" />
+    <Compile Include="EventArgs11.cs" />
+    <Compile Include="EventArgs12.cs" />
+    <Compile Include="Class44.cs" />
+    <Compile Include="Class45.cs" />
+    <Compile Include="Class46.cs" />
+    <Compile Include="Enum11.cs" />
+    <Compile Include="Enum12.cs" />
+    <Compile Include="EventArgs13.cs" />
+    <Compile Include="Class47.cs" />
+    <Compile Include="WealthLab\Extensions\Properties\Resources.cs" />
+    <Compile Include="WealthLab\Extensions\Properties\Settings.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\TraceEventType.cs" />
+    <EmbeddedResource Include="UpdateExtensionsForm.resources" />
+    <EmbeddedResource Include="ExtensionControl.resources" />
+    <EmbeddedResource Include="WealthLab.Extensions.Properties.Resources.resources" />
+    <EmbeddedResource Include="WealthLab.Extensions.icons.package.ico" />
+    <EmbeddedResource Include="CopyDataForm.resources" />
+    <EmbeddedResource Include="ExtensionManagerForm.resources" />
+    <EmbeddedResource Include="UpdateActionControl.resources" />
+  </ItemGroup>
+</Project>
