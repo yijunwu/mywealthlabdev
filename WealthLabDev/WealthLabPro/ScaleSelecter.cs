@@ -1,0 +1,132 @@
+﻿namespace WealthLabPro
+{
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Threading;
+    using System.Windows.Forms;
+    using WealthLab;
+
+    [ToolboxBitmap(typeof(ScaleSelecter), "ScaleSelecter")]
+    public class ScaleSelecter : UserControl
+    {
+        private BarDataScale barDataScale_0;
+        private BarDataScale barDataScale_1;
+        private bool bool_0;
+        private Button btnSelect;
+        private IContainer icontainer_0;
+        private Label lblCaption;
+
+        public event EventHandler<EventArgs> ScaleChanged;
+
+        public ScaleSelecter()
+        {
+            this.InitializeComponent();
+        }
+
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            ScaleSelecterForm form = new ScaleSelecterForm();
+            Point point = base.PointToScreen(base.Location);
+            form.Top = ((point.Y - base.Top) + base.Height) - 2;
+            form.Left = point.X - base.Left;
+            form.DataScale = this.DataScale;
+            if (this.bool_0)
+            {
+                form.AvailableScales.Items.Remove("second");
+                form.AvailableScales.Items.Remove("tick");
+            }
+            form.TopMost = true;
+            if (form.Bottom > MainModule.Instance.FirstMainForm.Bottom)
+            {
+                form.Top -= form.Bottom - MainModule.Instance.FirstMainForm.Bottom;
+            }
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                this.DataScale = form.DataScale;
+                if (this.eventHandler_0 != null)
+                {
+                    this.eventHandler_0(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (this.icontainer_0 != null))
+            {
+                this.icontainer_0.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            ComponentResourceManager manager = new ComponentResourceManager(typeof(ScaleSelecter));
+            this.btnSelect = new Button();
+            this.lblCaption = new Label();
+            base.SuspendLayout();
+            this.btnSelect.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            this.btnSelect.BackgroundImageLayout = ImageLayout.Center;
+            this.btnSelect.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
+            this.btnSelect.FlatStyle = FlatStyle.Flat;
+            this.btnSelect.Image = (Image) manager.GetObject("btnSelect.Image");
+            this.btnSelect.Location = new Point(0xa2, 0);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new Size(0x10, 20);
+            this.btnSelect.TabIndex = 2;
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new EventHandler(this.btnSelect_Click);
+            this.lblCaption.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
+            this.lblCaption.AutoEllipsis = true;
+            this.lblCaption.Location = new Point(4, 4);
+            this.lblCaption.Name = "lblCaption";
+            this.lblCaption.Size = new Size(0x98, 13);
+            this.lblCaption.TabIndex = 3;
+            this.lblCaption.Text = "Daily";
+            base.AutoScaleDimensions = new SizeF(6f, 13f);
+            base.AutoScaleMode = AutoScaleMode.Font;
+            this.BackColor = Color.Cornsilk;
+            base.Controls.Add(this.lblCaption);
+            base.Controls.Add(this.btnSelect);
+            base.Name = "ScaleSelecter";
+            base.Size = new Size(0xb2, 20);
+            base.ResumeLayout(false);
+        }
+
+        public BarDataScale DataScale
+        {
+            get
+            {
+                return this.barDataScale_0;
+            }
+            set
+            {
+                this.barDataScale_1 = this.barDataScale_0;
+                this.barDataScale_0 = value;
+                this.lblCaption.Text = this.barDataScale_0.ToString();
+            }
+        }
+
+        public BarDataScale PreviousDataScale
+        {
+            get
+            {
+                return this.barDataScale_1;
+            }
+        }
+
+        public bool SM
+        {
+            get
+            {
+                return this.bool_0;
+            }
+            set
+            {
+                this.bool_0 = value;
+            }
+        }
+    }
+}
+
