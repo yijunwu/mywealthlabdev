@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>d7a4201c-324c-42a1-8ac9-dd2e534156f9</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.Indicators</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="WealthLab" />
+    <Reference Include="System.Drawing" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\Indicators\WilliamsR.cs" />
+    <Compile Include="Class49.cs" />
+    <Compile Include="WealthLab\Indicators\WilliamsRHelper.cs" />
+    <Compile Include="WealthLab\Indicators\DSS.cs" />
+    <Compile Include="WealthLab\Indicators\DSSHelper.cs" />
+    <Compile Include="WealthLab\Indicators\ADX.cs" />
+    <Compile Include="WealthLab\Indicators\ADXHelper.cs" />
+    <Compile Include="WealthLab\Indicators\VHF.cs" />
+    <Compile Include="WealthLab\Indicators\VHFHelper.cs" />
+    <Compile Include="WealthLab\Indicators\TRIX.cs" />
+    <Compile Include="WealthLab\Indicators\TRIXHelper.cs" />
+    <Compile Include="WealthLab\Indicators\StochD.cs" />
+    <Compile Include="WealthLab\Indicators\StochDHelper.cs" />
+    <Compile Include="WealthLab\Indicators\StdError.cs" />
+    <Compile Include="WealthLab\Indicators\StdErrorHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Parabolic.cs" />
+    <Compile Include="WealthLab\Indicators\ParabolicHelper.cs" />
+    <Compile Include="WealthLab\Indicators\FAMA.cs" />
+    <Compile Include="WealthLab\Indicators\FAMAHelper.cs" />
+    <Compile Include="WealthLab\Indicators\DPO.cs" />
+    <Compile Include="WealthLab\Indicators\DPOHelper.cs" />
+    <Compile Include="WealthLab\Indicators\AveragePrice.cs" />
+    <Compile Include="WealthLab\Indicators\AveragePriceHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Momentum.cs" />
+    <Compile Include="WealthLab\Indicators\MomentumHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Median.cs" />
+    <Compile Include="WealthLab\Indicators\MedianHelper.cs" />
+    <Compile Include="WealthLab\Indicators\PeakBar.cs" />
+    <Compile Include="WealthLab\Indicators\PeakBarHelper.cs" />
+    <Compile Include="WealthLab\Indicators\OBV.cs" />
+    <Compile Include="WealthLab\Indicators\OBVHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Kalman.cs" />
+    <Compile Include="WealthLab\Indicators\KalmanHelper.cs" />
+    <Compile Include="WealthLab\Indicators\ATRP.cs" />
+    <Compile Include="WealthLab\Indicators\ATRPHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Vidya.cs" />
+    <Compile Include="WealthLab\Indicators\VidyaHelper.cs" />
+    <Compile Include="WealthLab\Indicators\QStick.cs" />
+    <Compile Include="WealthLab\Indicators\QStickHelper.cs" />
+    <Compile Include="WealthLab\Indicators\PeakTroughCalculator.cs" />
+    <Compile Include="WealthLab\Indicators\PeakTroughMode.cs" />
+    <Compile Include="WealthLab\Indicators\MFI.cs" />
+    <Compile Include="WealthLab\Indicators\MFIHelper.cs" />
+    <Compile Include="WealthLab\Indicators\LinearReg.cs" />
+    <Compile Include="WealthLab\Indicators\LinearRegHelper.cs" />
+    <Compile Include="WealthLab\Indicators\KeltnerUpper.cs" />
+    <Compile Include="WealthLab\Indicators\KeltnerUpperHelper.cs" />
+    <Compile Include="WealthLab\Indicators\KAMA.cs" />
+    <Compile Include="WealthLab\Indicators\KAMAHelper.cs" />
+    <Compile Include="WealthLab\Indicators\BBandUpper.cs" />
+    <Compile Include="WealthLab\Indicators\BBandUpperHelper.cs" />
+    <Compile Include="WealthLab\Indicators\ATR.cs" />
+    <Compile Include="WealthLab\Indicators\ATRHelper.cs" />
+    <Compile Include="WealthLab\Indicators\StdDev.cs" />
+    <Compile Include="WealthLab\Indicators\StdDevCalculation.cs" />
+    <Compile Include="WealthLab\Indicators\StdDevHelper.cs" />
+    <Compile Include="WealthLab\Indicators\MAMA.cs" />
+    <Compile Include="WealthLab\Indicators\MAMAHelper.cs" />
+    <Compile Include="WealthLab\Indicators\FIR.cs" />
+    <Compile Include="WealthLab\Indicators\FIRHelper.cs" />
+    <Compile Include="WealthLab\Indicators\CumUp.cs" />
+    <Compile Include="WealthLab\Indicators\CumUpHelper.cs" />
+    <Compile Include="WealthLab\Indicators\ADXR.cs" />
+    <Compile Include="WealthLab\Indicators\ADXRHelper.cs" />
+    <Compile Include="WealthLab\Indicators\HighestBar.cs" />
+    <Compile Include="WealthLab\Indicators\HighestBarHelper.cs" />
+    <Compile Include="WealthLab\Indicators\EMV.cs" />
+    <Compile Include="WealthLab\Indicators\EMVHelper.cs" />
+    <Compile Include="WealthLab\Indicators\AroonDown.cs" />
+    <Compile Include="WealthLab\Indicators\AroonDownHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Volatility.cs" />
+    <Compile Include="WealthLab\Indicators\VolatilityHelper.cs" />
+    <Compile Include="WealthLab\Indicators\TroughBar.cs" />
+    <Compile Include="WealthLab\Indicators\TroughBarHelper.cs" />
+    <Compile Include="WealthLab\Indicators\StochRSI.cs" />
+    <Compile Include="WealthLab\Indicators\StochRSIHelper.cs" />
+    <Compile Include="WealthLab\Indicators\DX.cs" />
+    <Compile Include="WealthLab\Indicators\DXHelper.cs" />
+    <Compile Include="WealthLab\Indicators\DIMinus.cs" />
+    <Compile Include="WealthLab\Indicators\DIMinusHelper.cs" />
+    <Compile Include="WealthLab\Indicators\CMF.cs" />
+    <Compile Include="WealthLab\Indicators\CMFHelper.cs" />
+    <Compile Include="WealthLab\Indicators\AveragePriceC.cs" />
+    <Compile Include="WealthLab\Indicators\AveragePriceCHelper.cs" />
+    <Compile Include="WealthLab\Indicators\TrueRange.cs" />
+    <Compile Include="WealthLab\Indicators\TrueRangeHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Parabolic2.cs" />
+    <Compile Include="WealthLab\Indicators\Parabolic2Helper.cs" />
+    <Compile Include="WealthLab\Indicators\KST.cs" />
+    <Compile Include="WealthLab\Indicators\KSTHelper.cs" />
+    <Compile Include="WealthLab\Indicators\WMA.cs" />
+    <Compile Include="WealthLab\Indicators\WMAHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Sum.cs" />
+    <Compile Include="WealthLab\Indicators\SumHelper.cs" />
+    <Compile Include="WealthLab\Indicators\MACD.cs" />
+    <Compile Include="WealthLab\Indicators\MACDHelper.cs" />
+    <Compile Include="WealthLab\Indicators\LowestBar.cs" />
+    <Compile Include="WealthLab\Indicators\LowestBarHelper.cs" />
+    <Compile Include="WealthLab\Indicators\DIPlus.cs" />
+    <Compile Include="WealthLab\Indicators\DIPlusHelper.cs" />
+    <Compile Include="WealthLab\Indicators\CADO.cs" />
+    <Compile Include="WealthLab\Indicators\CADOHelper.cs" />
+    <Compile Include="WealthLab\Indicators\VMA.cs" />
+    <Compile Include="WealthLab\Indicators\VMAHelper.cs" />
+    <Compile Include="WealthLab\Indicators\StochK.cs" />
+    <Compile Include="WealthLab\Indicators\StochKHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Lowest.cs" />
+    <Compile Include="WealthLab\Indicators\LowestHelper.cs" />
+    <Compile Include="WealthLab\Indicators\KeltnerLower.cs" />
+    <Compile Include="WealthLab\Indicators\KeltnerLowerHelper.cs" />
+    <Compile Include="WealthLab\Indicators\EMA.cs" />
+    <Compile Include="WealthLab\Indicators\EMAModern.cs" />
+    <Compile Include="WealthLab\Indicators\EMALegacy.cs" />
+    <Compile Include="WealthLab\Indicators\EMACalculation.cs" />
+    <Compile Include="WealthLab\Indicators\EMAHelper.cs" />
+    <Compile Include="WealthLab\Indicators\BBandLower.cs" />
+    <Compile Include="WealthLab\Indicators\BBandLowerHelper.cs" />
+    <Compile Include="WealthLab\Indicators\RSquared.cs" />
+    <Compile Include="WealthLab\Indicators\RSquaredHelper.cs" />
+    <Compile Include="WealthLab\Indicators\MoneyFlow.cs" />
+    <Compile Include="WealthLab\Indicators\MoneyFlowHelper.cs" />
+    <Compile Include="WealthLab\Indicators\CCI.cs" />
+    <Compile Include="WealthLab\Indicators\CCIHelper.cs" />
+    <Compile Include="WealthLab\Indicators\UltimateOsc.cs" />
+    <Compile Include="WealthLab\Indicators\UltimateOscHelper.cs" />
+    <Compile Include="WealthLab\Indicators\RSI.cs" />
+    <Compile Include="WealthLab\Indicators\RSIHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Highest.cs" />
+    <Compile Include="WealthLab\Indicators\HighestHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Trough.cs" />
+    <Compile Include="WealthLab\Indicators\TroughHelper.cs" />
+    <Compile Include="WealthLab\Indicators\SMA.cs" />
+    <Compile Include="WealthLab\Indicators\SMAHelper.cs" />
+    <Compile Include="WealthLab\Indicators\LinearRegSlope.cs" />
+    <Compile Include="WealthLab\Indicators\LinearRegSlopeHelper.cs" />
+    <Compile Include="WealthLab\Indicators\HV.cs" />
+    <Compile Include="WealthLab\Indicators\HVHelper.cs" />
+    <Compile Include="WealthLab\Indicators\EMPlus.cs" />
+    <Compile Include="WealthLab\Indicators\EMPlusHelper.cs" />
+    <Compile Include="WealthLab\Indicators\ROC.cs" />
+    <Compile Include="WealthLab\Indicators\ROCHelper.cs" />
+    <Compile Include="WealthLab\Indicators\MomentumPct.cs" />
+    <Compile Include="WealthLab\Indicators\MomentumPctHelper.cs" />
+    <Compile Include="WealthLab\Indicators\CumDown.cs" />
+    <Compile Include="WealthLab\Indicators\CumDownHelper.cs" />
+    <Compile Include="WealthLab\Indicators\AroonUp.cs" />
+    <Compile Include="WealthLab\Indicators\AroonUpHelper.cs" />
+    <Compile Include="WealthLab\Indicators\WilderMA.cs" />
+    <Compile Include="WealthLab\Indicators\WilderMAHelper.cs" />
+    <Compile Include="WealthLab\Indicators\RVI.cs" />
+    <Compile Include="WealthLab\Indicators\RVIHelper.cs" />
+    <Compile Include="WealthLab\Indicators\Peak.cs" />
+    <Compile Include="WealthLab\Indicators\PeakHelper.cs" />
+    <Compile Include="WealthLab\Indicators\EMMinus.cs" />
+    <Compile Include="WealthLab\Indicators\EMMinusHelper.cs" />
+    <Compile Include="WealthLab\Indicators\MAType.cs" />
+    <Compile Include="WealthLab\Indicators\Divergence.cs" />
+    <Compile Include="WealthLab\Indicators\DivergenceHelper.cs" />
+    <Compile Include="WealthLab\Indicators\CMO.cs" />
+    <Compile Include="WealthLab\Indicators\CMOHelper.cs" />
+    <Compile Include="WealthLab\Indicators\AccumDist.cs" />
+    <Compile Include="WealthLab\Indicators\AccumDistHelper.cs" />
+  </ItemGroup>
+</Project>
