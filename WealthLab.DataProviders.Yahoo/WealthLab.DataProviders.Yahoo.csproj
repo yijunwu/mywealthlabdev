@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>c533dd38-82cd-4969-933b-078c7f7303a5</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.DataProviders.Yahoo</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WealthLab" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="WealthLab.Extensions.Attribute" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Class16.cs" />
+    <Compile Include="ProviderSettingsForm.cs" />
+    <Compile Include="ProviderSettingsControl.cs" />
+    <Compile Include="Class17.cs" />
+    <Compile Include="Enum0.cs" />
+    <Compile Include="Class18.cs" />
+    <Compile Include="Class19.cs" />
+    <Compile Include="Enum1.cs" />
+    <Compile Include="Class20.cs" />
+    <Compile Include="Class21.cs" />
+    <Compile Include="Enum2.cs" />
+    <Compile Include="Class22.cs" />
+    <Compile Include="YahooWizardPageStart.cs" />
+    <Compile Include="YahooWizardPageClassification.cs" />
+    <Compile Include="Class23.cs" />
+    <Compile Include="YahooWizardPageSymbols.cs" />
+    <Compile Include="Class25.cs" />
+    <Compile Include="Enum3.cs" />
+    <Compile Include="Class26.cs" />
+    <Compile Include="EventArgs1.cs" />
+    <Compile Include="EventArgs2.cs" />
+    <Compile Include="EventArgs3.cs" />
+    <Compile Include="EventArgs4.cs" />
+    <Compile Include="EventArgs5.cs" />
+    <Compile Include="Enum4.cs" />
+    <Compile Include="Class27.cs" />
+    <Compile Include="Exception0.cs" />
+    <Compile Include="Exception1.cs" />
+    <Compile Include="Class28.cs" />
+    <Compile Include="Class29.cs" />
+    <Compile Include="Class30.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\AdjustedModeWhenDataRange.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\ClassificationGroup.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\DataSetSettings.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\SymbolInfoList.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\SymbolInfo.cs" />
+    <Compile Include="WealthLab\Cryptography\RSACryptography.cs" />
+    <Compile Include="WealthLab\Cryptography\RijndaelCryptography.cs" />
+    <Compile Include="WealthLab\DataProviders\Yahoo\Properties\Resources.cs" />
+    <Compile Include="WealthLab\DataProviders\Yahoo\YahooStaticSettings.cs" />
+    <Compile Include="WealthLab\DataProviders\Yahoo\YahooStaticProvider.cs" />
+    <Compile Include="WealthLab\DataProviders\Yahoo\YahooClientSettings.cs" />
+    <Compile Include="WealthLab\DataProviders\Yahoo\YahooFundamentalProvider.cs" />
+    <Compile Include="WealthLab\DataProviders\Yahoo\FundamentalItemYahooDividend.cs" />
+    <Compile Include="WealthLab\DataProviders\Yahoo\FundamentalItemYahooSplit.cs" />
+    <Compile Include="WealthLab\DataProviders\Yahoo\GStream0.cs" />
+    <EmbeddedResource Include="YahooWizardPageSymbols.resources" />
+    <EmbeddedResource Include="YahooWizardPageStart.resources" />
+    <EmbeddedResource Include="YahooWizardPageClassification.resources" />
+    <EmbeddedResource Include="ProviderSettingsControl.resources" />
+    <EmbeddedResource Include="WealthLab.DataProviders.Yahoo.Resources.Yahoo.bmp" />
+    <EmbeddedResource Include="WealthLab.DataProviders.Yahoo.Properties.Resources.resources" />
+    <EmbeddedResource Include="ProviderSettingsForm.resources" />
+  </ItemGroup>
+</Project>
