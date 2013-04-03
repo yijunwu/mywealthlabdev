@@ -101,7 +101,7 @@ internal class WizardPageActivateTrial : WizardPage, Interface0
         base.method_2();
     }
 
-    void WizardPage.Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_1 != null))
         {

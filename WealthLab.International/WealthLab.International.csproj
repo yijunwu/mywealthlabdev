@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>f6ebf75a-99ac-4f55-8381-2f4ea97530a6</ProjectGuid>
+    <ProjectGuid>{E52B6DC2-A05C-4A2F-8382-392B5B8483AF}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.International</AssemblyName>
     <OutputType>Library</OutputType>
@@ -34,37 +34,65 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="WealthLab" />
-    <Reference Include="WealthLab.Extensions" />
+    <Reference Include="WealthLab">
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab.Extensions">
+      <HintPath>..\ExternalLib\WealthLab.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Management" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="WizardPage.cs" />
+    <Compile Include="WizardPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Interface0.cs" />
-    <Compile Include="WizardPageHwidToRegister.cs" />
+    <Compile Include="WizardPageHwidToRegister.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Class51.cs" />
-    <Compile Include="WizardPageSelectActivationMethod.cs" />
+    <Compile Include="WizardPageSelectActivationMethod.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Enum13.cs" />
-    <Compile Include="WizardPageInfo.cs" />
+    <Compile Include="WizardPageInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Class52.cs" />
-    <Compile Include="WizardPageAuthInfo.cs" />
-    <Compile Include="WizardPageActivateKey.cs" />
-    <Compile Include="WizardPageActivateTrial.cs" />
+    <Compile Include="WizardPageAuthInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardPageActivateKey.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardPageActivateTrial.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Class53.cs" />
-    <Compile Include="Form0.cs" />
-    <Compile Include="WizardPageProgress.cs" />
+    <Compile Include="Form0.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WizardPageProgress.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Class54.cs" />
     <Compile Include="Class55.cs" />
     <Compile Include="Enum14.cs" />
-    <Compile Include="WizardPageError.cs" />
+    <Compile Include="WizardPageError.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Class56.cs" />
-    <Compile Include="Class57.cs" />
+    <Compile Include="Class57.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Delegate20.cs" />
     <Compile Include="EventArgs14.cs" />
     <Compile Include="Enum15.cs" />
-    <Compile Include="Class58.cs" />
+    <Compile Include="Class58.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Class59.cs" />
     <Compile Include="WealthLab\International\BaseMethodParams.cs" />
     <Compile Include="WealthLab\International\TrialMethodParams.cs" />
@@ -75,7 +103,9 @@
     <Compile Include="WealthLab\International\DataBaseException.cs" />
     <Compile Include="WealthLab\International\ButtonBehaviour.cs" />
     <Compile Include="WealthLab\International\Config.cs" />
-    <Compile Include="WealthLab\International\CustomersWebService\CustomersWebService.cs" />
+    <Compile Include="WealthLab\International\CustomersWebService\CustomersWebService.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WealthLab\International\CustomersWebService\ServiceHeader.cs" />
     <Compile Include="WealthLab\International\CustomersWebService\AuthEducationalParams.cs" />
     <Compile Include="WealthLab\International\CustomersWebService\AuthEducationalResult.cs" />

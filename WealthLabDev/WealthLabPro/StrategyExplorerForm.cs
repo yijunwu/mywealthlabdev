@@ -905,32 +905,54 @@
 
         private void lvStrategies_SelectedIndexChanged(object sender, EventArgs e)
         {
+            bool flag;
             this.btnAccountNumber.Enabled = this.lvStrategies.SelectedItems.Count > 0;
             base.AcceptButton = this.btnOK;
             if (this.lvStrategies.SelectedItems.Count != 0)
             {
                 ListViewItem item = this.lvStrategies.SelectedItems[0];
-                Strategy tag = (Strategy) item.Tag;
-                File.WriteAllText(MainModule.Instance.DataPath + @"\temp.html", tag.Description);
-                this.browser.Navigate(MainModule.Instance.DataPath + @"\temp.html");
-                this.linkMoreInfo.Visible = (tag.URL != null) && (tag.URL != "");
+                Strategy tag = (Strategy)item.Tag;
+                File.WriteAllText(string.Concat(MainModule.Instance.DataPath, "\\temp.html"), tag.Description);
+                this.browser.Navigate(string.Concat(MainModule.Instance.DataPath, "\\temp.html"));
+                LinkLabel linkLabel = this.linkMoreInfo;
+                flag = (tag.URL == null ? false : tag.URL != "");
+                linkLabel.Visible = flag;
                 this.bool_0 = true;
                 this.btnDelete.Enabled = false;
-                using (IEnumerator enumerator = this.lvStrategies.SelectedItems.GetEnumerator())
+                IEnumerator enumerator = this.lvStrategies.SelectedItems.GetEnumerator();
+                try
                 {
-                    while (enumerator.MoveNext())
+                    while (true)
                     {
-                        ListViewItem current = (ListViewItem) enumerator.Current;
-                        Strategy strategy2 = current.Tag as Strategy;
-                        if (strategy2.StrategyType != StrategyType.Compiled)
+                        if (enumerator.MoveNext())
                         {
-                            goto Label_0115;
+                            ListViewItem current = (ListViewItem)enumerator.Current;
+                            Strategy strategy = current.Tag as Strategy;
+                            if (strategy.StrategyType != StrategyType.Compiled)
+                            {
+                                this.btnDelete.Enabled = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    return;
-                Label_0115:
-                    this.btnDelete.Enabled = true;
                 }
+                finally
+                {
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
+                }
+                return;
+            }
+            else
+            {
+                return;
             }
         }
 
@@ -951,30 +973,44 @@
 
         private void method_1()
         {
-            foreach (string str in MainModule.Instance.Strategies.FolderNames)
+            foreach (string folderName in MainModule.Instance.Strategies.FolderNames)
             {
                 bool flag = false;
-                using (IEnumerator enumerator2 = this.tree.Nodes.GetEnumerator())
+                IEnumerator enumerator = this.tree.Nodes.GetEnumerator();
+                try
                 {
-                    while (enumerator2.MoveNext())
+                    while (true)
                     {
-                        TreeNode current = (TreeNode) enumerator2.Current;
-                        if (current.Text == str)
+                        if (enumerator.MoveNext())
                         {
-                            goto Label_005D;
+                            TreeNode current = (TreeNode)enumerator.Current;
+                            if (current.Text == folderName)
+                            {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    goto Label_0076;
-                Label_005D:
-                    flag = true;
                 }
-            Label_0076:
-                if (!flag)
+                finally
                 {
-                    TreeNode node2 = this.tree.Nodes.Add(str);
-                    node2.ImageIndex = 0;
-                    node2.SelectedImageIndex = 1;
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
                 }
+                if (flag)
+                {
+                    continue;
+                }
+                TreeNode treeNode = this.tree.Nodes.Add(folderName);
+                treeNode.ImageIndex = 0;
+                treeNode.SelectedImageIndex = 1;
             }
         }
 

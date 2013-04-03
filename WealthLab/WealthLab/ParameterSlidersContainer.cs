@@ -19,9 +19,61 @@
         private EventHandler<EventArgs> eventHandler_1;
 
 
-        public event EventHandler<EventArgs> SliderMouseDown;
+        public event EventHandler<EventArgs> SliderMouseDown
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<EventArgs> eventHandler2 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<EventArgs> eventHandler2 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+        }
 
-        public event EventHandler<EventArgs> SliderValueChanged;
+        public event EventHandler<EventArgs> SliderValueChanged
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
 
         public ParameterSlidersContainer()
         {
@@ -118,26 +170,26 @@
             {
                 this.pnlParameters.Controls.Clear();
                 this.wealthScript_0 = value;
-                if (this.wealthScript_0 != null)
+                if (this.wealthScript_0 == null)
                 {
-                    foreach (StrategyParameter parameter in this.wealthScript_0.Parameters)
-                    {
-                        ParameterSlider slider;
-                        slider = new ParameterSlider {
-                            Width = this.pnlParameters.Width - 4,
-                            Left = 2,
-                            Top = this.pnlParameters.Controls.Count * slider.Height,
-                            Parameter = parameter
-                        };
-                        slider.ValueChanged += new EventHandler<EventArgs>(this.method_0);
-                        slider.MouseDown += new MouseEventHandler(this.method_1);
-                        this.pnlParameters.Controls.Add(slider);
-                    }
-                    this.pnlParameters.Height = (this.pnlParameters.Controls.Count * 0x11) + 4;
+                    this.pnlParameters.Height = 4;
+                    return;
                 }
                 else
                 {
-                    this.pnlParameters.Height = 4;
+                    foreach (StrategyParameter parameter in this.wealthScript_0.Parameters)
+                    {
+                        ParameterSlider parameterSlider = new ParameterSlider();
+                        parameterSlider.Width = this.pnlParameters.Width - 4;
+                        parameterSlider.Left = 2;
+                        parameterSlider.Top = this.pnlParameters.Controls.Count * parameterSlider.Height;
+                        parameterSlider.Parameter = parameter;
+                        parameterSlider.ValueChanged += new EventHandler<EventArgs>(this.method_0);
+                        parameterSlider.MouseDown += new MouseEventHandler(this.method_1);
+                        this.pnlParameters.Controls.Add(parameterSlider);
+                    }
+                    this.pnlParameters.Height = this.pnlParameters.Controls.Count * 17 + 4;
+                    return;
                 }
             }
         }

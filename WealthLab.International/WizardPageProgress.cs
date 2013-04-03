@@ -69,7 +69,7 @@ internal class WizardPageProgress : WizardPage, Interface0
         this.lblAction.Text = string_1;
     }
 
-    void WizardPage.Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_1 != null))
         {

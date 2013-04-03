@@ -134,7 +134,7 @@ internal class WizardPageActivateKey : WizardPage, Interface0
         return ((base.method_4(this.txtFirstName) & base.method_4(this.txtLastName)) & base.method_4(this.txtKey));
     }
 
-    void WizardPage.Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_1 != null))
         {

@@ -33,7 +33,7 @@
         private Exception exception_0;
         private FundamentalsLoader fundamentalsLoader_0;
         private IContainer icontainer_0;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
         private int int_0;
         private ToolStripLabel lblScorecard;
@@ -492,13 +492,13 @@
                 this.bool_1 = true;
                 int num3 = 0;
                 this.strategyRankingSettings_0 = new StrategyRankingSettings();
-                this.strategyRankingSettings_0.ScorecardName = items[0++];
-                this.strategyRankingSettings_0.BarDataScale = WealthLab.BarDataScale.Parse(items[1++]);
-                this.strategyRankingSettings_0.PosSize = WealthLab.PositionSize.Parse(items[2++]);
-                this.strategyRankingSettings_0.DataRange = BarDataRange.Parse(items[3++]);
-                this.strategyRankingSettings_0.Symbol = items[4++];
-                this.strategyRankingSettings_0.DataSourceName = items[5++];
-                int num4 = int.Parse(items[6++]);
+                this.strategyRankingSettings_0.ScorecardName = items[0];///WYJ fix
+                this.strategyRankingSettings_0.BarDataScale = WealthLab.BarDataScale.Parse(items[1]);
+                this.strategyRankingSettings_0.PosSize = WealthLab.PositionSize.Parse(items[2]);
+                this.strategyRankingSettings_0.DataRange = BarDataRange.Parse(items[3]);
+                this.strategyRankingSettings_0.Symbol = items[4];
+                this.strategyRankingSettings_0.DataSourceName = items[5];
+                int num4 = int.Parse(items[6]);
                 this.strategyRankingSettings_0.Strategies.Clear();
                 List<StrategyRankingItem> list = new List<StrategyRankingItem>();
                 for (int i = 0; i < num4; i++)
@@ -554,33 +554,46 @@
 
         private void lvStrategies_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.lvStrategies.SelectedItems.Count > 0)
+            if (this.lvStrategies.SelectedItems.Count <= 0)
+            {
+                this.method_11(false);
+            }
+            else
             {
                 this.method_11(true);
                 this.method_17();
             }
-            else
-            {
-                this.method_11(false);
-            }
             this.MyMainForm.BuildParameterSliders();
             bool flag = false;
-            using (IEnumerator enumerator = this.lvStrategies.SelectedItems.GetEnumerator())
+            IEnumerator enumerator = this.lvStrategies.SelectedItems.GetEnumerator();
+            try
             {
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    ListViewItem current = (ListViewItem) enumerator.Current;
-                    StrategyRankingItem tag = (StrategyRankingItem) current.Tag;
-                    if (tag.UsePreferredValues)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0074;
+                        ListViewItem current = (ListViewItem)enumerator.Current;
+                        StrategyRankingItem tag = (StrategyRankingItem)current.Tag;
+                        if (tag.UsePreferredValues)
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                goto Label_008C;
-            Label_0074:
-                flag = true;
             }
-        Label_008C:
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
             this.btnUsePV.Checked = flag;
             this.mniPV.Checked = flag;
         }

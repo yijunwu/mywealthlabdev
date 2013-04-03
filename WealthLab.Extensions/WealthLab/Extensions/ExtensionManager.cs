@@ -29,11 +29,47 @@
         public static string WleFileFromOsClick;
         public static string WleFileFromStart;
 
-        public event UpdateExtensionActionEventHandler UpdateExtensionAction;
+        private ExtensionManager.UpdateExtensionActionEventHandler updateExtensionActionEventHandler_0;
 
-        public event UpdateExtensionsCompletedHandler UpdateExtensionsCompleted;
+        private ExtensionManager.UpdateExtensionsStartHandler updateExtensionsStartHandler_0;
 
-        public event UpdateExtensionsStartHandler UpdateExtensionsStart;
+        private ExtensionManager.UpdateExtensionsCompletedHandler updateExtensionsCompletedHandler_0;
+
+        public event ExtensionManager.UpdateExtensionActionEventHandler UpdateExtensionAction
+        {
+            add
+            {
+                this.updateExtensionActionEventHandler_0 += value;
+            }
+            remove
+            {
+                this.updateExtensionActionEventHandler_0 -= value;
+            }
+        }
+
+        public event ExtensionManager.UpdateExtensionsCompletedHandler UpdateExtensionsCompleted
+        {
+            add
+            {
+                this.updateExtensionsCompletedHandler_0 += value;
+            }
+            remove
+            {
+                this.updateExtensionsCompletedHandler_0 -= value;
+            }
+        }
+
+        public event ExtensionManager.UpdateExtensionsStartHandler UpdateExtensionsStart
+        {
+            add
+            {
+                this.updateExtensionsStartHandler_0 += value;
+            }
+            remove
+            {
+                this.updateExtensionsStartHandler_0 -= value;
+            }
+        }
 
         public ExtensionManager()
         {

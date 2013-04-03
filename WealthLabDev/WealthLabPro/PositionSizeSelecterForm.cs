@@ -743,89 +743,112 @@
             }
             set
             {
-                switch (value.Mode)
+                PosSizeMode mode = value.Mode;
+                switch (mode)
                 {
                     case PosSizeMode.RawProfitDollar:
-                        this.rbFixedDollar.Checked = true;
-                        break;
-
+                        {
+                            this.rbFixedDollar.Checked = true;
+                            break;
+                        }
                     case PosSizeMode.RawProfitShare:
-                        this.rbFixedShare.Checked = true;
-                        break;
-
+                        {
+                            this.rbFixedShare.Checked = true;
+                            break;
+                        }
                     case PosSizeMode.Dollar:
-                        this.rbDollar.Checked = true;
-                        break;
-
+                        {
+                            this.rbDollar.Checked = true;
+                            break;
+                        }
                     case PosSizeMode.Share:
-                        this.rbShare.Checked = true;
-                        break;
-
+                        {
+                            this.rbShare.Checked = true;
+                            break;
+                        }
                     case PosSizeMode.PctEquity:
-                        this.rbPctEquity.Checked = true;
-                        break;
-
+                        {
+                            this.rbPctEquity.Checked = true;
+                            break;
+                        }
                     case PosSizeMode.MaxRisk:
-                        this.rbMaxRisk.Checked = true;
-                        break;
-
+                        {
+                            this.rbMaxRisk.Checked = true;
+                            break;
+                        }
                     case PosSizeMode.SimuScript:
-                        this.rbPosSizer.Checked = true;
-                        break;
-
+                        {
+                            this.rbPosSizer.Checked = true;
+                            break;
+                        }
                     case PosSizeMode.ScriptOverride:
-                        this.rbScriptOverride.Checked = true;
-                        break;
+                        {
+                            this.rbScriptOverride.Checked = true;
+                            break;
+                        }
                 }
-                this.numRawDollar.Value = (decimal) value.RawProfitDollarSize;
-                this.numRawShare.Value = (decimal) value.RawProfitShareSize;
-                this.numDollar.Value = (decimal) value.DollarSize;
-                this.numShare.Value = (decimal) value.ShareSize;
+                this.numRawDollar.Value = (decimal)((double)value.RawProfitDollarSize);
+                this.numRawShare.Value = (decimal)((double)value.RawProfitShareSize);
+                this.numDollar.Value = (decimal)((double)value.DollarSize);
+                this.numShare.Value = (decimal)((double)value.ShareSize);
                 this.EquityMarginFactor = Convert.ToDecimal(value.MarginFactor);
-                this.numPctEquity.Maximum = 100M * this.EquityMarginFactor;
-                if (((decimal) value.PctSize) > this.numPctEquity.Maximum)
+                this.numPctEquity.Maximum = new decimal(100) * this.EquityMarginFactor;
+                if ((decimal)((double)value.PctSize) <= this.numPctEquity.Maximum)
                 {
-                    this.numPctEquity.Value = 100M;
+                    this.numPctEquity.Value = (decimal)((double)value.PctSize);
                 }
                 else
                 {
-                    this.numPctEquity.Value = (decimal) value.PctSize;
+                    this.numPctEquity.Value = new decimal(100);
                 }
-                this.numMaxRisk.Value = (decimal) value.RiskSize;
-                PosSizer sizer2 = null;
-                using (IEnumerator enumerator = this.cmbPosSizers.Items.GetEnumerator())
+                this.numMaxRisk.Value = (decimal)((double)value.RiskSize);
+                PosSizer posSizer = null;
+                IEnumerator enumerator = this.cmbPosSizers.Items.GetEnumerator();
+                try
                 {
-                    PosSizer current;
-                    while (enumerator.MoveNext())
+                    while (true)
                     {
-                        current = (PosSizer) enumerator.Current;
-                        if (current.FriendlyName == value.SimuScriptName)
+                        if (enumerator.MoveNext())
                         {
-                            goto Label_01C6;
+                            PosSizer current = (PosSizer)enumerator.Current;
+                            if (current.FriendlyName == value.SimuScriptName)
+                            {
+                                posSizer = current;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    goto Label_01DE;
-                Label_01C6:
-                    sizer2 = current;
                 }
-            Label_01DE:
-                if (sizer2 != null)
+                finally
                 {
-                    this.cmbPosSizers.SelectedIndex = this.cmbPosSizers.Items.IndexOf(sizer2);
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
+                }
+                if (posSizer != null)
+                {
+                    this.cmbPosSizers.SelectedIndex = this.cmbPosSizers.Items.IndexOf(posSizer);
                     this.string_0 = value.PosSizerConfig;
                     if (this.string_0 != "")
                     {
                         try
                         {
-                            sizer2.ApplyConfigString(PosSizer.ParseConfigString(this.string_0));
+                            posSizer.ApplyConfigString(PosSizer.ParseConfigString(this.string_0));
                         }
                         catch
                         {
                         }
                     }
                 }
-                this.numCapital.Value = (decimal) value.StartingCapital;
-                this.numMarginFactor.Text = value.MarginFactor.ToString();
+                this.numCapital.Value = (decimal)((double)value.StartingCapital);
+                double marginFactor = value.MarginFactor;
+                this.numMarginFactor.Text = marginFactor.ToString();
                 this.method_0();
             }
         }

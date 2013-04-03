@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>ab4bb55d-bcd2-4a88-8c2c-a7af8c4f6cd3</ProjectGuid>
+    <ProjectGuid>{F99BE05C-9733-4471-AEAB-75F2A6D581A3}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.Extensions.XmlSerializers</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -31,8 +32,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="WealthLab.Extensions" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializationWriterExtensionManager.cs" />
@@ -71,5 +73,14 @@
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer30.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer31.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializerContract.cs" />
+    <Reference Include="WealthLab.Extensions">
+      <HintPath>..\ExternalLib\WealthLab.Extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -27,7 +27,35 @@
         private string string_0;
         private string string_1;
 
-        public event EventHandler NewDrawingObjectAdded;
+        private EventHandler eventHandler_0;
+
+        public event EventHandler NewDrawingObjectAdded
+        {
+            add
+            {
+                EventHandler eventHandler;
+                EventHandler eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler eventHandler1 = (EventHandler)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler eventHandler;
+                EventHandler eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler eventHandler1 = (EventHandler)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
 
         public DrawingObjectManager()
         {

@@ -231,7 +231,7 @@
 
         public static DataSeries operator +(double value, DataSeries dataSeries_1)
         {
-            return (dataSeries_1 + ((DataSeries) value));
+            return (dataSeries_1 + value);
         }
 
         public static DataSeries operator +(DataSeries dataSeries_1, double value)

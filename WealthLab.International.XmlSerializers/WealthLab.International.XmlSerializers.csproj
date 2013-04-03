@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>66a1d5a4-1dd3-4376-ad38-4f07b9bc3dd5</ProjectGuid>
+    <ProjectGuid>{78E0555D-6A59-46B4-B20A-4F647303B887}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.International.XmlSerializers</AssemblyName>
     <OutputType>Library</OutputType>
@@ -31,8 +31,11 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="WealthLab.International" />
+    <Reference Include="WealthLab.International">
+      <HintPath>..\ExternalLib\WealthLab.International.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />

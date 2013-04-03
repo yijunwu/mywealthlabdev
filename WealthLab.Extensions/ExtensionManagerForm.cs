@@ -412,59 +412,82 @@ internal class ExtensionManagerForm : Form
 
     private void method_16()
     {
-        string str2;
-        string str = string.Empty;
-        using (IEnumerator enumerator = this.toolbarExtensions.Items.GetEnumerator())
+        string empty = string.Empty;
+        IEnumerator enumerator = this.toolbarExtensions.Items.GetEnumerator();
+        try
         {
-            ToolStripItem current;
-            while (enumerator.MoveNext())
+            while (true)
             {
-                current = (ToolStripItem) enumerator.Current;
-                if ((current is ToolStripButton) && (current as ToolStripButton).Checked)
+                if (enumerator.MoveNext())
                 {
-                    goto Label_0045;
+                    ToolStripItem current = (ToolStripItem)enumerator.Current;
+                    if (current is ToolStripButton && (current as ToolStripButton).Checked)
+                    {
+                        empty = (string)(current as ToolStripButton).Tag;
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
                 }
             }
-            goto Label_006C;
-        Label_0045:
-            str = (string) (current as ToolStripButton).Tag;
         }
-    Label_006C:
-        if ((str2 = str) != null)
+        finally
         {
-            if (!(str2 == "NeedUpdate"))
+            IDisposable disposable = enumerator as IDisposable;
+            if (disposable != null)
             {
-                if (!(str2 == "NotImplemented"))
-                {
-                    if (!(str2 == "NeedInstall"))
-                    {
-                        goto Label_00AA;
-                    }
-                    this.method_17(Enum12.const_2);
-                }
+                disposable.Dispose();
+            }
+        }
+        string str = empty;
+        string str1 = str;
+        if (str != null)
+        {
+            if (str1 == "NeedUpdate")
+            {
+                this.method_17(Enum12.const_1);
+                goto Label0;
             }
             else
             {
-                this.method_17(Enum12.const_1);
+                if (str1 != "NotImplemented")
+                {
+                    if (str1 != "NeedInstall")
+                    {
+                        goto Label1;
+                    }
+                    this.method_17(Enum12.const_2);
+                    goto Label0;
+                }
+                else
+                {
+                    goto Label0;
+                }
             }
-            goto Label_00CE;
         }
-    Label_00AA:
-        if (string.IsNullOrEmpty(str))
+    Label1:
+        if (!string.IsNullOrEmpty(empty))
+        {
+            this.method_19((ExtensionType)Enum.Parse(typeof(ExtensionType), empty));
+        }
+        else
         {
             return;
         }
-        this.method_19((ExtensionType) Enum.Parse(typeof(ExtensionType), str));
-    Label_00CE:
-        if (this.lstExtensions.Controls.Count > 0)
-        {
-            this.lstExtensions.method_8(this.lstExtensions.Controls[0]);
-        }
-        else
+    Label0:
+        if (this.lstExtensions.Controls.Count <= 0)
         {
             this.lblInfo.Text = "No items to display\r\n";
             this.lblInfo.Parent = this.lstExtensions;
             this.lblInfo.Visible = true;
+            return;
+        }
+        else
+        {
+            this.lstExtensions.method_8(this.lstExtensions.Controls[0]);
+            return;
         }
     }
 
@@ -638,7 +661,8 @@ internal class ExtensionManagerForm : Form
         Application.Exit();
     }
 
-    void Form.Dispose(bool disposing)
+    //void Form.Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_0 != null))
         {

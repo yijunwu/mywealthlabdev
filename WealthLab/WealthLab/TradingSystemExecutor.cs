@@ -77,31 +77,395 @@
         private SystemPerformance systemPerformance_0;
         private WealthScript wealthScript_0;
 
-        public event EventHandler<ChartBitmapEventArgs> ChartBitmapRequested;
+        private EventHandler<StrategyEventArgs> eventHandler_0;
 
-        public event EventHandler<EventArgs> ClearDebugWindow;
+        private EventHandler<DataSourceLookupEventArgs> eventHandler_1;
 
-        public event EventHandler<BarsEventArgs> ExecutionCompletedForChildStrategySymbol;
+        private EventHandler<LoadSymbolEventArgs> eventHandler_2;
 
-        public event EventHandler<BarsEventArgs> ExecutionCompletedForSymbol;
+        private EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler_3;
 
-        public event EventHandler<LoadSymbolFromDataSetEventArgs> ExternalSymbolFromDataSetRequested;
+        private EventHandler<BarsEventArgs> eventHandler_4;
 
-        public event EventHandler<LoadSymbolEventArgs> ExternalSymbolRequested;
+        private EventHandler<BarsEventArgs> eventHandler_5;
 
-        public event EventHandler<EventArgs> FlushDebugWindow;
+        private EventHandler<WSExceptionEventArgs> eventHandler_6;
 
-        public event EventHandler<DataSourceLookupEventArgs> LookupDataSource;
+        private EventHandler<EventArgs> eventHandler_7;
 
-        public event EventHandler<StrategyEventArgs> LookupStrategy;
+        private EventHandler<EventArgs> eventHandler_8;
 
-        public event EventHandler<DebugStringEventArgs> PrintToStatusBar;
+        private EventHandler<DebugStringEventArgs> eventHandler_9;
 
-        public event EventHandler<StrategyParameterEventArgs> SetParameterValues;
+        private EventHandler<ChartBitmapEventArgs> eventHandler_10;
 
-        public event EventHandler<TrendLineEventArgs> TrendlineGetValue;
+        private EventHandler<TrendLineEventArgs> eventHandler_11;
 
-        public event EventHandler<WSExceptionEventArgs> WealthScriptException;
+        private EventHandler<StrategyParameterEventArgs> eventHandler_12;
+
+        public event EventHandler<ChartBitmapEventArgs> ChartBitmapRequested
+        {
+            add
+            {
+                EventHandler<ChartBitmapEventArgs> eventHandler;
+                EventHandler<ChartBitmapEventArgs> eventHandler10 = this.eventHandler_10;
+                do
+                {
+                    eventHandler = eventHandler10;
+                    EventHandler<ChartBitmapEventArgs> eventHandler1 = (EventHandler<ChartBitmapEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler10 = Interlocked.CompareExchange<EventHandler<ChartBitmapEventArgs>>(ref this.eventHandler_10, eventHandler1, eventHandler);
+                }
+                while (eventHandler10 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<ChartBitmapEventArgs> eventHandler;
+                EventHandler<ChartBitmapEventArgs> eventHandler10 = this.eventHandler_10;
+                do
+                {
+                    eventHandler = eventHandler10;
+                    EventHandler<ChartBitmapEventArgs> eventHandler1 = (EventHandler<ChartBitmapEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler10 = Interlocked.CompareExchange<EventHandler<ChartBitmapEventArgs>>(ref this.eventHandler_10, eventHandler1, eventHandler);
+                }
+                while (eventHandler10 != eventHandler);
+            }
+        }
+
+        public event EventHandler<EventArgs> ClearDebugWindow
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler8 = this.eventHandler_8;
+                do
+                {
+                    eventHandler = eventHandler8;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler8 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_8, eventHandler1, eventHandler);
+                }
+                while (eventHandler8 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler8 = this.eventHandler_8;
+                do
+                {
+                    eventHandler = eventHandler8;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler8 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_8, eventHandler1, eventHandler);
+                }
+                while (eventHandler8 != eventHandler);
+            }
+        }
+
+        public event EventHandler<BarsEventArgs> ExecutionCompletedForChildStrategySymbol
+        {
+            add
+            {
+                EventHandler<BarsEventArgs> eventHandler;
+                EventHandler<BarsEventArgs> eventHandler5 = this.eventHandler_5;
+                do
+                {
+                    eventHandler = eventHandler5;
+                    EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                }
+                while (eventHandler5 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<BarsEventArgs> eventHandler;
+                EventHandler<BarsEventArgs> eventHandler5 = this.eventHandler_5;
+                do
+                {
+                    eventHandler = eventHandler5;
+                    EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                }
+                while (eventHandler5 != eventHandler);
+            }
+        }
+
+        public event EventHandler<BarsEventArgs> ExecutionCompletedForSymbol
+        {
+            add
+            {
+                EventHandler<BarsEventArgs> eventHandler;
+                EventHandler<BarsEventArgs> eventHandler4 = this.eventHandler_4;
+                do
+                {
+                    eventHandler = eventHandler4;
+                    EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                }
+                while (eventHandler4 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<BarsEventArgs> eventHandler;
+                EventHandler<BarsEventArgs> eventHandler4 = this.eventHandler_4;
+                do
+                {
+                    eventHandler = eventHandler4;
+                    EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                }
+                while (eventHandler4 != eventHandler);
+            }
+        }
+
+        public event EventHandler<LoadSymbolFromDataSetEventArgs> ExternalSymbolFromDataSetRequested
+        {
+            add
+            {
+                EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler;
+                EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler3 = this.eventHandler_3;
+                do
+                {
+                    eventHandler = eventHandler3;
+                    EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler1 = (EventHandler<LoadSymbolFromDataSetEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<LoadSymbolFromDataSetEventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                }
+                while (eventHandler3 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler;
+                EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler3 = this.eventHandler_3;
+                do
+                {
+                    eventHandler = eventHandler3;
+                    EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler1 = (EventHandler<LoadSymbolFromDataSetEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<LoadSymbolFromDataSetEventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                }
+                while (eventHandler3 != eventHandler);
+            }
+        }
+
+        public event EventHandler<LoadSymbolEventArgs> ExternalSymbolRequested
+        {
+            add
+            {
+                EventHandler<LoadSymbolEventArgs> eventHandler;
+                EventHandler<LoadSymbolEventArgs> eventHandler2 = this.eventHandler_2;
+                do
+                {
+                    eventHandler = eventHandler2;
+                    EventHandler<LoadSymbolEventArgs> eventHandler1 = (EventHandler<LoadSymbolEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<LoadSymbolEventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                }
+                while (eventHandler2 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<LoadSymbolEventArgs> eventHandler;
+                EventHandler<LoadSymbolEventArgs> eventHandler2 = this.eventHandler_2;
+                do
+                {
+                    eventHandler = eventHandler2;
+                    EventHandler<LoadSymbolEventArgs> eventHandler1 = (EventHandler<LoadSymbolEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<LoadSymbolEventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                }
+                while (eventHandler2 != eventHandler);
+            }
+        }
+
+        public event EventHandler<EventArgs> FlushDebugWindow
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler7 = this.eventHandler_7;
+                do
+                {
+                    eventHandler = eventHandler7;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler7 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_7, eventHandler1, eventHandler);
+                }
+                while (eventHandler7 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler7 = this.eventHandler_7;
+                do
+                {
+                    eventHandler = eventHandler7;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler7 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_7, eventHandler1, eventHandler);
+                }
+                while (eventHandler7 != eventHandler);
+            }
+        }
+
+        public event EventHandler<DataSourceLookupEventArgs> LookupDataSource
+        {
+            add
+            {
+                EventHandler<DataSourceLookupEventArgs> eventHandler;
+                EventHandler<DataSourceLookupEventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<DataSourceLookupEventArgs> eventHandler2 = (EventHandler<DataSourceLookupEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<DataSourceLookupEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<DataSourceLookupEventArgs> eventHandler;
+                EventHandler<DataSourceLookupEventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<DataSourceLookupEventArgs> eventHandler2 = (EventHandler<DataSourceLookupEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<DataSourceLookupEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+        }
+
+        public event EventHandler<StrategyEventArgs> LookupStrategy
+        {
+            add
+            {
+                EventHandler<StrategyEventArgs> eventHandler;
+                EventHandler<StrategyEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<StrategyEventArgs> eventHandler1 = (EventHandler<StrategyEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<StrategyEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<StrategyEventArgs> eventHandler;
+                EventHandler<StrategyEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<StrategyEventArgs> eventHandler1 = (EventHandler<StrategyEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<StrategyEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
+
+        public event EventHandler<DebugStringEventArgs> PrintToStatusBar
+        {
+            add
+            {
+                EventHandler<DebugStringEventArgs> eventHandler;
+                EventHandler<DebugStringEventArgs> eventHandler9 = this.eventHandler_9;
+                do
+                {
+                    eventHandler = eventHandler9;
+                    EventHandler<DebugStringEventArgs> eventHandler1 = (EventHandler<DebugStringEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler9 = Interlocked.CompareExchange<EventHandler<DebugStringEventArgs>>(ref this.eventHandler_9, eventHandler1, eventHandler);
+                }
+                while (eventHandler9 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<DebugStringEventArgs> eventHandler;
+                EventHandler<DebugStringEventArgs> eventHandler9 = this.eventHandler_9;
+                do
+                {
+                    eventHandler = eventHandler9;
+                    EventHandler<DebugStringEventArgs> eventHandler1 = (EventHandler<DebugStringEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler9 = Interlocked.CompareExchange<EventHandler<DebugStringEventArgs>>(ref this.eventHandler_9, eventHandler1, eventHandler);
+                }
+                while (eventHandler9 != eventHandler);
+            }
+        }
+
+        public event EventHandler<StrategyParameterEventArgs> SetParameterValues
+        {
+            add
+            {
+                EventHandler<StrategyParameterEventArgs> eventHandler;
+                EventHandler<StrategyParameterEventArgs> eventHandler12 = this.eventHandler_12;
+                do
+                {
+                    eventHandler = eventHandler12;
+                    EventHandler<StrategyParameterEventArgs> eventHandler1 = (EventHandler<StrategyParameterEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler12 = Interlocked.CompareExchange<EventHandler<StrategyParameterEventArgs>>(ref this.eventHandler_12, eventHandler1, eventHandler);
+                }
+                while (eventHandler12 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<StrategyParameterEventArgs> eventHandler;
+                EventHandler<StrategyParameterEventArgs> eventHandler12 = this.eventHandler_12;
+                do
+                {
+                    eventHandler = eventHandler12;
+                    EventHandler<StrategyParameterEventArgs> eventHandler1 = (EventHandler<StrategyParameterEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler12 = Interlocked.CompareExchange<EventHandler<StrategyParameterEventArgs>>(ref this.eventHandler_12, eventHandler1, eventHandler);
+                }
+                while (eventHandler12 != eventHandler);
+            }
+        }
+
+        public event EventHandler<TrendLineEventArgs> TrendlineGetValue
+        {
+            add
+            {
+                EventHandler<TrendLineEventArgs> eventHandler;
+                EventHandler<TrendLineEventArgs> eventHandler11 = this.eventHandler_11;
+                do
+                {
+                    eventHandler = eventHandler11;
+                    EventHandler<TrendLineEventArgs> eventHandler1 = (EventHandler<TrendLineEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler11 = Interlocked.CompareExchange<EventHandler<TrendLineEventArgs>>(ref this.eventHandler_11, eventHandler1, eventHandler);
+                }
+                while (eventHandler11 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<TrendLineEventArgs> eventHandler;
+                EventHandler<TrendLineEventArgs> eventHandler11 = this.eventHandler_11;
+                do
+                {
+                    eventHandler = eventHandler11;
+                    EventHandler<TrendLineEventArgs> eventHandler1 = (EventHandler<TrendLineEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler11 = Interlocked.CompareExchange<EventHandler<TrendLineEventArgs>>(ref this.eventHandler_11, eventHandler1, eventHandler);
+                }
+                while (eventHandler11 != eventHandler);
+            }
+        }
+
+        public event EventHandler<WSExceptionEventArgs> WealthScriptException
+        {
+            add
+            {
+                EventHandler<WSExceptionEventArgs> eventHandler;
+                EventHandler<WSExceptionEventArgs> eventHandler6 = this.eventHandler_6;
+                do
+                {
+                    eventHandler = eventHandler6;
+                    EventHandler<WSExceptionEventArgs> eventHandler1 = (EventHandler<WSExceptionEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler6 = Interlocked.CompareExchange<EventHandler<WSExceptionEventArgs>>(ref this.eventHandler_6, eventHandler1, eventHandler);
+                }
+                while (eventHandler6 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<WSExceptionEventArgs> eventHandler;
+                EventHandler<WSExceptionEventArgs> eventHandler6 = this.eventHandler_6;
+                do
+                {
+                    eventHandler = eventHandler6;
+                    EventHandler<WSExceptionEventArgs> eventHandler1 = (EventHandler<WSExceptionEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler6 = Interlocked.CompareExchange<EventHandler<WSExceptionEventArgs>>(ref this.eventHandler_6, eventHandler1, eventHandler);
+                }
+                while (eventHandler6 != eventHandler);
+            }
+        }
 
         public TradingSystemExecutor()
         {

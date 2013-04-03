@@ -72,7 +72,7 @@
         internal FundamentalsLoader fundamentalsLoader_0;
         private GroupBox grpMultiSymbol;
         private IContainer icontainer_0;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
         private IndicatorDragDropManager indicatorDragDropManager_0;
         private static int int_0 = 0;
@@ -2078,17 +2078,19 @@
 
         private void method_22()
         {
-            int num3;
+            int num;
             bool flag;
-            bool flag4;
+            PositionType positionType;
+            bool flag1;
+            bool flag2;
             this.btnRunAllCancel.Enabled = false;
-            if (this.bool_10)
+            if (!this.bool_10)
             {
-                this.lblRunAllStatus.Text = "Tested on " + this.list_0.Count + " Symbols";
+                this.lblRunAllStatus.Text = "";
             }
             else
             {
-                this.lblRunAllStatus.Text = "";
+                this.lblRunAllStatus.Text = string.Concat("Tested on ", this.list_0.Count, " Symbols");
             }
             this.progRunAll.Value = 0;
             this.progRunAll.Enabled = false;
@@ -2101,7 +2103,7 @@
                 this.indicatorDragDropManager_0.CreateDragDropIndicators();
                 this.drawingObjectManager_0.LoadDrawingObjects(this.chart.Bars);
             }
-            if ((this.chartRenderer_0.PricePane != null) && (this.chartRenderer_0.PricePane.LogScale != this.chartRenderer_0.LogScale))
+            if (this.chartRenderer_0.PricePane != null && this.chartRenderer_0.PricePane.LogScale != this.chartRenderer_0.LogScale)
             {
                 this.chartRenderer_0.LogScale = this.chartRenderer_0.PricePane.LogScale;
                 this.MyMainForm.SetLogScaleButtonState(this.chartRenderer_0.LogScale);
@@ -2113,295 +2115,337 @@
                 this.editor_0.UpdateExecutionTime();
             }
             this.method_39();
-            if (this.tradingSystemExecutor_1.RiskStopLevelNotSet && (this.Strategy != null))
+            if (this.tradingSystemExecutor_1.RiskStopLevelNotSet && this.Strategy != null)
             {
-                MessageBox.Show("Strategy code must set RiskStopLevel in order to use Maximum Risk position size.");
+                DialogResult dialogResult = MessageBox.Show("Strategy code must set RiskStopLevel in order to use Maximum Risk position size.");
             }
             if (this.alerts_0 != null)
             {
                 this.alerts_0.Clear();
             }
-            if ((this.WealthScript == null) && (this.combinationStrategyBuilder_0 == null))
+            if (this.WealthScript != null || this.combinationStrategyBuilder_0 != null)
             {
-                goto Label_0A10;
-            }
-            SystemResults results = this.tradingSystemExecutor_1.Performance.Results;
-            SystemResults resultsBuyHold = this.tradingSystemExecutor_1.Performance.ResultsBuyHold;
-            this.stlblProfit.Text = "Net Profit: " + results.NetProfit.ToString("C");
-            this.stlblBHProfit.Text = "BH Net Profit: " + resultsBuyHold.NetProfit.ToString("C");
-            if (this.posSize.PositionSize.RawProfitMode)
-            {
-                this.stlblPerBar.Text = "Profit per Bar: " + results.ProfitPerBar.ToString("C");
-                this.stlblPerBar.ToolTipText = "Profit per Bar measures the Efficiency of the Strategy";
-                this.stlblBHPerBar.Text = "BH Profit per Bar: " + resultsBuyHold.ProfitPerBar.ToString("C");
-                this.stlblBHPerBar.ToolTipText = "Profit per Bar of Buy and Hold";
-                this.method_32(results.ProfitPerBar, resultsBuyHold.ProfitPerBar);
-            }
-            else
-            {
-                this.stlblPerBar.Text = "APR: " + results.APR.ToString("N2") + "%";
-                this.stlblPerBar.ToolTipText = "Annual Percentage Rate of Return of the Strategy";
-                this.stlblBHPerBar.Text = "BH APR: " + resultsBuyHold.APR.ToString("N2") + "%";
-                this.stlblBHPerBar.ToolTipText = "Annual Percentage Rate of Return of Buy and Hold";
-                this.method_32(results.APR, resultsBuyHold.APR);
-            }
-            this.method_8();
-            this.list_2.Clear();
-            foreach (TabPage page in this.list_1)
-            {
-                bool flag3;
-                UserControl control = page.Controls[0] as UserControl;
-                IPerformanceVisualizer visualizer = control as IPerformanceVisualizer;
-                if (this.bool_10)
+                SystemResults results = this.tradingSystemExecutor_1.Performance.Results;
+                SystemResults resultsBuyHold = this.tradingSystemExecutor_1.Performance.ResultsBuyHold;
+                double netProfit = results.NetProfit;
+                this.stlblProfit.Text = string.Concat("Net Profit: ", netProfit.ToString("C"));
+                double netProfit1 = resultsBuyHold.NetProfit;
+                this.stlblBHProfit.Text = string.Concat("BH Net Profit: ", netProfit1.ToString("C"));
+                if (!this.posSize.PositionSize.RawProfitMode)
                 {
-                    flag3 = (visualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) > 0;
+                    double aPR = results.APR;
+                    this.stlblPerBar.Text = string.Concat("APR: ", aPR.ToString("N2"), "%");
+                    this.stlblPerBar.ToolTipText = "Annual Percentage Rate of Return of the Strategy";
+                    double aPR1 = resultsBuyHold.APR;
+                    this.stlblBHPerBar.Text = string.Concat("BH APR: ", aPR1.ToString("N2"), "%");
+                    this.stlblBHPerBar.ToolTipText = "Annual Percentage Rate of Return of Buy and Hold";
+                    this.method_32(results.APR, resultsBuyHold.APR);
                 }
                 else
                 {
-                    flag3 = (visualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) > 0;
+                    double profitPerBar = results.ProfitPerBar;
+                    this.stlblPerBar.Text = string.Concat("Profit per Bar: ", profitPerBar.ToString("C"));
+                    this.stlblPerBar.ToolTipText = "Profit per Bar measures the Efficiency of the Strategy";
+                    double profitPerBar1 = resultsBuyHold.ProfitPerBar;
+                    this.stlblBHPerBar.Text = string.Concat("BH Profit per Bar: ", profitPerBar1.ToString("C"));
+                    this.stlblBHPerBar.ToolTipText = "Profit per Bar of Buy and Hold";
+                    this.method_32(results.ProfitPerBar, resultsBuyHold.ProfitPerBar);
                 }
-                if (this.posSize.PositionSize.RawProfitMode)
+                this.method_8();
+                this.list_2.Clear();
+                foreach (TabPage list1 in this.list_1)
                 {
-                    flag3 = flag3 && ((visualizer.AppliesTo & VisualizerAppliesTo.RawProfit) > 0);
-                }
-                else
-                {
-                    flag3 = flag3 && ((visualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) > 0);
-                }
-                if (((visualizer.AppliesTo & VisualizerAppliesTo.CombinationStrategy) > 0) && (this.Strategy.StrategyType != StrategyType.CombinedStrategy))
-                {
-                    flag3 = false;
-                }
-                if (this.Strategy.StrategyType == StrategyType.CombinedStrategy)
-                {
-                    foreach (Attribute attribute in visualizer.GetType().GetCustomAttributes(true))
+                    UserControl item = list1.Controls[0] as UserControl;
+                    IPerformanceVisualizer performanceVisualizer = item as IPerformanceVisualizer;
+                    flag = (!this.bool_10 ? (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) > 0 : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) > 0);
+                    if (!this.posSize.PositionSize.RawProfitMode)
                     {
-                        if (attribute is PVComboProhibitor)
+                        flag1 = (!flag ? false : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) > 0);
+                        flag = flag1;
+                    }
+                    else
+                    {
+                        flag2 = (!flag ? false : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.RawProfit) > 0);
+                        flag = flag2;
+                    }
+                    if ((int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.CombinationStrategy) > 0 && this.Strategy.StrategyType != StrategyType.CombinedStrategy)
+                    {
+                        flag = false;
+                    }
+                    if (this.Strategy.StrategyType == StrategyType.CombinedStrategy)
+                    {
+                        Type type = performanceVisualizer.GetType();
+                        object[] customAttributes = type.GetCustomAttributes(true);
+                        int num1 = 0;
+                        while (num1 < (int)customAttributes.Length)
                         {
-                            goto Label_043B;
+                            Attribute attribute = (Attribute)customAttributes[num1];
+                            if (attribute is PVComboProhibitor)
+                            {
+                                flag = false;
+                                goto Label0;
+                            }
+                            else
+                            {
+                                num1++;
+                            }
                         }
                     }
-                }
-                goto Label_043E;
-            Label_043B:
-                flag3 = false;
-            Label_043E:
-                if (flag3)
-                {
-                    this.list_2.Add(page);
-                }
-            }
-            if ((this.Strategy != null) && (this.Strategy.StrategyType == StrategyType.Compiled))
-            {
-                num3 = 3;
-            }
-            else
-            {
-                num3 = 4;
-            }
-            bool flag2 = false;
-            int num5 = 0;
-            if (this.optimization_0 != null)
-            {
-                num5 = 1;
-                using (IEnumerator enumerator2 = this.tabChart.TabPages.GetEnumerator())
-                {
-                    while (enumerator2.MoveNext())
+                Label0:
+                    if (!flag)
                     {
-                        TabPage current = (TabPage) enumerator2.Current;
-                        if ((current.Text == "Optimization") && (current != this.tabChart.TabPages[this.tabChart.TabPages.Count - 1]))
-                        {
-                            goto Label_0506;
-                        }
+                        continue;
                     }
-                    goto Label_0526;
-                Label_0506:
-                    flag2 = true;
-                    num3++;
+                    this.list_2.Add(list1);
                 }
-            }
-        Label_0526:
-            flag = this.tabChart.TabCount != ((this.list_2.Count + num3) + num5);
-            if (flag2)
-            {
-                flag = true;
-            }
-            if (!flag)
-            {
-                for (int i = 0; i < this.list_2.Count; i++)
-                {
-                    if (this.list_2[i] != this.tabChart.TabPages[i + num3])
-                    {
-                        flag = true;
-                        break;
-                    }
-                }
-            }
-            if (flag)
-            {
-                List<TabPage> list = new List<TabPage>();
-                for (int j = 0; j < num3; j++)
-                {
-                    if (this.tabChart.TabPages[j].Text != "Optimization")
-                    {
-                        list.Add(this.tabChart.TabPages[j]);
-                    }
-                }
-                TabPage selectedTab = this.tabChart.SelectedTab;
-                this.tabChart.TabPages.Clear();
-                for (int k = 0; k < list.Count; k++)
-                {
-                    this.tabChart.TabPages.Add(list[k]);
-                }
-                foreach (TabPage page6 in this.list_2)
-                {
-                    this.tabChart.TabPages.Add(page6);
-                }
+                num = (this.Strategy == null || this.Strategy.StrategyType != StrategyType.Compiled ? 4 : 3);
+                bool flag3 = false;
+                int num2 = 0;
                 if (this.optimization_0 != null)
                 {
-                    this.tabChart.TabPages.Add("Optimization");
-                    TabPage page3 = this.tabChart.TabPages[this.tabChart.TabPages.Count - 1];
-                    page3.Controls.Add(this.optimization_0);
-                }
-                if ((selectedTab != null) && this.tabChart.TabPages.Contains(selectedTab))
-                {
-                    this.tabChart.SelectedTab = selectedTab;
-                }
-                else if ((selectedTab != null) && (selectedTab.Text == "Optimization"))
-                {
-                    this.SelectTab("Optimization");
-                }
-            }
-            foreach (TabPage page4 in this.tabChart.TabPages)
-            {
-                if (page4.Controls.Count != 0)
-                {
-                    Control control2 = page4.Controls[0];
-                    if (control2 is IPerformanceVisualizer)
+                    num2 = 1;
+                    IEnumerator enumerator = this.tabChart.TabPages.GetEnumerator();
+                    try
                     {
-                        IPerformanceVisualizer visualizer2 = control2 as IPerformanceVisualizer;
-                        if (visualizer2 != null)
+                        while (true)
                         {
-                            try
+                            if (enumerator.MoveNext())
                             {
-                                visualizer2.CreateVisualization(this.tradingSystemExecutor_1.Performance, this);
-                                if ((this.bool_13 && (visualizer2 is ISettingsProvider)) && ((this.dictionary_1.Count > 0) && (this.dictionary_1[visualizer2.TabText] != "")))
+                                TabPage current = (TabPage)enumerator.Current;
+                                if (current.Text == "Optimization" && current != this.tabChart.TabPages[this.tabChart.TabPages.Count - 1])
                                 {
-                                    (visualizer2 as ISettingsProvider).SettingsString = this.dictionary_1[visualizer2.TabText];
+                                    flag3 = true;
+                                    num++;
+                                    break;
                                 }
                             }
-                            catch (Exception exception)
+                            else
                             {
-                                MessageBox.Show("Error in Visualizer: " + page4.ToString() + ", removing." + Environment.NewLine + exception.Message);
-                                this.tabChart.TabPages.Remove(page4);
-                                this.tabChart.Refresh();
+                                break;
                             }
                         }
                     }
+                    finally
+                    {
+                        IDisposable disposable = enumerator as IDisposable;
+                        if (disposable != null)
+                        {
+                            disposable.Dispose();
+                        }
+                    }
                 }
-            }
-            foreach (Alert alert in results.Alerts)
-            {
-                if (alert.Account == null)
+                bool tabCount = this.tabChart.TabCount != this.list_2.Count + num + num2;
+                if (flag3)
                 {
-                    alert.Account = this.AccountNumber;
+                    tabCount = true;
                 }
-                alert.DataSet = this.DataSource;
-                alert.DataScale = this.BarDataScale;
-                alert.DataRange = this.DataRange;
-                alert.PosSize = this.PositionSize;
-            }
-            this.alerts_0.Populate(results);
-            if (results.Alerts.Count > 0)
-            {
-                this.method_57();
-            }
-            if (this.alerts_0.AutoStage && this.IsStreaming)
-            {
+                if (!tabCount)
+                {
+                    int num3 = 0;
+                    while (num3 < this.list_2.Count)
+                    {
+                        if (this.list_2[num3] == this.tabChart.TabPages[num3 + num])
+                        {
+                            num3++;
+                        }
+                        else
+                        {
+                            tabCount = true;
+                            goto Label1;
+                        }
+                    }
+                }
+            Label1:
+                if (tabCount)
+                {
+                    List<TabPage> tabPages = new List<TabPage>();
+                    for (int i = 0; i < num; i++)
+                    {
+                        if (this.tabChart.TabPages[i].Text != "Optimization")
+                        {
+                            tabPages.Add(this.tabChart.TabPages[i]);
+                        }
+                    }
+                    TabPage selectedTab = this.tabChart.SelectedTab;
+                    this.tabChart.TabPages.Clear();
+                    for (int j = 0; j < tabPages.Count; j++)
+                    {
+                        this.tabChart.TabPages.Add(tabPages[j]);
+                    }
+                    foreach (TabPage list2 in this.list_2)
+                    {
+                        this.tabChart.TabPages.Add(list2);
+                    }
+                    if (this.optimization_0 != null)
+                    {
+                        this.tabChart.TabPages.Add("Optimization");
+                        TabPage tabPage = this.tabChart.TabPages[this.tabChart.TabPages.Count - 1];
+                        tabPage.Controls.Add(this.optimization_0);
+                    }
+                    if (selectedTab == null || !this.tabChart.TabPages.Contains(selectedTab))
+                    {
+                        if (selectedTab != null && selectedTab.Text == "Optimization")
+                        {
+                            this.SelectTab("Optimization");
+                        }
+                    }
+                    else
+                    {
+                        this.tabChart.SelectedTab = selectedTab;
+                    }
+                }
+                foreach (TabPage tabPage1 in this.tabChart.TabPages)
+                {
+                    if (tabPage1.Controls.Count == 0)
+                    {
+                        continue;
+                    }
+                    Control control = tabPage1.Controls[0];
+                    if (control as IPerformanceVisualizer == null)
+                    {
+                        continue;
+                    }
+                    IPerformanceVisualizer item1 = control as IPerformanceVisualizer;
+                    if (item1 == null)
+                    {
+                        continue;
+                    }
+                    try
+                    {
+                        item1.CreateVisualization(this.tradingSystemExecutor_1.Performance, this);
+                        if (this.bool_13 && item1 is ISettingsProvider && this.dictionary_1.Count > 0 && this.dictionary_1[item1.TabText] != "")
+                        {
+                            (item1 as ISettingsProvider).SettingsString = this.dictionary_1[item1.TabText];
+                        }
+                    }
+                    catch (Exception exception1)
+                    {
+                        Exception exception = exception1;
+                        string[] str = new string[] { "Error in Visualizer: ", tabPage1.ToString(), ", removing.", Environment.NewLine, exception.Message };
+                        DialogResult dialogResult1 = MessageBox.Show(string.Concat(str));
+                        this.tabChart.TabPages.Remove(tabPage1);
+                        this.tabChart.Refresh();
+                    }
+                }
+                foreach (Alert alert in results.Alerts)
+                {
+                    if (alert.Account == null)
+                    {
+                        alert.Account = this.AccountNumber;
+                    }
+                    alert.DataSet = this.DataSource;
+                    alert.DataScale = this.BarDataScale;
+                    alert.DataRange = this.DataRange;
+                    alert.PosSize = this.PositionSize;
+                }
+                this.alerts_0.Populate(results);
                 if (results.Alerts.Count > 0)
                 {
-                    MainModule.Instance.TradeManager.AddAlerts(results.Alerts, MainModule.Instance.ShouldOrderBePlaced(results.Alerts[0]), true);
+                    this.method_57();
                 }
-                else if (MainModule.Instance.ShouldOrderBePlaced(this.AccountNumber))
+                if (this.alerts_0.AutoStage && this.IsStreaming)
                 {
-                    MainModule.Instance.TradeManager.CancelStrategyOrders(this.AccountNumber, this.Strategy, this.Symbol, this.BarDataScale);
+                    if (results.Alerts.Count <= 0)
+                    {
+                        if (MainModule.Instance.ShouldOrderBePlaced(this.AccountNumber))
+                        {
+                            MainModule.Instance.TradeManager.CancelStrategyOrders(this.AccountNumber, this.Strategy, this.Symbol, this.BarDataScale);
+                        }
+                    }
+                    else
+                    {
+                        MainModule.Instance.TradeManager.AddAlerts(results.Alerts, MainModule.Instance.ShouldOrderBePlaced(results.Alerts[0]), true);
+                    }
                 }
+                if (this.alerts_0.EmailAlerts && this.IsStreaming && results.Alerts.Count > 0)
+                {
+                    MainModule.Instance.method_26(results.Alerts);
+                }
+                this.SetupChartTradeMenuItems();
+                if (this.Symbol != "")
+                {
+                    this.MyMainForm.paramSliders.Refresh();
+                }
+                this.MyMainForm.ExecuteCompleted();
+                this.thread_0 = null;
             }
-            if ((this.alerts_0.EmailAlerts && this.IsStreaming) && (results.Alerts.Count > 0))
+            bool flag4 = false;
+            foreach (ChartDrawingObject drawingObject in this.drawingObjectManager_0.DrawingObjects)
             {
-                MainModule.Instance.method_26(results.Alerts);
-            }
-            this.SetupChartTradeMenuItems();
-            if (this.Symbol != "")
-            {
-                this.MyMainForm.paramSliders.Refresh();
-            }
-            this.MyMainForm.ExecuteCompleted();
-            this.thread_0 = null;
-        Label_0A10:
-            flag4 = false;
-            foreach (ChartDrawingObject obj2 in this.drawingObjectManager_0.DrawingObjects)
-            {
-                if (obj2.Bars == null)
+                if (drawingObject.Bars == null)
                 {
                     continue;
                 }
                 bool flag5 = false;
-                using (List<ChartDrawingObjectHandle>.Enumerator enumerator7 = obj2.Handles.GetEnumerator())
+                List<ChartDrawingObjectHandle>.Enumerator enumerator1 = drawingObject.Handles.GetEnumerator();
+                try
                 {
-                    while (enumerator7.MoveNext())
+                    while (true)
                     {
-                        ChartDrawingObjectHandle handle = enumerator7.Current;
-                        if (handle.Bar == -1)
+                        if (enumerator1.MoveNext())
                         {
-                            goto Label_0A74;
-                        }
-                    }
-                    goto Label_0A87;
-                Label_0A74:
-                    flag5 = true;
-                }
-            Label_0A87:
-                if (!flag5)
-                {
-                    TradeType buy = TradeType.Buy;
-                    string signalName = "";
-                    if (obj2.TriggerAlert(this.Bars, ref buy, ref signalName))
-                    {
-                        PositionType @short;
-                        this.tradingSystemExecutor_1.RiskStopLevelNotSet = false;
-                        this.tradingSystemExecutor_1.PosSize = this.posSize.PositionSize;
-                        if ((buy != TradeType.Buy) && (buy != TradeType.Sell))
-                        {
-                            @short = PositionType.Short;
+                            ChartDrawingObjectHandle chartDrawingObjectHandle = enumerator1.Current;
+                            if (chartDrawingObjectHandle.Bar == -1)
+                            {
+                                flag5 = true;
+                                break;
+                            }
                         }
                         else
                         {
-                            @short = PositionType.Long;
-                        }
-                        double shares = this.tradingSystemExecutor_1.CalcPositionSize(this.Bars, this.Bars.Count, this.Bars.Close[this.Bars.Count - 1], @short, 0.0, this.posSize.PositionSize.StartingCapital);
-                        Alert alert2 = new Alert(this.Strategy, this.Bars, this.Bars.Date[this.Bars.Count - 1], buy, OrderType.Market, shares, signalName) {
-                            PosSize = this.PositionSize,
-                            ChartDrawingObject = obj2
-                        };
-                        if (this.posSize.PositionSize.Mode == PosSizeMode.MaxRisk)
-                        {
-                            flag4 = true;
-                        }
-                        this.method_51();
-                        alert2.Account = MainModule.Instance.DefaultAccountNumber;
-                        this.alerts_0.AddAlert(alert2);
-                        this.method_57();
-                        if (this.alerts_0.AutoStage && this.IsStreaming)
-                        {
-                            MainModule.Instance.TradeManager.AddAlert(alert2, MainModule.Instance.ShouldOrderBePlaced(alert2), true);
-                        }
-                        if (this.alerts_0.EmailAlerts && this.IsStreaming)
-                        {
-                            MainModule.Instance.method_25(alert2, MainModule.Instance.ShouldOrderBePlaced(alert2));
+                            break;
                         }
                     }
                 }
+                finally
+                {
+                    ((IDisposable)enumerator1).Dispose();
+                }
+                if (flag5)
+                {
+                    continue;
+                }
+                TradeType tradeType = TradeType.Buy;
+                string str1 = "";
+                if (!drawingObject.TriggerAlert(this.Bars, ref tradeType, ref str1))
+                {
+                    continue;
+                }
+                this.tradingSystemExecutor_1.RiskStopLevelNotSet = false;
+                this.tradingSystemExecutor_1.PosSize = this.posSize.PositionSize;
+                if (tradeType != TradeType.Buy)
+                {
+                    if (tradeType == TradeType.Sell)
+                    {
+                        goto Label4;
+                    }
+                    positionType = PositionType.Short;
+                    goto Label2;
+                }
+            Label4:
+                positionType = PositionType.Long;
+            Label2:
+                double num4 = this.tradingSystemExecutor_1.CalcPositionSize(this.Bars, this.Bars.Count, this.Bars.Close[this.Bars.Count - 1], positionType, 0, this.posSize.PositionSize.StartingCapital);
+                Alert positionSize = new Alert(this.Strategy, this.Bars, this.Bars.Date[this.Bars.Count - 1], tradeType, OrderType.Market, num4, str1);
+                positionSize.PosSize = this.PositionSize;
+                positionSize.ChartDrawingObject = drawingObject;
+                if (this.posSize.PositionSize.Mode == PosSizeMode.MaxRisk)
+                {
+                    flag4 = true;
+                }
+                this.method_51();
+                positionSize.Account = MainModule.Instance.DefaultAccountNumber;
+                this.alerts_0.AddAlert(positionSize);
+                this.method_57();
+                if (this.alerts_0.AutoStage && this.IsStreaming)
+                {
+                    MainModule.Instance.TradeManager.AddAlert(positionSize, MainModule.Instance.ShouldOrderBePlaced(positionSize), true);
+                }
+                if (!this.alerts_0.EmailAlerts || !this.IsStreaming)
+                {
+                    continue;
+                }
+                MainModule.Instance.method_25(positionSize, MainModule.Instance.ShouldOrderBePlaced(positionSize));
             }
             if (flag4)
             {
@@ -2412,26 +2456,26 @@
                 this.alerts_0.UpdateStatus();
             }
             this.method_12(true);
-            if (this.bool_10 && (this.tabChart.SelectedIndex == 0))
+            if (this.bool_10 && this.tabChart.SelectedIndex == 0)
             {
                 this.SelectTab("Performance");
             }
-            if ((this.bool_12 && this.bool_10) && (DebugForm.Instance != null))
+            if (this.bool_12 && this.bool_10 && DebugForm.Instance != null)
             {
                 DebugForm.Instance.BringToFront();
             }
             this.method_36();
             int tradesNSF = this.tradingSystemExecutor_1.Performance.Results.TradesNSF;
-            if ((tradesNSF > 0) && !MainModule.Instance.Settings.Get("DontShowMissingTradeWarning", false))
+            if (tradesNSF > 0 && !MainModule.Instance.Settings.Get("DontShowMissingTradeWarning", false))
             {
-                string str = " trades were not included in the backtest results due to insufficient simulated capital.  Use Raw Profit mode to ensure all trades are always included.  You can find the number of trades not included at the bottom of the Trades list.";
+                string str2 = " trades were not included in the backtest results due to insufficient simulated capital.  Use Raw Profit mode to ensure all trades are always included.  You can find the number of trades not included at the bottom of the Trades list.";
                 if (this.PositionSize.Mode == PosSizeMode.SimuScript)
                 {
-                    str = " trades were not included in the backtest results due to insufficient simulated capital, or dropped by the selected PosSizer.  Use Raw Profit mode to ensure all trades are always included.  You can find the number of trades not included at the bottom of the Trades list.";
+                    str2 = " trades were not included in the backtest results due to insufficient simulated capital, or dropped by the selected PosSizer.  Use Raw Profit mode to ensure all trades are always included.  You can find the number of trades not included at the bottom of the Trades list.";
                 }
-                DontShowAgainForm form = new DontShowAgainForm("Warning", tradesNSF + str);
-                form.ShowDialog();
-                MainModule.Instance.Settings.Set("DontShowMissingTradeWarning", form.DontShowAgain);
+                DontShowAgainForm dontShowAgainForm = new DontShowAgainForm("Warning", string.Concat(tradesNSF, str2));
+                dontShowAgainForm.ShowDialog();
+                MainModule.Instance.Settings.Set("DontShowMissingTradeWarning", dontShowAgainForm.DontShowAgain);
             }
             if (this.ChildScrollBar > 0)
             {
@@ -3124,59 +3168,61 @@
 
         internal void method_6()
         {
-            if (!this.indicatorDragDropManager_0.HasDragDroppedIndicators)
-            {
-                MessageBox.Show("There are no dropped indicators to push.");
-            }
-            else
+            if (this.indicatorDragDropManager_0.HasDragDroppedIndicators)
             {
                 if (!MainModule.Instance.Settings.Get("DontShowPushIndicatorWarning", false))
                 {
-                    DontShowAgainForm form = new DontShowAgainForm("Confirm", "After pushing indicators and fundamental items to the strategy code, you will no longer be able to interact with them using the mouse. Do you want to continue?") {
-                        CancelButtonVisible = true
-                    };
-                    form.MakeYesNo();
-                    if (form.ShowDialog() != DialogResult.OK)
+                    DontShowAgainForm dontShowAgainForm = new DontShowAgainForm("Confirm", "After pushing indicators and fundamental items to the strategy code, you will no longer be able to interact with them using the mouse. Do you want to continue?");
+                    dontShowAgainForm.CancelButtonVisible = true;
+                    dontShowAgainForm.MakeYesNo();
+                    if (dontShowAgainForm.ShowDialog() != DialogResult.OK)
                     {
                         return;
                     }
-                    MainModule.Instance.Settings.Set("DontShowPushIndicatorWarning", form.DontShowAgain);
-                }
-                if (this.Strategy == null)
-                {
-                    WealthLab.Strategy strategy = new WealthLab.Strategy {
-                        StrategyType = StrategyType.Script,
-                        Code = MainModule.Instance.StrategyTemplateCode
-                    };
-                    this.strategy_0 = strategy;
-                    this.method_48();
-                    this.Strategy = strategy;
-                }
-                else if (this.editor_0 == null)
-                {
-                    if (this.builder_0 != null)
+                    else
                     {
-                        WealthLab.Strategy strategy2;
-                        strategy2 = new WealthLab.Strategy {
-                            StrategyType = StrategyType.Script,
-                            Code = this.builder_0.GenerateCode(),
-                            Code = this.indicatorDragDropManager_0.PushIndicatorsCode(strategy2.Code)
-                        };
-                        ChartForm form2 = this.MyMainForm.CreateNewStrategyWindow(true);
-                        form2.Strategy = strategy2;
-                        form2.Show();
-                        form2.BringToFront();
-                        form2.GoButtonPressed(this.Symbol, true);
-                        form2.SelectTab("Editor");
-                        form2.NeedSave = true;
+                        MainModule.Instance.Settings.Set("DontShowPushIndicatorWarning", dontShowAgainForm.DontShowAgain);
                     }
-                    return;
                 }
-                string strA = this.indicatorDragDropManager_0.PushIndicatorsCode(this.editor_0.Code);
-                if (string.Compare(strA, this.editor_0.Code) != 0)
+                if (this.Strategy != null)
+                {
+                    if (this.editor_0 == null)
+                    {
+                        if (this.builder_0 != null)
+                        {
+                            Strategy strategy = new Strategy();
+                            strategy.StrategyType = StrategyType.Script;
+                            strategy.Code = this.builder_0.GenerateCode();
+                            strategy.Code = this.indicatorDragDropManager_0.PushIndicatorsCode(strategy.Code);
+                            ChartForm chartForm = this.MyMainForm.CreateNewStrategyWindow(true);
+                            chartForm.Strategy = strategy;
+                            chartForm.Show();
+                            chartForm.BringToFront();
+                            chartForm.GoButtonPressed(this.Symbol, true);
+                            chartForm.SelectTab("Editor");
+                            chartForm.NeedSave = true;
+                            return;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    Strategy strategyTemplateCode = new Strategy();
+                    strategyTemplateCode.StrategyType = StrategyType.Script;
+                    strategyTemplateCode.Code = MainModule.Instance.StrategyTemplateCode;
+                    this.strategy_0 = strategyTemplateCode;
+                    this.method_48();
+                    this.Strategy = strategyTemplateCode;
+                }
+                string str = this.indicatorDragDropManager_0.PushIndicatorsCode(this.editor_0.Code);
+                if (string.Compare(str, this.editor_0.Code) != 0)
                 {
                     this.indicatorDragDropManager_0.Clear();
-                    this.editor_0.Code = strA;
+                    this.editor_0.Code = str;
                     this.CompileSource();
                     this.GoButtonPressed(this.Symbol, true);
                     this.SelectTab("Editor");
@@ -3184,6 +3230,12 @@
                     this.ParametersNeedSave = true;
                 }
                 this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+                return;
+            }
+            else
+            {
+                MessageBox.Show("There are no dropped indicators to push.");
+                return;
             }
         }
 
@@ -4612,21 +4664,39 @@
         {
             if (this.tabChart.SelectedTab.Text != "Optimization")
             {
-                using (IEnumerator enumerator = this.tabChart.TabPages.GetEnumerator())
+                IEnumerator enumerator = this.tabChart.TabPages.GetEnumerator();
+                try
                 {
-                    TabPage current;
-                    while (enumerator.MoveNext())
+                    while (true)
                     {
-                        current = (TabPage) enumerator.Current;
-                        if (current.Text == tabText)
+                        if (enumerator.MoveNext())
                         {
-                            goto Label_0055;
+                            TabPage current = (TabPage)enumerator.Current;
+                            if (current.Text == tabText)
+                            {
+                                this.tabChart.SelectedTab = current;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    return;
-                Label_0055:
-                    this.tabChart.SelectedTab = current;
                 }
+                finally
+                {
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
+                }
+                return;
+            }
+            else
+            {
+                return;
             }
         }
 

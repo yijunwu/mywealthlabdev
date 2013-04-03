@@ -1,6 +1,6 @@
 ﻿using System;
 
-internal class EventArgs6 : EventArgs
+public class EventArgs6 : EventArgs
 {
     public readonly Enum6 enum6_0;
     public readonly Enum7 enum7_0;

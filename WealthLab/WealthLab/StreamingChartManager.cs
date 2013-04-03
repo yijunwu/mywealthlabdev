@@ -24,9 +24,66 @@
         private StreamingDataProvider streamingDataProvider_0;
         private string string_0;
 
-        public event EventHandler<EventArgs> BarsLocked;
+        private EventHandler<EventArgs> eventHandler_0;
 
-        public event EventHandler<EventArgs> NewBar;
+        private EventHandler<EventArgs> eventHandler_1;
+
+
+        public event EventHandler<EventArgs> BarsLocked
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<EventArgs> eventHandler2 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<EventArgs> eventHandler2 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+        }
+
+        public event EventHandler<EventArgs> NewBar
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
 
         public StreamingChartManager()
         {

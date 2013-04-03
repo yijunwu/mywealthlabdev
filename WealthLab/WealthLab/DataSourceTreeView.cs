@@ -28,17 +28,180 @@
         private ToolStripSeparator sepSymbol;
         private TreeNode treeNode_0;
 
-        public event EventHandler<EventArgs> DataManagerClicked;
+        private EventHandler<DataSourceEventArgs> eventHandler_0;
+        private EventHandler<DataSourceSymbolEventArgs> eventHandler_1;
+        private EventHandler<EventArgs> eventHandler_2;
+        private EventHandler<EventArgs> eventHandler_3;
+        private EventHandler<EventArgs> eventHandler_4;
+        private EventHandler<EventArgs> eventHandler_5;
 
-        public event EventHandler<DataSourceEventArgs> DataSourceSelected;
+        public event EventHandler<EventArgs> DataManagerClicked
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler3 = this.eventHandler_3;
+                do
+                {
+                    eventHandler = eventHandler3;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                }
+                while (eventHandler3 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler3 = this.eventHandler_3;
+                do
+                {
+                    eventHandler = eventHandler3;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                }
+                while (eventHandler3 != eventHandler);
+            }
+        }
 
-        public event EventHandler<EventArgs> DataSourceTreeViewRenameClicked;
+        public event EventHandler<DataSourceEventArgs> DataSourceSelected
+        {
+            add
+            {
+                EventHandler<DataSourceEventArgs> eventHandler;
+                EventHandler<DataSourceEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<DataSourceEventArgs> eventHandler1 = (EventHandler<DataSourceEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<DataSourceEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<DataSourceEventArgs> eventHandler;
+                EventHandler<DataSourceEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<DataSourceEventArgs> eventHandler1 = (EventHandler<DataSourceEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<DataSourceEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
 
-        public event EventHandler<EventArgs> IndexManagerClicked;
+        public event EventHandler<EventArgs> DataSourceTreeViewRenameClicked
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler5 = this.eventHandler_5;
+                do
+                {
+                    eventHandler = eventHandler5;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                }
+                while (eventHandler5 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler5 = this.eventHandler_5;
+                do
+                {
+                    eventHandler = eventHandler5;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                }
+                while (eventHandler5 != eventHandler);
+            }
+        }
 
-        public event EventHandler<EventArgs> NewDataSourceClicked;
+        public event EventHandler<EventArgs> IndexManagerClicked
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler4 = this.eventHandler_4;
+                do
+                {
+                    eventHandler = eventHandler4;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                }
+                while (eventHandler4 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler4 = this.eventHandler_4;
+                do
+                {
+                    eventHandler = eventHandler4;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                }
+                while (eventHandler4 != eventHandler);
+            }
+        }
 
-        public event EventHandler<DataSourceSymbolEventArgs> SymbolSelected;
+        public event EventHandler<EventArgs> NewDataSourceClicked
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler2 = this.eventHandler_2;
+                do
+                {
+                    eventHandler = eventHandler2;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                }
+                while (eventHandler2 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler2 = this.eventHandler_2;
+                do
+                {
+                    eventHandler = eventHandler2;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                }
+                while (eventHandler2 != eventHandler);
+            }
+        }
+
+        public event EventHandler<DataSourceSymbolEventArgs> SymbolSelected
+        {
+            add
+            {
+                EventHandler<DataSourceSymbolEventArgs> eventHandler;
+                EventHandler<DataSourceSymbolEventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<DataSourceSymbolEventArgs> eventHandler2 = (EventHandler<DataSourceSymbolEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<DataSourceSymbolEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<DataSourceSymbolEventArgs> eventHandler;
+                EventHandler<DataSourceSymbolEventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<DataSourceSymbolEventArgs> eventHandler2 = (EventHandler<DataSourceSymbolEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<DataSourceSymbolEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+        }
 
         public DataSourceTreeView()
         {
@@ -64,32 +227,55 @@
 
         public TreeNode FindNode(WealthLab.DataSource dataSource_0, string symbol)
         {
-            //using (IEnumerator enumerator = base.Nodes.GetEnumerator())
+            TreeNode treeNode;
             IEnumerator enumerator = base.Nodes.GetEnumerator();
+            try
             {
-                TreeNode current;
                 while (enumerator.MoveNext())
                 {
-                    current = (TreeNode) enumerator.Current;
-                    if (current.Tag == dataSource_0)
+                    TreeNode current = (TreeNode)enumerator.Current;
+                    if (current.Tag != dataSource_0)
                     {
-                        goto Label_0030;
+                        continue;
                     }
-                }
-                goto Label_0096;
-            Label_0030:
-                foreach (TreeNode node3 in current.Nodes)
-                {
-                    if (node3.Text == symbol)
+                    IEnumerator enumerator1 = current.Nodes.GetEnumerator();
+                    try
                     {
-                        return node3;
+                        while (enumerator1.MoveNext())
+                        {
+                            TreeNode current1 = (TreeNode)enumerator1.Current;
+                            if (current1.Text != symbol)
+                            {
+                                continue;
+                            }
+                            treeNode = current1;
+                            return treeNode;
+                        }
                     }
+                    finally
+                    {
+                        IDisposable disposable = enumerator1 as IDisposable;
+                        if (disposable != null)
+                        {
+                            disposable.Dispose();
+                        }
+                    }
+                    treeNode = current;
+                    return treeNode;
                 }
-                return current;
+                return null;
             }
-        Label_0096:
-            return null;
+            finally
+            {
+                IDisposable disposable1 = enumerator as IDisposable;
+                if (disposable1 != null)
+                {
+                    disposable1.Dispose();
+                }
+            }
+            //return treeNode;
         }
+
 
         public void ItemAdded(WealthLab.DataSource item)
         {
@@ -131,22 +317,36 @@
 
         public void ItemRemoved(WealthLab.DataSource item)
         {
-            using (IEnumerator enumerator = base.Nodes.GetEnumerator())
+            IEnumerator enumerator = base.Nodes.GetEnumerator();
+            try
             {
-                TreeNode current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (TreeNode) enumerator.Current;
-                    if ((current.Tag == item) && (current.ImageIndex != 0))
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0036;
+                        TreeNode current = (TreeNode)enumerator.Current;
+                        if (current.Tag == item && current.ImageIndex != 0)
+                        {
+                            base.Nodes.Remove(current);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                return;
-            Label_0036:
-                base.Nodes.Remove(current);
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
             }
         }
+
 
         private void method_0(TreeNode treeNode_1, WealthLab.DataSource dataSource_0)
         {
@@ -412,22 +612,36 @@
 
         public void SelectDataSource(WealthLab.DataSource dataSource_0)
         {
-            using (IEnumerator enumerator = base.Nodes.GetEnumerator())
+            IEnumerator enumerator = base.Nodes.GetEnumerator();
+            try
             {
-                TreeNode current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (TreeNode) enumerator.Current;
-                    if ((current.Level == 0) && (current.Tag == dataSource_0))
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0038;
+                        TreeNode current = (TreeNode)enumerator.Current;
+                        if (current.Level == 0 && current.Tag == dataSource_0)
+                        {
+                            base.SelectedNode = current;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                return;
-            Label_0038:
-                base.SelectedNode = current;
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
             }
         }
+
 
         public void SelectSymbol(string symbol)
         {

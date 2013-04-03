@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>7bd4d6da-69ed-41b7-96f2-83388ce80c3c</ProjectGuid>
+    <ProjectGuid>{B13CE35C-1081-40A9-84C9-FC0A5336B981}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.StrategyProviders</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -31,20 +32,30 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="WealthLab" />
+    <Reference Include="WealthLab">
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Web.Services" />
-    <Reference Include="MS123.Web.Strategies" />
+    <Reference Include="MS123.Web.Strategies">
+      <HintPath>..\ExternalLib\MS123.Web.Strategies.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="Fidelity.Components" />
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\StrategyProviders\WLStrategyProvider.cs" />
-    <Compile Include="WealthLab\StrategyProviders\WLLogin.cs" />
+    <Compile Include="WealthLab\StrategyProviders\WLLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLab\StrategyProviders\Properties\Settings.cs" />
-    <Compile Include="WealthLab\StrategyProviders\WLWebServices\StrategyWebservice.cs" />
+    <Compile Include="WealthLab\StrategyProviders\WLWebServices\StrategyWebservice.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WealthLab\StrategyProviders\WLWebServices\GetPublicStrategiesCompletedEventHandler.cs" />
     <Compile Include="WealthLab\StrategyProviders\WLWebServices\GetPublicStrategiesCompletedEventArgs.cs" />
     <Compile Include="WealthLab\StrategyProviders\WLWebServices\GetPrivateStrategiesCompletedEventHandler.cs" />

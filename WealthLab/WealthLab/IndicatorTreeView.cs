@@ -25,7 +25,35 @@
         private static List<TreeNode> list_1 = null;
         private static List<Bitmap> list_2 = new List<Bitmap>();
 
-        public event EventHandler<IndicatorEventArgs> IndicatorSelected;
+        private EventHandler<IndicatorEventArgs> eventHandler_0;
+
+        public event EventHandler<IndicatorEventArgs> IndicatorSelected
+        {
+            add
+            {
+                EventHandler<IndicatorEventArgs> eventHandler;
+                EventHandler<IndicatorEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<IndicatorEventArgs> eventHandler1 = (EventHandler<IndicatorEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<IndicatorEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<IndicatorEventArgs> eventHandler;
+                EventHandler<IndicatorEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<IndicatorEventArgs> eventHandler1 = (EventHandler<IndicatorEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<IndicatorEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
 
         public IndicatorTreeView()
         {

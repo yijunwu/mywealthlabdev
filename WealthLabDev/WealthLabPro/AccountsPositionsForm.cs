@@ -722,25 +722,41 @@
             this.mniDeleteHistory.Enabled = this.lvTradeHistory.SelectedItems.Count > 0;
         }
 
+
         private void method_0(HistoricalTrade historicalTrade_0)
         {
-            if ((this.cmbAccounts.Text == string_0) || (this.cmbAccounts.Text == historicalTrade_0.AccountNumber))
+            if (this.cmbAccounts.Text == AccountsPositionsForm.string_0 || this.cmbAccounts.Text == historicalTrade_0.AccountNumber)
             {
-                using (IEnumerator enumerator = this.lvTradeHistory.Items.GetEnumerator())
+                IEnumerator enumerator = this.lvTradeHistory.Items.GetEnumerator();
+                try
                 {
-                    ListViewItem current;
-                    while (enumerator.MoveNext())
+                    while (true)
                     {
-                        current = (ListViewItem) enumerator.Current;
-                        if (current.Tag == historicalTrade_0)
+                        if (enumerator.MoveNext())
                         {
-                            goto Label_0067;
+                            ListViewItem current = (ListViewItem)enumerator.Current;
+                            if (current.Tag == historicalTrade_0)
+                            {
+                                double quantity = historicalTrade_0.Quantity;
+                                current.SubItems[this.columnHeader_10.DisplayIndex].Text = quantity.ToString();
+                                double price = historicalTrade_0.Price;
+                                current.SubItems[this.columnHeader_12.DisplayIndex].Text = price.ToString(string.Concat("N", DecimalsManager.Instance.GetPricingDecimalForSymbol(historicalTrade_0.Symbol)));
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    return;
-                Label_0067:
-                    current.SubItems[this.columnHeader_10.DisplayIndex].Text = historicalTrade_0.Quantity.ToString();
-                    current.SubItems[this.columnHeader_12.DisplayIndex].Text = historicalTrade_0.Price.ToString("N" + DecimalsManager.Instance.GetPricingDecimalForSymbol(historicalTrade_0.Symbol));
+                }
+                finally
+                {
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
                 }
             }
         }
@@ -963,24 +979,39 @@
 
         private void method_5(AccountPosition accountPosition_0)
         {
-            using (IEnumerator enumerator = this.lvPositions.Items.GetEnumerator())
+            IEnumerator enumerator = this.lvPositions.Items.GetEnumerator();
+            try
             {
-                ListViewItem current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (ListViewItem) enumerator.Current;
-                    if (current.Tag == accountPosition_0)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0038;
+                        ListViewItem current = (ListViewItem)enumerator.Current;
+                        if (current.Tag == accountPosition_0)
+                        {
+                            double quantity = accountPosition_0.Quantity;
+                            current.SubItems[this.columnHeader_2.DisplayIndex].Text = quantity.ToString();
+                            int pricingDecimalForSymbol = DecimalsManager.Instance.GetPricingDecimalForSymbol(accountPosition_0.Symbol);
+                            double entryPrice = accountPosition_0.EntryPrice;
+                            current.SubItems[this.columnHeader_3.DisplayIndex].Text = entryPrice.ToString(string.Concat("N", pricingDecimalForSymbol));
+                            this.method_14(accountPosition_0, current);
+                            this.method_7();
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                return;
-            Label_0038:
-                current.SubItems[this.columnHeader_2.DisplayIndex].Text = accountPosition_0.Quantity.ToString();
-                int pricingDecimalForSymbol = DecimalsManager.Instance.GetPricingDecimalForSymbol(accountPosition_0.Symbol);
-                current.SubItems[this.columnHeader_3.DisplayIndex].Text = accountPosition_0.EntryPrice.ToString("N" + pricingDecimalForSymbol);
-                this.method_14(accountPosition_0, current);
-                this.method_7();
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
             }
         }
 
@@ -1045,7 +1076,7 @@
         private void method_8()
         {
             Account account = null;
-            if (this.cmbAccounts.Text != string_0)
+            if (this.cmbAccounts.Text != AccountsPositionsForm.string_0)
             {
                 account = MainModule.Instance.BrokerProvider.FindAccount(this.cmbAccounts.Text);
             }
@@ -1055,66 +1086,86 @@
             }
             this.lvPositions.BeginUpdate();
             this.lvPositions.Items.Clear();
-            if ((account == null) && (this.cmbAccounts.Text != "Select an Account"))
+            if (account != null || !(this.cmbAccounts.Text != "Select an Account"))
             {
-                foreach (Account account2 in MainModule.Instance.BrokerProvider.Accounts)
+                if (account != null)
                 {
-                    if (!account2.IsPaperAccount)
-                    {
-                        this.method_11(account2);
-                    }
+                    this.method_11(account);
                 }
             }
-            else if (account != null)
+            else
             {
-                this.method_11(account);
+                foreach (Account account1 in MainModule.Instance.BrokerProvider.Accounts)
+                {
+                    if (account1.IsPaperAccount)
+                    {
+                        continue;
+                    }
+                    this.method_11(account1);
+                }
             }
             this.lvPositions.EndUpdate();
             this.lvPositions.SortByColumn(this.columnHeader_1, SortOrder.Ascending);
             this.method_13();
-            if ((account != null) && (this.cmbAccounts.Text != "Select an Account"))
+            if (account != null && this.cmbAccounts.Text != "Select an Account")
             {
-                if (account.Positions.Count == 1)
+                if (account.Positions.Count != 1)
                 {
-                    this.statusAccountPositions.Text = "1 Position in Account " + account.AccountNumber;
+                    this.statusAccountPositions.Text = string.Concat(account.Positions.Count, " Positions in Account ", account.AccountNumber);
                 }
                 else
                 {
-                    this.statusAccountPositions.Text = account.Positions.Count + " Positions in Account " + account.AccountNumber;
+                    this.statusAccountPositions.Text = string.Concat("1 Position in Account ", account.AccountNumber);
                 }
             }
             if (this.btnStreaming.Checked)
             {
-                foreach (ListViewItem item2 in this.lvPositions.Items)
+                foreach (ListViewItem item in this.lvPositions.Items)
                 {
-                    string text = item2.SubItems[this.columnHeader_1.DisplayIndex].Text;
-                    if (!this.streamingQuoteManager_0.Provider.IsSymbolStreaming(text, this.streamingQuoteManager_0))
+                    string text = item.SubItems[this.columnHeader_1.DisplayIndex].Text;
+                    if (this.streamingQuoteManager_0.Provider.IsSymbolStreaming(text, this.streamingQuoteManager_0))
                     {
-                        this.streamingQuoteManager_0.Subscribe(text);
+                        continue;
                     }
+                    this.streamingQuoteManager_0.Subscribe(text);
                 }
-                foreach (string str in this.streamingQuoteManager_0.Provider.GetSymbolsSubscribed(this.streamingQuoteManager_0))
+                List<string> symbolsSubscribed = this.streamingQuoteManager_0.Provider.GetSymbolsSubscribed(this.streamingQuoteManager_0);
+                foreach (string str in symbolsSubscribed)
                 {
                     bool flag = true;
-                    using (IEnumerator enumerator3 = this.lvPositions.Items.GetEnumerator())
+                    IEnumerator enumerator = this.lvPositions.Items.GetEnumerator();
+                    try
                     {
-                        while (enumerator3.MoveNext())
+                        while (true)
                         {
-                            ListViewItem current = (ListViewItem) enumerator3.Current;
-                            if (current.SubItems[this.columnHeader_1.DisplayIndex].Text == str)
+                            if (enumerator.MoveNext())
                             {
-                                goto Label_026C;
+                                ListViewItem current = (ListViewItem)enumerator.Current;
+                                if (current.SubItems[this.columnHeader_1.DisplayIndex].Text == str)
+                                {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
-                        goto Label_0285;
-                    Label_026C:
-                        flag = false;
                     }
-                Label_0285:
-                    if (flag)
+                    finally
                     {
-                        this.streamingQuoteManager_0.Unsubscribe(str);
+                        IDisposable disposable = enumerator as IDisposable;
+                        if (disposable != null)
+                        {
+                            disposable.Dispose();
+                        }
                     }
+                    if (!flag)
+                    {
+                        continue;
+                    }
+                    this.streamingQuoteManager_0.Unsubscribe(str);
                 }
             }
         }

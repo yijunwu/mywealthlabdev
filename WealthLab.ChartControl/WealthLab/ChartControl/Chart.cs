@@ -48,15 +48,157 @@
         private ScaleSelector scaleSelector_0 = new ScaleSelector();
         private static System.Type type_0 = null;
 
-        public event EventHandler<ScaleChangeEventArgs> DataScaleChange;
+        private EventHandler<BarNumberEventArgs> eventHandler_0;
 
-        public event EventHandler<EventArgs> DrawingObjectOperationCompleted;
+        private EventHandler<EventArgs> eventHandler_1;
 
-        public event EventHandler<BarNumberEventArgs> MouseMoveBarNumber;
+        private EventHandler<MouseEventArgs> eventHandler_2;
 
-        public event EventHandler<MouseEventArgs> MouseWheelMoved;
+        private EventHandler<ExceptionEventArgs> eventHandler_3;
 
-        public event EventHandler<ExceptionEventArgs> OnException;
+        private EventHandler<ScaleChangeEventArgs> eventHandler_4;
+
+
+        public event EventHandler<ScaleChangeEventArgs> DataScaleChange
+        {
+            add
+            {
+                EventHandler<ScaleChangeEventArgs> eventHandler;
+                EventHandler<ScaleChangeEventArgs> eventHandler4 = this.eventHandler_4;
+                do
+                {
+                    eventHandler = eventHandler4;
+                    EventHandler<ScaleChangeEventArgs> eventHandler1 = (EventHandler<ScaleChangeEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<ScaleChangeEventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                }
+                while (eventHandler4 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<ScaleChangeEventArgs> eventHandler;
+                EventHandler<ScaleChangeEventArgs> eventHandler4 = this.eventHandler_4;
+                do
+                {
+                    eventHandler = eventHandler4;
+                    EventHandler<ScaleChangeEventArgs> eventHandler1 = (EventHandler<ScaleChangeEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<ScaleChangeEventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                }
+                while (eventHandler4 != eventHandler);
+            }
+        }
+
+        public event EventHandler<EventArgs> DrawingObjectOperationCompleted
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<EventArgs> eventHandler2 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<EventArgs> eventHandler2 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+        }
+
+        public event EventHandler<BarNumberEventArgs> MouseMoveBarNumber
+        {
+            add
+            {
+                EventHandler<BarNumberEventArgs> eventHandler;
+                EventHandler<BarNumberEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<BarNumberEventArgs> eventHandler1 = (EventHandler<BarNumberEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<BarNumberEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<BarNumberEventArgs> eventHandler;
+                EventHandler<BarNumberEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<BarNumberEventArgs> eventHandler1 = (EventHandler<BarNumberEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<BarNumberEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
+
+        public event EventHandler<MouseEventArgs> MouseWheelMoved
+        {
+            add
+            {
+                EventHandler<MouseEventArgs> eventHandler;
+                EventHandler<MouseEventArgs> eventHandler2 = this.eventHandler_2;
+                do
+                {
+                    eventHandler = eventHandler2;
+                    EventHandler<MouseEventArgs> eventHandler1 = (EventHandler<MouseEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<MouseEventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                }
+                while (eventHandler2 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<MouseEventArgs> eventHandler;
+                EventHandler<MouseEventArgs> eventHandler2 = this.eventHandler_2;
+                do
+                {
+                    eventHandler = eventHandler2;
+                    EventHandler<MouseEventArgs> eventHandler1 = (EventHandler<MouseEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<MouseEventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                }
+                while (eventHandler2 != eventHandler);
+            }
+        }
+
+        public event EventHandler<ExceptionEventArgs> OnException
+        {
+            add
+            {
+                EventHandler<ExceptionEventArgs> eventHandler;
+                EventHandler<ExceptionEventArgs> eventHandler3 = this.eventHandler_3;
+                do
+                {
+                    eventHandler = eventHandler3;
+                    EventHandler<ExceptionEventArgs> eventHandler1 = (EventHandler<ExceptionEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<ExceptionEventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                }
+                while (eventHandler3 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<ExceptionEventArgs> eventHandler;
+                EventHandler<ExceptionEventArgs> eventHandler3 = this.eventHandler_3;
+                do
+                {
+                    eventHandler = eventHandler3;
+                    EventHandler<ExceptionEventArgs> eventHandler1 = (EventHandler<ExceptionEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<ExceptionEventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                }
+                while (eventHandler3 != eventHandler);
+            }
+        }
+
 
         public Chart()
         {

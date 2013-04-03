@@ -42,7 +42,7 @@
         private DrawingObjectManager drawingObjectManager_0;
         private System.Windows.Forms.HelpProvider helpProvider_0;
         private IContainer icontainer_0;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public static MainModule Instance = new MainModule();
         private int int_0;
         private int int_1;
@@ -1708,28 +1708,29 @@
 
         public bool WindowWithTitleExists(string title, Form exclude)
         {
-            bool flag;
-            using (IEnumerator enumerator = Application.OpenForms.GetEnumerator())
+            foreach (Form openForm in Application.OpenForms)
             {
-                while (enumerator.MoveNext())
+                if (openForm as MainForm == null)
                 {
-                    Form current = (Form) enumerator.Current;
-                    if (current is MainForm)
+                    continue;
+                }
+                Form[] mdiChildren = openForm.MdiChildren;
+                int num = 0;
+                while (num < (int)mdiChildren.Length)
+                {
+                    Form form = mdiChildren[num];
+                    if (!(form.Text == title) || form == exclude)
                     {
-                        foreach (Form form2 in current.MdiChildren)
-                        {
-                            if ((form2.Text == title) && (form2 != exclude))
-                            {
-                                goto Label_005C;
-                            }
-                        }
+                        num++;
+                    }
+                    else
+                    {
+                        bool flag = true;
+                        return flag;
                     }
                 }
-                return false;
-            Label_005C:
-                flag = true;
             }
-            return flag;
+            return false;
         }
 
         private string _authFile
@@ -1915,27 +1916,21 @@
         {
             get
             {
-                MainForm form3;
-                using (IEnumerator enumerator = Application.OpenForms.GetEnumerator())
+                foreach (Form openForm in Application.OpenForms)
                 {
-                    MainForm form2;
-                    while (enumerator.MoveNext())
+                    if (openForm as MainForm == null)
                     {
-                        Form current = (Form) enumerator.Current;
-                        if (current is MainForm)
-                        {
-                            form2 = current as MainForm;
-                            if (form2.IsFirstMainForm)
-                            {
-                                goto Label_003B;
-                            }
-                        }
+                        continue;
                     }
-                    return null;
-                Label_003B:
-                    form3 = form2;
+                    MainForm mainForm = openForm as MainForm;
+                    if (!mainForm.IsFirstMainForm)
+                    {
+                        continue;
+                    }
+                    MainForm mainForm1 = mainForm;
+                    return mainForm1;
                 }
-                return form3;
+                return null;
             }
         }
 
@@ -2100,17 +2095,23 @@
                 try
                 {
                     int num = 0;
-                    foreach (NetworkInterface interface2 in NetworkInterface.GetAllNetworkInterfaces())
+                    NetworkInterface[] allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+                    int num1 = 0;
+                    while (num1 < (int)allNetworkInterfaces.Length)
                     {
-                        if (num == this.int_0)
+                        NetworkInterface networkInterface = allNetworkInterfaces[num1];
+                        if (num != this.int_0)
                         {
-                            goto Label_0032;
+                            num++;
+                            num1++;
                         }
-                        num++;
+                        else
+                        {
+                            str = networkInterface.GetPhysicalAddress().ToString();
+                            return str;
+                        }
                     }
-                    return "None";
-                Label_0032:
-                    str = interface2.GetPhysicalAddress().ToString();
+                    str = "None";
                 }
                 catch
                 {

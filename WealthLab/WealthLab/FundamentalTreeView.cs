@@ -23,7 +23,35 @@
         private static List<TreeNode> list_1 = null;
         private static List<Bitmap> list_2 = new List<Bitmap>();
 
-        public event EventHandler<FundamentalSelectedEventArgs> FundamentalSelected;
+        private EventHandler<FundamentalSelectedEventArgs> eventHandler_0;
+
+        public event EventHandler<FundamentalSelectedEventArgs> FundamentalSelected
+        {
+            add
+            {
+                EventHandler<FundamentalSelectedEventArgs> eventHandler;
+                EventHandler<FundamentalSelectedEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<FundamentalSelectedEventArgs> eventHandler1 = (EventHandler<FundamentalSelectedEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<FundamentalSelectedEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<FundamentalSelectedEventArgs> eventHandler;
+                EventHandler<FundamentalSelectedEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<FundamentalSelectedEventArgs> eventHandler1 = (EventHandler<FundamentalSelectedEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<FundamentalSelectedEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
 
         public FundamentalTreeView()
         {

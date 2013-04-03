@@ -63,27 +63,35 @@ internal class Class51
 
     private bool method_3()
     {
-        int num = 0x13;
+        bool flag;
+        int num = 19;
         if (Application.OpenForms != null)
         {
-            bool flag;
-            using (IEnumerator enumerator = Application.OpenForms.GetEnumerator())
+            IEnumerator enumerator = Application.OpenForms.GetEnumerator();
+            try
             {
                 while (enumerator.MoveNext())
                 {
-                    Form current = (Form) enumerator.Current;
-                    if (current.GetType().Name == ActivateTrialCompletedEventArgs.smethod_0("爾⁀⩂⭄ņ♈㥊⁌", num))
+                    Form current = (Form)enumerator.Current;
+                    if (current.GetType().Name != ActivateTrialCompletedEventArgs.smethod_0("爾⁀⩂⭄ņ♈㥊⁌", num))
                     {
-                        goto Label_004E;
+                        continue;
                     }
+                    flag = true;
+                    return flag;
                 }
-                goto Label_0068;
-            Label_004E:
-                flag = true;
+                return false;
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
             }
             return flag;
         }
-    Label_0068:
         return false;
     }
 }

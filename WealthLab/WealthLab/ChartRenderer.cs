@@ -547,13 +547,33 @@
 
         private void method_1(WealthLab.Bars bars_1, Graphics graphics_0, int int_12, int int_13, WealthLab.ChartStyle chartStyle_1, bool bool_15, int int_14, string string_4, bool bool_16)
         {
+            int int1;
+            int y;
+            DateTime item;
+            string shortDateString;
+            ChartPane pricePane;
+            int num;
+            int y1;
+            List<Rectangle>.Enumerator enumerator;
+            int width;
+            bool flag;
+            SizeF sizeF;
+            int year;
+            Bitmap shortEntry;
+            int num1;
+            int int11;
+            string str;
+            object obj;
+            object[] shares;
+            Color color;
+            double num2;
             if (!this.Executing)
             {
                 Pen pen = new Pen(this.GridlineColor);
-                Pen pen2 = new Pen(this.BackgroundColor);
-                Pen pen3 = new Pen(ReverseColor(this.BackgroundColor));
+                Pen pen1 = new Pen(this.BackgroundColor);
+                Pen pen2 = new Pen(ChartRenderer.ReverseColor(this.BackgroundColor));
                 this.brush_0 = new SolidBrush(this.BackgroundColor);
-                this.brush_1 = new SolidBrush(ReverseColor(this.BackgroundColor));
+                this.brush_1 = new SolidBrush(ChartRenderer.ReverseColor(this.BackgroundColor));
                 this.list_1.Clear();
                 this.dictionary_0.Clear();
                 this.dictionary_1.Clear();
@@ -565,929 +585,972 @@
                     this.chartStyle_0.Renderer = this;
                 }
                 graphics_0.Clear(this.BackgroundColor);
-                if (((this.int_4 != int_12) || (this.int_5 != int_13)) || (this.string_3 != this.string_2))
+                if (this.int_4 != int_12 || this.int_5 != int_13 || this.string_3 != this.string_2)
                 {
                     this.int_4 = int_12;
                     this.int_5 = int_13;
                     this.bool_14 = true;
                     this.string_3 = this.string_2;
                 }
-                if ((this.int_4 > this.MarginRightWidth) && (this.int_5 > this.MarginBottomHeight))
+                if (this.int_4 > this.MarginRightWidth)
                 {
-                    if ((bars_1 != null) && (bars_1.Count != 0))
+                    if (this.int_5 > this.MarginBottomHeight)
                     {
-                        if ((this.bars_0 != bars_1) || (bars_1.Count != this.int_0.Length))
+                        if (bars_1 == null || bars_1.Count == 0)
                         {
-                            if ((this.bars_0 != bars_1) || (bars_1.Count != this.int_11))
+                            Font font = new Font("Arial", 12f);
+                            graphics_0.DrawString("No Data Available", font, this.ReverseBackgroundBrush, new Point(20, 20));
+                            return;
+                        }
+                        else
+                        {
+                            if (this.bars_0 != bars_1 || bars_1.Count != (int)this.int_0.Length)
                             {
-                                if (((this.string_1 == bars_1.Symbol) && (this.barScale_0 == bars_1.Scale)) && (bars_1.Count == (this.int_11 + 1)))
+                                if (this.bars_0 != bars_1 || bars_1.Count != this.int_11)
                                 {
-                                    this.bool_12 = true;
-                                    this.list_3.Clear();
-                                    foreach (ChartPane pane15 in this.Panes)
+                                    if (this.string_1 == bars_1.Symbol && this.barScale_0 == bars_1.Scale && bars_1.Count == this.int_11 + 1)
                                     {
-                                        if (pane15.Visible)
+                                        this.bool_12 = true;
+                                        this.list_3.Clear();
+                                        foreach (ChartPane pane in this.Panes)
                                         {
-                                            this.list_3.Add(pane15);
+                                            if (!pane.Visible)
+                                            {
+                                                continue;
+                                            }
+                                            this.list_3.Add(pane);
                                         }
                                     }
+                                    this.ChartStyle.Initialize();
+                                    this.int_11 = bars_1.Count;
+                                    this.barScale_0 = bars_1.Scale;
+                                    this.string_1 = bars_1.Symbol;
                                 }
-                                this.ChartStyle.Initialize();
-                                this.int_11 = bars_1.Count;
-                                this.barScale_0 = bars_1.Scale;
-                                this.string_1 = bars_1.Symbol;
-                            }
-                            this.bool_14 = true;
-                            if (this.bars_0 != bars_1)
-                            {
-                                this.Panes.Clear();
-                            }
-                        }
-                        this.bars_0 = bars_1;
-                        this.chartStyle_0 = chartStyle_1;
-                        if (this.bool_14)
-                        {
-                            this.int_1 = new int[bars_1.Count];
-                            this.int_0 = new int[bars_1.Count];
-                            for (int i = 0; i < bars_1.Count; i++)
-                            {
-                                this.int_0[i] = this.BarSpacing;
-                                this.int_1[i] = -1;
-                            }
-                            chartStyle_1.InitializeBarWidths();
-                            this.int_8 = this.method_7();
-                            this.int_9 = this.method_6();
-                            int num31 = this.RightPaddingBars - this.int_3;
-                            if (num31 < 0)
-                            {
-                                num31 = 0;
-                            }
-                            int num18 = ((int_12 - this.MarginRightWidth) - (this.int_0[this.int_8] / 2)) - (num31 * this.BarSpacing);
-                            for (int j = this.int_8; j >= this.int_9; j--)
-                            {
-                                this.int_1[j] = num18 - (this.int_0[j] / 2);
-                                num18 -= this.int_0[j];
-                            }
-                            if (this.int_9 < this.int_1.Length)
-                            {
-                                num18 = this.int_1[this.int_9];
-                                for (int k = this.int_9 - 1; k >= 0; k--)
+                                this.bool_14 = true;
+                                if (this.bars_0 != bars_1)
                                 {
-                                    num18 -= this.int_0[k + 1];
-                                    this.int_1[k] = num18;
+                                    this.Panes.Clear();
                                 }
                             }
-                            if (this.int_8 < this.int_1.Length)
+                            this.bars_0 = bars_1;
+                            this.chartStyle_0 = chartStyle_1;
+                            if (this.bool_14)
                             {
-                                num18 = this.int_1[this.int_8];
-                                for (int m = this.int_8 + 1; m < bars_1.Count; m++)
+                                this.int_1 = new int[bars_1.Count];
+                                this.int_0 = new int[bars_1.Count];
+                                for (int i = 0; i < bars_1.Count; i++)
                                 {
-                                    this.int_1[m] = num18 + this.int_0[m - 1];
+                                    this.int_0[i] = this.BarSpacing;
+                                    this.int_1[i] = -1;
                                 }
+                                chartStyle_1.InitializeBarWidths();
+                                this.int_8 = this.method_7();
+                                this.int_9 = this.method_6();
+                                int rightPaddingBars = this.RightPaddingBars - this.int_3;
+                                if (rightPaddingBars < 0)
+                                {
+                                    rightPaddingBars = 0;
+                                }
+                                int int12 = int_12 - this.MarginRightWidth - this.int_0[this.int_8] / 2 - rightPaddingBars * this.BarSpacing;
+                                for (int j = this.int_8; j >= this.int_9; j--)
+                                {
+                                    this.int_1[j] = int12 - this.int_0[j] / 2;
+                                    int12 = int12 - this.int_0[j];
+                                }
+                                if (this.int_9 < (int)this.int_1.Length)
+                                {
+                                    int12 = this.int_1[this.int_9];
+                                    for (int k = this.int_9 - 1; k >= 0; k--)
+                                    {
+                                        int12 = int12 - this.int_0[k + 1];
+                                        this.int_1[k] = int12;
+                                    }
+                                }
+                                if (this.int_8 < (int)this.int_1.Length)
+                                {
+                                    int12 = this.int_1[this.int_8];
+                                    for (int l = this.int_8 + 1; l < bars_1.Count; l++)
+                                    {
+                                        int12 = int12 + this.int_0[l - 1];
+                                        this.int_1[l] = int12;
+                                    }
+                                }
+                                this.bool_14 = false;
                             }
-                            this.bool_14 = false;
-                        }
-                        if (this.list_0.Count == 0)
-                        {
-                            this.CreateDefaultPanes();
-                        }
-                        double num = 0.0;
-                        double num2 = 0.0;
-                        foreach (ChartPane pane4 in this.list_0)
-                        {
-                            if (pane4.Visible)
+                            if (this.list_0.Count == 0)
                             {
-                                if (pane4.Hidden)
-                                {
-                                    num2 += pane4.HiddenHeight;
-                                }
-                                else
-                                {
-                                    num += pane4.RawHeight;
-                                }
+                                this.CreateDefaultPanes();
                             }
-                        }
-                        if (num > 0.0)
-                        {
-                            int num3;
-                            int num4;
-                            DateTime time;
-                            string str;
-                            List<Rectangle>.Enumerator enumerator6;
-                            int width;
-                            bool flag;
-                            double num10 = ((this.int_5 - num2) - this.MarginBottomHeight) / num;
-                            num10 = (num10 > 0.0) ? num10 : 0.0;
-                            int num34 = 0;
-                            for (int n = 0; n < this.list_0.Count; n++)
+                            double rawHeight = 0;
+                            double hiddenHeight = 0;
+                            foreach (ChartPane list0 in this.list_0)
                             {
-                                ChartPane pricePane;
-                                ChartPane pane2 = this.list_0[n];
-                                if (!pane2.Visible)
+                                if (!list0.Visible)
                                 {
                                     continue;
                                 }
-                                pane2.LowestValue = pane2.MinValue;
-                                pane2.HighestValue = pane2.MaxValue;
-                                if (!bool_15 || !(string_4 == pane2.Description))
+                                if (!list0.Hidden)
                                 {
-                                    goto Label_0637;
-                                }
-                                int num12 = Math.Max(10, pane2.HiddenHeight);
-                                if (bool_16)
-                                {
-                                    pricePane = this.PricePane;
+                                    rawHeight = rawHeight + (double)list0.RawHeight;
                                 }
                                 else
                                 {
-                                    pricePane = pane2;
-                                    int num15 = n;
-                                    while (!pane2.AbovePricePane)
+                                    hiddenHeight = hiddenHeight + (double)list0.HiddenHeight;
+                                }
+                            }
+                            if (rawHeight > 0)
+                            {
+                                double int5 = ((double)this.int_5 - hiddenHeight - (double)this.MarginBottomHeight) / rawHeight;
+                                num2 = (int5 > 0 ? int5 : 0);
+                                int5 = num2;
+                                int height = 0;
+                                for (int m = 0; m < this.list_0.Count; m++)
+                                {
+                                    ChartPane minValue = this.list_0[m];
+                                    if (minValue.Visible)
                                     {
-                                        pricePane = this.Panes[--num15];
-                                    Label_0548:
-                                        if (pricePane.Hidden || !pricePane.Visible)
+                                        minValue.LowestValue = minValue.MinValue;
+                                        minValue.HighestValue = minValue.MaxValue;
+                                        if (!bool_15 || !(string_4 == minValue.Description))
                                         {
-                                            continue;
-                                        }
-                                        goto Label_057D;
-                                    Label_055C:
-                                        pricePane = this.Panes[++num15];
-                                        goto Label_0548;
-                                    }
-                                    goto Label_055C;
-                                }
-                            Label_057D:
-                                pane2.Height += int_14;
-                                if (pane2.Height < num12)
-                                {
-                                    pane2.Height = num12;
-                                }
-                                int rawHeight = pane2.RawHeight;
-                                pane2.RawHeight = (int) (((double) pane2.Height) / num10);
-                                int num11 = pane2.RawHeight - rawHeight;
-                                pricePane.RawHeight -= num11;
-                                if ((pricePane.RawHeight * num10) < num12)
-                                {
-                                    int num13 = pricePane.RawHeight;
-                                    pricePane.RawHeight = (int) (((double) num12) / num10);
-                                    int num14 = pricePane.RawHeight - num13;
-                                    pane2.RawHeight -= num14;
-                                    pane2.Height = (int) (pane2.RawHeight * num10);
-                                }
-                                goto Label_06DA;
-                            Label_0637:
-                                if (this.bool_12 && (this.list_3.Count == this.list_0.Count))
-                                {
-                                    pane2.Height = this.list_3[n].Height;
-                                    pane2.RawHeight = this.list_3[n].RawHeight;
-                                    if (n == (this.list_0.Count - 1))
-                                    {
-                                        this.bool_12 = false;
-                                        this.list_3.Clear();
-                                    }
-                                }
-                                else if (pane2.Hidden)
-                                {
-                                    pane2.Height = pane2.HiddenHeight;
-                                }
-                                else
-                                {
-                                    pane2.Height = (int) (pane2.RawHeight * num10);
-                                }
-                            Label_06DA:
-                                pane2.Top = num34;
-                                num34 += pane2.Height;
-                                foreach (PlottedIndicator indicator in pane2.PlottedIndicators)
-                                {
-                                    pane2.method_1(indicator.Series);
-                                }
-                                foreach (PlottedSymbol symbol in pane2.PlottedSymbols)
-                                {
-                                    pane2.method_1(symbol.Bars.High);
-                                    pane2.method_1(symbol.Bars.Low);
-                                }
-                            }
-                            if (bool_15)
-                            {
-                                this.dictionary_2.Clear();
-                                foreach (ChartPane pane in this.list_0)
-                                {
-                                    this.dictionary_2.Add(pane.Description, pane.RawHeight);
-                                }
-                                this.bool_13 = true;
-                            }
-                            this.PricePane.method_1(bars_1.High);
-                            this.PricePane.method_1(bars_1.Low);
-                            if (!double.IsNaN(this.bars_0.High.PartialValue) && (this.int_8 == (bars_1.Count - 1)))
-                            {
-                                this.PricePane.method_2(bars_1.High.PartialValue);
-                                this.PricePane.method_2(bars_1.Low.PartialValue);
-                            }
-                            if (!double.IsNaN(this.bars_0.Volume.PartialValue) && (this.int_8 == (bars_1.Count - 1)))
-                            {
-                                this.VolumePane.method_2(bars_1.Volume.PartialValue);
-                            }
-                            if (this.VolumePane.Visible)
-                            {
-                                this.VolumePane.method_1(bars_1.Volume);
-                            }
-                            if (this.VolumePane.LowestValue > 0.0)
-                            {
-                                this.VolumePane.LowestValue = 0.0;
-                            }
-                            foreach (ChartPane pane9 in this.Panes)
-                            {
-                                if (pane9.LowestValue == double.MaxValue)
-                                {
-                                    pane9.LowestValue = 0.0;
-                                    pane9.HighestValue = 1.0;
-                                }
-                            }
-                            foreach (ChartPane pane10 in this.Panes)
-                            {
-                                pane10.method_9();
-                            }
-                            if (this.WealthScript != null)
-                            {
-                                this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle_0, PaintHookStage.AfterBackgroundRender);
-                            }
-                            if (this.color_9 != null)
-                            {
-                                for (int num35 = this.int_9; num35 <= this.int_8; num35++)
-                                {
-                                    if (this.color_9[num35] != Color.Empty)
-                                    {
-                                        num3 = this.int_1[num35] - (this.int_0[num35] / 2);
-                                        graphics_0.FillRectangle(new SolidBrush(this.color_9[num35]), num3, 0, this.int_0[num35], int_13);
-                                    }
-                                }
-                            }
-                            foreach (ChartPane pane12 in this.Panes)
-                            {
-                                if (pane12.color_0 != null)
-                                {
-                                    for (int num38 = this.int_9; num38 <= this.int_8; num38++)
-                                    {
-                                        if (pane12.color_0[num38] != Color.Empty)
-                                        {
-                                            num3 = this.int_1[num38] - (this.int_0[num38] / 2);
-                                            graphics_0.FillRectangle(new SolidBrush(pane12.color_0[num38]), num3, pane12.Top, this.int_0[num38], pane12.Height);
-                                        }
-                                    }
-                                }
-                            }
-                            Brush brush5 = new SolidBrush(this.MarginRightColor);
-                            graphics_0.FillRectangle(brush5, this.int_4 - this.MarginRightWidth, 0, this.MarginRightWidth, this.int_5);
-                            Brush brush6 = new SolidBrush(this.MarginBottomColor);
-                            graphics_0.FillRectangle(brush6, 0, this.int_5 - this.MarginBottomHeight, this.int_4, this.MarginBottomHeight);
-                            if (this.HorizontalGridines)
-                            {
-                                Brush brush4 = new SolidBrush(ReverseColor(this.MarginRightColor));
-                                foreach (ChartPane pane14 in this.list_0)
-                                {
-                                    if ((pane14.Visible && (pane14.Height > 0)) && (pane14.DisplayGrid && !pane14.Hidden))
-                                    {
-                                        this.gridLines_0.RangeMin = pane14.LowestValue;
-                                        this.gridLines_0.RangeMax = pane14.HighestValue;
-                                        this.gridLines_0.LinesDesired = pane14.Height / 20;
-                                        this.gridLines_0.Decimals = this.Bars.SymbolInfo.Decimals;
-                                        if (this.gridLines_0.GridIncrement > 0.0)
-                                        {
-                                            double gridFirstValue = this.gridLines_0.GridFirstValue;
-                                            if (pane14.LogScale && (gridFirstValue == 0.0))
+                                            if (!this.bool_12 || this.list_3.Count != this.list_0.Count)
                                             {
-                                                gridFirstValue += this.gridLines_0.GridIncrement;
-                                            }
-                                            num4 = pane14.ConvertValueToY(gridFirstValue);
-                                            while (num4 >= pane14.Top)
-                                            {
-                                                if (num4 < (pane14.Top + pane14.Height))
+                                                if (!minValue.Hidden)
                                                 {
-                                                    graphics_0.DrawLine(pen, 0, num4, this.int_4 - this.MarginRightWidth, num4);
-                                                    if (num4 > (pane14.Top + this.AxisFont.Height))
+                                                    minValue.Height = (int)((double)minValue.RawHeight * int5);
+                                                }
+                                                else
+                                                {
+                                                    minValue.Height = minValue.HiddenHeight;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                minValue.Height = this.list_3[m].Height;
+                                                minValue.RawHeight = this.list_3[m].RawHeight;
+                                                if (m == this.list_0.Count - 1)
+                                                {
+                                                    this.bool_12 = false;
+                                                    this.list_3.Clear();
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            int num3 = Math.Max(10, minValue.HiddenHeight);
+                                            if (!bool_16)
+                                            {
+                                                pricePane = minValue;
+                                                int num4 = m;
+                                                do
+                                                {
+                                                    if (!minValue.AbovePricePane)
                                                     {
-                                                        int num42 = (this.int_4 - this.MarginRightWidth) + 2;
-                                                        int num43 = num4 - ((int) (this.AxisFont.Height * 0.5));
-                                                        graphics_0.DrawString(pane14.FormatChartValue(gridFirstValue), this.AxisFont, brush4, (float) num42, (float) num43);
+                                                        int num5 = num4 - 1;
+                                                        num4 = num5;
+                                                        pricePane = this.Panes[num5];
+                                                    }
+                                                    else
+                                                    {
+                                                        int num6 = num4 + 1;
+                                                        num4 = num6;
+                                                        pricePane = this.Panes[num6];
                                                     }
                                                 }
-                                                gridFirstValue += this.gridLines_0.GridIncrement;
-                                                num4 = pane14.ConvertValueToY(gridFirstValue);
-                                                if ((num4 == 0) && (pane14.Top == 0))
-                                                {
-                                                    break;
-                                                }
+                                                while (pricePane.Hidden || !pricePane.Visible);
                                             }
+                                            else
+                                            {
+                                                pricePane = this.PricePane;
+                                            }
+                                            ChartPane chartPane = minValue;
+                                            chartPane.Height = chartPane.Height + int_14;
+                                            if (minValue.Height < num3)
+                                            {
+                                                minValue.Height = num3;
+                                            }
+                                            int rawHeight1 = minValue.RawHeight;
+                                            minValue.RawHeight = (int)((double)minValue.Height / int5);
+                                            int rawHeight2 = minValue.RawHeight - rawHeight1;
+                                            ChartPane chartPane1 = pricePane;
+                                            chartPane1.RawHeight = chartPane1.RawHeight - rawHeight2;
+                                            if ((double)pricePane.RawHeight * int5 < (double)num3)
+                                            {
+                                                int rawHeight3 = pricePane.RawHeight;
+                                                pricePane.RawHeight = (int)((double)num3 / int5);
+                                                int rawHeight4 = pricePane.RawHeight - rawHeight3;
+                                                ChartPane chartPane2 = minValue;
+                                                chartPane2.RawHeight = chartPane2.RawHeight - rawHeight4;
+                                                minValue.Height = (int)((double)minValue.RawHeight * int5);
+                                            }
+                                        }
+                                        minValue.Top = height;
+                                        height = height + minValue.Height;
+                                        foreach (PlottedIndicator plottedIndicator in minValue.PlottedIndicators)
+                                        {
+                                            minValue.method_1(plottedIndicator.Series);
+                                        }
+                                        foreach (PlottedSymbol plottedSymbol in minValue.PlottedSymbols)
+                                        {
+                                            minValue.method_1(plottedSymbol.Bars.High);
+                                            minValue.method_1(plottedSymbol.Bars.Low);
                                         }
                                     }
                                 }
-                            }
-                            Brush brush3 = new SolidBrush(TextColorForBackground(this.MarginBottomColor));
-                            int num37 = -2147483648;
-                            pen.Width = 2f;
-                            this.list_4.Clear();
-                            if (bars_1.IsIntraday)
-                            {
-                                for (int num33 = this.int_9 + 1; num33 <= this.int_8; num33++)
+                                if (bool_15)
                                 {
-                                    str = "";
-                                    time = bars_1.Date[num33];
-                                    time = bars_1.Date[num33 - 1];
-                                    if (time.Day == time.Day)
+                                    this.dictionary_2.Clear();
+                                    foreach (ChartPane list01 in this.list_0)
+                                    {
+                                        this.dictionary_2.Add(list01.Description, list01.RawHeight);
+                                    }
+                                    this.bool_13 = true;
+                                }
+                                this.PricePane.method_1(bars_1.High);
+                                this.PricePane.method_1(bars_1.Low);
+                                if (!double.IsNaN(this.bars_0.High.PartialValue) && this.int_8 == bars_1.Count - 1)
+                                {
+                                    this.PricePane.method_2(bars_1.High.PartialValue);
+                                    this.PricePane.method_2(bars_1.Low.PartialValue);
+                                }
+                                if (!double.IsNaN(this.bars_0.Volume.PartialValue) && this.int_8 == bars_1.Count - 1)
+                                {
+                                    this.VolumePane.method_2(bars_1.Volume.PartialValue);
+                                }
+                                if (this.VolumePane.Visible)
+                                {
+                                    this.VolumePane.method_1(bars_1.Volume);
+                                }
+                                if (this.VolumePane.LowestValue > 0)
+                                {
+                                    this.VolumePane.LowestValue = 0;
+                                }
+                                foreach (ChartPane pane1 in this.Panes)
+                                {
+                                    if (pane1.LowestValue != double.MaxValue)
                                     {
                                         continue;
                                     }
-                                    time = bars_1.Date[num33];
-                                    str = time.ToShortDateString();
-                                    num3 = this.int_1[num33];
-                                    width = (int) graphics_0.MeasureString(str, this.AxisFont).Width;
-                                    Rectangle rectangle2 = new Rectangle {
-                                        X = num3 - (width / 2),
-                                        Width = width,
-                                        Y = this.int_5 - this.MarginBottomHeight,
-                                        Height = this.MarginBottomHeight
-                                    };
-                                    flag = true;
-                                    using (enumerator6 = this.list_4.GetEnumerator())
+                                    pane1.LowestValue = 0;
+                                    pane1.HighestValue = 1;
+                                }
+                                foreach (ChartPane pane2 in this.Panes)
+                                {
+                                    pane2.method_9();
+                                }
+                                if (this.WealthScript != null)
+                                {
+                                    this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle_0, PaintHookStage.AfterBackgroundRender);
+                                }
+                                if (this.color_9 != null)
+                                {
+                                    for (int n = this.int_9; n <= this.int_8; n++)
                                     {
-                                        while (enumerator6.MoveNext())
+                                        if (this.color_9[n] != Color.Empty)
                                         {
-                                            Rectangle current = enumerator6.Current;
-                                            if (current.Contains(rectangle2.Left, (this.int_5 - this.MarginBottomHeight) + 1) || current.Contains(rectangle2.Left + width, (this.int_5 - this.MarginBottomHeight) + 1))
-                                            {
-                                                goto Label_0EB8;
-                                            }
+                                            int1 = this.int_1[n] - this.int_0[n] / 2;
+                                            graphics_0.FillRectangle(new SolidBrush(this.color_9[n]), int1, 0, this.int_0[n], int_13);
                                         }
-                                        goto Label_0ECB;
-                                    Label_0EB8:
-                                        flag = false;
-                                    }
-                                Label_0ECB:
-                                    if (flag)
-                                    {
-                                        graphics_0.DrawString(str, this.AxisFont, brush3, (float) rectangle2.Left, (float) rectangle2.Top);
-                                        this.list_4.Add(rectangle2);
-                                    }
-                                    if (this.VerticalGridlines)
-                                    {
-                                        graphics_0.DrawLine(pen, num3, 0, num3, this.int_5 - this.MarginBottomHeight);
                                     }
                                 }
-                            }
-                            pen.Width = 1f;
-                            if (this.int_9 < this.int_1.Length)
-                            {
-                                num3 = this.int_1[this.int_9];
-                                for (int num8 = this.int_9; num8 <= this.int_8; num8++)
+                                foreach (ChartPane pane3 in this.Panes)
                                 {
-                                    str = "";
-                                    switch (bars_1.Scale)
+                                    if (pane3.color_0 == null)
                                     {
-                                        case BarScale.Daily:
-                                            if (num8 > 0)
+                                        continue;
+                                    }
+                                    for (int o = this.int_9; o <= this.int_8; o++)
+                                    {
+                                        if (pane3.color_0[o] != Color.Empty)
+                                        {
+                                            int1 = this.int_1[o] - this.int_0[o] / 2;
+                                            graphics_0.FillRectangle(new SolidBrush(pane3.color_0[o]), int1, pane3.Top, this.int_0[o], pane3.Height);
+                                        }
+                                    }
+                                }
+                                Brush solidBrush = new SolidBrush(this.MarginRightColor);
+                                graphics_0.FillRectangle(solidBrush, this.int_4 - this.MarginRightWidth, 0, this.MarginRightWidth, this.int_5);
+                                Brush brush = new SolidBrush(this.MarginBottomColor);
+                                graphics_0.FillRectangle(brush, 0, this.int_5 - this.MarginBottomHeight, this.int_4, this.MarginBottomHeight);
+                                if (this.HorizontalGridines)
+                                {
+                                    Brush solidBrush1 = new SolidBrush(ChartRenderer.ReverseColor(this.MarginRightColor));
+                                Label0:
+                                    foreach (ChartPane list02 in this.list_0)
+                                    {
+                                        if (!list02.Visible || list02.Height <= 0 || !list02.DisplayGrid || list02.Hidden)
+                                        {
+                                            continue;
+                                        }
+                                        this.gridLines_0.RangeMin = list02.LowestValue;
+                                        this.gridLines_0.RangeMax = list02.HighestValue;
+                                        this.gridLines_0.LinesDesired = list02.Height / 20;
+                                        this.gridLines_0.Decimals = this.Bars.SymbolInfo.Decimals;
+                                        if (this.gridLines_0.GridIncrement <= 0)
+                                        {
+                                            continue;
+                                        }
+                                        double gridFirstValue = this.gridLines_0.GridFirstValue;
+                                        if (list02.LogScale && gridFirstValue == 0)
+                                        {
+                                            gridFirstValue = gridFirstValue + this.gridLines_0.GridIncrement;
+                                        }
+                                        y = list02.ConvertValueToY(gridFirstValue);
+                                        do
+                                        {
+                                            if (y < list02.Top)
                                             {
-                                                time = bars_1.Date[num8];
-                                                time = bars_1.Date[num8 - 1];
-                                                if (time.Month != time.Month)
+                                                goto Label0;
+                                            }
+                                            if (y < list02.Top + list02.Height)
+                                            {
+                                                graphics_0.DrawLine(pen, 0, y, this.int_4 - this.MarginRightWidth, y);
+                                                if (y > list02.Top + this.AxisFont.Height)
                                                 {
-                                                    time = bars_1.Date[num8];
-                                                    str = time.ToShortDateString();
+                                                    int int4 = this.int_4 - this.MarginRightWidth + 2;
+                                                    int height1 = (int)((double)y - (double)this.AxisFont.Height * 0.5);
+                                                    graphics_0.DrawString(list02.FormatChartValue(gridFirstValue), this.AxisFont, solidBrush1, (float)int4, (float)height1);
                                                 }
                                             }
-                                            break;
-
-                                        case BarScale.Weekly:
-                                            if (num8 > 0)
+                                            gridFirstValue = gridFirstValue + this.gridLines_0.GridIncrement;
+                                            y = list02.ConvertValueToY(gridFirstValue);
+                                        }
+                                        while (y != 0 || list02.Top != 0);
+                                    }
+                                }
+                                Brush brush1 = new SolidBrush(ChartRenderer.TextColorForBackground(this.MarginBottomColor));
+                                int num7 = -2147483648;
+                                pen.Width = 2f;
+                                this.list_4.Clear();
+                                if (bars_1.IsIntraday)
+                                {
+                                    for (int p = this.int_9 + 1; p <= this.int_8; p++)
+                                    {
+                                        shortDateString = "";
+                                        item = bars_1.Date[p];
+                                        item = bars_1.Date[p - 1];
+                                        if (item.Day != item.Day)
+                                        {
+                                            item = bars_1.Date[p];
+                                            shortDateString = item.ToShortDateString();
+                                            int1 = this.int_1[p];
+                                            sizeF = graphics_0.MeasureString(shortDateString, this.AxisFont);
+                                            width = (int)sizeF.Width;
+                                            Rectangle marginBottomHeight = new Rectangle();
+                                            marginBottomHeight.X = int1 - width / 2;
+                                            marginBottomHeight.Width = width;
+                                            marginBottomHeight.Y = this.int_5 - this.MarginBottomHeight;
+                                            marginBottomHeight.Height = this.MarginBottomHeight;
+                                            flag = true;
+                                            enumerator = this.list_4.GetEnumerator();
+                                            try
                                             {
-                                                time = bars_1.Date[num8];
-                                                time = bars_1.Date[num8 - 1];
-                                                if (time.Month != time.Month)
+                                                while (true)
                                                 {
-                                                    time = bars_1.Date[num8];
-                                                    if (((time.Month + 2) % 3) == 0)
+                                                    if (enumerator.MoveNext())
                                                     {
-                                                        time = bars_1.Date[num8];
-                                                        str = time.ToString("MMM-yy");
-                                                    }
-                                                }
-                                            }
-                                            break;
-
-                                        case BarScale.Monthly:
-                                        case BarScale.Quarterly:
-                                        case BarScale.Yearly:
-                                            if (num8 > 0)
-                                            {
-                                                time = bars_1.Date[num8];
-                                                time = bars_1.Date[num8 - 1];
-                                                if (time.Year != time.Year)
-                                                {
-                                                    time = bars_1.Date[num8];
-                                                    str = time.Year.ToString();
-                                                }
-                                            }
-                                            break;
-
-                                        case BarScale.Minute:
-                                            if (bars_1.BarInterval < 10)
-                                            {
-                                                time = bars_1.Date[num8];
-                                                if (time.Minute == 0)
-                                                {
-                                                    str = bars_1.Date[num8].ToShortTimeString();
-                                                }
-                                            }
-                                            break;
-                                    }
-                                    if (!(str != ""))
-                                    {
-                                        goto Label_120C;
-                                    }
-                                    if (this.VerticalGridlines)
-                                    {
-                                        graphics_0.DrawLine(pen, num3, 0, num3, this.int_5 - this.MarginBottomHeight);
-                                    }
-                                    width = (int) graphics_0.MeasureString(str, this.AxisFont).Width;
-                                    int x = num3 - (width / 2);
-                                    if (x <= num37)
-                                    {
-                                        goto Label_120C;
-                                    }
-                                    flag = true;
-                                    using (enumerator6 = this.list_4.GetEnumerator())
-                                    {
-                                        while (enumerator6.MoveNext())
-                                        {
-                                            Rectangle rectangle3 = enumerator6.Current;
-                                            if (rectangle3.Contains(x, (this.int_5 - this.MarginBottomHeight) + 1) || rectangle3.Contains(x + width, (this.int_5 - this.MarginBottomHeight) + 1))
-                                            {
-                                                goto Label_11CD;
-                                            }
-                                        }
-                                        goto Label_11E0;
-                                    Label_11CD:
-                                        flag = false;
-                                    }
-                                Label_11E0:
-                                    if (flag)
-                                    {
-                                        graphics_0.DrawString(str, this.AxisFont, brush3, (float) x, (float) (this.int_5 - this.MarginBottomHeight));
-                                    }
-                                    num37 = x + width;
-                                Label_120C:
-                                    num3 += this.int_0[num8];
-                                }
-                            }
-                            if (this.WealthScript != null)
-                            {
-                                this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle_0, PaintHookStage.BeforeBarsRender);
-                            }
-                            foreach (ChartPane pane6 in this.Panes)
-                            {
-                                this.ClipToPane(graphics_0, pane6);
-                                this.method_9(pane6, pane6.list_2, graphics_0);
-                            }
-                            this.ClipToPane(graphics_0, null);
-                            try
-                            {
-                                chartStyle_1.RenderBars(graphics_0);
-                                foreach (ChartPane pane16 in this.Panes)
-                                {
-                                    if (pane16.Visible && !pane16.Hidden)
-                                    {
-                                        foreach (PlottedSymbol symbol2 in pane16.PlottedSymbols)
-                                        {
-                                            chartStyle_1.method_0(symbol2, pane16, graphics_0);
-                                        }
-                                    }
-                                }
-                            }
-                            catch
-                            {
-                            }
-                            foreach (ChartPane pane5 in this.Panes)
-                            {
-                                if (!pane5.Visible || pane5.Hidden)
-                                {
-                                    continue;
-                                }
-                                this.ClipToPane(graphics_0, pane5);
-                                this.method_9(pane5, pane5.list_4, graphics_0);
-                                using (IEnumerator<PlottedIndicator> enumerator5 = pane5.PlottedIndicators.GetEnumerator())
-                                {
-                                    int num26;
-                                    int num27;
-                                    Brush brush2;
-                                    Color empty;
-                                    int num29;
-                                Label_1382:
-                                    if (!enumerator5.MoveNext())
-                                    {
-                                        goto Label_1832;
-                                    }
-                                    PlottedIndicator indicator2 = enumerator5.Current;
-                                    Pen pen4 = new Pen(indicator2.Color);
-                                    switch (indicator2.Style)
-                                    {
-                                        case LineStyle.Histogram:
-                                        {
-                                            int top;
-                                            int num24;
-                                            int num25 = this.BarSpacing - 2;
-                                            if (num25 < 1)
-                                            {
-                                                num25 = 1;
-                                            }
-                                            if (num25 > indicator2.Width)
-                                            {
-                                                num25 = indicator2.Width;
-                                            }
-                                            pen4.Width = num25;
-                                            for (int num23 = this.int_9; num23 <= this.int_8; num23++)
-                                            {
-                                                if (num23 >= indicator2.Series.FirstValidValue)
-                                                {
-                                                    num3 = this.int_1[num23];
-                                                    if (pane5.LogScale)
-                                                    {
-                                                        if (indicator2.Series[num23] > 0.0)
+                                                        Rectangle current = enumerator.Current;
+                                                        if (current.Contains(marginBottomHeight.Left, this.int_5 - this.MarginBottomHeight + 1) || current.Contains(marginBottomHeight.Left + width, this.int_5 - this.MarginBottomHeight + 1))
                                                         {
-                                                            top = pane5.Top + pane5.Height;
-                                                        }
-                                                        else
-                                                        {
-                                                            top = pane5.Top;
+                                                            flag = false;
+                                                            break;
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        top = pane5.ConvertValueToY(0.0);
+                                                        break;
                                                     }
-                                                    num24 = pane5.ConvertValueToY(indicator2.Series[num23]);
-                                                    pen4.Color = indicator2.GetBarColor(num23);
-                                                    graphics_0.DrawLine(pen4, num3, top, num3, num24);
                                                 }
                                             }
-                                            if (((indicator2.Series == this.bars_0.Volume) && !double.IsNaN(this.bars_0.Volume.PartialValue)) && (this.ScrollOffset == 0))
+                                            finally
                                             {
-                                                if (this.bars_0.Close.PartialValue > this.bars_0.Open.PartialValue)
-                                                {
-                                                    pen4.Color = this.UpBarVolumeColor;
-                                                }
-                                                else
-                                                {
-                                                    pen4.Color = this.DownBarVolumeColor;
-                                                }
-                                                num3 = (this.ChartWidth - this.MarginRightWidth) - (this.RightPaddingBars * this.BarSpacing);
-                                                top = pane5.ConvertValueToY(0.0);
-                                                num24 = pane5.ConvertValueToY(this.bars_0.Volume.PartialValue);
-                                                graphics_0.DrawLine(pen4, num3, top, num3, num24);
+                                                ((IDisposable)enumerator).Dispose();
                                             }
-                                            goto Label_1795;
-                                        }
-                                        case LineStyle.Invisible:
-                                            goto Label_1795;
-
-                                        case LineStyle.Dots:
-                                            empty = Color.Empty;
-                                            brush2 = null;
-                                            num29 = this.int_9 + 1;
-                                            goto Label_177D;
-
-                                        default:
-                                            pen4.Width = indicator2.Width;
-                                            pen4.StartCap = LineCap.Round;
-                                            pen4.EndCap = pen4.StartCap;
-                                            SetPenStyle(pen4, indicator2.Style);
-                                            num27 = this.int_8;
-                                            num26 = num27;
-                                            break;
-                                    }
-                                Label_1402:
-                                    if (((num26 < 1) || (num26 < this.int_9)) || (num27 <= 0))
-                                    {
-                                        goto Label_1795;
-                                    }
-                                    Color barColor = indicator2.GetBarColor(num27);
-                                    num26 = num27 - 1;
-                                    while (num26 >= 0)
-                                    {
-                                        if (!(indicator2.GetBarColor(num26) == barColor) || (num26 < this.int_9))
-                                        {
-                                            break;
-                                        }
-                                        num26--;
-                                    }
-                                    num26++;
-                                    if (num26 == 0)
-                                    {
-                                        num26 = 1;
-                                    }
-                                    if (num27 == 0)
-                                    {
-                                        goto Label_1402;
-                                    }
-                                    int num20 = num26;
-                                    if (num20 <= indicator2.Series.FirstValidValue)
-                                    {
-                                        num20 = indicator2.Series.FirstValidValue + 1;
-                                    }
-                                    if (num27 >= num20)
-                                    {
-                                        Point[] points = new Point[(num27 - num20) + 2];
-                                        pen4.Color = barColor;
-                                        int index = 0;
-                                        for (int num19 = num27; num19 >= (num20 - 1); num19--)
-                                        {
-                                            points[index] = new Point(this.int_1[num19], pane5.ConvertValueToY(indicator2.Series[num19]));
-                                            index++;
-                                        }
-                                        try
-                                        {
-                                            graphics_0.DrawLines(pen4, points);
-                                        }
-                                        catch (OverflowException)
-                                        {
-                                        }
-                                    }
-                                    goto Label_1819;
-                                Label_16FD:
-                                    if (num29 >= indicator2.Series.FirstValidValue)
-                                    {
-                                        Color color = indicator2.GetBarColor(num29);
-                                        if (color != empty)
-                                        {
-                                            if (brush2 != null)
+                                            if (flag)
                                             {
-                                                brush2.Dispose();
+                                                graphics_0.DrawString(shortDateString, this.AxisFont, brush1, (float)marginBottomHeight.Left, (float)marginBottomHeight.Top);
+                                                this.list_4.Add(marginBottomHeight);
                                             }
-                                            brush2 = new SolidBrush(color);
-                                            empty = color;
-                                        }
-                                        num3 = this.int_1[num29];
-                                        num4 = pane5.ConvertValueToY(indicator2.Series[num29]);
-                                        graphics_0.FillEllipse(brush2, num3, num4, indicator2.Width, indicator2.Width);
-                                    }
-                                    num29++;
-                                Label_177D:
-                                    if (num29 <= this.int_8)
-                                    {
-                                        goto Label_16FD;
-                                    }
-                                    if (brush2 != null)
-                                    {
-                                        brush2.Dispose();
-                                    }
-                                Label_1795:
-                                    if (indicator2.Selected)
-                                    {
-                                        Brush brush = new SolidBrush(indicator2.Color);
-                                        for (int num22 = 0; num22 <= (int_12 - this.int_6); num22 += 20)
-                                        {
-                                            int num30 = this.ConvertXToBar(num22);
-                                            if (num30 >= 0)
+                                            if (this.VerticalGridlines)
                                             {
-                                                num3 = this.ConvertBarToX(num30);
-                                                num4 = pane5.ConvertValueToY(indicator2.Series[num30]);
-                                                graphics_0.FillEllipse(brush, num3 - 3, num4 - 3, 7, 7);
+                                                graphics_0.DrawLine(pen, int1, 0, int1, this.int_5 - this.MarginBottomHeight);
                                             }
                                         }
-                                        brush.Dispose();
                                     }
-                                    pen4.Dispose();
-                                    goto Label_1382;
-                                Label_1819:
-                                    num27 = num26 - 1;
-                                    goto Label_1402;
                                 }
-                            Label_1832:
-                                this.ClipToPane(graphics_0, null);
-                            }
-                            if (this.tradingSystemExecutor_0 != null)
-                            {
-                                Pen pen5 = new Pen(Color.Blue, 2f);
-                                Pen pen6 = new Pen(Color.Red, 2f);
-                                foreach (Position position in this.tradingSystemExecutor_0.Performance.Results.Positions)
+                                pen.Width = 1f;
+                                if (this.int_9 < (int)this.int_1.Length)
                                 {
-                                    if (position.Bars.Symbol == bars_1.Symbol)
+                                    int1 = this.int_1[this.int_9];
+                                    int int9 = this.int_9;
+                                    while (int9 <= this.int_8)
                                     {
-                                        Bitmap longEntry;
-                                        int num45;
-                                        int num46;
-                                        string str4;
-                                        object obj2;
-                                        if ((position.EntryBar >= this.int_9) && (position.EntryBar <= this.int_8))
+                                        shortDateString = "";
+                                        BarScale scale = bars_1.Scale;
+                                        switch (scale)
+                                        {
+                                            case BarScale.Daily:
+                                                {
+                                                    if (int9 <= 0)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    item = bars_1.Date[int9 - 1];
+                                                    if (item.Month == item.Month)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    shortDateString = item.ToShortDateString();
+                                                    goto case BarScale.Tick;
+                                                }
+                                            case BarScale.Weekly:
+                                                {
+                                                    if (int9 <= 0)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    item = bars_1.Date[int9 - 1];
+                                                    if (item.Month == item.Month)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    if ((item.Month + 2) % 3 != 0)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    shortDateString = item.ToString("MMM-yy");
+                                                    goto case BarScale.Tick;
+                                                }
+                                            case BarScale.Monthly:
+                                            case BarScale.Quarterly:
+                                            case BarScale.Yearly:
+                                                {
+                                                    if (int9 <= 0)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    item = bars_1.Date[int9 - 1];
+                                                    if (item.Year == item.Year)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    year = item.Year;
+                                                    shortDateString = year.ToString();
+                                                    goto case BarScale.Tick;
+                                                }
+                                            case BarScale.Minute:
+                                                {
+                                                    if (bars_1.BarInterval >= 10)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    if (item.Minute != 0)
+                                                    {
+                                                        goto case BarScale.Tick;
+                                                    }
+                                                    item = bars_1.Date[int9];
+                                                    shortDateString = item.ToShortTimeString();
+                                                    goto case BarScale.Tick;
+                                                }
+                                            case BarScale.Second:
+                                            case BarScale.Tick:
+                                                {
+                                                    if (shortDateString != "")
+                                                    {
+                                                        if (this.VerticalGridlines)
+                                                        {
+                                                            graphics_0.DrawLine(pen, int1, 0, int1, this.int_5 - this.MarginBottomHeight);
+                                                        }
+                                                        sizeF = graphics_0.MeasureString(shortDateString, this.AxisFont);
+                                                        width = (int)sizeF.Width;
+                                                        int num8 = int1 - width / 2;
+                                                        if (num8 > num7)
+                                                        {
+                                                            flag = true;
+                                                            enumerator = this.list_4.GetEnumerator();
+                                                            try
+                                                            {
+                                                                while (true)
+                                                                {
+                                                                    if (enumerator.MoveNext())
+                                                                    {
+                                                                        Rectangle rectangle = enumerator.Current;
+                                                                        if (rectangle.Contains(num8, this.int_5 - this.MarginBottomHeight + 1) || rectangle.Contains(num8 + width, this.int_5 - this.MarginBottomHeight + 1))
+                                                                        {
+                                                                            flag = false;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+                                                            finally
+                                                            {
+                                                                ((IDisposable)enumerator).Dispose();
+                                                            }
+                                                            if (flag)
+                                                            {
+                                                                graphics_0.DrawString(shortDateString, this.AxisFont, brush1, (float)num8, (float)(this.int_5 - this.MarginBottomHeight));
+                                                            }
+                                                            num7 = num8 + width;
+                                                        }
+                                                    }
+                                                    int1 = int1 + this.int_0[int9];
+                                                    int9++;
+                                                    continue;
+                                                }
+                                            default:
+                                                {
+                                                    goto case BarScale.Tick;
+                                                }
+                                        }
+                                    }
+                                }
+                                if (this.WealthScript != null)
+                                {
+                                    this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle_0, PaintHookStage.BeforeBarsRender);
+                                }
+                                foreach (ChartPane chartPane3 in this.Panes)
+                                {
+                                    this.ClipToPane(graphics_0, chartPane3);
+                                    this.method_9(chartPane3, chartPane3.list_2, graphics_0);
+                                }
+                                this.ClipToPane(graphics_0, null);
+                                try
+                                {
+                                    chartStyle_1.RenderBars(graphics_0);
+                                    foreach (ChartPane pane4 in this.Panes)
+                                    {
+                                        if (!pane4.Visible || pane4.Hidden)
+                                        {
+                                            continue;
+                                        }
+                                        foreach (PlottedSymbol plottedSymbol1 in pane4.PlottedSymbols)
+                                        {
+                                            chartStyle_1.method_0(plottedSymbol1, pane4, graphics_0);
+                                        }
+                                    }
+                                }
+                                catch
+                                {
+                                    //object obj1 = obj2;
+                                }
+                                foreach (ChartPane chartPane4 in this.Panes)
+                                {
+                                    if (!chartPane4.Visible || chartPane4.Hidden)
+                                    {
+                                        continue;
+                                    }
+                                    this.ClipToPane(graphics_0, chartPane4);
+                                    this.method_9(chartPane4, chartPane4.list_4, graphics_0);
+                                    foreach (PlottedIndicator plottedIndicator1 in chartPane4.PlottedIndicators)
+                                    {
+                                        Pen barColor = new Pen(plottedIndicator1.Color);
+                                        LineStyle style = plottedIndicator1.Style;
+                                        switch (style)
+                                        {
+                                            case LineStyle.Histogram:
+                                                {
+                                                    int barSpacing = this.BarSpacing - 2;
+                                                    if (barSpacing < 1)
+                                                    {
+                                                        barSpacing = 1;
+                                                    }
+                                                    if (barSpacing > plottedIndicator1.Width)
+                                                    {
+                                                        barSpacing = plottedIndicator1.Width;
+                                                    }
+                                                    barColor.Width = (float)barSpacing;
+                                                    for (int q = this.int_9; q <= this.int_8; q++)
+                                                    {
+                                                        if (q >= plottedIndicator1.Series.FirstValidValue)
+                                                        {
+                                                            int1 = this.int_1[q];
+                                                            if (!chartPane4.LogScale)
+                                                            {
+                                                                num = chartPane4.ConvertValueToY(0);
+                                                            }
+                                                            else
+                                                            {
+                                                                num = (plottedIndicator1.Series[q] <= 0 ? chartPane4.Top : chartPane4.Top + chartPane4.Height);
+                                                            }
+                                                            y1 = chartPane4.ConvertValueToY(plottedIndicator1.Series[q]);
+                                                            barColor.Color = plottedIndicator1.GetBarColor(q);
+                                                            graphics_0.DrawLine(barColor, int1, num, int1, y1);
+                                                        }
+                                                    }
+                                                    if (plottedIndicator1.Series != this.bars_0.Volume || double.IsNaN(this.bars_0.Volume.PartialValue) || this.ScrollOffset != 0)
+                                                    {
+                                                        goto case LineStyle.Invisible;
+                                                    }
+                                                    if (this.bars_0.Close.PartialValue <= this.bars_0.Open.PartialValue)
+                                                    {
+                                                        barColor.Color = this.DownBarVolumeColor;
+                                                    }
+                                                    else
+                                                    {
+                                                        barColor.Color = this.UpBarVolumeColor;
+                                                    }
+                                                    int1 = this.ChartWidth - this.MarginRightWidth - this.RightPaddingBars * this.BarSpacing;
+                                                    num = chartPane4.ConvertValueToY(0);
+                                                    y1 = chartPane4.ConvertValueToY(this.bars_0.Volume.PartialValue);
+                                                    graphics_0.DrawLine(barColor, int1, num, int1, y1);
+                                                    goto case LineStyle.Invisible;
+                                                }
+                                            case LineStyle.Invisible:
+                                                {
+                                                    if (plottedIndicator1.Selected)
+                                                    {
+                                                        Brush solidBrush2 = new SolidBrush(plottedIndicator1.Color);
+                                                        for (int r = 0; r <= int_12 - this.int_6; r = r + 20)
+                                                        {
+                                                            int bar = this.ConvertXToBar(r);
+                                                            if (bar >= 0)
+                                                            {
+                                                                int1 = this.ConvertBarToX(bar);
+                                                                y = chartPane4.ConvertValueToY(plottedIndicator1.Series[bar]);
+                                                                graphics_0.FillEllipse(solidBrush2, int1 - 3, y - 3, 7, 7);
+                                                            }
+                                                        }
+                                                        solidBrush2.Dispose();
+                                                    }
+                                                    barColor.Dispose();
+                                                    continue;
+                                                }
+                                            case LineStyle.Dots:
+                                                {
+                                                    Color empty = Color.Empty;
+                                                    Brush brush2 = null;
+                                                    for (int s = this.int_9 + 1; s <= this.int_8; s++)
+                                                    {
+                                                        if (s >= plottedIndicator1.Series.FirstValidValue)
+                                                        {
+                                                            Color barColor1 = plottedIndicator1.GetBarColor(s);
+                                                            if (barColor1 != empty)
+                                                            {
+                                                                if (brush2 != null)
+                                                                {
+                                                                    brush2.Dispose();
+                                                                }
+                                                                brush2 = new SolidBrush(barColor1);
+                                                                empty = barColor1;
+                                                            }
+                                                            int1 = this.int_1[s];
+                                                            y = chartPane4.ConvertValueToY(plottedIndicator1.Series[s]);
+                                                            graphics_0.FillEllipse(brush2, int1, y, plottedIndicator1.Width, plottedIndicator1.Width);
+                                                        }
+                                                    }
+                                                    if (brush2 == null)
+                                                    {
+                                                        goto case LineStyle.Invisible;
+                                                    }
+                                                    brush2.Dispose();
+                                                    goto case LineStyle.Invisible;
+                                                }
+                                            default:
+                                                {
+                                                    barColor.Width = (float)plottedIndicator1.Width;
+                                                    barColor.StartCap = LineCap.Round;
+                                                    barColor.EndCap = barColor.StartCap;
+                                                    ChartRenderer.SetPenStyle(barColor, plottedIndicator1.Style);
+                                                    int int8 = this.int_8;
+                                                    int num9 = int8;
+                                                    while (num9 >= 1 && num9 >= this.int_9 && int8 > 0)
+                                                    {
+                                                        Color color1 = plottedIndicator1.GetBarColor(int8);
+                                                        num9 = int8 - 1;
+                                                        while (num9 >= 0 && plottedIndicator1.GetBarColor(num9) == color1 && num9 >= this.int_9)
+                                                        {
+                                                            num9--;
+                                                        }
+                                                        num9++;
+                                                        if (num9 == 0)
+                                                        {
+                                                            num9 = 1;
+                                                        }
+                                                        if (int8 == 0)
+                                                        {
+                                                            continue;
+                                                        }
+                                                        int firstValidValue = num9;
+                                                        if (firstValidValue <= plottedIndicator1.Series.FirstValidValue)
+                                                        {
+                                                            firstValidValue = plottedIndicator1.Series.FirstValidValue + 1;
+                                                        }
+                                                        if (int8 >= firstValidValue)
+                                                        {
+                                                            Point[] pointArray = new Point[int8 - firstValidValue + 2];
+                                                            barColor.Color = color1;
+                                                            int num10 = 0;
+                                                            for (int t = int8; t >= firstValidValue - 1; t--)
+                                                            {
+                                                                Point point = new Point(this.int_1[t], chartPane4.ConvertValueToY(plottedIndicator1.Series[t]));
+                                                                pointArray[num10] = point;
+                                                                num10++;
+                                                            }
+                                                            try
+                                                            {
+                                                                graphics_0.DrawLines(barColor, pointArray);
+                                                            }
+                                                            catch (OverflowException overflowException1)
+                                                            {
+                                                                OverflowException overflowException = overflowException1;
+                                                            }
+                                                        }
+                                                        int8 = num9 - 1;
+                                                    }
+                                                    goto case LineStyle.Invisible;
+                                                }
+                                        }
+                                    }
+                                    this.ClipToPane(graphics_0, null);
+                                }
+                                if (this.tradingSystemExecutor_0 != null)
+                                {
+                                    Pen pen3 = new Pen(Color.Blue, 2f);
+                                    Pen pen4 = new Pen(Color.Red, 2f);
+                                    foreach (Position position in this.tradingSystemExecutor_0.Performance.Results.Positions)
+                                    {
+                                        if (position.Bars.Symbol != bars_1.Symbol)
+                                        {
+                                            continue;
+                                        }
+                                        if (position.EntryBar >= this.int_9 && position.EntryBar <= this.int_8)
                                         {
                                             if (this.TradeArrowsVisible)
                                             {
-                                                if (position.PositionType == PositionType.Long)
+                                                if (position.PositionType != PositionType.Long)
                                                 {
-                                                    str4 = "Buy ";
-                                                    longEntry = Resources.LongEntry;
+                                                    str = "Short ";
+                                                    shortEntry = Resources.ShortEntry;
                                                 }
                                                 else
                                                 {
-                                                    str4 = "Short ";
-                                                    longEntry = Resources.ShortEntry;
+                                                    str = "Buy ";
+                                                    shortEntry = Resources.LongEntry;
                                                 }
-                                                obj2 = str4;
-                                                str4 = string.Concat(new object[] { obj2, position.Shares, " @", position.Bars.FormatValue(position.EntryPrice) });
-                                                this.method_8(longEntry, position.EntryBar, str4, position.PositionType == PositionType.Short, Color.Black, false).Position = position;
+                                                obj = str;
+                                                shares = new object[] { obj, position.Shares, " @", position.Bars.FormatValue(position.EntryPrice) };
+                                                str = string.Concat(shares);
+                                                ChartGlyph chartGlyph = this.method_8(shortEntry, position.EntryBar, str, position.PositionType == PositionType.Short, Color.Black, false);
+                                                chartGlyph.Position = position;
                                             }
                                             if (this.TradeCirclesVisible)
                                             {
-                                                num45 = this.PricePane.ConvertValueToY(position.EntryPrice);
-                                                num46 = this.int_1[position.EntryBar];
-                                                graphics_0.DrawEllipse(pen5, num46 - 3, num45 - 3, 6, 6);
+                                                num1 = this.PricePane.ConvertValueToY(position.EntryPrice);
+                                                int11 = this.int_1[position.EntryBar];
+                                                graphics_0.DrawEllipse(pen3, int11 - 3, num1 - 3, 6, 6);
                                             }
                                         }
-                                        if ((!position.Active && (position.ExitBar >= this.int_9)) && ((position.ExitBar <= this.int_8) && this.TradeArrowsVisible))
+                                        if (position.Active || position.ExitBar < this.int_9 || position.ExitBar > this.int_8 || !this.TradeArrowsVisible)
                                         {
-                                            Color blue;
-                                            if (position.PositionType == PositionType.Long)
-                                            {
-                                                str4 = "Sell ";
-                                                if (position.NetProfit > 0.0)
-                                                {
-                                                    longEntry = Resources.LongExitProfit;
-                                                }
-                                                else
-                                                {
-                                                    longEntry = Resources.LongExitLoss;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                str4 = "Cover ";
-                                                if (position.NetProfit > 0.0)
-                                                {
-                                                    longEntry = Resources.ShortExitProfit;
-                                                }
-                                                else
-                                                {
-                                                    longEntry = Resources.ShortExitLoss;
-                                                }
-                                            }
-                                            obj2 = str4;
-                                            str4 = string.Concat(new object[] { obj2, position.Shares, " @", position.Bars.FormatValue(position.ExitPrice), "\n", position.NetProfit.ToString("C"), "\n", position.NetProfitPercent.ToString("N2"), "%" });
-                                            if (position.NetProfit > 0.0)
-                                            {
-                                                blue = Color.Blue;
-                                            }
-                                            else
-                                            {
-                                                blue = Color.Red;
-                                            }
-                                            this.method_8(longEntry, position.ExitBar, str4, position.PositionType == PositionType.Long, blue, false).Position = position;
-                                            if (this.TradeCirclesVisible)
-                                            {
-                                                num45 = this.PricePane.ConvertValueToY(position.ExitPrice);
-                                                num46 = this.int_1[position.ExitBar];
-                                                graphics_0.DrawEllipse(pen6, num46 - 3, num45 - 3, 6, 6);
-                                            }
+                                            continue;
                                         }
+                                        if (position.PositionType != PositionType.Long)
+                                        {
+                                            str = "Cover ";
+                                            shortEntry = (position.NetProfit <= 0 ? Resources.ShortExitLoss : Resources.ShortExitProfit);
+                                        }
+                                        else
+                                        {
+                                            str = "Sell ";
+                                            shortEntry = (position.NetProfit <= 0 ? Resources.LongExitLoss : Resources.LongExitProfit);
+                                        }
+                                        obj = str;
+                                        shares = new object[] { obj, position.Shares, " @", position.Bars.FormatValue(position.ExitPrice), "\n", null, null, null, null };
+                                        double netProfit = position.NetProfit;
+                                        shares[5] = netProfit.ToString("C");
+                                        shares[6] = "\n";
+                                        netProfit = position.NetProfitPercent;
+                                        shares[7] = netProfit.ToString("N2");
+                                        shares[8] = "%";
+                                        str = string.Concat(shares);
+                                        color = (position.NetProfit <= 0 ? Color.Red : Color.Blue);
+                                        ChartGlyph chartGlyph1 = this.method_8(shortEntry, position.ExitBar, str, position.PositionType == PositionType.Long, color, false);
+                                        chartGlyph1.Position = position;
+                                        if (!this.TradeCirclesVisible)
+                                        {
+                                            continue;
+                                        }
+                                        num1 = this.PricePane.ConvertValueToY(position.ExitPrice);
+                                        int11 = this.int_1[position.ExitBar];
+                                        graphics_0.DrawEllipse(pen4, int11 - 3, num1 - 3, 6, 6);
                                     }
+                                    pen3.Dispose();
+                                    pen4.Dispose();
                                 }
-                                pen5.Dispose();
-                                pen6.Dispose();
-                            }
-                            this.ClipToPane(graphics_0, this.PricePane);
-                            foreach (Class33 class2 in this.list_2)
-                            {
-                                if ((class2.method_0() >= this.int_9) && (class2.method_0() <= this.int_8))
+                                this.ClipToPane(graphics_0, this.PricePane);
+                                foreach (Class33 list2 in this.list_2)
                                 {
+                                    if (list2.method_0() < this.int_9 || list2.method_0() > this.int_8)
+                                    {
+                                        continue;
+                                    }
                                     try
                                     {
-                                        num3 = this.ConvertBarToX(class2.method_0());
-                                        num4 = this.PricePane.ConvertValueToY(class2.method_1());
-                                        graphics_0.FillEllipse(class2.method_2(), num3, num4, 2, 2);
+                                        int1 = this.ConvertBarToX(list2.method_0());
+                                        y = this.PricePane.ConvertValueToY(list2.method_1());
+                                        graphics_0.FillEllipse(list2.method_2(), int1, y, 2, 2);
                                     }
                                     catch
                                     {
                                     }
                                 }
-                            }
-                            this.ClipToPane(graphics_0, null);
-                            if ((this.Fundamentals != null) && this.FundamentalsVisible)
-                            {
-                                foreach (string str3 in this.FundamentalGlyphs.Split(new char[] { ';' }))
+                                this.ClipToPane(graphics_0, null);
+                                if (this.Fundamentals != null && this.FundamentalsVisible)
                                 {
-                                    IList<FundamentalItem> list = this.Fundamentals.RequestSymbolItems(this.bars_0, this.bars_0.Symbol, str3);
-                                    if (list != null)
+                                    char[] chrArray = new char[] { ';' };
+                                    string[] strArrays = this.FundamentalGlyphs.Split(chrArray);
+                                    string[] strArrays1 = strArrays;
+                                    for (int u = 0; u < (int)strArrays1.Length; u++)
                                     {
-                                        foreach (FundamentalItem item in list)
+                                        string str1 = strArrays1[u];
+                                        IList<FundamentalItem> fundamentalItems = this.Fundamentals.RequestSymbolItems(this.bars_0, this.bars_0.Symbol, str1);
+                                        if (fundamentalItems != null)
                                         {
-                                            if ((item.Bar >= this.int_9) && (item.Bar <= this.int_8))
+                                            foreach (FundamentalItem fundamentalItem in fundamentalItems)
                                             {
-                                                this.method_8(item.Glyph, item.Bar, item.FormatValue(), true, Color.Black, true);
+                                                if (fundamentalItem.Bar < this.int_9 || fundamentalItem.Bar > this.int_8)
+                                                {
+                                                    continue;
+                                                }
+                                                this.method_8(fundamentalItem.Glyph, fundamentalItem.Bar, fundamentalItem.FormatValue(), true, Color.Black, true);
                                             }
                                         }
                                     }
                                 }
-                            }
-                            foreach (ChartPane pane7 in this.Panes)
-                            {
-                                pane7.LabelOffset = 0;
-                            }
-                            if (bars_1.Symbol != "")
-                            {
-                                string text = bars_1.Symbol + " ";
-                                if (bars_1.SecurityName != "")
+                                foreach (ChartPane pane5 in this.Panes)
                                 {
-                                    text = text + "(" + bars_1.SecurityName + ") ";
+                                    pane5.LabelOffset = 0;
                                 }
-                                if (bars_1.IsIntraday)
+                                if (bars_1.Symbol != "")
                                 {
-                                    text = text + bars_1.BarInterval.ToString() + " ";
-                                }
-                                text = text + bars_1.Scale.ToString();
-                                SizeF ef2 = graphics_0.MeasureString(text, this.font_1);
-                                Rectangle rect = new Rectangle(2, this.PricePane.Top + 2, (int) (ef2.Width + 8f), (int) (ef2.Height + 4f));
-                                graphics_0.FillRectangle(this.brush_0, rect);
-                                graphics_0.DrawRectangle(pen3, rect);
-                                graphics_0.DrawString(text, this.font_1, this.brush_1, 4f, (float) (this.PricePane.Top + 4));
-                                this.PricePane.LabelOffset = (rect.Bottom + 2) - this.PricePane.Top;
-                            }
-                            if (this.IndicatorLabelsVisible)
-                            {
-                                foreach (ChartPane pane8 in this.Panes)
-                                {
-                                    if (pane8.Visible)
+                                    string str2 = string.Concat(bars_1.Symbol, " ");
+                                    if (bars_1.SecurityName != "")
                                     {
-                                        pane8.method_6(graphics_0);
+                                        str2 = string.Concat(str2, "(", bars_1.SecurityName, ") ");
+                                    }
+                                    if (bars_1.IsIntraday)
+                                    {
+                                        year = bars_1.BarInterval;
+                                        str2 = string.Concat(str2, year.ToString(), " ");
+                                    }
+                                    str2 = string.Concat(str2, bars_1.Scale.ToString());
+                                    SizeF sizeF1 = graphics_0.MeasureString(str2, this.font_1);
+                                    Rectangle rectangle1 = new Rectangle(2, this.PricePane.Top + 2, (int)(sizeF1.Width + 8f), (int)(sizeF1.Height + 4f));
+                                    graphics_0.FillRectangle(this.brush_0, rectangle1);
+                                    graphics_0.DrawRectangle(pen2, rectangle1);
+                                    graphics_0.DrawString(str2, this.font_1, this.brush_1, 4f, (float)(this.PricePane.Top + 4));
+                                    this.PricePane.LabelOffset = rectangle1.Bottom + 2 - this.PricePane.Top;
+                                }
+                                if (this.IndicatorLabelsVisible)
+                                {
+                                    foreach (ChartPane chartPane5 in this.Panes)
+                                    {
+                                        if (!chartPane5.Visible)
+                                        {
+                                            continue;
+                                        }
+                                        chartPane5.method_6(graphics_0);
                                     }
                                 }
-                            }
-                            foreach (ChartPane pane13 in this.Panes)
-                            {
-                                if (pane13.list_3 != null)
+                                foreach (ChartPane pane6 in this.Panes)
                                 {
-                                    this.ClipToPane(graphics_0, pane13);
-                                    this.method_9(pane13, pane13.list_3, graphics_0);
-                                }
-                            }
-                            this.ClipToPane(graphics_0, null);
-                            foreach (ChartPane pane11 in this.Panes)
-                            {
-                                if (pane11.Visible && !pane11.Hidden)
-                                {
-                                    foreach (PlottedIndicator indicator3 in pane11.PlottedIndicators)
+                                    if (pane6.list_3 == null)
                                     {
-                                        if (((indicator3.Series == this.bars_0.Volume) && !double.IsNaN(this.bars_0.Volume.PartialValue)) && (this.int_8 == (this.bars_0.Count - 1)))
+                                        continue;
+                                    }
+                                    this.ClipToPane(graphics_0, pane6);
+                                    this.method_9(pane6, pane6.list_3, graphics_0);
+                                }
+                                this.ClipToPane(graphics_0, null);
+                                foreach (ChartPane chartPane6 in this.Panes)
+                                {
+                                    if (!chartPane6.Visible || chartPane6.Hidden)
+                                    {
+                                        continue;
+                                    }
+                                    foreach (PlottedIndicator plottedIndicator2 in chartPane6.PlottedIndicators)
+                                    {
+                                        if (plottedIndicator2.Series != this.bars_0.Volume || double.IsNaN(this.bars_0.Volume.PartialValue) || this.int_8 != this.bars_0.Count - 1)
                                         {
-                                            pane11.method_5(graphics_0, this.bars_0.Volume.PartialValue, indicator3.Color);
+                                            chartPane6.method_5(graphics_0, plottedIndicator2.Series[this.int_8], plottedIndicator2.Color);
                                         }
                                         else
                                         {
-                                            pane11.method_5(graphics_0, indicator3.Series[this.int_8], indicator3.Color);
+                                            chartPane6.method_5(graphics_0, this.bars_0.Volume.PartialValue, plottedIndicator2.Color);
                                         }
                                     }
                                 }
-                            }
-                            double partialValue = this.Bars.Close[this.int_8];
-                            if (!double.IsNaN(this.Bars.Close.PartialValue) && (this.int_8 == (this.Bars.Count - 1)))
-                            {
-                                partialValue = this.Bars.Close.PartialValue;
-                            }
-                            this.PricePane.method_5(graphics_0, partialValue, Color.Black);
-                            if (this.WealthScript != null)
-                            {
-                                this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle_0, PaintHookStage.AfterBarsRender);
-                            }
-                            foreach (ChartGlyph glyph in this.list_1)
-                            {
-                                graphics_0.DrawImage(glyph.Glyph, glyph.X, glyph.Y, glyph.Width, glyph.Height);
-                            }
-                            if (this.PaneSeparatorVisible)
-                            {
-                                Pen pen7 = new Pen(this.PaneSeparatorColor);
-                                using (pen7)
+                                double partialValue = this.Bars.Close[this.int_8];
+                                if (!double.IsNaN(this.Bars.Close.PartialValue) && this.int_8 == this.Bars.Count - 1)
                                 {
-                                    foreach (ChartPane pane17 in this.list_0)
+                                    partialValue = this.Bars.Close.PartialValue;
+                                }
+                                this.PricePane.method_5(graphics_0, partialValue, Color.Black);
+                                if (this.WealthScript != null)
+                                {
+                                    this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle_0, PaintHookStage.AfterBarsRender);
+                                }
+                                foreach (ChartGlyph list1 in this.list_1)
+                                {
+                                    graphics_0.DrawImage(list1.Glyph, list1.X, list1.Y, list1.Width, list1.Height);
+                                }
+                                if (this.PaneSeparatorVisible)
+                                {
+                                    Pen pen5 = new Pen(this.PaneSeparatorColor);
+                                    using (pen5)
                                     {
-                                        if (pane17.Visible)
+                                        foreach (ChartPane list03 in this.list_0)
                                         {
-                                            num4 = pane17.Top + pane17.Height;
-                                            graphics_0.DrawLine(pen7, 0, num4, this.int_4, num4);
+                                            if (!list03.Visible)
+                                            {
+                                                continue;
+                                            }
+                                            y = list03.Top + list03.Height;
+                                            graphics_0.DrawLine(pen5, 0, y, this.int_4, y);
                                         }
                                     }
                                 }
+                                this.brush_0.Dispose();
+                                this.brush_1.Dispose();
+                                pen1.Dispose();
+                                pen2.Dispose();
+                                return;
                             }
-                            this.brush_0.Dispose();
-                            this.brush_1.Dispose();
-                            pen2.Dispose();
-                            pen3.Dispose();
+                            else
+                            {
+                                return;
+                            }
                         }
                     }
                     else
                     {
-                        Font font = new Font("Arial", 12f);
-                        graphics_0.DrawString("No Data Available", font, this.ReverseBackgroundBrush, (PointF) new Point(20, 20));
+                        return;
                     }
                 }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                return;
             }
         }
+
 
         internal void method_10()
         {

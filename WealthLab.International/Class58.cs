@@ -9,7 +9,7 @@ internal class Class58 : Panel
     private bool bool_1;
     private bool bool_2;
     private bool bool_3;
-    private Color color_0 = VisualStyleInformation.TextControlBorder;
+    private Color color_0 = System.Windows.Forms.VisualStyles.VisualStyleInformation.TextControlBorder;
     private float float_0 = 1f;
     private IContainer icontainer_0;
 

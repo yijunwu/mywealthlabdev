@@ -35,9 +35,64 @@
         private StaticDataProvider staticDataProvider_0;
         private static string string_0 = "";
 
-        public event EventHandler<BarsEventArgs> ASynchDataCompleted;
+        private EventHandler<BarsEventArgs> eventHandler_0;
+        private EventHandler<UnhandledExceptionEventArgs> eventHandler_1;
 
-        public event EventHandler<UnhandledExceptionEventArgs> ASynchDataException;
+        public event EventHandler<BarsEventArgs> ASynchDataCompleted
+        {
+            add
+            {
+                EventHandler<BarsEventArgs> eventHandler;
+                EventHandler<BarsEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<BarsEventArgs> eventHandler;
+                EventHandler<BarsEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
+
+        public event EventHandler<UnhandledExceptionEventArgs> ASynchDataException
+        {
+            add
+            {
+                EventHandler<UnhandledExceptionEventArgs> eventHandler;
+                EventHandler<UnhandledExceptionEventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<UnhandledExceptionEventArgs> eventHandler2 = (EventHandler<UnhandledExceptionEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<UnhandledExceptionEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<UnhandledExceptionEventArgs> eventHandler;
+                EventHandler<UnhandledExceptionEventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<UnhandledExceptionEventArgs> eventHandler2 = (EventHandler<UnhandledExceptionEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<UnhandledExceptionEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+        }
 
         public BarsLoader()
         {

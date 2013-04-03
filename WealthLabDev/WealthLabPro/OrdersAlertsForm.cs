@@ -52,7 +52,7 @@
         private Font font_0;
         private Font font_1;
         private IContainer icontainer_0;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
         private ImageList imageList_1;
         public static OrdersAlertsForm Instance = null;
@@ -284,23 +284,16 @@
 
         public ListViewItem FindOrderItem(Order order)
         {
-            ListViewItem item2;
-            using (IEnumerator enumerator = this.lvOrders.Items.GetEnumerator())
+            foreach (ListViewItem item in this.lvOrders.Items)
             {
-                ListViewItem current;
-                while (enumerator.MoveNext())
+                if (item.Tag != order)
                 {
-                    current = (ListViewItem) enumerator.Current;
-                    if (current.Tag == order)
-                    {
-                        goto Label_0035;
-                    }
+                    continue;
                 }
-                return null;
-            Label_0035:
-                item2 = current;
+                ListViewItem listViewItem = item;
+                return listViewItem;
             }
-            return item2;
+            return null;
         }
 
         private void InitializeComponent()
@@ -878,34 +871,48 @@
 
         private void method_0(Order order_0)
         {
-            using (IEnumerator enumerator = this.lvOrders.Items.GetEnumerator())
+            IEnumerator enumerator = this.lvOrders.Items.GetEnumerator();
+            try
             {
-                ListViewItem current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (ListViewItem) enumerator.Current;
-                    if (current.Tag == order_0)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0035;
+                        ListViewItem current = (ListViewItem)enumerator.Current;
+                        if (current.Tag == order_0)
+                        {
+                            if (!this.btnAutoRemove.Checked || order_0.Status != OrderStatus.Canceled || !order_0.FromAutoTrading)
+                            {
+                                this.method_7(order_0, current);
+                            }
+                            else
+                            {
+                                this.list_0.Clear();
+                                this.list_0.Add(order_0);
+                                MainModule.Instance.TradeManager.RemoveOrders(this.list_0);
+                                this.method_8();
+                            }
+                            if (!current.Selected)
+                            {
+                                break;
+                            }
+                            this.method_10();
+                            this.lvOrders_SelectedIndexChanged(this.lvOrders, EventArgs.Empty);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                return;
-            Label_0035:
-                if ((this.btnAutoRemove.Checked && (order_0.Status == OrderStatus.Canceled)) && order_0.FromAutoTrading)
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
                 {
-                    this.list_0.Clear();
-                    this.list_0.Add(order_0);
-                    MainModule.Instance.TradeManager.RemoveOrders(this.list_0);
-                    this.method_8();
-                }
-                else
-                {
-                    this.method_7(order_0, current);
-                }
-                if (current.Selected)
-                {
-                    this.method_10();
-                    this.lvOrders_SelectedIndexChanged(this.lvOrders, EventArgs.Empty);
+                    disposable.Dispose();
                 }
             }
         }
@@ -965,20 +972,33 @@
 
         private void method_2(Order order_0)
         {
-            using (IEnumerator enumerator = this.lvOrders.Items.GetEnumerator())
+            IEnumerator enumerator = this.lvOrders.Items.GetEnumerator();
+            try
             {
-                ListViewItem current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (ListViewItem) enumerator.Current;
-                    if (current.Tag == order_0)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0035;
+                        ListViewItem current = (ListViewItem)enumerator.Current;
+                        if (current.Tag == order_0)
+                        {
+                            this.lvOrders.Items.Remove(current);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                return;
-            Label_0035:
-                this.lvOrders.Items.Remove(current);
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
             }
         }
 

@@ -9,6 +9,7 @@
     <AssemblyName>WealthLab.APaperProvider</AssemblyName>
     <OutputType>Library</OutputType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -36,7 +37,6 @@
     <Reference Include="WealthLab">
       <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
     </Reference>
-    <Reference Include="WealthLab.PaperProvider" />
     <Reference Include="System.Drawing" />
     <Reference Include="Fidelity.Components">
       <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
@@ -52,5 +52,11 @@
     <Compile Include="WealthLab\APaperProvider\Properties\Resources.cs" />
     <EmbeddedResource Include="WealthLab.APaperProvider.ErrorForm.resources" />
     <EmbeddedResource Include="WealthLab.APaperProvider.Properties.Resources.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthLab.PaperProvider\WealthLab.PaperProvider.csproj">
+      <Project>{7A35CAE9-326E-4C82-9492-E4E55476F254}</Project>
+      <Name>WealthLab.PaperProvider</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

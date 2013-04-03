@@ -12,7 +12,7 @@
     public class WLPEmail
     {
         private bool bool_0;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private int int_0;
         private static Stack<WLPEmail> stack_0 = new Stack<WLPEmail>();
         private string string_0;

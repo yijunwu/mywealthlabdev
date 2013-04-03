@@ -23,7 +23,35 @@
         private MarketHours marketHours_0;
         private string string_0;
 
-        public event EventHandler<StockSplitEventArgs> StockSplitDataAdjusted;
+        private EventHandler<StockSplitEventArgs> eventHandler_0;
+
+        public event EventHandler<StockSplitEventArgs> StockSplitDataAdjusted
+        {
+            add
+            {
+                EventHandler<StockSplitEventArgs> eventHandler;
+                EventHandler<StockSplitEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<StockSplitEventArgs> eventHandler1 = (EventHandler<StockSplitEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<StockSplitEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<StockSplitEventArgs> eventHandler;
+                EventHandler<StockSplitEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<StockSplitEventArgs> eventHandler1 = (EventHandler<StockSplitEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<StockSplitEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
 
         public DataSourceManager()
         {

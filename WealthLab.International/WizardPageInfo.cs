@@ -200,7 +200,7 @@ internal class WizardPageInfo : WizardPage, Interface0
         this.bool_0 = bool_1;
     }
 
-    void WizardPage.Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_1 != null))
         {

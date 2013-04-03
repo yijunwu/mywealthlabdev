@@ -2947,19 +2947,427 @@
 
         private void PreferencesForm_Load(object sender, EventArgs e)
         {
+            string str;
+            ListViewItem listViewItem;
+            string tag;
+            IEnumerator enumerator;
+            string str1;
+            string str2;
+            double num;
+            TradeManager tradeManager;
+            double cashThreshold;
+            double buyingPowerThreshold;
+            string str3;
+            TreeNode current;
+            IDisposable disposable;
+            IEnumerator enumerator1;
+            ListViewItem current1;
+            IDisposable disposable1;
+            string name;
+            IEnumerator enumerator2;
+            ListViewItem count;
+            string fundamentalGlyphs;
+            string friendlyName;
+            IEnumerator enumerator3;
+            ChartRenderer renderer;
+            IList<FundamentalItem> chartableItems;
+            Commission commission;
+            ICustomSettings customSetting;
+            object obj;
+            IDisposable disposable2;
+            StreamingDataProvider streamingDataProvider;
+            ListViewItem count1;
             TradingSystemExecutor executor;
+            double cashRate;
+            double marginRate;
+            double redcuceQtyPct;
+            ListViewItem listViewItem1;
+            IDisposable disposable3;
             this.cmbCommAction.SelectedIndex = 0;
             this.cmbCommOrder.SelectedIndex = 0;
             this.tree.ExpandAll();
             SettingsManager settings = MainModule.Instance.Settings;
             if (!MainModule.Instance.AuthProvider.AllowStreaming)
             {
-                for (int i = 0; i < this.tree.Nodes.Count; i++)
+                int num1 = 0;
+                while (num1 < this.tree.Nodes.Count)
                 {
-                    if (this.tree.Nodes[i].Text == "Streaming Data")
+                    if (this.tree.Nodes[num1].Text == "Streaming Data")
                     {
-                        this.tree.Nodes.RemoveAt(i);
-                        break;
+                        this.tree.Nodes.RemoveAt(num1);
+                        settings.Get(this, "PreferencesForm");
+                        if (this.tree.SelectedNode == null)
+                        {
+                            this.tree.SelectedNode = this.tree.Nodes[0];
+                            this.pnlCS.BringToFront();
+                            if (base.Tag != null && base.Tag is string)
+                            {
+                                tag = base.Tag as string;
+                                enumerator = this.tree.Nodes.GetEnumerator();
+                                try
+                                {
+                                    while (true)
+                                    {
+                                        if (enumerator.MoveNext())
+                                        {
+                                            current = (TreeNode)enumerator.Current;
+                                            if ((string)current.Tag == tag)
+                                            {
+                                                this.tree.SelectedNode = current;
+                                                this.tree_AfterSelect(this, new TreeViewEventArgs(current));
+                                                break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                finally
+                                {
+                                    disposable = enumerator as IDisposable;
+                                    if (disposable != null)
+                                    {
+                                        disposable.Dispose();
+                                    }
+                                }
+                            }
+                        }
+                        foreach (IPerformanceVisualizer visualizer in MainModule.Instance.Visualizers)
+                        {
+                            listViewItem = this.lvPV.Items.Add(visualizer.TabText);
+                            listViewItem.Tag = visualizer;
+                            str = "";
+                            if (visualizer.AppliesTo != VisualizerAppliesTo.All)
+                            {
+                                if ((int)(visualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) != 0)
+                                {
+                                    if ((int)(visualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) == 0)
+                                    {
+                                        str = "Multi Symbol";
+                                    }
+                                }
+                                else
+                                {
+                                    str = "Single Symbol";
+                                }
+                                if ((int)(visualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) != 0)
+                                {
+                                    if ((int)(visualizer.AppliesTo & VisualizerAppliesTo.RawProfit) != 0)
+                                    {
+                                        if ((visualizer.AppliesTo & VisualizerAppliesTo.CombinationStrategy) == VisualizerAppliesTo.CombinationStrategy)
+                                        {
+                                            str = "Combination Strategies";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (str != "")
+                                        {
+                                            str = string.Concat(str, ", ");
+                                        }
+                                        str = string.Concat(str, "Portfolio Simulation");
+                                    }
+                                }
+                                else
+                                {
+                                    if (str != "")
+                                    {
+                                        str = string.Concat(str, ", ");
+                                    }
+                                    str = string.Concat(str, "Raw Profit Mode");
+                                }
+                            }
+                            else
+                            {
+                                str = "All Backtests";
+                            }
+                            listViewItem.SubItems.Add(str);
+                        }
+                        foreach (IPerformanceVisualizer visualizersChecked in MainModule.Instance.VisualizersChecked)
+                        {
+                            enumerator1 = this.lvPV.Items.GetEnumerator();
+                            try
+                            {
+                                while (true)
+                                {
+                                    if (enumerator1.MoveNext())
+                                    {
+                                        current1 = (ListViewItem)enumerator1.Current;
+                                        if (current1.Text == visualizersChecked.TabText)
+                                        {
+                                            current1.Checked = true;
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            finally
+                            {
+                                disposable1 = enumerator1 as IDisposable;
+                                if (disposable1 != null)
+                                {
+                                    disposable1.Dispose();
+                                }
+                            }
+                        }
+                        renderer = MainModule.Instance.Renderer;
+                        this.colorBackground.BackColor = renderer.BackgroundColor;
+                        this.method_2(this, EventArgs.Empty);
+                        this.colorUpBars.BackColor = renderer.UpBarColor;
+                        this.colorDownBars.BackColor = renderer.DownBarColor;
+                        this.colorUpVolume.BackColor = renderer.UpBarVolumeColor;
+                        this.colorDownVolume.BackColor = renderer.DownBarVolumeColor;
+                        this.colorGridlines.BackColor = renderer.GridlineColor;
+                        this.colorRightMargin.BackColor = renderer.MarginRightColor;
+                        this.method_6(this, EventArgs.Empty);
+                        this.colorBottomMargin.BackColor = renderer.MarginBottomColor;
+                        this.colorPaneSep.BackColor = renderer.PaneSeparatorColor;
+                        this.lblSampleText.Font = renderer.AxisFont;
+                        this.lblTitleFontSample.Font = renderer.TitleFont;
+                        this.cbHorizontalGridlines.Checked = renderer.HorizontalGridines;
+                        this.cbVerticalGridlines.Checked = renderer.VerticalGridlines;
+                        this.cbPaneSeparators.Checked = renderer.PaneSeparatorVisible;
+                        this.cbPriceTooltip.Checked = settings.Get("PriceTooltip", true);
+                        this.cbIndicatorTooltip.Checked = settings.Get("IndicatorTooltip", true);
+                        this.cbFundamentalTooltip.Checked = settings.Get("FundamentalTooltip", true);
+                        this.fundamentalsLoader_0.DataHost = MainModule.Instance.DataSources;
+                        chartableItems = this.fundamentalsLoader_0.ChartableItems;
+                        fundamentalGlyphs = renderer.FundamentalGlyphs;
+                        foreach (FundamentalItem chartableItem in chartableItems)
+                        {
+                            count = (fundamentalGlyphs.StartsWith(string.Concat(chartableItem.Name, ";")) || fundamentalGlyphs.Contains(string.Concat(";", chartableItem.Name, ";")) ? this.lvFundSelected.Items.Add(chartableItem.Name) : this.lvFundAvailable.Items.Add(chartableItem.Name));
+                            count.Tag = chartableItem;
+                            this.imageList_0.Images.Add(chartableItem.Glyph);
+                            count.ImageIndex = this.imageList_0.Images.Count - 1;
+                        }
+                        this.assemblyLoader_0.Path = MainModule.Instance.AppPath;
+                        foreach (Type type in this.assemblyLoader_0.Types)
+                        {
+                            commission = (Commission)this.assemblyLoader_0.CreateInstance(type);
+                            if (commission is ICustomSettings)
+                            {
+                                customSetting = commission as ICustomSettings;
+                                customSetting.ReadSettings(MainModule.Instance.Settings);
+                            }
+                            this.lbCommission.Items.Add(commission);
+                        }
+                        this.cbCommission.Checked = MainModule.Instance.Executor.ApplyCommission;
+                        if (MainModule.Instance.Executor.Commission != null)
+                        {
+                            name = MainModule.Instance.Executor.Commission.GetType().Name;
+                            enumerator2 = this.lbCommission.Items.GetEnumerator();
+                            try
+                            {
+                                while (true)
+                                {
+                                    if (enumerator2.MoveNext())
+                                    {
+                                        obj = enumerator2.Current;
+                                        if (obj.GetType().Name == name)
+                                        {
+                                            this.lbCommission.SelectedItem = obj;
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            finally
+                            {
+                                disposable2 = enumerator2 as IDisposable;
+                                if (disposable2 != null)
+                                {
+                                    disposable2.Dispose();
+                                }
+                            }
+                        }
+                        executor = MainModule.Instance.Executor;
+                        this.cbSlippage.Checked = executor.EnableSlippage;
+                        this.cbLimitSlippage.Checked = executor.LimitOrderSlippage;
+                        this.numSlippage.Value = (decimal)((double)executor.SlippageUnits);
+                        this.numFuturesSlippage.Value = executor.SlippageTicks;
+                        this.cbRoundLots.Checked = executor.RoundLots;
+                        this.cbRound50.Checked = executor.RoundLots50;
+                        this.cbLimitDays.Checked = executor.LimitDaySimulation;
+                        this.cbInterest.Checked = executor.ApplyInterest;
+                        cashRate = executor.CashRate;
+                        this.numCashRate.Text = cashRate.ToString();
+                        marginRate = executor.MarginRate;
+                        this.numMarginRate.Text = marginRate.ToString();
+                        this.cbDividends.Checked = executor.ApplyDividends;
+                        this.cbReduceQty.Checked = executor.ReduceQtyBasedOnVolume;
+                        this.cbNoDecimalRoundingForLimitStopPrice.Checked = executor.NoDecimalRoundingForLimitStopPrice;
+                        redcuceQtyPct = executor.RedcuceQtyPct;
+                        this.numReduceQty.Text = redcuceQtyPct.ToString();
+                        this.cbWorstTradeSimulation.Checked = executor.WorstTradeSimulation;
+                        this.cbBenchmarkBH.Checked = executor.BenchmarkBuyAndHoldON;
+                        this.txtBHSymbol.Text = executor.BenchmarkSymbol;
+                        this.txtBHSymbol.Enabled = this.cbBenchmarkBH.Checked;
+                        this.cbShowHome.Checked = settings.Get("ShowHomePage", true);
+                        this.cbExpand.Checked = settings.Get("ExpandFirstDataSet", true);
+                        this.cbRememberData.Checked = settings.Get("RememberStrategyData", false);
+                        this.cbRememberPositionSize.Checked = settings.Get("RememberStrategyPositionSize", false);
+                        this.cbRememberRange.Checked = settings.Get("RememberStrategyRange", false);
+                        this.cbRememberScale.Checked = settings.Get("RememberStrategyScale", false);
+                        this.cbRememberParamValues.Checked = settings.Get("RememberParameterSliders", false);
+                        this.cbApplyCharts.Checked = settings.Get("ApplyChartColors", true);
+                        this.cbPrintPreviewOff.Checked = settings.Get("HidePrintPreview", false);
+                        this.cbPrintDialogOff.Checked = settings.Get("HidePrintDialog", false);
+                        this.cbAutoOpenOrders.Checked = settings.Get("AutoOpenOrders", true);
+                        this.cbSwitchAccount.Checked = settings.Get("SwitchToAccount", true);
+                        this.indicatorDecimalPlaces.Value = settings.Get(DecimalsManager.Instance.IndicatorKey, DecimalsManager.Instance.Indicator);
+                        this.pricingDecimalPlaces.Value = settings.Get(DecimalsManager.Instance.PricingKey, DecimalsManager.Instance.Pricing);
+                        this.cbDisablePortfolioSynch.Checked = settings.Get(TradeManager.DisablePortfolioSynchKey, false);
+                        this.cbNoDecimalRoundingForLimitStopPrice.Checked = settings.Get("NoDecimalRoundingForLimitStopPrice", false);
+                        this.cbSoundQuotes.Checked = settings.Get("SoundsQuotes", true);
+                        str1 = string.Concat(MainModule.Instance.AppPath, "\\Data\\Sounds\\alert1.wav");
+                        str2 = settings.Get("SoundsQuotes_File", str1);
+                        if (!File.Exists(str2))
+                        {
+                            str2 = str1;
+                        }
+                        this.txtBoxQuotes_SoundPath.Text = str2;
+                        if (!this.cbSoundQuotes.Checked)
+                        {
+                            this.txtBoxQuotes_SoundPath.Enabled = false;
+                            this.btnBrowse_Quotes.Enabled = false;
+                        }
+                        this.cbSoundStategyMonitor.Checked = settings.Get("SoundsStrategyMonitor", true);
+                        str1 = string.Concat(MainModule.Instance.AppPath, "\\Data\\Sounds\\alert2.wav");
+                        str2 = settings.Get("SoundsStrategyMonitor_File", str1);
+                        if (!File.Exists(str2))
+                        {
+                            str2 = str1;
+                        }
+                        this.txtBoxStrategyMonitor_SoundPath.Text = str2;
+                        if (!this.cbSoundStategyMonitor.Checked)
+                        {
+                            this.txtBoxStrategyMonitor_SoundPath.Enabled = false;
+                            this.btnBrowse_StrategyMonitor.Enabled = false;
+                        }
+                        this.cbSoundStrategyWindow.Checked = settings.Get("SoundsStrategyWindow", true);
+                        str1 = string.Concat(MainModule.Instance.AppPath, "\\Data\\Sounds\\alert4.wav");
+                        str2 = settings.Get("SoundsStrategyWindow_File", str1);
+                        if (!File.Exists(str2))
+                        {
+                            str2 = str1;
+                        }
+                        this.txtBoxStrategyWindow_SoundPath.Text = str2;
+                        if (!this.cbSoundStrategyWindow.Checked)
+                        {
+                            this.txtBoxStrategyWindow_SoundPath.Enabled = false;
+                            this.btnBrowse_StrategyWindow.Enabled = false;
+                        }
+                        this.cbSoundsRealTime.Checked = settings.Get("SoundsRealTime", true);
+                        str1 = string.Concat(MainModule.Instance.AppPath, "\\Data\\Sounds\\DIGITAL.wav");
+                        str2 = settings.Get("SoundsRealTime_File", str1);
+                        if (!File.Exists(str2))
+                        {
+                            str2 = str1;
+                        }
+                        this.txtBoxRealTime_SoundPath.Text = str2;
+                        if (!this.cbSoundsRealTime.Checked)
+                        {
+                            this.txtBoxRealTime_SoundPath.Enabled = false;
+                            this.btnBrowse_RealTimeStrategy.Enabled = false;
+                        }
+                        this.cbSoundsIndicators.Checked = settings.Get("SoundsIndicators", true);
+                        this.cbSoundsParameters.Checked = settings.Get("SoundsParameters", true);
+                        this.assemblyLoader_1.Path = MainModule.Instance.AppPath;
+                        foreach (Type type1 in this.assemblyLoader_1.Types)
+                        {
+                            streamingDataProvider = (StreamingDataProvider)this.assemblyLoader_1.CreateInstance(type1);
+                            this.imageList_1.Images.Add(streamingDataProvider.Glyph);
+                            count1 = this.lvStreaming.Items.Add(streamingDataProvider.FriendlyName);
+                            count1.Tag = streamingDataProvider;
+                            count1.ImageIndex = this.imageList_1.Images.Count - 1;
+                        }
+                        this.txtStreaming.Text = settings.Get("StreamingSymbols", ".DJI, .IXIC, .SPX");
+                        if (MainModule.Instance.StreamingProvider != null)
+                        {
+                            friendlyName = MainModule.Instance.StreamingProvider.FriendlyName;
+                            enumerator3 = this.lvStreaming.Items.GetEnumerator();
+                            try
+                            {
+                                while (true)
+                                {
+                                    if (enumerator3.MoveNext())
+                                    {
+                                        listViewItem1 = (ListViewItem)enumerator3.Current;
+                                        if (listViewItem1.Text == friendlyName)
+                                        {
+                                            listViewItem1.Checked = true;
+                                            listViewItem1.Selected = true;
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            finally
+                            {
+                                disposable3 = enumerator3 as IDisposable;
+                                if (disposable3 != null)
+                                {
+                                    disposable3.Dispose();
+                                }
+                            }
+                        }
+                        this.cbBadTickFilter.Checked = settings.Get("BadTickFilter", false);
+                        num = settings.Get("BadTickThreshold", 20);
+                        this.numBadTick.Text = num.ToString();
+                        MainModule.Instance.HelpProvider.SetHelpNavigator(this, HelpNavigator.Topic);
+                        MainModule.Instance.HelpProvider.SetHelpKeyword(this, "Preferences2.htm");
+                        foreach (string accountNumber in MainModule.Instance.AccountNumbers)
+                        {
+                            this.cmbDefaultAccount.Items.Add(accountNumber);
+                        }
+                        this.cmbDefaultAccount.SelectedIndex = this.cmbDefaultAccount.Items.IndexOf(MainModule.Instance.DefaultAccountNumber);
+                        if (this.cmbDefaultAccount.SelectedIndex == -1 && this.cmbDefaultAccount.Items.Count > 0)
+                        {
+                            this.cmbDefaultAccount.SelectedIndex = 0;
+                        }
+                        tradeManager = MainModule.Instance.TradeManager;
+                        this.cbExitAll.Checked = settings.Get("ExitFullPosition", false);
+                        this.cbCashThreshold.Checked = tradeManager.EnableCashThreshold;
+                        this.cbBuyingPowerThreshold.Checked = tradeManager.EnableBuyingPowerThreshold;
+                        cashThreshold = tradeManager.CashThreshold;
+                        this.numCashThreshold.Text = cashThreshold.ToString();
+                        buyingPowerThreshold = tradeManager.BuyingPowerThreshold;
+                        this.numBuyingPowerThreshold.Text = buyingPowerThreshold.ToString();
+                        this.cbSameBarExit.Checked = tradeManager.SameBarExits;
+                        this.txtSMTPHost.Text = settings.Get("EmailSMTPHost", string.Empty);
+                        this.txtSMTPPort.Text = settings.Get("EmailSMTPPort", string.Empty);
+                        str3 = settings.Get("EmailAddresses", string.Empty);
+                        str3 = str3.Replace("~!", "\r\n");
+                        this.txtEmailAddresses.Text = str3;
+                        this.txtUserID.Text = settings.Get("EmailUserID", "");
+                        this.chkAuthenticateWithPassword.Checked = settings.Get("EmailAuthenticateWithPassword", false);
+                        this.txtPassword.Text = MainModule.Instance.method_11(settings.Get("EmailPassword", string.Empty));
+                        if (!this.chkAuthenticateWithPassword.Checked)
+                        {
+                            this.txtPassword.Enabled = false;
+                        }
+                        this.chkSSL.Checked = settings.Get("EmailSSL", false);
+                        this.btnApply.Enabled = false;
+                        this.bool_0 = true;
+                        return;
+                    }
+                    else
+                    {
+                        num1++;
                     }
                 }
             }
@@ -2968,89 +3376,123 @@
             {
                 this.tree.SelectedNode = this.tree.Nodes[0];
                 this.pnlCS.BringToFront();
-                if ((base.Tag != null) && (base.Tag is string))
+                if (base.Tag != null && base.Tag is string)
                 {
-                    string tag = base.Tag as string;
-                    using (IEnumerator enumerator2 = this.tree.Nodes.GetEnumerator())
+                    tag = base.Tag as string;
+                    enumerator = this.tree.Nodes.GetEnumerator();
+                    try
                     {
-                        TreeNode current;
-                        while (enumerator2.MoveNext())
+                        while (true)
                         {
-                            current = (TreeNode) enumerator2.Current;
-                            if (((string) current.Tag) == tag)
+                            if (enumerator.MoveNext())
                             {
-                                goto Label_013E;
+                                current = (TreeNode)enumerator.Current;
+                                if ((string)current.Tag == tag)
+                                {
+                                    this.tree.SelectedNode = current;
+                                    this.tree_AfterSelect(this, new TreeViewEventArgs(current));
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
-                        goto Label_0170;
-                    Label_013E:
-                        this.tree.SelectedNode = current;
-                        this.tree_AfterSelect(this, new TreeViewEventArgs(current));
+                    }
+                    finally
+                    {
+                        disposable = enumerator as IDisposable;
+                        if (disposable != null)
+                        {
+                            disposable.Dispose();
+                        }
                     }
                 }
             }
-        Label_0170:
-            foreach (IPerformanceVisualizer visualizer in MainModule.Instance.Visualizers)
+            foreach (IPerformanceVisualizer performanceVisualizer in MainModule.Instance.Visualizers)
             {
-                ListViewItem item = this.lvPV.Items.Add(visualizer.TabText);
-                item.Tag = visualizer;
-                string text = "";
-                if (visualizer.AppliesTo == VisualizerAppliesTo.All)
+                listViewItem = this.lvPV.Items.Add(performanceVisualizer.TabText);
+                listViewItem.Tag = performanceVisualizer;
+                str = "";
+                if (performanceVisualizer.AppliesTo != VisualizerAppliesTo.All)
                 {
-                    text = "All Backtests";
+                    if ((int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) != 0)
+                    {
+                        if ((int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) == 0)
+                        {
+                            str = "Multi Symbol";
+                        }
+                    }
+                    else
+                    {
+                        str = "Single Symbol";
+                    }
+                    if ((int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) != 0)
+                    {
+                        if ((int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.RawProfit) != 0)
+                        {
+                            if ((performanceVisualizer.AppliesTo & VisualizerAppliesTo.CombinationStrategy) == VisualizerAppliesTo.CombinationStrategy)
+                            {
+                                str = "Combination Strategies";
+                            }
+                        }
+                        else
+                        {
+                            if (str != "")
+                            {
+                                str = string.Concat(str, ", ");
+                            }
+                            str = string.Concat(str, "Portfolio Simulation");
+                        }
+                    }
+                    else
+                    {
+                        if (str != "")
+                        {
+                            str = string.Concat(str, ", ");
+                        }
+                        str = string.Concat(str, "Raw Profit Mode");
+                    }
                 }
                 else
                 {
-                    if ((visualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) == 0)
-                    {
-                        text = "Single Symbol";
-                    }
-                    else if ((visualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) == 0)
-                    {
-                        text = "Multi Symbol";
-                    }
-                    if ((visualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) == 0)
-                    {
-                        if (text != "")
-                        {
-                            text = text + ", ";
-                        }
-                        text = text + "Raw Profit Mode";
-                    }
-                    else if ((visualizer.AppliesTo & VisualizerAppliesTo.RawProfit) == 0)
-                    {
-                        if (text != "")
-                        {
-                            text = text + ", ";
-                        }
-                        text = text + "Portfolio Simulation";
-                    }
-                    else if ((visualizer.AppliesTo & VisualizerAppliesTo.CombinationStrategy) == VisualizerAppliesTo.CombinationStrategy)
-                    {
-                        text = "Combination Strategies";
-                    }
+                    str = "All Backtests";
                 }
-                item.SubItems.Add(text);
+                listViewItem.SubItems.Add(str);
             }
-            foreach (IPerformanceVisualizer visualizer2 in MainModule.Instance.VisualizersChecked)
+            foreach (IPerformanceVisualizer visualizersChecked1 in MainModule.Instance.VisualizersChecked)
             {
-                using (IEnumerator enumerator5 = this.lvPV.Items.GetEnumerator())
+                enumerator1 = this.lvPV.Items.GetEnumerator();
+                try
                 {
-                    ListViewItem item2;
-                    while (enumerator5.MoveNext())
+                    while (true)
                     {
-                        item2 = (ListViewItem) enumerator5.Current;
-                        if (item2.Text == visualizer2.TabText)
+                        if (enumerator1.MoveNext())
                         {
-                            goto Label_02EF;
+                            current1 = (ListViewItem)enumerator1.Current;
+                            if (current1.Text == visualizersChecked1.TabText)
+                            {
+                                current1.Checked = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    continue;
-                Label_02EF:
-                    item2.Checked = true;
+                }
+                finally
+                {
+                    disposable1 = enumerator1 as IDisposable;
+                    if (disposable1 != null)
+                    {
+                        disposable1.Dispose();
+                    }
                 }
             }
-            ChartRenderer renderer = MainModule.Instance.Renderer;
+            renderer = MainModule.Instance.Renderer;
             this.colorBackground.BackColor = renderer.BackgroundColor;
             this.method_2(this, EventArgs.Empty);
             this.colorUpBars.BackColor = renderer.UpBarColor;
@@ -3071,69 +3513,77 @@
             this.cbIndicatorTooltip.Checked = settings.Get("IndicatorTooltip", true);
             this.cbFundamentalTooltip.Checked = settings.Get("FundamentalTooltip", true);
             this.fundamentalsLoader_0.DataHost = MainModule.Instance.DataSources;
-            IList<FundamentalItem> chartableItems = this.fundamentalsLoader_0.ChartableItems;
-            string fundamentalGlyphs = renderer.FundamentalGlyphs;
-            foreach (FundamentalItem item4 in chartableItems)
+            chartableItems = this.fundamentalsLoader_0.ChartableItems;
+            fundamentalGlyphs = renderer.FundamentalGlyphs;
+            foreach (FundamentalItem fundamentalItem in chartableItems)
             {
-                ListViewItem item3;
-                if (!fundamentalGlyphs.StartsWith(item4.Name + ";") && !fundamentalGlyphs.Contains(";" + item4.Name + ";"))
-                {
-                    item3 = this.lvFundAvailable.Items.Add(item4.Name);
-                }
-                else
-                {
-                    item3 = this.lvFundSelected.Items.Add(item4.Name);
-                }
-                item3.Tag = item4;
-                this.imageList_0.Images.Add(item4.Glyph);
-                item3.ImageIndex = this.imageList_0.Images.Count - 1;
+                count = (fundamentalGlyphs.StartsWith(string.Concat(fundamentalItem.Name, ";")) || fundamentalGlyphs.Contains(string.Concat(";", fundamentalItem.Name, ";")) ? this.lvFundSelected.Items.Add(fundamentalItem.Name) : this.lvFundAvailable.Items.Add(fundamentalItem.Name));
+                count.Tag = fundamentalItem;
+                this.imageList_0.Images.Add(fundamentalItem.Glyph);
+                count.ImageIndex = this.imageList_0.Images.Count - 1;
             }
             this.assemblyLoader_0.Path = MainModule.Instance.AppPath;
-            foreach (System.Type type in this.assemblyLoader_0.Types)
+            foreach (Type type2 in this.assemblyLoader_0.Types)
             {
-                Commission commission = (Commission) this.assemblyLoader_0.CreateInstance(type);
+                commission = (Commission)this.assemblyLoader_0.CreateInstance(type2);
                 if (commission is ICustomSettings)
                 {
-                    (commission as ICustomSettings).ReadSettings(MainModule.Instance.Settings);
+                    customSetting = commission as ICustomSettings;
+                    customSetting.ReadSettings(MainModule.Instance.Settings);
                 }
                 this.lbCommission.Items.Add(commission);
             }
             this.cbCommission.Checked = MainModule.Instance.Executor.ApplyCommission;
             if (MainModule.Instance.Executor.Commission != null)
             {
-                string name = MainModule.Instance.Executor.Commission.GetType().Name;
-                using (IEnumerator enumerator6 = this.lbCommission.Items.GetEnumerator())
+                name = MainModule.Instance.Executor.Commission.GetType().Name;
+                enumerator2 = this.lbCommission.Items.GetEnumerator();
+                try
                 {
-                    object obj2;
-                    while (enumerator6.MoveNext())
+                    while (true)
                     {
-                        obj2 = enumerator6.Current;
-                        if (obj2.GetType().Name == name)
+                        if (enumerator2.MoveNext())
                         {
-                            goto Label_06A7;
+                            obj = enumerator2.Current;
+                            if (obj.GetType().Name == name)
+                            {
+                                this.lbCommission.SelectedItem = obj;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    goto Label_06CB;
-                Label_06A7:
-                    this.lbCommission.SelectedItem = obj2;
+                }
+                finally
+                {
+                    disposable2 = enumerator2 as IDisposable;
+                    if (disposable2 != null)
+                    {
+                        disposable2.Dispose();
+                    }
                 }
             }
-        Label_06CB:
             executor = MainModule.Instance.Executor;
             this.cbSlippage.Checked = executor.EnableSlippage;
             this.cbLimitSlippage.Checked = executor.LimitOrderSlippage;
-            this.numSlippage.Value = (decimal) executor.SlippageUnits;
+            this.numSlippage.Value = (decimal)((double)executor.SlippageUnits);
             this.numFuturesSlippage.Value = executor.SlippageTicks;
             this.cbRoundLots.Checked = executor.RoundLots;
             this.cbRound50.Checked = executor.RoundLots50;
             this.cbLimitDays.Checked = executor.LimitDaySimulation;
             this.cbInterest.Checked = executor.ApplyInterest;
-            this.numCashRate.Text = executor.CashRate.ToString();
-            this.numMarginRate.Text = executor.MarginRate.ToString();
+            cashRate = executor.CashRate;
+            this.numCashRate.Text = cashRate.ToString();
+            marginRate = executor.MarginRate;
+            this.numMarginRate.Text = marginRate.ToString();
             this.cbDividends.Checked = executor.ApplyDividends;
             this.cbReduceQty.Checked = executor.ReduceQtyBasedOnVolume;
             this.cbNoDecimalRoundingForLimitStopPrice.Checked = executor.NoDecimalRoundingForLimitStopPrice;
-            this.numReduceQty.Text = executor.RedcuceQtyPct.ToString();
+            redcuceQtyPct = executor.RedcuceQtyPct;
+            this.numReduceQty.Text = redcuceQtyPct.ToString();
             this.cbWorstTradeSimulation.Checked = executor.WorstTradeSimulation;
             this.cbBenchmarkBH.Checked = executor.BenchmarkBuyAndHoldON;
             this.txtBHSymbol.Text = executor.BenchmarkSymbol;
@@ -3155,52 +3605,52 @@
             this.cbDisablePortfolioSynch.Checked = settings.Get(TradeManager.DisablePortfolioSynchKey, false);
             this.cbNoDecimalRoundingForLimitStopPrice.Checked = settings.Get("NoDecimalRoundingForLimitStopPrice", false);
             this.cbSoundQuotes.Checked = settings.Get("SoundsQuotes", true);
-            string defaultValue = MainModule.Instance.AppPath + @"\Data\Sounds\alert1.wav";
-            string path = settings.Get("SoundsQuotes_File", defaultValue);
-            if (!File.Exists(path))
+            str1 = string.Concat(MainModule.Instance.AppPath, "\\Data\\Sounds\\alert1.wav");
+            str2 = settings.Get("SoundsQuotes_File", str1);
+            if (!File.Exists(str2))
             {
-                path = defaultValue;
+                str2 = str1;
             }
-            this.txtBoxQuotes_SoundPath.Text = path;
+            this.txtBoxQuotes_SoundPath.Text = str2;
             if (!this.cbSoundQuotes.Checked)
             {
                 this.txtBoxQuotes_SoundPath.Enabled = false;
                 this.btnBrowse_Quotes.Enabled = false;
             }
             this.cbSoundStategyMonitor.Checked = settings.Get("SoundsStrategyMonitor", true);
-            defaultValue = MainModule.Instance.AppPath + @"\Data\Sounds\alert2.wav";
-            path = settings.Get("SoundsStrategyMonitor_File", defaultValue);
-            if (!File.Exists(path))
+            str1 = string.Concat(MainModule.Instance.AppPath, "\\Data\\Sounds\\alert2.wav");
+            str2 = settings.Get("SoundsStrategyMonitor_File", str1);
+            if (!File.Exists(str2))
             {
-                path = defaultValue;
+                str2 = str1;
             }
-            this.txtBoxStrategyMonitor_SoundPath.Text = path;
+            this.txtBoxStrategyMonitor_SoundPath.Text = str2;
             if (!this.cbSoundStategyMonitor.Checked)
             {
                 this.txtBoxStrategyMonitor_SoundPath.Enabled = false;
                 this.btnBrowse_StrategyMonitor.Enabled = false;
             }
             this.cbSoundStrategyWindow.Checked = settings.Get("SoundsStrategyWindow", true);
-            defaultValue = MainModule.Instance.AppPath + @"\Data\Sounds\alert4.wav";
-            path = settings.Get("SoundsStrategyWindow_File", defaultValue);
-            if (!File.Exists(path))
+            str1 = string.Concat(MainModule.Instance.AppPath, "\\Data\\Sounds\\alert4.wav");
+            str2 = settings.Get("SoundsStrategyWindow_File", str1);
+            if (!File.Exists(str2))
             {
-                path = defaultValue;
+                str2 = str1;
             }
-            this.txtBoxStrategyWindow_SoundPath.Text = path;
+            this.txtBoxStrategyWindow_SoundPath.Text = str2;
             if (!this.cbSoundStrategyWindow.Checked)
             {
                 this.txtBoxStrategyWindow_SoundPath.Enabled = false;
                 this.btnBrowse_StrategyWindow.Enabled = false;
             }
             this.cbSoundsRealTime.Checked = settings.Get("SoundsRealTime", true);
-            defaultValue = MainModule.Instance.AppPath + @"\Data\Sounds\DIGITAL.wav";
-            path = settings.Get("SoundsRealTime_File", defaultValue);
-            if (!File.Exists(path))
+            str1 = string.Concat(MainModule.Instance.AppPath, "\\Data\\Sounds\\DIGITAL.wav");
+            str2 = settings.Get("SoundsRealTime_File", str1);
+            if (!File.Exists(str2))
             {
-                path = defaultValue;
+                str2 = str1;
             }
-            this.txtBoxRealTime_SoundPath.Text = path;
+            this.txtBoxRealTime_SoundPath.Text = str2;
             if (!this.cbSoundsRealTime.Checked)
             {
                 this.txtBoxRealTime_SoundPath.Enabled = false;
@@ -3209,60 +3659,76 @@
             this.cbSoundsIndicators.Checked = settings.Get("SoundsIndicators", true);
             this.cbSoundsParameters.Checked = settings.Get("SoundsParameters", true);
             this.assemblyLoader_1.Path = MainModule.Instance.AppPath;
-            foreach (System.Type type2 in this.assemblyLoader_1.Types)
+            foreach (Type type3 in this.assemblyLoader_1.Types)
             {
-                StreamingDataProvider provider = (StreamingDataProvider) this.assemblyLoader_1.CreateInstance(type2);
-                this.imageList_1.Images.Add(provider.Glyph);
-                ListViewItem item5 = this.lvStreaming.Items.Add(provider.FriendlyName);
-                item5.Tag = provider;
-                item5.ImageIndex = this.imageList_1.Images.Count - 1;
+                streamingDataProvider = (StreamingDataProvider)this.assemblyLoader_1.CreateInstance(type3);
+                this.imageList_1.Images.Add(streamingDataProvider.Glyph);
+                count1 = this.lvStreaming.Items.Add(streamingDataProvider.FriendlyName);
+                count1.Tag = streamingDataProvider;
+                count1.ImageIndex = this.imageList_1.Images.Count - 1;
             }
             this.txtStreaming.Text = settings.Get("StreamingSymbols", ".DJI, .IXIC, .SPX");
             if (MainModule.Instance.StreamingProvider != null)
             {
-                string friendlyName = MainModule.Instance.StreamingProvider.FriendlyName;
-                using (IEnumerator enumerator8 = this.lvStreaming.Items.GetEnumerator())
+                friendlyName = MainModule.Instance.StreamingProvider.FriendlyName;
+                enumerator3 = this.lvStreaming.Items.GetEnumerator();
+                try
                 {
-                    ListViewItem item6;
-                    while (enumerator8.MoveNext())
+                    while (true)
                     {
-                        item6 = (ListViewItem) enumerator8.Current;
-                        if (item6.Text == friendlyName)
+                        if (enumerator3.MoveNext())
                         {
-                            goto Label_0D1D;
+                            listViewItem1 = (ListViewItem)enumerator3.Current;
+                            if (listViewItem1.Text == friendlyName)
+                            {
+                                listViewItem1.Checked = true;
+                                listViewItem1.Selected = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    goto Label_0D44;
-                Label_0D1D:
-                    item6.Checked = true;
-                    item6.Selected = true;
+                }
+                finally
+                {
+                    disposable3 = enumerator3 as IDisposable;
+                    if (disposable3 != null)
+                    {
+                        disposable3.Dispose();
+                    }
                 }
             }
-        Label_0D44:
             this.cbBadTickFilter.Checked = settings.Get("BadTickFilter", false);
-            this.numBadTick.Text = settings.Get("BadTickThreshold", (double) 20.0).ToString();
+            num = settings.Get("BadTickThreshold", 20);
+            this.numBadTick.Text = num.ToString();
             MainModule.Instance.HelpProvider.SetHelpNavigator(this, HelpNavigator.Topic);
             MainModule.Instance.HelpProvider.SetHelpKeyword(this, "Preferences2.htm");
-            foreach (string str6 in MainModule.Instance.AccountNumbers)
+            foreach (string accountNumber1 in MainModule.Instance.AccountNumbers)
             {
-                this.cmbDefaultAccount.Items.Add(str6);
+                this.cmbDefaultAccount.Items.Add(accountNumber1);
             }
             this.cmbDefaultAccount.SelectedIndex = this.cmbDefaultAccount.Items.IndexOf(MainModule.Instance.DefaultAccountNumber);
-            if ((this.cmbDefaultAccount.SelectedIndex == -1) && (this.cmbDefaultAccount.Items.Count > 0))
+            if (this.cmbDefaultAccount.SelectedIndex == -1 && this.cmbDefaultAccount.Items.Count > 0)
             {
                 this.cmbDefaultAccount.SelectedIndex = 0;
             }
-            TradeManager tradeManager = MainModule.Instance.TradeManager;
+            tradeManager = MainModule.Instance.TradeManager;
             this.cbExitAll.Checked = settings.Get("ExitFullPosition", false);
             this.cbCashThreshold.Checked = tradeManager.EnableCashThreshold;
             this.cbBuyingPowerThreshold.Checked = tradeManager.EnableBuyingPowerThreshold;
-            this.numCashThreshold.Text = tradeManager.CashThreshold.ToString();
-            this.numBuyingPowerThreshold.Text = tradeManager.BuyingPowerThreshold.ToString();
+            cashThreshold = tradeManager.CashThreshold;
+            this.numCashThreshold.Text = cashThreshold.ToString();
+            buyingPowerThreshold = tradeManager.BuyingPowerThreshold;
+            this.numBuyingPowerThreshold.Text = buyingPowerThreshold.ToString();
             this.cbSameBarExit.Checked = tradeManager.SameBarExits;
             this.txtSMTPHost.Text = settings.Get("EmailSMTPHost", string.Empty);
             this.txtSMTPPort.Text = settings.Get("EmailSMTPPort", string.Empty);
-            string str5 = settings.Get("EmailAddresses", string.Empty).Replace("~!", "\r\n");
-            this.txtEmailAddresses.Text = str5;
+            str3 = settings.Get("EmailAddresses", string.Empty);
+            str3 = str3.Replace("~!", "\r\n");
+            this.txtEmailAddresses.Text = str3;
             this.txtUserID.Text = settings.Get("EmailUserID", "");
             this.chkAuthenticateWithPassword.Checked = settings.Get("EmailAuthenticateWithPassword", false);
             this.txtPassword.Text = MainModule.Instance.method_11(settings.Get("EmailPassword", string.Empty));
@@ -3282,50 +3748,77 @@
 
         public DialogResult ShowDialog(string section)
         {
-            using (IEnumerator enumerator = this.tree.Nodes.GetEnumerator())
+            IEnumerator enumerator = this.tree.Nodes.GetEnumerator();
+            try
             {
-                TreeNode current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (TreeNode) enumerator.Current;
-                    if (current.Text == section)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0038;
+                        TreeNode current = (TreeNode)enumerator.Current;
+                        if (current.Text == section)
+                        {
+                            this.tree.SelectedNode = current;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                goto Label_0057;
-            Label_0038:
-                this.tree.SelectedNode = current;
             }
-        Label_0057:
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
             return base.ShowDialog();
         }
 
         private void tree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string tag = (string) e.Node.Tag;
-            using (IEnumerator enumerator = this.split.Panel2.Controls.GetEnumerator())
+            bool flag;
+            string tag = (string)e.Node.Tag;
+            IEnumerator enumerator = this.split.Panel2.Controls.GetEnumerator();
+            try
             {
-                Panel panel;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    Control current = (Control) enumerator.Current;
-                    if (current is Panel)
+                    if (enumerator.MoveNext())
                     {
-                        panel = current as Panel;
-                        string str2 = panel.Tag as string;
-                        if ((str2 != null) && (str2 == tag))
+                        Control current = (Control)enumerator.Current;
+                        if (current is Panel)
                         {
-                            goto Label_006A;
+                            Panel panel = current as Panel;
+                            string str = panel.Tag as string;
+                            if (str != null && str == tag)
+                            {
+                                panel.BringToFront();
+                                break;
+                            }
                         }
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
-                goto Label_0086;
-            Label_006A:
-                panel.BringToFront();
             }
-        Label_0086:
-            this.cbApplyCharts.Visible = (tag == "CS") || (tag == "CA");
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
+            CheckBox checkBox = this.cbApplyCharts;
+            flag = (tag == "CS" ? true : tag == "CA");
+            checkBox.Visible = flag;
             this.method_0();
         }
 

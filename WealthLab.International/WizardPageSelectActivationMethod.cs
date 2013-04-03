@@ -82,7 +82,7 @@ internal class WizardPageSelectActivationMethod : WizardPage, Interface0
         return Enum13.const_0;
     }
 
-    void WizardPage.Dispose(bool disposing)
+    protected override void Dispose(bool disposing) ///WYJ fix
     {
         if (disposing && (this.icontainer_1 != null))
         {

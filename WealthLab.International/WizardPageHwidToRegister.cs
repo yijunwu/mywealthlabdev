@@ -118,7 +118,7 @@ internal class WizardPageHwidToRegister : WizardPage, Interface0
         this.txtHwid.Text = Form0.smethod_4();
     }
 
-    void WizardPage.Dispose(bool disposing)
+    protected override void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_1 != null))
         {

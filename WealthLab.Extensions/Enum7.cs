@@ -1,6 +1,6 @@
 ﻿using System;
 
-internal enum Enum7
+public enum Enum7
 {
     const_0,
     const_1

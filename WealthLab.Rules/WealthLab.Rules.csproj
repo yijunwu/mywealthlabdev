@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>bdc23644-eb58-4e41-b24b-1a3219ccdfed</ProjectGuid>
+    <ProjectGuid>{0A00F37C-6A44-4935-A9B8-610B6A3A7D89}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.Rules</AssemblyName>
     <OutputType>Library</OutputType>
@@ -31,8 +31,13 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="WealthLab" />
-    <Reference Include="WealthLab.Indicators" />
+    <Reference Include="System" />
+    <Reference Include="WealthLab">
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab.Indicators">
+      <HintPath>..\WealthLab.Indicators\bin\Debug\WealthLab.Indicators.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />

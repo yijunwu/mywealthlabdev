@@ -138,7 +138,15 @@
 
         public static bool operator <(BarDataScale barDataScale_0, BarDataScale barDataScale_1)
         {
-            return ((barDataScale_0 != barDataScale_1) && (barDataScale_0 <= barDataScale_1));
+            if (barDataScale_0 == barDataScale_1)
+            {
+                return false;
+            }
+            else
+            {
+                return !(barDataScale_0 > barDataScale_1);
+            }
+
         }
 
         public static bool operator >(BarDataScale barDataScale_0, BarDataScale barDataScale_1)

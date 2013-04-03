@@ -585,26 +585,19 @@
 
         private TreeNode method_0(TreeView treeView_0, string string_0)
         {
-            TreeNode node3;
-            using (IEnumerator enumerator = treeView_0.Nodes.GetEnumerator())
+            foreach (TreeNode node in treeView_0.Nodes)
             {
-                TreeNode current;
-                while (enumerator.MoveNext())
+                if (node.Level != 0 || !(node.Text == string_0))
                 {
-                    current = (TreeNode) enumerator.Current;
-                    if ((current.Level == 0) && (current.Text == string_0))
-                    {
-                        goto Label_003B;
-                    }
+                    continue;
                 }
-                TreeNode node = treeView_0.Nodes.Add(string_0);
-                node.ImageIndex = int_8;
-                node.SelectedImageIndex = int_7;
-                return node;
-            Label_003B:
-                node3 = current;
+                TreeNode treeNode = node;
+                return treeNode;
             }
-            return node3;
+            TreeNode int8 = treeView_0.Nodes.Add(string_0);
+            int8.ImageIndex = Builder.int_8;
+            int8.SelectedImageIndex = Builder.int_7;
+            return int8;
         }
 
         private void method_1(TreeNode treeNode_0)
@@ -1214,26 +1207,26 @@
                                 goto Label_05CB;
                             }
                             case RuleParamType.Indicator:
-                                TextBox box2;
-                                box2 = new TextBox {
-                                    ReadOnly = true,
-                                    Font = new Font(box2.Font, FontStyle.Underline),
-                                    Cursor = Cursors.Hand,
-                                    Text = current.Value
-                                };
+                                TextBox box2 = new TextBox();
+                                
+                                box2.ReadOnly = true;
+                                box2.Font = new Font(box2.Font, FontStyle.Underline);
+                                box2.Cursor = Cursors.Hand;
+                                box2.Text = current.Value;
+                                
                                 box2.TextChanged += new EventHandler(this.method_6);
                                 box2.Click += new EventHandler(this.method_9);
                                 control = box2;
                                 goto Label_05CB;
 
                             case RuleParamType.Fundamental:
-                                TextBox box3;
-                                box3 = new TextBox {
-                                    ReadOnly = true,
-                                    Font = new Font(box3.Font, FontStyle.Underline),
-                                    Cursor = Cursors.Hand,
-                                    Text = current.Value
-                                };
+                                TextBox box3 = new TextBox();
+
+                                box3.ReadOnly = true;
+                                box3.Font = new Font(box3.Font, FontStyle.Underline);
+                                box3.Cursor = Cursors.Hand;
+                                box3.Text = current.Value;
+
                                 box3.TextChanged += new EventHandler(this.method_6);
                                 box3.Click += new EventHandler(this.method_10);
                                 control = box3;

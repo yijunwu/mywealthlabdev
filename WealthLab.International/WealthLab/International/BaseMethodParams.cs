@@ -14,8 +14,8 @@
         private int int_0;
         private int int_1;
         private int int_2;
-        private static readonly string string_0 = ActivateTrialCompletedEventArgs.smethod_0("฽฿A潃ⅅ᱇ⵉ㹋㭍㝏扑ὓ絕≗⁙՛൝䭟ॡ⍣卥㭧屩ᙫ䅭፯❱ᵳት⽷⩹䕻ѽꭿ첁첃\udf85\ube87\udb8f\ud791ꦓ", 0x12);
-        private static readonly string string_1 = ActivateTrialCompletedEventArgs.smethod_0("栽㌿⥁獃⁅❇㥉Ὃⱍ⅏㵑打╕ⱗṙᅛ੝ɟᝡᙣ፥㥧坩八", 0x12);
+        private static readonly string string_0 = CustomersWebService.ActivateTrialCompletedEventArgs.smethod_0("฽฿A潃ⅅ᱇ⵉ㹋㭍㝏扑ὓ絕≗⁙՛൝䭟ॡ⍣卥㭧屩ᙫ䅭፯❱ᵳት⽷⩹䕻ѽꭿ첁첃\udf85\ube87\udb8f\ud791ꦓ", 0x12);
+        private static readonly string string_1 = CustomersWebService.ActivateTrialCompletedEventArgs.smethod_0("栽㌿⥁獃⁅❇㥉Ὃⱍ⅏㵑打╕ⱗṙᅛ੝ɟᝡᙣ፥㥧坩八", 0x12);
         private string string_2;
         private string string_3;
         private string string_4;

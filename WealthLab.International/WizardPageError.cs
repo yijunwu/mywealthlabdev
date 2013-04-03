@@ -106,7 +106,7 @@ internal class WizardPageError : WizardPage, Interface0
         this.txtError.Text = string_1;
     }
 
-    void WizardPage.Dispose(bool disposing)
+    protected override void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_1 != null))
         {

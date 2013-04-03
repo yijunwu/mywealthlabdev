@@ -19,9 +19,61 @@
         private IAuthenticationHost iauthenticationHost_0;
         private IDataHost idataHost_0;
 
-        public event _DownloadFileCompleted OnInstallerDownloadComplete;
+        public event AuthenticationProvider._DownloadFileCompleted OnInstallerDownloadComplete
+        {
+            add
+            {
+                AuthenticationProvider._DownloadFileCompleted __DownloadFileCompleted;
+                AuthenticationProvider._DownloadFileCompleted _DownloadFileCompleted0 = this._DownloadFileCompleted_0;
+                do
+                {
+                    __DownloadFileCompleted = _DownloadFileCompleted0;
+                    AuthenticationProvider._DownloadFileCompleted __DownloadFileCompleted1 = (AuthenticationProvider._DownloadFileCompleted)Delegate.Combine(__DownloadFileCompleted, value);
+                    _DownloadFileCompleted0 = Interlocked.CompareExchange<AuthenticationProvider._DownloadFileCompleted>(ref this._DownloadFileCompleted_0, __DownloadFileCompleted1, __DownloadFileCompleted);
+                }
+                while (_DownloadFileCompleted0 != __DownloadFileCompleted);
+            }
+            remove
+            {
+                AuthenticationProvider._DownloadFileCompleted __DownloadFileCompleted;
+                AuthenticationProvider._DownloadFileCompleted _DownloadFileCompleted0 = this._DownloadFileCompleted_0;
+                do
+                {
+                    __DownloadFileCompleted = _DownloadFileCompleted0;
+                    AuthenticationProvider._DownloadFileCompleted __DownloadFileCompleted1 = (AuthenticationProvider._DownloadFileCompleted)Delegate.Remove(__DownloadFileCompleted, value);
+                    _DownloadFileCompleted0 = Interlocked.CompareExchange<AuthenticationProvider._DownloadFileCompleted>(ref this._DownloadFileCompleted_0, __DownloadFileCompleted1, __DownloadFileCompleted);
+                }
+                while (_DownloadFileCompleted0 != __DownloadFileCompleted);
+            }
+        }
 
-        public event _DownloadProgressChanged OnInstallerDownloadProgressChanged;
+        public event AuthenticationProvider._DownloadProgressChanged OnInstallerDownloadProgressChanged
+        {
+            add
+            {
+                AuthenticationProvider._DownloadProgressChanged __DownloadProgressChanged;
+                AuthenticationProvider._DownloadProgressChanged _DownloadProgressChanged0 = this._DownloadProgressChanged_0;
+                do
+                {
+                    __DownloadProgressChanged = _DownloadProgressChanged0;
+                    AuthenticationProvider._DownloadProgressChanged __DownloadProgressChanged1 = (AuthenticationProvider._DownloadProgressChanged)Delegate.Combine(__DownloadProgressChanged, value);
+                    _DownloadProgressChanged0 = Interlocked.CompareExchange<AuthenticationProvider._DownloadProgressChanged>(ref this._DownloadProgressChanged_0, __DownloadProgressChanged1, __DownloadProgressChanged);
+                }
+                while (_DownloadProgressChanged0 != __DownloadProgressChanged);
+            }
+            remove
+            {
+                AuthenticationProvider._DownloadProgressChanged __DownloadProgressChanged;
+                AuthenticationProvider._DownloadProgressChanged _DownloadProgressChanged0 = this._DownloadProgressChanged_0;
+                do
+                {
+                    __DownloadProgressChanged = _DownloadProgressChanged0;
+                    AuthenticationProvider._DownloadProgressChanged __DownloadProgressChanged1 = (AuthenticationProvider._DownloadProgressChanged)Delegate.Remove(__DownloadProgressChanged, value);
+                    _DownloadProgressChanged0 = Interlocked.CompareExchange<AuthenticationProvider._DownloadProgressChanged>(ref this._DownloadProgressChanged_0, __DownloadProgressChanged1, __DownloadProgressChanged);
+                }
+                while (_DownloadProgressChanged0 != __DownloadProgressChanged);
+            }
+        }
 
         protected AuthenticationProvider()
         {

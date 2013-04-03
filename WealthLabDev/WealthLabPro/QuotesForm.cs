@@ -1174,38 +1174,55 @@
 
         private void lvQuotes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.lvQuotes.SelectedItems.Count <= 0)
+            if (this.lvQuotes.SelectedItems.Count > 0)
+            {
+                if (this.lvQuotes.SelectedItems.Count == 1)
+                {
+                    this.mniEditPriceTrigger.Enabled = this.lvQuotes.SelectedItems[0].Tag != null;
+                }
+                else
+                {
+                    this.mniEditPriceTrigger.Enabled = false;
+                }
+                this.removeSelectedQuotesToolStripMenuItem.Enabled = true;
+            }
+            else
             {
                 this.mniEditPriceTrigger.Enabled = false;
                 this.removeSelectedQuotesToolStripMenuItem.Enabled = false;
                 this.triggerSelectedQuotesNowToolStripMenuItem.Enabled = false;
             }
-            else
+            IEnumerator enumerator = this.lvQuotes.SelectedItems.GetEnumerator();
+            try
             {
-                if (this.lvQuotes.SelectedItems.Count != 1)
+                while (true)
                 {
-                    this.mniEditPriceTrigger.Enabled = false;
-                }
-                else
-                {
-                    this.mniEditPriceTrigger.Enabled = this.lvQuotes.SelectedItems[0].Tag != null;
-                }
-                this.removeSelectedQuotesToolStripMenuItem.Enabled = true;
-            }
-            using (IEnumerator enumerator = this.lvQuotes.SelectedItems.GetEnumerator())
-            {
-                while (enumerator.MoveNext())
-                {
-                    ListViewItem current = (ListViewItem) enumerator.Current;
-                    if (current.Tag != null)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_00CB;
+                        ListViewItem current = (ListViewItem)enumerator.Current;
+                        if (current.Tag != null)
+                        {
+                            this.triggerSelectedQuotesNowToolStripMenuItem.Enabled = true;
+                            break;
+                        }
+                        else
+                        {
+                            this.triggerSelectedQuotesNowToolStripMenuItem.Enabled = false;
+                        }
                     }
-                    this.triggerSelectedQuotesNowToolStripMenuItem.Enabled = false;
+                    else
+                    {
+                        break;
+                    }
                 }
-                return;
-            Label_00CB:
-                this.triggerSelectedQuotesNowToolStripMenuItem.Enabled = true;
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
             }
         }
 

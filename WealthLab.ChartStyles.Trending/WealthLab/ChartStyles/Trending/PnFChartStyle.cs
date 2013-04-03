@@ -216,7 +216,7 @@
             pen = new Pen(Color.Black) {
                 Width = 1f,
                 StartCap = LineCap.Round,
-                EndCap = pen.StartCap
+                EndCap = LineCap.Round
             };
             int num8 = Convert.ToInt32(Math.Ceiling((double) (((double) this.int_1) / 2.0)));
             int num5 = Convert.ToInt32(Math.Ceiling((double) (((double) top) / 2.0)));

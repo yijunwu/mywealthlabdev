@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>b4cf3f5b-788e-4f3d-8dec-2462053dfe77</ProjectGuid>
+    <ProjectGuid>{1A941F38-9927-4CAA-A5EC-EB2ED378A6C9}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.Optimizers</AssemblyName>
     <OutputType>Library</OutputType>
@@ -32,16 +32,28 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="WealthLab" />
-    <Reference Include="Fidelity.Components" />
+    <Reference Include="WealthLab">
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
+    </Reference>
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="TeeChart" />
+    <Reference Include="TeeChart">
+      <HintPath>..\ExternalLib\TeeChart.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="WealthLab\Optimizers\MonteCarloSettings.cs" />
-    <Compile Include="WealthLab\Optimizers\OptResultsGraph2D.cs" />
-    <Compile Include="WealthLab\Optimizers\OptResultsGraph1D.cs" />
+    <Compile Include="WealthLab\Optimizers\MonteCarloSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\Optimizers\OptResultsGraph2D.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\Optimizers\OptResultsGraph1D.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\Optimizers\MonteCarloResult.cs" />
     <Compile Include="WealthLab\Optimizers\MonteCarlo.cs" />
     <Compile Include="WealthLab\Optimizers\MonteCarloRunInfo.cs" />

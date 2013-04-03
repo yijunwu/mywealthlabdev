@@ -8,6 +8,7 @@
     using WealthLab.Extensions;
     using WealthLab.International.CustomersWebService;
     using WealthLab.International.Properties;
+    using System.Reflection;
 
     public class WealthLabAuthProvider : AuthenticationProvider
     {

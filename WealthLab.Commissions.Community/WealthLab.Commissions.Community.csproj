@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>34c9ccbb-142b-454a-aa36-e17b97124627</ProjectGuid>
+    <ProjectGuid>{46C3EA5F-572C-43BF-9DBF-0567F589ECAB}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.Commissions.Community</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -32,20 +33,30 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="WealthLab" />
-    <Reference Include="Fidelity.Components" />
+    <Reference Include="WealthLab">
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
+    </Reference>
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="WealthLab.Extensions.Attribute" />
+    <Reference Include="WealthLab.Extensions.Attribute">
+      <HintPath>..\WealthLab.Extensions.Attribute\bin\Debug\WealthLab.Extensions.Attribute.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\Commissions\Community\Properties\Resources.cs" />
-    <Compile Include="WealthLab\Commissions\Community\uxDollarsPer.cs" />
+    <Compile Include="WealthLab\Commissions\Community\uxDollarsPer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\Commissions\Community\PercentOfValue.cs" />
     <Compile Include="WealthLab\Commissions\Community\DollarsPerTrade.cs" />
     <Compile Include="WealthLab\Commissions\Community\DollarsPerShare.cs" />
     <Compile Include="WealthLab\Commissions\Community\IB.cs" />
-    <Compile Include="WealthLab\Commissions\Community\uxIBBundled.cs" />
+    <Compile Include="WealthLab\Commissions\Community\uxIBBundled.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <EmbeddedResource Include="WealthLab.Commissions.Community.Commish.PNG" />
     <EmbeddedResource Include="WealthLab.Commissions.Community.Properties.Resources.resources" />
     <EmbeddedResource Include="WealthLab.Commissions.Community.uxDollarsPer.resources" />

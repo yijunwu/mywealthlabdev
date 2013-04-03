@@ -25,22 +25,117 @@
         private SendOrPostCallback sendOrPostCallback_6;
         private SendOrPostCallback sendOrPostCallback_7;
 
-        public event GetChangeLogUrlCompletedEventHandler GetChangeLogUrlCompleted;
+        private GetMoreExtensionsUrlCompletedEventHandler getMoreExtensionsUrlCompletedEventHandler_0;
 
-        public event GetDownloadUrlsCompletedEventHandler GetDownloadUrlsCompleted;
+        private GetChangeLogUrlCompletedEventHandler getChangeLogUrlCompletedEventHandler_0;
 
-        public event GetExtensionInfoAttributesCompletedEventHandler GetExtensionInfoAttributesCompleted;
+        private GetExtensionVersionsCompletedEventHandler getExtensionVersionsCompletedEventHandler_0;
 
-        public event GetExtensionIVCompletedEventHandler GetExtensionIVCompleted;
+        private GetExtensionInfoAttributesCompletedEventHandler getExtensionInfoAttributesCompletedEventHandler_0;
 
-        public event GetExtensionKeyCompletedEventHandler GetExtensionKeyCompleted;
+        private GetDownloadUrlsCompletedEventHandler getDownloadUrlsCompletedEventHandler_0;
 
-        public event GetExtensionVersionsCompletedEventHandler GetExtensionVersionsCompleted;
+        private RecordExtensionDownloadsCompletedEventHandler recordExtensionDownloadsCompletedEventHandler_0;
 
-        public event GetMoreExtensionsUrlCompletedEventHandler GetMoreExtensionsUrlCompleted;
+        private GetExtensionKeyCompletedEventHandler getExtensionKeyCompletedEventHandler_0;
 
-        public event RecordExtensionDownloadsCompletedEventHandler RecordExtensionDownloadsCompleted;
+        private GetExtensionIVCompletedEventHandler getExtensionIVCompletedEventHandler_0;
 
+        public event GetChangeLogUrlCompletedEventHandler GetChangeLogUrlCompleted
+        {
+            add
+            {
+                this.getChangeLogUrlCompletedEventHandler_0 += value;
+            }
+            remove
+            {
+                this.getChangeLogUrlCompletedEventHandler_0 -= value;
+            }
+        }
+
+        public event GetDownloadUrlsCompletedEventHandler GetDownloadUrlsCompleted
+        {
+            add
+            {
+                this.getDownloadUrlsCompletedEventHandler_0 += value;
+            }
+            remove
+            {
+                this.getDownloadUrlsCompletedEventHandler_0 -= value;
+            }
+        }
+
+        public event GetExtensionInfoAttributesCompletedEventHandler GetExtensionInfoAttributesCompleted
+        {
+            add
+            {
+                this.getExtensionInfoAttributesCompletedEventHandler_0 += value;
+            }
+            remove
+            {
+                this.getExtensionInfoAttributesCompletedEventHandler_0 -= value;
+            }
+        }
+
+        public event GetExtensionIVCompletedEventHandler GetExtensionIVCompleted
+        {
+            add
+            {
+                this.getExtensionIVCompletedEventHandler_0 += value;
+            }
+            remove
+            {
+                this.getExtensionIVCompletedEventHandler_0 -= value;
+            }
+        }
+
+        public event GetExtensionKeyCompletedEventHandler GetExtensionKeyCompleted
+        {
+            add
+            {
+                this.getExtensionKeyCompletedEventHandler_0 += value;
+            }
+            remove
+            {
+                this.getExtensionKeyCompletedEventHandler_0 -= value;
+            }
+        }
+
+        public event GetExtensionVersionsCompletedEventHandler GetExtensionVersionsCompleted
+        {
+            add
+            {
+                this.getExtensionVersionsCompletedEventHandler_0 += value;
+            }
+            remove
+            {
+                this.getExtensionVersionsCompletedEventHandler_0 -= value;
+            }
+        }
+
+        public event GetMoreExtensionsUrlCompletedEventHandler GetMoreExtensionsUrlCompleted
+        {
+            add
+            {
+                this.getMoreExtensionsUrlCompletedEventHandler_0 += value;
+            }
+            remove
+            {
+                this.getMoreExtensionsUrlCompletedEventHandler_0 -= value;
+            }
+        }
+
+        public event RecordExtensionDownloadsCompletedEventHandler RecordExtensionDownloadsCompleted
+        {
+            add
+            {
+                this.recordExtensionDownloadsCompletedEventHandler_0 += value;
+            }
+            remove
+            {
+                this.recordExtensionDownloadsCompletedEventHandler_0 -= value;
+            }
+        }
         public ExtensionManager()
         {
             this.Url = Settings.Default.WealthLab_Extensions_net_wli5_ExtensionWebservice;

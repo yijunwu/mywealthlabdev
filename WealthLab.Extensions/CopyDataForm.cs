@@ -40,7 +40,8 @@ internal class CopyDataForm : Form
         this.delegate16_0 = (Delegate16) Delegate.Remove(this.delegate16_0, delegate16_1);
     }
 
-    void Form.Dispose(bool disposing)
+    //void Form.Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_0 != null))
         {
@@ -49,7 +50,8 @@ internal class CopyDataForm : Form
         base.Dispose(disposing);
     }
 
-    void Form.WndProc(ref Message message_0)
+    //void Form.WndProc(ref Message message_0)
+    void WndProc(ref Message message_0)
     {
         if (message_0.Msg == 0x4a)
         {

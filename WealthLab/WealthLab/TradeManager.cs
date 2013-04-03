@@ -44,33 +44,425 @@
         private string string_4;
         private string string_5;
 
-        public event EventHandler<AccountEventArgs> AccountUpdated;
+        private EventHandler<EventArgs> eventHandler_0;
 
-        public event EventHandler<HistoricalTradeEventArgs> HistoryItemAdded;
+        private EventHandler<OrderEventArgs> eventHandler_1;
 
-        public event EventHandler<HistoricalTradeEventArgs> HistoryItemUpdated;
+        private EventHandler<OrderEventArgs> eventHandler_2;
 
-        public event EventHandler<OrderEventArgs> OrderAdded;
+        private EventHandler<OrderEventArgs> eventHandler_3;
 
-        public event EventHandler<OrderEventArgs> OrderChanged;
+        private EventHandler<OrderEventArgs> eventHandler_4;
 
-        public event EventHandler<OrderEventArgs> OrderRemoved;
+        private EventHandler<HistoricalTradeEventArgs> eventHandler_5;
 
-        public event EventHandler<OrderEventArgs> OrderStatusUpdated;
+        private EventHandler<HistoricalTradeEventArgs> eventHandler_6;
 
-        public event EventHandler<EventArgs> OrdersUpdated;
+        private EventHandler<AccountEventArgs> eventHandler_7;
 
-        public event EventHandler<AccountPositionEventArgs> PositionAdded;
+        private EventHandler<AccountEventArgs> eventHandler_8;
 
-        public event EventHandler<AccountPositionEventArgs> PositionChanged;
+        private EventHandler<AccountPositionEventArgs> eventHandler_9;
 
-        public event EventHandler<AccountPositionEventArgs> PositionRemoved;
+        private EventHandler<AccountPositionEventArgs> eventHandler_10;
 
-        public event EventHandler<AccountEventArgs> PositionsUpdated;
+        private EventHandler<AccountPositionEventArgs> eventHandler_11;
 
-        public event EventHandler<QuoteEventArgs> QuoteUpdated;
+        private EventHandler<QuoteEventArgs> eventHandler_12;
 
-        public event EventHandler<StringEventArgs> StatusBarUpdated;
+        private EventHandler<StringEventArgs> eventHandler_13;
+
+        public event EventHandler<AccountEventArgs> AccountUpdated
+        {
+            add
+            {
+                EventHandler<AccountEventArgs> eventHandler;
+                EventHandler<AccountEventArgs> eventHandler7 = this.eventHandler_7;
+                do
+                {
+                    eventHandler = eventHandler7;
+                    EventHandler<AccountEventArgs> eventHandler1 = (EventHandler<AccountEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler7 = Interlocked.CompareExchange<EventHandler<AccountEventArgs>>(ref this.eventHandler_7, eventHandler1, eventHandler);
+                }
+                while (eventHandler7 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<AccountEventArgs> eventHandler;
+                EventHandler<AccountEventArgs> eventHandler7 = this.eventHandler_7;
+                do
+                {
+                    eventHandler = eventHandler7;
+                    EventHandler<AccountEventArgs> eventHandler1 = (EventHandler<AccountEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler7 = Interlocked.CompareExchange<EventHandler<AccountEventArgs>>(ref this.eventHandler_7, eventHandler1, eventHandler);
+                }
+                while (eventHandler7 != eventHandler);
+            }
+        }
+
+        public event EventHandler<HistoricalTradeEventArgs> HistoryItemAdded
+        {
+            add
+            {
+                EventHandler<HistoricalTradeEventArgs> eventHandler;
+                EventHandler<HistoricalTradeEventArgs> eventHandler6 = this.eventHandler_6;
+                do
+                {
+                    eventHandler = eventHandler6;
+                    EventHandler<HistoricalTradeEventArgs> eventHandler1 = (EventHandler<HistoricalTradeEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler6 = Interlocked.CompareExchange<EventHandler<HistoricalTradeEventArgs>>(ref this.eventHandler_6, eventHandler1, eventHandler);
+                }
+                while (eventHandler6 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<HistoricalTradeEventArgs> eventHandler;
+                EventHandler<HistoricalTradeEventArgs> eventHandler6 = this.eventHandler_6;
+                do
+                {
+                    eventHandler = eventHandler6;
+                    EventHandler<HistoricalTradeEventArgs> eventHandler1 = (EventHandler<HistoricalTradeEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler6 = Interlocked.CompareExchange<EventHandler<HistoricalTradeEventArgs>>(ref this.eventHandler_6, eventHandler1, eventHandler);
+                }
+                while (eventHandler6 != eventHandler);
+            }
+        }
+
+        public event EventHandler<HistoricalTradeEventArgs> HistoryItemUpdated
+        {
+            add
+            {
+                EventHandler<HistoricalTradeEventArgs> eventHandler;
+                EventHandler<HistoricalTradeEventArgs> eventHandler5 = this.eventHandler_5;
+                do
+                {
+                    eventHandler = eventHandler5;
+                    EventHandler<HistoricalTradeEventArgs> eventHandler1 = (EventHandler<HistoricalTradeEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<HistoricalTradeEventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                }
+                while (eventHandler5 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<HistoricalTradeEventArgs> eventHandler;
+                EventHandler<HistoricalTradeEventArgs> eventHandler5 = this.eventHandler_5;
+                do
+                {
+                    eventHandler = eventHandler5;
+                    EventHandler<HistoricalTradeEventArgs> eventHandler1 = (EventHandler<HistoricalTradeEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<HistoricalTradeEventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                }
+                while (eventHandler5 != eventHandler);
+            }
+        }
+
+        public event EventHandler<OrderEventArgs> OrderAdded
+        {
+            add
+            {
+                EventHandler<OrderEventArgs> eventHandler;
+                EventHandler<OrderEventArgs> eventHandler2 = this.eventHandler_2;
+                do
+                {
+                    eventHandler = eventHandler2;
+                    EventHandler<OrderEventArgs> eventHandler1 = (EventHandler<OrderEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<OrderEventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                }
+                while (eventHandler2 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<OrderEventArgs> eventHandler;
+                EventHandler<OrderEventArgs> eventHandler2 = this.eventHandler_2;
+                do
+                {
+                    eventHandler = eventHandler2;
+                    EventHandler<OrderEventArgs> eventHandler1 = (EventHandler<OrderEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<OrderEventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                }
+                while (eventHandler2 != eventHandler);
+            }
+        }
+
+        public event EventHandler<OrderEventArgs> OrderChanged
+        {
+            add
+            {
+                EventHandler<OrderEventArgs> eventHandler;
+                EventHandler<OrderEventArgs> eventHandler4 = this.eventHandler_4;
+                do
+                {
+                    eventHandler = eventHandler4;
+                    EventHandler<OrderEventArgs> eventHandler1 = (EventHandler<OrderEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<OrderEventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                }
+                while (eventHandler4 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<OrderEventArgs> eventHandler;
+                EventHandler<OrderEventArgs> eventHandler4 = this.eventHandler_4;
+                do
+                {
+                    eventHandler = eventHandler4;
+                    EventHandler<OrderEventArgs> eventHandler1 = (EventHandler<OrderEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<OrderEventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                }
+                while (eventHandler4 != eventHandler);
+            }
+        }
+
+        public event EventHandler<OrderEventArgs> OrderRemoved
+        {
+            add
+            {
+                EventHandler<OrderEventArgs> eventHandler;
+                EventHandler<OrderEventArgs> eventHandler3 = this.eventHandler_3;
+                do
+                {
+                    eventHandler = eventHandler3;
+                    EventHandler<OrderEventArgs> eventHandler1 = (EventHandler<OrderEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<OrderEventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                }
+                while (eventHandler3 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<OrderEventArgs> eventHandler;
+                EventHandler<OrderEventArgs> eventHandler3 = this.eventHandler_3;
+                do
+                {
+                    eventHandler = eventHandler3;
+                    EventHandler<OrderEventArgs> eventHandler1 = (EventHandler<OrderEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<OrderEventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                }
+                while (eventHandler3 != eventHandler);
+            }
+        }
+
+        public event EventHandler<OrderEventArgs> OrderStatusUpdated
+        {
+            add
+            {
+                EventHandler<OrderEventArgs> eventHandler;
+                EventHandler<OrderEventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<OrderEventArgs> eventHandler2 = (EventHandler<OrderEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<OrderEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<OrderEventArgs> eventHandler;
+                EventHandler<OrderEventArgs> eventHandler1 = this.eventHandler_1;
+                do
+                {
+                    eventHandler = eventHandler1;
+                    EventHandler<OrderEventArgs> eventHandler2 = (EventHandler<OrderEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<OrderEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                }
+                while (eventHandler1 != eventHandler);
+            }
+        }
+
+        public event EventHandler<EventArgs> OrdersUpdated
+        {
+            add
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<EventArgs> eventHandler;
+                EventHandler<EventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
+
+        public event EventHandler<AccountPositionEventArgs> PositionAdded
+        {
+            add
+            {
+                EventHandler<AccountPositionEventArgs> eventHandler;
+                EventHandler<AccountPositionEventArgs> eventHandler9 = this.eventHandler_9;
+                do
+                {
+                    eventHandler = eventHandler9;
+                    EventHandler<AccountPositionEventArgs> eventHandler1 = (EventHandler<AccountPositionEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler9 = Interlocked.CompareExchange<EventHandler<AccountPositionEventArgs>>(ref this.eventHandler_9, eventHandler1, eventHandler);
+                }
+                while (eventHandler9 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<AccountPositionEventArgs> eventHandler;
+                EventHandler<AccountPositionEventArgs> eventHandler9 = this.eventHandler_9;
+                do
+                {
+                    eventHandler = eventHandler9;
+                    EventHandler<AccountPositionEventArgs> eventHandler1 = (EventHandler<AccountPositionEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler9 = Interlocked.CompareExchange<EventHandler<AccountPositionEventArgs>>(ref this.eventHandler_9, eventHandler1, eventHandler);
+                }
+                while (eventHandler9 != eventHandler);
+            }
+        }
+
+        public event EventHandler<AccountPositionEventArgs> PositionChanged
+        {
+            add
+            {
+                EventHandler<AccountPositionEventArgs> eventHandler;
+                EventHandler<AccountPositionEventArgs> eventHandler11 = this.eventHandler_11;
+                do
+                {
+                    eventHandler = eventHandler11;
+                    EventHandler<AccountPositionEventArgs> eventHandler1 = (EventHandler<AccountPositionEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler11 = Interlocked.CompareExchange<EventHandler<AccountPositionEventArgs>>(ref this.eventHandler_11, eventHandler1, eventHandler);
+                }
+                while (eventHandler11 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<AccountPositionEventArgs> eventHandler;
+                EventHandler<AccountPositionEventArgs> eventHandler11 = this.eventHandler_11;
+                do
+                {
+                    eventHandler = eventHandler11;
+                    EventHandler<AccountPositionEventArgs> eventHandler1 = (EventHandler<AccountPositionEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler11 = Interlocked.CompareExchange<EventHandler<AccountPositionEventArgs>>(ref this.eventHandler_11, eventHandler1, eventHandler);
+                }
+                while (eventHandler11 != eventHandler);
+            }
+        }
+
+        public event EventHandler<AccountPositionEventArgs> PositionRemoved
+        {
+            add
+            {
+                EventHandler<AccountPositionEventArgs> eventHandler;
+                EventHandler<AccountPositionEventArgs> eventHandler10 = this.eventHandler_10;
+                do
+                {
+                    eventHandler = eventHandler10;
+                    EventHandler<AccountPositionEventArgs> eventHandler1 = (EventHandler<AccountPositionEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler10 = Interlocked.CompareExchange<EventHandler<AccountPositionEventArgs>>(ref this.eventHandler_10, eventHandler1, eventHandler);
+                }
+                while (eventHandler10 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<AccountPositionEventArgs> eventHandler;
+                EventHandler<AccountPositionEventArgs> eventHandler10 = this.eventHandler_10;
+                do
+                {
+                    eventHandler = eventHandler10;
+                    EventHandler<AccountPositionEventArgs> eventHandler1 = (EventHandler<AccountPositionEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler10 = Interlocked.CompareExchange<EventHandler<AccountPositionEventArgs>>(ref this.eventHandler_10, eventHandler1, eventHandler);
+                }
+                while (eventHandler10 != eventHandler);
+            }
+        }
+
+        public event EventHandler<AccountEventArgs> PositionsUpdated
+        {
+            add
+            {
+                EventHandler<AccountEventArgs> eventHandler;
+                EventHandler<AccountEventArgs> eventHandler8 = this.eventHandler_8;
+                do
+                {
+                    eventHandler = eventHandler8;
+                    EventHandler<AccountEventArgs> eventHandler1 = (EventHandler<AccountEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler8 = Interlocked.CompareExchange<EventHandler<AccountEventArgs>>(ref this.eventHandler_8, eventHandler1, eventHandler);
+                }
+                while (eventHandler8 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<AccountEventArgs> eventHandler;
+                EventHandler<AccountEventArgs> eventHandler8 = this.eventHandler_8;
+                do
+                {
+                    eventHandler = eventHandler8;
+                    EventHandler<AccountEventArgs> eventHandler1 = (EventHandler<AccountEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler8 = Interlocked.CompareExchange<EventHandler<AccountEventArgs>>(ref this.eventHandler_8, eventHandler1, eventHandler);
+                }
+                while (eventHandler8 != eventHandler);
+            }
+        }
+
+        public event EventHandler<QuoteEventArgs> QuoteUpdated
+        {
+            add
+            {
+                EventHandler<QuoteEventArgs> eventHandler;
+                EventHandler<QuoteEventArgs> eventHandler12 = this.eventHandler_12;
+                do
+                {
+                    eventHandler = eventHandler12;
+                    EventHandler<QuoteEventArgs> eventHandler1 = (EventHandler<QuoteEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler12 = Interlocked.CompareExchange<EventHandler<QuoteEventArgs>>(ref this.eventHandler_12, eventHandler1, eventHandler);
+                }
+                while (eventHandler12 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<QuoteEventArgs> eventHandler;
+                EventHandler<QuoteEventArgs> eventHandler12 = this.eventHandler_12;
+                do
+                {
+                    eventHandler = eventHandler12;
+                    EventHandler<QuoteEventArgs> eventHandler1 = (EventHandler<QuoteEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler12 = Interlocked.CompareExchange<EventHandler<QuoteEventArgs>>(ref this.eventHandler_12, eventHandler1, eventHandler);
+                }
+                while (eventHandler12 != eventHandler);
+            }
+        }
+
+        public event EventHandler<StringEventArgs> StatusBarUpdated
+        {
+            add
+            {
+                EventHandler<StringEventArgs> eventHandler;
+                EventHandler<StringEventArgs> eventHandler13 = this.eventHandler_13;
+                do
+                {
+                    eventHandler = eventHandler13;
+                    EventHandler<StringEventArgs> eventHandler1 = (EventHandler<StringEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler13 = Interlocked.CompareExchange<EventHandler<StringEventArgs>>(ref this.eventHandler_13, eventHandler1, eventHandler);
+                }
+                while (eventHandler13 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<StringEventArgs> eventHandler;
+                EventHandler<StringEventArgs> eventHandler13 = this.eventHandler_13;
+                do
+                {
+                    eventHandler = eventHandler13;
+                    EventHandler<StringEventArgs> eventHandler1 = (EventHandler<StringEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler13 = Interlocked.CompareExchange<EventHandler<StringEventArgs>>(ref this.eventHandler_13, eventHandler1, eventHandler);
+                }
+                while (eventHandler13 != eventHandler);
+            }
+        }
 
         public TradeManager()
         {

@@ -33,8 +33,8 @@
         private RadioButton rbUserSpecified;
         private const string string_0 = "Box Size (%)";
         private const string string_1 = "Box Size (Pts)";
-        private string string_2 = Thread.CurrentThread.CurrentUICulture.NumberFormat.NumberDecimalSeparator;
-        private string string_3 = Thread.CurrentThread.CurrentUICulture.NumberFormat.NumberGroupSeparator;
+        private string string_2 = System.Threading.Thread.CurrentThread.CurrentUICulture.NumberFormat.NumberDecimalSeparator;
+        private string string_3 = System.Threading.Thread.CurrentThread.CurrentUICulture.NumberFormat.NumberGroupSeparator;
         private string string_4 = "Close";
         private TextBox txtBoxSize;
         private NumericUpDown uxReversalBoxes;

@@ -88,7 +88,7 @@
                 pen = new Pen(Color.Black) {
                     Width = 1f,
                     StartCap = LineCap.Square,
-                    EndCap = pen.StartCap
+                    EndCap = LineCap.Square
                 };
                 if (this.bool_0)
                 {

@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>6e55b2d6-e942-4468-b813-fe79cb5383ff</ProjectGuid>
+    <ProjectGuid>{AC81AB86-4D02-4383-8B44-A03888B023EB}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.ChartDrawingObjects</AssemblyName>
     <OutputType>Library</OutputType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -31,15 +32,23 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="Fidelity.Components">
+      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="Fidelity.Components" />
     <Reference Include="System.Drawing" />
-    <Reference Include="WealthLab" />
-    <Reference Include="WealthLab.ChartControl" />
+    <Reference Include="WealthLab">
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
+    </Reference>
+    <Reference Include="WealthLab.ChartControl">
+      <HintPath>..\WealthLab.ChartControl\bin\Debug\WealthLab.ChartControl.dll</HintPath>
+    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="WealthLab\ChartDrawingObjects\LineSettings.cs" />
+    <Compile Include="WealthLab\ChartDrawingObjects\LineSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Class3.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\CDOCallout.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\CalloutHelper.cs" />
@@ -51,23 +60,37 @@
     <Compile Include="WealthLab\ChartDrawingObjects\TradableTrendlineHelper.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\CDOSpeedResistance.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\SpeedResistanceHelper.cs" />
-    <Compile Include="WealthLab\ChartDrawingObjects\RegressionChannelSettings.cs" />
+    <Compile Include="WealthLab\ChartDrawingObjects\RegressionChannelSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartDrawingObjects\CDORectangle.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\RectangleHelper.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\CDOFibArcs.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\FibArcsHelper.cs" />
-    <Compile Include="WealthLab\ChartDrawingObjects\TradableTrendlineSettings.cs" />
+    <Compile Include="WealthLab\ChartDrawingObjects\TradableTrendlineSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartDrawingObjects\CDOHorizontalLine.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\HorizontalLineHelper.cs" />
-    <Compile Include="WealthLab\ChartDrawingObjects\CalloutSettings.cs" />
-    <Compile Include="WealthLab\ChartDrawingObjects\BitmapSettings.cs" />
+    <Compile Include="WealthLab\ChartDrawingObjects\CalloutSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartDrawingObjects\BitmapSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartDrawingObjects\CDOFibTimeZones.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\FibTimeZonesHelper.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\CDODiamond.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\DiamondHelper.cs" />
-    <Compile Include="WealthLab\ChartDrawingObjects\GannFanSettings.cs" />
-    <Compile Include="WealthLab\ChartDrawingObjects\TextNoteSettings.cs" />
-    <Compile Include="WealthLab\ChartDrawingObjects\FibSettings.cs" />
+    <Compile Include="WealthLab\ChartDrawingObjects\GannFanSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartDrawingObjects\TextNoteSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WealthLab\ChartDrawingObjects\FibSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="WealthLab\ChartDrawingObjects\CDOVerticalLine.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\VerticalLineHelper.cs" />
     <Compile Include="WealthLab\ChartDrawingObjects\CDOGannFan.cs" />

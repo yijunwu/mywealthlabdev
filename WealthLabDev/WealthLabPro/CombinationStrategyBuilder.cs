@@ -963,39 +963,54 @@
 
         private void method_2()
         {
-            foreach (string str in MainModule.Instance.Strategies.FolderNames)
+            foreach (string folderName in MainModule.Instance.Strategies.FolderNames)
             {
                 bool flag = false;
-                using (IEnumerator enumerator2 = this.strategyTree.Nodes.GetEnumerator())
+                IEnumerator enumerator = this.strategyTree.Nodes.GetEnumerator();
+                try
                 {
-                    while (enumerator2.MoveNext())
+                    while (true)
                     {
-                        TreeNode current = (TreeNode) enumerator2.Current;
-                        if (current.Text == str)
+                        if (enumerator.MoveNext())
                         {
-                            goto Label_005D;
+                            TreeNode current = (TreeNode)enumerator.Current;
+                            if (current.Text == folderName)
+                            {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    goto Label_0076;
-                Label_005D:
-                    flag = true;
                 }
-            Label_0076:
-                if (!flag)
+                finally
                 {
-                    TreeNode node2 = this.strategyTree.Nodes.Add(str);
-                    node2.ImageIndex = 0;
-                    node2.SelectedImageIndex = 1;
-                    foreach (Strategy strategy in MainModule.Instance.Strategies.Strategies)
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
                     {
-                        if (strategy.Folder == str)
-                        {
-                            TreeNode node3 = node2.Nodes.Add(strategy.Name);
-                            node3.Tag = strategy;
-                            node3.ImageIndex = 5;
-                            node3.SelectedImageIndex = 5;
-                        }
+                        disposable.Dispose();
                     }
+                }
+                if (flag)
+                {
+                    continue;
+                }
+                TreeNode treeNode = this.strategyTree.Nodes.Add(folderName);
+                treeNode.ImageIndex = 0;
+                treeNode.SelectedImageIndex = 1;
+                foreach (Strategy strategy in MainModule.Instance.Strategies.Strategies)
+                {
+                    if (strategy.Folder != folderName)
+                    {
+                        continue;
+                    }
+                    TreeNode treeNode1 = treeNode.Nodes.Add(strategy.Name);
+                    treeNode1.Tag = strategy;
+                    treeNode1.ImageIndex = 5;
+                    treeNode1.SelectedImageIndex = 5;
                 }
             }
         }

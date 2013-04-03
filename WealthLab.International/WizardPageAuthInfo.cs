@@ -87,7 +87,7 @@ internal class WizardPageAuthInfo : WizardPage, Interface0
         MessageBox.Show(this.lblInfo.Location.ToString());
     }
 
-    void WizardPage.Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_1 != null))
         {

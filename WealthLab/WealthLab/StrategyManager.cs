@@ -303,20 +303,21 @@
                         }
                         flag = true;
                     }
-                    StrategyHelper helper = (StrategyHelper) this.assemblyLoader_0.CreateInstance(type);
-                    strategy = new Strategy {
-                        Name = helper.Name,
-                        ID = helper.ID,
-                        Description = helper.Description,
-                        FileName = assemblyDescription,
-                        Folder = assemblyDescription,
-                        StrategyType = StrategyType.Compiled,
-                        Author = helper.Author,
-                        CreationDate = helper.CreationDate,
-                        LastModified = strategy.CreationDate,
-                        WealthScriptType = helper.WealthScriptType,
-                        URL = helper.URL
-                    };
+                    StrategyHelper strategyHelper = (StrategyHelper)this.assemblyLoader_0.CreateInstance(type);
+
+                    strategy = new Strategy();
+                    strategy.Name = strategyHelper.Name;
+                    strategy.ID = strategyHelper.ID;
+                    strategy.Description = strategyHelper.Description;
+                    strategy.FileName = assemblyDescription;
+                    strategy.Folder = assemblyDescription;
+                    strategy.StrategyType = StrategyType.Compiled;
+                    strategy.Author = strategyHelper.Author;
+                    strategy.CreationDate = strategyHelper.CreationDate;
+                    strategy.LastModified = strategy.CreationDate;
+                    strategy.WealthScriptType = strategyHelper.WealthScriptType;
+                    strategy.URL = strategyHelper.URL;
+
                     if (this.settingsManager_0.ContainsKey(strategy.Name))
                     {
                         strategy.AccountNumber = this.settingsManager_0.Get(strategy.Name, "");

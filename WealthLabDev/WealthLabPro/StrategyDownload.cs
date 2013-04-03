@@ -32,7 +32,7 @@
         private GroupBox grpWarning;
         private IContainer icontainer_0;
         private IList<string> ilist_0 = MainModule.Instance.Strategies.FolderNames;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
         private int int_0;
         private int int_1;

@@ -46,7 +46,35 @@
         private string string_6;
         private string string_7;
 
-        public event EventHandler<DroppedIndicatorEventArgs> IndicatorDropped;
+        private EventHandler<DroppedIndicatorEventArgs> eventHandler_0;
+        public event EventHandler<DroppedIndicatorEventArgs> IndicatorDropped
+        {
+            add
+            {
+                EventHandler<DroppedIndicatorEventArgs> eventHandler;
+                EventHandler<DroppedIndicatorEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<DroppedIndicatorEventArgs> eventHandler1 = (EventHandler<DroppedIndicatorEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<DroppedIndicatorEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<DroppedIndicatorEventArgs> eventHandler;
+                EventHandler<DroppedIndicatorEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<DroppedIndicatorEventArgs> eventHandler1 = (EventHandler<DroppedIndicatorEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<DroppedIndicatorEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
+
 
         public IndicatorDragDropManager()
         {

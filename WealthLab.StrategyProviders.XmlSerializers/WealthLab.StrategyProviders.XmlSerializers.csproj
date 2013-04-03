@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>061b7d62-8057-406a-9f49-a569953996d8</ProjectGuid>
+    <ProjectGuid>{4BC2DFB0-CD92-4258-B1D8-9B60A7CF9A2A}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthLab.StrategyProviders.XmlSerializers</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -31,8 +32,12 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="WealthLab.StrategyProviders" />
+    <Reference Include="WealthLab.StrategyProviders">
+      <HintPath>..\WealthLab.StrategyProviders\bin\Debug\WealthLab.StrategyProviders.dll</HintPath>
+    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializationWriterStrategyWebservice.cs" />

@@ -1186,30 +1186,49 @@
 
         private void lvAlerts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool flag2;
-            bool flag = this.lvAlerts.SelectedItems.Count > 0;
-            if (!(flag2 = MainModule.Instance.AuthProvider.LoggedIn && (MainModule.Instance.BrokerProvider != null)))
+            bool flag;
+            bool flag1;
+            bool count = this.lvAlerts.SelectedItems.Count > 0;
+            flag = (!MainModule.Instance.AuthProvider.LoggedIn ? false : MainModule.Instance.BrokerProvider != null);
+            bool flag2 = flag;
+            bool flag3 = flag;
+            if (!flag2)
             {
-                using (IEnumerator enumerator = this.lvAlerts.SelectedItems.GetEnumerator())
+                IEnumerator enumerator = this.lvAlerts.SelectedItems.GetEnumerator();
+                try
                 {
-                    while (enumerator.MoveNext())
+                    while (true)
                     {
-                        ListViewItem current = (ListViewItem) enumerator.Current;
-                        Alert tag = current.Tag as Alert;
-                        if (tag.Account.StartsWith("Paper"))
+                        if (enumerator.MoveNext())
                         {
-                            goto Label_008A;
+                            ListViewItem current = (ListViewItem)enumerator.Current;
+                            Alert tag = current.Tag as Alert;
+                            if (tag.Account.StartsWith("Paper"))
+                            {
+                                flag3 = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    goto Label_00A2;
-                Label_008A:
-                    flag2 = true;
+                }
+                finally
+                {
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
                 }
             }
-        Label_00A2:
-            this.btnPlace.Enabled = flag && flag2;
-            this.btnStage.Enabled = flag;
-            this.btnSendToQuote.Enabled = flag;
+            ToolStripButton toolStripButton = this.btnPlace;
+            flag1 = (!count ? false : flag3);
+            toolStripButton.Enabled = flag1;
+            this.btnStage.Enabled = count;
+            this.btnSendToQuote.Enabled = count;
             this.mniPlace.Enabled = this.btnPlace.Enabled;
             this.mniStage.Enabled = this.btnStage.Enabled;
             this.mniSendToQuote.Enabled = this.btnSendToQuote.Enabled;
@@ -1731,187 +1750,180 @@
 
         private void method_18(object object_1)
         {
-            StrategyCenterExecutionItem item = (StrategyCenterExecutionItem) object_1;
-            StrategyCenterItem item2 = item.Item;
+            DateTime native;
+            DateTime dateTime;
+            Bars data;
+            int num;
+            StrategyCenterExecutionItem object1 = (StrategyCenterExecutionItem)object_1;
+            StrategyCenterItem item = object1.Item;
             try
             {
-                DateTime time;
-                DateTime time2;
-                item2.Log("Thread Execute");
-                Thread.Sleep(0x1388);
-                BarsLoader loader = new BarsLoader {
-                    DataHost = MainModule.Instance.DataSources,
-                    BarDataScale = item2.DataScale,
-                    OverrideOnDemand = true,
-                    OverrideOnDemandValue = true
-                };
-                item2.DataRange.ConfigureBarsLoader(loader);
+                item.Log("Thread Execute");
+                Thread.Sleep(5000);
+                BarsLoader barsLoader = new BarsLoader();
+                barsLoader.DataHost = MainModule.Instance.DataSources;
+                barsLoader.BarDataScale = item.DataScale;
+                barsLoader.OverrideOnDemand = true;
+                barsLoader.OverrideOnDemandValue = true;
+                item.DataRange.ConfigureBarsLoader(barsLoader);
                 bool flag = true;
-                if (item2.DataScale.IsIntraday)
+                BarDataScale dataScale = item.DataScale;
+                if (!dataScale.IsIntraday)
                 {
-                    int num;
-                    if (item2.BarInterval == 1)
-                    {
-                        num = 30;
-                    }
-                    else if (item2.BarInterval <= 5)
-                    {
-                        num = 60;
-                    }
-                    else
-                    {
-                        num = 90;
-                    }
-                    time2 = item.NextRun.AddSeconds((double) num);
+                    DateTime nextRun = object1.NextRun;
+                    dateTime = nextRun.AddMinutes(5);
                 }
                 else
                 {
-                    time2 = item.NextRun.AddMinutes(5.0);
-                }
-                while (!flag)
-                {
-                    Bars data;
-                    DateTime time6;
-                    Thread.Sleep(0x2710);
-                Label_00D6:
-                    time = this.marketHours_0.ConvertLocalTimeToNative(DateTime.Now);
-                    DataSource dataSet = null;
-                    StaticDataProvider providerInstance = MainModule.Instance.DataSources.GetProviderInstance(item2.DataSet.Provider.GetType());
-                    if (item2.DataSet.Provider.SupportsDataSourceUpdate)
+                    if (item.BarInterval != 1)
                     {
-                        this.method_6(item2, "Performing batch update for " + item.SymbolsNeedingProcessing);
-                        dataSet = new DataSource(providerInstance) {
-                            BarDataScale = item2.DataScale
-                        };
-                        if (item2.Symbol != "")
-                        {
-                            dataSet.Symbols.Add(item2.Symbol);
-                        }
-                        else
-                        {
-                            foreach (string str2 in item.SymbolsProcessingCopied)
-                            {
-                                dataSet.Symbols.Add(str2);
-                            }
-                        }
-                        dataSet.DSString = item2.DataSet.DSString;
-                        loader.OverrideOnDemandValue = false;
-                        try
-                        {
-                            providerInstance.Initialize(loader);
-                            item2.Log("Calling UpdateDataSource");
-                            providerInstance.UpdateDataSource(dataSet, item2);
-                        }
-                        catch (Exception exception)
-                        {
-                            item2.Log("Error: " + exception.Message);
-                        }
-                    }
-                    if (dataSet == null)
-                    {
-                        dataSet = item2.DataSet;
+                        num = (item.BarInterval > 5 ? 90 : 60);
                     }
                     else
                     {
-                        dataSet.Provider = item2.DataSet.Provider;
+                        num = 30;
                     }
-                    int num2 = item.SymbolsProcessing.Count - 1;
-                Label_0236:
-                    if (num2 < 0)
+                    DateTime nextRun1 = object1.NextRun;
+                    dateTime = nextRun1.AddSeconds((double)num);
+                }
+                while (true)
+                {
+                    if (!flag)
                     {
-                        goto Label_03B4;
+                        Thread.Sleep(10000);
                     }
-                    string symbol = item.SymbolsProcessing[num2];
-                    try
+                    else
                     {
-                        data = loader.GetData(dataSet, symbol);
+                        flag = false;
                     }
-                    catch
+                    native = this.marketHours_0.ConvertLocalTimeToNative(DateTime.Now);
+                    DataSource dataSource = null;
+                    StaticDataProvider providerInstance = MainModule.Instance.DataSources.GetProviderInstance(item.DataSet.Provider.GetType());
+                    if (item.DataSet.Provider.SupportsDataSourceUpdate)
                     {
-                        data = new Bars(symbol, item2.Scale, item2.BarInterval);
-                    }
-                    goto Label_03A2;
-                Label_0279:
-                    if (data.Date[data.Count - 1] > item.NextRun)
-                    {
-                        data.Delete(data.Count - 1);
-                        goto Label_03A2;
-                    }
-                Label_02B0:
-                    time6 = DateTime.MinValue;
-                    if (data.Count > 0)
-                    {
-                        time6 = data.Date[data.Count - 1];
-                    }
-                    DateTime nextRun = item.NextRun;
-                    if (!item2.DataScale.IsIntraday)
-                    {
-                        nextRun = nextRun.Date;
-                    }
-                    if (!item2.DataScale.IsIntraday && !this.marketHours_0.AfterMarketCloseNow)
-                    {
-                        nextRun = nextRun.AddDays(-1.0);
-                        while (!this.marketHours_0.IsTradingDay(nextRun))
+                        this.method_6(item, string.Concat("Performing batch update for ", object1.SymbolsNeedingProcessing));
+                        dataSource = new DataSource(providerInstance);
+                        dataSource.BarDataScale = item.DataScale;
+                        if (item.Symbol == "")
                         {
-                            nextRun = nextRun.AddDays(-1.0);
+                            foreach (string symbolsProcessingCopied in object1.SymbolsProcessingCopied)
+                            {
+                                dataSource.Symbols.Add(symbolsProcessingCopied);
+                            }
+                        }
+                        else
+                        {
+                            dataSource.Symbols.Add(item.Symbol);
+                        }
+                        dataSource.DSString = item.DataSet.DSString;
+                        barsLoader.OverrideOnDemandValue = false;
+                        try
+                        {
+                            providerInstance.Initialize(barsLoader);
+                            item.Log("Calling UpdateDataSource");
+                            providerInstance.UpdateDataSource(dataSource, item);
+                        }
+                        catch (Exception exception1)
+                        {
+                            Exception exception = exception1;
+                            item.Log(string.Concat("Error: ", exception.Message));
                         }
                     }
-                    if (((data.Count > 0) && (time6 >= nextRun)) || item2.RunOnce)
+                    if (dataSource != null)
                     {
-                        item.BarsList.Add(data);
-                        item.SymbolsProcessing.Remove(symbol);
-                        item2.Log(symbol + " is current");
+                        dataSource.Provider = item.DataSet.Provider;
                     }
-                    num2--;
-                    goto Label_0236;
-                Label_03A2:
-                    if (data.Count <= 0)
+                    else
                     {
-                        goto Label_02B0;
+                        dataSource = item.DataSet;
                     }
-                    goto Label_0279;
-                Label_03B4:
-                    if ((item.SymbolsProcessing.Count > 0) && (time < time2))
+                    for (int i = object1.SymbolsProcessing.Count - 1; i >= 0; i--)
                     {
-                        continue;
+                        string str = object1.SymbolsProcessing[i];
+                        try
+                        {
+                            data = barsLoader.GetData(dataSource, str);
+                        }
+                        catch
+                        {
+                            data = new Bars(str, item.Scale, item.BarInterval);
+                        }
+                        while (data.Count > 0)
+                        {
+                            if (data.Date[data.Count - 1] <= object1.NextRun)
+                            {
+                                break;
+                            }
+                            data.Delete(data.Count - 1);
+                        }
+                        DateTime minValue = DateTime.MinValue;
+                        if (data.Count > 0)
+                        {
+                            minValue = data.Date[data.Count - 1];
+                        }
+                        DateTime date = object1.NextRun;
+                        BarDataScale barDataScale = item.DataScale;
+                        if (!barDataScale.IsIntraday)
+                        {
+                            date = date.Date;
+                        }
+                        BarDataScale dataScale1 = item.DataScale;
+                        if (!dataScale1.IsIntraday && !this.marketHours_0.AfterMarketCloseNow)
+                        {
+                            date = date.AddDays(-1);
+                            while (!this.marketHours_0.IsTradingDay(date))
+                            {
+                                date = date.AddDays(-1);
+                            }
+                        }
+                        if (data.Count > 0 && minValue >= date || item.RunOnce)
+                        {
+                            object1.BarsList.Add(data);
+                            object1.SymbolsProcessing.Remove(str);
+                            item.Log(string.Concat(str, " is current"));
+                        }
                     }
-                    goto Label_03DE;
-                Label_03CF:
-                    flag = false;
-                    goto Label_00D6;
+                    if (object1.SymbolsProcessing.Count <= 0)
+                    {
+                        break;
+                    }
+                    if (native >= dateTime)
+                    {
+                        break;
+                    }
                 }
-                goto Label_03CF;
-            Label_03DE:
-                if (item.SymbolsProcessingCopied.Count > 0)
+                if (object1.SymbolsProcessingCopied.Count > 0)
                 {
-                    item2.Log("Symbols not updated in time: " + item.SymbolsNeedingProcessing);
+                    item.Log(string.Concat("Symbols not updated in time: ", object1.SymbolsNeedingProcessing));
                 }
-                if ((item.SymbolsProcessing.Count == 0) || (time > time2))
+                if (object1.SymbolsProcessing.Count == 0 || native > dateTime)
                 {
-                    this.method_19(item2);
+                    this.method_19(item);
                     lock (this.list_0)
                     {
-                        if (item2.LastRun < item.NextRun)
+                        if (item.LastRun < object1.NextRun)
                         {
-                            item2.LastRun = item.NextRun;
+                            item.LastRun = object1.NextRun;
                         }
-                        item2.CalculateNextRun(false);
-                        this.list_0.Remove(item);
-                        item.BarsList.Clear();
+                        item.CalculateNextRun(false);
+                        this.list_0.Remove(object1);
+                        object1.BarsList.Clear();
                     }
-                    if (Instance != null)
+                    if (StrategyCenterForm.Instance != null)
                     {
-                        base.Invoke(new Delegate32(this.method_23), new object[] { item2 });
+                        object[] objArray = new object[] { item };
+                        base.Invoke(new StrategyCenterForm.Delegate32(this.method_23), objArray);
                     }
                 }
                 this.method_21();
             }
-            catch (Exception exception2)
+            catch (Exception exception3)
             {
-                this.method_6(item2, "Error(99): " + exception2.Message);
+                Exception exception2 = exception3;
+                this.method_6(item, string.Concat("Error(99): ", exception2.Message));
             }
-            item2.Log("Leaving Thread Execute");
-            this.method_6(item2, "");
+            item.Log("Leaving Thread Execute");
+            this.method_6(item, "");
         }
 
         private void method_19(StrategyCenterItem strategyCenterItem_0)
@@ -1992,55 +2004,71 @@
 
         private void method_20(StrategyCenterItem strategyCenterItem_0)
         {
-            if (strategyCenterItem_0 == null)
+            if (strategyCenterItem_0 != null)
+            {
+                ChartForm dataSet = this.MyMainForm.FindStrategyFormByTag(strategyCenterItem_0.Strategy, this);
+                if (dataSet == null)
+                {
+                    dataSet = this.MyMainForm.OpenStrategyWindow(strategyCenterItem_0.Strategy, false, false);
+                    dataSet.Tag = this;
+                }
+                dataSet.BringToFront();
+                dataSet.WindowState = FormWindowState.Normal;
+                dataSet.DataSource = strategyCenterItem_0.DataSet;
+                dataSet.Symbol = strategyCenterItem_0.Symbol;
+                dataSet.DataRange = strategyCenterItem_0.DataRange;
+                dataSet.PositionSize = strategyCenterItem_0.PositionSize;
+                dataSet.BarDataScale = strategyCenterItem_0.DataScale;
+                dataSet.SetBarDataScaleForDataSource(strategyCenterItem_0.DataSet, strategyCenterItem_0.DataScale);
+                WealthScript wealthScript = dataSet.WealthScript;
+                if (wealthScript != null && strategyCenterItem_0.WealthScript != null)
+                {
+                    for (int i = 0; i < wealthScript.Parameters.Count; i++)
+                    {
+                        wealthScript.Parameters[i].Value = strategyCenterItem_0.WealthScript.Parameters[i].Value;
+                    }
+                }
+                this.MyMainForm.ActivateMdiChild();
+                string symbol = strategyCenterItem_0.Symbol;
+                if (symbol == "")
+                {
+                    IEnumerator enumerator = this.lvAlerts.SelectedItems.GetEnumerator();
+                    try
+                    {
+                        while (true)
+                        {
+                            if (enumerator.MoveNext())
+                            {
+                                ListViewItem current = (ListViewItem)enumerator.Current;
+                                Alert tag = (Alert)current.Tag;
+                                if (strategyCenterItem_0.DataSet.Symbols.Contains(tag.Symbol))
+                                {
+                                    symbol = tag.Symbol;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        IDisposable disposable = enumerator as IDisposable;
+                        if (disposable != null)
+                        {
+                            disposable.Dispose();
+                        }
+                    }
+                }
+                this.MyMainForm.SelectTreeNode(strategyCenterItem_0.DataSet, symbol);
+                return;
+            }
+            else
             {
                 return;
             }
-            ChartForm form = this.MyMainForm.FindStrategyFormByTag(strategyCenterItem_0.Strategy, this);
-            if (form == null)
-            {
-                form = this.MyMainForm.OpenStrategyWindow(strategyCenterItem_0.Strategy, false, false);
-                form.Tag = this;
-            }
-            form.BringToFront();
-            form.WindowState = FormWindowState.Normal;
-            form.DataSource = strategyCenterItem_0.DataSet;
-            form.Symbol = strategyCenterItem_0.Symbol;
-            form.DataRange = strategyCenterItem_0.DataRange;
-            form.PositionSize = strategyCenterItem_0.PositionSize;
-            form.BarDataScale = strategyCenterItem_0.DataScale;
-            form.SetBarDataScaleForDataSource(strategyCenterItem_0.DataSet, strategyCenterItem_0.DataScale);
-            WealthScript wealthScript = form.WealthScript;
-            if ((wealthScript != null) && (strategyCenterItem_0.WealthScript != null))
-            {
-                for (int i = 0; i < wealthScript.Parameters.Count; i++)
-                {
-                    wealthScript.Parameters[i].Value = strategyCenterItem_0.WealthScript.Parameters[i].Value;
-                }
-            }
-            this.MyMainForm.ActivateMdiChild();
-            string symbol = strategyCenterItem_0.Symbol;
-            if (symbol == "")
-            {
-                using (IEnumerator enumerator = this.lvAlerts.SelectedItems.GetEnumerator())
-                {
-                    Alert tag;
-                    while (enumerator.MoveNext())
-                    {
-                        ListViewItem current = (ListViewItem) enumerator.Current;
-                        tag = (Alert) current.Tag;
-                        if (strategyCenterItem_0.DataSet.Symbols.Contains(tag.Symbol))
-                        {
-                            goto Label_015D;
-                        }
-                    }
-                    goto Label_017B;
-                Label_015D:
-                    symbol = tag.Symbol;
-                }
-            }
-        Label_017B:
-            this.MyMainForm.SelectTreeNode(strategyCenterItem_0.DataSet, symbol);
         }
 
         private void method_21()
@@ -2586,7 +2614,7 @@
             {
                 bool flag2;
                 Bars data;
-                List<StrategyCenterExecutionItem> list;
+                List<StrategyCenterExecutionItem> list = null; ///WYJ fix
                 this.method_6(item2, "Populating: " + item2.DataSet.Name);
                 bool flag = true;
                 StaticDataProvider providerInstance = MainModule.Instance.DataSources.GetProviderInstance(item2.DataSet.Provider.GetType());

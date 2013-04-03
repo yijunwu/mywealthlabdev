@@ -52,43 +52,55 @@
 
         public static string FileNameToSymbol(string fileName)
         {
-            string fileNameWithoutExtension = string.Empty;
-            if (!(fileName != string.Empty))
+            string empty = string.Empty;
+            if (fileName != string.Empty)
             {
-                return fileNameWithoutExtension;
-            }
-            fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-            bool flag = false;
-            //using (IDictionaryEnumerator enumerator = hashtable_0.GetEnumerator())
-            IDictionaryEnumerator enumerator = hashtable_0.GetEnumerator();
-            {
-                DictionaryEntry current;
-                while (enumerator.MoveNext())
+                empty = Path.GetFileNameWithoutExtension(fileName);
+                bool flag = false;
+                IDictionaryEnumerator enumerator = SymbolFileNameConverter.hashtable_0.GetEnumerator();
+                try
                 {
-                    current = (DictionaryEntry) enumerator.Current;
-                    if (fileNameWithoutExtension.Equals(current.Value as string))
+                    while (true)
                     {
-                        goto Label_0058;
+                        if (enumerator.MoveNext())
+                        {
+                            DictionaryEntry current = (DictionaryEntry)enumerator.Current;
+                            if (empty.Equals(current.Value as string))
+                            {
+                                empty = current.Key as string;
+                                flag = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
-                goto Label_007D;
-            Label_0058:
-                fileNameWithoutExtension = current.Key as string;
-                flag = true;
-            }
-        Label_007D:
-            if (!flag)
-            {
-                foreach (DictionaryEntry entry2 in hashtable_1)
+                finally
                 {
-                    if (fileNameWithoutExtension.Contains(entry2.Value as string))
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
                     {
-                        fileNameWithoutExtension = fileNameWithoutExtension.Replace(entry2.Value as string, entry2.Key as string);
+                        disposable.Dispose();
+                    }
+                }
+                if (!flag)
+                {
+                    foreach (DictionaryEntry hashtable1 in SymbolFileNameConverter.hashtable_1)
+                    {
+                        if (!empty.Contains(hashtable1.Value as string))
+                        {
+                            continue;
+                        }
+                        empty = empty.Replace(hashtable1.Value as string, hashtable1.Key as string);
                     }
                 }
             }
-            return fileNameWithoutExtension;
+            return empty;
         }
+
 
         public static string StripInvalidChars(string name)
         {
@@ -105,35 +117,49 @@
         public static string SymbolToFileName(string symbol)
         {
             bool flag = false;
-            foreach (DictionaryEntry entry2 in hashtable_1)
+            foreach (DictionaryEntry hashtable1 in SymbolFileNameConverter.hashtable_1)
             {
-                if (symbol.Contains(entry2.Key as string))
+                if (!symbol.Contains(hashtable1.Key as string))
                 {
-                    symbol = symbol.Replace(entry2.Key as string, entry2.Value as string);
-                    flag = true;
+                    continue;
                 }
+                symbol = symbol.Replace(hashtable1.Key as string, hashtable1.Value as string);
+                flag = true;
             }
             if (!flag)
             {
-                //using (IDictionaryEnumerator enumerator2 = hashtable_0.GetEnumerator())
-                IDictionaryEnumerator enumerator2 = hashtable_0.GetEnumerator();
+                IDictionaryEnumerator enumerator = SymbolFileNameConverter.hashtable_0.GetEnumerator();
+                try
                 {
-                    DictionaryEntry current;
-                    while (enumerator2.MoveNext())
+                    while (true)
                     {
-                        current = (DictionaryEntry) enumerator2.Current;
-                        if (symbol.Equals(current.Key as string))
+                        if (enumerator.MoveNext())
                         {
-                            goto Label_00AC;
+                            DictionaryEntry current = (DictionaryEntry)enumerator.Current;
+                            if (symbol.Equals(current.Key as string))
+                            {
+                                symbol = current.Value as string;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    return symbol;
-                Label_00AC:
-                    symbol = current.Value as string;
+                }
+                finally
+                {
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
                 }
             }
             return symbol;
         }
+
 
         public static string UrlEncode(string name)
         {

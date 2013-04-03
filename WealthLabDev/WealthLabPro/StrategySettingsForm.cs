@@ -443,35 +443,48 @@
             this.accountTypeSelector1.IgnoreCalls = true;
             if (MainModule.Instance.BrokerProvider != null)
             {
-                foreach (string str2 in MainModule.Instance.AccountNumbers)
+                foreach (string accountNumber in MainModule.Instance.AccountNumbers)
                 {
-                    this.cmbAccounts.Items.Add(str2);
+                    this.cmbAccounts.Items.Add(accountNumber);
                 }
             }
             this.cmbAccounts.SelectedIndex = this.cmbAccounts.Items.IndexOf(MainModule.Instance.DefaultAccountNumber);
             this.cmbAccounts.SelectedIndex = -1;
-            using (IEnumerator enumerator = this.cmbAccounts.Items.GetEnumerator())
+            IEnumerator enumerator = this.cmbAccounts.Items.GetEnumerator();
+            try
             {
-                string current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (string) enumerator.Current;
-                    if (current == this.strategyCenterItem_0.AccountNumber)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_00F0;
+                        string current = (string)enumerator.Current;
+                        if (current == this.strategyCenterItem_0.AccountNumber)
+                        {
+                            this.cmbAccounts.SelectedItem = current;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                goto Label_010F;
-            Label_00F0:
-                this.cmbAccounts.SelectedItem = current;
             }
-        Label_010F:
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
             this.accountTypeSelector1.IgnoreCalls = false;
             this.accountTypeSelector1.InitAccountTradeType(this.cmbAccounts.Text, "");
             this.accountTypeSelector1.SelectAccountTradeType(this.strategyCenterItem_0.AccountTradeType, true);
-            this.lblMarketClose.Text = this.Item.MarketInfo.CloseTimeNative.ToString("HH:mm") + " GMT " + TimeZoneInformation.GetTimeZone(this.Item.MarketInfo.TimeZoneName).StandardOffset;
-            this.lblExecute.Text = "GMT " + TimeZoneInformation.GetTimeZone(this.Item.MarketInfo.TimeZoneName).StandardOffset;
-            this.lblExecuteLocal.Text = "GMT " + TimeZoneInformation.CurrentTimeZone.StandardOffset;
+            DateTime closeTimeNative = this.Item.MarketInfo.CloseTimeNative;
+            this.lblMarketClose.Text = string.Concat(closeTimeNative.ToString("HH:mm"), " GMT ", TimeZoneInformation.GetTimeZone(this.Item.MarketInfo.TimeZoneName).StandardOffset);
+            this.lblExecute.Text = string.Concat("GMT ", TimeZoneInformation.GetTimeZone(this.Item.MarketInfo.TimeZoneName).StandardOffset);
+            this.lblExecuteLocal.Text = string.Concat("GMT ", TimeZoneInformation.CurrentTimeZone.StandardOffset);
         }
 
         private void tree_AfterSelect(object sender, TreeViewEventArgs e)

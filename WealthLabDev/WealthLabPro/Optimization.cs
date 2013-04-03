@@ -519,13 +519,13 @@
             return obj2;
         }
 
-        public void Initialize(WealthLabPro.ChartForm chartForm_1)
+        public void Initialize(ChartForm chartForm_1)
         {
             this.chartForm_0 = chartForm_1;
             this.mainForm_0 = chartForm_1.MyMainForm;
             Strategy strategy = chartForm_1.Strategy;
-            WealthLab.WealthScript wealthScript = chartForm_1.WealthScript;
-            if (((strategy != null) && (wealthScript != null)) && (strategy.ParameterValues.Count == wealthScript.Parameters.Count))
+            WealthScript wealthScript = chartForm_1.WealthScript;
+            if (strategy != null && wealthScript != null && strategy.ParameterValues.Count == wealthScript.Parameters.Count)
             {
                 for (int i = 0; i < strategy.ParameterValues.Count; i++)
                 {
@@ -537,53 +537,66 @@
             this.tradingSystemExecutor_0.FundamentalsLoader = this.chartForm_0.fundamentalsLoader_0;
             this.tradingSystemExecutor_0.StrategyName = this.chartForm_0.Strategy.Name;
             this.assemblyLoader_0.Path = MainModule.Instance.AppPath;
-            int num2 = 0;
+            int count = 0;
             string str = this.isettingsHost_0.Get("Optimization.Scorecard", "");
-            foreach (System.Type type in this.assemblyLoader_0.Types)
+            foreach (Type type in this.assemblyLoader_0.Types)
             {
-                StrategyScorecard item = (StrategyScorecard) this.assemblyLoader_0.CreateInstance(type);
-                this.cmbScorecard.Items.Add(item);
-                if (item.FriendlyName == str)
+                StrategyScorecard strategyScorecard = (StrategyScorecard)this.assemblyLoader_0.CreateInstance(type);
+                this.cmbScorecard.Items.Add(strategyScorecard);
+                if (strategyScorecard.FriendlyName != str)
                 {
-                    num2 = this.cmbScorecard.Items.Count - 1;
+                    continue;
                 }
+                count = this.cmbScorecard.Items.Count - 1;
             }
-            this.cmbScorecard.SelectedIndex = num2;
+            this.cmbScorecard.SelectedIndex = count;
             str = this.isettingsHost_0.Get("Optimization.Method", "");
             foreach (Optimizer optimizer in MainModule.Instance.Optimizers)
             {
-                Optimizer optimizer2 = (Optimizer) MainModule.Instance.assemblyLoader_3.CreateInstance(optimizer.GetType());
-                optimizer2.Host = this;
-                optimizer2.PrintHost = this;
-                this.cmbMethod.Items.Add(optimizer2);
-                if (optimizer.FriendlyName == str)
+                Optimizer optimizer1 = (Optimizer)MainModule.Instance.assemblyLoader_3.CreateInstance(optimizer.GetType());
+                optimizer1.Host = this;
+                optimizer1.PrintHost = this;
+                this.cmbMethod.Items.Add(optimizer1);
+                if (optimizer.FriendlyName != str)
                 {
-                    this.cmbMethod.SelectedItem = optimizer2;
+                    continue;
                 }
+                this.cmbMethod.SelectedItem = optimizer1;
             }
-            if (this.cmbMethod.SelectedItem != null)
+            if (this.cmbMethod.SelectedItem == null)
             {
-                return;
-            }
-            using (IEnumerator enumerator2 = this.cmbMethod.Items.GetEnumerator())
-            {
-                Optimizer current;
-                while (enumerator2.MoveNext())
+                IEnumerator enumerator = this.cmbMethod.Items.GetEnumerator();
+                try
                 {
-                    current = (Optimizer) enumerator2.Current;
-                    if (current.FriendlyName == "Exhaustive")
+                    while (true)
                     {
-                        goto Label_027A;
+                        if (enumerator.MoveNext())
+                        {
+                            Optimizer current = (Optimizer)enumerator.Current;
+                            if (current.FriendlyName == "Exhaustive")
+                            {
+                                this.cmbMethod.SelectedItem = current;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
-                goto Label_029E;
-            Label_027A:
-                this.cmbMethod.SelectedItem = current;
-            }
-        Label_029E:
-            if ((this.cmbMethod.SelectedItem == null) && (this.cmbMethod.Items.Count > 0))
-            {
-                this.cmbMethod.SelectedItem = this.cmbMethod.Items[0];
+                finally
+                {
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
+                    {
+                        disposable.Dispose();
+                    }
+                }
+                if (this.cmbMethod.SelectedItem == null && this.cmbMethod.Items.Count > 0)
+                {
+                    this.cmbMethod.SelectedItem = this.cmbMethod.Items[0];
+                }
             }
         }
 
@@ -1290,22 +1303,16 @@
 
         private bool method_11(string string_1)
         {
-            bool flag;
-            using (IEnumerator enumerator = this.lvParameters.Items.GetEnumerator())
+            foreach (ListViewItem item in this.lvParameters.Items)
             {
-                while (enumerator.MoveNext())
+                if (item.Text != string_1)
                 {
-                    ListViewItem current = (ListViewItem) enumerator.Current;
-                    if (current.Text == string_1)
-                    {
-                        goto Label_0038;
-                    }
+                    continue;
                 }
-                return false;
-            Label_0038:
-                flag = true;
+                bool flag = true;
+                return flag;
             }
-            return flag;
+            return false;
         }
 
         private void method_12()
@@ -1786,102 +1793,126 @@
 
         private void mniLoadResults_Click(object sender, EventArgs e)
         {
-            Guid guid;
-            if (this.openFileDialog_0.ShowDialog(this) != DialogResult.OK)
+            if (this.openFileDialog_0.ShowDialog(this) == DialogResult.OK)
             {
-                return;
-            }
-            OptimizationResultList list = OptimizationResultList.LoadFromFile(this.openFileDialog_0.FileName);
-            if (!(this.optimizer_0.FriendlyName != list.OptimizationMethod))
-            {
-                goto Label_00B0;
-            }
-            Optimizer optimizer = null;
-            using (IEnumerator enumerator = this.cmbMethod.Items.GetEnumerator())
-            {
-                Optimizer current;
-                while (enumerator.MoveNext())
+                OptimizationResultList optimizationResultList = OptimizationResultList.LoadFromFile(this.openFileDialog_0.FileName);
+                if (this.optimizer_0.FriendlyName != optimizationResultList.OptimizationMethod)
                 {
-                    current = (Optimizer) enumerator.Current;
-                    if (current.FriendlyName == list.OptimizationMethod)
+                    Optimizer optimizer = null;
+                    IEnumerator enumerator = this.cmbMethod.Items.GetEnumerator();
+                    try
                     {
-                        goto Label_007C;
+                        while (true)
+                        {
+                            if (enumerator.MoveNext())
+                            {
+                                Optimizer current = (Optimizer)enumerator.Current;
+                                if (current.FriendlyName == optimizationResultList.OptimizationMethod)
+                                {
+                                    optimizer = current;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        IDisposable disposable = enumerator as IDisposable;
+                        if (disposable != null)
+                        {
+                            disposable.Dispose();
+                        }
+                    }
+                    if (optimizer != null)
+                    {
+                        this.cmbMethod.SelectedItem = optimizer;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not locate the Optimization Method used to produce these Results.");
+                        return;
                     }
                 }
-                goto Label_0095;
-            Label_007C:
-                optimizer = current;
-            }
-        Label_0095:
-            if (optimizer == null)
-            {
-                MessageBox.Show("Could not locate the Optimization Method used to produce these Results.");
-                return;
-            }
-            this.cmbMethod.SelectedItem = optimizer;
-        Label_00B0:
-            if (!(this.cmbScorecard.Text != list.Scorecard))
-            {
-                goto Label_0147;
-            }
-            StrategyScorecard scorecard = null;
-            using (IEnumerator enumerator2 = this.cmbScorecard.Items.GetEnumerator())
-            {
-                StrategyScorecard scorecard2;
-                while (enumerator2.MoveNext())
+                if (this.cmbScorecard.Text != optimizationResultList.Scorecard)
                 {
-                    scorecard2 = (StrategyScorecard) enumerator2.Current;
-                    if (scorecard2.FriendlyName == list.Scorecard)
+                    StrategyScorecard strategyScorecard = null;
+                    IEnumerator enumerator1 = this.cmbScorecard.Items.GetEnumerator();
+                    try
                     {
-                        goto Label_010D;
+                        while (true)
+                        {
+                            if (enumerator1.MoveNext())
+                            {
+                                StrategyScorecard current1 = (StrategyScorecard)enumerator1.Current;
+                                if (current1.FriendlyName == optimizationResultList.Scorecard)
+                                {
+                                    strategyScorecard = current1;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        IDisposable disposable1 = enumerator1 as IDisposable;
+                        if (disposable1 != null)
+                        {
+                            disposable1.Dispose();
+                        }
+                    }
+                    if (strategyScorecard == null)
+                    {
+                        MessageBox.Show("Could not locate the ScoreCard used to represent the Results.");
+                        return;
+                    }
+                    else
+                    {
+                        this.cmbScorecard.SelectedItem = strategyScorecard;
                     }
                 }
-                goto Label_0128;
-            Label_010D:
-                scorecard = scorecard2;
-            }
-        Label_0128:
-            if (scorecard != null)
-            {
-                this.cmbScorecard.SelectedItem = scorecard;
-            }
-            else
-            {
-                MessageBox.Show("Could not locate the ScoreCard used to represent the Results.");
-                return;
-            }
-        Label_0147:
-            guid = new Guid(list.StrategyID);
-            if (guid != this.chartForm_0.Strategy.ID)
-            {
-                Strategy iD = MainModule.Instance.Strategies.LookupID(list.StrategyID);
-                if (iD == null)
+                Guid guid = new Guid(optimizationResultList.StrategyID);
+                if (guid != this.chartForm_0.Strategy.ID)
                 {
-                    MessageBox.Show("Could not locate the Strategy that these Optimization Results were based on.");
-                    return;
+                    Strategy strategy = MainModule.Instance.Strategies.LookupID(optimizationResultList.StrategyID);
+                    if (strategy != null)
+                    {
+                        this.chartForm_0.Strategy = strategy;
+                        this.LoadParameterList();
+                        if (this.chartForm_0.Symbol != "")
+                        {
+                            this.chartForm_0.GoButtonPressed(this.chartForm_0.Symbol, true);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not locate the Strategy that these Optimization Results were based on.");
+                        return;
+                    }
                 }
-                this.chartForm_0.Strategy = iD;
-                this.LoadParameterList();
-                if (this.chartForm_0.Symbol != "")
+                if (optimizationResultList.Results.Count > 0 && this.chartForm_0.WealthScript != null)
                 {
-                    this.chartForm_0.GoButtonPressed(this.chartForm_0.Symbol, true);
+                    OptimizationResult item = optimizationResultList.Results[0];
+                    if (item.ParameterValues.Count != this.chartForm_0.WealthScript.Parameters.Count)
+                    {
+                        MessageBox.Show("The number of Parameters in the saved Results does not match the number of Parameters in the Strategy.  Cannot load the Results.");
+                        return;
+                    }
                 }
+                this.optimizationResultList_0 = optimizationResultList;
+                this.method_5();
+                this.lvResults.EndUpdate();
+                this.method_9(this.optimizationResultList_0);
+                this.optimizer_0.WealthScript = this.WealthScript;
+                this.optimizer_0.RunCompleted(this.optimizationResultList_0);
             }
-            if ((list.Results.Count > 0) && (this.chartForm_0.WealthScript != null))
-            {
-                OptimizationResult result = list.Results[0];
-                if (result.ParameterValues.Count != this.chartForm_0.WealthScript.Parameters.Count)
-                {
-                    MessageBox.Show("The number of Parameters in the saved Results does not match the number of Parameters in the Strategy.  Cannot load the Results.");
-                    return;
-                }
-            }
-            this.optimizationResultList_0 = list;
-            this.method_5();
-            this.lvResults.EndUpdate();
-            this.method_9(this.optimizationResultList_0);
-            this.optimizer_0.WealthScript = this.WealthScript;
-            this.optimizer_0.RunCompleted(this.optimizationResultList_0);
         }
 
         private void mniPrintResults_Click(object sender, EventArgs e)

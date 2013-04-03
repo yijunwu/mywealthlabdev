@@ -30,7 +30,36 @@
         private ToolStripButton tsbM;
         private ToolStripButton tsbW;
 
-        public event EventHandler<ScaleChangeEventArgs> ScaleChangeEvent;
+        private EventHandler<ScaleChangeEventArgs> eventHandler_0;
+
+        public event EventHandler<ScaleChangeEventArgs> ScaleChangeEvent
+        {
+            add
+            {
+                EventHandler<ScaleChangeEventArgs> eventHandler;
+                EventHandler<ScaleChangeEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<ScaleChangeEventArgs> eventHandler1 = (EventHandler<ScaleChangeEventArgs>)Delegate.Combine(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<ScaleChangeEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+            remove
+            {
+                EventHandler<ScaleChangeEventArgs> eventHandler;
+                EventHandler<ScaleChangeEventArgs> eventHandler0 = this.eventHandler_0;
+                do
+                {
+                    eventHandler = eventHandler0;
+                    EventHandler<ScaleChangeEventArgs> eventHandler1 = (EventHandler<ScaleChangeEventArgs>)Delegate.Remove(eventHandler, value);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<ScaleChangeEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                }
+                while (eventHandler0 != eventHandler);
+            }
+        }
+        
 
         public ScaleSelector()
         {

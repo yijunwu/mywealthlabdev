@@ -306,49 +306,58 @@
 
         public void AddDynamicMenuItem(DynamicMenuItem dynamicMenuItem_0)
         {
-            using (IEnumerator enumerator = this.menuMain.Items.GetEnumerator())
+            IEnumerator enumerator = this.menuMain.Items.GetEnumerator();
+            try
             {
-                int num;
-                ToolStripMenuItem item;
-                ToolStripMenuItem item3;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    ToolStripItem current = (ToolStripItem) enumerator.Current;
-                    if (current is ToolStripMenuItem)
+                    if (enumerator.MoveNext())
                     {
-                        item = current as ToolStripMenuItem;
-                        if (current.Text == dynamicMenuItem_0.MainMenuItemText)
+                        ToolStripItem current = (ToolStripItem)enumerator.Current;
+                        if (current is ToolStripMenuItem)
                         {
-                            goto Label_0053;
+                            ToolStripMenuItem toolStripMenuItem = current as ToolStripMenuItem;
+                            if (current.Text == dynamicMenuItem_0.MainMenuItemText)
+                            {
+                                for (int i = 0; i < toolStripMenuItem.DropDownItems.Count; i++)
+                                {
+                                    if (toolStripMenuItem.DropDownItems[i] is ToolStripMenuItem)
+                                    {
+                                        ToolStripMenuItem item = toolStripMenuItem.DropDownItems[i] as ToolStripMenuItem;
+                                        if (item.Text == dynamicMenuItem_0.SubMenuItemText)
+                                        {
+                                            ToolStripMenuItem itemImage = new ToolStripMenuItem(dynamicMenuItem_0.Text);
+                                            itemImage.Click += new EventHandler(dynamicMenuItem_0.OnClick.Invoke);
+                                            if (dynamicMenuItem_0.ItemImage != null)
+                                            {
+                                                itemImage.Image = dynamicMenuItem_0.ItemImage;
+                                            }
+                                            if (toolStripMenuItem.DropDownItems[i - 1].Text == dynamicMenuItem_0.Text)
+                                            {
+                                                goto Label0;
+                                            }
+                                            toolStripMenuItem.DropDownItems.Insert(i, itemImage);
+                                            goto Label0;
+                                        }
+                                    }
+                                }
+                                break;
+                            }
                         }
                     }
-                }
-                return;
-            Label_0053:
-                num = 0;
-                while (num < item.DropDownItems.Count)
-                {
-                    if (item.DropDownItems[num] is ToolStripMenuItem)
+                    else
                     {
-                        ToolStripMenuItem item2 = item.DropDownItems[num] as ToolStripMenuItem;
-                        if (item2.Text == dynamicMenuItem_0.SubMenuItemText)
-                        {
-                            goto Label_00A3;
-                        }
+                        break;
                     }
-                    num++;
                 }
-                return;
-            Label_00A3:
-                item3 = new ToolStripMenuItem(dynamicMenuItem_0.Text);
-                item3.Click += new EventHandler(dynamicMenuItem_0.OnClick.Invoke);
-                if (dynamicMenuItem_0.ItemImage != null)
+            Label0: return;
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
                 {
-                    item3.Image = dynamicMenuItem_0.ItemImage;
-                }
-                if (item.DropDownItems[num - 1].Text != dynamicMenuItem_0.Text)
-                {
-                    item.DropDownItems.Insert(num, item3);
+                    disposable.Dispose();
                 }
             }
         }
@@ -3361,97 +3370,153 @@
 
         public void ItemChanged(ChartForm item)
         {
-            using (IEnumerator enumerator = this.dropdownCharts.DropDownItems.GetEnumerator())
+            IEnumerator enumerator = this.dropdownCharts.DropDownItems.GetEnumerator();
+            try
             {
-                ToolStripItem current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (ToolStripItem) enumerator.Current;
-                    if (current.Tag == item)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0035;
+                        ToolStripItem current = (ToolStripItem)enumerator.Current;
+                        if (current.Tag == item)
+                        {
+                            current.Text = item.Text;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                return;
-            Label_0035:
-                current.Text = item.Text;
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
             }
         }
 
         public void ItemChanged(QuotesForm item)
         {
-            using (IEnumerator enumerator = this.dropdownQuotes.DropDownItems.GetEnumerator())
+            IEnumerator enumerator = this.dropdownQuotes.DropDownItems.GetEnumerator();
+            try
             {
-                ToolStripItem current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (ToolStripItem) enumerator.Current;
-                    if (current.Tag == item)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0035;
+                        ToolStripItem current = (ToolStripItem)enumerator.Current;
+                        if (current.Tag == item)
+                        {
+                            current.Text = item.Text;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                return;
-            Label_0035:
-                current.Text = item.Text;
             }
-        }
-
-        public void ItemRemoved(ChartForm item)
-        {
-            using (IEnumerator enumerator = this.dropdownCharts.DropDownItems.GetEnumerator())
+            finally
             {
-                ToolStripItem current;
-                while (enumerator.MoveNext())
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
                 {
-                    current = (ToolStripItem) enumerator.Current;
-                    if (current.Tag == item)
-                    {
-                        goto Label_0035;
-                    }
+                    disposable.Dispose();
                 }
-                goto Label_0059;
-            Label_0035:
-                this.dropdownCharts.DropDownItems.Remove(current);
-            }
-        Label_0059:
-            this.int_1--;
-            if (this.int_1 == 0)
-            {
-                this.dropdownCharts.Text = "Charts && Strategies";
-            }
-            else
-            {
-                this.dropdownCharts.Text = "Charts && Strategies (" + this.int_1 + ")";
             }
         }
 
         public void ItemRemoved(QuotesForm item)
         {
-            using (IEnumerator enumerator = this.dropdownQuotes.DropDownItems.GetEnumerator())
+            IEnumerator enumerator = this.dropdownQuotes.DropDownItems.GetEnumerator();
+            try
             {
-                ToolStripItem current;
-                while (enumerator.MoveNext())
+                while (true)
                 {
-                    current = (ToolStripItem) enumerator.Current;
-                    if (current.Tag == item)
+                    if (enumerator.MoveNext())
                     {
-                        goto Label_0035;
+                        ToolStripItem current = (ToolStripItem)enumerator.Current;
+                        if (current.Tag == item)
+                        {
+                            this.dropdownQuotes.DropDownItems.Remove(current);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                goto Label_0059;
-            Label_0035:
-                this.dropdownQuotes.DropDownItems.Remove(current);
             }
-        Label_0059:
-            this.int_2--;
-            if (this.int_2 == 0)
+            finally
             {
-                this.dropdownQuotes.Text = "Quotes";
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
+            MainForm int2 = this;
+            int2.int_2 = int2.int_2 - 1;
+            if (this.int_2 != 0)
+            {
+                this.dropdownQuotes.Text = string.Concat("Quotes (", this.int_2, ")");
+                return;
             }
             else
             {
-                this.dropdownQuotes.Text = "Quotes (" + this.int_2 + ")";
+                this.dropdownQuotes.Text = "Quotes";
+                return;
+            }
+        }
+
+        public void ItemRemoved(ChartForm item)
+        {
+            IEnumerator enumerator = this.dropdownCharts.DropDownItems.GetEnumerator();
+            try
+            {
+                while (true)
+                {
+                    if (enumerator.MoveNext())
+                    {
+                        ToolStripItem current = (ToolStripItem)enumerator.Current;
+                        if (current.Tag == item)
+                        {
+                            this.dropdownCharts.DropDownItems.Remove(current);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
+            MainForm int1 = this;
+            int1.int_1 = int1.int_1 - 1;
+            if (this.int_1 != 0)
+            {
+                this.dropdownCharts.Text = string.Concat("Charts && Strategies (", this.int_1, ")");
+                return;
+            }
+            else
+            {
+                this.dropdownCharts.Text = "Charts && Strategies";
+                return;
             }
         }
 
@@ -4877,101 +4942,140 @@
         private ChartStyle method_5()
         {
             ChartStyle tag = null;
-            if (this.btnBarChart.Checked)
+            if (!this.btnBarChart.Checked)
             {
-                tag = (ChartStyle) this.btnBarChart.Tag;
-            }
-            else if (this.btnCandleStyle.Checked)
-            {
-                tag = (ChartStyle) this.btnCandleStyle.Tag;
-            }
-            else if (this.btnLineChart.Checked)
-            {
-                tag = (ChartStyle) this.btnLineChart.Tag;
-            }
-            else
-            {
-                using (IEnumerator enumerator = this.tsmMoreChartStyles.DropDownItems.GetEnumerator())
+                if (!this.btnCandleStyle.Checked)
                 {
-                    ToolStripButton button;
-                    while (enumerator.MoveNext())
+                    if (!this.btnLineChart.Checked)
                     {
-                        ToolStripItem current = (ToolStripItem) enumerator.Current;
-                        if (current is ToolStripButton)
+                        IEnumerator enumerator = this.tsmMoreChartStyles.DropDownItems.GetEnumerator();
+                        try
                         {
-                            button = current as ToolStripButton;
-                            if (button.Checked)
+                            while (true)
                             {
-                                goto Label_00A9;
+                                if (enumerator.MoveNext())
+                                {
+                                    ToolStripItem current = (ToolStripItem)enumerator.Current;
+                                    if (current is ToolStripButton)
+                                    {
+                                        ToolStripButton toolStripButton = current as ToolStripButton;
+                                        if (toolStripButton.Checked)
+                                        {
+                                            tag = (ChartStyle)toolStripButton.Tag;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            IDisposable disposable = enumerator as IDisposable;
+                            if (disposable != null)
+                            {
+                                disposable.Dispose();
                             }
                         }
                     }
-                    goto Label_00CB;
-                Label_00A9:
-                    tag = (ChartStyle) button.Tag;
+                    else
+                    {
+                        tag = (ChartStyle)this.btnLineChart.Tag;
+                    }
+                }
+                else
+                {
+                    tag = (ChartStyle)this.btnCandleStyle.Tag;
                 }
             }
-        Label_00CB:
-            if (tag == null)
+            else
+            {
+                tag = (ChartStyle)this.btnBarChart.Tag;
+            }
+            if (tag != null)
+            {
+                Type type = tag.GetType();
+                tag = (ChartStyle)this.assemblyLoader_0.CreateInstance(type);
+                return tag;
+            }
+            else
             {
                 return null;
             }
-            System.Type type = tag.GetType();
-            return (ChartStyle) this.assemblyLoader_0.CreateInstance(type);
         }
 
         private ChartStyle method_6(string string_1)
         {
-            ChartStyle style = null;
-            ChartStyle tag = (ChartStyle) this.btnBarChart.Tag;
-            if (tag.FriendlyName == string_1)
+            ChartStyle chartStyle = null;
+            ChartStyle tag = (ChartStyle)this.btnBarChart.Tag;
+            if (tag.FriendlyName != string_1)
             {
-                style = tag;
-            }
-            else
-            {
-                tag = (ChartStyle) this.btnCandleStyle.Tag;
-                if (tag.FriendlyName == string_1)
+                tag = (ChartStyle)this.btnCandleStyle.Tag;
+                if (tag.FriendlyName != string_1)
                 {
-                    style = tag;
-                }
-                else
-                {
-                    tag = (ChartStyle) this.btnLineChart.Tag;
-                    if (tag.FriendlyName == string_1)
+                    tag = (ChartStyle)this.btnLineChart.Tag;
+                    if (tag.FriendlyName != string_1)
                     {
-                        style = tag;
+                        IEnumerator enumerator = this.tsmMoreChartStyles.DropDownItems.GetEnumerator();
+                        try
+                        {
+                            while (true)
+                            {
+                                if (enumerator.MoveNext())
+                                {
+                                    ToolStripItem current = (ToolStripItem)enumerator.Current;
+                                    if (current is ToolStripButton)
+                                    {
+                                        tag = (ChartStyle)current.Tag;
+                                        if (tag.FriendlyName == string_1)
+                                        {
+                                            chartStyle = tag;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            IDisposable disposable = enumerator as IDisposable;
+                            if (disposable != null)
+                            {
+                                disposable.Dispose();
+                            }
+                        }
                     }
                     else
                     {
-                        using (IEnumerator enumerator = this.tsmMoreChartStyles.DropDownItems.GetEnumerator())
-                        {
-                            while (enumerator.MoveNext())
-                            {
-                                ToolStripItem current = (ToolStripItem) enumerator.Current;
-                                if (current is ToolStripButton)
-                                {
-                                    tag = (ChartStyle) current.Tag;
-                                    if (tag.FriendlyName == string_1)
-                                    {
-                                        goto Label_00BD;
-                                    }
-                                }
-                            }
-                            goto Label_00D5;
-                        Label_00BD:
-                            style = tag;
-                        }
+                        chartStyle = tag;
                     }
                 }
+                else
+                {
+                    chartStyle = tag;
+                }
             }
-        Label_00D5:
-            if (style == null)
+            else
+            {
+                chartStyle = tag;
+            }
+            if (chartStyle != null)
+            {
+                Type type = chartStyle.GetType();
+                chartStyle = (ChartStyle)this.assemblyLoader_0.CreateInstance(type);
+                return chartStyle;
+            }
+            else
             {
                 return null;
             }
-            System.Type type = style.GetType();
-            return (ChartStyle) this.assemblyLoader_0.CreateInstance(type);
         }
 
         private void method_7()

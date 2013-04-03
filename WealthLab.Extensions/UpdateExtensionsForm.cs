@@ -170,7 +170,8 @@ internal class UpdateExtensionsForm : Form
         this.btnStartWealthLab.Enabled = true;
     }
 
-    void Form.Dispose(bool disposing)
+    //void Form.Dispose(bool disposing)
+    void Dispose(bool disposing)
     {
         if (disposing && (this.icontainer_0 != null))
         {

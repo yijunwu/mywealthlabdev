@@ -675,22 +675,16 @@ internal class Form0 : Form
 
     public bool method_6()
     {
-        bool flag;
-        using (IEnumerator enumerator = Application.OpenForms.GetEnumerator())
+        foreach (Form openForm in Application.OpenForms)
         {
-            while (enumerator.MoveNext())
+            if (!openForm.Text.StartsWith(WealthLabAuthProvider.FullProductName))
             {
-                Form current = (Form) enumerator.Current;
-                if (current.Text.StartsWith(WealthLabAuthProvider.FullProductName))
-                {
-                    goto Label_0036;
-                }
+                continue;
             }
-            return false;
-        Label_0036:
-            flag = true;
+            bool flag = true;
+            return flag;
         }
-        return flag;
+        return false;
     }
 
     public void method_7()
@@ -819,7 +813,7 @@ internal class Form0 : Form
         return ActivateTrialCompletedEventArgs.smethod_0("焯䜱䀳帵崷吹䠻圽⌿⍁ぃ⽅❇⑉", num);
     }
 
-    void Form.Dispose(bool disposing)
+    protected override void Dispose(bool disposing) ///WYJ fix
     {
         if (disposing && (this.icontainer_0 != null))
         {

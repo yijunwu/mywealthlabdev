@@ -44,46 +44,60 @@
         public void RecallExpandState()
         {
             bool flag = false;
-            bool_0 = true;
-            lock (list_0)
+            SmartTreeView.bool_0 = true;
+            lock (SmartTreeView.list_0)
             {
-                foreach (TreeNode node2 in base.Nodes)
+                foreach (TreeNode node in base.Nodes)
                 {
-                    if (node2.Level == 0)
+                    if (node.Level != 0)
                     {
-                        if (list_0.Contains(node2.Text))
+                        continue;
+                    }
+                    if (!SmartTreeView.list_0.Contains(node.Text))
+                    {
+                        node.Collapse();
+                    }
+                    else
+                    {
+                        flag = true;
+                        node.Expand();
+                    }
+                }
+            }
+            SmartTreeView.bool_0 = false;
+            if (!flag)
+            {
+                IEnumerator enumerator = base.Nodes.GetEnumerator();
+                try
+                {
+                    while (true)
+                    {
+                        if (enumerator.MoveNext())
                         {
-                            flag = true;
-                            node2.Expand();
+                            TreeNode current = (TreeNode)enumerator.Current;
+                            if (current.Level == 0 && current.Text == this.string_0)
+                            {
+                                current.Expand();
+                                break;
+                            }
                         }
                         else
                         {
-                            node2.Collapse();
+                            break;
                         }
                     }
                 }
-            }
-            bool_0 = false;
-            if (!flag)
-            {
-                //using (IEnumerator enumerator = base.Nodes.GetEnumerator())
-                IEnumerator enumerator = base.Nodes.GetEnumerator();
+                finally
                 {
-                    TreeNode current;
-                    while (enumerator.MoveNext())
+                    IDisposable disposable = enumerator as IDisposable;
+                    if (disposable != null)
                     {
-                        current = (TreeNode) enumerator.Current;
-                        if ((current.Level == 0) && (current.Text == this.string_0))
-                        {
-                            goto Label_00DB;
-                        }
+                        disposable.Dispose();
                     }
-                    return;
-                Label_00DB:
-                    current.Expand();
                 }
             }
         }
+
 
         public string StandardNodeName
         {

@@ -13,7 +13,7 @@
     public class QuickRefManager : Component
     {
         private IContainer icontainer_0;
-        private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private List<QuickRefCategory> list_0;
 
         public QuickRefManager()

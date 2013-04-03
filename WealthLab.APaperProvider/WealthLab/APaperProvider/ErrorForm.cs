@@ -50,23 +50,16 @@
 
         public static Form GetMainForm()
         {
-            Form form2;
-            using (IEnumerator enumerator = Application.OpenForms.GetEnumerator())
+            foreach (Form openForm in Application.OpenForms)
             {
-                Form current;
-                while (enumerator.MoveNext())
+                if (openForm.Name != "MainForm")
                 {
-                    current = (Form) enumerator.Current;
-                    if (current.Name == "MainForm")
-                    {
-                        goto Label_0036;
-                    }
+                    continue;
                 }
-                return null;
-            Label_0036:
-                form2 = current;
+                Form form = openForm;
+                return form;
             }
-            return form2;
+            return null;
         }
 
         private void InitializeComponent()

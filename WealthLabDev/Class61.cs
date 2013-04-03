@@ -12,44 +12,44 @@ internal static class Class61
     private static void Main()
     {
         ServicePointManager.DefaultConnectionLimit = 10;
-        bool createdNew = true;
-        using (new Mutex(true, Application.ProductName, out createdNew))
+        bool flag = true;
+        using (Mutex mutex = new Mutex(true, Application.ProductName, out flag))
         {
-            if (!createdNew)
+            if (!flag)
             {
-                goto Label_00D4;
+                MessageBox.Show(string.Concat("Application: \"", Application.ProductName, "\" is already running."), Application.ProductName);
             }
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            string str = "";
-            if (!NetworkInterface.GetIsNetworkAvailable())
+            else
             {
-                goto Label_00A6;
-            }
-            foreach (NetworkInterface interface2 in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (((interface2.OperationalStatus == OperationalStatus.Up) && (interface2.NetworkInterfaceType != NetworkInterfaceType.Tunnel)) && (interface2.NetworkInterfaceType != NetworkInterfaceType.Loopback))
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                string str = "";
+                if (!NetworkInterface.GetIsNetworkAvailable())
                 {
-                    IPv4InterfaceStatistics statistics = interface2.GetIPv4Statistics();
-                    if ((statistics.BytesReceived > 0L) && (statistics.BytesSent > 0L))
+                    str = NetworkInterface.GetAllNetworkInterfaces()[0].GetPhysicalAddress().ToString();
+                }
+                else
+                {
+                    NetworkInterface[] allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+                    for (int i = 0; i < (int)allNetworkInterfaces.Length; i++)
                     {
-                        goto Label_0097;
+                        NetworkInterface networkInterface = allNetworkInterfaces[i];
+                        if (networkInterface.OperationalStatus == OperationalStatus.Up && networkInterface.NetworkInterfaceType != NetworkInterfaceType.Tunnel && networkInterface.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                        {
+                            IPv4InterfaceStatistics pv4Statistics = networkInterface.GetIPv4Statistics();
+                            if (pv4Statistics.BytesReceived > (long)0 && pv4Statistics.BytesSent > (long)0)
+                            {
+                                str = networkInterface.GetPhysicalAddress().ToString();
+                                goto Label0;
+                            }
+                        }
                     }
                 }
+            Label0:
+                Class61.smethod_0(str);
+                Application.Run(new MainForm());
+                Process.GetCurrentProcess().Kill();
             }
-            goto Label_00B8;
-        Label_0097:
-            str = interface2.GetPhysicalAddress().ToString();
-            goto Label_00B8;
-        Label_00A6:
-            str = NetworkInterface.GetAllNetworkInterfaces()[0].GetPhysicalAddress().ToString();
-        Label_00B8:
-            smethod_0(str);
-            Application.Run(new MainForm());
-            Process.GetCurrentProcess().Kill();
-            return;
-        Label_00D4:
-            MessageBox.Show("Application: \"" + Application.ProductName + "\" is already running.", Application.ProductName);
         }
     }
 

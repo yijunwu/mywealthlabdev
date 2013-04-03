@@ -32,18 +32,24 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="QWhale.Common">
+      <HintPath>..\ExternalLib\QWhale.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="QWhale.Editor">
+      <HintPath>..\ExternalLib\QWhale.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="QWhale.Syntax">
+      <HintPath>..\ExternalLib\QWhale.Syntax.dll</HintPath>
+    </Reference>
+    <Reference Include="QWhale.Syntax.Parsers">
+      <HintPath>..\ExternalLib\QWhale.Syntax.Parsers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="WealthLab">
       <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="QWhale.Editor">
-      <HintPath>..\ExternalLib\QWhale.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="QWhale.Syntax.Parsers">
-      <HintPath>..\ExternalLib\QWhale.Syntax.Parsers.dll</HintPath>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>..\log4net\bin\Debug\log4net.dll</HintPath>
     </Reference>
@@ -55,9 +61,6 @@
     </Reference>
     <Reference Include="WealthLab.ChartControl">
       <HintPath>..\ExternalLib\WealthLab.ChartControl.dll</HintPath>
-    </Reference>
-    <Reference Include="QWhale.Syntax">
-      <HintPath>..\ExternalLib\QWhale.Syntax.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="SyntaxSettingsConverter">
@@ -78,6 +81,7 @@
       <HintPath>..\WealthLab.IndexDefinitions\bin\Debug\WealthLab.IndexDefinitions.dll</HintPath>
     </Reference>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Class62.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLabPro\StrategySettingsForm.cs">
       <SubType>Form</SubType>
@@ -316,11 +320,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\QWhale.Common\QWhale.Common.csproj">
-      <Project>{00F8046C-A484-4170-8273-E80F22903A40}</Project>
-      <Name>QWhale.Common</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
