@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>bb05affc-4944-4544-afbb-0682d4ad333d</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.DataProviders.AsciiFilesStatic</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
+    <Reference Include="WealthLab" />
+    <Reference Include="WealthLab.DataProviders.MarketManager" />
+    <Reference Include="WealthLab.Extensions.Attribute" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Xml" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\BorderLabel.cs" />
+    <Compile Include="TextFilesWizardPageScale.cs" />
+    <Compile Include="CustomFieldNameControl.cs" />
+    <Compile Include="AsciiFilesWizardFieldOptions.cs" />
+    <Compile Include="Class5.cs" />
+    <Compile Include="AsciiFilesWizardFolderPage.cs" />
+    <Compile Include="FormatName.cs" />
+    <Compile Include="TextFilesWizardPageData.cs" />
+    <Compile Include="Class6.cs" />
+    <Compile Include="EventArgs0.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\DataSetSettings.cs" />
+    <Compile Include="WealthLab\DataProviders\Helper\TraceEventType.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiFilesDataSetList.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiFilesStaticProvider.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\FormatOptions.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiCacheControl.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\Field.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\FieldList.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\FieldType.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiMarketManagerInfo.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiFilesDataSet.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiCache.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\Config.cs" />
+    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\Properties\Resources.cs" />
+    <EmbeddedResource Include="WealthLab.DataProviders.AsciiFilesStatic.Properties.Resources.resources" />
+    <EmbeddedResource Include="AsciiFilesWizardFieldOptions.resources" />
+    <EmbeddedResource Include="FormatName.resources" />
+    <EmbeddedResource Include="TextFilesWizardPageScale.resources" />
+    <EmbeddedResource Include="AsciiFilesWizardFolderPage.resources" />
+    <EmbeddedResource Include="WealthLab.DataProviders.AsciiFilesStatic.AsciiCacheControl.resources" />
+    <EmbeddedResource Include="TextFilesWizardPageData.resources" />
+    <EmbeddedResource Include="WealthLab.DataProviders.AsciiFilesStatic.Resources.TextFiles.ico" />
+    <EmbeddedResource Include="CustomFieldNameControl.resources" />
+  </ItemGroup>
+</Project>
