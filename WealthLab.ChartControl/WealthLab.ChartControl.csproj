@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>44585416-bbf9-4d5c-91a6-f9d9542ea203</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>WealthLab.ChartControl</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="Fidelity.Components" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="WealthLab" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="WealthLab\ChartControl\PolygonBasedObjectSettings.cs" />
+    <Compile Include="WealthLab\ChartControl\Properties\Resources.cs" />
+    <Compile Include="WealthLab\ChartControl\GeneralToolTip.cs" />
+    <Compile Include="WealthLab\ChartControl\ChartDrawingObject.cs" />
+    <Compile Include="WealthLab\ChartControl\CDOPolygonBased.cs" />
+    <Compile Include="WealthLab\ChartControl\ScaleSelector.cs" />
+    <Compile Include="WealthLab\ChartControl\DrawingObjectManager.cs" />
+    <Compile Include="WealthLab\ChartControl\LineBasedObjectSettings.cs" />
+    <Compile Include="WealthLab\ChartControl\DraggedIndicatorHelper.cs" />
+    <Compile Include="WealthLab\ChartControl\CDOLineBased.cs" />
+    <Compile Include="WealthLab\ChartControl\PriceToolTip.cs" />
+    <Compile Include="WealthLab\ChartControl\CDOTrendline.cs" />
+    <Compile Include="WealthLab\ChartControl\DrawingObjectHelper.cs" />
+    <Compile Include="WealthLab\ChartControl\TrendlineHelper.cs" />
+    <Compile Include="WealthLab\ChartControl\PointBasedObjectSettings.cs" />
+    <Compile Include="WealthLab\ChartControl\IndicatorParametersForm.cs" />
+    <Compile Include="WealthLab\ChartControl\ChartMode.cs" />
+    <Compile Include="WealthLab\ChartControl\Chart.cs" />
+    <Compile Include="WealthLab\ChartControl\BarNumberEventArgs.cs" />
+    <Compile Include="WealthLab\ChartControl\ExceptionEventArgs.cs" />
+    <Compile Include="WealthLab\ChartControl\GlyphToolTip.cs" />
+    <Compile Include="WealthLab\ChartControl\IndicatorToolTip.cs" />
+    <Compile Include="WealthLab\ChartControl\IndicatorDragDropManager.cs" />
+    <Compile Include="WealthLab\ChartControl\TrendlineSettings.cs" />
+    <Compile Include="WealthLab\ChartControl\DrawingObjectProperties.cs" />
+    <Compile Include="WealthLab\ChartControl\IndicatorDescriptor.cs" />
+    <Compile Include="WealthLab\ChartControl\IndicatorDescriptionString.cs" />
+    <Compile Include="WealthLab\ChartControl\BarsDescriptorString.cs" />
+    <Compile Include="WealthLab\ChartControl\DraggedFundamentalItem.cs" />
+    <Compile Include="WealthLab\ChartControl\ChartDrawingObjectHandle.cs" />
+    <Compile Include="WealthLab\ChartControl\ChartDrawingObjectHandleType.cs" />
+    <Compile Include="WealthLab\ChartControl\ICDOBehavior.cs" />
+    <Compile Include="WealthLab\ChartControl\CDOPointBased.cs" />
+    <Compile Include="WealthLab\ChartControl\ScaleChangeEventArgs.cs" />
+    <Compile Include="WealthLab\ChartControl\PaneDescriptor.cs" />
+    <Compile Include="WealthLab\ChartControl\DroppedIndicatorEventArgs.cs" />
+    <EmbeddedResource Include="WealthLab.ChartControl.Properties.Resources.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.PolygonBasedObjectSettings.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.IndicatorParametersForm.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.LineBasedObjectSettings.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.PriceToolTip.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.IndicatorToolTip.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.PointBasedObjectSettings.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.GeneralToolTip.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.Chart.bmp" />
+    <EmbeddedResource Include="WealthLab.ChartControl.Chart.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.DrawingObjectManager.bmp" />
+    <EmbeddedResource Include="WealthLab.ChartControl.IndicatorDragDropManager.bmp" />
+    <EmbeddedResource Include="WealthLab.ChartControl.ScaleSelector.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.GlyphToolTip.resources" />
+    <EmbeddedResource Include="WealthLab.ChartControl.DrawingObjectProperties.resources" />
+  </ItemGroup>
+</Project>
