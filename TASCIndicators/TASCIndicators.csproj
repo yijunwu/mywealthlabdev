@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>066a8e89-4fde-4bb1-9885-ca1a51791109</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>TASCIndicators</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="WealthLab" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="WealthLab.Indicators" />
+    <Reference Include="WealthLab.Extensions.Attribute" />
+    <Reference Include="System" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="TASCIndicators\RevEngBBandCross.cs" />
+    <Compile Include="TASCIndicators\RevEngBBandCrossHelper.cs" />
+    <Compile Include="TASCIndicators\CG.cs" />
+    <Compile Include="TASCIndicators\CGHelper.cs" />
+    <Compile Include="TASCIndicators\RSS.cs" />
+    <Compile Include="TASCIndicators\RSSHelper.cs" />
+    <Compile Include="TASCIndicators\RSIBand.cs" />
+    <Compile Include="TASCIndicators\RSIBandHelper.cs" />
+    <Compile Include="TASCIndicators\RevEngMACD.cs" />
+    <Compile Include="TASCIndicators\RevEngMACDHelper.cs" />
+    <Compile Include="TASCIndicators\NVI.cs" />
+    <Compile Include="TASCIndicators\NVIHelper.cs" />
+    <Compile Include="TASCIndicators\MidasLower.cs" />
+    <Compile Include="TASCIndicators\MidasLowerHelper.cs" />
+    <Compile Include="TASCIndicators\HighestBar2.cs" />
+    <Compile Include="TASCIndicators\HighestBar2Helper.cs" />
+    <Compile Include="TASCIndicators\Fisher.cs" />
+    <Compile Include="TASCIndicators\FisherHelper.cs" />
+    <Compile Include="TASCIndicators\DVS.cs" />
+    <Compile Include="TASCIndicators\DVSHelper.cs" />
+    <Compile Include="TASCIndicators\HACOLT.cs" />
+    <Compile Include="TASCIndicators\HACOLTHelper.cs" />
+    <Compile Include="TASCIndicators\WilsonRSIChannel.cs" />
+    <Compile Include="TASCIndicators\WilsonRSIChannelHelper.cs" />
+    <Compile Include="TASCIndicators\TCFPlus.cs" />
+    <Compile Include="TASCIndicators\TCFPlusHelper.cs" />
+    <Compile Include="TASCIndicators\PCRiFast.cs" />
+    <Compile Include="TASCIndicators\PCRiFastHelper.cs" />
+    <Compile Include="TASCIndicators\FractalDim.cs" />
+    <Compile Include="TASCIndicators\FractalDimHelper.cs" />
+    <Compile Include="TASCIndicators\BullPowerVG.cs" />
+    <Compile Include="TASCIndicators\BullPowerVGHelper.cs" />
+    <Compile Include="TASCIndicators\Alpha.cs" />
+    <Compile Include="TASCIndicators\AlphaHelper.cs" />
+    <Compile Include="TASCIndicators\RWILow.cs" />
+    <Compile Include="TASCIndicators\RWILowHelper.cs" />
+    <Compile Include="TASCIndicators\Resources\EM.cs" />
+    <Compile Include="TASCIndicators\VMACDH.cs" />
+    <Compile Include="TASCIndicators\TEMA.cs" />
+    <Compile Include="TASCIndicators\TEMAHelper.cs" />
+    <Compile Include="TASCIndicators\TCFMinus.cs" />
+    <Compile Include="TASCIndicators\TCFMinusHelper.cs" />
+    <Compile Include="TASCIndicators\RWIHigh.cs" />
+    <Compile Include="TASCIndicators\RWIHighHelper.cs" />
+    <Compile Include="TASCIndicators\RegEMA.cs" />
+    <Compile Include="TASCIndicators\RegEMAHelper.cs" />
+    <Compile Include="TASCIndicators\PTBar.cs" />
+    <Compile Include="TASCIndicators\PTBarHelper.cs" />
+    <Compile Include="TASCIndicators\EMA2.cs" />
+    <Compile Include="TASCIndicators\EMA2Helper.cs" />
+    <Compile Include="TASCIndicators\CyclicComponent.cs" />
+    <Compile Include="TASCIndicators\CyclicComponentHelper.cs" />
+    <Compile Include="TASCIndicators\LeastError.cs" />
+    <Compile Include="TASCIndicators\EC.cs" />
+    <Compile Include="TASCIndicators\ECHelper.cs" />
+    <Compile Include="TASCIndicators\BollingerPctBSmoothed.cs" />
+    <Compile Include="TASCIndicators\BollingerPctBSmoothedHelper.cs" />
+    <Compile Include="TASCIndicators\Gapo.cs" />
+    <Compile Include="TASCIndicators\GapoHelper.cs" />
+    <Compile Include="TASCIndicators\FRAMA.cs" />
+    <Compile Include="TASCIndicators\FRAMAHelper.cs" />
+    <Compile Include="TASCIndicators\FractDim.cs" />
+    <Compile Include="TASCIndicators\FractDimHelper.cs" />
+    <Compile Include="TASCIndicators\VZO.cs" />
+    <Compile Include="TASCIndicators\VZOHelper.cs" />
+    <Compile Include="TASCIndicators\CupStatus.cs" />
+    <Compile Include="TASCIndicators\SemiCups.cs" />
+    <Compile Include="TASCIndicators\SemiCup.cs" />
+    <Compile Include="TASCIndicators\UCI.cs" />
+    <Compile Include="TASCIndicators\UCIHelper.cs" />
+    <Compile Include="TASCIndicators\TrueLow.cs" />
+    <Compile Include="TASCIndicators\TrueLowHelper.cs" />
+    <Compile Include="TASCIndicators\TrendLinePeaks.cs" />
+    <Compile Include="TASCIndicators\TrendLinePeaksHelper.cs" />
+    <Compile Include="TASCIndicators\LowestBar2.cs" />
+    <Compile Include="TASCIndicators\LowestBar2Helper.cs" />
+    <Compile Include="TASCIndicators\SZO.cs" />
+    <Compile Include="TASCIndicators\SZOHelper.cs" />
+    <Compile Include="TASCIndicators\InverseFisherStoch.cs" />
+    <Compile Include="TASCIndicators\InverseFisherStochHelper.cs" />
+    <Compile Include="TASCIndicators\FIRSmoother.cs" />
+    <Compile Include="TASCIndicators\FIRSmootherHelper.cs" />
+    <Compile Include="TASCIndicators\Midas.cs" />
+    <Compile Include="TASCIndicators\MidasHelper.cs" />
+    <Compile Include="TASCIndicators\BollingerPctB.cs" />
+    <Compile Include="TASCIndicators\BBandPercentBHelper.cs" />
+    <Compile Include="TASCIndicators\RevEngSMA_TC.cs" />
+    <Compile Include="TASCIndicators\RevEngSMA_TCHelper.cs" />
+    <Compile Include="TASCIndicators\PCRiSlowIFT.cs" />
+    <Compile Include="TASCIndicators\PCRiSlowIFTHelper.cs" />
+    <Compile Include="TASCIndicators\PCRiSlow.cs" />
+    <Compile Include="TASCIndicators\PCRiSlowHelper.cs" />
+    <Compile Include="TASCIndicators\MidasUpper.cs" />
+    <Compile Include="TASCIndicators\MidasUpperHelper.cs" />
+    <Compile Include="TASCIndicators\HACO.cs" />
+    <Compile Include="TASCIndicators\HACOHelper.cs" />
+    <Compile Include="TASCIndicators\CandleCode.cs" />
+    <Compile Include="TASCIndicators\CandleCodeHelper.cs" />
+    <Compile Include="TASCIndicators\ARSI.cs" />
+    <Compile Include="TASCIndicators\ARSIHelper.cs" />
+    <Compile Include="TASCIndicators\VMPlus.cs" />
+    <Compile Include="TASCIndicators\TTF.cs" />
+    <Compile Include="TASCIndicators\TTFHelper.cs" />
+    <Compile Include="TASCIndicators\SARSIUpper.cs" />
+    <Compile Include="TASCIndicators\SARSIUpperHelper.cs" />
+    <Compile Include="TASCIndicators\SARSILower.cs" />
+    <Compile Include="TASCIndicators\SARSILowerHelper.cs" />
+    <Compile Include="TASCIndicators\RevEngRSI.cs" />
+    <Compile Include="TASCIndicators\RevEngRSIHelper.cs" />
+    <Compile Include="TASCIndicators\FVE.cs" />
+    <Compile Include="TASCIndicators\FVEHelper.cs" />
+    <Compile Include="TASCIndicators\InverseFisherRSI.cs" />
+    <Compile Include="TASCIndicators\InverseFisherRSIHelper.cs" />
+    <Compile Include="TASCIndicators\TrendLineTroughs.cs" />
+    <Compile Include="TASCIndicators\TrendLineTroughsHelper.cs" />
+    <Compile Include="TASCIndicators\PZO.cs" />
+    <Compile Include="TASCIndicators\PZOHelper.cs" />
+    <Compile Include="TASCIndicators\PCI.cs" />
+    <Compile Include="TASCIndicators\PCIHelper.cs" />
+    <Compile Include="TASCIndicators\InverseFisher.cs" />
+    <Compile Include="TASCIndicators\InverseFisherHelper.cs" />
+    <Compile Include="TASCIndicators\IIRSmoother.cs" />
+    <Compile Include="TASCIndicators\IIRSmootherHelper.cs" />
+    <Compile Include="TASCIndicators\CyberCycle.cs" />
+    <Compile Include="TASCIndicators\CyberCycleHelper.cs" />
+    <Compile Include="TASCIndicators\BearPowerVG.cs" />
+    <Compile Include="TASCIndicators\BearPowerVGHelper.cs" />
+    <Compile Include="TASCIndicators\VMMinus.cs" />
+    <Compile Include="TASCIndicators\TrueHigh.cs" />
+    <Compile Include="TASCIndicators\TrueHighHelper.cs" />
+    <Compile Include="TASCIndicators\InstantaneousTrendLine.cs" />
+    <Compile Include="TASCIndicators\InstantaneousTrendLineHelper.cs" />
+    <Compile Include="TASCIndicators\Gaussian.cs" />
+    <Compile Include="TASCIndicators\GaussianHelper.cs" />
+    <Compile Include="TASCIndicators\Spearman.cs" />
+    <Compile Include="TASCIndicators\SpearmanHelper.cs" />
+    <Compile Include="TASCIndicators\SchaffTrendCycle.cs" />
+    <Compile Include="TASCIndicators\SchaffTrendCycleHelper.cs" />
+    <Compile Include="TASCIndicators\RapidRSI.cs" />
+    <Compile Include="TASCIndicators\RapidRSIHelper.cs" />
+    <Compile Include="TASCIndicators\PVI.cs" />
+    <Compile Include="TASCIndicators\PVIHelper.cs" />
+    <Compile Include="TASCIndicators\Properties\Resources.cs" />
+    <Compile Include="TASCIndicators\ATRModified.cs" />
+    <Compile Include="TASCIndicators\ATRModifiedHelper.cs" />
+    <EmbeddedResource Include="TASCIndicators.glyph.bmp" />
+    <EmbeddedResource Include="TASCIndicators.Resources.TASC.PNG" />
+    <EmbeddedResource Include="TASCIndicators.Properties.Resources.resources" />
+  </ItemGroup>
+</Project>
