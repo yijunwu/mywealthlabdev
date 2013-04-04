@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24C21168-7E33-481B-8729-68C8E4827D0E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>QWhale.Editor</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="QWhale.Common">
+      <HintPath>..\QWhale.Common\bin\Debug\QWhale.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="QWhale.Syntax">
+      <HintPath>..\QWhale.Syntax\bin\Debug\QWhale.Syntax.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IUndoData.cs" />
+    <Compile Include="QWhale\Editor\OutlineOptions.cs" />
+    <Compile Include="QWhale\Editor\ICollapsable.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlDisplayStringsInfo.cs" />
+    <Compile Include="QWhale\Editor\ISyntaxPaint.cs" />
+    <Compile Include="QWhale\Editor\SyntaxPaint.cs" />
+    <Compile Include="QWhale\Editor\IEditSyntaxPaint.cs" />
+    <Compile Include="QWhale\Editor\EditSyntaxPaint.cs" />
+    <Compile Include="QWhale\Editor\IEditLineStyles.cs" />
+    <Compile Include="QWhale\Editor\EditLineStyles.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\DlgSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Dialogs\ISearchDialog.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\SearchDialog.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ISpelling.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextImport.cs" />
+    <Compile Include="QWhale\Editor\TextSource\INavigate.cs" />
+    <Compile Include="QWhale\Editor\IEditNavigate.cs" />
+    <Compile Include="QWhale\Editor\IMargin.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IHyperText.cs" />
+    <Compile Include="QWhale\Editor\IEditHyperText.cs" />
+    <Compile Include="QWhale\Editor\TextSource\Serialization\XmlTextSourceInfo.cs" />
+    <Compile Include="QWhale\Editor\TextSource\Serialization\XmlTextStringsInfo.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlEditSpellingInfo.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlPrintingInfo.cs" />
+    <Compile Include="QWhale\Editor\IScrollingButtons.cs" />
+    <Compile Include="QWhale\Editor\ScrollingButtons.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\ICodeCompletionWindow.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CodeCompletionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\CodeCompletion\ICodeCompletionBox.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CodeCompletionBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Dialogs\IPrintOptionsDialog.cs" />
+    <Compile Include="QWhale\Editor\IMacroKeyList.cs" />
+    <Compile Include="QWhale\Editor\MacroKeyList.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\IGotoLineDialog.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\DlgGoto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Design\LineStyleConverter.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IBookMark.cs" />
+    <Compile Include="QWhale\Editor\TextSource\BookMark.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IBookMarkEx.cs" />
+    <Compile Include="QWhale\Editor\TextSource\BookMarkEx.cs" />
+    <Compile Include="QWhale\Editor\IRecordPlayBack.cs" />
+    <Compile Include="QWhale\Editor\DrawStage.cs" />
+    <Compile Include="QWhale\Editor\DrawState.cs" />
+    <Compile Include="QWhale\Editor\IOutlining.cs" />
+    <Compile Include="QWhale\Editor\RulerUnits.cs" />
+    <Compile Include="QWhale\Editor\RulerOptions.cs" />
+    <Compile Include="QWhale\Editor\IEditRuler.cs" />
+    <Compile Include="QWhale\Editor\CustomDrawEventArgs.cs" />
+    <Compile Include="QWhale\Editor\CustomDrawEvent.cs" />
+    <Compile Include="QWhale\Editor\LineStyleOptions.cs" />
+    <Compile Include="QWhale\Editor\IEditLineStyle.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlSelectionInfo.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlOutliningInfo.cs" />
+    <Compile Include="QWhale\Editor\Outlining.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IStringExport.cs" />
+    <Compile Include="QWhale\Editor\IFmtExport.cs" />
+    <Compile Include="QWhale\Editor\Serialization\FmtExport.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlExport.cs" />
+    <Compile Include="QWhale\Editor\EditRuler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Serialization\XmlMacroKeyDataInfo.cs" />
+    <Compile Include="QWhale\Editor\TextUndoEvent.cs" />
+    <Compile Include="QWhale\Design\Dialogs\DlgFlagEnumeration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\TextSource\IBookMarks.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITabulation.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ICodeSnippetRange.cs" />
+    <Compile Include="QWhale\Editor\TextSource\CodeSnippetRange.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\ICodeCompletionEdit.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\ICodeCompletionColumn.cs" />
+    <Compile Include="QWhale\Editor\KeyEventType.cs" />
+    <Compile Include="QWhale\Editor\IKeyData.cs" />
+    <Compile Include="QWhale\Editor\IMacroKeyData.cs" />
+    <Compile Include="QWhale\Editor\KeyEvent.cs" />
+    <Compile Include="QWhale\Editor\KeyEventEx.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CodeCompletionColumn.cs" />
+    <Compile Include="QWhale\Editor\EditorPrintDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\TextSource\SearchOptions.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextSearch.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ILineStyle.cs" />
+    <Compile Include="QWhale\Editor\TextSource\UndoData.cs" />
+    <Compile Include="QWhale\Editor\GutterOptions.cs" />
+    <Compile Include="QWhale\Editor\IGutter.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlSyntaxEditInfo.cs" />
+    <Compile Include="QWhale\Editor\ISearch.cs" />
+    <Compile Include="QWhale\Editor\IEditNotifier.cs" />
+    <Compile Include="QWhale\Editor\ICaret.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IEdit.cs" />
+    <Compile Include="QWhale\Editor\IWordWrap.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextExport.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\ICodeCompletion.cs" />
+    <Compile Include="QWhale\Editor\ISplitView.cs" />
+    <Compile Include="QWhale\Editor\IAutoCorrect.cs" />
+    <Compile Include="QWhale\Editor\ISyntaxEdit.cs" />
+    <Compile Include="QWhale\Editor\SyntaxEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\CodeCompletion\ICodeCompletionColumns.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CodeCompletionColumns.cs" />
+    <Compile Include="QWhale\Editor\Serialization\HtmlExport.cs" />
+    <Compile Include="QWhale\Editor\RulerEventArgs.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\IPersistentSettings.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\PersistentSettings.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\IEditorSettingsDialog.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\DlgSyntaxSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\TextSource\NotifyState.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextNotify.cs" />
+    <Compile Include="QWhale\Editor\TextSource\BookMarks.cs" />
+    <Compile Include="QWhale\Editor\SelectionState.cs" />
+    <Compile Include="QWhale\Editor\AllowedSelectionMode.cs" />
+    <Compile Include="QWhale\Editor\SelectionOptions.cs" />
+    <Compile Include="QWhale\Editor\SelectionType.cs" />
+    <Compile Include="QWhale\Editor\ISelection.cs" />
+    <Compile Include="QWhale\Editor\IEditPage.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\ICodeCompletionHint.cs" />
+    <Compile Include="QWhale\Editor\PromptReplaceEventArgs.cs" />
+    <Compile Include="QWhale\Editor\PromptOnReplaceEvent.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlEditLineStylesInfo.cs" />
+    <Compile Include="QWhale\Editor\Selection.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\HtmlSyntaxPaint.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\HintSyntaxPaint.cs" />
+    <Compile Include="QWhale\Editor\TextSource\StringItem.cs" />
+    <Compile Include="QWhale\Editor\TextSource\HyperText.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IBraceMatching.cs" />
+    <Compile Include="QWhale\Editor\IEditBraceMatching.cs" />
+    <Compile Include="QWhale\Editor\ILineSeparator.cs" />
+    <Compile Include="QWhale\Editor\LineSeparator.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlEditHyperTextInfo.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlEditPagesInfo.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IUndo.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextParsing.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextSnippets.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextErrors.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextSource.cs" />
+    <Compile Include="QWhale\Editor\TextSource\TextSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\TextSource\IInnerTextSource.cs" />
+    <Compile Include="QWhale\Editor\TextSource\InnerTextSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\IScrollingButton.cs" />
+    <Compile Include="QWhale\Editor\ScrollingButton.cs" />
+    <Compile Include="QWhale\Editor\ScrollingSplitter.cs" />
+    <Compile Include="QWhale\Editor\AutoCorrectEventArgs.cs" />
+    <Compile Include="QWhale\Editor\AutoCorrectEvent.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\EditorSettingsTab.cs" />
+    <Compile Include="QWhale\Design\LineStylesConverter.cs" />
+    <Compile Include="QWhale\Editor\TextSource\BracesOptions.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ILineStyles.cs" />
+    <Compile Include="QWhale\Editor\TextSource\LineStyles.cs" />
+    <Compile Include="QWhale\Editor\TextSource\LineStyle.cs" />
+    <Compile Include="QWhale\Editor\IWhiteSpace.cs" />
+    <Compile Include="QWhale\Editor\KeyData.cs" />
+    <Compile Include="QWhale\Editor\MacroKeyData.cs" />
+    <Compile Include="QWhale\Editor\UrlJumpEventArgs.cs" />
+    <Compile Include="QWhale\Editor\UrlJumpEvent.cs" />
+    <Compile Include="QWhale\Editor\DrawHeaderEventArgs.cs" />
+    <Compile Include="QWhale\Editor\DrawUserMarginEventArgs.cs" />
+    <Compile Include="QWhale\Editor\DrawUserMarginEvent.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlMarginInfo.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlEditPageInfo.cs" />
+    <Compile Include="QWhale\Editor\TextSource\Serialization\XmlBracesInfo.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IStringImport.cs" />
+    <Compile Include="QWhale\Editor\IFmtImport.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\ICompletionEdit.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CompletionEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Serialization\FmtImport.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlImport.cs" />
+    <Compile Include="QWhale\Editor\Serialization\RtfExport.cs" />
+    <Compile Include="QWhale\Design\ScrollingButtonsEditor.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CodeCompletionFlags.cs" />
+    <Compile Include="QWhale\Editor\DrawHeaderEvent.cs" />
+    <Compile Include="QWhale\Editor\CreatePrintEditEventArgs.cs" />
+    <Compile Include="QWhale\Editor\CreatePrintEditEvent.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlGutterInfo.cs" />
+    <Compile Include="QWhale\Editor\HitTest.cs" />
+    <Compile Include="QWhale\Editor\IHitTestInfo.cs" />
+    <Compile Include="QWhale\Editor\IEventHandlers.cs" />
+    <Compile Include="QWhale\Editor\EventHandlers.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CompletionListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Serialization\HtmlImporter.cs" />
+    <Compile Include="QWhale\Editor\EditPage.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\ISyntaxSettings.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\SyntaxSettings.cs" />
+    <Compile Include="QWhale\Editor\TextSource\NavigateOptions.cs" />
+    <Compile Include="QWhale\Editor\HitTestInfo.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ICodeSnippetRanges.cs" />
+    <Compile Include="QWhale\Editor\TextSource\CodeSnippetRanges.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CompletionHint.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Serialization\XmlEditLineStyleInfo.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\ISearchSettings.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\SearchSettings.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\IColorThemes.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\ColorThemes.cs" />
+    <Compile Include="QWhale\Editor\TextSource\UndoEventArgs.cs" />
+    <Compile Include="QWhale\Editor\TextSource\UndoEvent.cs" />
+    <Compile Include="QWhale\Editor\TextSource\Braces.cs" />
+    <Compile Include="QWhale\Editor\IEditPageHeader.cs" />
+    <Compile Include="QWhale\Editor\NotifyEventArgs.cs" />
+    <Compile Include="QWhale\Editor\NotifyEvent.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlSearchSettingsInfo.cs" />
+    <Compile Include="QWhale\Editor\Properties\Resources.cs" />
+    <Compile Include="QWhale\Editor\IKeyList.cs" />
+    <Compile Include="QWhale\Editor\KeyList.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlMacroKeysDataInfo.cs" />
+    <Compile Include="QWhale\Design\LineStylesEditor.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IUndoList.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IndentOptions.cs" />
+    <Compile Include="QWhale\Editor\TextSource\WordSpellEventArgs.cs" />
+    <Compile Include="QWhale\Editor\TextSource\WordSpellEvent.cs" />
+    <Compile Include="QWhale\Editor\TextSource\HyperTextEventArgs.cs" />
+    <Compile Include="QWhale\Editor\TextSource\HyperTextEvent.cs" />
+    <Compile Include="QWhale\Editor\IEditSpelling.cs" />
+    <Compile Include="QWhale\Editor\SeparatorOptions.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlLineSeparatorInfo.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlScrollingInfo.cs" />
+    <Compile Include="QWhale\Editor\Margin.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\IColorTheme.cs" />
+    <Compile Include="QWhale\Editor\TextSource\UndoOptions.cs" />
+    <Compile Include="QWhale\Editor\TextSource\UndoFlags.cs" />
+    <Compile Include="QWhale\Editor\TextSource\UpdateReason.cs" />
+    <Compile Include="QWhale\Editor\TextSource\UndoOperation.cs" />
+    <Compile Include="QWhale\Editor\PrintOptions.cs" />
+    <Compile Include="QWhale\Editor\IPrinting.cs" />
+    <Compile Include="QWhale\Editor\IEditNotify.cs" />
+    <Compile Include="QWhale\Editor\TextSource\IWordBreak.cs" />
+    <Compile Include="QWhale\Editor\IDisplayStrings.cs" />
+    <Compile Include="QWhale\Editor\IDrawInfo.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\ColorTheme.cs" />
+    <Compile Include="QWhale\Editor\TextSource\ITextStrings.cs" />
+    <Compile Include="QWhale\Editor\IndentOrientation.cs" />
+    <Compile Include="QWhale\Editor\IRulerIndent.cs" />
+    <Compile Include="QWhale\Editor\RulerIndent.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CodeCompletionEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\CodeCompletion\HtmlLexer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Serialization\XmlColorThemesInfo.cs" />
+    <Compile Include="QWhale\Editor\PositionChangedEventArgs.cs" />
+    <Compile Include="QWhale\Editor\EditHyperText.cs" />
+    <Compile Include="QWhale\Design\ScrollingButtonConverter.cs" />
+    <Compile Include="QWhale\Design\FlagEnumerationEditor.cs" />
+    <Compile Include="QWhale\Editor\EditRulers.cs" />
+    <Compile Include="QWhale\Editor\PageType.cs" />
+    <Compile Include="QWhale\Editor\IEditPages.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlWhiteSpaceInfo.cs" />
+    <Compile Include="QWhale\Editor\EditSpelling.cs" />
+    <Compile Include="QWhale\Editor\Resources.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Printing.cs" />
+    <Compile Include="QWhale\Editor\PageHeader.cs" />
+    <Compile Include="QWhale\Editor\EditConsts.cs" />
+    <Compile Include="QWhale\Editor\EditPages.cs" />
+    <Compile Include="QWhale\Editor\EditLineStyle.cs" />
+    <Compile Include="QWhale\Editor\Dialogs\DlgPrintOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Design\ScrollingButtonsConverter.cs" />
+    <Compile Include="QWhale\Editor\TextSource\BlockDeletingEventArgs.cs" />
+    <Compile Include="QWhale\Editor\StringEvent.cs" />
+    <Compile Include="QWhale\Editor\KeyPreviewEventArgs.cs" />
+    <Compile Include="QWhale\Editor\KeyPreviewEvent.cs" />
+    <Compile Include="QWhale\Editor\IScrolling.cs" />
+    <Compile Include="QWhale\Editor\Scrolling.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlPageHeaderInfo.cs" />
+    <Compile Include="QWhale\Editor\TextSource\Serialization\XmlBookmarkInfo.cs" />
+    <Compile Include="QWhale\Editor\DrawInfo.cs" />
+    <Compile Include="QWhale\Editor\CodeCompletion\CodeCompletionHint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Editor\Gutter.cs" />
+    <Compile Include="QWhale\Editor\TextSource\UndoList.cs" />
+    <Compile Include="QWhale\Editor\TextSource\TextStrings.cs" />
+    <Compile Include="QWhale\Editor\ScrollingOptions.cs" />
+    <Compile Include="QWhale\Editor\TextSource\Serialization\XmlLineStyleInfo.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlSyntaxSettingsInfo.cs" />
+    <Compile Include="QWhale\Editor\WhiteSpace.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlScrollingButtonInfo.cs" />
+    <Compile Include="QWhale\Editor\Serialization\XmlColorThemeInfo.cs" />
+    <Compile Include="QWhale\Editor\DisplayStrings.cs" />
+    <EmbeddedResource Include="QWhale.Editor.Dialogs.DlgSyntaxSettings.resources" />
+    <EmbeddedResource Include="QWhale.Design.Dialogs.DlgFlagEnumeration.resources" />
+    <EmbeddedResource Include="QWhale.Editor.Images.ShowWhiteSpace.cur" />
+    <EmbeddedResource Include="QWhale.Editor.Dialogs.DlgPrintOptions.resources" />
+    <EmbeddedResource Include="QWhale.Editor.Properties.Resources.resources" />
+    <EmbeddedResource Include="QWhale.Editor.Images.ReverseIncrementalSearch.cur" />
+    <EmbeddedResource Include="QWhale.Editor.CodeCompletion.HtmlLexer.resources" />
+    <EmbeddedResource Include="QWhale.Editor.Images.HideWhiteSpace.cur" />
+    <EmbeddedResource Include="QWhale.Editor.Dialogs.DlgSearch.resources" />
+    <EmbeddedResource Include="QWhale.Editor.Images.SyntaxEdit.bmp" />
+    <EmbeddedResource Include="QWhale.Editor.Images.TextSource.bmp" />
+    <EmbeddedResource Include="QWhale.Editor.Images.LeftArrow.cur" />
+    <EmbeddedResource Include="QWhale.Editor.Images.IncrementalSearch.cur" />
+    <EmbeddedResource Include="QWhale.Editor.Resources.resources" />
+    <EmbeddedResource Include="QWhale.Editor.EditConsts.resources" />
+    <EmbeddedResource Include="QWhale.Editor.Dialogs.DlgGoto.resources" />
+  </ItemGroup>
+</Project>
