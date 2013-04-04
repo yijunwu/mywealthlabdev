@@ -58,7 +58,7 @@
             {
                 smethod_2(ref flag, str);
             }
-            settingsManager_0.Set("LastSessionEnd", smethod_1());
+            settingsManager_0.Set("LastSessionEnd", getCurrentOADateTime());
             settingsManager_0.SaveSettings();
         }
 
@@ -120,7 +120,8 @@
             return assembly_0.GetName().Name;
         }
 
-        private void method_0()
+        ///WYJ fix: original signature: private void method_0()
+        private void loadAssemblies()
         {
             Assembly assembly;
             Type[] types;
@@ -238,14 +239,16 @@
             this.icontainer_0 = new Container();
         }
 
-        private static DateTime smethod_0()
+        ///WYJ fix: original signature: private static DateTime smethod_0()
+        private static DateTime getNow()
         {
             return DateTime.Now.ToUniversalTime();
         }
 
-        private static double smethod_1()
+        ///WYJ fix: original signature: private static double smethod_1()
+        private static double getCurrentOADateTime()
         {
-            return smethod_0().ToOADate();
+            return getNow().ToOADate();
         }
 
         private static void smethod_2(ref bool bool_0, string string_7)
@@ -272,7 +275,7 @@
                     {
                         builder.Append(strArray[strArray.Length - 1]);
                         builder.Append("|");
-                        builder.Append(smethod_1().ToString());
+                        builder.Append(getCurrentOADateTime().ToString());
                         builder.Append("|");
                     }
                 }
@@ -293,10 +296,10 @@
             }
             else
             {
-                builder.Append(smethod_1().ToString());
+                builder.Append(getCurrentOADateTime().ToString());
                 builder.Append("|");
             }
-            builder.Append(smethod_1().ToString());
+            builder.Append(getCurrentOADateTime().ToString());
             lock (settingsManager_0)
             {
                 settingsManager_0.Set(string_7, builder.ToString());
@@ -336,7 +339,7 @@
             set
             {
                 this.string_3 = value;
-                this.method_0();
+                this.loadAssemblies();
             }
         }
 
@@ -361,7 +364,7 @@
             set
             {
                 this.string_0 = value;
-                this.method_0();
+                this.loadAssemblies();
             }
         }
 
@@ -384,7 +387,7 @@
                     }
                     settingsManager_0.IsEncrypted = true;
                     settingsManager_0.FileName = string_4;
-                    double num2 = smethod_1();
+                    double num2 = getCurrentOADateTime();
                     if (settingsManager_0.Get("LogStarted", double_2) == double_2)
                     {
                         settingsManager_0.Set("LogStarted", num2);
@@ -419,7 +422,7 @@
             set
             {
                 this.string_1 = value;
-                this.method_0();
+                this.loadAssemblies();
             }
         }
 
