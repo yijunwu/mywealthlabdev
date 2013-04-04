@@ -54,10 +54,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="ControlLibrary, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalLib\ControlLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLib\log4net.dll</HintPath>
@@ -359,6 +355,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ControlLibrary\ControlLibrary.csproj">
+      <Project>{AB461C43-796D-4FC8-87B0-86A8E5E6DC54}</Project>
+      <Name>ControlLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
       <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
       <Name>Fidelity.Components</Name>
@@ -377,7 +377,9 @@
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\WealthLab*.dll" "C:\Program Files\Wealth-Lab Developer 6"
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\ControlLibrary.dll" "C:\Program Files\Wealth-Lab Developer 6"
+copy "$(ProjectDir)\bin\Debug\Fidelity.Components.dll" "C:\Program Files\Wealth-Lab Developer 6"
+copy "$(ProjectDir)\bin\Debug\WealthLab*.dll" "C:\Program Files\Wealth-Lab Developer 6"
 copy "$(ProjectDir)\bin\Debug\WealthLabDev.exe" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
   </PropertyGroup>
 </Project>
