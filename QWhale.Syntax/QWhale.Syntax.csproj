@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92D3D425-DCB3-4253-8295-08509BCE00B7}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>QWhale.Syntax</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="QWhale\Syntax\ISyntaxAttributes.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\SnippetType.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeCompletionProviderItem.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetType.cs" />
+    <Compile Include="QWhale\Syntax\IExport.cs" />
+    <Compile Include="QWhale\Syntax\IImport.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeCompletionProvider.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetsProvider.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetMembers.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetLiterals.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetImport.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetsInfo.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexer.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\Lexer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\IParser.cs" />
+    <Compile Include="QWhale\Syntax\Parser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\ClosingEventArgs.cs" />
+    <Compile Include="QWhale\Syntax\ClosePopupEvent.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexSyntaxBlocks.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexStyles.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexReswordSets.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexStates.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexStates.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlLexReswordSetInfo.cs" />
+    <Compile Include="QWhale\Syntax\ISyntaxTree.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippets.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetDeclarations.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlParameterMemberInfo.cs" />
+    <Compile Include="QWhale\Syntax\DescriptionLookupEventArgs.cs" />
+    <Compile Include="QWhale\Syntax\DescriptionLookupEvent.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\IQuickInfoItem.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\QuickInfoItem.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\IQuickInfo.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippet.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxTree.cs" />
+    <Compile Include="QWhale\Syntax\ISyntaxErrors.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxErrors.cs" />
+    <Compile Include="QWhale\Syntax\ISyntaxError.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxError.cs" />
+    <Compile Include="QWhale\Syntax\ShowingEventArgs.cs" />
+    <Compile Include="QWhale\Syntax\ShowPopupEvent.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetTypes.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetTypes.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetObjects.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetObjects.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetLiteral.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetLiteral.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetObject.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetObject.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICommentInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlListMemberInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetTypeInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetCodeInfo.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexState.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexToken.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeCompletionProvider.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CommentInfo.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetImports.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetCode.cs" />
+    <Compile Include="QWhale\Syntax\Design\Dialogs\DlgSyntaxBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\XmlLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\XmlNodeType.cs" />
+    <Compile Include="QWhale\Syntax\ISyntaxParser.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\XmlParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\SyntaxConsts.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetMember.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetMember.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetDeclarations.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippet.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexReswordSet.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexReswordSet.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\MemberAttribute.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\IListMember.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetReferences.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetReferences.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeCompletionRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeCompletionRepository.cs" />
+    <Compile Include="QWhale\Syntax\ITextUndo.cs" />
+    <Compile Include="QWhale\Syntax\TextUndo.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexStyle.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletionScope.cs" />
+    <Compile Include="QWhale\Syntax\MemberLookupEventArgs.cs" />
+    <Compile Include="QWhale\Syntax\MemberLookupEvent.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlLexSyntaxBlockInfo.cs" />
+    <Compile Include="QWhale\Syntax\ISyntaxAttribute.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\IListMembers.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\IParameterInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlListMembersInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlQuickInfoItemInfo.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexSyntaxBlock.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexSyntaxBlock.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlLexSchemeInfo.cs" />
+    <Compile Include="QWhale\Syntax\TextStyle.cs" />
+    <Compile Include="QWhale\Syntax\ItemState.cs" />
+    <Compile Include="QWhale\Syntax\IStringItem.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetDeclaration.cs" />
+    <Compile Include="QWhale\Syntax\Design\SyntaxBuilderConsts.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxAttributes.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ListMembers.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlLexStyleInfo.cs" />
+    <Compile Include="QWhale\Syntax\ISyntaxNodes.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxNodes.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletionType.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletionArgs.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletionEvent.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ILexScheme.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexScheme.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\IParameterMember.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ParameterMember.cs" />
+    <Compile Include="QWhale\Syntax\IOutlineRange.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexStyles.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexReswordSets.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\IParameterMembers.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ParameterMembers.cs" />
+    <Compile Include="QWhale\Syntax\IStringList.cs" />
+    <Compile Include="QWhale\Syntax\Design\SyntaxBuilderEditor.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetHeader.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetHeader.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICommentInfoItem.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CommentInfoItem.cs" />
+    <Compile Include="QWhale\Syntax\Design\LexSchemeConverter.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlColorInfo.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxAttribute.cs" />
+    <Compile Include="QWhale\Syntax\StringList.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ListMember.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetType.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCommentInfoItemInfo.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexSyntaxBlocks.cs" />
+    <Compile Include="QWhale\Syntax\ITextUndoList.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxOptions.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetMembers.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetLiterals.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetLiteralInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetObjectInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetImportInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetHeaderInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetDeclarationInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetMembersInfo.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\QuickInfo.cs" />
+    <Compile Include="QWhale\Syntax\OutlineRange.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetsProvider.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexState.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlLexStateInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlQuickInfo.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippets.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetImports.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetCode.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ICodeSnippetReference.cs" />
+    <Compile Include="QWhale\Syntax\MemberItem.cs" />
+    <Compile Include="QWhale\Syntax\HtmlLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\HtmlParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetImport.cs" />
+    <Compile Include="QWhale\Syntax\TextUndoList.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCommentInfo.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetMemberInfo.cs" />
+    <Compile Include="QWhale\Syntax\ReadFormattedTextEventArgs.cs" />
+    <Compile Include="QWhale\Syntax\ReadFormattedTextEvent.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexStyle.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxNodeOptions.cs" />
+    <Compile Include="QWhale\Syntax\ISyntaxNode.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ParameterModifer.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetDeclaration.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlCodeSnippetReferenceInfo.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\LexerProc.cs" />
+    <Compile Include="QWhale\Syntax\Serialization\XmlLexerInfo.cs" />
+    <Compile Include="QWhale\Syntax\SyntaxNode.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ParameterInfo.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CodeSnippetReference.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ParseTextEventArgs.cs" />
+    <Compile Include="QWhale\Syntax\Lexer\ParseTextEvent.cs" />
+    <EmbeddedResource Include="QWhale.Syntax.Images.XmlParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Images.Parser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Design.Dialogs.DlgSyntaxBuilder.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QWhale.Common\QWhale.Common.csproj">
+      <Project>{00F8046C-A484-4170-8273-E80F22903A40}</Project>
+      <Name>QWhale.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
