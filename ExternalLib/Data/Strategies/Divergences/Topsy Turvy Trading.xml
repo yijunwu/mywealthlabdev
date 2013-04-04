@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Topsy Turvy Trading</Name>
+  <ID>776492cc-f95f-4b10-8d27-fae62b564779</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class TopsyTurvyTrading : WealthScript
+	{
+		//Strategy parameter variables
+		private StrategyParameter period;
+		private StrategyParameter reversal;
+		private StrategyParameter target;
+		
+		//Constructor, create the parameter objects
+		public TopsyTurvyTrading()
+		{
+        	period = CreateParameter("Period", 14, 10, 30, 2);
+			reversal = CreateParameter("Reversal Amt", 3, 1, 10, 0.25);
+			target = CreateParameter("Profit Target", 8, 2, 20, 2);
+		}
+
+		//Main execute method
+		protected override void Execute()
+		{
+			bool bullish, bearish;
+			
+			int lastTroughBar = -1;
+			int lastPeakBar = -1;
+			int entryBar = -1;
+			
+			int per = period.ValueInt;
+			double rev = reversal.Value;	
+			double stopLossValue = -1;
+			double profitTargetValue = -1;
+			
+			//Make regular bars silver so red and green bars will stand out
+			SetBarColors(Color.Silver, Color.Silver);
+
+			//Create the DISpread indicator and plot it
+			DataSeries diSpread = DIPlus.Series(Bars, per) - DIMinus.Series(Bars, per);
+			diSpread.FirstValidValue = per;
+			ChartPane diPane = CreatePane(75, true, true);
+			PlotSeries(diPane, diSpread, Color.Gray, LineStyle.Solid, 2);
+			
+			//Main trading system loop
+			for(int bar = per; bar &lt; Bars.Count; bar++)
+			{
+				//Look for bullish divergences
+				double t0 = Trough.Value(bar, Bars.Low, rev, PeakTroughMode.Percent);
+				int tb0 = (int)TroughBar.Value(bar, Bars.Low, rev, PeakTroughMode.Percent);
+				if (tb0 == -1)
+					continue;
+				if (tb0 != lastTroughBar)
+				{
+					lastTroughBar = tb0;
+					AnnotateBar("T", tb0, false, Color.Blue);
+				}
+				double t1 = Trough.Value(tb0, Bars.Low, rev, PeakTroughMode.Percent);				
+				int tb1 = (int)TroughBar.Value(tb0, Bars.Low, rev, PeakTroughMode.Percent);
+				if (tb1 == -1)
+					continue;			
+				bullish = (t0 &gt; t1) &amp;&amp; (diSpread[tb0] &lt; diSpread[tb1]);
+				if (bullish)
+					SetBarColor(bar, Color.Green);
+				
+				//Look for bearish divergences
+				double p0 = Peak.Value(bar, Bars.High, rev, PeakTroughMode.Percent);
+				int pb0 = (int)PeakBar.Value(bar, Bars.High, rev, PeakTroughMode.Percent);
+				if (pb0 == -1)
+					continue;
+				if (pb0 != lastPeakBar)
+				{
+					lastPeakBar = pb0;
+					AnnotateBar("P", pb0, true, Color.Red);
+				}
+				double p1 = Peak.Value(pb0, Bars.High, rev, PeakTroughMode.Percent);
+				int pb1 = (int)PeakBar.Value(pb0, Bars.High, rev, PeakTroughMode.Percent);
+				if (pb1 == -1)
+					continue;				
+				bearish = (p0 &lt; p1) &amp;&amp; (diSpread[pb0] &gt; diSpread[pb1]);
+				if (bearish)
+					SetBarColor(bar, Color.Red);
+				
+				//Trading system rules
+				if (IsLastPositionActive)
+				{
+					//check for stop loss exit, then profit target
+					if (!ExitAtStop(bar + 1, LastPosition, stopLossValue, "Stop Loss"))
+						ExitAtLimit(bar + 1, LastPosition, profitTargetValue, "Profit Target");
+				}
+				else
+				{
+					if (bullish &amp;&amp; entryBar != tb0)
+					{
+						//If bullish, attempt buy stop entry
+						if (BuyAtStop(bar + 1, Bars.High[bar] * 1.005) != null)
+						{
+							stopLossValue = t0 * 0.995;
+							profitTargetValue = LastPosition.EntryPrice * (1 + (target.Value / 100));
+							entryBar = tb0;
+						}
+					}
+					if (bearish &amp;&amp; entryBar != pb0)
+					{
+						//If bearish, attempt short stop entry
+						if (ShortAtStop(bar + 1, Bars.Low[bar] * 0.995) != null)
+						{
+							stopLossValue = p0 * 1.005;
+							profitTargetValue = LastPosition.EntryPrice * (1 - (target.Value / 100));
+							entryBar = pb0;
+						}
+					}
+				}				
+			}
+		}
+	}
+}</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;Topsy Turvy Trading&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;This 
+								strategy was featured in the April 2002 issue of
+								&lt;a href="http://www2.wealth-lab.com/cgi-bin/WealthLab.DLL/editsystem?id=6"&gt;
+									Active Trader magazine&lt;/a&gt;.&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font face="Verdana" size="2"&gt;This strategy looks for a 
+							&amp;quot;reverse divergence&amp;quot; between price and the DMI spread (based on subtracting -DMI 
+							from +DMI). A reverse divergence occurs when the indicator makes new highs but 
+							price does not (reverse for a bearish divergence). The script is working quite 
+							well to catch the reverse divergences. In fact, it catches the exact divergences 
+							in APA and CDN described in the article.&lt;/font&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-06-24T18:59:52.25-05:00</CreationDate>
+  <LastModified>2007-06-28T11:12:58.140625-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName />
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>1000000</StartingCapital>
+    <DollarSize>50000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>30</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+</Strategy>

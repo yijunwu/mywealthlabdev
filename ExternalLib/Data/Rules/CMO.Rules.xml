@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>CMO crosses above overbought level</Name>
+    <Description />
+    <Category>CMO (Chande Momentum Oscillator)</Category>
+    <Init>DataSeries &lt;#CMOSeries&gt; = CMO.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#CMOSeries&gt;, &lt;#Overbought Level&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:CMO&gt;, &lt;#CMOSeries&gt;, Color.Blue, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:CMO&gt;, &lt;#Overbought Level&gt;, Color.Green, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Overbought Level</Name>
+        <Value>50</Value>
+        <DefaultValue>50</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>-100</Start>
+        <Stop>100</Stop>
+        <Step>5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CMOSeries</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CMO crosses below overbought level</Name>
+    <Description />
+    <Category>CMO (Chande Momentum Oscillator)</Category>
+    <Init>DataSeries &lt;#CMOSeries&gt; = CMO.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#CMOSeries&gt;, &lt;#Overbought Level&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:CMO&gt;, &lt;#CMOSeries&gt;, Color.Blue, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:CMO&gt;, &lt;#Overbought Level&gt;, Color.Green, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Overbought Level</Name>
+        <Value>50</Value>
+        <DefaultValue>50</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>-100</Start>
+        <Stop>100</Stop>
+        <Step>5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CMOSeries</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CMO crosses above oversold level</Name>
+    <Description />
+    <Category>CMO (Chande Momentum Oscillator)</Category>
+    <Init>DataSeries &lt;#CMOSeries&gt; = CMO.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#CMOSeries&gt;, &lt;#Oversold Level&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:CMO&gt;, &lt;#CMOSeries&gt;, Color.Blue, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:CMO&gt;, &lt;#Oversold Level&gt;, Color.Red, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Oversold Level</Name>
+        <Value>-50</Value>
+        <DefaultValue>-50</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>-100</Start>
+        <Stop>100</Stop>
+        <Step>5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CMOSeries</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CMO crosses below oversold level</Name>
+    <Description />
+    <Category>CMO (Chande Momentum Oscillator)</Category>
+    <Init>DataSeries &lt;#CMOSeries&gt; = CMO.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#CMOSeries&gt;, &lt;#Oversold Level&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:CMO&gt;, &lt;#CMOSeries&gt;, Color.Blue, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:CMO&gt;, &lt;#Oversold Level&gt;, Color.Red, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Oversold Level</Name>
+        <Value>-50</Value>
+        <DefaultValue>-50</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>-100</Start>
+        <Stop>100</Stop>
+        <Step>5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CMOSeries</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CMO is overbought</Name>
+    <Description />
+    <Category>CMO (Chande Momentum Oscillator)</Category>
+    <Init>DataSeries &lt;#CMOSeries&gt; = CMO.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (&lt;#CMOSeries&gt;[bar] &gt; &lt;#Overbought Level&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:CMO&gt;, &lt;#CMOSeries&gt;, Color.Blue, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:CMO&gt;, &lt;#Overbought Level&gt;, Color.Green, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Overbought Level</Name>
+        <Value>50</Value>
+        <DefaultValue>50</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>-100</Start>
+        <Stop>100</Stop>
+        <Step>5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CMOSeries</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CMO is oversold</Name>
+    <Description />
+    <Category>CMO (Chande Momentum Oscillator)</Category>
+    <Init>DataSeries &lt;#CMOSeries&gt; = CMO.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (&lt;#CMOSeries&gt;[bar] &lt; &lt;#Oversold Level&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:CMO&gt;, &lt;#CMOSeries&gt;, Color.Blue, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:CMO&gt;, &lt;#Oversold Level&gt;, Color.Red, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Oversold Level</Name>
+        <Value>-50</Value>
+        <DefaultValue>-50</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>-100</Start>
+        <Stop>100</Stop>
+        <Step>5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CMOSeries</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+</ArrayOfRule>

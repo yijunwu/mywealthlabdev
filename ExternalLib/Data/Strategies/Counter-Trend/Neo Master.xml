@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Neo Master</Name>
+  <ID>2994266d-0e61-413f-a675-df94463441a3</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class NeoMaster : WealthScript
+	{
+		private StrategyParameter paramPeriod;
+		private StrategyParameter paramConsec;
+		private StrategyParameter paramAgo;
+		private StrategyParameter paramOversold;
+		
+		public NeoMaster()
+		{
+			paramPeriod = CreateParameter("CMO Period", 14, 6, 30, 4);
+			paramConsec = CreateParameter("Consec Down", 9, 3, 21, 3);
+			paramAgo = CreateParameter("Bars Ago", 4, 1, 8, 1);
+			paramOversold = CreateParameter("Oversold", 50, 30, 100, 10);
+		}
+		
+		protected override void Execute()
+		{
+			bool bought = false;
+			
+			//Get values from parameters
+			int period = paramPeriod.ValueInt;
+			int consec = paramConsec.ValueInt;
+			int ago = paramAgo.ValueInt;
+			double oversold = paramOversold.Value;
+			
+			//Create and plot Chande Momentum Oscillator
+			DataSeries cmo = CMO.Series(Bars.Close, period);
+			ChartPane cmoPane = CreatePane(75, true, true);
+			PlotSeries(cmoPane, cmo, Color.Blue, LineStyle.Solid, 1);
+			
+			//trading system rules
+			for(int bar = Math.Max(period, consec + ago); bar &lt; Bars.Count; bar++)
+			{
+				if (CumDown.Value(bar, Bars.Close, ago) == 0)
+					bought = false;
+				if (CumDown.Value(bar, Bars.Close, ago) &gt;= consec)
+					if (!bought)
+					{
+						bought = true;
+						BuyAtMarket(bar + 1);
+					}
+				if (CumUp.Value(bar, Bars.Close, ago) &gt;= 9 || cmo[bar] &gt;= oversold)
+					SellAtMarket(bar + 1, Position.AllPositions);
+			}
+		}
+	}
+}</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;Neo Master&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;Neo 
+								Master was the successor of the original &lt;a href="http://www.wealth-lab.com"&gt;
+									Wealth-Lab.com&lt;/a&gt; default system, &amp;quot;Master System&amp;quot;.&amp;nbsp; Although it has 
+								the word &amp;quot;master&amp;quot; in its name, the concepts involved are actually simple.&amp;nbsp; 
+								The system enters after 9 consecutive bars where the closing price is less 
+								than the closing price 4 bars ago.&amp;nbsp; It will enter multiple positions 
+								when a new run of consecutive bars that meet this condition occur.&amp;nbsp; The 
+								system exits all open positions either when their is an opposite consecutive 
+								run upwards, or the Chande Momentum Oscillator (CMO) enters oversold 
+								territory.&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-06-29T11:09:16.046875-05:00</CreationDate>
+  <LastModified>2007-11-21T11:11:50-06:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>50000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>48000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2006-10-01T00:00:00</StartDate>
+    <EndDate>2007-10-28T00:00:00</EndDate>
+    <FixedBars>2000</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>

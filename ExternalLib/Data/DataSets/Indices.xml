@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<DataSet xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Indices</Name>
+  <Scale>Daily</Scale>
+  <BarInterval>0</BarInterval>
+  <DSString>{SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"}
+{SOAP-ENV:Body}
+{a1:YahooStaticSettings id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/WealthLab.DataProviders.Yahoo/WealthLab.DataProviders.Yahoo%2C%20Version%3D1.3.20.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull"}
+{Version}2{/Version}
+{_symbols id="ref-3"}^AEX,^AORD,^ATX,^BFX,^BSESN,^BVSP,^CCSI,^FCHI,^FTSE,^GDAXI,^GOX,^GSPC,^HSI,^IBEX,^IETP,^IXIC,^JKSE,^KS11,^MERV,^MID,^MSH,^MXX,^N225,^N300,^NDX,^NSEI,^NYA,^NZ50,^OEX,^OMXSPI,^OSEAX,^OSX,^QQV,^RLV,^RUA,^RUI,^RUT,^SSMI,^STI,^STI.N,^TA100,^TWII,^VAY,^VIX,^VXN,^XAU,000001.SS,EGX30.CA,FTSEMIB.MI,OMXC20.CO{/_symbols}
+{_updateGroups}false{/_updateGroups}
+{_groups id="ref-4"}{/_groups}
+{_startDate}1970-01-01T00:00:00.0000000-05:00{/_startDate}
+{/a1:YahooStaticSettings}
+{/SOAP-ENV:Body}
+{/SOAP-ENV:Envelope}
+</DSString>
+  <ProviderName>YahooStaticProvider</ProviderName>
+</DataSet>

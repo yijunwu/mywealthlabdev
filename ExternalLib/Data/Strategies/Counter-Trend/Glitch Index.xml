@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Glitch Index</Name>
+  <ID>0ad669fe-d4ca-4f7c-8361-a680c49ef855</ID>
+  <Code>/*
+    GlitchIndex
+    Glitch Index strategy
+*/
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+    public class GlitchIndex : WealthScript
+    {
+        //Create parameters
+        private StrategyParameter smaPeriod;
+
+        public GlitchIndex()
+        {
+            smaPeriod = CreateParameter("SMA Period", 30, 10, 60, 5);
+        }
+
+        protected override void Execute()
+        {
+            //Obtain SMA period from parameter
+            int period = smaPeriod.ValueInt;
+
+            //Plot SMA
+            SMA sma30 = SMA.Series(Close, period);
+            PlotSeries(PricePane, sma30, Color.DarkGreen, LineStyle.Solid, 2);
+
+            //Create "de-trended" 30 period SMA by removing SMA slope
+            ChartPane rocPane = CreatePane(50, true, true);
+            ROC rocSma = ROC.Series(sma30, 1);
+            PlotSeries(rocPane, rocSma, Color.DarkOliveGreen, LineStyle.Histogram, 20);
+            DataSeries detrendedSma = ((rocSma * 0.1) + 1) * sma30;
+            PlotSeries(PricePane, detrendedSma, Color.DarkCyan, LineStyle.Solid, 2);
+            detrendedSma.Description = "Detrended SMA";
+
+            //Create Glitch Index, measure price excursions above and below de-trended SMA
+            DataSeries glitch = ((Close - detrendedSma) / Close) * 100;
+            glitch.Description = "Glitch Index";
+            ChartPane glitchPane = CreatePane(50, true, true);
+            PlotSeries(glitchPane, glitch, Color.Gray, LineStyle.Histogram, 20);
+
+            //Color individual bars of Glitch Index
+            for (int bar = period + 1; bar &lt; Bars.Count; bar++)
+            {
+                if (glitch[bar] &gt;= 5)
+                    SetSeriesBarColor(bar, glitch, Color.LightGreen);
+                else if (glitch[bar] &gt; 2)
+                    SetSeriesBarColor(bar, glitch, Color.Green);
+                else if (Highest.Value(bar, glitch, period) &gt;= 5)
+                    SetSeriesBarColor(bar, glitch, Color.Red);
+                else if (glitch[bar] &lt; -2)
+                    SetSeriesBarColor(bar, glitch, Color.Maroon);
+            }
+
+            //Trading system rules
+            for (int bar = period + 1; bar &lt; Bars.Count; bar++)
+            {
+                //Sell when Glitch Index &gt; 2
+                if (IsLastPositionActive)
+                {
+                    if (glitch[bar] &gt; 2)
+                        SellAtMarket(bar + 1, LastPosition);
+                }
+                //Buy when Glitch Index &lt; -2 and highest Glitch Index within 30 days &lt; 5
+                else
+                {
+                    if (glitch[bar] &lt; -2)
+                        if (Highest.Value(bar, glitch, period) &lt; 5)
+                            BuyAtMarket(bar + 1);
+                }
+            }
+        }
+    }
+}
+
+
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;Glitch Index&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Creates a 
+								special, new indicator, called the &amp;quot;Glitch Index&amp;quot;, which uses a de-trended 
+								moving average to determine if the market is making significant moves.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-04-11T19:43:24.578125-05:00</CreationDate>
+  <LastModified>2007-08-23T11:57:47.984375-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>50000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>48000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>5</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+</Strategy>

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>OBV crosses above Moving Average</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#obv&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#obv&gt;, &lt;#smooth&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>OBV crosses below Moving Average</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#obv&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#obv&gt;, &lt;#smooth&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>OBV is trending up</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+</Init>
+    <Body>if (&lt;#obv&gt;[bar] &gt; &lt;#obv&gt;[bar - &lt;#Lookback Period&gt;])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Lookback Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration>bars</Decoration>
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>OBV is trending down</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+</Init>
+    <Body>if (&lt;#obv&gt;[bar] &lt; &lt;#obv&gt;[bar - &lt;#Lookback Period&gt;])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Lookback Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration>bars</Decoration>
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>OBV is above Moving Average</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#obv&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (&lt;#obv&gt;[bar] &gt; &lt;#smooth&gt;[bar])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>OBV is below Moving Average</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#obv&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (&lt;#obv&gt;[bar] &lt; &lt;#smooth&gt;[bar])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Smoothed OBV turns up</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#obv&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (TurnUp(bar, &lt;#smooth&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Smoothed OBV turns down</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#obv&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (TurnDown(bar, &lt;#smooth&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Smoothed OBV is above a Value</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#obv&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (&lt;#smooth&gt;[bar] &gt; &lt;#Value&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Smoothed OBV is below a Value</Name>
+    <Description />
+    <Category>OBV (On-Balance Volume)</Category>
+    <Init>DataSeries &lt;#obv&gt; = OBV.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#obv&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (&lt;#smooth&gt;[bar] &lt; &lt;#Value&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#obv&gt;,Color.Green,LineStyle.Histogram,2);
+PlotSeries(&lt;#NewPane:OBV&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>95271ca3-97ed-417e-8e3d-720260e5a339</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>obv</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+</ArrayOfRule>

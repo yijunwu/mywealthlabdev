@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>ADX crosses above ADXR </Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#ADX Period&gt;);
+DataSeries &lt;#adxr&gt; = ADXR.Series(Bars,&lt;#ADXR Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#adx&gt;, &lt;#adxr&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adxr&gt;,Color.Blue,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>4fe9ef3f-a549-4da0-a4c8-3ff2a4373f06</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>ADX Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>ADXR Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>adxr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX crosses above a Value</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#adx&gt;, &lt;#Value&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>05702550-97e1-4d49-aa16-eb23bc954ee2</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX crosses below ADXR </Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#ADX Period&gt;);
+DataSeries &lt;#adxr&gt; = ADXR.Series(Bars,&lt;#ADXR Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#adx&gt;, &lt;#adxr&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adxr&gt;,Color.Blue,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>4fe9ef3f-a549-4da0-a4c8-3ff2a4373f06</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>ADX Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>ADXR Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>adxr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX crosses below a Value</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#adx&gt;, &lt;#Value&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>05702550-97e1-4d49-aa16-eb23bc954ee2</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX turns down</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (TurnDown(bar, &lt;#adx&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX turns up</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (TurnUp(bar, &lt;#adx&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX is falling</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (&lt;#adx&gt;[bar] &lt; &lt;#adx&gt;[bar - &lt;#Lookback Period&gt;])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Lookback Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX is rising</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (&lt;#adx&gt;[bar] &gt; &lt;#adx&gt;[bar - &lt;#Lookback Period&gt;])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Lookback Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX is above a Value</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (&lt;#adx&gt;[bar] &gt; &lt;#Value&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>ADX is below a Value</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#adx&gt; = ADX.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (&lt;#adx&gt;[bar] &lt; &lt;#Value&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#adx&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>adx</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>DI+ turns up</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#diplus&gt; = DIPlus.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (TurnUp(bar, &lt;#diplus&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#diplus&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>diplus</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>DI+ turns down</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#diplus&gt; = DIPlus.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (TurnDown(bar, &lt;#diplus&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#diplus&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>diplus</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>DI- turns up</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#diminus&gt; = DIMinus.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (TurnUp(bar, &lt;#diminus&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#diminus&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>diminus</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>DI- turns down</Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#diminus&gt; = DIMinus.Series(Bars,&lt;#Period&gt;);
+</Init>
+    <Body>if (TurnDown(bar, &lt;#diminus&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#diminus&gt;,Color.Purple,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>6db19e1f-32ea-4da4-8665-1534aab42045</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>diminus</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>DI+ crosses above DI- </Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#diplus&gt; = DIPlus.Series(Bars,&lt;#DI+ Period&gt;);
+DataSeries &lt;#diminus&gt; = DIMinus.Series(Bars,&lt;#DI- Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#diplus&gt;, &lt;#diminus&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#diplus&gt;,Color.Purple,LineStyle.Solid,3);
+PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#diminus&gt;,Color.Blue,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>4fe9ef3f-a549-4da0-a4c8-3ff2a4373f06</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>DI+ Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>DI- Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>diplus</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>diminus</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>DI+ crosses below DI- </Name>
+    <Description />
+    <Category>Directional Movement</Category>
+    <Init>DataSeries &lt;#diplus&gt; = DIPlus.Series(Bars,&lt;#DI+ Period&gt;);
+DataSeries &lt;#diminus&gt; = DIMinus.Series(Bars,&lt;#DI- Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#diplus&gt;, &lt;#diminus&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#diplus&gt;,Color.Purple,LineStyle.Solid,3);
+PlotSeries(&lt;#NewPane:ADX&gt;,&lt;#diminus&gt;,Color.Blue,LineStyle.Solid,3);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>4fe9ef3f-a549-4da0-a4c8-3ff2a4373f06</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>DI+ Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>DI- Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>diplus</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>diminus</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+</ArrayOfRule>

@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>T2 Trend Friend</Name>
+  <ID>ac94c695-e288-4e17-8d92-565e1866c69a</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using WealthLab.Indicators;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace WealthLabCompile
+{
+	class T2TrendFriend : WealthScript
+	{
+	
+	   //parameters to use in stategy
+		private StrategyParameter simpleMovingAveragePeriodParam1;
+		private StrategyParameter simpleMovingAveragePeriodParam2;
+		private StrategyParameter simpleMovingAveragePeriodParam3;
+		private StrategyParameter minimumBarsToHoldParam;
+	
+		public T2TrendFriend()
+		{
+			simpleMovingAveragePeriodParam1 = CreateParameter("SMA 1", 10, 1, 90, 1);
+			simpleMovingAveragePeriodParam2 = CreateParameter("SMA 2", 20, 1, 120, 1);
+			simpleMovingAveragePeriodParam3 = CreateParameter("SMA 3", 30, 1, 300, 1);
+			minimumBarsToHoldParam = CreateParameter("Min Hold Bars", 3, 0, 90, 1);
+		}
+		
+		protected override void Execute()
+		{
+			//Obtain periods from parameters
+			int simpleMovingAveragePeriod1 = simpleMovingAveragePeriodParam1.ValueInt;
+			int simpleMovingAveragePeriod2 = simpleMovingAveragePeriodParam2.ValueInt;
+			int simpleMovingAveragePeriod3 = simpleMovingAveragePeriodParam3.ValueInt;
+			int minimumBarsToHold = minimumBarsToHoldParam.ValueInt;
+			
+			SMA sma1 = SMA.Series(Close, simpleMovingAveragePeriod1);
+			PlotSeries(PricePane, sma1, Color.Red, LineStyle.Solid, 1);
+			
+			SMA sma2 = SMA.Series(Close, simpleMovingAveragePeriod2);
+			PlotSeries(PricePane, sma2, Color.Blue, LineStyle.Solid, 1);
+			
+			SMA sma3 = SMA.Series(Close, simpleMovingAveragePeriod3);
+			PlotSeries(PricePane, sma3, Color.Green, LineStyle.Solid, 1);
+			
+			for (int bar = simpleMovingAveragePeriod3; bar &lt; Bars.Count; bar++)
+			{
+				if (IsLastPositionActive)	// exit condition
+				{          
+					//if (this.CrossOver(bar,sma1,Close))
+					if (Close[bar] &lt; sma1[bar] &amp;&amp; HeldEnoughBars(bar, minimumBarsToHold))
+					{
+						SellAtMarket(bar + 1, LastPosition);
+					}
+				}
+				else
+				{
+					//if (this.CrossUnder(bar,sma1,Close) &amp;&amp;
+					if (Close[bar] &gt; sma1[bar] &amp;&amp;
+							(sma1[bar] &gt; sma2[bar] &amp;&amp; sma1[bar] &gt; sma3[bar]) &amp;&amp; (sma2[bar] &gt; sma3[bar]))
+					{
+						BuyAtMarket(bar + 1);
+					}
+				}
+			}
+		}	// end of Execute method
+		
+		// call when position active to see if the position has been held
+		// X number of bars
+		private bool HeldEnoughBars( int bar, int barsToHold )
+		{
+			bool	returnValue = true;
+			
+			if (barsToHold &gt; 0)
+			{
+				returnValue = (bar + 1 - LastPosition.EntryBar &gt;= barsToHold) ? true : false;
+			}
+			
+			return returnValue;
+		}
+		
+	}	// end of class
+}	// end of namespace
+
+
+
+
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;T2 Trend Friend&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Using 3 
+								different SMA periods, this strategy will buy when the close price is above the 
+								1st SMA and when the 1st SMA is greater than the 2nd SMA and when the 2nd SMA is 
+								greater than the 3rd SMA. The strategy will sell when the close price is below 
+								the 1st SMA. If the minimum hold bars parameter is greater than zero, then open 
+								positions will be held at a minimum the specified number of bars for the 
+								parameter.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Matthew George</Author>
+  <CreationDate>2007-05-08T16:30:16.9545069-05:00</CreationDate>
+  <LastModified>2007-06-28T11:14:44.46875-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName />
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>1000000</StartingCapital>
+    <DollarSize>50000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>30</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+</Strategy>

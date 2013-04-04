@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Rule>
+    <Name>Rate of Change is above a Value</Name>
+    <Description />
+    <Category>ROC (Rate of Change)</Category>
+    <Init>
+      DataSeries &lt;#roc&gt; = ROC.Series(&lt;#Source&gt;,&lt;#Period&gt;);
+    </Init>
+    <Body>
+      if (&lt;#roc&gt;[bar] &gt; &lt;#Value&gt;)
+    </Body>
+    <Plotting>
+      PlotSeries(&lt;#NewPane:ROC&gt;,&lt;#roc&gt;,Color.SlateGray,LineStyle.Histogram,20);
+    </Plotting>
+
+
+    <RuleType>Condition</RuleType>
+    <ID>1745a0eb-1c68-4e41-a6fa-d7c40c13916e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>100000</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Source</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>roc</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+
+  <Rule>
+    <Name>Overnight Price change of a previous day &lt;X%</Name>
+    <Description>Measures the overnight price change of a previous day. For example, if the Lookback Period is 1, then we determine yesterday's percent change from the price of the day before yesterday. The change is expressed as a percentage (e.g., 5.0 is 5%) and can be a negative number.</Description>
+    <Category>ROC (Rate of Change)</Category>
+    <Init />
+    <Body>
+      if (100*(ROC.GetSeriesValue(bar-&lt;#LookBackPeriod&gt;,&lt;#Price&gt;)/ROC.GetSeriesValue(bar-&lt;#LookBackPeriod&gt;-1,&lt;#Price&gt;))-100&lt;&lt;#Percent&gt;)
+    </Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>03275017-801a-4103-8668-cc6d683c28a9</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>LookBackPeriod</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Percent</Name>
+        <Value>1</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables />
+    <UsingClause />
+  </Rule>
+
+  <Rule>
+    <Name>Overnight Price change of a previous day &gt;X%</Name>
+    <Description>Measures the overnight price change of a previous day. For example, if the Lookback Period is 1, then we determine yesterday's percent change from the price of the day before yesterday. The change is expressed as a percentage (e.g., 5.0 is 5%) and can be a negative number.</Description>
+    <Category>ROC (Rate of Change)</Category>
+    <Init />
+    <Body>
+      if (100*(ROC.GetSeriesValue(bar-&lt;#LookBackPeriod&gt;,&lt;#Price&gt;)/ROC.GetSeriesValue(bar-&lt;#LookBackPeriod&gt;-1,&lt;#Price&gt;))-100&gt;&lt;#Percent&gt;)
+    </Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>03275017-801a-4103-8668-cc6d683c28a9</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>LookBackPeriod</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Percent</Name>
+        <Value>1</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables />
+    <UsingClause />
+  </Rule>
+
+  <Rule>
+    <Name>Price is more than X% above previous day's Price</Name>
+    <Description>Percent change is expressed as a positive number; the percentage above the previous day.</Description>
+    <Category>ROC (Rate of Change)</Category>
+    <Init>
+      DataSeries &lt;#ROCAbove&gt; =ROC.Series(&lt;#Price&gt;,&lt;#LookBackPeriod&gt;);
+    </Init>
+    <Body>
+      if (ROCAbove[bar]&gt;&lt;#Percent&gt;)
+    </Body>
+    <Plotting>
+      PlotSeries(&lt;#NewPane:ROC&gt;, &lt;#ROCAbove&gt;, Color.SlateGray, LineStyle.Solid, 2 );
+    </Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>03275017-801a-4103-8668-cc6d683c28a9</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>LookBackPeriod</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Percent</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ROCAbove</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+
+  </Rule>
+
+  <Rule>
+    <Name>Price is more than X% below previous day's Price</Name>
+    <Description>Percent change is expressed as a positive number; the percentage below the previous day.</Description>
+    <Category>ROC (Rate of Change)</Category>
+    <Init>
+      DataSeries &lt;#ROCBelow&gt; =ROC.Series(&lt;#Price&gt;,&lt;#LookBackPeriod&gt;);
+    </Init>
+    <Body>
+      if (ROCBelow[bar]&lt;-1*&lt;#Percent&gt;)
+    </Body>
+    <Plotting>
+      PlotSeries(&lt;#NewPane:ROC&gt;, &lt;#ROCBelow&gt;, Color.SlateGray, LineStyle.Solid, 2 );
+    </Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>03275017-801a-4103-8668-cc6d683c28a9</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>LookBackPeriod</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Percent</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ROCBelow</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+
+  <Rule>
+    <Name>Rate of Change is below a Value</Name>
+    <Description />
+    <Category>ROC (Rate of Change)</Category>
+    <Init>
+      DataSeries &lt;#roc&gt; = ROC.Series(&lt;#Source&gt;,&lt;#Period&gt;);
+    </Init>
+    <Body>
+      if (&lt;#roc&gt;[bar] &lt; &lt;#Value&gt;)
+    </Body>
+    <Plotting>
+      PlotSeries(&lt;#NewPane:ROC&gt;,&lt;#roc&gt;,Color.SlateGray,LineStyle.Histogram,20);
+    </Plotting>
+
+    <RuleType>Condition</RuleType>
+    <ID>1745a0eb-1c68-4e41-a6fa-d7c40c13916e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>100000</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Source</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>14</Value>
+        <DefaultValue>14</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>roc</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+
+</ArrayOfRule>

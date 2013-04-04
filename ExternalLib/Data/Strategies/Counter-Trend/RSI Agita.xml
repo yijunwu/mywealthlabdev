@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>RSI Agita</Name>
+  <ID>80c79dcf-3d6d-4b9e-b517-961ae5ee1aef</ID>
+  <Code>/*
+    RSIAgita
+    RSI Agita Strategy
+*/
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+    public class RSIAgita : WealthScript
+    {
+        //Create parameters
+        private StrategyParameter rsiPeriod;
+        private StrategyParameter overbought;
+        private StrategyParameter oversold;
+
+        public RSIAgita()
+        {
+            rsiPeriod = CreateParameter("RSI Period", 20, 10, 60, 5);
+            oversold = CreateParameter("Oversold", 30, 10, 40, 5);
+            overbought = CreateParameter("Overbought", 55, 40, 80, 5);
+        }
+
+        protected override void Execute()
+        {
+            int level;
+            int period = rsiPeriod.ValueInt;
+
+            //Create and plot 20 period RSI
+            RSI rsi20 = RSI.Series(Close, period);
+            ChartPane rsiPane = CreatePane(50, true, true);
+            PlotSeries(rsiPane, rsi20, Color.Navy, LineStyle.Solid, 3);
+            DrawHorzLine(rsiPane, oversold.Value, Color.Red, LineStyle.Dotted, 2);
+            DrawHorzLine(rsiPane, overbought.Value, Color.Green, LineStyle.Dotted, 2);
+
+            //Trading system main loop
+            for (int bar = period + 1; bar &lt; Bars.Count; bar++)
+            {
+                //Entries are allowed only if price is below last entry price
+                double lastEntryPrice = IsLastPositionActive ? LastPosition.EntryPrice : Double.MaxValue;
+
+                //Check penetration of RSI below levels 35 down to 5
+                level = oversold.ValueInt;
+                while (level &gt; 0)
+                {
+                    if (CrossUnder(bar, rsi20, level))
+                        if (Bars.Close[bar] &lt; lastEntryPrice)
+                            BuyAtMarket(bar + 1);
+                    level -= 5;
+                }
+
+                //Exit all long positions if RSI crosses above 45
+                if (CrossOver(bar, rsi20, overbought.ValueInt))
+                    foreach (Position pos in Positions)
+                        if (pos.Active)
+                            SellAtMarket(bar + 1, pos);
+            }
+        }        
+    }
+}
+
+
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;RSI Agita&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;A 
+								countertrend system, enters when the Relative Strength Index becomes oversold.&amp;nbsp; 
+								Will continue to add positions if the market becomes more oversold.&amp;nbsp; Sells all 
+								the positions when the RSI indicator rebounds.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-04-11T19:44:29.671875-05:00</CreationDate>
+  <LastModified>2007-08-18T09:12:51.3125-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>AXP</Symbol>
+  <DataScale>
+    <Scale>Weekly</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>50000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>48000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>5</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+</Strategy>

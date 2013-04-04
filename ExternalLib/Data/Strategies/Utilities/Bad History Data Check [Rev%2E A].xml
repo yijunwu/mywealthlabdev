@@ -1,0 +1,421 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Bad History Data Check [Rev. A]</Name>
+  <ID>4813a213-023a-4ff6-a8d4-10c2dc02fb78</ID>
+  <Code>using System;
+using System.IO;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using Community.Components;
+
+namespace WealthLab.Strategies
+{    
+	public class BadHistoryDataCheck : WealthScript
+	{        
+		StrategyParameter _fullDataSet;			// if == 1, check entire DataSet 
+		StrategyParameter _showOnlyErrors;		// if == 1, show only symbols with errors
+		StrategyParameter _check4pmBar;			// if == 1, if last intraday bar is not 4pm, flag an error
+		
+		private Bars _bars = null;
+		
+		public BadHistoryDataCheck()
+		{
+			_fullDataSet = CreateParameter("Full DataSet", 0, 0, 1, 1);
+			_showOnlyErrors = CreateParameter("Show Only Errors", 0, 0, 1, 1);
+			_check4pmBar = CreateParameter("Check 4pm", 0, 0, 1, 1);
+		}
+		
+		public int TradingDaysBetweenDates(DateTime dt1, DateTime dt2)
+		{        
+			int days = 0;
+			dt1 = dt1.AddDays(1);
+			while (dt1 &lt; dt2)
+			{                                    
+				if (dt1.DayOfWeek != DayOfWeek.Saturday 
+					&amp;&amp; dt1.DayOfWeek != DayOfWeek.Sunday
+					&amp;&amp; !Bars.MarketInfo.Holidays.Contains(dt1) )
+					days++;
+				dt1 = dt1.AddDays(1);
+			}
+			return days;
+		}
+        
+		protected override void Execute()
+		{        
+			ClearDebug();	
+			_bars = Bars;
+			Utility u = new Utility(this);			// Community.Components
+			string dsName = u.GetDataSetName();	
+			
+			IList&lt;string&gt; badSymbols = new List&lt;string&gt;();
+            
+			bool intraday = Bars.BarInterval &gt; 0;
+			if (!intraday &amp; !(Bars.Scale == BarScale.Daily))
+			{
+				string lbl = "Cannot perform Data Check in scale: " + Bars.Scale.ToString();
+				PrintDebug(lbl);
+				DrawLabel(PricePane, lbl, Color.Red);
+				return;
+			}
+            
+			DateTime Sept172001 = new DateTime(2001,9,17);  // First trading day after 9/11
+			TimeSpan ts1300 = new TimeSpan(13,0,0);    		// 13:00:00 close for short days
+            							
+			foreach (string sym in DataSetSymbols)
+			{          				
+				if (_fullDataSet.ValueInt != 1)
+				{					
+					if (sym != Bars.Symbol) continue;
+				}
+				else
+				{
+					FlushDebug();
+					ClearExternalSymbols();
+					try {
+						_bars = GetExternalSymbol(dsName, sym, false);
+						PrintStatusBar("Processing: " + sym);
+					}
+					catch(Exception e) {
+						PrintDebug(e.Message);
+						PrintDebug("-----");
+						continue;
+					}
+				}
+				
+				if (_bars.Count == 0)
+				{           
+					PrintDebug("No data: " + _bars.Symbol);
+					PrintDebug("-----");
+					if (_fullDataSet.ValueInt != 1) return; else continue;
+				}
+				
+				int badBars = 0;
+				for(int bar = 2; bar &lt; _bars.Count; bar++)
+				{    
+//					PrintDebug(bar);
+					DateTime dt = _bars.Date[bar];
+					DateTime dt1 = _bars.Date[bar - 1];
+					// Check intraday last bar at 4pm
+					if (intraday 
+						&amp;&amp; _check4pmBar.ValueInt == 1 
+						&amp;&amp; _bars.IntradayBarNumber(bar) == 0)
+					{                            
+						if (u.GetTime(_bars, bar-1) != 1600 &amp;&amp; dt1.TimeOfDay != ts1300)
+						{
+							badBars++;
+							PrintDebug(bar + " Last bar-of-day time: " + dt1.ToShortDateString() + " " + dt1.TimeOfDay);
+						}
+					}
+                    
+					//Check for bars on Saturday or Sunday
+					if (dt.DayOfWeek == DayOfWeek.Saturday || dt.DayOfWeek == DayOfWeek.Sunday)
+					{
+						badBars++;
+						PrintDebug("Weekend bar: " + dt + " bar " + bar);
+					}
+                
+					//Check for duplicate dates
+					if (dt == dt1)
+					{
+						badBars++;
+						PrintDebug("Duplicate date: " + dt + " bar " + bar);
+					}
+					
+					//Check for zero close
+					if (_bars.Close[bar] &lt; 1e-7)
+					{
+						badBars++;
+						PrintDebug("Zero Close: " + dt + " bar " + bar);	
+					}
+					
+					//Check for open or close outside high/low range
+					if (_bars.Open[bar] &lt; _bars.Low[bar])
+					{
+						badBars++;
+						PrintDebug("Open &lt; Low: " + dt + " bar " + bar);
+					}
+					if (_bars.Open[bar] &gt; _bars.High[bar])
+					{
+						badBars++;
+						PrintDebug("Open &gt; High: " + dt + " bar " + bar);
+					}
+					if (_bars.Close[bar] &lt; _bars.Low[bar])
+					{
+						badBars++;
+						PrintDebug("Close &lt; Low: " + dt + " bar " + bar);
+					}
+					if (_bars.Close[bar] &gt; _bars.High[bar])
+					{
+						badBars++;
+						PrintDebug("Close &gt; High: " + dt + " bar " + bar);
+					}
+                    
+					//Out of sequence dates
+					if (dt &lt; dt1)
+					{
+						PrintDebug("Out of sequence date at bar " + bar);
+						PrintDebug(String.Format( "{0:yyyyMMdd HHmm }", _bars.Date[bar-2]));
+						PrintDebug(String.Format( "{0:yyyyMMdd HHmm }", dt1));
+						PrintDebug(String.Format( "{0:yyyyMMdd HHmm }", dt));
+						PrintDebug("");
+						badBars++;
+					}
+                
+					//    Check for day gaps that are not weekends or holidays
+					if (dt.Date != dt1.Date)
+					{
+						if (dt.Date == Sept172001) continue;
+						TimeSpan ts = dt.Date - dt1.Date;
+						if ( ts.Days &gt; 1 )
+						{
+							int days = TradingDaysBetweenDates(dt1.Date, dt.Date);
+							if (days &gt; 1)
+							{
+								PrintDebug("Gap of " + days + " days in data at bar " + bar + " (" + dt.Date + ")");
+								badBars++;
+							}
+						}
+					}        
+				}
+				
+				string msg = _bars.Symbol + "\t" + _bars.Scale.ToString();
+				msg += "; Bars.Count = " + _bars.Count + "; " + _bars.Date[_bars.Count - 1].ToShortDateString();
+				if (intraday)
+					msg += " " + _bars.Date[_bars.Count - 1].ToShortTimeString();    
+                
+				string msg2 = _bars.Symbol;
+				if (badBars == 0)
+					msg2 += " OK!";
+				else
+				{
+					msg2 += " bad bars: " + badBars;
+					badSymbols.Add(_bars.Symbol);
+				}                
+                
+				if ( badBars &gt; 0 ||    (_showOnlyErrors.ValueInt == 0 &amp;&amp; badBars == 0))
+				{    
+					PrintDebug(msg);
+					PrintDebug(msg2);
+					PrintDebug("-----");
+					FlushDebug();
+				}
+			}    
+            
+			if (badSymbols.Count &gt; 0)
+			{
+				DataSource ds = u.GetDataSource();
+				
+				if (ds.Provider.CanDeleteSymbolDataFile)
+				{				
+					DialogResult dr = MessageBox.Show(String.Format("Delete {0} data files with bad bars from the DataStore?", badSymbols.Count),
+						String.Format("Warning! Delete {0} data files?", ds.ProviderName), 
+						MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+					if (dr.Equals(DialogResult.Yes))
+					{													
+						foreach (string sym in badSymbols)
+						{		
+							string fp = ds.Provider.DataStore.FileNameForSymbol(sym, Bars.Scale, Bars.BarInterval);
+							if (System.IO.File.Exists(fp))
+							{
+								try 
+								{
+									ds.Provider.DeleteSymbolDataFile(ds, sym);
+									PrintDebug("Deleted: " + fp);
+									FlushDebug();
+								}
+								catch (Exception e) 
+								{
+									PrintDebug(e.Message);
+								}	
+							}
+							else
+							{
+								PrintDebug("File not found: " + fp);
+							}
+						}
+					}
+				}
+				else
+				{
+					MessageBox.Show(String.Format("{0} data files with bad bars.  See Debug Window for more info.", badSymbols.Count), 
+						"Data Check Complete for " + ds.ProviderName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+			}
+			PrintStatusBar("Data Check Complete");
+            
+		}        
+	}
+} </Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 4.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+						&lt;/style&gt;
+	&lt;/head&gt;
+	&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;Bad History Data Check - Rev A.&amp;nbsp;&lt;/font&gt;&lt;/h1&gt;
+	&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;&lt;b&gt;&lt;font color="#FF0000"&gt;Note!&lt;/font&gt;&lt;/b&gt;
+				Requires the &lt;a href="http://www.wealth-lab.com/Extensions/ExtensionDetails/Default.aspx?id=26zkdjIBuHfUlqp1A/7MkpGjUpiYjSrPoss2B4i3F2L5vMLKG0nnCbUXHwDo+iSDwn8e5oXBLHLIQ6JvxkX824brxYBBM091wVGrmjtoQjBBCYqKAc1+o0fTp5KTiPS1APlodsDhPPG+d/6VDXPrBg==" target="_blank"&gt;Community
+	Components Library&lt;/a&gt; Version 2010.11 (minimum)&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+	&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;Use 
+				this Strategy to check your historical data for problems.&amp;nbsp; The Strategy 
+				writes its report to the &amp;quot;Debug window&amp;quot;.&amp;nbsp; View the Debug window by 
+				selecting it from the &amp;quot;Tools&amp;quot; menu.&amp;nbsp; The Strategy looks for the 
+	following problems in your data:&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+	&lt;ol&gt;
+		&lt;li&gt;
+			&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+		Bars that fall on Saturdays or Sundays&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+		&lt;li&gt;
+			&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+		Duplicate dates&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+		&lt;li&gt;
+			&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+		Bars where the open or close is less than the low or greater than the high&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+		&lt;li&gt;
+			&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+		Out of sequence dates&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+		&lt;li&gt;
+			&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;
+					&lt;span style="font-family: Verdana"&gt;Gaps 
+		of more than 3 days in the data&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+	&lt;/ol&gt;
+	&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;If 
+				you find any bad data, you can reload the data by right clicking on a chart 
+	and selecting &amp;quot;Reload Chart History&amp;quot; from the popup menu.&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+
+
+
+
+	&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;Rev A. Enhancements / Additions&lt;/font&gt;&lt;/h1&gt;
+
+
+
+
+	&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;Rev
+				A. eliminates virtually all false alarms for gap bars, and, gaps that are
+				reported indicate the number of market days that are missing not
+				including weekends or holidays.&amp;nbsp; Holidays, however, must be entered in
+				the Markets.xml file found in the ..\1.0.0.0\Data folder.&amp;nbsp; This file
+				contains U.S. Market holidays back to 2004 and is installed with
+				Wealth-Lab.&amp;nbsp; You can beef up the holiday section to eliminate false
+				alarms prior to 2004.&amp;nbsp; Holidays are taken from the primary Bars object
+	and assumed to be the same holidays for all symbols in the DataSet.&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+
+
+
+
+	&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;There
+	are also three &amp;quot;switches&amp;quot; to control the mode of operation and debug output: &lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+
+
+
+
+	&lt;ol&gt;
+		&lt;li&gt;
+			&lt;p class="MsoNormal" style="margin-top: 0; margin-bottom: 5"&gt;&lt;font size="2"&gt;&lt;i&gt;&lt;span style="font-family: Verdana"&gt;Full
+					DataSet&lt;/span&gt;&lt;/i&gt;&lt;span style="font-family: Verdana"&gt;: Select &amp;quot;0&amp;quot; for testing
+						only one symbol.&amp;nbsp; Select &amp;quot;1&amp;quot; to
+						check the entire DataSet.&amp;nbsp;&amp;nbsp;&lt;br&gt;
+							&lt;b&gt;&lt;font color="#FF0000"&gt;Note!&lt;/font&gt;&lt;/b&gt; When testing the entire DataSet: a) click on &lt;b&gt;one
+							symbol only&lt;/b&gt;, and b) make sure the chart is not in Streaming
+		mode.&amp;nbsp;&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+		&lt;li&gt;
+			&lt;p class="MsoNormal" style="margin-top: 0; margin-bottom: 5"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;&lt;i&gt;Show
+						Only Errors&lt;/i&gt;: &amp;quot;0&amp;quot; will show all symbols,
+						even if the data are &amp;quot;OK!&amp;quot;.&amp;nbsp; Select &amp;quot;1&amp;quot; to see only symbols that have
+						errors in the debug output.&amp;nbsp;&lt;br&gt;
+							The latter is useful with the Full DataSet option so that you can quickly identify
+							only the
+		symbols with errors.&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+		&lt;li&gt;
+			&lt;p class="MsoNormal" style="margin-top: 0; margin-bottom: 5"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;&lt;i&gt;Check
+						4pm&lt;/i&gt;: Default &amp;quot;0&amp;quot;.&amp;nbsp; Select &amp;quot;1&amp;quot; to check that the last bar of intraday
+						history is 4pm (or 1pm on short days).&amp;nbsp; Generally, it's most likely
+						that symbol will trade in the last interval of the day, so this can be
+						used to detect a truncated intraday history. This selection
+		applies only to &lt;i&gt;intraday&lt;/i&gt; data checks. &lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+	&lt;/ol&gt;
+
+
+
+
+	&lt;p class="MsoNormal" style="margin-top: 0; margin-bottom: 5"&gt;&lt;font color="#0000FF"&gt;&lt;b&gt;&lt;font face="Verdana" size="2"&gt;Important!&lt;/font&gt;&lt;/b&gt;&lt;/font&gt;&lt;span style="font-family: Verdana"&gt;&lt;font size="2"&gt;&lt;font color="#0000FF"&gt;&lt;b&gt;&lt;br&gt;
+				&lt;/b&gt;&lt;/font&gt;Finally,
+				at the end of the data check and if applicable for the DataSet's
+				Static Provider,&lt;i&gt; &lt;/i&gt;the script asks if you want to delete the &lt;i&gt;data files with bad bars from
+				the Provider's DataStore&lt;/i&gt;. This option is most useful when a
+				DataSet returns dozens of symbols with errors.&amp;nbsp; In this
+				case, look at the debug window to determine if you want to
+				delete all the
+				bad data files.&amp;nbsp; If so, click &amp;quot;Yes&amp;quot; to allow the script to
+				delete the files, and once complete use the Data Manager to
+				update the DataSet, which will &amp;quot;reload&amp;quot; the deleted symbol
+				histories.&amp;nbsp; Note that following a reload errors may still be
+				detected, and in this baseline case you should generally choose &lt;u&gt;not&lt;/u&gt;
+		to delete files. &lt;/font&gt;&lt;/span&gt;&lt;p class="MsoNormal" style="margin-top: 0; margin-bottom: 5"&gt;&amp;nbsp;
+
+
+
+
+&lt;/html&gt;</Description>
+  <Author>Cone</Author>
+  <CreationDate>2010-09-14T14:35:44.828125-04:00</CreationDate>
+  <LastModified>2010-10-29T12:41:38.46875-04:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <ParameterValues>
+    <double>0</double>
+    <double>0</double>
+    <double>0</double>
+  </ParameterValues>
+  <DataSetName>S&amp;P 100</DataSetName>
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>10000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>20</PctSize>
+    <RiskSize>5</RiskSize>
+    <SimuScriptName />
+    <PosSizerConfig />
+    <MarginFactor>1.1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2008-05-25T00:00:00</StartDate>
+    <EndDate>2020-01-01T00:00:00</EndDate>
+    <FixedBars>800000</FixedBars>
+    <RecentValue>3</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues />
+  <UsePreferredValues>false</UsePreferredValues>
+  <StartingEquity>100000</StartingEquity>
+  <MarginFactor>1</MarginFactor>
+  <Origin>Wealth-Lab.com</Origin>
+  <CombinedStrategyChildren />
+</Strategy>

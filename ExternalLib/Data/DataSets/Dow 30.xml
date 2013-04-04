@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<DataSet xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Dow 30</Name>
+  <Scale>Daily</Scale>
+  <BarInterval>0</BarInterval>
+  <DSString>{SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"}
+{SOAP-ENV:Body}
+{a1:YahooStaticSettings id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/WealthLab.DataProviders.Yahoo/WealthLab.DataProviders.Yahoo%2C%20Version%3D1.3.20.1%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull"}
+{Version}2{/Version}
+{_symbols id="ref-3"}AA,AXP,BA,BAC,CAT,CSCO,CVX,DD,DIS,GE,HD,HPQ,IBM,INTC,JNJ,JPM,KO,MCD,MMM,MRK,MSFT,PFE,PG,T,TRV,UNH,UTX,VZ,WMT,XOM{/_symbols}
+{_updateGroups}false{/_updateGroups}
+{_groups id="ref-4"}{/_groups}
+{_startDate}1970-01-01T00:00:00.0000000-05:00{/_startDate}
+{/a1:YahooStaticSettings}
+{/SOAP-ENV:Body}
+{/SOAP-ENV:Envelope}
+</DSString>
+  <ProviderName>YahooStaticProvider</ProviderName>
+</DataSet>

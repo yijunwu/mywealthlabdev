@@ -1,0 +1,1643 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>Bearish Belt Hold</Name>
+    <Description>(2-bar pattern, stable at bar 25) A significant gap up occurs but prices are heading downwards only.  After a significant gap up causes large profit-taking. Expect lower prices.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishBeltHold&gt;;
+CandlePattern.BearishBeltHold(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishBeltHold&gt;);
+</Init>
+    <Body>if (&lt;#bearishBeltHold&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>a12476f5-9a4c-49ba-a5a9-f324f0c68a32</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Belt Hold</Value>
+        <DefaultValue>-Belt Hold</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishBeltHold</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Dark Cloud Cover</Name>
+    <Description>(2-bar pattern, stable at bar 25) The first day is a long white day, and the second day is a black day which opens above the first day's high and closes within the first day but below the midpoint.  Although a gap-up indicates a uptrend, prices are heading downwards and probabilities are high that prices continue to fall.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishDarkCloudCover&gt;;
+CandlePattern.BearishDarkCloudCover(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishDarkCloudCover&gt;);
+</Init>
+    <Body>if (&lt;#bearishDarkCloudCover&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>24153d49-425d-4ee2-8840-7dc509f8f6f0</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Dark Cloud</Value>
+        <DefaultValue>-Dark Cloud</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishDarkCloudCover</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Doji Star</Name>
+    <Description>(2-bar pattern, stable at bar 25) The first day is a long white day. The second day is a doji star that gaps above the first day.  A star indicates a reversal and a doji indicates indecision. This pattern usually indicates a reversal following an indecisive period. You should wait for a confirmation before trading a doji star.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishDojiStar&gt;;
+CandlePattern.BearishDojiStar(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishDojiStar&gt;);
+</Init>
+    <Body>if (&lt;#bearishDojiStar&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>80566f25-82c5-4e9a-b938-dc1fccc8f1aa</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Doji Star</Value>
+        <DefaultValue>-Doji Star</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishDojiStar</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Engulfing Lines</Name>
+    <Description>(2-bar pattern) A small white line (first day) is engulfed by a large black line (second day). This pattern is strongly bearish if it occurs after a significant up-trend (i.e., it acts as a reversal pattern).</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishEngulfingLines&gt;;
+CandlePattern.BearishEngulfingLines(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishEngulfingLines&gt;);
+</Init>
+    <Body>if (&lt;#bearishEngulfingLines&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>bb130b6e-5e81-4acc-83d5-269197f6e481</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Engulfing</Value>
+        <DefaultValue>-Engulfing</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishEngulfingLines</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Evening Star</Name>
+    <Description>(3-bar pattern) The first day is a long white day, the second day gaps above the first day's close and the third day is a long black day. The "star" indicates a possible reversal and the black line confirms this. The star can be empty or filled-in. This is a bearish pattern signifying a potential top.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishEveningStar&gt;;
+CandlePattern.BearishEveningStar(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishEveningStar&gt;);
+</Init>
+    <Body>if (&lt;#bearishEveningStar&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>85e319b2-ce52-49bc-bc8b-7c9776163074</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Evening Star</Value>
+        <DefaultValue>-Evening Star</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishEveningStar</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Hanging Man</Name>
+    <Description>(2-bar pattern, stable at bar 25) A small real body (i.e., a small range between the open and closing prices) and a long lower shadow (i.e., the low was significantly lower than the open, high, and close). This pattern is bearish if it occurs after a significant uptrend, but detection requires only a minor uptrend measured by a 5-period SMA.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishHangingMan&gt;;
+CandlePattern.BearishHangingMan(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishHangingMan&gt;);
+</Init>
+    <Body>if (&lt;#bearishHangingMan&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>84a716b3-1d9b-41c7-9c87-bed73757b9e5</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Hanging Man</Value>
+        <DefaultValue>-Hanging Man</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishHangingMan</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Harami</Name>
+    <Description>(2-bar pattern, stable at bar 25) A line with a small black body (second day) falls within the area of a larger white body (first day). This pattern indicates a decrease in momentum.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishHarami&gt;;
+CandlePattern.BearishHarami(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishHarami&gt;);
+</Init>
+    <Body>if (&lt;#bearishHarami&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>9fa5de3d-1ca5-40d1-ab42-b68c9be368cc</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Harami</Value>
+        <DefaultValue>-Harami</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishHarami</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Harami Cross</Name>
+    <Description>(2-bar pattern, stable at bar 25) First day is a long white day and the second day is a Doji day that is engulfed by the first day's body. It is similar to a Harami, except the second line is a Doji (signifying indecision). This pattern indicates a decrease in momentum.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishHaramiCross&gt;;
+CandlePattern.BearishHaramiCross(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishHaramiCross&gt;);
+</Init>
+    <Body>if (&lt;#bearishHaramiCross&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>2dae1715-1eff-410f-b992-28140797e576</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Harami Cross</Value>
+        <DefaultValue>-Harami Cross</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishHaramiCross</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Kicking</Name>
+    <Description>(2-bar pattern, stable at bar 25) A white marubozu followed by a black marubozu where the black marubozu gaps below the 1st day's open.  The gap is a resistance area, and a downtrend is expected.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishKicking&gt;;
+CandlePattern.BearishKicking(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishKicking&gt;);
+</Init>
+    <Body>if (&lt;#bearishKicking&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>379018f6-e299-4e0b-8b8f-c987d649bcd3</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Kicking</Value>
+        <DefaultValue>-Kicking</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishKicking</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Long Black Line</Name>
+    <Description>(1-bar pattern, stable at bar 25) Prices open near the high and close significantly lower near the period's low. This is a bearish line.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishLongBlackLine&gt;;
+CandlePattern.BearishLongBlackLine(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishLongBlackLine&gt;);
+</Init>
+    <Body>if (&lt;#bearishLongBlackLine&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>bb28818a-1cc9-4daa-bb2d-04080c5ad066</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Long Black Line</Value>
+        <DefaultValue>-Long Black Line</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishLongBlackLine</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Separating Lines</Name>
+	    <Description>(2-bar pattern) The 1st day is a long white day followed by a black day that opens at the opening price of the 1st day.  Although the 1st day prices are heading upwards, the second day shows significant downturn with an insignificant upper shadow. The downtrend should continue.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishSeparatingLines&gt;;
+CandlePattern.BearishSeparatingLines(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishSeparatingLines&gt;);
+</Init>
+    <Body>if (&lt;#bearishSeparatingLines&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>b4ca473a-8643-41cb-b383-2998b1e15173</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Separating</Value>
+        <DefaultValue>-Separating</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishSeparatingLines</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Shooting Star</Name>
+    <Description>(2-bar pattern, stable at bar 25) Price gap up to the upside with a small real body. The star's body must appear near the low price and the line should have a long upper shadow. This pattern suggests a minor reversal when it appears after a uptrend.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishShootingStar&gt;;
+CandlePattern.BearishShootingStar(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishShootingStar&gt;);
+</Init>
+    <Body>if (&lt;#bearishShootingStar&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>b4ca473b-7917-4cfe-ae7d-96f338d3f584</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Shooting Star</Value>
+        <DefaultValue>-Shooting Star</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishShootingStar</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Side-By-Side White Lines</Name>
+    <Description>(3-bar pattern) A black day followed by a gap down of two almost identical white days.  No trend-reversal occurs on the 2nd and 3rd day, thus the downtrend is still intact.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishSideBySideWhiteLines&gt;;
+CandlePattern.BearishSideBySideWhiteLines(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishSideBySideWhiteLines&gt;);
+</Init>
+    <Body>if (&lt;#bearishSideBySideWhiteLines&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>11cf4cf7-5727-416f-b69a-6f28b8ca996f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-SideBySide White|</Value>
+        <DefaultValue>-SideBySide White|</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishSideBySideWhiteLines</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Three Black Crows</Name>
+    <Description>(3-bar pattern, stable at bar 25) Three black days with lower closes each day where each day opens lower but within the body of the previous day.  Strong down-trend indicates a continuation of falling prices.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishThreeBlackCrows&gt;;
+CandlePattern.BearishThreeBlackCrows(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishThreeBlackCrows&gt;);
+</Init>
+    <Body>if (&lt;#bearishThreeBlackCrows&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>98f59ae8-5a2f-4761-8e5f-d1e427b8b33c</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-3Black Crows</Value>
+        <DefaultValue>-3Black Crows</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishThreeBlackCrows</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Three Inside Down</Name>
+    <Description>(3-bar pattern, stable at bar 25) The first two days are a Bearish Harami pattern followed by a black day that closes below the second day.  The 3rd day is the confirmation of the Bearish Harami pattern.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishThreeInsideDown&gt;;
+CandlePattern.BearishThreeInsideDown(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishThreeInsideDown&gt;);
+</Init>
+    <Body>if (&lt;#bearishThreeInsideDown&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>236d5c81-205b-4170-bfc2-736eebc532a2</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-3Inside Down</Value>
+        <DefaultValue>-3Inside Down</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishThreeInsideDown</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Three Outside Down</Name>
+    <Description>(3-bar pattern) The first two days are a Bearish Engulfing pattern followed by a black day that closes below the second day.  The third day is the confirmation of the Bearish Engulfing pattern.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishThreeOutsideDown&gt;;
+CandlePattern.BearishThreeOutsideDown(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishThreeOutsideDown&gt;);
+</Init>
+    <Body>if (&lt;#bearishThreeOutsideDown&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>55ce01b5-eb0a-499a-9af2-939cef85b5e2</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-3Outside Down</Value>
+        <DefaultValue>-3Outside Down</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishThreeOutsideDown</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bearish Tri Star</Name>
+    <Description>(3-bar pattern, stable at bar 25) Three Dojis where the second Doji gaps above the 1st and the third. High indecision during three days suggests that the trend is about to change. This pattern appears very seldom on securities with high volume.</Description>
+    <Category>Candlesticks Bearish</Category>
+    <Init>bool[] &lt;#bearishTriStar&gt;;
+CandlePattern.BearishTriStar(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bearishTriStar&gt;);
+</Init>
+    <Body>if (&lt;#bearishTriStar&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>4d1ff77a-b272-4b12-8fca-1b1607c282e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>-Tri Star</Value>
+        <DefaultValue>-Tri Star</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bearishTriStar</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Belt Hold</Name>
+    <Description>(2-bar pattern) A significant gap down occurs but prices are heading upwards only.  After a significant down gap causes a short-covering and strong buying. Expect higher prices.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishBeltHold&gt;;
+CandlePattern.BullishBeltHold(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishBeltHold&gt;);
+</Init>
+    <Body>if (&lt;#bullishBeltHold&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>d23dd198-d2d5-4f9c-89a8-1f65f110a378</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Belt Hold</Value>
+        <DefaultValue>+Belt Hold</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishBeltHold</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Doji Star</Name>
+    <Description>(2-bar pattern, stable at bar 25)  First day is a long black day, the second day is a Doji day that gaps below the first day. A "star" indicates a reversal and a Doji indicates indecision. This pattern usually indicates a reversal following an indecisive period. You should wait for a confirmation before trading a Doji star.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishDojiStar&gt;;
+CandlePattern.BullishDojiStar(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishDojiStar&gt;);
+</Init>
+    <Body>if (&lt;#bullishDojiStar&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>9483b252-7b89-4fe5-b0c7-6ce1963ce0ba</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Doji Star</Value>
+        <DefaultValue>+Doji Star</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishDojiStar</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Engulfing Lines</Name>
+    <Description>(2-bar pattern, stable at bar 25) A small black line (first day) is engulfed by a large white line (second day). This pattern is strongly bullish if it occurs after a significant downtrend (i.e., it acts as a reversal pattern).</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishEngulfingLines&gt;;
+CandlePattern.BullishEngulfingLines(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishEngulfingLines&gt;);
+</Init>
+    <Body>if (&lt;#bullishEngulfingLines&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>6b49306a-ff38-40a4-946d-6f027734c291</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Engulfing</Value>
+        <DefaultValue>+Engulfing</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishEngulfingLines</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Hammer</Name>
+    <Description>(1-bar pattern, stable at bar 25) A small real body (i.e., a small range between the open and closing prices) and a long lower shadow (i.e., the low was significantly lower than the open, high, and close). Detection requires at least a minor downtrend measure by a 5-period SMA.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishHammer&gt;;
+CandlePattern.BullishHammer(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishHammer&gt;);
+</Init>
+    <Body>if (&lt;#bullishHammer&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>ce0bda35-3400-4b29-b3ec-6941be15f948</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Hammer</Value>
+        <DefaultValue>+Hammer</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishHammer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Harami</Name>
+    <Description>(2-bar pattern, stable at bar 25) A line with a small white body (second day) falls within the area of a larger black body (first day). This pattern indicates a decrease in momentum.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishHarami&gt;;
+CandlePattern.BullishHarami(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishHarami&gt;);
+</Init>
+    <Body>if (&lt;#bullishHarami&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>8cb825b2-a2fe-4465-9179-c5d8ec6538c4</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Harami</Value>
+        <DefaultValue>+Harami</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishHarami</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Harami Cross</Name>
+    <Description>(2-bar pattern, stable at bar 25) First day is a long black day and the second day is a Doji day that is engulfed by the first day's body. It is similar to a Harami, except the second line is a Doji (signifying indecision). This pattern indicates a decrease in momentum.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishHaramiCross&gt;;
+CandlePattern.BullishHaramiCross(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishHaramiCross&gt;);
+</Init>
+    <Body>if (&lt;#bullishHaramiCross&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>d5925843-05e3-4fc0-b932-0cd7f25cec14</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Harami Cross</Value>
+        <DefaultValue>+Harami Cross</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishHaramiCross</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Inverted Hammer</Name>
+    <Description>(2-bar pattern, stable at bar 25) Price gap down to the downside with a small real body. The star's body must appear near the low price and the line should have a long upper shadow.  This pattern suggests a minor reversal when it appears after a downtrend.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishInvertedHammer&gt;;
+CandlePattern.BullishInvertedHammer(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishInvertedHammer&gt;);
+</Init>
+    <Body>if (&lt;#bullishInvertedHammer&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>43f4f525-e745-4ed3-b856-f689afd3d4e2</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Inverted Hammer</Value>
+        <DefaultValue>+Inverted Hammer</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishInvertedHammer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Kicking</Name>
+    <Description>(2-bar pattern, stable at bar 25) A black marubozu followed by a white marubozu where the white marubozu gaps up the 1st day's open.  The gap is a support area, and an uptrend is expected.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishKicking&gt;;
+CandlePattern.BullishKicking(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishKicking&gt;);
+</Init>
+    <Body>if (&lt;#bullishKicking&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>93f2cbb3-354d-4529-a02d-4b66d7d9c51b</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Kicking</Value>
+        <DefaultValue>+Kicking</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishKicking</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Long White Line</Name>
+    <Description>(1-bar pattern, stable at bar 25) The prices open near the low and close significantly higher near the period's high. This is a bullish line.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishLongWhiteLine&gt;;
+CandlePattern.BullishLongWhiteLine(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishLongWhiteLine&gt;);
+</Init>
+    <Body>if (&lt;#bullishLongWhiteLine&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>38eb7eea-452a-4617-864e-4d547a526509</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Long White</Value>
+        <DefaultValue>+Long White</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishLongWhiteLine</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Morning Star</Name>
+    <Description>(3-bar pattern, stable at bar 25) The first day is a long black day, the second day gaps below the first day's close and the third day is a long white day. The "star" indicates a possible reversal and the white line confirms this. This is a bullish pattern signifying a potential bottom.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishMorningStar&gt;;
+CandlePattern.BullishMorningStar(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishMorningStar&gt;);
+</Init>
+    <Body>if (&lt;#bullishMorningStar&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>c38a9d7d-bdfb-4bbe-bf6a-bbc1abacf966</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Morning Star</Value>
+        <DefaultValue>+Morning Star</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishMorningStar</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Piercing Line</Name>
+    <Description>(2-bar pattern, stable at bar 25) The first day is a long black day, the second day is a white day which opens below the first day's low and closes within the first day but above the midpoint.  This is a bullish pattern and the opposite of a Dark Cloud Cover.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishPiercingLine&gt;;
+CandlePattern.BullishPiercingLine(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishPiercingLine&gt;);
+</Init>
+    <Body>if (&lt;#bullishPiercingLine&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>89a1e103-443f-4f93-b165-45c452b9ba4f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Piercing</Value>
+        <DefaultValue>+Piercing</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishPiercingLine</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Separating Lines</Name>
+    <Description>(2-bar pattern) The 1st day is a long black day followed by a white day that opens at the opening price of the 1st day.  Although the 1st day prices are heading downwards, the second day shows significant upturn with an insignificant lower shadow. The uptrend should continue.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishSeparatingLines&gt;;
+CandlePattern.BullishSeparatingLines(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishSeparatingLines&gt;);
+</Init>
+    <Body>if (&lt;#bullishSeparatingLines&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>27a45fe3-e6ef-4762-9ba7-30fe527f514e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Separating</Value>
+        <DefaultValue>+Separating</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishSeparatingLines</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Side-By-Side White Lines</Name>
+    <Description>(3-bar pattern) A white day followed by a gap up of two almost identical white days. No trend-reversal occurs on the 2nd and 3rd day, thus the uptrend is still intact.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishSideBySideWhiteLines&gt;;
+CandlePattern.BullishSideBySideWhiteLines(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishSideBySideWhiteLines&gt;);
+</Init>
+    <Body>if (&lt;#bullishSideBySideWhiteLines&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>c6d57678-98a7-4175-a3d5-8b91d8d5c86f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+SideBySide White</Value>
+        <DefaultValue>+SideBySide White</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishSideBySideWhiteLines</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Three Inside Up</Name>
+    <Description>(3-bar pattern, stable at bar 25) The first two days are a Bullish Harami pattern followed by a white day that closes above the second day. This is usually the confirmation of the Bullish Harami pattern.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishThreeInsideUp&gt;;
+CandlePattern.BullishThreeInsideUp(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishThreeInsideUp&gt;);
+</Init>
+    <Body>if (&lt;#bullishThreeInsideUp&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0de21856-ff66-45c1-9cde-0670d6f46ee3</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+3Inside Up</Value>
+        <DefaultValue>+3Inside Up</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishThreeInsideUp</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Three Outside Up</Name>
+    <Description>(3-bar pattern, stable at bar 25) The first two days are a Bullish Engulfing pattern followed by a white day that closes above the second day. The third day is the confirmation of the Bullish Engulfing pattern.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishThreeOutsideUp&gt;;
+CandlePattern.BullishThreeOutsideUp(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishThreeOutsideUp&gt;);
+</Init>
+    <Body>if (&lt;#bullishThreeOutsideUp&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>aa2c9e9b-11d2-4dac-b705-6cc554613907</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+3Outside Up</Value>
+        <DefaultValue>+3Outside Up</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishThreeOutsideUp</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Three White Soldiers</Name>
+    <Description>(3-bar pattern) Three white days with higher closes each day and where each day opens above but within the body of the previous day.  This pattern represents strong uptrend.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishThreeWhiteSoldiers&gt;;
+CandlePattern.BullishThreeWhiteSoldiers(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishThreeWhiteSoldiers&gt;);
+</Init>
+    <Body>if (&lt;#bullishThreeWhiteSoldiers&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>b014b69c-d35e-4591-ab28-0902d1e0542e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+3White Soldiers</Value>
+        <DefaultValue>+3White Soldiers</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishThreeWhiteSoldiers</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Bullish Tri Star</Name>
+    <Description>(3-bar pattern, stable at bar 25) Three Dojis where the second Doji gaps below the 1st and the third. High indecision during three days suggests that the trend is about to change. This pattern appears very seldom on securities with high volume.</Description>
+    <Category>Candlesticks Bullish</Category>
+    <Init>bool[] &lt;#bullishTriStar&gt;;
+CandlePattern.BullishTriStar(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#bullishTriStar&gt;);
+</Init>
+    <Body>if (&lt;#bullishTriStar&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>caabb25a-b605-4909-9833-4d2a5869ef74</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>+Tri Star</Value>
+        <DefaultValue>+Tri Star</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>bullishTriStar</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Neutral Doji</Name>
+    <Description>(1-bar pattern, stable at bar 25) The price opens and closes at the same price. This pattern implies indecision.  Double doji lines (two adjacent doji lines) imply that a forceful move will follow a breakout from the current indecision.</Description>
+    <Category>Candlesticks Other</Category>
+    <Init>bool[] &lt;#neutralDoji&gt;;
+CandlePattern.NeutralDoji(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#neutralDoji&gt;);
+</Init>
+    <Body>if (&lt;#neutralDoji&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>3a474994-edb2-4a77-b3b6-f01267429068</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>Doji</Value>
+        <DefaultValue>Doji</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>neutralDoji</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Neutral Marubozu</Name>
+    <Description>(1-bar pattern, stable at bar 25) A candlestick that has no upper and lower shadows.</Description>
+    <Category>Candlesticks Other</Category>
+    <Init>bool[] &lt;#neutralMarubozu&gt;;
+CandlePattern.NeutralMarubozu(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#neutralMarubozu&gt;);
+</Init>
+    <Body>if (&lt;#neutralMarubozu&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>7963ab21-f470-461c-8b50-c69a547c06dc</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>Marubozu</Value>
+        <DefaultValue>Marubozu</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>neutralMarubozu</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Neutral Spinning Top</Name>
+    <Description>(1-bar pattern) The distance between the high and low, and the distance between the open and close, are relatively small.</Description>
+    <Category>Candlesticks Other</Category>
+    <Init>bool[] &lt;#neutralSpinningTop&gt;;
+CandlePattern.NeutralSpinningTop(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#neutralSpinningTop&gt;);
+</Init>
+    <Body>if (&lt;#neutralSpinningTop&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>70f4e912-d42e-447f-ac84-25e39a8b0397</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>Spinning Top</Value>
+        <DefaultValue>Spinning Top</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>neutralSpinningTop</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Reversal Dragonfly Doji</Name>
+    <Description>(1-bar pattern) The open and close are the same, and the low is significantly lower than the open, high, and closing prices.  This pattern signifies a turning point.</Description>
+    <Category>Candlesticks Other</Category>
+    <Init>bool[] &lt;#reversalDragonflyDoji&gt;;
+CandlePattern.ReversalDragonflyDoji(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#reversalDragonflyDoji&gt;);
+</Init>
+    <Body>if (&lt;#reversalDragonflyDoji&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>95827029-9d17-4567-ae4d-0ac57c83d004</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>Reversal Dragonfly Doji</Value>
+        <DefaultValue>Reversal Dragonfly Doji</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>reversalDragonflyDoji</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Reversal Gravestone Doji</Name>
+    <Description>(1-bar pattern) The open, close, and low are the same, and the high is significantly higher than the open, low, and closing prices.  This pattern signifies a turning point.</Description>
+    <Category>Candlesticks Other</Category>
+    <Init>bool[] &lt;#reversalGravestoneDoji&gt;;
+CandlePattern.ReversalGravestoneDoji(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#reversalGravestoneDoji&gt;);
+</Init>
+    <Body>if (&lt;#reversalGravestoneDoji&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>f233bd41-42de-4bd3-869f-1b0f72f24291</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>Reversal Gravestone Doji</Value>
+        <DefaultValue>Reversal Gravestone Doji</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>reversalGravestoneDoji</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Reversal Long-legged Doji</Name>
+    <Description>(1-bar pattern, stable at bar 25) The open and close are the same, and the range between the high and low is relatively large.  This pattern often signifies a turning point.</Description>
+    <Category>Candlesticks Other</Category>
+    <Init>bool[] &lt;#reversalLongLeggedDoji&gt;;
+CandlePattern.ReversalLongLeggedDoji(this, &lt;#Annotation&gt;, &lt;#Highlight Candle&gt;, out &lt;#reversalLongLeggedDoji&gt;);
+</Init>
+    <Body>if (&lt;#reversalLongLeggedDoji&gt;[bar])
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>9d59c258-71cf-45e2-ab50-71159e4cc267</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Annotation</Name>
+        <Value>Reversal Longleg Doji</Value>
+        <DefaultValue>Reversal Longleg Doji</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Highlight Candle</Name>
+        <Value>true</Value>
+        <DefaultValue>true</DefaultValue>
+        <ParamType>Boolean</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>reversalLongLeggedDoji</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules.Candlesticks;</UsingClause>
+  </Rule>
+</ArrayOfRule>

@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Channel Breakout VT</Name>
+  <ID>233db86b-ca14-41a4-bccb-f344f25194ec</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using WealthLab.Indicators;
+using System.Drawing;
+
+namespace WealthLabCompile
+{
+  class ChannelBreakoutVT : WealthScript
+  {
+    //Create parameters
+    private StrategyParameter longChannelPer;
+    private StrategyParameter shortChannelPer;
+
+    public ChannelBreakoutVT()
+    {
+      longChannelPer = CreateParameter("Long Channel", 55, 35, 100, 5);
+      shortChannelPer = CreateParameter("Short Channel", 21, 3, 33, 3);
+    }
+
+    protected override void Execute()
+    {
+      //Obtain periods from parameters
+      int longPer = longChannelPer.ValueInt;
+      int shortPer = shortChannelPer.ValueInt;
+
+      DataSeries H55 = Highest.Series(High, longPer);
+      DataSeries L55 = Lowest.Series(Low, longPer);
+      DataSeries H21 = Highest.Series(High, shortPer);
+      DataSeries L21 = Lowest.Series(Low, shortPer);
+
+		// shift the plotted series to the right one bar to visualize the crossings
+      PlotSeries(PricePane, H55 &gt;&gt; 1, Color.Green, LineStyle.Solid, 1);
+      PlotSeries(PricePane, L21 &gt;&gt; 1, Color.Red, LineStyle.Dotted, 1);
+      PlotSeries(PricePane, H21 &gt;&gt; 1, Color.Blue, LineStyle.Dotted, 1);
+      PlotSeries(PricePane, L55 &gt;&gt; 1, Color.Fuchsia, LineStyle.Solid, 1);
+
+      for (int bar = longPer; bar &lt; Bars.Count; bar++)
+      {
+        if (IsLastPositionActive)
+        {
+          Position Pos = LastPosition;
+          if (Pos.PositionType == PositionType.Long)
+            SellAtStop(bar + 1, LastPosition, L21[bar]);
+          else
+            CoverAtStop(bar + 1, LastPosition, H21[bar]);
+        }
+        else
+       {
+			 RiskStopLevel = L21[bar];
+			if (BuyAtStop(bar + 1, H55[bar]) == null) 
+			{
+				RiskStopLevel = H21[bar];
+				ShortAtStop(bar + 1, L55[bar]);
+			}
+        }
+      }
+    }
+  }
+}
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;Channel Breakout VT&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;This is 
+								the 55-day channel breakout system used by Van&amp;nbsp;K.&amp;nbsp;Tharp in &amp;quot;Trade Your Way to 
+								Financial Freedom&amp;quot; (pg. 286) to demonstrate the effect of different money 
+								management models on trading system results.&amp;nbsp; Verbatim: &amp;quot;it enters the market on 
+								a stop order if the market makes a new 55-day high (long) or a new 55-day low 
+								(short).&amp;nbsp; The stop, for both the initial risk and profit taking, is a 21-day 
+								trailing stop on the other side of the market.&amp;nbsp; &lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-04-11T21:12:09.171875-04:00</CreationDate>
+  <LastModified>2007-11-14T15:53:42.984375-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>BA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>MaxRisk</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>8</PctSize>
+    <RiskSize>2</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>RecentYears</Range>
+    <StartDate>2007-01-01T00:00:00</StartDate>
+    <EndDate>2007-10-13T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>4</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>

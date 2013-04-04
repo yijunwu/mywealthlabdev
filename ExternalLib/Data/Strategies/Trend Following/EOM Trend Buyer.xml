@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>EOM Trend Buyer</Name>
+  <ID>7c6a3959-d21c-45e8-a5f7-b07f8a559be2</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using WealthLab.Indicators;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace WealthLabCompile
+{
+	class EOMTrendBuyer : WealthScript
+	{
+	
+	   //parameters to use in stategy
+		private StrategyParameter simpleMovingAveragePeriodParam;
+		private StrategyParameter holdBarsParam;
+		private StrategyParameter buyDateParam;
+	
+		public EOMTrendBuyer()
+		{
+			simpleMovingAveragePeriodParam = CreateParameter("Buy &gt; SMA", 200, 30, 365, 10);
+			holdBarsParam = CreateParameter("Hold Bars", 5, 1, 30, 1);
+			buyDateParam = CreateParameter("Buy Date", 23, 1, 30, 1);
+		}
+	
+	   protected override void Execute()
+	   {
+			bool	monthBarChecked = false;
+			int		simpleMovingAveragePeriod = simpleMovingAveragePeriodParam.ValueInt;
+			int		holdBars = holdBarsParam.ValueInt;
+			int		buyDate = buyDateParam.ValueInt;
+			
+			SMA sma = SMA.Series(Close, simpleMovingAveragePeriod);
+			
+			PlotSeries(PricePane, sma, Color.Green, LineStyle.Solid, 2);
+			
+			for (int bar = simpleMovingAveragePeriod; bar &lt; Bars.Count; bar++)
+			{
+				if ( Date[bar].Day &lt; Date[bar - 1].Day )
+				{
+					// in a new month, start checking for eligible bars
+					monthBarChecked = false;
+				}
+				
+				if ( monthBarChecked )
+				{
+					// skip this bar if we already found a bar that was eligible for a position
+					continue;
+				}
+					
+				if (IsLastPositionActive)
+				{          
+					if (bar + 1 - LastPosition.EntryBar &gt;= holdBars)	// sell if position held for X bars
+					{
+						SellAtMarket(bar + 1, LastPosition, "Hold Days Expired");
+					}
+				}
+				else
+				{
+					if (Close[bar] &gt; sma[bar])
+					{
+						DateTime barNextMonthDate = Date[bar].AddMonths(1);
+							
+						if (Date[bar].Day &gt;= buyDate)
+						{
+							monthBarChecked = true;
+							
+							if (null == LastPosition)
+							{
+								BuyAtMarket(bar + 1);
+							}
+							else if (LastPosition.EntryDate.Month != barNextMonthDate.Month
+								&amp;&amp; Close[bar - 2] &gt; Close[bar - 1] &amp;&amp; Close[bar - 1] &gt; Close[bar])
+							{
+								BuyAtMarket(bar + 1);
+							}
+						}
+					}
+				}
+			}
+		}	// end of Execute method
+	}	// end of class
+}	// end of namespace
+
+
+
+
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;EOM Trend Buyer&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;This 
+								strategy attempts to find a correlation with the trend of fund managers buying 
+								positions towards the end of the month. The strategy requires that the equity in 
+								question is above a specified SMA and and requires the day of the month to be 
+								greater than or equal to a specified date. For existing positions, the position 
+								is held for a specified number of bars and a new position is not entered into if 
+								the previous position's month is the same as the new position.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Matthew George</Author>
+  <CreationDate>2007-05-08T10:25:07.8295069-05:00</CreationDate>
+  <LastModified>2007-06-28T11:15:39.34375-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName />
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>1000000</StartingCapital>
+    <DollarSize>50000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>30</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+</Strategy>

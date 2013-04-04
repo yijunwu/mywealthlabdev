@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<DataSet xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Nasdaq 100</Name>
+  <Scale>Daily</Scale>
+  <BarInterval>0</BarInterval>
+  <DSString>{SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"}
+{SOAP-ENV:Body}
+{a1:YahooStaticSettings id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/WealthLab.DataProviders.Yahoo/WealthLab.DataProviders.Yahoo%2C%20Version%3D1.3.20.1%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull"}
+{Version}2{/Version}
+{_symbols id="ref-3"}AAPL,ADBE,ADP,ADSK,AKAM,ALTR,ALXN,AMAT,AMGN,AMZN,APOL,ATVI,AVGO,BBBY,BIDU,BIIB,BMC,BRCM,CA,CELG,CERN,CHKP,CHRW,CMCSA,COST,CSCO,CTSH,CTXS,DELL,DLTR,DTV,EA,EBAY,ESRX,EXPD,EXPE,FAST,FFIV,FISV,FLEX,FOSL,GILD,GMCR,GOLD,GOOG,GRMN,HSIC,INFY,INTC,INTU,ISRG,KLAC,LIFE,LINTA,LLTC,LRCX,MAT,MCHP,MDLZ,MNST,MRVL,MSFT,MU,MXIM,MYL,NFLX,NTAP,NUAN,NVDA,NWSA,ORCL,ORLY,PAYX,PCAR,PCLN,PRGO,QCOM,RIMM,ROST,SBUX,SHLD,SIAL,SIRI,SNDK,SPLS,SRCL,STX,SYMC,TXN,VIAB,VMED,VOD,VRSN,VRTX,WCRX,WFM,WYNN,XLNX,XRAY,YHOO{/_symbols}
+{_updateGroups}false{/_updateGroups}
+{_groups id="ref-4"}{/_groups}
+{_startDate}1990-01-01T00:00:00.0000000-05:00{/_startDate}
+{/a1:YahooStaticSettings}
+{/SOAP-ENV:Body}
+{/SOAP-ENV:Envelope}
+</DSString>
+  <ProviderName>YahooStaticProvider</ProviderName>
+</DataSet>

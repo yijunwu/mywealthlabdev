@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>CMO Signals with Profit Target</Name>
+  <ID>e719acc5-3934-474c-8c25-da9336183f03</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+    public class CMOSignalsWithProfitTarget : WealthScript
+    {
+
+		StrategyParameter oversold;
+		StrategyParameter overbought;
+		StrategyParameter cmoPeriod;
+		StrategyParameter profitTarget;
+
+        public CMOSignalsWithProfitTarget()
+        {
+			oversold = CreateParameter("Oversold", -50, -70, -40, 10);
+			overbought = CreateParameter("Overbought", 50, 40, 70, 10);
+			cmoPeriod = CreateParameter("CMO Period", 20, 5, 10, 1);
+			profitTarget = CreateParameter("Profit Target", 10, 5, 10, 1);
+        }
+
+        protected override void Execute()
+        {
+            int lastBarBought = 0;
+            PlotStops();
+
+            //Get parameter values
+            int period = cmoPeriod.ValueInt;
+			double target = profitTarget.Value / 100.0d + 1.0d;
+            int oversoldLevel = oversold.ValueInt;
+            int overboughtLevel = overbought.ValueInt;
+
+            //Create and plot CMO indicator
+            CMO cmo = CMO.Series(Close, period);
+            ChartPane cmoPane = CreatePane(40, true, true);
+            PlotSeriesOscillator(cmoPane, cmo, overboughtLevel, oversoldLevel, Color.Green, Color.Red, Color.CadetBlue, LineStyle.Solid, 1);
+
+           //Trading system loop
+            for (int bar = period + 1; bar &lt; Bars.Count; bar++)
+            {
+                //Buy when CMO crosses above oversold level
+                if (CrossOver(bar, cmo, oversoldLevel))
+                    if (LastActivePosition == null || LastActivePosition.EntryBar &gt; Bars.Close[bar])
+                        if (bar &gt;= lastBarBought + 9)
+                        {
+                            BuyAtMarket(bar + 1, "CMO Oversold");
+                            lastBarBought = bar + 1;
+                        }
+                //Exit rules
+                foreach(Position pos in Positions)
+                    if (pos.Active)
+                    {
+                        if (CrossOver(bar, cmo, overboughtLevel))
+                            SellAtMarket(bar + 1, pos, "CMO Overbought");
+                        else
+                            SellAtLimit(bar + 1, pos, pos.EntryPrice * target, "Profit target");
+                    }                
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;CMO Signals with Profit Target&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Enters 
+								the market when prices are low, as determined by the Chande Momentum Oscillator, 
+								combined with a simple price pattern.&amp;nbsp; Exits when prices eventually rise so that 
+								CMO becomes oversold, or at a 10% profit target, whichever comes first.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-04-12T02:41:38.234375+02:00</CreationDate>
+  <LastModified>2009-09-01T11:55:48.632501+03:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <ParameterValues>
+    <double>-50</double>
+    <double>50</double>
+    <double>10</double>
+    <double>10</double>
+  </ParameterValues>
+  <DataSetName>All 10 Sectors</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2003-08-04T00:00:00</StartDate>
+    <EndDate>2008-08-04T00:00:00</EndDate>
+    <FixedBars>500</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues>AA|Oversold|-60|AA|Overbought|70|AA|CMO Period|6|AA|Profit Target|9|</PreferredValues>
+  <UsePreferredValues>false</UsePreferredValues>
+  <Origin />
+</Strategy>

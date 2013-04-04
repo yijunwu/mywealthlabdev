@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>CCI crosses above Downtrend Level</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+</Init>
+    <Body>if (CrossOver( bar, &lt;#CCISer&gt;, &lt;#Downtrend Level&gt; ))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI crosses below Downtrend Level</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+</Init>
+    <Body>if (CrossUnder( bar, &lt;#CCISer&gt;, &lt;#Downtrend Level&gt; ))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI crosses above Uptrend Level</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+</Init>
+    <Body>if (CrossOver( bar, &lt;#CCISer&gt;, &lt;#Uptrend Level&gt; ))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI crosses below Uptrend Level</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+</Init>
+    <Body>if (CrossUnder( bar, &lt;#CCISer&gt;, &lt;#Uptrend Level&gt; ))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI crosses above Signal Line</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+DataSeries &lt;#SMACCISer&gt; = SMA.Series( &lt;#CCISer&gt;, &lt;#SMAPeriod&gt; );
+</Init>
+    <Body>if ( CrossOver( bar, &lt;#CCISer&gt;, &lt;#SMACCISer&gt; ) &amp;&amp; ( &lt;#SMACCISer&gt;[bar] &lt;= 0 ) )
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>SMAPeriod</Name>
+        <Value>10</Value>
+        <DefaultValue>10</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>SMACCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI crosses below Signal Line</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+DataSeries &lt;#SMACCISer&gt; = SMA.Series( &lt;#CCISer&gt;, &lt;#SMAPeriod&gt; );
+</Init>
+    <Body>if ( CrossUnder( bar, &lt;#CCISer&gt;, &lt;#SMACCISer&gt; ) &amp;&amp; ( &lt;#SMACCISer&gt;[bar] &gt;= 0 ) )
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>SMAPeriod</Name>
+        <Value>10</Value>
+        <DefaultValue>10</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>SMACCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI is above Signal Line</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+DataSeries &lt;#SMACCISer&gt; = SMA.Series( &lt;#CCISer&gt;, &lt;#SMAPeriod&gt; );
+</Init>
+    <Body>if ( &lt;#CCISer&gt;[bar] &gt; &lt;#SMACCISer&gt;[bar] )
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>SMAPeriod</Name>
+        <Value>10</Value>
+        <DefaultValue>10</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>SMACCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI is below Signal Line</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+DataSeries &lt;#SMACCISer&gt; = SMA.Series( &lt;#CCISer&gt;, &lt;#SMAPeriod&gt; );
+</Init>
+    <Body>if ( &lt;#CCISer&gt;[bar] &lt; &lt;#SMACCISer&gt;[bar] )
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>SMAPeriod</Name>
+        <Value>10</Value>
+        <DefaultValue>10</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>SMACCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI Strong Uptrend</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+</Init>
+    <Body>if ( &lt;#CCISer&gt;[bar] &gt; &lt;#Uptrend Level&gt; )
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>CCI Strong Downtrend</Name>
+    <Description />
+    <Category>Commodity Channel Index (CCI)</Category>
+    <Init>DataSeries &lt;#CCISer&gt; = CCI.Series( Bars, &lt;#Period&gt; );
+</Init>
+    <Body>if ( &lt;#CCISer&gt;[bar] &lt; &lt;#Downtrend Level&gt; )
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane&gt;, CCI.Series(Bars, &lt;#Period&gt;), Color.Teal, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Uptrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+DrawHorzLine(&lt;#NewPane&gt;, &lt;#Downtrend Level&gt;, Color.Black, LineStyle.Dotted, 2);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Uptrend Level</Name>
+        <Value>100</Value>
+        <DefaultValue>100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Downtrend Level</Name>
+        <Value>-100</Value>
+        <DefaultValue>-100</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>-200</Start>
+        <Stop>200</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>CCISer</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+</ArrayOfRule>

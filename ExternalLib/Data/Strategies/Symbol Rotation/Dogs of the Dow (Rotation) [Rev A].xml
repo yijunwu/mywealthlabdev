@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Dogs of the Dow (Rotation) [Rev A]</Name>
+  <ID>f3a8647a-0be7-425d-8c8f-cc31496f7597</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+using WealthLab.Rules;
+
+namespace WealthLab.Strategies
+{
+	public class DogsOfTheDow : WealthScript, IComparer&lt;YieldHolder&gt;
+	{
+		private const string _item = "dividend"; 
+		private TimeSpan _oneYear = new TimeSpan(365, 0, 0, 0);
+		private StrategyParameter _numberOfDogs;
+		
+		public DogsOfTheDow()
+		{
+			_numberOfDogs = CreateParameter("Dogs", 10, 2, 20, 1);
+		}			
+		
+		/* Returns the dividend yield calculated by summing the previous year's per share dividends 
+		   and dividing by current share price */ 
+		private YieldHolder YieldNow(int bar, string symbol)
+		{					
+			SetContext(symbol, true);
+			YieldHolder holder = new YieldHolder();
+			holder.symbol = symbol;
+			if (Bars.FirstActualBar &gt; bar)
+			{
+				holder.yld = 0d;
+				RestoreContext();
+				return holder;
+			}
+			
+			IList&lt;FundamentalItem&gt; fList = FundamentalDataItems(_item);
+			DateTime yearAgo = Date[bar] - _oneYear;
+			double divsPerShare = 0d;
+			
+			foreach (FundamentalItem fi in fList)
+			{
+				if (fi.Date &gt; yearAgo &amp;&amp; fi.Date &lt;= Date[bar])
+				{	
+					if (fi.Bar &lt; 0) continue;
+					if (100 * fi.Value / Close[fi.Bar] &lt; 4)		// large one-time cash distribution filter (4% of share price)
+						divsPerShare += fi.Value;
+				}
+			}
+			holder.yld = 100 * (divsPerShare / Close[bar]);
+			RestoreContext();
+			return holder;
+		}
+			
+		
+		protected override void Execute()
+		{			
+			int number = _numberOfDogs.ValueInt;
+			List&lt;YieldHolder&gt; list = new List&lt;YieldHolder&gt;();
+			ClearDebug();
+			PrintDebug("Year\tAvg Yield %");
+			
+			for(int bar = 1; bar &lt; Bars.Count; bar++)
+			{
+				DateTime barDate = Date[bar];		
+				bool isFriday = barDate.DayOfWeek == DayOfWeek.Friday;
+				int day = barDate.Day;
+				
+				/* Do the processing on the last trading day of the year */
+				if ( (barDate.Month == 12) &amp; ((day == 31) || (isFriday &amp; (day &gt;= 29)))
+					// || (bar == Bars.Count - 1)	// To see trades as of "today", uncomment, Compile/Run
+					)
+				{					
+					PrintStatusBar( "Processing: " + barDate.Year.ToString()  );
+					/* Load the list with the current yields and sort. Highest yields are at the end of the list. */
+					list.Clear();
+					double summ = 0d;
+					foreach(string symbol in DataSetSymbols)
+					{						
+						if (Bars.FirstActualBar &lt; bar)
+						{
+							YieldHolder yy = YieldNow(bar, symbol);
+							list.Add(yy);
+							summ += yy.yld;
+							//PrintDebug(symbol + "\t" + yy.yld.ToString("0.00"));
+						}						
+					}
+					double avgYield = summ / DataSetSymbols.Count;
+					PrintDebug(Date[bar].Date.Year + "\t" + avgYield.ToString("0.0"));
+					list.Sort(this);
+					
+					//remove the lowest yields from the list, leaving the specified number of Dogs
+					int c = list.Count;
+					for(int i = 1; i &lt;= c - number; i++)
+						list.RemoveAt(0);
+					
+					// sell all Positions to adjst for equal dollar size Positions and to reinvest dividends
+					SellAtMarket(bar+1, Position.AllPositions);
+					
+					foreach(YieldHolder holder in list)
+					{
+						SetContext(holder.symbol, true);
+						//BuyAtMarket(bar + 1, "% Yield: " + holder.yld.ToString("0.00"));
+						BuyAtMarket(bar + 1, holder.yld.ToString("0.00"));
+						RestoreContext();
+					}
+				}
+			}
+			PrintStatusBar("Complete!");
+		}
+		public int Compare(YieldHolder item1, YieldHolder item2)
+		{
+			return item1.yld.CompareTo(item2.yld);
+		}
+	}
+	public class YieldHolder
+	{
+		internal string symbol;
+		internal double yld;
+	}	
+}</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 4.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;title&gt;Strategy: Dogs of the Dow&lt;/title&gt;
+	&lt;/head&gt;
+
+	&lt;body&gt;
+		&lt;h3&gt;&lt;font face="Verdana"&gt;Dogs of the Dow&lt;/font&gt;&lt;/h3&gt;
+		&lt;p&gt;&lt;font face="Verdana" size="2"&gt;This "symbol rotation" Strategy simply invests in the 10 highest-dividend yielding stocks from a Dow 30 Industrials
+				at the beginning of each calendar year.&amp;nbsp; When readjusting the Portfolio,
+				the Strategy code sells all stocks first and repurchases if required.&amp;nbsp; Besides
+				simplifying the code, the &amp;quot;sell all /
+				repurchase&amp;quot; method allows dividends to be effectively reinvested, and it
+		makes it easy to readjust each Position with an equal-dollar size.&lt;/font&gt;&lt;/p&gt;
+		&lt;p&gt;&lt;b&gt;&lt;font face="Verdana" size="2"&gt;[Rev A.]&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;
+		&lt;p&gt;&lt;font face="Verdana" size="2"&gt;&lt;a href="http://www.wealth-lab.com/Community/Forum/Posts.aspx?id=ySrfUxc3S1xfVgORzjWL4e82ABBsz8E/bqZgxykmGqk4SX4TE+n18RmpoeCe8eP1+fdmxbl+RYrLYO+g6HGjWyELoHH2lTrrgGbmn55tjNU=#153156"&gt;Sammy_G
+				reported&lt;/a&gt; that the previous dividend yield calculation
+				was not correct, and this appears to be a bug in the &lt;i&gt;WealthLab.Rules.FundamentalsRatio&lt;/i&gt;
+				method. That&amp;nbsp; prompted this revision, which calculates
+				dividend yield based on the the per-share cash dividend
+				series, which extends back 10 years.&amp;nbsp; Fortunately, that
+				gives us the ability to test &amp;quot;Dogs&amp;quot; 4 more years
+				than with the regular 10-Q fundamental data, although see
+		&amp;quot;Note on historical results&amp;quot; below.&lt;/font&gt;&lt;/p&gt;
+		&lt;hr&gt;
+
+			&lt;p&gt;&lt;b&gt;&lt;font color="blue" face="Verdana" size="2"&gt;Usage Notes&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;
+
+			&lt;p&gt;&lt;font face="Verdana" size="2"&gt;Run the Strategy by clicking
+			&lt;u&gt; any one symbol&lt;/u&gt; in the Dow 30 DataSet. Note that the dividend yield is recorded as the &lt;i&gt;Entry SignalName.&lt;/i&gt; &lt;/font&gt;&lt;/p&gt;
+			&lt;ul&gt;
+				&lt;li&gt;&lt;b&gt;&lt;font face="Verdana" size="2"&gt;Scale: &lt;font color="#0000FF"&gt; Daily&lt;/font&gt;&lt;/font&gt;&lt;/b&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;Data Range:&lt;/b&gt; &lt;b&gt;&lt;font color="#0000FF"&gt;Most-Recent
+						10 Years (max)&lt;/font&gt;.&amp;nbsp; &lt;/b&gt;Fidelity per
+						share dividend series used to calculate dividend
+						yield are available for 10 years.&amp;nbsp; For more
+						accurate Performance metrics, use the Date Range
+						option to start the test on the first trading day
+				following Christmas 10 years ago.&lt;/font&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;Position Size: &lt;font color="#0000FF"&gt; 10% of Equity&lt;/font&gt; &lt;/b&gt;when using the 10 &amp;quot;Dogs&amp;quot; (Positions)
+						default. The number of Dogs may be changed using the Strategy Parameter's
+						slider.  Set Position Sizing accordingly.&amp;nbsp; Set the margin factor
+				slightly higher than 1:1 so that no trades are rejected due to price gaps.&lt;/font&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;Preferences, Backtest Settings:&lt;/b&gt;&amp;nbsp; &lt;i&gt;Apply Dividends to
+				Backtest Results&lt;/i&gt; .&lt;/font&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;Preferences, Slippage and Round Lots:&lt;/b&gt;&amp;nbsp; Rounds Lots disabled&amp;nbsp;&lt;/font&gt;&lt;/li&gt;
+			&lt;/ul&gt;
+			&lt;hr&gt;
+				&lt;p&gt;&lt;b&gt;&lt;font face="Verdana" size="2"&gt;Note on historical results&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;
+
+				&lt;p&gt;&lt;font face="Verdana" size="2"&gt;
+
+						This Strategy does not take into account the index component changes over the years.  For example, previously both 'T' (AT&amp;T) and 'SBC' (SBC Communications) were part of the Dow 30, but SBC purchased T in Nov. 2005, and then SBC change their name and symbol to AT&amp;T and 'T', respectively, in Dec. 2005.&amp;nbsp;
+						After the 2008 financial crisis, bellwethers such as AIG, C,
+						and GM were dismissed from the Dow components.&amp;nbsp;
+						Furthermore, CSCO became a Dow component with 0%
+				yield.&amp;nbsp;&lt;/font&gt;&lt;/p&gt;
+
+				&lt;p&gt;&lt;font face="Verdana" size="2"&gt;Consequently,
+				the results will clearly differ somewhat with &lt;a href="http://www.dogsofthedow.com/dogyrs.htm"&gt;published historical results&lt;/a&gt; for the &lt;b&gt;Dogs of the Dow&lt;/b&gt; trading system.&amp;nbsp;&lt;/font&gt;&lt;/p&gt;
+
+				&lt;p&gt;&lt;font face="Verdana" size="2"&gt;More information on the Dogs of the Dow strategy can be found at the
+				following links.&amp;nbsp;&lt;b&gt;&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+
+				&lt;p&gt;&lt;font face="Verdana" size="2"&gt;&lt;a href="http://www.investopedia.com/terms/d/dogsofthedow.asp"&gt;http://www.investopedia.com/terms/d/dogsofthedow.asp&lt;/a&gt;&lt;br&gt;
+							&lt;a href="http://invest-faq.com/articles/strat-dogs.html"&gt;http://invest-faq.com/articles/strat-dogs.html&lt;/a&gt;&lt;br&gt;
+				&lt;a href="http://www.dogsofthedow.com"&gt;http://www.dogsofthedow.com&lt;/a&gt;&amp;nbsp;&lt;/font&gt;&lt;/p&gt;
+
+	&lt;/body&gt;
+&lt;/html&gt;
+</Description>
+  <Author>Cone</Author>
+  <CreationDate>2010-09-29T17:57:36.65625-04:00</CreationDate>
+  <LastModified>2010-09-29T19:07:42.984375-04:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <ParameterValues />
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>PctEquity</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <PosSizerConfig />
+    <MarginFactor>1.1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>DateRange</Range>
+    <StartDate>2000-12-26T00:00:00</StartDate>
+    <EndDate>2020-01-01T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues />
+  <UsePreferredValues>false</UsePreferredValues>
+  <StartingEquity>100000</StartingEquity>
+  <MarginFactor>1</MarginFactor>
+  <Origin>Wealth-Lab.com</Origin>
+  <CombinedStrategyChildren />
+</Strategy>

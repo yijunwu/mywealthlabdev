@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>External Symbol Price Series crosses above Upper Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>
+      DataSeries &lt;#externalSeries&gt; = GetExternalSeries(&lt;#ExternalSymbol&gt;,&lt;#ExtPriceSeries&gt;);
+      DataSeries &lt;#bandLowerSeries&gt; = BBandLower.Series( &lt;#externalSeries&gt;,&lt;#BBandPeriod&gt;, &lt;#BBandStdDev&gt; );
+      DataSeries &lt;#bandUpperSeries&gt; = BBandUpper.Series( &lt;#externalSeries&gt;,&lt;#BBandPeriod&gt;, &lt;#BBandStdDev&gt; );
+    </Init>
+    <Body>
+      if (CrossOver(bar, externalSeries, bandUpperSeries))
+    </Body>
+    <Plotting>
+      PlotSymbol(&lt;#NewPane&gt;, GetExternalSymbol("&lt;#ExternalSymbol&gt;", true), Color.Black, Color.Blue);
+      PlotSeries(&lt;#NewPane&gt;, &lt;#bandUpperSeries&gt;, Color.Gray, LineStyle.Solid, 2 );
+      PlotSeries(&lt;#NewPane&gt;, &lt;#bandLowerSeries&gt;, Color.Gray, LineStyle.Solid, 2 );
+    </Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>8ca328e4-3d19-4102-8186-8b5c7abaa467</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>ExternalSymbol</Name>
+        <Value>MSFT</Value>
+        <DefaultValue>MSFT</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>ExtPriceSeries</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBandPeriod</Name>
+        <Value>10</Value>
+        <DefaultValue>10</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBandStdDev</Name>
+        <Value>1.5</Value>
+        <DefaultValue>1.5</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>externalSeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>bandUpperSeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>bandLowerSeries</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>External Symbol Price Series crosses below Lower Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>
+      DataSeries &lt;#BBexternalSeriesLB&gt; = GetExternalSeries(&lt;#ExternalSymbol&gt;,&lt;#ExtPriceSeries&gt;);
+      DataSeries &lt;#BBbandUpperSeriesLB&gt; = BBandUpper.Series( &lt;#BBexternalSeriesLB&gt;,&lt;#BBandPeriod&gt;, &lt;#BBandStdDev&gt; );
+      DataSeries &lt;#BBbandLowerSeriesLB&gt; = BBandLower.Series( &lt;#BBexternalSeriesLB&gt;,&lt;#BBandPeriod&gt;, &lt;#BBandStdDev&gt; );
+    </Init>
+    <Body>
+      if (CrossUnder(bar, BBexternalSeriesLB, BBbandLowerSeriesLB))
+    </Body>
+    <Plotting>
+      PlotSymbol(&lt;#NewPane&gt;, GetExternalSymbol("&lt;#ExternalSymbol&gt;", true), Color.Black, Color.Blue);
+      PlotSeries(&lt;#NewPane&gt;, &lt;#BBbandUpperSeriesLB&gt;, Color.Gray, LineStyle.Solid, 2 );
+      PlotSeries(&lt;#NewPane&gt;, &lt;#BBbandLowerSeriesLB&gt;, Color.Gray, LineStyle.Solid, 2 );
+    </Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>8ca328e4-3d19-4102-8186-8b5c7abaa467</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>ExternalSymbol</Name>
+        <Value>MSFT</Value>
+        <DefaultValue>MSFT</DefaultValue>
+        <ParamType>String</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>ExtPriceSeries</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBandPeriod</Name>
+        <Value>10</Value>
+        <DefaultValue>10</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBandStdDev</Name>
+        <Value>1.5</Value>
+        <DefaultValue>1.5</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBexternalSeriesLB</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>BBbandUpperSeriesLB</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>BBbandLowerSeriesLB</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Price crosses above lower Bollinger Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBDown&gt; = BBandLower.Series( &lt;#BBand Series&gt;, &lt;#BBand Period LB&gt;, &lt;#BBand Std Dev LB&gt; );
+</Init>
+    <Body>if (CrossOver( bar, &lt;#Price&gt;, &lt;#BBDown&gt; ))
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBDown&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period LB</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev LB</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBDown</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Price crosses above upper Bollinger Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBUp&gt; = BBandUpper.Series( &lt;#BBand Series&gt;, &lt;#BBand Period UB&gt;, &lt;#BBand Std Dev UB&gt; );
+</Init>
+    <Body>if (CrossOver( bar, &lt;#Price&gt;, &lt;#BBUp&gt; ))
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBUp&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period UB</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev UB</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBUp</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Price crosses below lower Bollinger Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBDown&gt; = BBandLower.Series( &lt;#BBand Series&gt;, &lt;#BBand Period LB&gt;, &lt;#BBand Std Dev LB&gt; );
+</Init>
+    <Body>if (CrossUnder( bar, &lt;#Price&gt;, &lt;#BBDown&gt; ))
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBDown&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period LB</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev LB</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBDown</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Price crosses below upper Bollinger Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBUp&gt; = BBandUpper.Series( &lt;#BBand Series&gt;, &lt;#BBand Period UB&gt;, &lt;#BBand Std Dev UB&gt; );
+</Init>
+    <Body>if (CrossUnder( bar, &lt;#Price&gt;, &lt;#BBUp&gt; ))
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBUp&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period UB</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev UB</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBUp</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Price is above lower Bollinger Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBDown&gt; = BBandLower.Series( &lt;#BBand Series&gt;, &lt;#BBand Period LB&gt;, &lt;#BBand Std Dev LB&gt; );
+</Init>
+    <Body>if (&lt;#Price&gt;[bar] &gt; &lt;#BBDown&gt;[bar])
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBDown&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period LB</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev LB</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBDown</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Price is above upper Bollinger Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBUp&gt; = BBandUpper.Series( &lt;#BBand Series&gt;, &lt;#BBand Period UB&gt;, &lt;#BBand Std Dev UB&gt; );
+</Init>
+    <Body>if (&lt;#Price&gt;[bar] &gt; &lt;#BBUp&gt;[bar])
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBUp&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period UB</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev UB</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBUp</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Price is below lower Bollinger Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBDown&gt; = BBandLower.Series( &lt;#BBand Series&gt;, &lt;#BBand Period LB&gt;, &lt;#BBand Std Dev LB&gt; );
+</Init>
+    <Body>if (&lt;#Price&gt;[bar] &lt; &lt;#BBDown&gt;[bar])
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBDown&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period LB</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev LB</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBDown</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Price is below upper Bollinger Band</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBUp&gt; = BBandUpper.Series( &lt;#BBand Series&gt;, &lt;#BBand Period UB&gt;, &lt;#BBand Std Dev UB&gt; );
+</Init>
+    <Body>if (&lt;#Price&gt;[bar] &lt; &lt;#BBUp&gt;[bar])
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBUp&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period UB</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev UB</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBUp</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Bollinger Bands are tightening</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBUp&gt; = BBandUpper.Series( &lt;#Price&gt;, &lt;#BBand Period&gt;, &lt;#BBand Std Dev&gt; );
+DataSeries &lt;#BBDown&gt; = BBandLower.Series( &lt;#Price&gt;, &lt;#BBand Period&gt;, &lt;#BBand Std Dev&gt; );
+</Init>
+    <Body>if ((&lt;#BBUp&gt;[bar-1] - &lt;#BBDown&gt;[bar-1]) &gt; (&lt;#BBUp&gt;[bar] - &lt;#BBDown&gt;[bar]))
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBUp&gt;, Color.Blue, LineStyle.Solid, 2 );
+PlotSeries(PricePane, &lt;#BBDown&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBUp</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>BBDown</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Bollinger Bands are expanding</Name>
+    <Description />
+    <Category>Bollinger Bands</Category>
+    <Init>DataSeries &lt;#BBUp&gt; = BBandUpper.Series( &lt;#Price&gt;, &lt;#BBand Period&gt;, &lt;#BBand Std Dev&gt; );
+DataSeries &lt;#BBDown&gt; = BBandLower.Series( &lt;#Price&gt;, &lt;#BBand Period&gt;, &lt;#BBand Std Dev&gt; );
+</Init>
+    <Body>if ((&lt;#BBUp&gt;[bar-1] - &lt;#BBDown&gt;[bar-1]) &lt; (&lt;#BBUp&gt;[bar] - &lt;#BBDown&gt;[bar]))
+</Body>
+    <Plotting>PlotSeries(PricePane, &lt;#BBUp&gt;, Color.Blue, LineStyle.Solid, 2 );
+PlotSeries(PricePane, &lt;#BBDown&gt;, Color.Blue, LineStyle.Solid, 2 );
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>809248b1-9c49-4fc5-a87d-219cca898f7e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Price</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>BBand Std Dev</Name>
+        <Value>2</Value>
+        <DefaultValue>2</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>0.5</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>BBUp</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>BBDown</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+</ArrayOfRule>

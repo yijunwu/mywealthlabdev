@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Moving Average Crossover</Name>
+  <ID>f4c37775-3b51-468d-9a3f-bee2acbe6447</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using WealthLab.Indicators;
+using System.Drawing;
+
+namespace WealthLabCompile
+{
+  class MovingAverageCrossover : WealthScript
+  {
+    //Create parameters
+    private StrategyParameter slowPeriod;
+    private StrategyParameter fastPeriod;
+
+    public MovingAverageCrossover()
+    {
+        fastPeriod = CreateParameter("Fast Period", 20, 1, 100, 1);
+        slowPeriod = CreateParameter("Slow Period", 50, 20, 300, 5);      
+    }
+
+    protected override void Execute()
+    {
+        //Obtain periods from parameters
+        int fastPer = fastPeriod.ValueInt;
+        int slowPer = slowPeriod.ValueInt;
+      
+        SMA smaFast = SMA.Series(Close, fastPer);
+        SMA smaSlow = SMA.Series(Close, slowPer);
+
+        PlotSeries(PricePane, smaFast, Color.Green, LineStyle.Solid, 2);
+        PlotSeries(PricePane, smaSlow, Color.Red, LineStyle.Solid, 2);
+
+        for (int bar = Math.Max(fastPer, slowPer); bar &lt; Bars.Count; bar++)
+        {
+            if (IsLastPositionActive)
+            {          
+              if (CrossUnder(bar, smaFast, smaSlow))
+                SellAtMarket(bar + 1, LastPosition);
+            }
+            else
+            {
+              if (CrossOver(bar, smaFast, smaSlow))
+                BuyAtMarket(bar + 1);
+            }
+        }
+    }
+  }
+}</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;Moving Average Crossover&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;This 
+								classic strategy enters long at market on the bar after a fast moving average 
+								crosses above a slow moving average, and sells when it crosses back below.&amp;nbsp; This 
+								is the most basic type of trend following system.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-04-11T20:57:12.296875-05:00</CreationDate>
+  <LastModified>2007-12-04T18:27:34.9079071-06:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>50000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>48000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2006-10-01T00:00:00</StartDate>
+    <EndDate>2007-10-28T00:00:00</EndDate>
+    <FixedBars>2000</FixedBars>
+    <RecentValue>9</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>

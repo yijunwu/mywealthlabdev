@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>RSI Rotation</Name>
+  <ID>a8fcd7d9-c71f-4cde-966a-d3cae52f7267</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+ 
+namespace WealthLab.Strategies
+{	
+	public class RSIRotation : WealthScript, IComparer&lt;RSIHolder&gt;		
+	{
+		private StrategyParameter numberOfSymbols;
+		private StrategyParameter rsiPeriod;
+
+		public RSIRotation()
+		{
+			numberOfSymbols = CreateParameter("n Symbols", 3, 2, 10, 1);
+			rsiPeriod = CreateParameter("RSI Period", 14, 6, 34, 2);
+		}		
+		
+		protected override void Execute()
+		{
+			//Validate that all data is updated
+			DateTime recentDate = DateTime.MinValue;
+			foreach(string symbol in DataSetSymbols)
+			{
+				Bars b = GetExternalSymbol(symbol, false);
+				PrintStatusBar("Accessing: " + symbol);
+				if (b.Count &gt; 0 &amp;&amp; b.Date[b.Count - 1] &gt; recentDate)
+					recentDate = b.Date[b.Count - 1];
+			}
+			string needUpdates = "";
+			foreach(string symbol in DataSetSymbols)
+			{
+				Bars b = GetExternalSymbol(symbol, false);
+				if (b.Count == 0)
+					needUpdates += symbol + ", ";
+				else if (b.Date[b.Count - 1] != recentDate)
+					needUpdates += symbol + ", ";
+			}
+			if (needUpdates != "")
+			{
+				DrawLabel(PricePane, "The following Symbols appear to need data updates: " + needUpdates, Color.Black);
+				PrintStatusBar("Need update: " + needUpdates);
+				return;
+			}
+   
+			//Clear cached symbol list so they can be re-requested with synchronization
+			ClearExternalSymbols();
+			int number = numberOfSymbols.ValueInt;
+			int Period = rsiPeriod.ValueInt;		
+   
+			//Execute rotation strategy
+			List&lt;RSIHolder&gt; list = new List&lt;RSIHolder&gt;();
+			for(int bar = Period * 2; bar &lt; Bars.Count; bar++)
+			{
+				//PrintStatusBar("Processing Bar " + bar);  // This slows things down considerably    
+				//Identify the 3 symbols that have the lowest RSI
+				list.Clear();
+				foreach(string symbol in DataSetSymbols)
+				{
+					SetContext(symbol, true);
+					if (Bars.FirstActualBar &lt; bar)
+					{
+						RSIHolder holder = new RSIHolder();
+						holder.symbol = symbol;
+						holder.rsi = RSI.Series(Bars.Close, Period)[bar];
+						list.Add(holder);
+					}
+					RestoreContext();
+				}
+				list.Sort(this);
+    
+				//keep top number (3 is initial default) only
+				int c = list.Count;
+				for(int i = c - 1; i &gt;= number; i--)
+					list.RemoveAt(i);
+    
+				//Close positions that are not in the new lowest 3
+				for(int pos = ActivePositions.Count - 1; pos &gt;= 0; pos--)
+				{
+					Position p = ActivePositions[pos];
+					bool keepPosition = false;
+					foreach(RSIHolder holder in list)
+						if (holder.symbol == p.Bars.Symbol)
+						{
+							keepPosition = true;
+							break;
+						}
+					if (!keepPosition)     
+						SellAtMarket(bar + 1, p);           
+				}
+    
+				//Buy new positions
+				foreach(RSIHolder holder in list)
+				{
+					bool buyPosition = true;
+					foreach(Position p in ActivePositions)
+						if (p.Bars.Symbol == holder.symbol)
+						{
+							buyPosition = false;
+							break;
+						}
+					if (buyPosition)
+					{
+						SetContext(holder.symbol, true);
+						BuyAtMarket(bar + 1);
+						RestoreContext();
+					}
+				}
+			}
+			PrintStatusBar("Strategy completed!");
+		}
+  
+		public int Compare(RSIHolder item1, RSIHolder item2)
+		{
+			return item1.rsi.CompareTo(item2.rsi);
+		}
+	}
+	public class RSIHolder
+	{
+		internal string symbol;
+		internal double rsi;
+	}
+}
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 4.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;RSI Rotation&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;RSI Rotation&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;RSI
+								Rotation is a non-Intraday strategy that continuously holds &lt;i&gt;n&lt;/i&gt; stocks of a
+								DataSet that have the lowest RSI value.&amp;nbsp; Although the number &lt;i&gt;n&lt;/i&gt; is
+								determined by the &lt;i&gt;n Symbols&lt;/i&gt; Strategy Parameter, you must adjust Portfolio
+								Simulation Mode sizing appropriately for the number that you select. For
+								example, with 3 symbols you might set 33.3% of Equity sizing.&amp;nbsp; &lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+
+					&lt;table border="1" cellpadding="2" width="80%" style="border-style: solid" bgcolor="#FFFFE6"&gt;
+						&lt;tr&gt;
+							&lt;td width="100%"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;&lt;b&gt;Tip:&lt;/b&gt;
+										&amp;nbsp;&lt;br&gt;
+											To avoid dropped trades due to opening gaps, set the margin factor slightly
+											above 1 (e.g., 1.05:1), or, use a slightly smaller Percent of Equity size.&lt;/span&gt;&lt;/font&gt;&lt;/td&gt;
+								&lt;/tr&gt;
+							&lt;/table&gt;
+
+						&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;The
+									Strategy is easy to trade (uses AtMarket orders), but the &amp;quot;Ulcer
+									Index&amp;quot; is high since the Strategy could potentially ride losing positions
+									for large losses.&amp;nbsp; Try backtesting this on a DataSet of blue-chip companies, like the Dow 30. &lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+
+						&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-11-08T09:18:46.875-05:00</CreationDate>
+  <LastModified>2007-11-28T13:13:21.125-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues>
+    <double>3</double>
+    <double>14</double>
+  </ParameterValues>
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>PctEquity</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>75000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>33</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1.05</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>RecentYears</Range>
+    <StartDate>2002-10-31T00:00:00</StartDate>
+    <EndDate>2007-09-26T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>6</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>

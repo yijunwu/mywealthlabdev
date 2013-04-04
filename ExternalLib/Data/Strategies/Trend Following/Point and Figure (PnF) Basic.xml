@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Point and Figure (PnF) Basic</Name>
+  <ID>b815d41a-529e-491a-ac76-14cc42ea562d</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+using WealthLab.ChartStyles;
+using WealthLab.ChartStyles.Trending;
+
+namespace WealthLab.Strategies
+{
+	public class PnFBasic : WealthScript
+	{	
+		private StrategyParameter _logBox;
+		private StrategyParameter _boxSize;
+		private StrategyParameter _revBoxes;		
+				
+		//Strategy sliders are independent of the Point and Figure ChartStyle settings
+		public PnFBasic()
+		{
+			_logBox = CreateParameter("Log Method", 1, 0, 1, 1);
+			_boxSize = CreateParameter("Box Size", 2.5, 0.5, 5, 0.5);
+			_revBoxes = CreateParameter("Reversal Boxes", 3, 1, 5, 1);			
+		}
+		
+		protected override void Execute()
+		{							
+			const double e = Math.E;
+			bool log = _logBox.ValueInt == 1;
+			double boxSize = _boxSize.Value;
+			int reversalBoxes = _revBoxes.ValueInt;   			
+			DataSeries dTdB = Close - Close;
+			dTdB.Description = "Double Top/Bottom";
+			
+			// initialize the TPnF object with the slider settings; ControlPrice.HighLow is also valid	
+			TPnF t = new TPnF(Bars, ControlPrice.Close, boxSize, reversalBoxes, log);			
+						
+			double boxSizeActual = boxSize;
+			if (log) boxSizeActual = Math.Log(1 + boxSizeActual/100, e);
+			
+			// start loops with the third column (Columns index = 2)
+			if (t.ReversalBars.Count &lt; 3) return;
+			int n = t.ReversalBars[2];	
+						
+			if (ChartStyle is CandleChartStyle || ChartStyle is BarChartStyle)
+			{
+				t.PaintContributorBars(this, Color.Blue, Color.Fuchsia, Color.LightGray);
+				
+				// fill the dTdB series from the integer array (for plotting only)
+				for (int bar = n; bar &lt; Bars.Count; bar ++)
+					dTdB[bar] = t.DblTopDblBottom[bar];				
+				PlotSeries(CreatePane(20, true, true), dTdB, Color.Blue, LineStyle.Histogram, 2);
+			}
+			else if (ChartStyle is PnFChartStyle)
+				HideVolume();		// Don't display volume for the Point and Figure Sytle
+				
+			
+			// Create a dominant trend boolean indicator
+			bool[] trendIsBullish = new bool[Bars.Count];
+						
+			// To simplify, create a list of the dominant trendlines
+			List&lt;PnFTrendLine&gt; DomTLs = new List&lt;PnFTrendLine&gt;();
+			
+			foreach (PnFTrendLine tL in t.TrendLines)
+				if ( tL.Accel == 0 &amp;&amp; (tL.EndColumn - tL.StartColumn &gt; 1 || tL.EndColumn == -1) ) 
+					DomTLs.Add(tL);
+						
+			n = 0;
+			PnFTrendLine dL = DomTLs[n];
+			n++;
+			for (int bar = 1; bar &lt; Bars.Count; bar++)
+			{
+				if (bar == dL.EndBar)	// find the most-recent TL started in the opposite trend, but ends after the current trendline
+				{						
+					while (n &lt; DomTLs.Count)
+					{
+						PnFTrendLine tLNext = DomTLs[n];						
+						n++;
+						// The next statement technically looks ahead, but doesn't "peek".  
+						// The code yields the same result as finding the trendline in the opposite direction that started most-recently.
+						if (tLNext.EndBar &gt; dL.EndBar || tLNext.EndBar == -1)
+						{
+							dL = tLNext;
+							break;
+						}						
+					} 
+				}
+				trendIsBullish[bar] = dL.IsRising;
+				if (trendIsBullish[bar]) SetPaneBackgroundColor(PricePane, bar, Color.LightCyan);
+			}
+			
+			//Main trading loop	
+			for (int bar = n; bar &lt; Bars.Count; bar ++)
+			{				
+				if (IsLastPositionActive)
+				{
+					Position p = LastPosition;
+					PnF pnf = t.Columns[bar];
+					if (t.DblTopDblBottom[bar] == -2)	// to sell after a simple turn down, use: if (!pnf.DirectionUp)			
+						SellAtMarket(bar + 1, p);
+				}
+				else if (trendIsBullish[bar])
+				{
+					if (t.DblTopDblBottom[bar] == 2)	// trigger condition
+						BuyAtMarket(bar + 1);
+				}
+			}
+		}			
+	}
+}
+</Code>
+  <Description>&lt;p&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;Point and Figure Basic Strategy 1&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face="Verdana" size="2"&gt;This basic Point and Figure 
+		trend-following strategy buys on the bar after a double-top PnF signal,
+		but only if the primary trend is rising.&amp;nbsp; The Strategy exits a long
+		Position after any double-bottom sell signal.&amp;nbsp; A double top (bottom) occurs
+		when two X's (O's) are drawn in the same row, and, the signal is triggered when one or
+		more additional X's (O's) are drawn after the double top (bottom).&amp;nbsp;&amp;nbsp;&lt;/font&gt;
+	&lt;/p&gt;
+
+&lt;p&gt;&lt;font face="Verdana" size="2"&gt; Point and Figure charts can be based
+		on either closing prices (ControlPrice.Close) or using the High/Low
+		method (ControlPrice.HighLow).&amp;nbsp; This script is hard-coded for the Close
+		method, although you can alter other PnF settings using the parameter
+		sliders.  The TPnF class used by this Strategy is documented in the &lt;i&gt;WealthScript Programming Guide&lt;/i&gt;.&amp;nbsp;&lt;/font&gt;
+	&lt;/p&gt;
+
+&lt;p&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;&lt;font color="#FF0000"&gt;Important Notes!&amp;nbsp;&lt;/font&gt;&lt;/b&gt;
+		&amp;nbsp;&lt;/font&gt;
+	&lt;/p&gt;
+
+&lt;ol&gt;
+	&lt;li&gt;&lt;font face="Verdana" size="2"&gt;
+			PnF settings for the Strategy are controlled by the slider values, not by the
+			Point and Figure ChartStyle dialog settings, which are independent and may
+			differ.&amp;nbsp;&lt;br&gt;
+				&amp;nbsp;&lt;/font&gt;
+			&lt;/li&gt;
+		&lt;li&gt;&lt;font face="Verdana" size="2"&gt;You can select any
+				Chart Style to run Point and Figure strategies, however, the Strategy
+				feedback is most pleasing using Candle or OHLC. A routine identifies the bars that contribute to adding PnF
+				boxes:&amp;nbsp;&lt;/font&gt;
+			&lt;ul&gt;
+				&lt;li&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;&lt;font color="#0000FF"&gt;blue bars&lt;/font&gt;&lt;/b&gt;:
+						prices that contribute to adding X's&lt;/font&gt;
+					&lt;/li&gt;
+				&lt;li&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;&lt;font color="#FF00FF"&gt;fuchsia bars&lt;/font&gt;&lt;/b&gt;:
+						price events that add O's&lt;/font&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;font face="Verdana" size="2"&gt;&lt;b&gt;&lt;font color="#808080"&gt;light grey bars&lt;/font&gt;&lt;/b&gt;:
+						bars ignored by the PnF Strategy&lt;br&gt;
+							&amp;nbsp;&lt;/font&gt;&lt;/li&gt;
+					&lt;/ul&gt;
+				&lt;/li&gt;
+			&lt;li&gt;&lt;font face="Verdana" size="2"&gt;The light blue background indicates that the
+					current primary trend is bullish.&amp;nbsp; Using the Point &amp;amp; Figure
+					ChartStyle, you can observe the primary (and intermediate) trendlines by
+					selecting &amp;quot;45&amp;deg; Trendlines&amp;quot; in the ChartStyle Settings.&lt;br&gt;
+						&amp;nbsp;&amp;nbsp;&lt;/font&gt;&lt;/li&gt;
+				&lt;li&gt;&lt;font face="Verdana" size="2"&gt;When switching between Chart Styles, you
+						must re-run the script by striking F5 or clicking &amp;quot;Go&amp;quot; to repaint the chart.
+						&lt;/font&gt;&lt;/li&gt;
+				&lt;/ol&gt;
+</Description>
+  <Author>Local</Author>
+  <CreationDate>2008-04-29T18:39:53.19825-04:00</CreationDate>
+  <LastModified>2008-05-08T15:08:53.515625-04:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber>X44552089</AccountNumber>
+  <ParameterValues>
+    <double>0</double>
+    <double>1</double>
+    <double>3</double>
+  </ParameterValues>
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitShare</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>200</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>FixedBars</Range>
+    <StartDate>2006-09-04T00:00:00</StartDate>
+    <EndDate>2008-02-25T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>8</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+</Strategy>

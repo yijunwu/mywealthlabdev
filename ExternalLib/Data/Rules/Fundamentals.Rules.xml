@@ -1,0 +1,1667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>Fundamental Item is above a Previous Period by Pct</Name>
+    <Description>Occurs when the current value of the Fundamental Item compared with a previous value of the same Fundamental Item is above an entered percentage.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fiChangeSeries&gt; = FundamentalsRatio.GrowthRateSeries( this, &lt;#Fundamental Item&gt;, &lt;#Lookback Period&gt;, false );
+&lt;#fiChangeSeries&gt;.Description = &lt;#Fundamental Item&gt; + " Change Ratio over " + &lt;#Lookback Period&gt;.ToString() + " periods";
+</Init>
+    <Body>if( &lt;#fiChangeSeries&gt;[bar] &gt; &lt;#Change Rate (pct)&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneRatio&gt; = CreatePane(50, true, true ); 
+PlotSeries( &lt;#paneRatio&gt;, &lt;#fiChangeSeries&gt;, Color.Purple, WealthLab.LineStyle.Solid, 2 ); 
+DrawHorzLine( &lt;#paneRatio&gt;, &lt;#Change Rate (pct)&gt;, Color.Black, WealthLab.LineStyle.Dotted, 2 ); 
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>4a2f432a-3c3b-4931-8015-d9e9505a70fe</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>is above previous ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Lookback Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Change Rate (pct)</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>1000</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiChangeSeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneRatio</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item is above a Fundamental Item</Name>
+    <Description>Occurs when the value of one Fundamental Item is greater than another Fundamental Item at the same bar; e.g. earnings per share vs. estimated earnings.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fiSeries1&gt; = FundamentalDataSeries( &lt;#Fundamental Item 1&gt; ); 
+DataSeries &lt;#fiSeries2&gt; = FundamentalDataSeries( &lt;#Fundamental Item 2&gt; );
+</Init>
+    <Body>if( &lt;#fiSeries1&gt;[bar] &gt; &lt;#fiSeries2&gt;[bar] )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>2f67e94b-2a79-4cf3-920b-2f40733e4965</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item 1</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>is above ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Fundamental Item 2</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiSeries1</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fiSeries2</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item is below a Fundamental Item</Name>
+    <Description>Occurs when the value of one Fundamental Item is less than another Fundamental Item at the same bar; e.g. earnings per share vs. estimated earnings.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fiSeries1&gt; = FundamentalDataSeries( &lt;#Fundamental Item 1&gt; ); 
+DataSeries &lt;#fiSeries2&gt; = FundamentalDataSeries( &lt;#Fundamental Item 2&gt; );
+</Init>
+    <Body>if( &lt;#fiSeries1&gt;[bar] &lt; &lt;#fiSeries2&gt;[bar] )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>01494263-5bbb-4ae4-be3e-61bc6b4214a1</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item 1</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>is below ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Fundamental Item 2</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiSeries1</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fiSeries2</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item Moving Average is above Value</Name>
+    <Description>Occurs when a moving average for an entered period is above an entered value.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fidsAverage&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt;, &lt;#MA Period&gt;, true, 0); 
+</Init>
+    <Body>if( &lt;#fidsAverage&gt;[bar] &gt; &lt;#Value&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneZ&gt; = CreatePane(50, true, false); 
+PlotSeries(&lt;#paneZ&gt;, &lt;#fidsAverage&gt;, Color.Purple, LineStyle.Solid, 1); 
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>af757c9e-26a1-4f35-847e-3118617e5d5e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>averaged over ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>MA Period</Name>
+        <Value>12</Value>
+        <DefaultValue>12</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration>is above ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fidsAverage</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneZ</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item is below a Previous Period by Pct</Name>
+    <Description>Occurs when the current value of the Fundamental Item compared with a previous value of the same Fundamental Item is below an entered percentage.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fiChangeSeries&gt; = FundamentalsRatio.GrowthRateSeries( this, &lt;#Fundamental Item&gt;, &lt;#Lookback Period&gt;, false );
+&lt;#fiChangeSeries&gt;.Description = &lt;#Fundamental Item&gt; + " Change Ratio over " + &lt;#Lookback Period&gt;.ToString() + " periods";
+</Init>
+    <Body>if( &lt;#fiChangeSeries&gt;[bar] &lt; &lt;#Change Rate (pct)&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneRatio&gt; = CreatePane(50, true, true ); 
+PlotSeries( &lt;#paneRatio&gt;, &lt;#fiChangeSeries&gt;, Color.Purple, WealthLab.LineStyle.Solid, 2 ); 
+DrawHorzLine( &lt;#paneRatio&gt;, &lt;#Change Rate (pct)&gt;, Color.Black, WealthLab.LineStyle.Dotted, 2 ); 
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>4a2f432a-3c3b-4931-8015-d9e9505a70fe</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>is below previous ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Lookback Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Change Rate (pct)</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>1000</Stop>
+        <Step>10</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiChangeSeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneRatio</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item is above a Fundamental Item by a Value</Name>
+    <Description>Occurs when the value of one Fundamental Item is greater than, by a certain value, another Fundamental Item at the same bar; e.g. earnings per share vs. estimated earnings.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fiSeries1&gt; = FundamentalDataSeries( &lt;#Fundamental Item 1&gt; ); 
+DataSeries &lt;#fiSeries2&gt; = FundamentalDataSeries( &lt;#Fundamental Item 2&gt; );
+DataSeries &lt;#fiSeries2Plus&gt; = &lt;#fiSeries2&gt; + &lt;#Value&gt;;
+</Init>
+    <Body>if( &lt;#fiSeries1&gt;[bar] &gt; &lt;#fiSeries2Plus&gt;[bar] )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>2f67e94b-2a79-4cf3-920b-2f40733e4965</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item 1</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>is above ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Fundamental Item 2</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>by ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>0.00</Value>
+        <DefaultValue>0.00</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiSeries1</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fiSeries2</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fiSeries2Plus</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item is below a Fundamental Item by a Value</Name>
+    <Description>Occurs when the value of one Fundamental Item is less than, by a certain value, another Fundamental Item at the same bar; e.g. earnings per share vs. estimated earnings.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fiSeries1&gt; = FundamentalDataSeries( &lt;#Fundamental Item 1&gt; ); 
+DataSeries &lt;#fiSeries2&gt; = FundamentalDataSeries( &lt;#Fundamental Item 2&gt; );
+DataSeries &lt;#fiSeries2Plus&gt; = &lt;#fiSeries2&gt; + &lt;#Value&gt;;
+</Init>
+    <Body>if( &lt;#fiSeries1&gt;[bar] &lt; &lt;#fiSeries2Plus&gt;[bar] )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>2f67e94b-2a79-4cf3-920b-2f40733e4965</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item 1</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>is below ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Fundamental Item 2</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>by ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>0.00</Value>
+        <DefaultValue>0.00</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiSeries1</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fiSeries2</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fiSeries2Plus</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item Moving Average is below Value</Name>
+    <Description>Occurs when a moving average for an entered period is below an entered value.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fidsAverage&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt;, &lt;#MA Period&gt;, true, 0); 
+</Init>
+    <Body>if( &lt;#fidsAverage&gt;[bar] &lt; &lt;#Value&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneZ&gt; = CreatePane(50, true, false); 
+PlotSeries(&lt;#paneZ&gt;, &lt;#fidsAverage&gt;, Color.Purple, LineStyle.Solid, 1); 
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>af757c9e-26a1-4f35-847e-3118617e5d5e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>averaged over ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>MA Period</Name>
+        <Value>12</Value>
+        <DefaultValue>12</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>100000</Stop>
+        <Step>1</Step>
+        <Decoration>is below ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fidsAverage</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneZ</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Cumulative Fundamental Item for Period is above Value</Name>
+    <Description>Occurs when the accumulated values for a fundamental item over an entered period is above an entered value. This can be useful for trailing twelve month values fo fundamental items that do not aggregate of the course of reporting; e.g. net income.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fidsAggregate&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt;, &lt;#Periods&gt;, false, 0); 
+</Init>
+    <Body>if( &lt;#fidsAggregate&gt;[bar] &gt; &lt;#Value&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneZ&gt; = CreatePane(50, true, false); 
+PlotSeries(&lt;#paneZ&gt;, &lt;#fidsAggregate&gt;, Color.Purple, LineStyle.Solid, 1); 
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>e5257ea3-649f-413d-908e-8e3ab32b5aaf</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>aggegated over ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Periods</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration>is above ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fidsAggregate</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneZ</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Cumulative Fundamental Item for Period is below Value</Name>
+    <Description>Occurs when the accumulated values for a fundamental item over an entered period is below an entered value. This can be useful for trailing twelve month values fo fundamental items that do not aggregate of the course of reporting; e.g. net income.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fidsAggregate&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt;, &lt;#Periods&gt;, false, 0); 
+</Init>
+    <Body>if( &lt;#fidsAggregate&gt;[bar] &lt; &lt;#Value&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneZ&gt; = CreatePane(50, true, false); 
+PlotSeries(&lt;#paneZ&gt;, &lt;#fidsAggregate&gt;, Color.Purple, LineStyle.Solid, 1); 
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>e5257ea3-649f-413d-908e-8e3ab32b5aaf</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>aggegated over ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Periods</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration>is above ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fidsAggregate</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneZ</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item is equal to a Fundamental Item</Name>
+    <Description>Occurs when the value of one Fundamental Item is equal to another Fundamental Item at the same bar; e.g. earnings per share vs. estimated earnings.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fiSeries1&gt; = FundamentalDataSeries( &lt;#Fundamental Item 1&gt; ); 
+DataSeries &lt;#fiSeries2&gt; = FundamentalDataSeries( &lt;#Fundamental Item 2&gt; );
+</Init>
+    <Body>if( &lt;#fiSeries1&gt;[bar] == &lt;#fiSeries2&gt;[bar] )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>2f67e94b-2a79-4cf3-920b-2f40733e4965</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item 1</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration>equals ...</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Fundamental Item 2</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiSeries1</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fiSeries2</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item crosses above its Moving Average</Name>
+    <Description>Occurs when the value of a fundamental item crosses above the moving average (e.g. trailing 12 months) for that fundamental item.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fidsItem&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt; );
+DataSeries &lt;#fidsAverage&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt;, &lt;#MA Period&gt;, true, 0);
+</Init>
+    <Body>if( CrossOver( bar, &lt;#fidsItem&gt;, &lt;#fidsAverage&gt; ) )
+</Body>
+    <Plotting>ChartPane &lt;#paneZ&gt; = CreatePane(50, true, false);
+PlotSeries(&lt;#paneZ&gt;, &lt;#fidsAverage&gt;, Color.Purple, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>af757c9e-26a1-4f35-847e-3118617e5d5e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>MA Period</Name>
+        <Value>12</Value>
+        <DefaultValue>12</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fidsAverage</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneZ</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fidsItem</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item crosses below its Moving Average</Name>
+    <Description>Occurs when the value of a fundamental item crosses below the moving average (e.g. trailing 12 months) for that fundamental item.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fidsItem&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt; );
+DataSeries &lt;#fidsAverage&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt;, &lt;#MA Period&gt;, true, 0);
+</Init>
+    <Body>if( CrossUnder( bar, &lt;#fidsItem&gt;, &lt;#fidsAverage&gt; ) )
+</Body>
+    <Plotting>ChartPane &lt;#paneZ&gt; = CreatePane(50, true, false);
+PlotSeries(&lt;#paneZ&gt;, &lt;#fidsAverage&gt;, Color.Purple, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>af757c9e-26a1-4f35-847e-3118617e5d5e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>MA Period</Name>
+        <Value>12</Value>
+        <DefaultValue>12</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fidsAverage</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneZ</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fidsItem</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item is below its Moving Average</Name>
+    <Description>Occurs when the value of a fundamental item is below the moving average (e.g. trailing 12 months) for that fundamental item.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fidsItem&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt; );
+DataSeries &lt;#fidsAverage&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt;, &lt;#MA Period&gt;, true, 0);
+</Init>
+    <Body>if( &lt;#fidsItem&gt;[bar] &lt; &lt;#fidsAverage&gt;[bar] )
+</Body>
+    <Plotting>ChartPane &lt;#paneZ&gt; = CreatePane(50, true, false);
+PlotSeries(&lt;#paneZ&gt;, &lt;#fidsAverage&gt;, Color.Purple, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>af757c9e-26a1-4f35-847e-3118617e5d5e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>MA Period</Name>
+        <Value>12</Value>
+        <DefaultValue>12</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fidsAverage</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneZ</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fidsItem</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item is above its Moving Average</Name>
+    <Description>Occurs when the value of a fundamental item is above the moving average (e.g. trailing 12 months) for that fundamental item.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#fidsItem&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt; );
+DataSeries &lt;#fidsAverage&gt; = FundamentalDataSeries( &lt;#Fundamental Item&gt;, &lt;#MA Period&gt;, true, 0);
+</Init>
+    <Body>if( &lt;#fidsItem&gt;[bar] &gt; &lt;#fidsAverage&gt;[bar] )
+</Body>
+    <Plotting>ChartPane &lt;#paneZ&gt; = CreatePane(50, true, false);
+PlotSeries(&lt;#paneZ&gt;, &lt;#fidsAverage&gt;, Color.Purple, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>af757c9e-26a1-4f35-847e-3118617e5d5e</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>MA Period</Name>
+        <Value>12</Value>
+        <DefaultValue>12</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fidsAverage</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneZ</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fidsItem</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item Annual Growth Rate is above a value</Name>
+    <Description>Occurs when a fundamental item versus a previous year (year over year) growth rate is above an entered percentage. </Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#dsFIChange&gt; = FundamentalsRatio.GrowthRateSeries( this, &lt;#Fundamental Item&gt;, &lt;#Years&gt;, true );
+&lt;#dsFIChange&gt;.Description = &lt;#Fundamental Item&gt; + " ROC over " + &lt;#Years&gt; + " years";
+</Init>
+    <Body>if( &lt;#dsFIChange&gt;[bar] &gt; &lt;#Growth Rate&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneRatio&gt; = CreatePane(50, true, false);
+PlotSeries(&lt;#paneRatio&gt;, &lt;#dsFIChange&gt;, Color.Purple, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>c0c97210-ef41-421f-9971-3364d7640ba1</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Growth Rate</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>1000</Stop>
+        <Step>10</Step>
+        <Decoration>(pct)</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Years</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>dsFIChange</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneRatio</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item Annual Growth Rate is below a value</Name>
+    <Description>Occurs when a fundamental item versus a previous year (year over year) growth rate is below an entered percentage. </Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#dsFIChange&gt; = FundamentalsRatio.GrowthRateSeries( this, &lt;#Fundamental Item&gt;, &lt;#Years&gt;, true );
+&lt;#dsFIChange&gt;.Description = &lt;#Fundamental Item&gt; + " ROC over " + &lt;#Years&gt; + " years";
+</Init>
+    <Body>if( &lt;#dsFIChange&gt;[bar] &lt; &lt;#Growth Rate&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneRatio&gt; = CreatePane(50, true, false);
+PlotSeries(&lt;#paneRatio&gt;, &lt;#dsFIChange&gt;, Color.Purple, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>c0c97210-ef41-421f-9971-3364d7640ba1</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Growth Rate</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>1000</Stop>
+        <Step>10</Step>
+        <Decoration>(pct)</Decoration>
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Years</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>10</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>dsFIChange</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneRatio</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item per Fundamental Item is above a Value</Name>
+    <Description>Occurs when the ratio between two fundamental items goes above an entered ratio (value). an adjustment factor can be applied to the ratio. For example, sales are reported in millions and employees are reported as thousands so by using an adjustment of 1000, the actual sales per employee can be calculated.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#dsItem1&gt; = FundamentalDataSeries( &lt;#Fundamental Item 1&gt; );
+DataSeries &lt;#dsItem2&gt; = FundamentalDataSeries( &lt;#Fundamental Item 2&gt; );
+DataSeries &lt;#dsItemPerItem&gt; = &lt;#dsItem1&gt; / &lt;#dsItem2&gt;;
+&lt;#dsItemPerItem&gt; = &lt;#dsItemPerItem&gt; * &lt;#Adjustment&gt;;
+</Init>
+    <Body>if( &lt;#dsItemPerItem&gt;[bar] &gt; &lt;#Value&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneRatio&gt; = CreatePane(50, true, false);
+PlotSeries(&lt;#paneRatio&gt;, &lt;#dsItemPerItem&gt;, Color.Purple, LineStyle.Histogram, 50);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>002ca36b-9120-46ba-ba51-e5064da86df9</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item 1</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Fundamental Item 2</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Adjustment</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>dsItem1</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>dsItem2</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>dsItemPerItem</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneRatio</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item per Fundamental Item is below a Value</Name>
+    <Description>Occurs when the ratio between two fundamental items goes below an entered ratio (value). an adjustment factor can be applied to the ratio. For example, sales are reported in millions and employees are reported as thousands so by using an adjustment of 1000, the actual sales per employee can be calculated.</Description>
+    <Category>General Fundamentals</Category>
+    <Init>DataSeries &lt;#dsItem1&gt; = FundamentalDataSeries( &lt;#Fundamental Item 1&gt; );
+DataSeries &lt;#dsItem2&gt; = FundamentalDataSeries( &lt;#Fundamental Item 2&gt; );
+DataSeries &lt;#dsItemPerItem&gt; = &lt;#dsItem1&gt; / &lt;#dsItem2&gt;;
+&lt;#dsItemPerItem&gt; = &lt;#dsItemPerItem&gt; * &lt;#Adjustment&gt;;
+</Init>
+    <Body>if( &lt;#dsItemPerItem&gt;[bar] &lt; &lt;#Value&gt; )
+</Body>
+    <Plotting>ChartPane &lt;#paneRatio&gt; = CreatePane(50, true, false);
+PlotSeries(&lt;#paneRatio&gt;, &lt;#dsItemPerItem&gt;, Color.Purple, LineStyle.Histogram, 50);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>002ca36b-9120-46ba-ba51-e5064da86df9</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item 1</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Fundamental Item 2</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Adjustment</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>dsItem1</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>dsItem2</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>dsItemPerItem</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>paneRatio</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Last Ex-Dividend Date was not within N Days</Name>
+    <Description>Occurs greater than N days after the Ex-Dividend Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>FundamentalDateRules &lt;#fdr&gt; = new FundamentalDateRules(this, Bars, Bars.Symbol, "dividend");
+int &lt;#fiDays&gt;;
+</Init>
+    <Body>if(( &lt;#fdr&gt;.DaysSinceFundamentalItem( bar, out &lt;#fiDays&gt; ))&amp;&amp;( &lt;#fiDays&gt; &gt; &lt;#Days&gt; ))
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiDays</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fdr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Last Ex-Dividend Date was within N Days</Name>
+    <Description>Occurs less than or equal to N days after the Ex-Dividend Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>FundamentalDateRules &lt;#fdr&gt; = new FundamentalDateRules(this, Bars, Bars.Symbol, "dividend");
+int &lt;#fiDays&gt;;
+</Init>
+    <Body>if(( &lt;#fdr&gt;.DaysSinceFundamentalItem( bar, out &lt;#fiDays&gt; ))&amp;&amp;( &lt;#fiDays&gt; &lt;= &lt;#Days&gt; ))
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiDays</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fdr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Next Ex-Dividend Date is not within N Days</Name>
+    <Description>Occurs greater than N days before the Ex-Dividend Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>FundamentalDateRules &lt;#fdr&gt; = new FundamentalDateRules(this, Bars, Bars.Symbol, "dividend");
+int &lt;#fiDays&gt;;
+</Init>
+    <Body>if(( &lt;#fdr&gt;.DaysToFundamentalItem( bar, out &lt;#fiDays&gt; ))&amp;&amp;( &lt;#fiDays&gt; &gt; &lt;#Days&gt; ))
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiDays</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fdr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Next Ex-Dividend Date is within N Days</Name>
+    <Description>Occurs less than or equal to N days before the Ex-Dividend Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>FundamentalDateRules &lt;#fdr&gt; = new FundamentalDateRules(this, Bars, Bars.Symbol, "dividend");
+int &lt;#fiDays&gt;;
+</Init>
+    <Body>if(( &lt;#fdr&gt;.DaysToFundamentalItem( bar, out &lt;#fiDays&gt; ))&amp;&amp;( &lt;#fiDays&gt; &lt;= &lt;#Days&gt; ))
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiDays</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fdr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Trade date is Ex-Dividend Date</Name>
+    <Description>Occurs on the Ex-Dividend Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>FundamentalDateRules &lt;#fdr&gt; = new FundamentalDateRules(this, Bars, Bars.Symbol, "dividend");
+int &lt;#fiDays&gt;;
+</Init>
+    <Body>if(( &lt;#fdr&gt;.DaysSinceFundamentalItem( bar, out &lt;#fiDays&gt; ))&amp;&amp;( &lt;#fiDays&gt; == 0 ))
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters />
+    <Variables>
+      <RuleVariable>
+        <Name>fiDays</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fdr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Trade date is not Ex-Dividend Date</Name>
+    <Description>Occurs when not on the Ex-Dividend Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>FundamentalDateRules &lt;#fdr&gt; = new FundamentalDateRules(this, Bars, Bars.Symbol, "dividend");
+int &lt;#fiDays&gt;;
+</Init>
+    <Body>if(( &lt;#fdr&gt;.DaysSinceFundamentalItem( bar, out &lt;#fiDays&gt; ))&amp;&amp;( &lt;#fiDays&gt; != 0 ))
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters />
+    <Variables>
+      <RuleVariable>
+        <Name>fiDays</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fdr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Last Fundamental Item Date was within N Days</Name>
+    <Description>Occurs less than or equal to N days after the fundamental item.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>FundamentalDateRules &lt;#fdr&gt; = new FundamentalDateRules(this, Bars, Bars.Symbol, &lt;#Fundamental Item&gt;);
+int &lt;#fiDays&gt;;
+</Init>
+    <Body>if(( &lt;#fdr&gt;.DaysSinceFundamentalItem( bar, out &lt;#fiDays&gt; ))&amp;&amp;( &lt;#fiDays&gt; &lt;= &lt;#Days&gt; ))
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiDays</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fdr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Last Fundamental Item Date was not within N Days</Name>
+    <Description>Occurs greater than N days after the fundamental item.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>FundamentalDateRules &lt;#fdr&gt; = new FundamentalDateRules(this, Bars, Bars.Symbol, &lt;#Fundamental Item&gt;);
+int &lt;#fiDays&gt;;
+</Init>
+    <Body>if(( &lt;#fdr&gt;.DaysSinceFundamentalItem( bar, out &lt;#fiDays&gt; ))&amp;&amp;( &lt;#fiDays&gt; &gt; &lt;#Days&gt; ))
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental Item</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>fiDays</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>fdr</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Fundamental Item Date is less than or equal to the date of bar</Name>
+    <Description>Occurs when the fundamental item report date is less than or equal to the bar's date. Enter a Count of 0 to get the date of the first fundamental item. Enter a Count of -1 to get the date of the last fundamental item. This is useful to stop a "less than" or "below" rule from triggering before the first fundamental item is found. To get the first used date for annual functions (ttm), enter a count that is comparable to a year of the fundamental item. For example, if the fundamental item is "assets", which is a quarterly item, enter a Count of 4.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>DateTime &lt;#dtItem&gt; = FundamentalsRatio.FundamentalItemDate( this, FundamentalsRatio.ConvertName(&lt;#Fundamental&gt;), &lt;#Count&gt; );
+</Init>
+    <Body>if( &lt;#dtItem&gt; &lt;= Date[bar] )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>1247a212-3c66-4dd7-aeac-bfac3fae4e46</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Fundamental</Name>
+        <Value>[Click here to select a Fundamental Item]</Value>
+        <DefaultValue>[Click here to select a Fundamental Item]</DefaultValue>
+        <ParamType>Fundamental</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Count</Name>
+        <Value>0</Value>
+        <DefaultValue>0</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>0</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>dtItem</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Last Options Expiration Date was not within N Days</Name>
+    <Description>Occurs greater than N days after the Options Expiration Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysSinceOptionExpiryDate( bar ) &gt; &lt;#Days&gt; )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Last Options Expiration Date was within N Days</Name>
+    <Description>Occurs less than or equal to N days after the Options Expiration Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysSinceOptionExpiryDate( bar ) &lt;= &lt;#Days&gt; )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Next Options Expiration Date is not within N Days</Name>
+    <Description>Occurs greater than N days before the Options Expiration Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysToOptionExpiryDate( bar ) &gt; &lt;#Days&gt; )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Next Options Expiration Date is within N Days</Name>
+    <Description>Occurs less than or equal to N days before the Options Expiration Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysToOptionExpiryDate( bar ) &lt;= &lt;#Days&gt; )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Trade Date is Options Expiration Date</Name>
+    <Description>Occurs on the Options Expiration Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysSinceOptionExpiryDate( bar ) == 0 )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters />
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Trade Date is not Options Expiration Date</Name>
+    <Description>Occurs when not on the Options Expiration Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysSinceOptionExpiryDate( bar ) != 0 )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters />
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Last Triple Witching Date was within N Days</Name>
+    <Description>Occurs less than or equal to N days after the Triple Witching Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysSinceTripleWitchingDate( bar ) &lt;= &lt;#Days&gt; )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Last Triple Witching Date was not within N Days</Name>
+    <Description>Occurs greater than N days after the Triple Witching Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysSinceTripleWitchingDate( bar ) &gt; &lt;#Days&gt; )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Next Triple Witching Date is within N Days</Name>
+    <Description>Occurs less than or equal to N days before the Triple Witching Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysToTripleWitchingDate( bar ) &lt;= &lt;#Days&gt; )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Next Triple Witching Date is not within N Days</Name>
+    <Description>Occurs greater than N days before the Triple Witching Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysToTripleWitchingDate( bar ) &gt; &lt;#Days&gt; )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Days</Name>
+        <Value>5</Value>
+        <DefaultValue>5</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Trade Date is Triple Witching Date</Name>
+    <Description>Occurs on the Triple Witching Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysSinceTripleWitchingDate( bar ) == 0 )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters />
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+  <Rule>
+    <Name>Trade Date is not Triple Witching Date</Name>
+    <Description>Occurs when not on the Triple Witching Date.</Description>
+    <Category>Calendar Fundamentals</Category>
+    <Init>OptionExpiryDate &lt;#oed&gt; = new OptionExpiryDate( Bars );
+</Init>
+    <Body>if( &lt;#oed&gt;.DaysSinceTripleWitchingDate( bar ) != 0 )
+</Body>
+    <Plotting />
+    <RuleType>Condition</RuleType>
+    <ID>0e82602a-c739-487b-af15-3b99eb85a6e8</ID>
+    <Parameters />
+    <Variables>
+      <RuleVariable>
+        <Name>oed</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause>WealthLab.Rules;</UsingClause>
+  </Rule>
+</ArrayOfRule>

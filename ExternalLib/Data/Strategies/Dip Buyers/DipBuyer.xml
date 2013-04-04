@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>DipBuyer</Name>
+  <ID>f8a8bdb7-a278-4e46-8880-5b22c025c7b2</ID>
+  <Code>
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using WealthLab;
+    using WealthLab.Indicators;
+    using System.Drawing;
+
+    namespace WealthLabCompile
+    {
+    class DipBuyer : WealthScript
+    {
+    //Create parameters
+    private StrategyParameter pctDip;
+
+    public DipBuyer()
+    {
+    pctDip = CreateParameter("Dip Percent", 8, 1, 15, 0.5);
+    }
+
+    protected override void Execute()
+    {
+    DataSeries trigger = Bars.Close * (1 - pctDip.Value/100);
+    // Offset the series by 1 bar to show the crossing
+    PlotSeries( PricePane, trigger &gt;&gt; 1, Color.Red, LineStyle.Solid, 1 );
+
+            for (int bar = 0; bar &lt; Bars.Count; bar++)
+            {
+                if (IsLastPositionActive)
+                    SellAtMarket(bar + 1, LastPosition);
+	            
+            BuyAtLimit(bar + 1, trigger[bar]);
+            }
+
+            // Give the largest losers the highest priority for simulations
+            foreach (Position Pos in Positions)
+                Pos.Priority = -Pos.NetProfitPercent;
+        }
+
+    }
+}
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;Dip Buyer&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Attempts 
+								to buy, using a limit order, at a specific percentage (default 8% dip) below the 
+								previous day's close.&amp;nbsp; Any position is sold the following day at market (on 
+								open). &lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-04-11T20:55:32.765625-05:00</CreationDate>
+  <LastModified>2007-06-28T11:16:37.34375-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName />
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>1000000</StartingCapital>
+    <DollarSize>50000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>30</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+</Strategy>

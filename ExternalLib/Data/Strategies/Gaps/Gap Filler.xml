@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Gap Filler</Name>
+  <ID>af507daa-6fdc-4161-bcf3-ef0f3f773517</ID>
+  <Code>
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using WealthLab;
+    using WealthLab.Indicators;
+    using System.Drawing;
+
+    namespace WealthLabCompile
+    {
+    class GapFiller : WealthScript
+    {
+    //Create parameters
+    private StrategyParameter pctGap;
+
+    public GapFiller()
+    {
+    pctGap = CreateParameter("Gap Percent", 8, 1, 15, 1);
+    }
+
+    protected override void Execute()
+    {
+    double targetLevel = double.MaxValue;
+    DataSeries trigger = Bars.Close * (1 - pctGap.Value / 100) &gt;&gt; 1;
+            PlotSeries(PricePane, trigger, Color.Blue, LineStyle.Solid, 1);
+
+            for (int bar = 1; bar &lt; Bars.Count; bar++)
+            {
+                if (IsLastPositionActive)
+                {
+                    SellAtLimit(bar + 1, LastPosition, targetLevel);
+                }
+                else if (Open[bar] &lt;= trigger[bar])
+                {                 
+                    BuyAtMarket(bar + 1);
+                    targetLevel = Close[bar - 1];
+                }
+            }
+        }
+    }
+}
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;Gap Filler&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Enters 
+								the market the day after a gap down of 8% or more and holds the position 
+								indefinitely until the gap is eventually closed.&amp;nbsp; Since there's no guarantee 
+								that a gap will be filled (or that a company will stay in business), risk can be 
+								managed by using [small] position sizing.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-04-12T20:37:44.625-05:00</CreationDate>
+  <LastModified>2007-06-28T11:11:37.875-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName />
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>1000000</StartingCapital>
+    <DollarSize>50000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>30</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+</Strategy>

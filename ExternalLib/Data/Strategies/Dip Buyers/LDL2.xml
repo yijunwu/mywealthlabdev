@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>LDL2</Name>
+  <ID>a772d90a-3b11-4049-bdf3-e02d8fba73d6</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using WealthLab.Indicators;
+using System.Windows.Forms;
+using System.Drawing;
+
+namespace WealthLabCompile
+{
+    class LDL2 : WealthScript
+    {
+		private StrategyParameter limitMultiplierParam;
+		private StrategyParameter maxBarsToHoldParam;
+		private StrategyParameter profitTargetParam;
+		double	limitPrice;
+
+		public LDL2()
+		{
+			limitMultiplierParam = this.CreateParameter("Limit Mulitpiler", 0.94, 0.8, 0.99, 0.01);
+			maxBarsToHoldParam = this.CreateParameter("Bars to Hold", 2, 2, 25, 1);
+			profitTargetParam = this.CreateParameter("Exit Profit %", 3, 1, 25, 1);
+		}
+
+		protected override void Execute()
+		{
+			double	limitMultiplier = limitMultiplierParam.Value;
+			int		maxBarsToHold = maxBarsToHoldParam.ValueInt;
+			double	profitTarget = profitTargetParam.Value * 0.01;	// calc percentage value on whole number
+
+			for (int bar = 5; bar &lt; this.Bars.Count; bar++)
+			{
+				limitPrice = ( (Low[bar] + Close[bar] ) / 2 ) * limitMultiplier;
+
+				if ( Close[bar] &gt; 5 )
+				{
+					BuyAtLimit(bar + 1, limitPrice );
+				}
+				
+				for (int p = ActivePositions.Count - 1; p &gt; -1; p-- )
+				{
+					Position pos = ActivePositions[p];
+					if (bar + 1 - pos.EntryBar &gt;= maxBarsToHold)	// sell if position held for X bars
+						SellAtMarket(bar + 1, pos, "Hold Days Expired");
+					else if ( bar + 1 &gt; pos.EntryBar )
+					{
+						// sell if position hits profit target percentage
+						if (Close[bar] &gt;= (pos.EntryPrice + (pos.EntryPrice * profitTarget)))
+							SellAtMarket(bar + 1, pos, "Profit Target Reached");
+					}				
+				}			
+			}
+		}
+   }	
+}
+
+
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;LDL2&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Sets a 
+								limit price based on the current bar price where the low price is added to the 
+								close price and then divided by 2. This result is then multiplied by a default 
+								factor of 0.94 to set the limit price. If the position is then held for 2 
+								(default) bars, the position is sold at market. This system is intended to enter 
+								the market at oversold levels and exit after over reaction has leveled off.&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-05-07T11:15:39.0051667-04:00</CreationDate>
+  <LastModified>2007-11-17T12:04:10.421875-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues>
+    <double>0.96000000000000041</double>
+    <double>2</double>
+    <double>3</double>
+  </ParameterValues>
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>GM</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>Dollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-10-31T00:00:00</StartDate>
+    <EndDate>2007-09-26T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>4</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>

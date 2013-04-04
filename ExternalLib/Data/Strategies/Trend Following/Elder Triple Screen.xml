@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Elder Triple Screen</Name>
+  <ID>49e9f087-4829-4cde-8dfe-85357d8e60ae</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class ElderTripleScreen : WealthScript
+	{
+		private StrategyParameter paramPeriod;
+		
+		public ElderTripleScreen()
+		{
+			paramPeriod = CreateParameter("EMA Weeks", 13, 5, 20, 2);
+		}
+		
+		protected override void Execute()
+		{
+			int period = paramPeriod.ValueInt;
+			bool upTrend = false;
+			bool buySetup = false;
+			bool shortSetup = false;
+			double stopLevel = 0;
+			
+			Color colorUp = Color.FromArgb(220,255,220);
+			Color colorDown = Color.FromArgb(255,220,220);
+			SetBarColors(Color.Gray, Color.Gray);
+			PlotStops();
+			
+			//Obtain and plot weekly EMA
+			SetScaleWeekly();
+			if (Bars.Count &lt;= period)
+				throw new Exception("Not enough data to create weekly indicators");
+			
+			DataSeries emaWeekly = EMA.Series(Bars.Close, period, EMACalculation.Modern);
+			RestoreScale();
+			emaWeekly = Synchronize(emaWeekly);
+			PlotSeries(PricePane, emaWeekly, Color.Teal, LineStyle.Solid, 3);
+			
+			//Plot stochastics
+			DataSeries stochK = StochK.Series(Bars, 5);
+			DataSeries stochD = StochD.Series(Bars, 5, 3);
+			ChartPane stochPane = CreatePane(75, true, true);
+			PlotSeries(stochPane, stochK, Color.Red, LineStyle.Solid, 2);
+			PlotSeries(stochPane, stochD, Color.Black, LineStyle.Solid, 1);
+			
+			for(int bar = period * 5; bar &lt; Bars.Count; bar++)
+			{
+				//See if there was a change in long-term trend
+				if (emaWeekly[bar] &gt; emaWeekly[bar - 1])
+					upTrend = true;
+				else if (emaWeekly[bar] &lt; emaWeekly[bar - 1])
+					upTrend = false;
+				
+				//Set background color based on long term trend
+				if (upTrend)
+					SetBackgroundColor(bar, colorUp);
+				else
+					SetBackgroundColor(bar, colorDown);
+				
+				//Set bar color based on short term overbought/oversold
+				if (stochD[bar] &gt; 80)
+					SetBarColor(bar, Color.Red);
+				else if (stochD[bar] &lt; 20)
+					SetBarColor(bar, Color.Blue);
+				
+				//Trading system rules
+				if (!IsLastPositionActive)
+				{
+					//Determine if there are trade setups based on long term trend
+					if (upTrend)
+					{
+						shortSetup = false;
+						if (stochD[bar] &lt; 20 &amp;&amp; CrossOver(bar, stochK, stochD))
+							buySetup = true;						
+					}
+					else
+					{
+						buySetup = false;
+						if (stochD[bar] &gt; 80 &amp;&amp; CrossUnder(bar, stochK, stochD))
+							shortSetup = true;
+					}
+					
+					//Act on long setups
+					if (buySetup)
+					{
+						if (BuyAtStop(bar + 1, Bars.High[bar] + 1/16) != null)
+						{
+							buySetup = false;
+							stopLevel = Bars.Low[bar];
+							if (bar &lt; Bars.Count - 1)
+								if (Bars.Low[bar + 1] &lt; stopLevel)
+									stopLevel = Bars.Low[bar + 1];
+							stopLevel -= 1/16;
+						}
+					}
+					
+					//Act on short setups
+					if (shortSetup)
+					{
+						if (ShortAtStop(bar + 1, Bars.Low[bar] - 1/16) != null)
+						{
+							shortSetup = false;
+							stopLevel = Bars.High[bar];
+							if (bar &lt; Bars.Count - 1)
+								if (Bars.High[bar + 1] &gt; stopLevel)
+									stopLevel = Bars.High[bar + 1];
+							stopLevel += 1/16;
+						}
+					}
+				}
+				else
+				{
+					//Exit using stop loss
+					if (!ExitAtStop(bar + 1, LastPosition, stopLevel, "Stop"))
+					{									
+						//Trailing stop and Screen 2 exits
+						if (LastPosition.PositionType == PositionType.Long)
+						{
+							if (!SellAtAutoTrailingStop(bar + 1, LastPosition, 5, 50))
+								if (stochD[bar] &gt; 80)
+									SellAtMarket(bar + 1, LastPosition, "Screen 2");
+						}
+						else						
+						{
+							if (!CoverAtAutoTrailingStop(bar + 1, LastPosition, 5, 50))
+								if (stochD[bar] &lt; 20)
+									SellAtMarket(bar + 1, LastPosition, "Screen 2");
+						}
+					}
+				}
+			}
+		}
+	}
+}</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;Elder Triple Screen&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;An 
+								implementation of the &amp;quot;Triple Screen&amp;quot; technique published by Dr. Alexander Elder 
+								in 1985.&amp;nbsp; The three screens that this particular implementation relies on 
+								are:&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+					&lt;ol&gt;
+						&lt;li&gt;
+							&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;13 Week 
+										Exponential Moving Average to determine the long term trend&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+							&lt;li&gt;
+								&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+											Stochastic %D to determine short term overbought/oversold level, and %K 
+											crossing %D to initiate the trade setup&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+								&lt;li&gt;
+									&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;A 
+												buy/short stop to enter the market above the current trading range&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+									&lt;/ol&gt;
+
+
+
+								&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-07-23T11:39:51.609375-05:00</CreationDate>
+  <LastModified>2007-11-27T09:49:51.921875-06:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>Intraday 5 Minute</DataSetName>
+  <Symbol>DELL</Symbol>
+  <DataScale>
+    <Scale>Minute</Scale>
+    <BarInterval>5</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>50000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>48000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>RecentWeeks</Range>
+    <StartDate>2006-10-01T00:00:00</StartDate>
+    <EndDate>2007-10-28T00:00:00</EndDate>
+    <FixedBars>400</FixedBars>
+    <RecentValue>9</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>

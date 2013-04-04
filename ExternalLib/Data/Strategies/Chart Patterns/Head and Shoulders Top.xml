@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Head and Shoulders Top</Name>
+  <ID>da0ac1c5-9110-4a3e-a02f-9d238172f3e6</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class HeadAndShoulders : WealthScript
+	{
+		
+		//Parameters that control pattern detection
+		private StrategyParameter spReversalPct;
+		private StrategyParameter spHeadHeightPct;
+		private StrategyParameter spShoulderSymmetry;
+		private StrategyParameter spBarsExpire;
+		
+		//construct the parameter sliders
+		public HeadAndShoulders()
+		{
+			spReversalPct = CreateParameter("Reversal %", 5, 3, 10, 0.5);
+			spHeadHeightPct = CreateParameter("Head Height %", 1, 0.5, 5, 0.5);
+			spShoulderSymmetry = CreateParameter("Symmetry %", 2, 1, 5, 0.5);
+			spBarsExpire = CreateParameter("Bars Expire", 40, 20, 100, 10);
+		}
+		
+		protected override void Execute()
+		{
+			//variables
+			int numHS = 0;
+			bool foundHS = false;
+			int hsBar = 0;
+			int detectedPB = 0;
+			double neckline;
+			int tb0 = 0;
+			int tb1 = 0;
+			int pb0 = 0;
+			int pb1 = 0;
+			int pb2 = 0;
+			double t0 = 0;
+			double t1 = 0;
+			double p0 = 0;
+			double p1 = 0;
+			double p2 = 0;
+			
+			//parameter values
+			double reversal = spReversalPct.Value;
+			double headHeight = spHeadHeightPct.Value;
+			double symmetry = spShoulderSymmetry.Value;
+			int expire = spBarsExpire.ValueInt;
+			
+			//DataSeries assignments
+			DataSeries pkHigh = Peak.Series(High, reversal, PeakTroughMode.Percent);
+			DataSeries pkBarHigh = PeakBar.Series(High, reversal, PeakTroughMode.Percent);
+			DataSeries tgLow = Trough.Series(Low, reversal, PeakTroughMode.Percent);
+			DataSeries tgBarLow = TroughBar.Series(Low, reversal, PeakTroughMode.Percent);
+			
+			//main logic
+			SetBarColors(Color.Silver, Color.Silver);
+			for(int bar = 20; bar &lt; Bars.Count; bar++)
+			{
+				//process open trade
+				for(int p = ActivePositions.Count - 1; p &gt;= 0; p--)
+				{
+					Position pos = ActivePositions[p];
+					HSTradeInfo info = (HSTradeInfo)pos.Tag;
+					if (Close[bar] &lt;= info.target)
+						CoverAtMarket(bar + 1, pos, "Target");
+					else if (Close[bar] &gt;= info.stop)
+						CoverAtMarket(bar + 1, pos, "Stop");
+				}
+				
+				//are we currently processing a H&amp;S found earlier?
+				if (foundHS)
+				{
+					//project the neckline to the current bar
+					neckline = LineExtendY(tb1, t1, tb0, t0, bar);
+					if (Close[bar] &lt; neckline)
+					{
+						//neckline penetration
+						SetBarColor(bar, Color.Green);
+						AnnotateBar("Neckline penetrated", bar, true, Color.Green);
+						foundHS = false;
+					
+						//calculate and plot the downward target
+						double diff = p1 - neckline;
+						double target = neckline - diff;
+						int targetBar = 0;
+						if (target &gt; 0)
+						{
+							//enter a position
+							if (ShortAtMarket(bar + 1) != null)
+							{
+								HSTradeInfo tradeInfo = new HSTradeInfo();
+								tradeInfo.target = target;
+								tradeInfo.stop = p1;
+								LastPosition.Tag = tradeInfo;
+							}
+							
+							for(targetBar = bar; targetBar &lt; Bars.Count - 2; targetBar++)
+							{
+								if (Low[targetBar] &lt; target)
+									break;
+							}
+							DrawLine(PricePane, bar, target, targetBar, target, Color.Teal, LineStyle.Dotted, 2);
+							AnnotateChart(PricePane, "Target = " + target, bar, target * 0.98, Color.Teal);
+							if (Low[targetBar] &lt; target)
+							{
+								SetBarColor(targetBar, Color.Red);
+								AnnotateBar("Target Achieved", targetBar, false, Color.Red);
+							}
+						}
+					
+						//draw the neckline, extend 5 bars out for clarity
+						neckline = LineExtendY(tb1, t1, tb0, t0, bar + 5);
+						DrawLine(PricePane, tb1, t1, bar + 5, neckline, Color.Green, LineStyle.Dotted, 2);
+					}
+					else
+					{
+						if (bar - hsBar &gt; expire)
+							foundHS = false;
+					}
+				}
+				else
+				{
+					//determine locations and values of most recent peaks and troughs
+					p0 = pkHigh[bar];
+					pb0 = (int)pkBarHigh[bar];
+					if (pb0 == -1)
+						continue;
+					t0 = tgLow[pb0];
+					tb0 = (int)tgBarLow[pb0];
+					if (tb0 == -1)
+						continue;
+					p1 = pkHigh[tb0];
+					pb1 = (int)(int)pkBarHigh[tb0];
+					if (pb1 == -1)
+						continue;
+					t1 = tgLow[pb1];
+					tb1 = (int)tgBarLow[pb1];
+					if (tb1 == -1)
+						continue;
+					p2 = pkHigh[tb1];
+					pb2 = (int)pkBarHigh[tb1];
+					if (pb2 == -1)
+						continue;
+					
+					//is the head higher than the two shoulders?
+					if (p1 &gt; p0 &amp;&amp; p1 &gt; p2)
+					{
+						double pct = ((p1 - p0) / p0) * 100;
+						if (pct &gt; headHeight)
+						{
+							pct = ((p1 - p2) / p2) * 100;
+							if (pct &gt; headHeight)
+							{
+								//check shoulder symmetry
+								pct = (Math.Abs(p2 - p0) / p2) * 100;
+								if (pct &lt;= symmetry)
+								{
+									//H&amp;S top must have a price advance to reverse
+									if (ROC.Series(Close, 100)[pb1] &gt; 15)
+									{
+										//don't detect the same H&amp;S twice
+										if (pb2 != detectedPB)
+										{
+											//H&amp;S found!
+											foundHS = true;
+											hsBar = bar;
+											detectedPB = pb2;
+											numHS++;
+											SetBarColor(pb0, Color.Blue);
+											SetBarColor(pb1, Color.Blue);
+											SetBarColor(pb2, Color.Blue);
+											SetBarColor(tb0, Color.Red);
+											SetBarColor(tb1, Color.Red);
+											AnnotateBar("Shoulder", pb0, true, Color.Blue);
+											AnnotateBar("Head", pb1, true, Color.Blue);
+											AnnotateBar("Shoulder", pb2, true, Color.Blue);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			DrawLabel(PricePane, "Number of H&amp;S patterns detected: " + numHS, Color.Black);
+			if (ActivePositions.Count &gt; 0)
+			{
+				Position pos = ActivePositions[ActivePositions.Count - 1];
+				HSTradeInfo tradeInfo = (HSTradeInfo)pos.Tag;
+				DrawLabel(PricePane, "Current Target: " + tradeInfo.target.ToString("N2"), Color.Red);
+			}
+		}
+	}
+	
+	//This class stores information for each H&amp;S based trade
+	internal class HSTradeInfo
+	{
+		internal double target;
+		internal double stop;
+	}
+}</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;Head and Shoulders Top&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;The 
+								Head and Shoulders top is one of the most common &amp;quot;chart patterns&amp;quot; in 
+								technical analysis.&amp;nbsp; It occurs when the market rallies, forming a left 
+								shoulder, then falls back, and rallies again to a point higher than the left 
+								shoulder.&amp;nbsp; This second rally is called the &amp;quot;head&amp;quot;.&amp;nbsp; Prices then 
+								fall back again and a third rally occurs, but does not reach the level of 
+								the head.&amp;nbsp; This is the second shoulder.&amp;nbsp; A neckline is established 
+								by drawing a line connecting the bottom of the two shoulders and extending 
+								it to the right.&amp;nbsp; If prices penetrate this neckline the pattern is 
+								complete, and prices are expected to continue downward.&amp;nbsp; The downward 
+								target objective is the distance of the head to the neckline extended down.&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;This 
+								script illustrates many important concepts and techniques that can be used 
+								in Wealth-Lab Strategies, including:&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+					&lt;ul&gt;
+						&lt;li&gt;
+							&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+										Using the Peak and Trough feature to detect complex chart patterns&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+							&lt;li&gt;
+								&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+											Using the DrawLine and LineExtend methods to draw lines on the chart&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+								&lt;li&gt;
+									&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+												Annotating different bars of the chart with text to indicate certain 
+												events&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+									&lt;li&gt;
+										&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;
+													Creating a simple C# class to store information about each trade that is 
+													generated&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+										&lt;/ul&gt;
+									&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;The 
+												trading rules employed are:&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+									&lt;ul&gt;
+										&lt;li&gt;
+											&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;The 
+														system goes short when the neckline is penetrated&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+											&lt;li&gt;
+												&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;The 
+															system exits for a profit if prices close below the Head and Shoulders 
+															target objective&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+												&lt;li&gt;
+													&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="font-family: Verdana"&gt;The 
+																system exits for a loss if prices rally again and close above the &amp;quot;head&amp;quot;&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;
+													&lt;/ul&gt;
+
+
+												&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-11-19T14:23:08.984375-06:00</CreationDate>
+  <LastModified>2008-04-24T10:41:32.625-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <ParameterValues />
+  <DataSetName>All 10 Sectors</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>Dollar</Mode>
+    <RawProfitDollarSize>50000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>33333.33</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1.4</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>1984-01-01T00:00:00</StartDate>
+    <EndDate>2010-01-01T00:00:00</EndDate>
+    <FixedBars>2000</FixedBars>
+    <RecentValue>5</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AQAAAAEDUk9DKAAAAAEAAAAAAAAAAADwPwNST0OQgHD/AAAAAAEAAAACAAAAA1JPQwAAAAAA/z8BAAAAAAAAAAD/AAA/AAAAAAAAAAAAAP8/A0NEUwAAAAAFSW50MzJkAAAA</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+</Strategy>

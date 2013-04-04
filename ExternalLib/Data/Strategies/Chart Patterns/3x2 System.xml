@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>3x2 System</Name>
+  <ID>1f802e41-a577-49fa-8f02-3b3bb83785f2</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class MyStrategy : WealthScript
+	{
+		StrategyParameter up;
+		StrategyParameter down;
+		
+		public MyStrategy()
+		{
+			down = CreateParameter("Down Days", 3, 2, 10, 1);
+			up = CreateParameter("Up Days", 2, 2, 10, 1);			
+		}
+		
+		protected override void Execute()
+		{
+			int upDays = up.ValueInt;
+			int downDays = down.ValueInt;
+			
+			for(int bar = 20; bar &lt; Bars.Count; bar++)
+			{
+				if (IsLastPositionActive)
+				{
+					if (CumUp.Value(bar, Close, 1) &gt;= upDays)
+						SellAtMarket(bar + 1, LastPosition);
+				}
+				else
+				{
+					if (CumDown.Value(bar, Close, 1) &gt;= downDays)
+						BuyAtMarket(bar + 1);
+				}
+			}
+		}
+	}
+}</Code>
+  <Description>&lt;html&gt;
+
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;New Page 1&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+
+					&lt;body&gt;
+
+						&lt;h1&gt;&lt;font face="Verdana" size="2"&gt;3x2 System&lt;/font&gt;&lt;/h1&gt;
+						&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;This 
+									simple Strategy buys after 3 consecutive days of lower prices, and sells after 2 
+									consecutive days of higher prices.&amp;nbsp; You can control these 2 parameters by 
+									moving the sliders in the lower left corner of the WL Pro 5 interface.&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+
+						&lt;/body&gt;
+
+					&lt;/html&gt;
+</Description>
+  <Author>Local</Author>
+  <CreationDate>2008-02-18T14:36:11.640625-06:00</CreationDate>
+  <LastModified>2008-05-15T09:59:55.96875-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <ParameterValues />
+  <DataSetName>All 10 Sectors</DataSetName>
+  <Symbol>AAPL</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>33333.33</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>33.333</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1.4</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>1984-01-01T00:00:00</StartDate>
+    <EndDate>2010-01-01T00:00:00</EndDate>
+    <FixedBars>2000</FixedBars>
+    <RecentValue>8</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+</Strategy>

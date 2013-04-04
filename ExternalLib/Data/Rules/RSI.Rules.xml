@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>RSI crosses above overbought level</Name>
+    <Description />
+    <Category>RSI (Relative Strength Index)</Category>
+    <Init>DataSeries &lt;#RSISeries&gt; = RSI.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#RSISeries&gt;, &lt;#Overbought Level&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:RSI&gt;, &lt;#RSISeries&gt;, Color.Navy, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:RSI&gt;, &lt;#Overbought Level&gt;, Color.Green, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Overbought Level</Name>
+        <Value>70</Value>
+        <DefaultValue>70</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>RSISeries</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>RSI crosses below overbought level</Name>
+    <Description />
+    <Category>RSI (Relative Strength Index)</Category>
+    <Init>DataSeries &lt;#RSISeries&gt; = RSI.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#RSISeries&gt;, &lt;#Overbought Level&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:RSI&gt;, &lt;#RSISeries&gt;, Color.Navy, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:RSI&gt;, &lt;#Overbought Level&gt;, Color.Green, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Overbought Level</Name>
+        <Value>70</Value>
+        <DefaultValue>70</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>RSISeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>RSIPane</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>RSI crosses above oversold level</Name>
+    <Description />
+    <Category>RSI (Relative Strength Index)</Category>
+    <Init>DataSeries &lt;#RSISeries&gt; = RSI.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#RSISeries&gt;, &lt;#Oversold Level&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:RSI&gt;, &lt;#RSISeries&gt;, Color.Navy, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:RSI&gt;, &lt;#Oversold Level&gt;, Color.Red, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Oversold Level</Name>
+        <Value>30</Value>
+        <DefaultValue>30</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>RSISeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>RSIPane</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>RSI crosses below oversold level</Name>
+    <Description />
+    <Category>RSI (Relative Strength Index)</Category>
+    <Init>DataSeries &lt;#RSISeries&gt; = RSI.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#RSISeries&gt;, &lt;#Oversold Level&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:RSI&gt;, &lt;#RSISeries&gt;, Color.Navy, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:RSI&gt;, &lt;#Oversold Level&gt;, Color.Red, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Oversold Level</Name>
+        <Value>30</Value>
+        <DefaultValue>30</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>RSISeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>RSIPane</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>RSI is overbought</Name>
+    <Description />
+    <Category>RSI (Relative Strength Index)</Category>
+    <Init>DataSeries &lt;#RSISeries&gt; = RSI.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (&lt;#RSISeries&gt;[bar] &gt; &lt;#Overbought Level&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:RSI&gt;, &lt;#RSISeries&gt;, Color.Navy, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:RSI&gt;, &lt;#Overbought Level&gt;, Color.Green, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Overbought Level</Name>
+        <Value>70</Value>
+        <DefaultValue>70</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>RSISeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>RSIPane</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>RSI is oversold</Name>
+    <Description />
+    <Category>RSI (Relative Strength Index)</Category>
+    <Init>DataSeries &lt;#RSISeries&gt; = RSI.Series(&lt;#Series&gt;, &lt;#Period&gt;);
+</Init>
+    <Body>if (&lt;#RSISeries&gt;[bar] &lt; &lt;#Oversold Level&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:RSI&gt;, &lt;#RSISeries&gt;, Color.Navy, LineStyle.Solid, 2);
+DrawHorzLine(&lt;#NewPane:RSI&gt;, &lt;#Oversold Level&gt;, Color.Red, LineStyle.Solid, 1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>9378fca0-2238-47ee-b97c-05eae141bf2f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Series</Name>
+        <Value>Close</Value>
+        <DefaultValue>Close</DefaultValue>
+        <ParamType>StandardDataSeries</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Oversold Level</Name>
+        <Value>30</Value>
+        <DefaultValue>30</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>1</Start>
+        <Stop>100</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>RSISeries</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>RSIPane</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+</ArrayOfRule>

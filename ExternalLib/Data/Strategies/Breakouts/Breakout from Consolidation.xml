@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Breakout from Consolidation</Name>
+  <ID>4d56803f-e314-454a-aa9e-2b15d2ee941d</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class BreakoutFromConsolidation : WealthScript
+	{
+		protected override void Execute()
+		{
+			ChartPane adxPane = CreatePane( 40, true, true );
+			PlotSeries( adxPane, ADX.Series( Bars, 14 ), Color.Black, WealthLab.LineStyle.Solid, 1 );
+			HideVolume();
+
+			int adxPeriod = 14; // ADX period
+			int adxHigh = 20; 	// ADX upper limit value
+			int lookback = 30; 	// ADX below the limit within the lookback
+			int trailBars = 5;  // Trailing stop period
+
+			DrawHorzLine( adxPane, adxHigh, Color.Maroon, WealthLab.LineStyle.Solid, 1 );
+
+			for(int bar = 60; bar &lt; Bars.Count; bar++)
+			{
+				if (IsLastPositionActive)
+				{
+					if( LastPosition.PositionType == PositionType.Long )
+					SellAtTrailingStop( bar+1, LastPosition, Lowest.Series( Bars.Low, trailBars )[bar], "Exit" ); else							
+					if( LastPosition.PositionType == PositionType.Short )
+					CoverAtTrailingStop( bar+1, LastPosition, Highest.Series( Bars.High, trailBars )[bar], "Cover" );
+
+				}
+				else
+				{
+					//if( Highest.Value( bar, ADX.Series( Bars, adxPeriod ), lookback ) &lt; adxHigh )
+					if( Highest.Series( ADX.Series( Bars, adxPeriod ), lookback )[bar] &lt; adxHigh )
+					if ( BuyAtStop( bar+1, Highest.Series( Bars.High, lookback )[bar], "Long" ) == null )
+						ShortAtStop( bar+1, Lowest.Series( Bars.Low, lookback )[bar], "Short" );
+				}
+			}
+		}
+	}
+}
+</Code>
+  <Description>&lt;b&gt;ADX Consolidation Breakout&lt;/b&gt;
+
+&lt;p&gt;This system is designed to trade breakouts from consolidations defined by the Average Directional Movement Index (ADX), an indicator designed to measure whether a market is in trending mode.&lt;/p&gt;
+
+&lt;p&gt;If the ADX remains at a low level, directional movement will be defined as low, implying a flat or dull market. The longer it does, the more likely a strong trending move will emerge. The system defines a directionless, range-bound market as one that has had an ADX reading at or below 20 for 30 trading days. At this point, the system uses a simple channel breakout rule to enter the market.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Strategy rules:&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;1. If the 14-day ADX has remained under 20 for the past 30 trading sessions, then either:&lt;br&gt;
+a) enter long the next day with a stop at the highest high of the past 20 days, or&lt;br&gt;
+b) enter short the next day with a stop at the lowest low of the past 20 days.&lt;br&gt;
+2. Close long position tomorrow with a trailing stop at the lowest low of the past five days.&lt;br&gt;
+3. Cover short position tomorrow with a trailing stop at the highest high of the past five days.&lt;/p&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-12-06T20:50:38.171875+03:00</CreationDate>
+  <LastModified>2007-12-07T20:32:19.3125+03:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>ActiveTrader Standard Futures Portfolio</DataSetName>
+  <Symbol>US_RAD</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>PctEquity</Mode>
+    <RawProfitDollarSize>25000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>20</PctSize>
+    <RiskSize>1</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>DateRange</Range>
+    <StartDate>1997-12-01T00:00:00</StartDate>
+    <EndDate>2007-11-30T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>

@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Bollinger Buyer</Name>
+  <ID>2acce79b-9628-4601-8060-2c91acca8869</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using WealthLab.Indicators;
+using System.Drawing;
+//DKK
+namespace WealthLabCompile
+{
+  class BollingerBuyer : WealthScript
+  {
+    //Create parameters
+    private StrategyParameter bbPeriod;
+    private StrategyParameter bbStdDev;
+
+    public BollingerBuyer()
+    {
+        bbPeriod = CreateParameter("Bollinger Period", 20, 5, 50, 5);      
+        bbStdDev = CreateParameter("Std Dev", 2, 1, 5, 0.25);        
+    }
+
+    protected override void Execute()
+    {
+        //Obtain parameters values
+        int bbPer = bbPeriod.ValueInt;
+        double bbSD = bbStdDev.Value;
+       
+        BBandLower bbL = BBandLower.Series( Close, bbPer, bbSD );
+        BBandUpper bbU = BBandUpper.Series( Close, bbPer, bbSD );
+       
+        SolidBrush shadowBrush = new SolidBrush(Color.FromArgb(50, Color.Silver));
+        PlotSeriesFillBand(PricePane, bbU, bbL, Color.Silver, shadowBrush, LineStyle.Solid, 2);
+
+        for (int bar = bbPer; bar &lt; Bars.Count; bar++)
+        {
+            if (IsLastPositionActive)
+            {
+                Position Pos = LastPosition;
+                if (CrossOver(bar, High, bbU)) {
+                  if (Close[bar] &lt; bbU[bar])
+                    SellAtMarket(bar + 1, Pos);
+                }
+                else if (Close[bar] &lt; Math.Min( Low[Pos.EntryBar], Low[Pos.EntryBar - 1] ))
+                    SellAtMarket(bar + 1, Pos, "Stop Loss");
+            }
+            else
+            {
+                if (CrossUnder(bar, Low, bbL))
+                    if (Close[bar] &gt; bbL[bar])
+                        BuyAtMarket(bar + 1);
+            }
+        }
+    }
+  }
+}
+
+
+
+</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							li.MsoNormal
+							{mso-style-parent:"";
+							margin-bottom:.0001pt;
+							font-size:12.0pt;
+							font-family:"Times New Roman";
+							margin-left:0in; margin-right:0in; margin-top:0in}
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;Bollinger Buyer&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Enters 
+								when price crosses below the lower Bollinger Band, but closes within the bands.&amp;nbsp; 
+								Multiple exit strategies are incorporated in the following priority: &lt;/font&gt;
+							&lt;/span&gt;&lt;/p&gt;
+					&lt;ol style="MARGIN-TOP: 0in; MARGIN-BOTTOM: 0in" type="1"&gt;
+						&lt;li class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Sell 
+									at market on the next bar when prices cross above the upper Band on the 
+									previous bar but don't cross on the current bar.&amp;nbsp; The idea is to stay in the 
+									market as long as prices are &amp;quot;riding&amp;quot; the upper band. &lt;/font&gt;&lt;/span&gt;&lt;/li&gt;
+						&lt;li class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Sell 
+									at market on the next bar to cut losses on a close below the lower of: a) the 
+									lowest price of the entry bar, or b) the lowest price of the bar prior to the 
+									entry bar.&lt;/font&gt;&lt;/span&gt;&lt;font size="2" face="Verdana"&gt; &lt;/font&gt;&lt;/li&gt;
+						&lt;li class="MsoNormal"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;&lt;font size="2"&gt;Sell 
+									at a specified profit target percentage.&amp;nbsp; If the value is 0, then a profit 
+									target is not used.&lt;/font&gt;&lt;/span&gt;&lt;font size="2" face="Verdana"&gt; &lt;/font&gt;&lt;/li&gt;
+						&lt;/ol&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-04-11T19:54:19.8125-05:00</CreationDate>
+  <LastModified>2007-09-05T10:19:37.828125-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>Dow 30</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>Dollar</Mode>
+    <RawProfitDollarSize>50000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>50000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+</Strategy>

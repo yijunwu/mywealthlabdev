@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>KT Trading System</Name>
+  <ID>d04d007b-4fcb-4b5a-abfd-49b8dea2503e</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class KTTradingSystem : WealthScript
+	{
+		private StrategyParameter trigger;
+		private StrategyParameter hold;
+		
+		public KTTradingSystem()
+		{
+			trigger = CreateParameter("Buy Trigger", 5, 0, 10, 1);
+			hold = CreateParameter("Hold Days", 2, 1, 10, 1);
+		}
+		
+		protected override void Execute()
+		{
+			double triggerValue = trigger.Value;
+			int holdDays = hold.ValueInt;
+			Color green = Color.FromArgb(128, 0, 255, 0);
+			
+			DataSeries s10 = StochK.Series(Bars, 10);
+			DataSeries s15 = StochK.Series(Bars, 15);
+			DataSeries s20 = StochK.Series(Bars, 20);
+			DataSeries s25 = StochK.Series(Bars, 25);
+			DataSeries s30 = StochK.Series(Bars, 30);
+			
+			ChartPane stochPane = CreatePane(100, true, true);
+			PlotSeries(stochPane, s10, Color.FromArgb(200,0,0), LineStyle.Solid, 1);
+			PlotSeries(stochPane, s15, Color.FromArgb(180,0,0), LineStyle.Solid, 1);
+			PlotSeries(stochPane, s20, Color.FromArgb(160,0,0), LineStyle.Solid, 1);
+			PlotSeries(stochPane, s25, Color.FromArgb(140,0,0), LineStyle.Solid, 1);
+			PlotSeries(stochPane, s30, Color.FromArgb(120,0,0), LineStyle.Solid, 1);
+			
+			for(int bar = 30; bar &lt; Bars.Count; bar++)
+			{
+				bool setup = false;
+				if (s10[bar] &lt; triggerValue)
+					if (s15[bar] &lt; triggerValue)
+						if (s20[bar] &lt; triggerValue)
+							if (s25[bar] &lt; triggerValue)
+								if (s30[bar] &lt; triggerValue)
+								{
+									SetBackgroundColor(bar, green);
+									setup = true;
+								}
+				
+				if (IsLastPositionActive)
+				{
+					if (bar - LastPosition.EntryBar &gt;= holdDays - 1)
+						SellAtMarket(bar + 1, LastPosition);
+				}
+				else
+				{
+					if (setup)
+						BuyAtMarket(bar + 1);
+				}
+			}
+		}
+	}
+}</Code>
+  <Description>&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Language" content="en-us"&gt;
+			&lt;meta name="GENERATOR" content="Microsoft FrontPage 5.0"&gt;
+				&lt;meta name="ProgId" content="FrontPage.Editor.Document"&gt;
+					&lt;meta http-equiv="Content-Type" content="text/html; charset=windows-1252"&gt;
+						&lt;title&gt;BuyAtMarket&lt;/title&gt;
+						&lt;style&gt;
+							&lt;!--
+							body         { font-family: Tahoma; font-size: 8pt }
+							h1           { font-family: Tahoma; font-size: 12pt; font-weight: bold }
+							h2           { font-family: Tahoma; font-size: 10pt; font-weight: bold }
+							--&gt;
+							&lt;/style&gt;
+						&lt;/head&gt;
+					&lt;h1&gt;&lt;font size="2" face="Verdana"&gt;KT Trading System&lt;/font&gt;&lt;/h1&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;This 
+								strategy was featured in the September 2005 issue of
+								&lt;a href="http://www2.wealth-lab.com/cgi-bin/WealthLab.DLL/editsystem?id=109"&gt;
+									Active Trader magazine&lt;/a&gt;.&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+					&lt;p class="MsoNormal"&gt;&lt;font size="2"&gt;&lt;span style="FONT-FAMILY: Verdana"&gt;The KT 
+								Trading System uses several Stochastic %K indicators, of various time periods, 
+								to pinpoint market entry.&amp;nbsp; All of the Stochastic %K's must be below the 
+								predefined trigger level (default value 5) to trigger an entry.&amp;nbsp; The idea behind 
+								the system is to piggy back traders who follow a popular technical indicator.&amp;nbsp; 
+								Many traders use the short term Stochastic indicator to determine when the 
+								market is oversold.&amp;nbsp; By waiting for confirmation from %K's of many different 
+								periods, we enter the trade when a wide range of other traders using varied time 
+								frames are also entering the market.&amp;nbsp; We expect the buying pressure to cause the 
+								underlying to rise, and enter the following day at market open.&amp;nbsp; The system 
+								attempts to ride this surge, and exits after a 2 day holding period.&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;
+
+					&lt;/html&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-06-26T17:32:22.25-05:00</CreationDate>
+  <LastModified>2007-06-28T11:12:20.921875-05:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName />
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>1000000</StartingCapital>
+    <DollarSize>50000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2002-04-25T00:00:00</StartDate>
+    <EndDate>2007-04-25T00:00:00</EndDate>
+    <FixedBars>30</FixedBars>
+    <RecentValue>5</RecentValue>
+  </DataRange>
+</Strategy>

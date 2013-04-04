@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Darvas Box</Name>
+  <ID>c783d337-884d-4261-821d-809f4cdb10f7</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class DarvasBox : WealthScript
+	{
+		protected override void Execute()
+		{
+			double BoxTop, BoxBottom;
+			bool BoxBottomDef, BoxTopDef, BoxDef, First;
+			int BoxTopCount, BoxBotCount, BoxDays, LastBoxBar;
+			WealthLab.LineStyle ls = WealthLab.LineStyle.Solid;
+
+			First = true;
+			BoxDays = 2;
+			LastBoxBar = 0;
+			
+			// my initialization
+			BoxTop = Bars.High[0];
+			BoxBottom = Bars.Low[0];
+			BoxTopCount = BoxBotCount = 0;
+			BoxTopDef = BoxBottomDef = BoxDef = false;
+
+			for(int bar = 5; bar &lt; Bars.Count; bar++)
+			{
+				if( First == true )
+				{
+					BoxTop = Bars.High[bar];
+					First = false;
+					BoxTopCount = 0;
+					BoxBotCount = 0;
+					BoxBottomDef = false;
+					BoxTopDef = false;
+					LastBoxBar = bar;
+				}
+
+				if( ( BoxDef == false ) &amp; ( Bars.High[bar] &gt; BoxTop ) )
+				{
+					BoxTopCount = 0;
+					BoxTop = Bars.High[bar];
+					// Resets BoxBotCount if New High is made again
+					BoxBotCount = 0;
+				}
+
+				if( ( BoxDef == false ) &amp; ( Bars.High[bar] &lt;= BoxTop ) )
+					BoxTopCount++;
+
+				if(( BoxDef == false ) &amp; ( BoxTopCount == BoxDays ) &amp; ( Bars.High[bar] &lt;= BoxTop ))
+					BoxTopDef = true;
+
+				if(( BoxDef == false ) &amp; ( BoxTopDef == true ) &amp; ( BoxBottomDef == false ) &amp; ( BoxTopCount &gt;= BoxDays+1 ))
+				{
+					if( BoxBotCount == 0 )
+						BoxBottom = Bars.Low[bar];
+
+					if( Bars.Low[bar] &lt; BoxBottom )
+					{
+						BoxBotCount = 0;
+						BoxBottom = Bars.Low[bar];
+					}
+					
+					if( Bars.Low[bar] &gt;= BoxBottom )
+						BoxBotCount++;
+
+					if( BoxBotCount == BoxDays+1 )
+						BoxBottomDef = true;
+				}
+
+				// test
+
+				if(( BoxDef == false ) &amp; ( BoxTopDef == true ))
+				{
+					if( Bars.High[bar] &gt; BoxTop )
+						First = true;
+				}
+
+				if(( BoxDef == false ) &amp; ( BoxBottomDef == true ) &amp; ( BoxTopDef == true ) )
+				{
+					BoxDef = true;
+					BoxBottomDef = false;
+					BoxTopDef = false;
+				}
+
+				// Darvas Box defined
+
+				if( BoxDef == true )
+				{
+					DrawLine( PricePane, bar, BoxTop, LastBoxBar, BoxTop, Color.Green, ls, 2 );
+					DrawLine( PricePane, bar, BoxBottom, LastBoxBar, BoxBottom, Color.Red, ls, 2 );
+
+					if( Bars.High[bar] &gt; BoxTop )
+					{
+						BoxDef = false;
+						
+						if( !IsLastPositionActive )
+							BuyAtStop( bar+1, BoxTop );
+
+						DrawLine( PricePane, LastBoxBar, BoxBottom, LastBoxBar, BoxTop, Color.Green, ls, 2 );
+						DrawLine( PricePane, bar, BoxBottom, bar, BoxTop, Color.Green, ls, 2 );
+
+						First = true;
+						BoxTop = Bars.High[bar];
+					}
+
+					if( Bars.Low[bar] &lt; BoxBottom )
+					{
+						BoxDef = false;
+						
+						if( IsLastPositionActive ) 
+							SellAtStop( bar+1, LastPosition, BoxBottom );
+
+						DrawLine( PricePane, LastBoxBar, BoxBottom, LastBoxBar, BoxTop, Color.Green, ls, 2 );
+						DrawLine( PricePane, bar, BoxBottom, bar, BoxTop, Color.Red, ls, 2 );
+						First = true;
+						BoxTop = Bars.High[bar];
+					}
+				}
+
+				// second true
+
+				if( First == true )
+				{
+					BoxTop = Bars.High[bar];
+					First = false;
+					BoxTopCount = 1;
+					BoxBotCount = 0;
+					BoxBottomDef = false;
+					BoxTopDef = false;
+					LastBoxBar = bar;
+				}
+			}
+			
+		}
+	}
+}
+
+</Code>
+  <Description>&lt;b&gt;System Concept:&lt;/b&gt; Nicolas Darvas was a successful professional dancer who also made millions in the stock market in the 50s using a charting method he described in his classic book &lt;i&gt;How I Made $2,000,000 in the Stock Market&lt;/i&gt;. His basic approach (not including the stock selection process) is essentially a breakout technique.
+
+&lt;p&gt;Darvas defined consolidations as "boxes" and traded upside breakouts of these boxes. A Darvas Box is formed when both the box top and box bottom have been established, as follows:&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;When a stock fails to make a new high for three days, the most recent high that is higher than the three subsequent highs becomes the box top.&lt;/li&gt;
+	&lt;li&gt;If price breaks out of the box top, repeat step 1.&lt;/li&gt;
+	&lt;li&gt;When a stock fails to make new lows after three days, the most recent low that is lower than the three subsequent lows becomes the box bottom.&lt;/li&gt;
+	&lt;li&gt;The box is broken when today's high price breaks out above the box top or below the box bottom.&lt;/li&gt;
+	&lt;/ol&gt;
+			
+&lt;b&gt;Trade rules:&lt;/b&gt;&lt;br&gt;
+	&lt;ol&gt;
+		&lt;li&gt;Go long when the price exceeds the top of the Darvas Box.&lt;/li&gt;
+		&lt;li&gt;Sell when the price of the stock falls below the bottom of the Darvas Box.&lt;/li&gt;
+		&lt;/ol&gt;
+
+	&lt;p&gt;The Darvas Box system has the benefit of being very simple and it has the potential to beat the market with proper money management.&lt;/p&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-12-08T13:52:53.753875+03:00</CreationDate>
+  <LastModified>2008-02-08T21:22:18.65625+03:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>ActiveTrader Standard Stock Portfolio</DataSetName>
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>PctEquity</Mode>
+    <RawProfitDollarSize>25000</RawProfitDollarSize>
+    <RawProfitShareSize>1</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>1</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>DateRange</Range>
+    <StartDate>1998-01-01T00:00:00</StartDate>
+    <EndDate>2007-12-31T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Rule>
+    <Name>AccumDist crosses above Moving Average</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#ad&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (CrossOver(bar, &lt;#ad&gt;, &lt;#smooth&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+
+PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>ee8beb3d-6484-4a89-aa2c-019571efe8da</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>AccumDist crosses below Moving Average</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#ad&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (CrossUnder(bar, &lt;#ad&gt;, &lt;#smooth&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+
+PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>cf7d05f8-6be1-4f97-967d-b1d450a561fd</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>AccumDist is trending up</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+</Init>
+    <Body>if (&lt;#ad&gt;[bar] &gt; &lt;#ad&gt;[bar - &lt;#Lookback Period&gt;])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>bee494e5-9760-424c-b2a7-621092c94331</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Lookback Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration>bars</Decoration>
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>AccumDist is trending down</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+</Init>
+    <Body>if (&lt;#ad&gt;[bar] &lt; &lt;#ad&gt;[bar - &lt;#Lookback Period&gt;])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>783bc2d9-6081-4fcf-a4a4-f375fdc2a230</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Lookback Period</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>1</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>AccumDist is above Moving Average</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#ad&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (&lt;#ad&gt;[bar] &gt; &lt;#smooth&gt;[bar])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+
+PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>42ecd087-3e72-45e3-b3d4-0a2b2d6cc53b</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>AccumDist is below Moving Average</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#ad&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (&lt;#ad&gt;[bar] &lt; &lt;#smooth&gt;[bar])
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>609585e2-bb12-4a69-989c-655f9d721dff</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <Value>20</Value>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Smoothed AccumDist turns up</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#ad&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (TurnUp(bar, &lt;#smooth&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>613aa51c-dfee-440f-83a1-52973d21f59c</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Smoothed AccumDist turns down</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#ad&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (TurnDown(bar, &lt;#smooth&gt;))
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>bf20239d-517c-49d4-912c-c8457647297f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Smoothed AccumDist is above a Value</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#ad&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (&lt;#smooth&gt;[bar] &gt; &lt;#Value&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>7c672ab0-e480-40aa-8329-779da29b413f</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Float</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+  <Rule>
+    <Name>Smoothed AccumDist is below a Value</Name>
+    <Description />
+    <Category>Accumulation/Distribution</Category>
+    <Init>DataSeries &lt;#ad&gt; = AccumDist.Series(Bars);
+DataSeries &lt;#smooth&gt; = SMA.Series(&lt;#ad&gt;,&lt;#Smooth Period&gt;);
+</Init>
+    <Body>if (&lt;#smooth&gt;[bar] &lt; &lt;#Value&gt;)
+</Body>
+    <Plotting>PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#ad&gt;,Color.Green,LineStyle.Solid,2);
+PlotSeries(&lt;#NewPane:AccumDist&gt;,&lt;#smooth&gt;,Color.Red,LineStyle.Solid,1);
+</Plotting>
+    <RuleType>Condition</RuleType>
+    <ID>7b20be75-5df1-4fa7-9c9f-b02de6b93c83</ID>
+    <Parameters>
+      <RuleParameter>
+        <Name>Value</Name>
+        <Value>1</Value>
+        <DefaultValue>1</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>0</Start>
+        <Stop>0</Stop>
+        <Step>0</Step>
+        <Decoration />
+      </RuleParameter>
+      <RuleParameter>
+        <Name>Smooth Period</Name>
+        <DefaultValue>20</DefaultValue>
+        <ParamType>Integer</ParamType>
+        <Start>2</Start>
+        <Stop>200</Stop>
+        <Step>1</Step>
+        <Decoration />
+      </RuleParameter>
+    </Parameters>
+    <Variables>
+      <RuleVariable>
+        <Name>ad</Name>
+      </RuleVariable>
+      <RuleVariable>
+        <Name>smooth</Name>
+      </RuleVariable>
+    </Variables>
+    <UsingClause />
+  </Rule>
+</ArrayOfRule>

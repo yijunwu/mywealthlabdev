@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Two Bar Breakout</Name>
+  <ID>e40ab8e6-7ba5-40c1-b74a-e6f0b8da40c2</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class TwoBarBreakout_Revisited : WealthScript
+	{
+		protected override void Execute()
+		{
+			for(int bar = 60; bar &lt; Bars.Count; bar++)
+			{
+				if (!IsLastPositionActive)
+				{
+					// Set-up
+					if( Bars.Low[bar] &lt; Bars.Low[bar-1] )
+						if( Bars.High[bar] &lt; Bars.High[bar-1] )
+							if( Bars.Close[bar] &lt; Bars.Open[bar] )
+					// Trade filter
+					if( SMA.Series( Bars.Close, 5 )[bar] &gt; SMA.Series( Bars.Close, 50 )[bar] )
+						// Entry
+						BuyAtStop( bar+1, Bars.High[bar] + 0.1 * ATR.Series( Bars,2 )[bar] );
+				}
+				else
+				{
+					// Added profit taking
+					if( !SellAtLimit( bar+1, LastPosition, Bars.High[bar] + 0.5 * ATR.Series( Bars, 2 )[bar], "Take Profit" ) )
+						SellAtTrailingStop( bar+1, LastPosition, Lowest.Series( Low, 2 )[bar], "Trailing Stop" );
+
+				}
+			}
+		}
+	}
+}
+</Code>
+  <Description>&lt;p&gt;From the article &lt;b&gt;Two Bar Breakout Revisited&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;A pattern-based system designed to capture short-term trends. It enters based on the behavior of the two most recent price bars and exits with a tight stop. The system has a brief average holding period of 2-3 days. &lt;/p&gt;
+
+&lt;p&gt;Modified trade rules (long only):&lt;/p&gt;
+&lt;p&gt;1. If the low is less than the previous bar's low, the high is less than the previous bar's high, and the close is less than the	open, enter the next day on a stop at this day's high plus 10 percent of the two-day average range.
+&lt;p&gt;2. Exit using either a trailing stop	at the lowest low of the past two days or take profits at this day's high plus 50 percent of the two-day average range.&lt;/p&gt;</Description>
+  <Author>Local</Author>
+  <CreationDate>2007-12-07T20:28:31.703125+03:00</CreationDate>
+  <LastModified>2007-12-07T20:28:31.703125+03:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <ParameterValues />
+  <DataSetName>ActiveTrader Standard Stock Portfolio (Y adj)</DataSetName>
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>PctEquity</Mode>
+    <RawProfitDollarSize>25000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>1</RiskSize>
+    <SimuScriptName />
+    <MarginFactor>1</MarginFactor>
+  </PositionSize>
+  <DataRange>
+    <Range>DateRange</Range>
+    <StartDate>1997-04-01T00:00:00</StartDate>
+    <EndDate>2007-03-30T00:00:00</EndDate>
+    <FixedBars>1000</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+</Strategy>
