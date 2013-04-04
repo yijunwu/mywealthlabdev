@@ -1,0 +1,23 @@
+﻿// Assembly TeeChart, Version 3.5.3146.24806
+
+[assembly: System.Reflection.AssemblyDelaySign(false)]
+[assembly: System.Reflection.AssemblyKeyName("")]
+[assembly: System.Web.UI.TagPrefix("Steema.TeeChart.Web", "tchart")]
+[assembly: System.Security.AllowPartiallyTrustedCallers]
+[assembly: System.Web.UI.WebResource("Steema.TeeChart.Web.Images.scrollHzLt.gif", "img/gif")]
+[assembly: System.Web.UI.WebResource("Steema.TeeChart.Web.Images.scrollHzGt.gif", "img/gif")]
+[assembly: System.Web.UI.WebResource("Steema.TeeChart.Web.Images.scrollHzBack.gif", "img/gif")]
+[assembly: System.Web.UI.WebResource("Steema.TeeChart.Web.Images.scrollHzSlider.gif", "img/gif")]
+[assembly: System.Web.UI.WebResource("Steema.TeeChart.Web.twebchart.js", "application/x-javascript")]
+[assembly: System.Runtime.CompilerServices.CompilationRelaxations(8)]
+[assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
+[assembly: System.Reflection.AssemblyTitle("TeeChart Pro")]
+[assembly: System.Reflection.AssemblyDescription("Charting and Plotting Control")]
+[assembly: System.Reflection.AssemblyConfiguration("TeeChart for .NET")]
+[assembly: System.Reflection.AssemblyCompany("Steema Software")]
+[assembly: System.Reflection.AssemblyProduct("TeeChart")]
+[assembly: System.Reflection.AssemblyCopyright("� 2001-2008 by Steema Software. All Rights Reserved.")]
+[assembly: System.Reflection.AssemblyTrademark("")]
+[assembly: System.CLSCompliant(true)]
+[assembly: System.Runtime.InteropServices.ComVisible(true)]
+

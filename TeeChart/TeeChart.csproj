@@ -1,0 +1,1927 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DD030632-81E4-4843-BB14-68C7C96CBD26}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>TeeChart</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Steema\TeeChart\DateTimeSteps.cs" />
+    <Compile Include="Steema\TeeChart\Utils.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ZoomAttributes.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\TeeBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\Tool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\ZoomTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\SeriesTranspose.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\Annotation.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\PageNumber.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Series.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Custom3D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Custom3DPalette.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Custom3DGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Surface.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Waterfall.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\BaseLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\CustomPoint.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Custom.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Line.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\HorizLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\HighLow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\TrendStyles.cs" />
+    <Compile Include="Steema\TeeChart\Functions\Function.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\BaseTrend.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\ExpTrendFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\TrendFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\CorrelationFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\PolyFitting.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Export\PDFPage.cs" />
+    <Compile Include="Steema\TeeChart\Export\PDFData.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\GraphicsFonts.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\GraphicsFont.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Tools\ToolsGalleryDemos.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ToolSeriesEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\AxisToolEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\AxisArrowEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\BaseSeriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\GanttSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\DarvasEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\BoxSeriesEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\PeriodEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\ColorEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\OrgChartEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\CustomGaugeSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Web\ToolResource.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollBarSetPositionEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollBarScrolledHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollBarChangedSizeHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollBarSetPositionHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollBarDrawStyle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\LegendScrollBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\DragMarkEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DragMarkDraggedEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DragMarkDraggingEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ToolSeries.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\DragMarks.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\ToolsCollection.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ToolAxis.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\BeforeDrawAxesEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\BeforeDrawSeriesEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\AfterDrawSeriesEventsArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\BeforeDrawEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\AfterDrawEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Histogram.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Circular.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\CircularGauge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Smoothing.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\DownSamplingMethod.cs" />
+    <Compile Include="Steema\TeeChart\Functions\DownSampling.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\PeriodStyles.cs" />
+    <Compile Include="Steema\TeeChart\Functions\PeriodAligns.cs" />
+    <Compile Include="Steema\TeeChart\Functions\Moving.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\MovingAverage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Add.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\ManySeries.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Subtract.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Multiply.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Divide.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\High.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Low.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Average.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Count.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Cumulative.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Momentum.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\MomentumDivision.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\ExpAverage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\ExpMovAverage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\BaseSourceEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\SummaryEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\ShadowEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\ArrowSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\MovingAverageFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\AxisLabelsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\AspectEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ClipSeriesEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\TagCloudSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\ITeeEventListener.cs" />
+    <Compile Include="Steema\TeeChart\Commander.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\SeriesRegionTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\ColorLineToolOnDragEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ColorLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Points.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\PieOtherStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\MultiPies.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Pie.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\Shadow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\CustomBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Box.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\HorizBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\GridPalette.cs" />
+    <Compile Include="Steema\TeeChart\Styles\PaletteStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Bezier.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\PanelMarginUnits.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Shape.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Panel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\CalculateEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Functions\Custom.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\CalculateEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Series\TriSurfaceSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\TowerSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\ShapeSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\PolarSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\KagiSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\SeriesPointer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\GaugeSeriesPointer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\OBVFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\ADXFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\DatabaseEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\CrossTabSourceEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\AxisEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\IOpenGL.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\IGLLightsource.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\IGLPosition.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Aspect.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\PointDouble.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\PointXYZ.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Point3D.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Point3DDouble.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Triangle3D.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Triangle2D.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\ThreeDPlane.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\SurfaceStyle.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\CanvasType.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\TeeFontStyle.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\ChartBrush.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\PathGradientMode.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\GradientStyle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\Gradient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\ChartFont.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\ChartPen.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\EdgeStyles.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\BevelStyles.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Bevel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\ImageBevel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\ImageMode.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\ShapeSize.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\TextFormat.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\TextShapeStyle.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\TextShape.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\TextShapePosition.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\TeeEvent.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\View3DEvent.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DVec.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\TTFontData.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\GraphicsImages.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\GraphicsImage.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SubChartTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\IChart.cs" />
+    <Compile Include="Steema\TeeChart\TChart.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\InnerChart.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\SubChart.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ChartCollection.cs" />
+    <Compile Include="Steema\TeeChart\Themes\Theme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\CustomTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\TeeChartTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\GrayscaleTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\BusinessTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\TriSurface.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Smith.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\PolygonList.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Polygon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\PolygonSeries.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Map.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\CustomGauge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\LinearGauge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\VerticalLinearGauge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\ErrorStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ErrorWidthUnits.cs" />
+    <Compile Include="Steema\TeeChart\Styles\CustomBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Bar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\CustomError.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Error.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\ErrorBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\NearestPointEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\TitleEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\PenEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\FastLineSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\PageEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\ChartGallery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\CompressOHLCFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\ChartEditorOptions.cs" />
+    <Compile Include="Steema\TeeChart\Editors\ChartEditorTabs.cs" />
+    <Compile Include="Steema\TeeChart\Editors\ChartEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\applyBounds.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DGdiPlus.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\LegendPaletteEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\DataTableEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DXAML.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\SelectEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SurfaceNearestTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\ColorBand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\RandomTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\ColorPalettes.cs" />
+    <Compile Include="Steema\TeeChart\Styles\TagCloudOrder.cs" />
+    <Compile Include="Steema\TeeChart\Styles\TagCloudDrawTagEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Styles\TagCloudDrawTagEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Styles\TagCloud.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Renko.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Points3D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Calendar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Arrow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\ValueListOrder.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesPoint.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesXYPoint.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ValueList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\StringList.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ColorList.cs" />
+    <Compile Include="Steema\TeeChart\Styles\HorizontalAxis.cs" />
+    <Compile Include="Steema\TeeChart\Styles\VerticalAxis.cs" />
+    <Compile Include="Steema\TeeChart\Styles\TreatNullsStyle.cs" />
+    <Compile Include="Steema\TeeChart\Styles\GetSeriesMarkEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesEventStyle.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesEvent.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesGroupActive.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesGroup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\SeriesGroups.cs" />
+    <Compile Include="Steema\TeeChart\Styles\IWorldMaps.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesCollection.cs" />
+    <Compile Include="Steema\TeeChart\Page.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\ADXFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Export\PNGOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ZoomToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\AxisScrollEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\VolumeSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\PointFigure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\ImageBarSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\DonutSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\CircledSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\GLEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\SeriesRegionToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\ClassicTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\GetAxisLabelEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\GetNextAxisLabelEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\GetLegendRectEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\GetLegendPosEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\GetLegendTextEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\GetLegendSizeEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\SerializeEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\SerializeEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\GetAxisLabelEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\GetNextAxisLabelEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\GetAxesChartRectEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\GetAxesChartRectEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\GetLegendRectEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\GetLegendSizeEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\GetLegendTextEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\GetLegendPosEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Styles\VolumePipe.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\TowerStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Tower.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\GridColorPalette.cs" />
+    <Compile Include="Steema\TeeChart\Styles\CustomPolar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\PolarGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Polar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\PolarBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\FastLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Performance.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ToolsGallery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\SurfaceNearestToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\CursorEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\ThemeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\TextSource.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\SurfaceSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\WaterfallSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\RenkoEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\BollingerFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\ButtonColor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\BrushEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\PictureDialog.cs" />
+    <Compile Include="Steema\TeeChart\Data\SeriesSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Data\XmlSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\SeriesBandToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\DragPointStyles.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DragPointEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DragPoint.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\ClipSeries.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Title.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Header.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Footer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\OperaTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\LinePoint.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\GetImageEvent.cs" />
+    <Compile Include="Steema\TeeChart\Styles\CustomImagePoint.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\ImagePoint.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\PrintMarginUnits.cs" />
+    <Compile Include="Steema\TeeChart\ChartPrintJob.cs" />
+    <Compile Include="Steema\TeeChart\Margins.cs" />
+    <Compile Include="Steema\TeeChart\Printer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Export\TIFFOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ScrollBarEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ExtraLegendEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\IStopComboBoxTranslate.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Tools\DragPointEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ColorLineEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\ErrorSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\CalendarSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\EditorUtils.cs" />
+    <Compile Include="Steema\TeeChart\Editors\DialogEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\DesignTimeOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\AxisMaxMin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\SARFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\NotifySeriesEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\ChangeOrderEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\DblClickSeriesEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\ChangeActiveEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\ChangeColorEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\ChangeOrderEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\OtherItemsChangeEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\RefreshEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\RemovedSeriesEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\EditSeriesEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\CheckBoxesStyle.cs" />
+    <Compile Include="Steema\TeeChart\ChartListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\ControllerButtonSize.cs" />
+    <Compile Include="Steema\TeeChart\ChartController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Wall.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Walls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\XPTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\WebTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\IThemeProperties.cs" />
+    <Compile Include="Steema\TeeChart\Themes\ThemeProperties.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ShapeXYStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ShapeStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ShapeTextVertAlign.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ShapeTextHorizAlign.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Shape.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\OrgLineStyle.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Spacing.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\OrgShape.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\OrgItem.cs" />
+    <Compile Include="Steema\TeeChart\Styles\OrgItems.cs" />
+    <Compile Include="Steema\TeeChart\Styles\OrgItemList.cs" />
+    <Compile Include="Steema\TeeChart\Styles\OrgSeries.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Gantt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Bubble.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\PVOFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Export\JPEGOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\GridTransposeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ColorBandEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\Vector3DSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\StackBarSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\PyramidSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\ContourSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\CandleSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\BarSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\GradientEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\MACDFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\AxesEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DVML.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DSVG.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DEPS.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Data\DataGroup.cs" />
+    <Compile Include="Steema\TeeChart\Data\ChartAggregate.cs" />
+    <Compile Include="Steema\TeeChart\Data\DataSeriesSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Data\SummarySource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Data\SingleRecordSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Data\TextField.cs" />
+    <Compile Include="Steema\TeeChart\Data\TextFieldCollection.cs" />
+    <Compile Include="Steema\TeeChart\Data\TextSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Data\GroupFormula.cs" />
+    <Compile Include="Steema\TeeChart\Data\CrossTabSource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\TFrame.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\GaugePointerStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesPointer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\GaugeSeriesPointer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\PolarGridEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\LegendPaletteAxis.cs" />
+    <Compile Include="Steema\TeeChart\Tools\PaletteSeries.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\PaletteChart.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\LegendPalette.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Pyramid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\ImageBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\SeriesOHLCPoint.cs" />
+    <Compile Include="Steema\TeeChart\Styles\OHLC.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\CandleStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Candle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Bar3D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\MultiAreas.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Area.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\PerimeterFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\CustomSorted.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\MedianFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\CompressGetDateHandler.cs" />
+    <Compile Include="Steema\TeeChart\Functions\CompressionPeriod.cs" />
+    <Compile Include="Steema\TeeChart\Functions\CompressOHLC.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\CompressGetDateEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Functions\CLVFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Export\ExportEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Export\ExportEditors.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\BitmapEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\FlexEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\XAMLEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\EPSEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\PDFEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\SVGEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\VMLEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\MetafileEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\JPEGEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\PNGEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\GIFEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\TIFFEditor.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Tools\PieToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\SingleSourceEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\SeriesMarksEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\Grid3DSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\GalleryPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\SubChartEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Texts.cs" />
+    <Compile Include="Steema\TeeChart\Tools\GridBand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Volume.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Kagi.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\HorizBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\GaugesChangeHandler.cs" />
+    <Compile Include="Steema\TeeChart\Styles\HandStyle.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Gauges.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\PointerStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\CustomStack.cs" />
+    <Compile Include="Steema\TeeChart\Styles\GetPointerStyleEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Functions\MACDFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Export\GIFOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ToolsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ScrollToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\RotateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\LightToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\HotspotEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\TextEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\LegendEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\FunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\BevelImageEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\SeriesStats.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\ScrollToolViewUnit.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollMouseAction.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollAttributes.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScrollTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\FibonacciStyle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\FibonacciTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\AxisArrowPosition.cs" />
+    <Compile Include="Steema\TeeChart\Tools\AxisArrow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Funnel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Bollinger.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Export\PCXOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\DrawLineEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\SmithSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\SeriesEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\PointSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\GeneralEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\GalleryByType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\CustomFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DPDF.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\SeriesStatsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\MarkersEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\NumericGaugeSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\SmoothStretchOption.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Filter.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\FilterRegion.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\RGB.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\ResizeFilter.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\CropFilter.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\ZoomFilter.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\ICanvasHyperlinks.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\ICanvasToolTips.cs" />
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DFlex.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\GetAxisDrawLabelEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\GetAxisDrawLabelEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\AxisCalcPosLabelsEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\AxisLabelAlign.cs" />
+    <Compile Include="Steema\TeeChart\AxisLabelStyle.cs" />
+    <Compile Include="Steema\TeeChart\AxisLabels.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\AxisLabelsItems.cs" />
+    <Compile Include="Steema\TeeChart\AxisLabelItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\AxisTitle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\PositionUnits.cs" />
+    <Compile Include="Steema\TeeChart\Axis.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\CustomAxes.cs" />
+    <Compile Include="Steema\TeeChart\DepthAxis.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Axes.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\RectangleTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\RectangleToolDraggingEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\RectangleToolResizingEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\RectangleToolResizedEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\RectangleToolDraggedEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\PieToolStyle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\PieTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\AnnotationPositions.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Callout.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\AnnotationCallout.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\BlueSkyTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\BlackIsBackTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Custom2DPolar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\WindRose.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\CellsOrientation.cs" />
+    <Compile Include="Steema\TeeChart\Styles\PointFigure.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\MultiBars.cs" />
+    <Compile Include="Steema\TeeChart\Styles\BarStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesXYZPoint.cs" />
+    <Compile Include="Steema\TeeChart\Functions\StdDeviation.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\OBVFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Export\SerializeBinder.cs" />
+    <Compile Include="Steema\TeeChart\Export\ExportFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\Exports.cs" />
+    <Compile Include="Steema\TeeChart\Export\DataExport.cs" />
+    <Compile Include="Steema\TeeChart\Export\DataExportFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\XMLFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\TextFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\HTMLFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\ExcelFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\ThemeExport.cs" />
+    <Compile Include="Steema\TeeChart\Export\TemplateExport.cs" />
+    <Compile Include="Steema\TeeChart\Export\ImageExport.cs" />
+    <Compile Include="Steema\TeeChart\Export\PictureFormats.cs" />
+    <Compile Include="Steema\TeeChart\Export\ImageFormats.cs" />
+    <Compile Include="Steema\TeeChart\Export\ImageExportFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\BitmapFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\MetafileFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\JPEGFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\PNGFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\GIFFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\TIFFFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\PDFFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\VMLFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\FlexFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\XAMLFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\SVGFormat.cs" />
+    <Compile Include="Steema\TeeChart\Export\EPSFormat.cs" />
+    <Compile Include="Steema\TeeChart\Import\Imports.cs" />
+    <Compile Include="Steema\TeeChart\Import\ThemeImport.cs" />
+    <Compile Include="Steema\TeeChart\Import\TemplateImport.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\BMPOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\SeriesAnimationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\HistogramSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\ClockSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\BezierSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\ImportEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\PVOFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Drawing\Graphics3DHotSpot.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Export\FlexOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\SeriesTransposeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\LinearGaugeSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Languages\ITranslator.cs" />
+    <Compile Include="Steema\TeeChart\Languages\English.cs" />
+    <Compile Include="Steema\TeeChart\ZoomScroll.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\ScrollModes.cs" />
+    <Compile Include="Steema\TeeChart\Scroll.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\ZoomDirections.cs" />
+    <Compile Include="Steema\TeeChart\Zoom.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\GanttBarPart.cs" />
+    <Compile Include="Steema\TeeChart\Tools\GanttDragEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\GanttResizeEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\GanttTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\GanttDragEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\GanttResizeEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\TableLegend.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\DataTableTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\AxisScroll.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Vector3D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\MapAction.cs" />
+    <Compile Include="Steema\TeeChart\Styles\PointPolygonList.cs" />
+    <Compile Include="Steema\TeeChart\Styles\MapRegion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\PolygonStyle.cs" />
+    <Compile Include="Steema\TeeChart\Styles\PointPolygon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\HorizHistogram.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\HorizArea.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Stochastic.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\SelectListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Web\TempChartStyle.cs" />
+    <Compile Include="Steema\TeeChart\Web\WebChart.cs" />
+    <Compile Include="Steema\TeeChart\Web\TeeChartImgGen.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SeriesAnimation.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\AnimationStepEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\AnimationStepEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SelectorDraggedEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SelectorDraggingEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SelectorResizedEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SelectorResizingEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SelectorSelectedEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\Selector.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\GridTranspose.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\ColorGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\VarianceFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\RSIStyle.cs" />
+    <Compile Include="Steema\TeeChart\Functions\RSIFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\RootMeanSquare.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\CCIFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\GanttToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\DragMarksEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\IsoSurfaceEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\CLVFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\CCIFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\FaderToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\SeriesBandTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\RotatingEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\RotateStyles.cs" />
+    <Compile Include="Steema\TeeChart\Tools\Rotate.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\IHotspot.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SeriesHotspotEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\HotspotHelperScripts.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SeriesHotspotEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SeriesHotspot.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\FaderStyle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\FaderTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\DrawLineStyle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DrawLineHandle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DrawLineEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DrawLineSelectingEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DrawLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\DrawLines.cs" />
+    <Compile Include="Steema\TeeChart\Tools\DrawLineItem.cs" />
+    <Compile Include="Steema\TeeChart\Tools\CursorToolStyles.cs" />
+    <Compile Include="Steema\TeeChart\Tools\SnapStyle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ScopeCursorStyle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\CursorClicked.cs" />
+    <Compile Include="Steema\TeeChart\Tools\CursorChangeEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\CursorGetAxisRectEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\CursorTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\CursorChangeEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\CursorGetAxisRectEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\ChartImage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\MarkersCollection.cs" />
+    <Compile Include="Steema\TeeChart\Tools\Marker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\DigitalFont.cs" />
+    <Compile Include="Steema\TeeChart\Styles\NumericGauge.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\IsoSurface.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\SurfaceSides.cs" />
+    <Compile Include="Steema\TeeChart\Styles\LevelLine.cs" />
+    <Compile Include="Steema\TeeChart\Styles\TempLevel.cs" />
+    <Compile Include="Steema\TeeChart\Styles\LevelPoint.cs" />
+    <Compile Include="Steema\TeeChart\Styles\LevelSegment.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ContourLevel.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Sides.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ContourConstruction.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ContourSeriesMarks.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Contour.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\MarksStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\ArrowHeadStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\MarksCallout.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\MarksItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\MarksItems.cs" />
+    <Compile Include="Steema\TeeChart\Styles\SeriesMarks.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\LegendSymbolPosition.cs" />
+    <Compile Include="Steema\TeeChart\LegendSymbolSize.cs" />
+    <Compile Include="Steema\TeeChart\SymbolDrawEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\LegendItems.cs" />
+    <Compile Include="Steema\TeeChart\LegendItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\SymbolDrawEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\LegendSymbol.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\LegendStyles.cs" />
+    <Compile Include="Steema\TeeChart\LegendTextStyles.cs" />
+    <Compile Include="Steema\TeeChart\LegendAlignments.cs" />
+    <Compile Include="Steema\TeeChart\Legend.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\LegendTitle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Spline.cs" />
+    <Compile Include="Steema\TeeChart\Functions\HistogramFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\CrossPoints.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\MarksTipEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\GridBandEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\FibonacciToolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\VolumePipeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\CircularGaugeSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\PreviewPanelEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\CustomShapeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\ChartClickedPart.cs" />
+    <Compile Include="Steema\TeeChart\ChartClickedPartStyle.cs" />
+    <Compile Include="Steema\TeeChart\PaintChartEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\ChartPrintEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\MouseEventKinds.cs" />
+    <Compile Include="Steema\TeeChart\Chart.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\TeeChartException.cs" />
+    <Compile Include="Steema\TeeChart\TeeMouseEvent.cs" />
+    <Compile Include="Steema\TeeChart\FrAccessProvider.cs" />
+    <Compile Include="Steema\TeeChart\FrAccess.cs" />
+    <Compile Include="Steema\TeeChart\Tools\MarksTipMouseAction.cs" />
+    <Compile Include="Steema\TeeChart\Tools\MarksTipGetTextEventHandler.cs" />
+    <Compile Include="Steema\TeeChart\Tools\MarksTip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\MarksTipGetTextEventArgs.cs" />
+    <Compile Include="Steema\TeeChart\Tools\Magnify.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Themes\ExcelTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Darvas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\ClockStyles.cs" />
+    <Compile Include="Steema\TeeChart\Styles\Clock.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\BarJoin.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\Regression.cs" />
+    <Compile Include="Steema\TeeChart\Functions\Poly.cs" />
+    <Compile Include="Steema\TeeChart\Editors\Export\EmfOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\SelectorEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\ImageEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\AnnotationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\TextInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\HighLow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\CustomSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\AreaSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\SmoothingFunctionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\AxisIncrement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Data\SeriesDataAdapter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\NearestPointStyles.cs" />
+    <Compile Include="Steema\TeeChart\Tools\NearestPoint.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\LightStyle.cs" />
+    <Compile Include="Steema\TeeChart\Tools\LightTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\ExtraLegend.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Tools\ScrollingDirection.cs" />
+    <Compile Include="Steema\TeeChart\Tools\BannerTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Radar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Styles\Donut.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Functions\ModeFunction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Export\EPSPage.cs" />
+    <Compile Include="Steema\TeeChart\Export\EPSData.cs" />
+    <Compile Include="Steema\TeeChart\Editors\WallEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\Point3DSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\PieSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\MapSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\GaugesSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\FunnelSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Series\ColorGridSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\PrintPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\PanelEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\MarkSymbolEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\ButtonPen.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\BevelEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Steema\TeeChart\Editors\Tools\MagnifyEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.metal.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.SeriesTranspose.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.ColorBand.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Line.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.HorizLine.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.HorizHistogram.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Gantt.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.TChart.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Data.Images.SingleRecordSource.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.CustomGaugeSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ImageEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ColorLineEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.SeriesPointer.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.ContourSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.FunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.ADXFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.BevelEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.SeriesStats.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.HorizBox.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.aboutback.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.LegendPaletteEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.CursorEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ColorBandEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.Point3DSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.ColorGridSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.PeriodEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Web.twebchart.js" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.tchartnetlogo.png" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.ChartController.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.wood.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.FaderTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.FibonacciTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Polar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Pie.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Map.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Bar3D.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Functions.Images.BasicFunction.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Data.Images.CrossTabSource.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.MarkersEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.RotateEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.SelectListForm.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.MovingAverageFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.CCIFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.IsoSurface.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.LegendScrollBar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.GanttTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.DrawLine.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Pyramid.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.ImageBar.Dollar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.Axis.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Export.FlexOptions.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ScrollToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ToolSeriesEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.SmithSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.SeriesEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.PanelEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.SmoothingFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.View3D16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Export16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.BannerTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.SeriesAnimation.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.GridBand.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Contour.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Commander.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.IsoSurfaceEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.PointSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.Grid3DSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.GalleryByType.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.PVOFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.BevelImageEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Copy16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.SurfaceNearestTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Histogram.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Clock.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Box.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Bezier.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.Commander.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.TagCloudSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ToolsEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ExtraLegendEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.AxisScrollEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.TextEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.SingleSourceEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.Vector3DSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.ClockSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.CalendarSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.LegendEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.GLEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.GalleryPanel.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.ChartGallery.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.BollingerFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.DialogEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.CrossTabSourceEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.ChartEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Web.Images.scrollHzSlider.gif" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Depth16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.SeriesRegionTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.VolumePipe.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.ExtraLegend.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Volume.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Radar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.FastLine.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Export.ExportEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.BaseSourceEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.HistogramSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.DonutSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.CandleSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.OBVFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.grass.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.CircularGauge.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.SeriesHotspot.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.GridTranspose.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.CursorTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.WindRose.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.ImageBar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.DeltaPoint.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.SeriesTransposeEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.SeriesRegionToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.AxisToolEdit.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.AnnotationEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.SeriesMarksEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.PolarSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.ImportEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.ButtonColor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Drawing.PrivateFonts.LCD-FONT.TTF" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.World.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.NumericGauge.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.LinearGauge.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.Selector.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Renko.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.RectangleTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.PieTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.AxisScroll.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.ColorGrid.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.Down.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.SeriesBandToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.DataTableEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.VolumePipeEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ZoomToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ToolsGallery.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.SeriesAnimationEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.MarksTipEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.ShapeSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.GaugesSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.MarkSymbolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.BrushEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Rotate16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Normal16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.MarksTip.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Tower.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.HorizBar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.HighLow.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Calendar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Data.Images.TextSource.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.KagiSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.NearestPointEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.GridBandEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.DragMarksEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.AreaSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.PreviewPanelEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.PenEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.MACDFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.AxisLabelsEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Web.Images.scrollHzLt.gif" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.Magnify.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.ImagePoint.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Donut.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.BarJoin.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.Editor.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.OrgChartEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.MagnifyEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.FibonacciToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.ScrollBarEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.DragPointEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.ImageBarSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.HighLow.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.PrintPreview.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.ColorEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Edit16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.clouds.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.ClipSeries.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Darvas.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.TriSurface.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Points3D.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Points.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.ErrorBar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.PolarGridEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.CircularGaugeSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.BaseSeriesForm.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.SurfaceNearestToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.DesignTimeOptions.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.AxisEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.AspectEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.fire.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.Marker.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.ScrollTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.PageNumber.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.DragPoint.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Surface.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Gauges.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Candle.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Area.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.RenkoEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.TitleEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.TextSource.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.SummaryEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.VolumeSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.TowerSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.BarSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.PageEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.CompressOHLCFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.CLVFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.AboutBox.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Export.tee.swc" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.PolarGrid.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Print16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.stone.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.snow.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.ImagePoint.TeeDefaultImage.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Web.Images.WebChart.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Vector3D.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.LinePoint.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.HorizArea.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Funnel.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Bar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.ButtonColor.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.SubChartEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.SelectorEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.FastLineSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.DatabaseEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.CustomShapeEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.AxisIncrement.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Drawing.PrivateFonts.LED-FONT.TTF" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Zoom16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.CommanderIcons.Move16x16.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.SubChartTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.LegendPalette.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.DragMarks.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.ChartImage.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.PolarBar.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Error.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.BigCandle.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.FaderToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.LightToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.HotspotEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.DrawLineEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.ThemeEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.TriSurfaceSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.SurfaceSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.PieSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.CustomSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Web.Images.scrollHzGt.gif" />
+    <EmbeddedResource Include="Steema.TeeChart.Web.Images.scrollHzBack.gif" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.LightTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Shape.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.ChartListBox.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.ButtonPen.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Images.Up.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Data.Images.XmlSource.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.SeriesStatsEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.LinearGaugeSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.GanttToolEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.CircledSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.BoxSeriesEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.ArrowSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.ButtonPen.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Images.TChart.ico" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.SeriesBandTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.VerticalLinearGauge.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.DataTableTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Kagi.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.ZoomTool.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.Rotate.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.NearestPoint.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.ColorLine.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.AxisArrow.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Tools.ToolsIcons.Annotation.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Waterfall.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Smith.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.PointFigure.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Bubble.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Styles.SeriesIcons.Arrow.bmp" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.DarvasEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.WallEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Tools.AxisArrowEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.ShadowEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.WaterfallSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.Series.MapSeries.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.GradientEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.GeneralEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.CustomFunctionEditor.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.AxisMaxMin.resources" />
+    <EmbeddedResource Include="Steema.TeeChart.Editors.AxesEditor.resources" />
+  </ItemGroup>
+</Project>
