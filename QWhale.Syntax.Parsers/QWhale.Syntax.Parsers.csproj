@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{41BD61C1-285C-4AA7-B538-217EAC294833}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>QWhale.Syntax.Parsers</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="QWhale.Syntax">
+      <HintPath>..\QWhale.Syntax\bin\Debug\QWhale.Syntax.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\VbParameterInfo.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\NETRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\IReflectionRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\ReflectionRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\DescriptionHelper.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CsListMembers.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\VbListMembers.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\JsListMember.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CsRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\NetTypes.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\XmlCommentParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\CodeCompletion\VbListMember.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\SqlRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\JsParameterInfo.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\JavaScriptParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\JScriptNETParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\CodeCompletion\JavaScriptRepository.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\SqlParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\SqlLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\SqlNodeType.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\VbScriptParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\PrimaryExpressionNode.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\VbScriptLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\NetSyntaxParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\CsParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\JsParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\JsLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\NetNodeType.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\XmlCommentType.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\JsRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\VbScriptRepository.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\VbParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\VbLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\JavaScriptLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\CParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\CLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CsListMember.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\JsListMembers.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\VbRepository.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\INetNamespace.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\NetNamespace.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\CsLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\MSSQLParser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QWhale\Syntax\Parsers\MsSqlLexerToken.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\MsSqlNodeType.cs" />
+    <Compile Include="QWhale\Syntax\Parsers\SyntaxParserConsts.cs" />
+    <Compile Include="QWhale\Syntax\CodeCompletion\CsParameterInfo.cs" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.Images.CParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.Images.JScriptNETParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.Images.JavaScriptParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.VbScriptParser.resources" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.Images.VbParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.Images.JsParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.Images.CsParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.VbParser.resources" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.CsParser.resources" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.Images.VbScriptParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.NetSyntaxParser.resources" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.Images.SQLParser.bmp" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.MSSQLParser.resources" />
+    <EmbeddedResource Include="QWhale.Syntax.Parsers.JsParser.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QWhale.Common\QWhale.Common.csproj">
+      <Project>{00F8046C-A484-4170-8273-E80F22903A40}</Project>
+      <Name>QWhale.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
