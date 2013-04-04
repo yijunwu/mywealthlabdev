@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>Fidelity.Components</AssemblyName>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Fidelity\Components\SortableListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fidelity\Components\GridLines.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fidelity\Components\InputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fidelity\Components\AssemblyLoader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fidelity\Components\ProcessNodeEventArgs.cs" />
+    <Compile Include="Fidelity\Components\ProcessNodeEventHandler.cs" />
+    <Compile Include="Fidelity\Components\TreeViewWalker.cs" />
+    <Compile Include="Fidelity\Components\InputBox.cs" />
+    <Compile Include="Fidelity\Components\Cryptography.cs" />
+    <Compile Include="Fidelity\Components\ISettingsHost.cs" />
+    <Compile Include="Fidelity\Components\SettingsManager.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fidelity\Components\FileNameValidator.cs" />
+    <Compile Include="Fidelity\Components\DontShowAgainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fidelity\Components\ICustomSettings.cs" />
+    <Compile Include="Fidelity\Components\ColorPickerPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fidelity\Components\Distribution.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fidelity\Components\Bin.cs" />
+    <Compile Include="Fidelity\Components\IWorkspace.cs" />
+    <Compile Include="Fidelity\Components\TimeZoneInformation.cs" />
+    <EmbeddedResource Include="Fidelity.Components.SettingsManager.bmp" />
+    <EmbeddedResource Include="Fidelity.Components.GridLines.bmp" />
+    <EmbeddedResource Include="Fidelity.Components.DontShowAgainForm.resources" />
+    <EmbeddedResource Include="Fidelity.Components.SortableListView.bmp" />
+    <EmbeddedResource Include="Fidelity.Components.AssemblyLoader.bmp" />
+    <EmbeddedResource Include="Fidelity.Components.ColorPickerPanel.resources" />
+    <EmbeddedResource Include="Fidelity.Components.InputForm.resources" />
+    <EmbeddedResource Include="Fidelity.Components.Distribution.resources" />
+    <EmbeddedResource Include="Fidelity.Components.ColorPickerPanel.bmp" />
+    <EmbeddedResource Include="Fidelity.Components.Distribution.bmp" />
+  </ItemGroup>
+</Project>
