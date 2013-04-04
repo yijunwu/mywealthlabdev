@@ -10,6 +10,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -22,7 +23,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -58,10 +58,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLib\ControlLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Fidelity.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLib\log4net.dll</HintPath>
@@ -87,10 +83,6 @@
     </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Configuration" />
-    <Reference Include="WealthLab.International, Version=1.0.36.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WealthLab.Crack\Win32.Cracked\WealthLab.International.dll</HintPath>
-    </Reference>
     <Reference Include="WealthLab.PosSizers">
       <HintPath>..\WealthLab.PosSizers\bin\Debug\WealthLab.PosSizers.dll</HintPath>
     </Reference>
@@ -367,6 +359,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WealthLab.ChartControl\WealthLab.ChartControl.csproj">
       <Project>{6822E234-082C-4756-89B7-D44634D8C013}</Project>
       <Name>WealthLab.ChartControl</Name>
@@ -380,4 +376,8 @@
       <Name>WealthLab</Name>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\WealthLab*.dll" "C:\Program Files\Wealth-Lab Developer 6"
+copy "$(ProjectDir)\bin\Debug\WealthLabDev.exe" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

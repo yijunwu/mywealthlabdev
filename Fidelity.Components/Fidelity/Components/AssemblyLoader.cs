@@ -195,16 +195,16 @@
                                 }
                             }
                         }
-                    
-                    }
                     Label0:
-                    if (flag)
-                    {
-                        lock (AssemblyLoader.settingsManager_0)
+                        if (flag)
                         {
-                            AssemblyLoader.settingsManager_0.SaveSettings();
+                            lock (AssemblyLoader.settingsManager_0)
+                            {
+                                AssemblyLoader.settingsManager_0.SaveSettings();
+                            }
                         }
                     }
+                    
                 }
                 this.list_1.Sort(this);
                 this.list_0.Sort(this);
