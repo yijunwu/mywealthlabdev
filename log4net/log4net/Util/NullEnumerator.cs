@@ -1,0 +1,40 @@
+﻿namespace log4net.Util
+{
+    using System;
+    using System.Collections;
+
+    public sealed class NullEnumerator : IEnumerator
+    {
+        private static readonly NullEnumerator s_instance = new NullEnumerator();
+
+        private NullEnumerator()
+        {
+        }
+
+        public bool MoveNext()
+        {
+            return false;
+        }
+
+        public void Reset()
+        {
+        }
+
+        public object Current
+        {
+            get
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        public static NullEnumerator Instance
+        {
+            get
+            {
+                return s_instance;
+            }
+        }
+    }
+}
+
