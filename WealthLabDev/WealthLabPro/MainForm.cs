@@ -163,6 +163,9 @@
         private ToolStripMenuItem mniNewCombinationStrategy;
         private ToolStripMenuItem mniNewDataSet;
         private ToolStripMenuItem mniNewDataSetTB;
+
+        private ToolStripMenuItem mniCrossHair;
+
         private ToolStripMenuItem mniNewEditor;
         private ToolStripMenuItem mniNewMultiStrategyBuilder;
         private ToolStripMenuItem mniNewMultiStrategyBuilder2;
@@ -411,7 +414,7 @@
 
         public void btnCrossHair_Click(object sender, EventArgs e)
         {
-            if (sender == null || (sender as ToolStripItem).Name == "btnCrossHair")
+            if (sender == null || (sender as ToolStripItem).Name.Contains("CrossHair"))
             {
                 this.btnCrossHair.Checked = !this.btnCrossHair.Checked;
             }
@@ -1657,6 +1660,9 @@
             this.mniNewCombinationStrategy = new ToolStripMenuItem();
             this.sepNew = new ToolStripSeparator();
             this.mniNewWorkspaceTB = new ToolStripMenuItem();
+
+            this.mniCrossHair = new ToolStripMenuItem(); ///WYJ fix
+
             this.mniNewQuoteDD = new ToolStripMenuItem();
             this.sepNew2 = new ToolStripSeparator();
             this.mniNewDataSetTB = new ToolStripMenuItem();
@@ -2039,6 +2045,7 @@
             this.mniDataWindow.Tag = "CS";
             this.mniDataWindow.Text = "Data &Window";
             this.mniDataWindow.Visible = false;
+            //this.mniDataWindow.ShortcutKeys = Keys.Control | Keys.W; ///WYJ fix
             this.mniDataWindow.Click += new EventHandler(this.btnDataWindow_Click);
             this.mniTools.DropDownItems.AddRange(new ToolStripItem[] { 
                 this.mniHomePage, this.mniAccounts, this.mniOrderManager, this.mniStrategyCenter, this.mniDataManager, this.symbolInfoManagerToolStripMenuItem, this.mniStrategyRanking, this.mniIndexManager, this.sepTools, this.mniIndicators, this.mniFundamentals, this.sepIndicators, this.mniDebug, this.mniQuickRef, this.sepQuickRef, this.mniPreferences, 
@@ -2481,7 +2488,7 @@
             this.btnTrade.Visible = false;
             this.btnTrade.Click += new EventHandler(this.btnTradeTicket_Click);
             this.toolbar.BackColor = Color.FromArgb(0xb8, 0xbf, 0xd3);
-            this.toolbar.GripStyle = ToolStripGripStyle.Hidden;
+            this.toolbar.GripStyle = ToolStripGripStyle.Visible; //WYJ fix: original: ToolStripGripStyle..Hidden;
             this.toolbar.Items.AddRange(new ToolStripItem[] { 
                 this.toolStripDropDownButton1, this.btnOpenStrategy, this.btnSave, this.btnSaveAs, this.sepChartFile, this.btnLogin, this.sepSpacing, this.lblSpacing, this.btnIncreaseSpacing, this.btnRestoreSpacing, this.btnDecreaseSpacing, this.sepBarSpacing, this.tslblChartStyles, this.btnCandleStyle, this.btnBarChart, this.btnLineChart, 
                 this.tsmMoreChartStyles, this.btnLinear, this.btnLog, this.sepChartStyles, this.tslblOptions, this.btnLabelsVisible, this.btnStatusBarVisible, this.btnFundamentalsVisible, this.btnDataWindow, this.btnIndicatorsTB2, this.btnFundamentalsTB2, this.btnClearIndicators, this.btnPushCode, this.btnTradeTicket, this.btnPreferencesTB
@@ -2999,11 +3006,20 @@
             this.dataRange.TabIndex = 1;
             this.dataRange.DataRangeChanged += new EventHandler<EventArgs>(this.method_9);
             this.toolbarDrawing.Dock = DockStyle.Right; ///WYJ fix
-            this.toolbarDrawing.GripStyle = ToolStripGripStyle.Hidden;
+            this.toolbarDrawing.GripStyle = ToolStripGripStyle.Visible; ///WYJ fix, original code: ToolStripGripStyle.Hidden
             //this.toolbarDrawing.Items.AddRange(new ToolStripItem[] { this.btnClearDrawingObjects, this.btnCrossHair, this.sepDeleteDrawing, this.btnTrendline });
-            this.mniNewDataSetTB.Visible = false;
-            this.mniNewDataSetTB.ShortcutKeys = Keys.Control | Keys.P;
-            this.toolbarDrawing.Items.AddRange(new ToolStripItem[] { this.btnClearDrawingObjects, this.btnCrossHair, this.sepDeleteDrawing, this.btnTrendline, this.mniNewDataSetTB });
+
+            this.mniCrossHair.Image = (Image)manager.GetObject("mniNewDataSetTB.Image");
+            this.mniCrossHair.ImageTransparentColor = Color.Fuchsia;
+            this.mniCrossHair.Name = "mniCrossHair";
+            //this.mniCrossHair.ShortcutKeys = Keys.Control | Keys.Shift | Keys.D;
+            this.mniCrossHair.Size = new Size(300, 0x16);
+            this.mniCrossHair.Text = "New DataSet ...";
+            
+            this.mniCrossHair.Click += new EventHandler(this.btnCrossHair_Click);
+            this.mniCrossHair.Visible = false;
+            this.mniCrossHair.ShortcutKeys = Keys.Control | Keys.Q;
+            this.toolbarDrawing.Items.AddRange(new ToolStripItem[] { this.btnClearDrawingObjects, this.btnCrossHair, this.sepDeleteDrawing, this.btnTrendline, this.mniCrossHair });
             this.toolbarDrawing.Location = new Point(0x3ec, 0x4a);
             this.toolbarDrawing.Name = "toolbarDrawing";
             this.toolbarDrawing.Size = new Size(0x18, 0x180);

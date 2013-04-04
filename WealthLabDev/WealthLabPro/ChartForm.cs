@@ -222,6 +222,7 @@
                     this.DecreaseBarSpacing();
                     break;
             }
+            /*
             if (e.KeyData == (Keys.Control | Keys.Q))
             {
                 foreach (Form form in Application.OpenForms)
@@ -231,7 +232,7 @@
                         (form as MainForm).btnCrossHair_Click(null, null);
                     }
                 }
-            }
+            } */
                 
 
         }
@@ -1148,7 +1149,7 @@
             this.editBarToolStripMenuItem.Text = "Edit Bar Data";
             this.editBarToolStripMenuItem.Click += new EventHandler(this.editBarToolStripMenuItem_Click);
             this.tabChart.Controls.Add(this.pageChart);
-            this.tabChart.Dock = DockStyle.Fill;
+            this.tabChart.Dock = DockStyle.Fill; //WYJ fix: original: .Fill;
             this.tabChart.ItemSize = new Size(0x2a, 0x12);
             this.tabChart.Location = new Point(0, 0);
             this.tabChart.Name = "tabChart";
@@ -1336,6 +1337,7 @@
             this.posSize.Visible = false;
             this.chart.AllowDrop = true;
             this.chart.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
+            //this.chart.Anchor = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top; //WYJ fix
             this.chart.ContextMenuStrip = this.popupChart;
             this.chart.Cursor = Cursors.Default;
             this.chart.DragDropManager = this.indicatorDragDropManager_0;
