@@ -1225,7 +1225,7 @@
             string str = MainModule.Instance.Settings.Get("ChartStyleSelected", "");
             if (str != "")
             {
-                form.ChartStyle = this.method_6(str);
+                form.ChartStyle = this.getChartStyleByName(str);
             }
             else
             {
@@ -1247,6 +1247,7 @@
                 this.SelectNode();
                 this.treeDataSources.SelectSymbol(form.DataSource, form.Symbol);
             }
+            //form.Size = new System.Drawing.Size(new Point(300, 300)); ///WYJ fix, specify the size of chart window - Not here, but in the loadWorkspace method
             return form;
         }
 
@@ -1727,8 +1728,8 @@
             this.sepDeleteDrawing = new ToolStripSeparator();
             this.btnTrendline = new ToolStripButton();
             this.splitter = new Splitter();
-            ///WYJ fix
-            this.splitter.DoubleClick += /*this.splitContainerDataPane_DoubleClick;*/ new EventHandler(this.mniViewDataPanel_Click);
+
+            this.splitter.DoubleClick += new EventHandler(this.mniViewDataPanel_Click); ///WYJ fix
             this.saveFileDialog_0 = new SaveFileDialog();
             this.openFileDialog_0 = new OpenFileDialog();
             this.timer_0 = new System.Windows.Forms.Timer(this.icontainer_0);
@@ -4488,7 +4489,8 @@
                 {
                     form.MdiParent = this;
                     form.Show();
-                    form.SetBounds(rectangle2.X, rectangle2.Y, rectangle2.Width, rectangle2.Height);
+                    form.SetBounds(rectangle2.X+5, rectangle2.Y+23, rectangle2.Width+100, rectangle2.Height - 35); ///WYJ fix, change the size and location of the chart window
+                    form.WindowState = FormWindowState.Maximized; ///WYJ fix, maximize the chart window
                     if (form is ChartForm)
                     {
                         ChartForm form2 = form as ChartForm;
@@ -5097,17 +5099,18 @@
             }
         }
 
-        private ChartStyle method_6(string string_1)
+        ///WYJ fix, original signature: private ChartStyle method6(string string_1) 
+        private ChartStyle getChartStyleByName(string chartStyleName)
         {
             ChartStyle chartStyle = null;
             ChartStyle tag = (ChartStyle)this.btnBarChart.Tag;
-            if (tag.FriendlyName != string_1)
+            if (tag.FriendlyName != chartStyleName)
             {
                 tag = (ChartStyle)this.btnCandleStyle.Tag;
-                if (tag.FriendlyName != string_1)
+                if (tag.FriendlyName != chartStyleName)
                 {
                     tag = (ChartStyle)this.btnLineChart.Tag;
-                    if (tag.FriendlyName != string_1)
+                    if (tag.FriendlyName != chartStyleName)
                     {
                         IEnumerator enumerator = this.tsmMoreChartStyles.DropDownItems.GetEnumerator();
                         try
@@ -5120,7 +5123,7 @@
                                     if (current is ToolStripButton)
                                     {
                                         tag = (ChartStyle)current.Tag;
-                                        if (tag.FriendlyName == string_1)
+                                        if (tag.FriendlyName == chartStyleName)
                                         {
                                             chartStyle = tag;
                                             break;
@@ -6246,6 +6249,7 @@
 
         private void timer_2_Tick(object sender, EventArgs e)
         {
+            ///WYJ note: TNP might be some tick number indicating the time left before next check point of authentication
             Random random = new Random();
             if (int_5 > 0)
             {
