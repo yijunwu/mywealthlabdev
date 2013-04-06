@@ -20,14 +20,14 @@
         private bool bool_2 = true;
         private bool bool_3 = true;
         private bool bool_4;
-        private static bool bool_5 = false;
+        private static bool displayCrossHair = false;
         [CompilerGenerated]
         private bool bool_6;
         private ChartMode chartMode_0;
         private ChartPane chartPane_0;
         private ChartRenderer chartRenderer_0;
         private WealthLab.ChartStyle chartStyle_0;
-        private Class2 class2_0;
+        private Class2 cursorPointData;
         private DrawingObjectManager drawingObjectManager_0;
         private Font font_0 = new Font("Vrinda", 8f);
         private GeneralToolTip generalToolTip_0 = new GeneralToolTip();
@@ -502,28 +502,29 @@
                 handler(this, e);
             }
         }
-
-        private void method_5(Graphics graphics_0)
+        
+        ///WYJ fix, original signature: private void method_5(Graphics graphics_0)
+        private void drawCrosshair(Graphics graphics_0)
         {
-            if ((this.class2_0 != null) && (this.class2_0.int_0 < this.Bars.Count))
+            if ((this.cursorPointData != null) && (this.cursorPointData.barNum < this.Bars.Count))
             {
                 Pen pen = new Pen(ChartRenderer.ReverseColor(this.Renderer.BackgroundColor));
                 using (pen)
                 {
                     Brush brush = new SolidBrush(ChartRenderer.ReverseColor(this.Renderer.BackgroundColor));
                     Brush brush2 = new SolidBrush(this.Renderer.BackgroundColor);
-                    int num = this.Renderer.ConvertBarToX(this.class2_0.int_0);
-                    graphics_0.DrawLine(pen, num, 0, num, this.Renderer.ChartHeight);
-                    graphics_0.DrawLine(pen, 0, this.class2_0.int_1, this.Renderer.ChartWidth, this.class2_0.int_1);
-                    string text = this.Bars.Date[this.class2_0.int_0].ToString("d");
+                    int x = this.Renderer.ConvertBarToX(this.cursorPointData.barNum);
+                    graphics_0.DrawLine(pen, x, 0, x, this.Renderer.ChartHeight);
+                    graphics_0.DrawLine(pen, 0, this.cursorPointData.y, this.Renderer.ChartWidth, this.cursorPointData.y);
+                    string text = this.Bars.Date[this.cursorPointData.barNum].ToString("d");
                     SizeF ef = graphics_0.MeasureString(text, this.Font);
-                    RectangleF ef2 = new RectangleF((float) (num + 5), 0f, ef.Width, ef.Height);
+                    RectangleF ef2 = new RectangleF((float) (x + 5), 0f, ef.Width, ef.Height);
                     graphics_0.DrawRectangle(pen, Rectangle.Ceiling(ef2));
                     graphics_0.FillRectangle(brush, Rectangle.Ceiling(ef2));
                     graphics_0.DrawString(text, this.Font, brush2, ef2);
-                    string str2 = this.class2_0.double_0.ToString("F02");
+                    string str2 = this.cursorPointData.doubleValue.ToString("F02");
                     ef = graphics_0.MeasureString(str2, this.Font);
-                    RectangleF ef3 = new RectangleF(0f, (float) (this.class2_0.int_1 - 15), ef.Width, ef.Height);
+                    RectangleF ef3 = new RectangleF(0f, (float) (this.cursorPointData.y - 15), ef.Width, ef.Height);
                     graphics_0.DrawRectangle(pen, Rectangle.Ceiling(ef3));
                     graphics_0.FillRectangle(brush, Rectangle.Ceiling(ef3));
                     graphics_0.DrawString(str2, this.Font, brush2, ef3);
@@ -586,18 +587,142 @@
 
         protected override void OnKeyDown(KeyEventArgs keyEventArgs_0)
         {
-            if (keyEventArgs_0.Control && (this.Bars != null))
+            if (/*keyEventArgs_0.Control &&*/ (this.Bars != null))
             {
-                if (keyEventArgs_0.KeyCode == Keys.Home)
+                if (keyEventArgs_0.KeyCode == Keys.Home && keyEventArgs_0.Control)
                 {
                     this.ScrollToBar(0);
+                    base.OnKeyDown(keyEventArgs_0);
+                    return;
                 }
-                else if (keyEventArgs_0.KeyCode == Keys.End)
+                else if (keyEventArgs_0.KeyCode == Keys.End && keyEventArgs_0.Control)
                 {
                     this.ScrollToBar(this.Bars.Count - 1);
+                    base.OnKeyDown(keyEventArgs_0);
+                    return;
+                }
+                int moveBy = 0;
+                switch (keyEventArgs_0.KeyCode)
+                {
+                    case Keys.Left:
+                        if (this.Mode == ChartMode.SetCrosshairLocation)
+                        {
+                            if (keyEventArgs_0.Control)
+                                moveBy = 10;
+                            else
+                                moveBy = 1;
+
+                            int cursorPointBar = 0;
+                            double doubleValue = 100;//current.ConvertYToValue(y);
+                            int y = 300;
+
+                            if (this.cursorPointData != null)
+                            {
+                                //find barNum, doubleValue, y
+                                this.cursorPointData.barNum -= moveBy;
+                                if (this.cursorPointData.barNum < 0)
+                                    this.cursorPointData.barNum = 0;
+
+                                if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
+                                    this.cursorPointData.barNum = this.chartRenderer_0.RightEdgeBar;
+
+                                cursorPointBar = this.cursorPointData.barNum;
+
+                                if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar + 1)
+                                {
+                                    moveBy = this.chartRenderer_0.LeftEdgeBar + 1 - this.cursorPointData.barNum;
+                                    this.ScrollBy(moveBy);
+                                }
+                            }
+                            else
+                            {
+                                cursorPointBar = this.Renderer.ConvertXToBar(10000);
+                                if (cursorPointBar == -1)
+                                {
+                                    cursorPointBar = this.Renderer.RightEdgeBar;
+                                }
+                            }
+
+                            doubleValue = this.Bars.Close[cursorPointBar];
+                            y = this.chartRenderer_0.PricePane.ConvertValueToY(doubleValue);
+                            this.cursorPointData.doubleValue = doubleValue;
+                            this.cursorPointData.y = y;
+
+                            base.Invalidate();
+
+                        }
+                        else
+                        {
+                            if (keyEventArgs_0.Control)
+                                moveBy = 40;
+                            else
+                                moveBy = 10;
+                            this.ScrollBy(moveBy);
+                        }
+                        break;
+
+                    case Keys.Right:
+                        if (this.Mode == ChartMode.SetCrosshairLocation)
+                        {
+                            if (keyEventArgs_0.Control)
+                                moveBy = 10;
+                            else
+                                moveBy = 1;
+
+                            int cursorPointBar = 0;
+                            double doubleValue = 100;//current.ConvertYToValue(y);
+                            int y = 300;
+
+                            if (this.cursorPointData != null)
+                            {
+                                //find barNum, doubleValue, y
+                                this.cursorPointData.barNum+=moveBy;
+
+                                if (this.cursorPointData.barNum >= this.Bars.Count)
+                                    this.cursorPointData.barNum = this.Bars.Count - 1;
+
+                                if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar)
+                                    this.cursorPointData.barNum = this.chartRenderer_0.LeftEdgeBar;
+
+                                cursorPointBar = this.cursorPointData.barNum;
+
+                                if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
+                                {
+                                    moveBy = this.cursorPointData.barNum - this.chartRenderer_0.RightEdgeBar;
+                                    this.ScrollBy(-1*moveBy);
+                                }
+                            }
+                            else
+                            {
+                                cursorPointBar = this.Renderer.ConvertXToBar(10000);
+                                if (cursorPointBar == -1)
+                                {
+                                    cursorPointBar = this.Renderer.LeftEdgeBar;
+                                }
+                            }
+
+                            doubleValue = this.Bars.Close[cursorPointBar];
+                            y = this.chartRenderer_0.PricePane.ConvertValueToY(doubleValue);
+                            this.cursorPointData.doubleValue = doubleValue;
+                            this.cursorPointData.y = y;
+
+                            base.Invalidate();
+
+                        }
+                        else
+                        {
+                            if (keyEventArgs_0.Control)
+                                moveBy = -40;
+                            else
+                                moveBy = -10;
+                            this.ScrollBy(moveBy);///WYJ fix
+                        }
+                        break;
                 }
                 base.OnKeyDown(keyEventArgs_0);
             }
+
+            
         }
 
         protected override void OnMouseClick(MouseEventArgs mouseEventArgs_0)
@@ -717,7 +842,7 @@
                 }
                 else if (mevent.Button == MouseButtons.Left)
                 {
-                    if (bool_5)
+                    if (displayCrossHair)
                     {
                         this.Mode = ChartMode.SetCrosshairLocation;
                     }
@@ -756,7 +881,9 @@
             base.OnMouseLeave(eventArgs_0);
         }
 
-        protected override void OnMouseMove(MouseEventArgs mevent)
+        ///WYJ fix: code from Reflector
+        
+        protected /*override*/ void OnMouseMove2(MouseEventArgs mevent)
         {
             try
             {
@@ -769,7 +896,7 @@
                 Position position = null;
                 int x = mevent.X;
                 int y = mevent.Y;
-                if ((this.Mode == ChartMode.SetCrosshairLocation) && !bool_5)
+                if ((this.Mode == ChartMode.SetCrosshairLocation) && !displayCrossHair)
                 {
                     this.Mode = ChartMode.Normal;
                 }
@@ -867,21 +994,21 @@
                         }
                         if ((this.Mode == ChartMode.SetCrosshairLocation) && (mevent.Button == MouseButtons.Left))
                         {
-                            int rightEdgeBar = this.Renderer.ConvertXToBar(x);
-                            if (rightEdgeBar == -1)
+                            int cursorPointBar = this.Renderer.ConvertXToBar(x);
+                            if (cursorPointBar == -1)
                             {
-                                rightEdgeBar = this.Renderer.RightEdgeBar;
+                                cursorPointBar = this.Renderer.RightEdgeBar;
                             }
-                            double num12 = current.ConvertYToValue(y);
-                            if (this.class2_0 != null)
+                            double pointValue = current.ConvertYToValue(y);
+                            if (this.cursorPointData != null)
                             {
-                                this.class2_0.int_0 = rightEdgeBar;
-                                this.class2_0.double_0 = num12;
-                                this.class2_0.int_1 = y;
+                                this.cursorPointData.barNum = cursorPointBar;
+                                this.cursorPointData.doubleValue = pointValue;
+                                this.cursorPointData.y = y;
                             }
                             else
                             {
-                                this.class2_0 = new Class2(rightEdgeBar, num12, y);
+                                this.cursorPointData = new Class2(cursorPointBar, pointValue, y);
                             }
                             base.Invalidate();
                             base.OnMouseMove(mevent);
@@ -1087,6 +1214,374 @@
             base.OnMouseMove(mevent);
         }
 
+        ///WYJ fix, code from JustDecompile, protected override void OnMouseMove(MouseEventArgs mevent)
+        protected override void OnMouseMove(MouseEventArgs mevent)
+        {
+            bool flag;
+            bool flag1;
+            bool flag2;
+            bool flag3;
+            try
+            {
+                bool flag4 = false;
+                bool flag5 = false;
+                bool flag6 = false;
+                bool flag7 = false;
+                PlottedIndicator plottedIndicator = null;
+                PlottedIndicator plottedIndicator1 = null;
+                Position position = null;
+                int x = mevent.X;
+                int y = mevent.Y;
+                if (this.Mode == ChartMode.SetCrosshairLocation && !Chart.displayCrossHair)
+                {
+                    this.Mode = ChartMode.Normal;
+                }
+                lock (this.object_0)
+                {
+                    if (this.HasValidChart)
+                    {
+                        int bar = this.chartRenderer_0.ConvertXToBar(x);
+                        if (bar > this.chartRenderer_0.RightEdgeBar)
+                        {
+                            bar = this.chartRenderer_0.RightEdgeBar;
+                        }
+                        int num = bar;
+                        if (this.Mode == ChartMode.DragScrollChart)
+                        {
+                            if (bar != this.int_0)
+                            {
+                                int int0 = bar - this.int_0;
+                                int count = this.hscrollBar_0.Value - int0;
+                                if (count < 0)
+                                {
+                                    count = 0;
+                                }
+                                if (count > this.bars_0.Count)
+                                {
+                                    count = this.bars_0.Count;
+                                }
+                                this.hscrollBar_0.Value = count;
+                                this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.ThumbPosition, this.hscrollBar_0.Value));
+                                base.Invalidate();
+                            }
+                            this.method_2();
+                            base.OnMouseMove(mevent);
+                            return;
+                        }
+                        else //(this.Mode != ChartMode.DragScrollChart)
+                        {
+                            ChartPane chartPane = null;
+                            IEnumerator<ChartPane> enumerator = this.chartRenderer_0.Panes.GetEnumerator();
+                            using (enumerator)
+                            {
+                                while (enumerator.MoveNext())
+                                {
+                                    ChartPane current = enumerator.Current;
+                                    if (this.Mode != ChartMode.SetCrosshairLocation)
+                                    {
+                                        if (current.IsPricePane || mevent.Button != MouseButtons.None || (y <= current.Top || y > current.Top + 4 || current.AbovePricePane) && (y >= current.Top + current.Height || y < current.Top + current.Height - 4 || !current.AbovePricePane))
+                                        {
+                                            if (this.Mode == ChartMode.ResizingPaneMode && mevent.Button != MouseButtons.Left)
+                                            {
+                                                this.Mode = ChartMode.Normal;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            this.Mode = ChartMode.ResizingPaneMode;
+                                            this.Mode = ChartMode.ResizingPaneMode;
+                                        }
+                                    }
+                                    if (chartPane != null)
+                                    {
+                                        if (current.Top > chartPane.Top)
+                                        {
+                                            chartPane = current;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        chartPane = current;
+                                    }
+                                    if (y >= current.Top && y < current.Top + current.Height)
+                                    {
+                                        if (this.eventHandler_0 != null)
+                                        {
+                                            if (x > base.Width - this.Renderer.MarginRightWidth)
+                                            {
+                                                num = -1;
+                                                bar = this.chartRenderer_0.RightEdgeBar;
+                                            }
+                                            this.eventHandler_0(this, new BarNumberEventArgs(num, current.ConvertYToValue(y), current));
+                                        }
+                                        
+                                        if (bar >= 0 && this.Mode == ChartMode.ResizingPaneMode && mevent.Button == MouseButtons.Left)
+                                        {
+                                            if (this.chartPane_0.AbovePricePane)
+                                                this.int_3 += y - this.int_2;
+                                            else
+                                                this.int_3 += this.int_2 - y;
+
+                                            this.int_2 = y;
+                                            base.Invalidate();
+                                            base.OnMouseMove(mevent);
+                                            return;
+                                        } 
+                                        //if (bar < 0 || this.Mode != ChartMode.ResizingPaneMode || mevent.Button != MouseButtons.Left)
+                                        else if (this.Mode == ChartMode.SetCrosshairLocation && mevent.Button == MouseButtons.Left)
+                                        {
+                                            int cursorPointBar = this.Renderer.ConvertXToBar(x);
+                                            if (cursorPointBar == -1)
+                                            {
+                                                cursorPointBar = this.Renderer.RightEdgeBar;
+                                            }
+                                            double value1 = current.ConvertYToValue(y);
+                                            if (this.cursorPointData == null)
+                                            {
+                                                this.cursorPointData = new Chart.Class2(cursorPointBar, value1, y);
+                                            }
+                                            else
+                                            {
+                                                this.cursorPointData.barNum = cursorPointBar;
+                                                this.cursorPointData.doubleValue = value1;
+                                                this.cursorPointData.y = y;
+                                            }
+                                            base.Invalidate();
+                                            base.OnMouseMove(mevent);
+                                            return;
+                                        }
+                                        //if (this.Mode != ChartMode.SetCrosshairLocation || mevent.Button != MouseButtons.Left)
+                                        else if (bar >= 0 && this.Mode == ChartMode.DraggingHandle)
+                                        {
+                                            ChartDrawingObjectHandle selectedHandle = this.drawingObjectManager_0.SelectedHandle;
+                                            selectedHandle.Date = this.Bars.Date[bar];
+                                            ChartPane pane = selectedHandle.Owner.Pane;
+                                            double value = pane.ConvertYToValue(y);
+                                            if (!selectedHandle.SnapToValue)
+                                            {
+                                                selectedHandle.Value = value;
+                                            }
+                                            else
+                                            {
+                                                if (!pane.IsPricePane)
+                                                {
+                                                    if (pane.PlottedIndicators.Count != 0)
+                                                    {
+                                                        double num3 = double.MaxValue;
+                                                        PlottedIndicator plottedIndicator2 = null;
+                                                        foreach (PlottedIndicator plottedIndicator3 in pane.PlottedIndicators)
+                                                        {
+                                                            double num4 = Math.Abs(plottedIndicator3.Series[bar] - value);
+                                                            if (num4 >= num3)
+                                                            {
+                                                                continue;
+                                                            }
+                                                            num3 = num4;
+                                                            plottedIndicator2 = plottedIndicator3;
+                                                        }
+                                                        if (plottedIndicator2 != null)
+                                                        {
+                                                            selectedHandle.Value = plottedIndicator2.Series[bar];
+                                                        }
+                                                        else
+                                                        {
+                                                            selectedHandle.Value = value;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        selectedHandle.Value = value;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (value < this.Bars.Low[bar] || value > this.Bars.High[bar])
+                                                    {
+                                                        if (value > this.Bars.Low[bar])
+                                                        {
+                                                            selectedHandle.Value = this.Bars.High[bar];
+                                                        }
+                                                        else
+                                                        {
+                                                            selectedHandle.Value = this.Bars.Low[bar];
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (Math.Abs(value - this.Bars.Open[bar]) >= Math.Abs(value - this.Bars.Close[bar]))
+                                                        {
+                                                            selectedHandle.Value = this.Bars.Close[bar];
+                                                        }
+                                                        else
+                                                        {
+                                                            selectedHandle.Value = this.Bars.Open[bar];
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            selectedHandle.Owner.OnDrag(selectedHandle);
+                                            base.Invalidate();
+                                            this.method_2();
+                                            base.OnMouseMove(mevent);
+                                            return;
+                                        }
+                                        else //if (bar < 0 || this.Mode != ChartMode.DraggingHandle)
+                                        {
+                                            if (num < 0)
+                                            {
+                                                break;
+                                            }
+                                            if (this.DrawingManager != null && this.DrawingManager.method_4(current, mevent.X, mevent.Y))
+                                            {
+                                                base.Invalidate();
+                                            }
+                                            if (current.HideDisplayPaneButton(x, y))
+                                            {
+                                                this.method_0(this.generalToolTip_0, x, y);
+                                                this.generalToolTip_0.RenderValue(current.GetHashCode(), current.HideDisplayPaneTooltip);
+                                                flag6 = true;
+                                            }
+                                            if (flag6 || current.Hidden)
+                                            {
+                                                break;
+                                            }
+                                            IEnumerator<PlottedIndicator> enumerator1 = current.PlottedIndicators.GetEnumerator();
+                                            using (enumerator1)
+                                            {
+                                                while (enumerator1.MoveNext())
+                                                {
+                                                    PlottedIndicator current1 = enumerator1.Current;
+                                                    DataSeries series = current1.Series;
+                                                    if (series.FirstValidValue <= bar)
+                                                    {
+                                                        int y1 = current.ConvertValueToY(series[bar]);
+                                                        if (Math.Abs(y - y1) <= Chart.PixelSensitivity)
+                                                        {
+                                                            if (this.indicatorToolTip_0.RepositionRequired(current1, bar))
+                                                            {
+                                                                this.method_0(this.indicatorToolTip_0, x, y);
+                                                                this.indicatorToolTip_0.RenderValue(current1, bar);
+                                                            }
+                                                            flag5 = true;
+                                                            plottedIndicator1 = current1;
+                                                            if (this.Mode != ChartMode.DraggingIndicator || !this.bool_4)
+                                                            {
+                                                                break;
+                                                            }
+                                                            plottedIndicator = current1;
+                                                            current1.Selected = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                            
+                                                }
+                                            }
+                                            if (current == this.chartRenderer_0.PricePane && !flag5)
+                                            {
+                                                int num1 = current.ConvertValueToY(this.bars_0.High[bar]);
+                                                int y2 = current.ConvertValueToY(this.bars_0.Low[bar]);
+                                                if (y >= num1 && y <= y2)
+                                                {
+                                                    if (this.priceToolTip_0.RepositionRequired(this.bars_0, bar))
+                                                    {
+                                                        this.method_0(this.priceToolTip_0, x, y);
+                                                        this.priceToolTip_0.RenderValues(this.bars_0, bar);
+                                                    }
+                                                    flag4 = true;
+                                                }
+                                                List<ChartGlyph>.Enumerator enumerator2 = this.chartRenderer_0.Glyphs.GetEnumerator();
+                                                try
+                                                {
+                                                    while (enumerator2.MoveNext())
+                                                    {
+                                                        ChartGlyph chartGlyph = enumerator2.Current;
+                                                        if ((!chartGlyph.IsTrade || this.chartRenderer_0.TradeAnnotationsVisible) && x >= chartGlyph.X && y >= chartGlyph.Y && x <= chartGlyph.X + chartGlyph.Width && y <= chartGlyph.Y + chartGlyph.Height)
+                                                        {
+                                                            if (this.glyphToolTip_0.RepositionRequired(chartGlyph))
+                                                            {
+                                                                this.glyphToolTip_0.Glyph = chartGlyph;
+                                                                this.method_0(this.glyphToolTip_0, x, y);
+                                                            }
+                                                            flag7 = true;
+                                                            position = chartGlyph.Position;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                finally
+                                                {
+                                                    ((IDisposable)enumerator2).Dispose();
+                                                }
+                                            }
+                                            IEnumerator<PlottedSymbol> enumerator3 = current.PlottedSymbols.GetEnumerator();
+                                            using (enumerator3)
+                                            {
+                                                while (enumerator3.MoveNext())
+                                                {
+                                                    PlottedSymbol plottedSymbol = enumerator3.Current;
+                                                    int num2 = current.ConvertValueToY(plottedSymbol.Bars.High[bar]);
+                                                    int y3 = current.ConvertValueToY(plottedSymbol.Bars.Low[bar]);
+                                                    if (y < num2 || y > y3)
+                                                    {
+                                                        continue;
+                                                    }
+                                                    if (this.priceToolTip_0.RepositionRequired(plottedSymbol.Bars, bar))
+                                                    {
+                                                        this.method_0(this.priceToolTip_0, x, y);
+                                                        this.priceToolTip_0.RenderValues(plottedSymbol.Bars, bar);
+                                                    }
+                                                    flag4 = true;
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if (this.indicatorDragDropManager_0 != null)
+                            {
+                                this.indicatorDragDropManager_0.SelectedIndicator = plottedIndicator1;
+                            }
+                            PriceToolTip priceToolTip0 = this.priceToolTip_0;
+                            flag = (!flag4 || this.Mode != ChartMode.Normal ? false : this.bool_1);
+                            priceToolTip0.Visible = flag;
+                            IndicatorToolTip indicatorToolTip0 = this.indicatorToolTip_0;
+                            flag1 = (!flag5 || this.Mode != ChartMode.Normal ? false : this.bool_2);
+                            indicatorToolTip0.Visible = flag1;
+                            GeneralToolTip generalToolTip0 = this.generalToolTip_0;
+                            flag2 = (!flag6 ? false : this.Mode == ChartMode.Normal);
+                            generalToolTip0.Visible = flag2;
+                            GlyphToolTip glyphToolTip0 = this.glyphToolTip_0;
+                            flag3 = (!flag7 || this.Mode != ChartMode.Normal ? false : this.bool_3);
+                            glyphToolTip0.Visible = flag3;
+                            if (this.position_0 != position)
+                            {
+                                this.position_0 = position;
+                                base.Invalidate();
+                            }
+                        }
+                        
+                    }
+                }
+                if (this.plottedIndicator_0 != plottedIndicator)
+                {
+                    if (this.plottedIndicator_0 != null)
+                    {
+                        this.plottedIndicator_0.Selected = false;
+                    }
+                    this.plottedIndicator_0 = plottedIndicator;
+                    base.Invalidate();
+                }
+                base.OnMouseMove(mevent);
+                return;
+            }
+            catch
+            {
+                base.OnMouseMove(mevent);
+                return;
+            }
+        }
+
         protected override void OnMouseUp(MouseEventArgs mevent)
         {
             if (((this.Mode == ChartMode.ResizingPaneMode) && (mevent.Button == MouseButtons.Left)) && (this.int_3 != 0))
@@ -1129,7 +1624,7 @@
                 this.drawingObjectManager_0.SaveDrawingObjects(this.Bars);
                 this.Refresh();
             }
-            if (!bool_5)
+            if (!displayCrossHair)
             {
                 this.Mode = ChartMode.Normal;
             }
@@ -1187,10 +1682,10 @@
                         }
                         this.Renderer.ClipToPane(graphics, null);
                     }
-                    if (bool_5)
+                    if (displayCrossHair)
                     {
                         this.Mode = ChartMode.SetCrosshairLocation;
-                        this.method_5(graphics);
+                        this.drawCrosshair(graphics);
                     }
                     if ((this.Mode == ChartMode.ResizingPaneMode) && (this.int_3 != 0))
                     {
@@ -1355,11 +1850,11 @@
         {
             get
             {
-                return bool_5;
+                return displayCrossHair;
             }
             set
             {
-                bool_5 = value;
+                displayCrossHair = value;
             }
         }
 
@@ -1544,15 +2039,15 @@
 
         private class Class2
         {
-            public double double_0;
-            public int int_0;
-            public int int_1;
+            public double doubleValue;
+            public int barNum;
+            public int y;
 
-            public Class2(int int_2, double double_1, int int_3)
+            public Class2(int bar, double pointValue, int y)
             {
-                this.int_0 = int_2;
-                this.double_0 = double_1;
-                this.int_1 = int_3;
+                this.barNum = bar;
+                this.doubleValue = pointValue;
+                this.y = y;
             }
         }
     }
