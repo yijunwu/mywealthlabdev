@@ -38,7 +38,7 @@ internal class Class51
             string item = this.method_2(str);
             if ((item != null) && !this.list_1.Contains(item))
             {
-                Application.Exit();
+                //Application.Exit();  ///WYJ fix
             }
         }
     }
