@@ -15,13 +15,13 @@
     public class YahooStaticProvider : StaticDataProvider
     {
         private BarDataStore barDataStore_0;
-        private static Class16 class16_0;
+        private static Class16 classificationGroupsUpdater;
         private Class22 class22_0;
         private Class26 class26_0;
         private Dictionary<string, string> dictionary_0 = new Dictionary<string, string>();
         private IDataUpdateMessage idataUpdateMessage_0;
-        private int int_0;
-        private int int_1;
+        private int numberOfSymbolsToUpdate;
+        private int numberOfSymbolsUpdated;
         private List<string> list_1 = new List<string>();
         private object object_0 = new object();
         private static string string_0;
@@ -45,7 +45,7 @@
         public override void CancelUpdate()
         {
             Class21.smethod_8(new object[0]);
-            this.class26_0.method_14();
+            this.class26_0.CancelUpdate();
         }
 
         public override DataSource CreateDataSource()
@@ -73,7 +73,7 @@
         public override void DeleteSymbolDataFile(DataSource dataSource_0, string symbol)
         {
             Class21.smethod_8(new object[0]);
-            this.barDataStore_0.RemoveFile(Class23.smethod_1(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
+            this.barDataStore_0.RemoveFile(Class23.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
         }
 
         public override void Initialize(IDataHost dataHost)
@@ -83,9 +83,9 @@
             this.barDataStore_0 = new BarDataStore(dataHost, this);
             string_0 = this.barDataStore_0.RootPath;
             this.class26_0 = new Class26();
-            this.class26_0.method_0(new Class26.Delegate1(this.method_1));
-            this.class26_0.method_2(new Class26.Delegate2(this.method_0));
-            class16_0 = new Class16(string_0 + "YahooClassification.xml", "http://67.199.28.171/Classification/Yahoo/YahooClassification.xml");
+            this.class26_0.AddStaticDataHandler(new Class26.Delegate1(this.onData));
+            this.class26_0.AddStaticErrorHandler(new Class26.Delegate2(this.onError));
+            classificationGroupsUpdater = new Class16(string_0 + "YahooClassification.xml", "http://67.199.28.171/Classification/Yahoo/YahooClassification.xml");
             if (yahooClientSettings_0 == null)
             {
                 yahooClientSettings_0 = YahooClientSettings.Deserialize(string_0);
@@ -97,44 +97,44 @@
             ServicePointManager.FindServicePoint(new Uri("http://ichart.finance.yahoo.com"));
         }
 
-        private void method_0(object sender, EventArgs3 e)
+        private void onError(object sender, EventArgs3 e)  ///WYJ note: looks like an error handler
         {
             Class21.smethod_8(new object[0]);
             if (e.class27_0 != null)
             {
-                this.int_1++;
-                this.method_4(e.class27_0.method_0(), "Error: " + e.exception_0.Message, Thread.CurrentThread.Name);
-                this.method_2();
+                this.numberOfSymbolsUpdated++;
+                this.DisplayUpdateMessage(e.class27_0.getSymbol(), "Error: " + e.exception_0.Message, Thread.CurrentThread.Name);
+                this.DisplayUpdateProgress();
             }
             else
             {
-                this.method_3("Thread (" + Thread.CurrentThread.Name + ") execution error! " + e.exception_0.Message);
+                this.DisplayUpdateMessage("Thread (" + Thread.CurrentThread.Name + ") execution error! " + e.exception_0.Message);
             }
         }
 
-        private void method_1(object sender, EventArgs2 e)
+        private void onData(object sender, EventArgs2 e) ///WYJ fix, update Bars for security
         {
             Class21.smethod_8(new object[0]);
-            if ((e.class27_0.method_1() & Enum4.flag_0) != 0)
+            if ((e.class27_0.getDataType() & Enum4.flag_0) != 0)
             {
                 if (e.bars_0 != null)
                 {
                     int num2;
                     lock (this.list_1)
                     {
-                        if (this.list_1.Contains(e.class27_0.method_0()))
+                        if (this.list_1.Contains(e.class27_0.getSymbol()))
                         {
-                            this.barDataStore_0.RemoveFile(Class23.smethod_1(e.class27_0.method_0()), BarScale.Daily, 0);
-                            this.list_1.Remove(e.class27_0.method_0());
+                            this.barDataStore_0.RemoveFile(Class23.encode(e.class27_0.getSymbol()), BarScale.Daily, 0);
+                            this.list_1.Remove(e.class27_0.getSymbol());
                         }
                     }
-                    Bars bars = new Bars(Class23.smethod_1(e.class27_0.method_0()), BarScale.Daily, 0);
+                    Bars bars = new Bars(Class23.encode(e.class27_0.getSymbol()), BarScale.Daily, 0);
                     this.barDataStore_0.LoadBarsObject(bars);
                     int count = bars.Count;
                     bars.AppendWithCorrections(e.bars_0, out num2);
-                    if (this.dictionary_0.ContainsKey(e.class27_0.method_0()))
+                    if (this.dictionary_0.ContainsKey(e.class27_0.getSymbol()))
                     {
-                        string str = this.dictionary_0[e.class27_0.method_0()];
+                        string str = this.dictionary_0[e.class27_0.getSymbol()];
                         if (str != string.Empty)
                         {
                             bars.SecurityName = str.ToUpper();
@@ -144,9 +144,9 @@
                     {
                         this.barDataStore_0.SaveBarsObject(bars);
                     }
-                    this.int_1++;
-                    this.method_5(bars, count, num2, Thread.CurrentThread.Name);
-                    this.method_2();
+                    this.numberOfSymbolsUpdated++;
+                    this.DisplayUpdateMessage(bars, count, num2, Thread.CurrentThread.Name);
+                    this.DisplayUpdateProgress();
                 }
                 if (e.class28_0 != null)
                 {
@@ -155,8 +155,8 @@
                         this.yahooFundamentalProvider_0 = new YahooFundamentalProvider();
                         this.yahooFundamentalProvider_0.Initialize(base.DataHost);
                     }
-                    this.yahooFundamentalProvider_0.UpdateData(e.class27_0.method_0(), e.class28_0.method_0(), "Dividend (Yahoo! Finance)");
-                    this.yahooFundamentalProvider_0.UpdateData(e.class27_0.method_0(), e.class28_0.method_2(), "Split (Yahoo! Finance)");
+                    this.yahooFundamentalProvider_0.UpdateData(e.class27_0.getSymbol(), e.class28_0.getDividend(), "Dividend (Yahoo! Finance)");
+                    this.yahooFundamentalProvider_0.UpdateData(e.class27_0.getSymbol(), e.class28_0.getSplit(), "Split (Yahoo! Finance)");
                 }
             }
         }
@@ -192,15 +192,15 @@
             return new Class19(list, list2, enum2);
         }
 
-        private void method_2()
+        private void DisplayUpdateProgress()
         {
             if (this.idataUpdateMessage_0 != null)
             {
-                this.idataUpdateMessage_0.ReportUpdateProgress((this.int_1 * 100) / this.int_0);
+                this.idataUpdateMessage_0.ReportUpdateProgress((this.numberOfSymbolsUpdated * 100) / this.numberOfSymbolsToUpdate);
             }
         }
 
-        private void method_3(string string_1)
+        private void DisplayUpdateMessage(string string_1)
         {
             if (this.idataUpdateMessage_0 != null)
             {
@@ -208,7 +208,7 @@
             }
         }
 
-        private void method_4(string string_1, string string_2, string string_3)
+        private void DisplayUpdateMessage(string string_1, string string_2, string string_3)
         {
             if (this.idataUpdateMessage_0 != null)
             {
@@ -216,7 +216,7 @@
             }
         }
 
-        private void method_5(Bars bars_0, int int_2, int int_3, string string_1)
+        private void DisplayUpdateMessage(Bars bars_0, int int_2, int int_3, string string_1)
         {
             if (this.idataUpdateMessage_0 != null)
             {
@@ -248,31 +248,32 @@
             return true;
         }
 
-        private void method_7(DataSource dataSource_0)
+        ///WYJ fix, original name: method_7
+        private void updateClassificationGroups(DataSource dataSource_0)  ///WYJ note: update group specification for data source
         {
             Class21.smethod_8(new object[0]);
             YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
-            if (((this.class22_0 == null) || !class16_0.method_5()) || class16_0.method_8(1))
+            if (((this.class22_0 == null) || !classificationGroupsUpdater.FileExists()) || classificationGroupsUpdater.IsLastUpdatedDaysAgo(1))
             {
-                if (!class16_0.method_5() || class16_0.method_8(1))
+                if (!classificationGroupsUpdater.FileExists() || classificationGroupsUpdater.IsLastUpdatedDaysAgo(1))
                 {
-                    this.method_3("Updating the Classification Groups file...");
-                    class16_0.method_7(false);
-                    if (class16_0.method_4() != null)
+                    this.DisplayUpdateMessage("Updating the Classification Groups file...");
+                    classificationGroupsUpdater.UpdateClassificationGroupsFile(false);
+                    if (classificationGroupsUpdater.GetException() != null)
                     {
-                        this.method_3("Error: " + class16_0.method_4().Message);
+                        this.DisplayUpdateMessage("Error: " + classificationGroupsUpdater.GetException().Message);
                         return;
                     }
-                    this.method_3("Classification file updated.");
+                    this.DisplayUpdateMessage("Classification file updated.");
                 }
-                this.class22_0 = new Class22(class16_0.method_6());
+                this.class22_0 = new Class22(classificationGroupsUpdater.ReadClassificationGroupFromFile());
             }
-            this.method_3("Checking the DataSet's Classification groups composition:");
+            this.DisplayUpdateMessage("Checking the DataSet's Classification groups composition:");
             Class17 class2 = new Class17(settings.Groups, Enum0.const_0);
             Class17 class3 = new Class17(settings.Symbols, Enum0.const_0);
             Class17 class4 = this.class22_0.method_3(class3, class2.list_0.ToArray());
-            this.method_3(string.Format("Symbols deleted {0}: {1}", this.class22_0.method_0().list_0.Count, this.class22_0.method_0().ToString()));
-            this.method_3(string.Format("Symbols added {0}: {1}", this.class22_0.method_1().list_0.Count, this.class22_0.method_1().ToString()));
+            this.DisplayUpdateMessage(string.Format("Symbols deleted {0}: {1}", this.class22_0.method_0().list_0.Count, this.class22_0.method_0().ToString()));
+            this.DisplayUpdateMessage(string.Format("Symbols added {0}: {1}", this.class22_0.method_1().list_0.Count, this.class22_0.method_1().ToString()));
             if ((this.class22_0.method_0().list_0.Count > 0) || (this.class22_0.method_1().list_0.Count > 0))
             {
                 string str = Directory.GetParent(string_0).Parent.FullName + @"\DataSets\";
@@ -285,20 +286,20 @@
         private void method_8(ref Class27 class27_0, SymbolInfoList symbolInfoList_0, DateTime dateTime_0)
         {
             DateTime time = dateTime_0;
-            DateTime time2 = symbolInfoList_0.Search(class27_0.method_0(), BarScale.Daily, 0);
+            DateTime time2 = symbolInfoList_0.Search(class27_0.getSymbol(), BarScale.Daily, 0);
             if (time < time2)
             {
                 class27_0.method_6(time);
                 if (time2 != DateTime.MaxValue)
                 {
-                    this.list_1.Add(class27_0.method_0());
+                    this.list_1.Add(class27_0.getSymbol());
                 }
-                symbolInfoList_0.Add(class27_0.method_0(), BarScale.Daily, 0, time);
+                symbolInfoList_0.Add(class27_0.getSymbol(), BarScale.Daily, 0, time);
             }
             else
             {
                 class27_0.method_6(time2);
-                DateTime time3 = this.barDataStore_0.SymbolLastUpdated(Class23.smethod_1(class27_0.method_0()), BarScale.Daily, 0);
+                DateTime time3 = this.barDataStore_0.SymbolLastUpdated(Class23.encode(class27_0.getSymbol()), BarScale.Daily, 0);
                 if (time3 != DateTime.MinValue)
                 {
                     time = time3.AddDays(-10.0);
@@ -307,23 +308,23 @@
             class27_0.method_4(time);
         }
 
-        private void method_9(List<Class27> list_2)
+        private void updateSecurityNames(List<Class27> list_2)
         {
             try
             {
-                this.method_3("Updating Security Names for " + list_2.Count + " symbols...");
-                this.dictionary_0 = this.class26_0.method_32(list_2);
+                this.DisplayUpdateMessage("Updating Security Names for " + list_2.Count + " symbols...");
+                this.dictionary_0 = this.class26_0.GetSymbolNames(list_2);
                 Class21.smethod_2("Sec. Names");
                 foreach (KeyValuePair<string, string> pair in this.dictionary_0)
                 {
                     Class21.smethod_2(pair.Key + " " + pair.Value);
                 }
                 Class21.smethod_2("-----");
-                this.method_3("Security Names updated.");
+                this.DisplayUpdateMessage("Security Names updated.");
             }
             catch (Exception exception)
             {
-                this.method_3("Error updating Security Names. " + exception.Message);
+                this.DisplayUpdateMessage("Error updating Security Names. " + exception.Message);
             }
         }
 
@@ -363,19 +364,19 @@
                     }
                     SymbolInfoList list = SymbolInfoList.Deserialize(string_0 + "SymbolsStartDate.xml");
                     list.Synchronize(this.barDataStore_0);
-                    Class27 class2 = new Class27(symbol);
-                    this.method_8(ref class2, list, settings.StartDate);
-                    class2.method_8(DateTime.Now.AddDays(2.0));
-                    class2.method_2(Enum4.flag_1 | Enum4.flag_0);
+                    Class27 class27 = new Class27(symbol);
+                    this.method_8(ref class27, list, settings.StartDate);
+                    class27.method_8(DateTime.Now.AddDays(2.0));
+                    class27.setDataType(Enum4.flag_1 | Enum4.flag_0);
                     if (includePartialBar)
                     {
-                        class2.method_2(class2.method_1() | Enum4.flag_2);
+                        class27.setDataType(class27.getDataType() | Enum4.flag_2);
                     }
                     List<Class27> list2 = new List<Class27> {
-                        class2
+                        class27
                     };
-                    this.method_9(list2);
-                    this.class26_0.method_27(list2);
+                    this.updateSecurityNames(list2);
+                    this.class26_0.updateSecurityData(list2);
                 }
                 catch (Exception exception)
                 {
@@ -384,12 +385,12 @@
                     MessageBox.Show(str, "On Demand Update Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 }
             }
-            Bars bars2 = new Bars(Class23.smethod_1(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
-            if (this.barDataStore_0.ContainsSymbol(Class23.smethod_1(symbol), dataSource_0.Scale, dataSource_0.BarInterval))
+            Bars bars2 = new Bars(Class23.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
+            if (this.barDataStore_0.ContainsSymbol(Class23.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval))
             {
                 this.barDataStore_0.LoadBarsObject(bars2, startDate, DateTime.MaxValue, maxBars);
             }
-            if (symbol != Class23.smethod_1(symbol))
+            if (symbol != Class23.encode(symbol))
             {
                 Bars toBars = new Bars(symbol, dataSource_0.Scale, dataSource_0.BarInterval);
                 toBars.Append(bars2);
@@ -531,7 +532,7 @@
         public override void UpdateDataSource(DataSource dataSource_0, IDataUpdateMessage dataUpdateMsg)
         {
             Class21.smethod_8(new object[] { dataSource_0.Name, dataSource_0.Symbols[0] });
-            this.class26_0.method_10(false);
+            this.class26_0.SetCancelFlag(false);
             SymbolInfoList list = null;
             this.idataUpdateMessage_0 = dataUpdateMsg;
             try
@@ -543,7 +544,7 @@
                     settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
                     if (settings.UpdateGroups)
                     {
-                        this.method_7(dataSource_0);
+                        this.updateClassificationGroups(dataSource_0);
                         settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
                     }
                     class2 = new Class17(settings.Symbols, Enum0.const_0);
@@ -555,7 +556,7 @@
                 list = SymbolInfoList.Deserialize(string_0 + "SymbolsStartDate.xml");
                 list.Synchronize(this.barDataStore_0);
                 List<Class27> list2 = new List<Class27>();
-                this.method_3("Preparing requests ...");
+                this.DisplayUpdateMessage("Preparing requests ...");
                 foreach (string str in class2.list_0)
                 {
                     Class27 class3 = new Class27(str);
@@ -568,20 +569,20 @@
                         this.method_8(ref class3, list, new DateTime(0x7d0, 1, 1));
                     }
                     class3.method_8(DateTime.Now.AddDays(2.0));
-                    class3.method_2(Enum4.flag_1 | Enum4.flag_0);
+                    class3.setDataType(Enum4.flag_1 | Enum4.flag_0);
                     list2.Add(class3);
-                    if (this.class26_0.method_9())
+                    if (this.class26_0.GetCancelFlag())
                     {
                         return;
                     }
                 }
-                this.method_3("Requests are ready to go.");
+                this.DisplayUpdateMessage("Requests are ready to go.");
                 if (list2.Count > 0)
                 {
-                    this.int_0 = list2.Count;
-                    this.int_1 = 0;
-                    this.method_9(list2);
-                    this.class26_0.method_27(list2);
+                    this.numberOfSymbolsToUpdate = list2.Count;
+                    this.numberOfSymbolsUpdated = 0;
+                    this.updateSecurityNames(list2);
+                    this.class26_0.updateSecurityData(list2);
                 }
             }
             catch (Exception exception)
@@ -599,7 +600,7 @@
         public override void UpdateProvider(IDataUpdateMessage dataUpdateMsg, List<DataSource> dataSources, bool updateNonDSSymbols, bool deleteNonDSSymbols)
         {
             Class21.smethod_8(new object[0]);
-            this.class26_0.method_10(false);
+            this.class26_0.SetCancelFlag(false);
             this.idataUpdateMessage_0 = dataUpdateMsg;
             List<Class27> list = new List<Class27>();
             SymbolInfoList list2 = null;
@@ -607,7 +608,7 @@
             {
                 list2 = SymbolInfoList.Deserialize(string_0 + "SymbolsStartDate.xml");
                 list2.Synchronize(this.barDataStore_0);
-                this.method_3("Preparing requests ...");
+                this.DisplayUpdateMessage("Preparing requests ...");
                 foreach (DataSource source in dataSources)
                 {
                     YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(source.DSString);
@@ -617,16 +618,16 @@
                         Class27 class4 = new Class27(str3);
                         this.method_8(ref class4, list2, settings.StartDate);
                         class4.method_8(DateTime.Now.AddDays(2.0));
-                        class4.method_2(Enum4.flag_1 | Enum4.flag_0);
+                        class4.setDataType(Enum4.flag_1 | Enum4.flag_0);
                         for (int i = list.Count - 1; i >= 0; i--)
                         {
-                            if (list[i].method_0() == class4.method_0())
+                            if (list[i].getSymbol() == class4.getSymbol())
                             {
                                 list.RemoveAt(i);
                             }
                         }
                         list.Add(class4);
-                        if (this.class26_0.method_9())
+                        if (this.class26_0.GetCancelFlag())
                         {
                             return;
                         }
@@ -641,38 +642,36 @@
                         bool flag2 = true;
                         for (int j = list.Count - 1; j >= 0; j--)
                         {
-                            if (list[j].method_0() == str4)
+                            if (list[j].getSymbol() == str4)
                             {
-                                goto Label_01E9;
+                                //goto Label_01E9; ///WYJ fix
+                                flag2 = false; 
+                                break;
                             }
                         }
-                        goto Label_01EC;
-                    Label_01E9:
-                        flag2 = false;
-                    Label_01EC:
                         if (flag2)
                         {
                             Class27 item = new Class27(str4);
-                            DateTime time2 = this.barDataStore_0.SymbolLastUpdated(Class23.smethod_1(item.method_0()), BarScale.Daily, 0);
+                            DateTime time2 = this.barDataStore_0.SymbolLastUpdated(Class23.encode(item.getSymbol()), BarScale.Daily, 0);
                             item.method_4(time2.AddDays(-10.0));
                             item.method_8(DateTime.Now.AddDays(2.0));
-                            item.method_2(Enum4.flag_1 | Enum4.flag_0);
+                            item.setDataType(Enum4.flag_1 | Enum4.flag_0);
                             list.Add(item);
                         }
-                        if (this.class26_0.method_9())
+                        if (this.class26_0.GetCancelFlag())
                         {
                             return;
                         }
                     }
                 }
                 list.Sort();
-                this.method_3("Requests are ready to go.");
+                this.DisplayUpdateMessage("Requests are ready to go.");
                 if (list.Count > 0)
                 {
-                    this.int_0 = list.Count;
-                    this.int_1 = 0;
-                    this.method_9(list);
-                    this.class26_0.method_27(list);
+                    this.numberOfSymbolsToUpdate = list.Count;
+                    this.numberOfSymbolsUpdated = 0;
+                    this.updateSecurityNames(list);
+                    this.class26_0.updateSecurityData(list);
                 }
                 if (deleteNonDSSymbols)
                 {
@@ -687,20 +686,18 @@
                             while (enumerator4.MoveNext())
                             {
                                 Class27 current = enumerator4.Current;
-                                if (current.method_0() == str2)
+                                if (current.getSymbol() == str2)
                                 {
-                                    goto Label_032F;
+                                    ///goto Label_032F;
+                                    flag = true;
+                                    break;
                                 }
                             }
-                            goto Label_0342;
-                        Label_032F:
-                            flag = true;
                         }
-                    Label_0342:
                         if (!flag)
                         {
                             num++;
-                            this.barDataStore_0.RemoveFile(Class23.smethod_1(str2), BarScale.Daily, 0);
+                            this.barDataStore_0.RemoveFile(Class23.encode(str2), BarScale.Daily, 0);
                             if (str != string.Empty)
                             {
                                 str = str + ",";
@@ -809,7 +806,7 @@
         {
             get
             {
-                return class16_0;
+                return classificationGroupsUpdater;
             }
         }
 

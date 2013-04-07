@@ -14,7 +14,8 @@ internal static class Class23
         return string_0;
     }
 
-    public static string smethod_1(string string_0)
+    ///WYJ fix, original signature, public static string smethod_1(string string_0)
+    public static string encode(string string_0)
     {
         foreach (char ch in char_0)
         {

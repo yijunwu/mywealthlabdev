@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 
-internal static class Class21
+internal static class Class21  ///WYJ note, probably the Logger class, only for data fetching
 {
     private static bool bool_0;
     private static DefaultTraceListener defaultTraceListener_0;

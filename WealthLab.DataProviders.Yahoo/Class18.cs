@@ -5,19 +5,19 @@ using System.Windows.Forms;
 internal static class Class18
 {
     private static ManualResetEvent manualResetEvent_0 = new ManualResetEvent(true);
-    private static string string_0 = null;
-    private static string string_1 = null;
+    private static string cookie = null;
+    private static string errorMessage = null;
     private static string string_2;
     private static string string_3;
 
-    public static string smethod_0()
+    public static string GetCookie()
     {
-        return string_0;
+        return cookie;
     }
 
-    public static string smethod_1()
+    public static string GetErrorMessage()
     {
-        return string_1;
+        return errorMessage;
     }
 
     public static string smethod_2()
@@ -33,7 +33,7 @@ internal static class Class18
     public static void smethod_4()
     {
         Class21.smethod_8(new object[0]);
-        string_0 = null;
+        cookie = null;
     }
 
     private static void smethod_5()
@@ -47,13 +47,13 @@ internal static class Class18
                 Thread.Sleep(50);
                 Application.DoEvents();
             }
-            string_0 = browser.Document.Cookie;
-            Class21.smethod_2("Cookie: " + string_0);
+            cookie = browser.Document.Cookie;
+            Class21.smethod_2("Cookie: " + cookie);
         }
         catch (Exception exception)
         {
             Class21.smethod_4(Enum2.const_3, exception.Message);
-            string_1 = exception.Message;
+            errorMessage = exception.Message;
         }
         finally
         {
@@ -65,8 +65,8 @@ internal static class Class18
     {
         Class21.smethod_8(new object[] { string_4, string_5 });
         manualResetEvent_0.Reset();
-        string_0 = string.Empty;
-        string_1 = null;
+        cookie = string.Empty;
+        errorMessage = null;
         string_2 = string_4;
         string_3 = string_5.Trim();
         string_3 = string_3.Trim(new char[1]);
@@ -76,7 +76,7 @@ internal static class Class18
         thread.Start();
         if (!manualResetEvent_0.WaitOne(0x2710, false))
         {
-            string_1 = "Time out";
+            errorMessage = "Time out";
         }
     }
 }

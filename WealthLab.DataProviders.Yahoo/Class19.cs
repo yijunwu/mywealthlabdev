@@ -112,6 +112,8 @@ internal class Class19
         return null;
     }
 
+    ///WYJ fix, code from Reflector
+    /*
     public Bars method_4(Bars bars_0)
     {
         Class21.smethod_7(new object[] { bars_0.Symbol });
@@ -127,12 +129,16 @@ internal class Class19
             DateTime time5;
             if (this.list_0.Count <= 0)
             {
-                goto Label_023B;
+                //goto Label_023B; ///WYJ fix
+                bars.Add(bars_0.Date[i], bars_0.Open[i] * num, bars_0.High[i] * num, bars_0.Low[i] * num, bars_0.Close[i] * num, bars_0.Volume[i] * num2);
+                break;
             }
             DateTime time3 = bars_0.Date[i];
             if (time3.Date >= this.list_0[this.list_0.Count - 1].Date.Date)
             {
-                goto Label_023B;
+                //goto Label_023B; ///WYJ fix
+                bars.Add(bars_0.Date[i], bars_0.Open[i] * num, bars_0.High[i] * num, bars_0.Low[i] * num, bars_0.Close[i] * num, bars_0.Volume[i] * num2);
+                break;
             }
             goto Label_01CD;
         Label_00C9:
@@ -177,6 +183,68 @@ internal class Class19
             toBars.Add(bars.Date[j], bars.Open[j], bars.High[j], bars.Low[j], bars.Close[j], bars.Volume[j]);
         }
         return toBars;
+    } */
+
+    public Bars method_4(Bars bars_0)
+    {
+        object[] symbol = new object[] { bars_0.Symbol };
+        Class21.smethod_7(symbol);
+        this.method_1();
+        this.list_1.Clear();
+        Bars bar = new Bars(bars_0.Symbol, bars_0.Scale, bars_0.BarInterval);
+        double item = 1;
+        double num = 1;
+        double num1 = 1;
+        for (int i = bars_0.Count - 1; i >= 0; i--)
+        {
+            if (this.list_0.Count > 0)
+            {
+                DateTime dateTime = bars_0.Date[i];
+                DateTime date = this.list_0[this.list_0.Count - 1].Date;
+                if (dateTime.Date < date.Date)
+                {
+                    do
+                    {
+                        DateTime item1 = bars_0.Date[i];
+                        DateTime date1 = this.list_0[this.list_0.Count - 1].Date;
+                        if (item1.Date >= date1.Date)
+                        {
+                            break;
+                        }
+                        if (this.list_0[this.list_0.Count - 1].Name.StartsWith("D") && (int)(this.enum1_0 & Enum1.flag_1) != 0)
+                        {
+                            double value = this.list_0[this.list_0.Count - 1].Value;
+                            item = item * (1 - value / (bars_0.Close[i] * num1));
+                        }
+                        if (this.list_0[this.list_0.Count - 1].Name.StartsWith("S") && (int)(this.enum1_0 & Enum1.flag_0) != 0)
+                        {
+                            double value1 = 1 / this.list_0[this.list_0.Count - 1].Value;
+                            item = item * value1;
+                            num = num * value1;
+                            num1 = num1 * value1;
+                        }
+                        this.list_0.RemoveAt(this.list_0.Count - 1);
+                    }
+                    while (this.list_0.Count != 0);
+                    DateTime dateTime1 = bars_0.Date[i];
+                    this.list_1.Add(new Class20(dateTime1.Date, item, num));
+                }
+            }
+            bar.Add(bars_0.Date[i], bars_0.Open[i] * item, bars_0.High[i] * item, bars_0.Low[i] * item, bars_0.Close[i] * item, bars_0.Volume[i] * num);
+        }
+        Bars securityName = new Bars(bars_0.Symbol, bars_0.Scale, bars_0.BarInterval);
+        securityName.SecurityName = bars_0.SecurityName;
+        if (YahooStaticProvider.VersionContainsUserEditedDates())
+        {
+            YahooStaticProvider.AddUserEditedDates(securityName, bars_0);
+        }
+        for (int j = bar.Count - 1; j >= 0; j--)
+        {
+            securityName.Add(bar.Date[j], bar.Open[j], bar.High[j], bar.Low[j], bar.Close[j], bar.Volume[j]);
+        }
+        return securityName;
     }
-}
+} 
+
+
 

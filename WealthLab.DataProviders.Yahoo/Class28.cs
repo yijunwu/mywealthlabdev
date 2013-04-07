@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using WealthLab;
 
-internal class Class28
+internal class Class28  ///WYJ note, class for dividend and split
 {
-    private List<FundamentalItem> list_0 = new List<FundamentalItem>();
-    private List<FundamentalItem> list_1 = new List<FundamentalItem>();
+    private List<FundamentalItem> dividend = new List<FundamentalItem>();
+    private List<FundamentalItem> split = new List<FundamentalItem>();
 
-    public List<FundamentalItem> method_0()
+    public List<FundamentalItem> getDividend()
     {
-        return this.list_0;
+        return this.dividend;
     }
 
-    public void method_1(List<FundamentalItem> list_2)
+    public void setDividend(List<FundamentalItem> dividend)
     {
-        this.list_0 = list_2;
+        this.dividend = dividend;
     }
 
-    public List<FundamentalItem> method_2()
+    public List<FundamentalItem> getSplit()
     {
-        return this.list_1;
+        return this.split;
     }
 
-    public void method_3(List<FundamentalItem> list_2)
+    public void setSplit(List<FundamentalItem> split)
     {
-        this.list_1 = list_2;
+        this.split = split;
     }
 }
 

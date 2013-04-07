@@ -27,7 +27,7 @@
         public Quote GetQuote(string symbol)
         {
             this.method_2(false, null);
-            return this.class26_0.method_19(symbol);
+            return this.class26_0.GetRealTimeQuoteForSymbol(symbol);
         }
 
         public override StaticDataProvider GetStaticProvider()
@@ -40,9 +40,9 @@
             return this.yahooStaticProvider_0;
         }
 
-        private void method_1()
+        private void updateStatus()
         {
-            this.iconnectionStatus_1.StatusUpdate(ConnStatus.OK, 0, this.class26_0.method_8() + " Symbols Subscribed");
+            this.iconnectionStatus_1.StatusUpdate(ConnStatus.OK, 0, this.class26_0.GetSubscribedSymbolCount() + " Symbols Subscribed");
         }
 
         private void method_2(bool bool_2, IConnectionStatus iconnectionStatus_2)
@@ -51,12 +51,12 @@
             {
                 this.bool_1 = true;
                 this.class26_0 = new Class26();
-                this.class26_0.method_6(new Class26.Delegate3(this.method_4));
-                this.class26_0.method_4(new Class26.Delegate4(this.method_3));
-                this.class26_0.method_13();
+                this.class26_0.AddStreamingDataHandler(new Class26.Delegate3(this.method_4));
+                this.class26_0.AddStreamingErrorHandler(new Class26.Delegate4(this.onError));
+                this.class26_0.login();
                 if (bool_2)
                 {
-                    this.class26_0.method_23();
+                    this.class26_0.startStreamingRequesterAndProcessor();
                 }
                 if (iconnectionStatus_2 != null)
                 {
@@ -65,7 +65,7 @@
             }
         }
 
-        private void method_3(object sender, EventArgs5 e)
+        private void onError(object sender, EventArgs5 e)
         {
             base.ConnectionStatus.StatusUpdate(ConnStatus.Error, 0, e.string_0);
         }
@@ -84,8 +84,8 @@
             Class21.smethod_8(new object[] { symbol });
             if (this.bool_1 && (symbol != string.Empty))
             {
-                this.class26_0.method_12(symbol.ToUpper());
-                this.method_1();
+                this.class26_0.subscribeSymbol(symbol.ToUpper());
+                this.updateStatus();
             }
         }
 
@@ -94,8 +94,8 @@
             Class21.smethod_8(new object[] { symbol });
             if (this.bool_1 && (symbol != string.Empty))
             {
-                this.class26_0.method_11(symbol.ToUpper());
-                this.method_1();
+                this.class26_0.unsubscribeSymbol(symbol.ToUpper());
+                this.updateStatus();
             }
         }
 

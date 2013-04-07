@@ -6,7 +6,7 @@ internal class Class22
     private Class17 class17_0 = new Class17();
     private Class17 class17_1 = new Class17();
     private ClassificationGroup classificationGroup_0;
-    private string string_0;
+    private string symbols;
 
     public Class22(ClassificationGroup classificationGroup_1)
     {
@@ -23,16 +23,16 @@ internal class Class22
         return this.class17_1;
     }
 
-    private void method_2(string string_1, ClassificationGroup classificationGroup_1)
+    private void method_2(string groupId, ClassificationGroup classificationGroup_1)
     {
         for (int i = 0; i < classificationGroup_1.Groups.Count; i++)
         {
-            if ((classificationGroup_1.Groups[i].Type == "Symbols") && (classificationGroup_1.Groups[i].ID == string_1))
+            if ((classificationGroup_1.Groups[i].Type == "Symbols") && (classificationGroup_1.Groups[i].ID == groupId))
             {
-                this.string_0 = classificationGroup_1.Groups[i].Symbols;
+                this.symbols = classificationGroup_1.Groups[i].Symbols;
                 return;
             }
-            this.method_2(string_1, classificationGroup_1.Groups[i]);
+            this.method_2(groupId, classificationGroup_1.Groups[i]);
         }
     }
 
@@ -42,9 +42,9 @@ internal class Class22
         Class17 class2 = new Class17();
         foreach (string str in string_1)
         {
-            this.string_0 = string.Empty;
+            this.symbols = string.Empty;
             this.method_2(str, this.classificationGroup_0);
-            class2.method_2(this.string_0, Enum0.const_1);
+            class2.method_2(this.symbols, Enum0.const_1);
         }
         this.class17_0.list_0.Clear();
         this.class17_1.list_0.Clear();

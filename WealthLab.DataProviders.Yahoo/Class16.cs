@@ -11,17 +11,17 @@ internal class Class16
     private DownloadProgressChangedEventHandler downloadProgressChangedEventHandler_0;
     private Exception exception_0;
     private ManualResetEvent manualResetEvent_0 = new ManualResetEvent(false);
-    private string string_0;
-    private string string_1;
-    private string string_2;
+    private string filePath;
+    private string tempFilePath;
+    private string classificationXmlUrl;
     private WebClient webClient_0 = new WebClient();
 
-    public Class16(string string_3, string string_4)
+    public Class16(string path, string url)
     {
-        this.string_0 = string_3;
-        this.string_1 = Path.ChangeExtension(string_3, ".tmp");
-        this.string_2 = string_4;
-        this.webClient_0.Headers.Add(HttpRequestHeader.UserAgent, Path.GetFileNameWithoutExtension(string_3));
+        this.filePath = path;
+        this.tempFilePath = Path.ChangeExtension(path, ".tmp");
+        this.classificationXmlUrl = url;
+        this.webClient_0.Headers.Add(HttpRequestHeader.UserAgent, Path.GetFileNameWithoutExtension(path));
         this.webClient_0.DownloadFileCompleted += new AsyncCompletedEventHandler(this.webClient_0_DownloadFileCompleted);
         this.webClient_0.DownloadProgressChanged += new DownloadProgressChangedEventHandler(this.webClient_0_DownloadProgressChanged);
     }
@@ -78,25 +78,26 @@ internal class Class16
         while (handler != handler2);
     }
 
-    public Exception method_4()
+    public Exception GetException()
     {
         return this.exception_0;
     }
 
-    public bool method_5()
+    public bool FileExists()
     {
-        return System.IO.File.Exists(this.string_0);
+        return System.IO.File.Exists(this.filePath);
     }
 
-    public ClassificationGroup method_6()
+    ///WYJ fix, original name: method_6
+    public ClassificationGroup ReadClassificationGroupFromFile()
     {
-        return ClassificationGroup.Deserealize(this.string_0);
+        return ClassificationGroup.Deserealize(this.filePath);
     }
 
-    public void method_7(bool bool_0)
+    public void UpdateClassificationGroupsFile(bool bool_0)
     {
         this.exception_0 = null;
-        this.webClient_0.DownloadFileAsync(new Uri(this.string_2), this.string_1);
+        this.webClient_0.DownloadFileAsync(new Uri(this.classificationXmlUrl), this.tempFilePath);
         this.manualResetEvent_0.Reset();
         if (!bool_0)
         {
@@ -104,9 +105,9 @@ internal class Class16
         }
     }
 
-    public bool method_8(int int_0)
+    public bool IsLastUpdatedDaysAgo(int int_0)
     {
-        return (DateTime.Now.ToUniversalTime().Subtract(System.IO.File.GetLastWriteTimeUtc(this.string_0)).Days >= int_0);
+        return (DateTime.Now.ToUniversalTime().Subtract(System.IO.File.GetLastWriteTimeUtc(this.filePath)).Days >= int_0);
     }
 
     private void webClient_0_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
@@ -114,12 +115,12 @@ internal class Class16
         this.exception_0 = e.Error;
         if (this.exception_0 == null)
         {
-            if (System.IO.File.Exists(this.string_0))
+            if (System.IO.File.Exists(this.filePath))
             {
-                System.IO.File.Delete(this.string_0);
+                System.IO.File.Delete(this.filePath);
             }
-            System.IO.File.Move(this.string_1, this.string_0);
-            System.IO.File.Delete(this.string_1);
+            System.IO.File.Move(this.tempFilePath, this.filePath);
+            System.IO.File.Delete(this.tempFilePath);
         }
         if (this.asyncCompletedEventHandler_0 != null)
         {

@@ -282,7 +282,7 @@ internal class YahooWizardPageClassification : UserControl
         this.method_6();
         this.lblUpdateClassification.Text = "Please wait, updating Classification...";
         Application.DoEvents();
-        YahooStaticProvider.ClassificationFile.method_7(true);
+        YahooStaticProvider.ClassificationFile.UpdateClassificationGroupsFile(true);
     }
 
     private void method_4(ClassificationGroup classificationGroup_1, TreeNodeCollection treeNodeCollection_0)
@@ -301,7 +301,7 @@ internal class YahooWizardPageClassification : UserControl
 
     private void method_5()
     {
-        if (!YahooStaticProvider.ClassificationFile.method_5())
+        if (!YahooStaticProvider.ClassificationFile.FileExists())
         {
             this.lblUpdateClassification.Text = "Classification created:";
             this.method_7();
@@ -315,7 +315,7 @@ internal class YahooWizardPageClassification : UserControl
                 Application.DoEvents();
                 this.treeClassification.Nodes.Clear();
                 this.lvSelected.Items.Clear();
-                this.classificationGroup_0 = YahooStaticProvider.ClassificationFile.method_6();
+                this.classificationGroup_0 = YahooStaticProvider.ClassificationFile.ReadClassificationGroupFromFile();
                 if (this.classificationGroup_0 != null)
                 {
                     this.method_4(this.classificationGroup_0, this.treeClassification.Nodes);
@@ -390,7 +390,7 @@ internal class YahooWizardPageClassification : UserControl
     private void YahooWizardPageClassification_Load(object sender, EventArgs e)
     {
         Application.DoEvents();
-        if (!YahooStaticProvider.ClassificationFile.method_5())
+        if (!YahooStaticProvider.ClassificationFile.FileExists())
         {
             if (MessageBox.Show("Classification data file was not found.\n\rDownload it now?", "Classification not found", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
