@@ -1,14 +1,15 @@
 ﻿using System;
 
-internal class Class29
+///WYJ fix, original name: Class29
+internal class DateTimeVolume  
 {
-    public DateTime dateTime_0;
-    public double double_0;
+    public DateTime dateTime;
+    public double volume;
 
-    public Class29(DateTime dateTime_1, double double_1)
+    public DateTimeVolume(DateTime dateTime, double volume)
     {
-        this.dateTime_0 = dateTime_1;
-        this.double_0 = double_1;
+        this.dateTime = dateTime;
+        this.volume = volume;
     }
 }
 

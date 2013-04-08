@@ -1,29 +1,31 @@
 ﻿using System;
 using WealthLab.DataProviders.Helper;
 
-internal class Class22
+///WYJ fix, original name: Class22
+internal class GroupsToSymbols
 {
-    private Class17 class17_0 = new Class17();
-    private Class17 class17_1 = new Class17();
+    private SymbolList deleteList = new SymbolList();  ///WYJ note, symbols deleted
+    private SymbolList addList = new SymbolList();  ///WYJ note, symbols added
     private ClassificationGroup classificationGroup_0;
     private string symbols;
 
-    public Class22(ClassificationGroup classificationGroup_1)
+    public GroupsToSymbols(ClassificationGroup classificationGroup_1)
     {
         this.classificationGroup_0 = classificationGroup_1;
     }
 
-    public Class17 method_0()
+    public SymbolList GetDeleteList()
     {
-        return this.class17_0;
+        return this.deleteList;
     }
 
-    public Class17 method_1()
+    public SymbolList GetAddList()
     {
-        return this.class17_1;
+        return this.addList;
     }
 
-    private void method_2(string groupId, ClassificationGroup classificationGroup_1)
+    ///WYJ fix, original name: method_2
+    private void getSymbolsOfGroup(string groupId, ClassificationGroup classificationGroup_1) ///WYJ note, get Symbols of group, the symbols are saved to this.symbols
     {
         for (int i = 0; i < classificationGroup_1.Groups.Count; i++)
         {
@@ -32,37 +34,41 @@ internal class Class22
                 this.symbols = classificationGroup_1.Groups[i].Symbols;
                 return;
             }
-            this.method_2(groupId, classificationGroup_1.Groups[i]);
+            else 
+                this.getSymbolsOfGroup(groupId, classificationGroup_1.Groups[i]);
         }
     }
 
-    public Class17 method_3(Class17 class17_2, params string[] string_1)
+    ///WYJ fix, original name: method_3
+    public SymbolList generateNewSymbolList(SymbolList symbolList, params string[] groupArray)  
     {
-        Class21.smethod_8(new object[] { class17_2.ToString() });
-        Class17 class2 = new Class17();
-        foreach (string str in string_1)
+        Logger.LogParameters(new object[] { symbolList.ToString() });
+
+        //1. Get symbols of all the groups specified in groupArray
+        SymbolList newSymbolList = new SymbolList();
+        foreach (string group in groupArray)
         {
             this.symbols = string.Empty;
-            this.method_2(str, this.classificationGroup_0);
-            class2.method_2(this.symbols, Enum0.const_1);
+            this.getSymbolsOfGroup(group, this.classificationGroup_0);
+            newSymbolList.AddSymbols(this.symbols, Enum0.const_1);
         }
-        this.class17_0.list_0.Clear();
-        this.class17_1.list_0.Clear();
-        foreach (string str3 in class2.list_0)
+        this.deleteList.list.Clear();
+        this.addList.list.Clear();
+        foreach (string symbol in newSymbolList.list)
         {
-            if (!class17_2.list_0.Contains(str3))
+            if (!symbolList.list.Contains(symbol))
             {
-                this.class17_1.list_0.Add(str3);
+                this.addList.list.Add(symbol);
             }
         }
-        foreach (string str2 in class17_2.list_0)
+        foreach (string symbol in symbolList.list)
         {
-            if (!class2.list_0.Contains(str2))
+            if (!newSymbolList.list.Contains(symbol))
             {
-                this.class17_0.list_0.Add(str2);
+                this.deleteList.list.Add(symbol);
             }
         }
-        return class2;
+        return newSymbolList;
     }
 }
 

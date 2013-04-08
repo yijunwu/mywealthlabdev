@@ -185,12 +185,12 @@ internal class YahooWizardPageClassification : UserControl
         this.btnRemoveGroup.Enabled = true;
     }
 
-    public Class17 method_0()
+    public SymbolList method_0()
     {
-        Class17 class2 = new Class17();
+        SymbolList class2 = new SymbolList();
         foreach (ListViewItem item in this.lvSelected.Items)
         {
-            class2.method_2((item.Tag as ClassificationGroup).Symbols, Enum0.const_1);
+            class2.AddSymbols((item.Tag as ClassificationGroup).Symbols, Enum0.const_1);
         }
         return class2;
     }
@@ -352,8 +352,8 @@ internal class YahooWizardPageClassification : UserControl
 
     public void method_8(string string_1)
     {
-        YahooStaticProvider.ClassificationFile.method_2(new AsyncCompletedEventHandler(this.method_10));
-        YahooStaticProvider.ClassificationFile.method_0(new DownloadProgressChangedEventHandler(this.method_9));
+        YahooStaticProvider.ClassificationFile.AddAsyncCompletedEventHandler(new AsyncCompletedEventHandler(this.method_10));
+        YahooStaticProvider.ClassificationFile.AddDownloadProgressChangedEventHandler(new DownloadProgressChangedEventHandler(this.method_9));
         this.string_0 = string_1;
         this.font_0 = this.lblUpdateClassification.Font;
         this.font_1 = new Font(this.lblUpdateClassification.Font, FontStyle.Bold);

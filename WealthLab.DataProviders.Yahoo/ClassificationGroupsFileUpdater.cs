@@ -5,7 +5,8 @@ using System.Net;
 using System.Threading;
 using WealthLab.DataProviders.Helper;
 
-internal class Class16
+///WYJ fix, original name Class16
+internal class ClassificationGroupsFileUpdater
 {
     private AsyncCompletedEventHandler asyncCompletedEventHandler_0;
     private DownloadProgressChangedEventHandler downloadProgressChangedEventHandler_0;
@@ -16,7 +17,7 @@ internal class Class16
     private string classificationXmlUrl;
     private WebClient webClient_0 = new WebClient();
 
-    public Class16(string path, string url)
+    public ClassificationGroupsFileUpdater(string path, string url)
     {
         this.filePath = path;
         this.tempFilePath = Path.ChangeExtension(path, ".tmp");
@@ -26,56 +27,60 @@ internal class Class16
         this.webClient_0.DownloadProgressChanged += new DownloadProgressChangedEventHandler(this.webClient_0_DownloadProgressChanged);
     }
 
-    public void method_0(DownloadProgressChangedEventHandler downloadProgressChangedEventHandler_1)
+    ///WYJ fix, original name: method_0
+    public void AddDownloadProgressChangedEventHandler(DownloadProgressChangedEventHandler handler)
     {
-        DownloadProgressChangedEventHandler handler2;
-        DownloadProgressChangedEventHandler handler = this.downloadProgressChangedEventHandler_0;
+        DownloadProgressChangedEventHandler prevHandler;
+        DownloadProgressChangedEventHandler tmp = this.downloadProgressChangedEventHandler_0;
         do
         {
-            handler2 = handler;
-            DownloadProgressChangedEventHandler handler3 = (DownloadProgressChangedEventHandler) Delegate.Combine(handler2, downloadProgressChangedEventHandler_1);
-            handler = Interlocked.CompareExchange<DownloadProgressChangedEventHandler>(ref this.downloadProgressChangedEventHandler_0, handler3, handler2);
+            prevHandler = tmp;
+            DownloadProgressChangedEventHandler handler3 = (DownloadProgressChangedEventHandler) Delegate.Combine(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<DownloadProgressChangedEventHandler>(ref this.downloadProgressChangedEventHandler_0, handler3, prevHandler);
         }
-        while (handler != handler2);
+        while (tmp != prevHandler);
     }
 
-    public void method_1(DownloadProgressChangedEventHandler downloadProgressChangedEventHandler_1)
+    ///WYJ fix, original name: method_1
+    public void DeleteDownloadProgressChangedEventHandler(DownloadProgressChangedEventHandler handler)
     {
-        DownloadProgressChangedEventHandler handler2;
-        DownloadProgressChangedEventHandler handler = this.downloadProgressChangedEventHandler_0;
+        DownloadProgressChangedEventHandler prevHandler;
+        DownloadProgressChangedEventHandler tmp = this.downloadProgressChangedEventHandler_0;
         do
         {
-            handler2 = handler;
-            DownloadProgressChangedEventHandler handler3 = (DownloadProgressChangedEventHandler) Delegate.Remove(handler2, downloadProgressChangedEventHandler_1);
-            handler = Interlocked.CompareExchange<DownloadProgressChangedEventHandler>(ref this.downloadProgressChangedEventHandler_0, handler3, handler2);
+            prevHandler = tmp;
+            DownloadProgressChangedEventHandler handler3 = (DownloadProgressChangedEventHandler) Delegate.Remove(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<DownloadProgressChangedEventHandler>(ref this.downloadProgressChangedEventHandler_0, handler3, prevHandler);
         }
-        while (handler != handler2);
+        while (tmp != prevHandler);
     }
 
-    public void method_2(AsyncCompletedEventHandler asyncCompletedEventHandler_1)
+    ///WYJ fix, original name: method_2
+    public void AddAsyncCompletedEventHandler(AsyncCompletedEventHandler handler)
     {
-        AsyncCompletedEventHandler handler2;
-        AsyncCompletedEventHandler handler = this.asyncCompletedEventHandler_0;
+        AsyncCompletedEventHandler prevHandler;
+        AsyncCompletedEventHandler tmp = this.asyncCompletedEventHandler_0;
         do
         {
-            handler2 = handler;
-            AsyncCompletedEventHandler handler3 = (AsyncCompletedEventHandler) Delegate.Combine(handler2, asyncCompletedEventHandler_1);
-            handler = Interlocked.CompareExchange<AsyncCompletedEventHandler>(ref this.asyncCompletedEventHandler_0, handler3, handler2);
+            prevHandler = tmp;
+            AsyncCompletedEventHandler handler3 = (AsyncCompletedEventHandler) Delegate.Combine(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<AsyncCompletedEventHandler>(ref this.asyncCompletedEventHandler_0, handler3, prevHandler);
         }
-        while (handler != handler2);
+        while (tmp != prevHandler);
     }
 
-    public void method_3(AsyncCompletedEventHandler asyncCompletedEventHandler_1)
+    ///WYJ fix, original name: method_3
+    public void DeleteAsyncCompletedEventHandler(AsyncCompletedEventHandler handler)
     {
-        AsyncCompletedEventHandler handler2;
-        AsyncCompletedEventHandler handler = this.asyncCompletedEventHandler_0;
+        AsyncCompletedEventHandler prevHandler;
+        AsyncCompletedEventHandler tmp = this.asyncCompletedEventHandler_0;
         do
         {
-            handler2 = handler;
-            AsyncCompletedEventHandler handler3 = (AsyncCompletedEventHandler) Delegate.Remove(handler2, asyncCompletedEventHandler_1);
-            handler = Interlocked.CompareExchange<AsyncCompletedEventHandler>(ref this.asyncCompletedEventHandler_0, handler3, handler2);
+            prevHandler = tmp;
+            AsyncCompletedEventHandler handler3 = (AsyncCompletedEventHandler) Delegate.Remove(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<AsyncCompletedEventHandler>(ref this.asyncCompletedEventHandler_0, handler3, prevHandler);
         }
-        while (handler != handler2);
+        while (tmp != prevHandler);
     }
 
     public Exception GetException()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using WealthLab;
 
-internal class Class28  ///WYJ note, class for dividend and split
+internal class SplitAndDividend  ///WYJ note, class for dividend and split
 {
     private List<FundamentalItem> dividend = new List<FundamentalItem>();
     private List<FundamentalItem> split = new List<FundamentalItem>();

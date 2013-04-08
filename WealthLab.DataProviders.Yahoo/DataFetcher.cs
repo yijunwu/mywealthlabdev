@@ -11,21 +11,21 @@ using System.Windows.Forms;
 using WealthLab;
 using WealthLab.DataProviders.Yahoo;
 
-internal class Class26
+internal class DataFetcher
 {
     private bool cancelFlag;
     private Delegate1 staticDataHandler;
     private Delegate2 staticErrorHandler;
     private Delegate3 streamingDataHandler;
     private Delegate4 streamingErrorHandler;
-    private Dictionary<string, Class29> dictionary_0 = new Dictionary<string, Class29>();
+    private Dictionary<string, DateTimeVolume> dictionary_0 = new Dictionary<string, DateTimeVolume>();
     private IFormatProvider iformatProvider_0;
     private List<string> subscribedSymbols = new List<string>();  ///WYJ note: probably the real-time symbol list
-    private List<Class30> list_1 = new List<Class30>();
+    private List<ThreadControl> list_1 = new List<ThreadControl>();
     private Queue<Class27> queue_0 = new Queue<Class27>();
     private Thread thread_0;
 
-    public Class26()
+    public DataFetcher()
     {
         CultureInfo info = new CultureInfo("en-US") {
             NumberFormat = { NumberDecimalSeparator = "." }
@@ -82,14 +82,14 @@ internal class Class26
 
     public void login()
     {
-        Class21.smethod_8(new object[0]);
-        if (((Class18.GetCookie() == null) && (YahooStaticProvider.ClientSettings.Login != string.Empty)) && (YahooStaticProvider.ClientSettings.Password != string.Empty))
+        Logger.LogParameters(new object[0]);
+        if (((Login.GetCookie() == null) && (YahooStaticProvider.ClientSettings.Login != string.Empty)) && (YahooStaticProvider.ClientSettings.Password != string.Empty))
         {
-            Class18.smethod_6(YahooStaticProvider.ClientSettings.Login, YahooStaticProvider.ClientSettings.Password);
-            if (Class18.GetErrorMessage() != null)
+            Login.LoginWith(YahooStaticProvider.ClientSettings.Login, YahooStaticProvider.ClientSettings.Password);
+            if (Login.GetErrorMessage() != null)
             {
-                Class21.smethod_4(Enum2.const_3, Class18.GetErrorMessage());
-                MessageBox.Show("Yahoo! login failed. Error: " + Class18.GetErrorMessage(), "Yahoo! login error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Logger.Log(Enum2.const_3, Login.GetErrorMessage());
+                MessageBox.Show("Yahoo! login failed. Error: " + Login.GetErrorMessage(), "Yahoo! login error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }
@@ -97,16 +97,16 @@ internal class Class26
     ///WYJ fix, original name method_14()
     public void CancelUpdate()
     {
-        Class21.smethod_8(new object[0]);
+        Logger.LogParameters(new object[0]);
         if (!this.cancelFlag)
         {
             this.cancelFlag = true;
             lock (this.list_1)
             {
-                foreach (Class30 class2 in this.list_1)
+                foreach (ThreadControl class2 in this.list_1)
                 {
                     class2.method_1().WaitOne();
-                    class2.method_0().Abort();
+                    class2.GetThread().Abort();
                 }
             }
         }
@@ -177,17 +177,17 @@ internal class Class26
         {
             num++;
             object[] string0 = new object[] { string_0, bool_1, string.Concat("Attempt ", num) };
-            Class21.smethod_8(string0);
+            Logger.LogParameters(string0);
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(string_0);
             if (bool_1)
             {
-                if (Class18.GetCookie() == null)
+                if (Login.GetCookie() == null)
                 {
                     this.login();
                 }
-                if (Class18.GetCookie() != null)
+                if (Login.GetCookie() != null)
                 {
-                    httpWebRequest.Headers.Add(HttpRequestHeader.Cookie, Class18.GetCookie());
+                    httpWebRequest.Headers.Add(HttpRequestHeader.Cookie, Login.GetCookie());
                 }
             }
             httpWebRequest.Timeout = 10000;
@@ -200,21 +200,21 @@ internal class Class26
                     using (StreamReader streamReader = new StreamReader(responseStream))
                     {
                         end = streamReader.ReadToEnd();
-                        Class21.smethod_2(string.Concat("Result  ", string_0, "\r\n", end));
+                        Logger.Log(string.Concat("Result  ", string_0, "\r\n", end));
                     }
                 }
             }
             catch (Exception exception1)
             {
                 Exception exception = exception1;
-                Class21.smethod_4(Enum2.const_3, exception.Message);
+                Logger.Log(Enum2.const_3, exception.Message);
                 if (exception as WebException == null || num >= YahooStaticProvider.ClientSettings.AttemptCount)
                 {
                     throw exception;
                 }
                 else
                 {
-                    Class21.smethod_4(Enum2.const_4, string.Concat("New attempt ", string_0));
+                    Logger.Log(Enum2.const_4, string.Concat("New attempt ", string_0));
                 }
             }
             if (end != null)
@@ -231,7 +231,7 @@ internal class Class26
 
     public Bars processDataRequest(Class27 class27_0, bool isStreaming)  ///WYJ note, bool_1 probably means real-time data, which requires login
     {
-        Class21.smethod_8(new object[] { class27_0.getSymbol() });
+        Logger.LogParameters(new object[] { class27_0.getSymbol() });
         string str = this.getUrl(class27_0.getSymbol(), class27_0.method_3(), class27_0.method_7(), Enum4.flag_0);
         string str2 = this.requestData(str, false);
         Bars bars = this.parseQuoteData(class27_0.getSymbol(), str2);
@@ -241,7 +241,7 @@ internal class Class26
             double high;
             double low;
             double volume;
-            if (Class18.GetCookie() == null)
+            if (Login.GetCookie() == null)
             {
                 this.login();
             }
@@ -264,26 +264,26 @@ internal class Class26
 
 
     ///WYJ fix, original name method_18
-    private void calculateIncremetalVolume(ref Quote quote_0, double volume)   ///WYJ note, calculate incremental volume
+    private void calculateIncremetalVolume(ref Quote quote, double volume)   ///WYJ note, calculate incremental volume
     {
-        if (this.dictionary_0.ContainsKey(quote_0.Symbol))
+        if (this.dictionary_0.ContainsKey(quote.Symbol))
         {
-            Class29 class2 = this.dictionary_0[quote_0.Symbol];
-            if (class2.dateTime_0.Date == quote_0.TimeStamp.Date)  ///WYJ note, the same day, subtract the previous volume to get the volume in the time period
+            DateTimeVolume lastVolume = this.dictionary_0[quote.Symbol];
+            if (lastVolume.dateTime.Date == quote.TimeStamp.Date)  ///WYJ note, the same day, subtract the previous volume to get the volume in the time period
             {
-                quote_0.Size = volume - class2.double_0;
+                quote.Size = volume - lastVolume.volume;
             }
             else  ///WYJ note, a new day, use the raw value as the volume in the time period
             {
-                quote_0.Size = volume;
+                quote.Size = volume;
             }
-            class2.dateTime_0 = quote_0.TimeStamp;
-            class2.double_0 = volume;
+            lastVolume.dateTime = quote.TimeStamp;
+            lastVolume.volume = volume;
         }
         else
         {
-            quote_0.Size = 0.0;   ///WYJ note, shouldn't it be volume, instead of 0.0?
-            this.dictionary_0.Add(quote_0.Symbol, new Class29(quote_0.TimeStamp, volume));
+            quote.Size = 0.0;   ///WYJ note, shouldn't it be volume, instead of 0.0?
+            this.dictionary_0.Add(quote.Symbol, new DateTimeVolume(quote.TimeStamp, volume));
         }
     }
 
@@ -352,7 +352,7 @@ internal class Class26
         catch (Exception exception)
         {
             string str = exception.Message + " Line: " + string_0;
-            Class21.smethod_4(Enum2.const_3, str);
+            Logger.Log(Enum2.const_3, str);
             quote = null;
         }
         return quote;
@@ -487,9 +487,9 @@ internal class Class26
     }
 
     ///WYJ fix, original signature: private Class28 method_24(string string_0)
-    private Class28 parseDividendAndSplitData(string string_0)
+    private SplitAndDividend parseDividendAndSplitData(string string_0)
     {
-        Class28 class2 = new Class28();
+        SplitAndDividend class2 = new SplitAndDividend();
         foreach (string str in string_0.Split(new char[] { '\n' }))
         {
             if (str.StartsWith("DIVIDEND,"))
@@ -518,7 +518,7 @@ internal class Class26
     }
 
     ///WYJ fix, original name: method_25
-    private Class28 processDividendAndSplitDataRequest(Class27 class27_0)  ///WYJ note, get dividend and split data
+    private SplitAndDividend processDividendAndSplitDataRequest(Class27 class27_0)  ///WYJ note, get dividend and split data
     {
         string str = this.getUrl(class27_0.getSymbol(), class27_0.method_5(), class27_0.method_7(), Enum4.flag_1);
         string str2 = this.requestData(str, true);
@@ -621,7 +621,7 @@ internal class Class26
     ///WYJ fix, original name: method_26
     private void processDataRequestQueue()  ///WYJ note, this is the method that is used in the downloading thread, see updateSecurityData method of this class
     {
-        Class30 item = null;
+        ThreadControl item = null;
         try
         {
             try
@@ -650,7 +650,7 @@ internal class Class26
                     }
                     Exception exception = null;
                     Bars bars = null;
-                    Class28 class28 = null;
+                    SplitAndDividend class28 = null;
                     try
                     {
                         bars = this.processDataRequest(class27, (int)(class27.getDataType() & Enum4.flag_2) != 0);
@@ -662,7 +662,7 @@ internal class Class26
                     catch (Exception exception2)
                     {
                         Exception exception1 = exception2;
-                        Class21.smethod_4(Enum2.const_4, string.Concat(class27.getSymbol(), " ", exception1.Message));
+                        Logger.Log(Enum2.const_4, string.Concat(class27.getSymbol(), " ", exception1.Message));
                         exception = exception1;
                     }
                     item.method_1().Reset();
@@ -688,12 +688,12 @@ internal class Class26
             }
             catch (ThreadAbortException threadAbortException)
             {
-                Class21.smethod_2("Thread Abort");
+                Logger.Log("Thread Abort");
             }
             catch (Exception exception4)
             {
                 Exception exception3 = exception4;
-                Class21.smethod_4(Enum2.const_3, string.Concat("Thread execution error. ", exception3.Message));
+                Logger.Log(Enum2.const_3, string.Concat("Thread execution error. ", exception3.Message));
                 if (this.staticErrorHandler != null)
                 {
                     this.staticErrorHandler(this, new EventArgs3(null, exception3));
@@ -711,7 +711,7 @@ internal class Class26
     ///WYJ fix, original signature: public void method_27(List<Class27> list_2)
     public void updateSecurityData(List<Class27> list_2) ///WYJ note, probably method that fetches data
     {
-        Class21.smethod_8(new object[0]);
+        Logger.LogParameters(new object[0]);
         this.list_1.Clear();
         List<ManualResetEvent> list = new List<ManualResetEvent>();
         foreach (Class27 class3 in list_2)
@@ -725,13 +725,13 @@ internal class Class26
                 Name = i.ToString(),
                 IsBackground = true
             };
-            Class30 item = new Class30(thread);
+            ThreadControl item = new ThreadControl(thread);
             this.list_1.Add(item);
             list.Add(item.method_2());
         }
-        foreach (Class30 class2 in this.list_1)
+        foreach (ThreadControl class2 in this.list_1)
         {
-            class2.method_0().Start();
+            class2.GetThread().Start();
         }
         WaitHandle.WaitAll(list.ToArray());
     }
@@ -739,8 +739,8 @@ internal class Class26
     ///WYJ fix, original signature: private Bars method_28(string string_0, string string_1)
     private Bars parseQuoteData(string string_0, string string_1)
     {
-        Class21.smethod_8(new object[] { string_0 });
-        Bars bars = new Bars(Class23.encode(string_0), BarScale.Daily, 0);
+        Logger.LogParameters(new object[] { string_0 });
+        Bars bars = new Bars(Encoder.encode(string_0), BarScale.Daily, 0);
         string str = string.Empty;
         int index = -1;
         try
@@ -767,7 +767,7 @@ internal class Class26
         catch (Exception exception)
         {
             string str2 = string.Format("Data parsing error. Symbol: {0}, LineNumber: {1}, String:\r\n {2}\r\nMessage:\r\n{3}\r\nStack Trace:\r\n{4}", new object[] { string_0, index, str, exception.Message, exception.StackTrace });
-            Class21.smethod_4(Enum2.const_3, str2);
+            Logger.Log(Enum2.const_3, str2);
             throw new Exception0(str2);
         }
         return bars;

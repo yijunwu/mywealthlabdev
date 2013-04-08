@@ -1,50 +1,56 @@
 ﻿using System;
 
-internal class Class20
+///WYJ fix, original name: Class20
+internal class SnDFactor   ///WYJ note: SnDFactor
 {
     private DateTime dateTime_0;
-    private double double_0;
-    private double double_1;
+    private double factor;
+    private double factorForSplit;
 
-    public Class20()
+    public SnDFactor()
     {
     }
 
-    public Class20(DateTime dateTime_1, double double_2, double double_3) : this()
+    public SnDFactor(DateTime dateTime_1, double factor, double factorForSplit) : this()
     {
         this.dateTime_0 = dateTime_1;
-        this.double_0 = double_2;
-        this.double_1 = double_3;
+        this.factor = factor;
+        this.factorForSplit = factorForSplit;
     }
 
-    public DateTime method_0()
+    ///WYJ fix, original name: method_0
+    public DateTime DateTime()
     {
         return this.dateTime_0;
     }
 
-    public void method_1(DateTime dateTime_1)
+    ///WYJ fix, original name: method_1
+    public void SetDateTime(DateTime dateTime_1)
     {
         this.dateTime_0 = dateTime_1;
     }
 
-    public double method_2()
+    ///WYJ fix, original name: method_2
+    public double FactorForSnD()
     {
-        return this.double_0;
+        return this.factor;
     }
 
-    public void method_3(double double_2)
+    ///WYJ fix, original name: method_3
+    public void SetFactorForSnD(double double_2)
     {
-        this.double_0 = double_2;
+        this.factor = double_2;
     }
 
-    public double method_4()
+    ///WYJ fix, original name: method_4
+    public double FactorForSplit()
     {
-        return this.double_1;
+        return this.factorForSplit;
     }
 
-    public void method_5(double double_2)
+    public void SetFactorForSplit(double double_2)
     {
-        this.double_1 = double_2;
+        this.factorForSplit = double_2;
     }
 }
 

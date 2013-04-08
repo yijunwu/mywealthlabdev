@@ -41,12 +41,12 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
     private void cbDividendAdj_CheckedChanged(object sender, EventArgs e)
     {
         this.method_3();
-        this.method_2();
+        this.updateSettings();
     }
 
     private void cbNeverPerformOnDemand_CheckedChanged(object sender, EventArgs e)
     {
-        this.method_2();
+        this.updateSettings();
     }
 
     private void InitializeComponent_1()
@@ -258,7 +258,8 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
         YahooStaticProvider.ClientSettings.Serialize();
     }
 
-    public void method_1()
+    ///WYJ fix, original name: method_1
+    public void SetStates()
     {
         this.bool_0 = false;
         this.numThreadCount.Value = YahooStaticProvider.ClientSettings.ThreadCount;
@@ -281,7 +282,8 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
         this.bool_0 = true;
     }
 
-    private void method_2()
+    ///WYJ fix, original name: method_2
+    private void updateSettings()
     {
         if (this.bool_0)
         {
@@ -296,7 +298,7 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
             YahooStaticProvider.ClientSettings.NeverPerformOnDemandUpdates = this.cbNeverPerformOnDemand.Checked;
             if ((this.string_0 != this.txtLogin.Text.Trim()) || (this.string_1 != this.txtPassword.Text.Trim()))
             {
-                Class18.smethod_4();
+                Login.Reset();
             }
         }
     }

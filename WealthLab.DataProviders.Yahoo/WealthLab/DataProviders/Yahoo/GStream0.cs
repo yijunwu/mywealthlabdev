@@ -8,7 +8,7 @@
     public class GStream0 : StreamingDataProvider
     {
         private bool bool_1;
-        private Class26 class26_0;
+        private DataFetcher class26_0;
         private IConnectionStatus iconnectionStatus_1;
         private YahooStaticProvider yahooStaticProvider_0;
 
@@ -50,9 +50,9 @@
             if (!this.bool_1)
             {
                 this.bool_1 = true;
-                this.class26_0 = new Class26();
-                this.class26_0.AddStreamingDataHandler(new Class26.Delegate3(this.method_4));
-                this.class26_0.AddStreamingErrorHandler(new Class26.Delegate4(this.onError));
+                this.class26_0 = new DataFetcher();
+                this.class26_0.AddStreamingDataHandler(new DataFetcher.Delegate3(this.method_4));
+                this.class26_0.AddStreamingErrorHandler(new DataFetcher.Delegate4(this.onError));
                 this.class26_0.login();
                 if (bool_2)
                 {
@@ -74,14 +74,14 @@
         {
             if ((((e.quote_0.Price != 0.0) && (e.double_1 != 0.0)) && (e.double_2 != 0.0)) && (e.double_0 != 0.0))
             {
-                Class21.smethod_7(new object[] { e.quote_0.TimeStamp.ToString(), e.quote_0.Symbol, e.quote_0.Price, e.quote_0.Size, e.double_0, e.double_1, e.double_2 });
+                Logger.LogWithStackTrace(new object[] { e.quote_0.TimeStamp.ToString(), e.quote_0.Symbol, e.quote_0.Price, e.quote_0.Size, e.double_0, e.double_1, e.double_2 });
                 base.UpdateMiniBar(e.quote_0, e.double_0, e.double_1, e.double_2);
             }
         }
 
         protected override void Subscribe(string symbol)
         {
-            Class21.smethod_8(new object[] { symbol });
+            Logger.LogParameters(new object[] { symbol });
             if (this.bool_1 && (symbol != string.Empty))
             {
                 this.class26_0.subscribeSymbol(symbol.ToUpper());
@@ -91,7 +91,7 @@
 
         protected override void UnSubscribe(string symbol)
         {
-            Class21.smethod_8(new object[] { symbol });
+            Logger.LogParameters(new object[] { symbol });
             if (this.bool_1 && (symbol != string.Empty))
             {
                 this.class26_0.unsubscribeSymbol(symbol.ToUpper());

@@ -1,6 +1,7 @@
 ﻿using System;
 
-internal static class Class23
+///WYJ fix, original name: Class23
+internal static class Encoder
 {
     private static char[] char_0 = new char[] { '\\', '/', ':', '*', '?', '"', '<', '>', '|' };
 

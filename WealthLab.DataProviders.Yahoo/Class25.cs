@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using WealthLab;
 
-internal class Class25
+internal class Class25  ///WYJ note, the class is never used anywhere
 {
     private Bars bars_0;
     private Bars bars_1;

@@ -46,11 +46,11 @@ internal class YahooWizardPageSymbols : UserControl
 
     private void cmbPrefix_SelectedIndexChanged(object sender, EventArgs e)
     {
-        Class17 class2 = new Class17(this.txtSymbols.Text, Enum0.const_1) {
-            bool_0 = false,
-            char_0 = ' '
+        SymbolList class2 = new SymbolList(this.txtSymbols.Text, Enum0.const_1) {
+            sortNeeded = false,
+            delimiterForDisplay = ' '
         };
-        class2.method_6((this.cmbPrefix.SelectedItem as Class24).string_0, '.');
+        class2.AddSurfixToSymbolNames((this.cmbPrefix.SelectedItem as Class24).string_0, '.');
         this.txtSymbols.Text = class2.ToString();
     }
 
@@ -123,9 +123,9 @@ internal class YahooWizardPageSymbols : UserControl
         base.ResumeLayout(false);
     }
 
-    public Class17 method_0()
+    public SymbolList method_0()
     {
-        return new Class17(this.txtSymbols.Text, Enum0.const_1);
+        return new SymbolList(this.txtSymbols.Text, Enum0.const_1);
     }
 
     public void method_1()
@@ -187,7 +187,7 @@ internal class YahooWizardPageSymbols : UserControl
         this.cmbPrefix.SelectedIndex = 0;
     }
 
-    internal class Class24
+    internal class Class24   ///WYJ note, surfix
     {
         public string string_0;
         public string string_1;

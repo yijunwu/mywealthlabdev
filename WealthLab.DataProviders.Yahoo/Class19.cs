@@ -4,33 +4,35 @@ using WealthLab;
 using WealthLab.DataProviders.Helper;
 using WealthLab.DataProviders.Yahoo;
 
-internal class Class19
+///WYJ fix, original name: Class19
+internal class SnDHandler  ///WYJ note, the class that handles split and dividend
 {
     private AdjustedModeWhenDataRange adjustedModeWhenDataRange_0;
     private DateTime dateTime_0;
     private Enum1 enum1_0;
-    private IList<FundamentalItem> ilist_0;
-    private IList<FundamentalItem> ilist_1;
-    private List<FundamentalItem> list_0;
-    private List<Class20> list_1;
+    private IList<FundamentalItem> splitList;
+    private IList<FundamentalItem> dividendList;
+    private List<FundamentalItem> splitAndDividendList;
+    private List<SnDFactor> factorList;
 
-    public Class19(IList<FundamentalItem> ilist_2, IList<FundamentalItem> ilist_3, Enum1 enum1_1)
+    public SnDHandler(IList<FundamentalItem> splitList, IList<FundamentalItem> dividendList, Enum1 enum1_1)
     {
         this.dateTime_0 = DateTime.MaxValue;
-        this.list_1 = new List<Class20>();
-        Class21.smethod_7(new object[] { enum1_1 });
-        this.ilist_0 = ilist_2;
-        this.ilist_1 = ilist_3;
+        this.factorList = new List<SnDFactor>();
+        Logger.LogWithStackTrace(new object[] { enum1_1 });
+        this.splitList = splitList;
+        this.dividendList = dividendList;
         this.enum1_0 = enum1_1;
     }
 
-    public Class19(IList<FundamentalItem> ilist_2, IList<FundamentalItem> ilist_3, Enum1 enum1_1, AdjustedModeWhenDataRange adjustedModeWhenDataRange_1, DateTime dateTime_1) : this(ilist_2, ilist_3, enum1_1)
+    public SnDHandler(IList<FundamentalItem> splitList, IList<FundamentalItem> dividendList, Enum1 enum1_1, AdjustedModeWhenDataRange adjustedModeWhenDataRange_1, DateTime dateTime_1) : this(splitList, dividendList, enum1_1)
     {
         this.adjustedModeWhenDataRange_0 = adjustedModeWhenDataRange_1;
         this.dateTime_0 = dateTime_1;
     }
 
-    private int method_0(FundamentalItem fundamentalItem_0, FundamentalItem fundamentalItem_1)
+    ///WYJ fix, original name method_0
+    private int compare(FundamentalItem fundamentalItem_0, FundamentalItem fundamentalItem_1)
     {
         if (fundamentalItem_0.Date.CompareTo(fundamentalItem_1.Date) != 0)
         {
@@ -47,16 +49,19 @@ internal class Class19
         return -1;
     }
 
+    ///WYJ fix, workable backup before making flow change
+    /*
     private void method_1()
     {
         this.list_0 = new List<FundamentalItem>();
         this.list_0.AddRange(this.ilist_1);
         this.list_0.AddRange(this.ilist_0);
-        this.list_0.Sort(new Comparison<FundamentalItem>(this.method_0));
+        this.list_0.Sort(new Comparison<FundamentalItem>(this.compare));
         double num = 1.0;
         for (int i = this.list_0.Count - 1; i >= 0; i--)
         {
-            if (((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) || (this.enum1_0 == Enum1.flag_1)) && ((this.list_0[i].Date > this.dateTime_0) || (this.enum1_0 == Enum1.flag_1)))
+            ///WYJ fix, original: if (((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) || (this.enum1_0 == Enum1.flag_1)) && ((this.list_0[i].Date > this.dateTime_0) || (this.enum1_0 == Enum1.flag_1)))
+            if ((this.enum1_0 == Enum1.flag_1) || (this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.list_0[i].Date > this.dateTime_0))
             {
                 if (this.list_0[i].Name.StartsWith("S"))
                 {
@@ -74,8 +79,41 @@ internal class Class19
                 local1.Value *= num;
             }
         }
+    }*/
+
+    ///WYJ fix, original name: method_1
+    private void PreprocessSplitAndDividend()  ///WYJ note, looks like method handling split and dividend
+    {
+        this.splitAndDividendList = new List<FundamentalItem>();
+        this.splitAndDividendList.AddRange(this.dividendList);
+        this.splitAndDividendList.AddRange(this.splitList);
+        this.splitAndDividendList.Sort(new Comparison<FundamentalItem>(this.compare));
+        double num = 1.0;
+        for (int i = this.splitAndDividendList.Count - 1; i >= 0; i--)
+        {
+            ///WYJ fix, original: if (((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) || (this.enum1_0 == Enum1.flag_1)) && ((this.list_0[i].Date > this.dateTime_0) || (this.enum1_0 == Enum1.flag_1)))
+            if ((this.enum1_0 == Enum1.flag_1) || (this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime_0))
+            {
+                if (this.splitAndDividendList[i].Name.StartsWith("S"))
+                {
+                    num *= this.splitAndDividendList[i].Value;
+                }
+                if ((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime_0))
+                {
+                    this.splitAndDividendList.RemoveAt(i);
+                    continue;
+                }
+            }
+
+            if (this.splitAndDividendList[i].Name.StartsWith("D"))
+            {
+                FundamentalItem local1 = this.splitAndDividendList[i];
+                local1.Value *= num;
+            }
+        }
     }
 
+    ///WYJ note, this method is never used
     private void method_2(List<FundamentalItem> list_2)
     {
         double num = 1.0;
@@ -83,7 +121,7 @@ internal class Class19
         {
             if (list_2[i].Name.StartsWith("S"))
             {
-                num *= this.list_0[i].Value;
+                num *= this.splitAndDividendList[i].Value;
             }
             if (list_2[i].Name.StartsWith("D"))
             {
@@ -92,22 +130,22 @@ internal class Class19
         }
     }
 
-    public Class20 method_3(DateTime dateTime_1)
+    public SnDFactor GetFactorForDateTime(DateTime dateTime_1)
     {
-        for (int i = 0; i < this.list_1.Count; i++)
+        for (int i = 0; i < this.factorList.Count; i++)
         {
-            if ((this.list_1[i].method_0() < dateTime_1) || (i == (this.list_1.Count - 1)))
+            if ((this.factorList[i].DateTime() < dateTime_1) || (i == (this.factorList.Count - 1)))
             {
                 if (i == 0)
                 {
-                    return new Class20(DateTime.MaxValue, 1.0, 1.0);
+                    return new SnDFactor(DateTime.MaxValue, 1.0, 1.0);
                 }
-                return this.list_1[i - 1];
+                return this.factorList[i - 1];
             }
         }
-        if (this.list_1.Count == 0)
+        if (this.factorList.Count == 0)
         {
-            return new Class20(DateTime.MaxValue, 1.0, 1.0);
+            return new SnDFactor(DateTime.MaxValue, 1.0, 1.0);
         }
         return null;
     }
@@ -185,64 +223,65 @@ internal class Class19
         return toBars;
     } */
 
-    public Bars method_4(Bars bars_0)
+    ///WYJ fix, original name: method_4
+    public Bars ProcessSplitAndDividend(Bars bars_0)
     {
         object[] symbol = new object[] { bars_0.Symbol };
-        Class21.smethod_7(symbol);
-        this.method_1();
-        this.list_1.Clear();
+        Logger.LogWithStackTrace(symbol);
+        this.PreprocessSplitAndDividend();
+        this.factorList.Clear();
         Bars bar = new Bars(bars_0.Symbol, bars_0.Scale, bars_0.BarInterval);
-        double item = 1;
-        double num = 1;
+        double factor = 1;
+        double factorForSplit = 1;
         double num1 = 1;
         for (int i = bars_0.Count - 1; i >= 0; i--)
         {
-            if (this.list_0.Count > 0)
+            if (this.splitAndDividendList.Count > 0)
             {
                 DateTime dateTime = bars_0.Date[i];
-                DateTime date = this.list_0[this.list_0.Count - 1].Date;
+                DateTime date = this.splitAndDividendList[this.splitAndDividendList.Count - 1].Date;
                 if (dateTime.Date < date.Date)
                 {
                     do
                     {
                         DateTime item1 = bars_0.Date[i];
-                        DateTime date1 = this.list_0[this.list_0.Count - 1].Date;
+                        DateTime date1 = this.splitAndDividendList[this.splitAndDividendList.Count - 1].Date;
                         if (item1.Date >= date1.Date)
                         {
                             break;
                         }
-                        if (this.list_0[this.list_0.Count - 1].Name.StartsWith("D") && (int)(this.enum1_0 & Enum1.flag_1) != 0)
+                        if (this.splitAndDividendList[this.splitAndDividendList.Count - 1].Name.StartsWith("D") && (int)(this.enum1_0 & Enum1.flag_1) != 0)
                         {
-                            double value = this.list_0[this.list_0.Count - 1].Value;
-                            item = item * (1 - value / (bars_0.Close[i] * num1));
+                            double value = this.splitAndDividendList[this.splitAndDividendList.Count - 1].Value;
+                            factor = factor * (1 - value / (bars_0.Close[i] * num1));
                         }
-                        if (this.list_0[this.list_0.Count - 1].Name.StartsWith("S") && (int)(this.enum1_0 & Enum1.flag_0) != 0)
+                        if (this.splitAndDividendList[this.splitAndDividendList.Count - 1].Name.StartsWith("S") && (int)(this.enum1_0 & Enum1.flag_0) != 0)
                         {
-                            double value1 = 1 / this.list_0[this.list_0.Count - 1].Value;
-                            item = item * value1;
-                            num = num * value1;
+                            double value1 = 1 / this.splitAndDividendList[this.splitAndDividendList.Count - 1].Value;
+                            factor = factor * value1;
+                            factorForSplit = factorForSplit * value1;
                             num1 = num1 * value1;
                         }
-                        this.list_0.RemoveAt(this.list_0.Count - 1);
+                        this.splitAndDividendList.RemoveAt(this.splitAndDividendList.Count - 1);
                     }
-                    while (this.list_0.Count != 0);
+                    while (this.splitAndDividendList.Count != 0);
                     DateTime dateTime1 = bars_0.Date[i];
-                    this.list_1.Add(new Class20(dateTime1.Date, item, num));
+                    this.factorList.Add(new SnDFactor(dateTime1.Date, factor, factorForSplit));
                 }
             }
-            bar.Add(bars_0.Date[i], bars_0.Open[i] * item, bars_0.High[i] * item, bars_0.Low[i] * item, bars_0.Close[i] * item, bars_0.Volume[i] * num);
+            bar.Add(bars_0.Date[i], bars_0.Open[i] * factor, bars_0.High[i] * factor, bars_0.Low[i] * factor, bars_0.Close[i] * factor, bars_0.Volume[i] * factorForSplit);
         }
-        Bars securityName = new Bars(bars_0.Symbol, bars_0.Scale, bars_0.BarInterval);
-        securityName.SecurityName = bars_0.SecurityName;
+        Bars barsToReturn = new Bars(bars_0.Symbol, bars_0.Scale, bars_0.BarInterval);
+        barsToReturn.SecurityName = bars_0.SecurityName;
         if (YahooStaticProvider.VersionContainsUserEditedDates())
         {
-            YahooStaticProvider.AddUserEditedDates(securityName, bars_0);
+            YahooStaticProvider.AddUserEditedDates(barsToReturn, bars_0);
         }
         for (int j = bar.Count - 1; j >= 0; j--)
         {
-            securityName.Add(bar.Date[j], bar.Open[j], bar.High[j], bar.Low[j], bar.Close[j], bar.Volume[j]);
+            barsToReturn.Add(bar.Date[j], bar.Open[j], bar.High[j], bar.Low[j], bar.Close[j], bar.Volume[j]);
         }
-        return securityName;
+        return barsToReturn;
     }
 } 
 

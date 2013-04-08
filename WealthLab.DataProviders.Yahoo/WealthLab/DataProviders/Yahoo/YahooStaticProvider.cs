@@ -15,9 +15,9 @@
     public class YahooStaticProvider : StaticDataProvider
     {
         private BarDataStore barDataStore_0;
-        private static Class16 classificationGroupsUpdater;
-        private Class22 class22_0;
-        private Class26 class26_0;
+        private static ClassificationGroupsFileUpdater classificationGroupsUpdater;
+        private GroupsToSymbols groupsToSymbolsUpdater;
+        private DataFetcher dataFetcher;
         private Dictionary<string, string> dictionary_0 = new Dictionary<string, string>();
         private IDataUpdateMessage idataUpdateMessage_0;
         private int numberOfSymbolsToUpdate;
@@ -33,7 +33,7 @@
 
         public YahooStaticProvider()
         {
-            Class21.smethod_8(new object[0]);
+            Logger.LogParameters(new object[0]);
         }
 
         public static void AddUserEditedDates(Bars toBars, Bars fromBars)
@@ -44,13 +44,13 @@
 
         public override void CancelUpdate()
         {
-            Class21.smethod_8(new object[0]);
-            this.class26_0.CancelUpdate();
+            Logger.LogParameters(new object[0]);
+            this.dataFetcher.CancelUpdate();
         }
 
         public override DataSource CreateDataSource()
         {
-            Class21.smethod_8(new object[0]);
+            Logger.LogParameters(new object[0]);
             DataSource source = new DataSource(this);
             YahooStaticSettings settings = new YahooStaticSettings();
             if (this.yahooWizardPageStart_0.method_2())
@@ -72,20 +72,20 @@
 
         public override void DeleteSymbolDataFile(DataSource dataSource_0, string symbol)
         {
-            Class21.smethod_8(new object[0]);
-            this.barDataStore_0.RemoveFile(Class23.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
+            Logger.LogParameters(new object[0]);
+            this.barDataStore_0.RemoveFile(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
         }
 
         public override void Initialize(IDataHost dataHost)
         {
-            Class21.smethod_8(new object[0]);
+            Logger.LogParameters(new object[0]);
             base.Initialize(dataHost);
             this.barDataStore_0 = new BarDataStore(dataHost, this);
             string_0 = this.barDataStore_0.RootPath;
-            this.class26_0 = new Class26();
-            this.class26_0.AddStaticDataHandler(new Class26.Delegate1(this.onData));
-            this.class26_0.AddStaticErrorHandler(new Class26.Delegate2(this.onError));
-            classificationGroupsUpdater = new Class16(string_0 + "YahooClassification.xml", "http://67.199.28.171/Classification/Yahoo/YahooClassification.xml");
+            this.dataFetcher = new DataFetcher();
+            this.dataFetcher.AddStaticDataHandler(new DataFetcher.Delegate1(this.onData));
+            this.dataFetcher.AddStaticErrorHandler(new DataFetcher.Delegate2(this.onError));
+            classificationGroupsUpdater = new ClassificationGroupsFileUpdater(string_0 + "YahooClassification.xml", "http://67.199.28.171/Classification/Yahoo/YahooClassification.xml");
             if (yahooClientSettings_0 == null)
             {
                 yahooClientSettings_0 = YahooClientSettings.Deserialize(string_0);
@@ -99,7 +99,7 @@
 
         private void onError(object sender, EventArgs3 e)  ///WYJ note: looks like an error handler
         {
-            Class21.smethod_8(new object[0]);
+            Logger.LogParameters(new object[0]);
             if (e.class27_0 != null)
             {
                 this.numberOfSymbolsUpdated++;
@@ -114,7 +114,7 @@
 
         private void onData(object sender, EventArgs2 e) ///WYJ fix, update Bars for security
         {
-            Class21.smethod_8(new object[0]);
+            Logger.LogParameters(new object[0]);
             if ((e.class27_0.getDataType() & Enum4.flag_0) != 0)
             {
                 if (e.bars_0 != null)
@@ -124,11 +124,11 @@
                     {
                         if (this.list_1.Contains(e.class27_0.getSymbol()))
                         {
-                            this.barDataStore_0.RemoveFile(Class23.encode(e.class27_0.getSymbol()), BarScale.Daily, 0);
+                            this.barDataStore_0.RemoveFile(Encoder.encode(e.class27_0.getSymbol()), BarScale.Daily, 0);
                             this.list_1.Remove(e.class27_0.getSymbol());
                         }
                     }
-                    Bars bars = new Bars(Class23.encode(e.class27_0.getSymbol()), BarScale.Daily, 0);
+                    Bars bars = new Bars(Encoder.encode(e.class27_0.getSymbol()), BarScale.Daily, 0);
                     this.barDataStore_0.LoadBarsObject(bars);
                     int count = bars.Count;
                     bars.AppendWithCorrections(e.bars_0, out num2);
@@ -166,7 +166,7 @@
             bars_0.UserEditedDates.Clear();
         }
 
-        private Class19 method_11(string string_1, DateTime dateTime_0)
+        private SnDHandler getSnDHandler(string symbol, DateTime dateTime_0)
         {
             if (!yahooClientSettings_0.DividendAdj && !yahooClientSettings_0.SplitAdj)
             {
@@ -183,13 +183,13 @@
             }
             this.yahooFundamentalProvider_0 = new YahooFundamentalProvider();
             this.yahooFundamentalProvider_0.Initialize(base.DataHost);
-            IList<FundamentalItem> list = this.yahooFundamentalProvider_0.RequestItems(string_1, "Split (Yahoo! Finance)");
-            IList<FundamentalItem> list2 = this.yahooFundamentalProvider_0.RequestItems(string_1, "Dividend (Yahoo! Finance)");
+            IList<FundamentalItem> splitList = this.yahooFundamentalProvider_0.RequestItems(symbol, "Split (Yahoo! Finance)");
+            IList<FundamentalItem> divList = this.yahooFundamentalProvider_0.RequestItems(symbol, "Dividend (Yahoo! Finance)");
             if (dateTime_0 != DateTime.MaxValue)
             {
-                return new Class19(list, list2, enum2, yahooClientSettings_0.AdjModeWhenDataRange, dateTime_0);
+                return new SnDHandler(splitList, divList, enum2, yahooClientSettings_0.AdjModeWhenDataRange, dateTime_0);
             }
-            return new Class19(list, list2, enum2);
+            return new SnDHandler(splitList, divList, enum2);
         }
 
         private void DisplayUpdateProgress()
@@ -251,9 +251,9 @@
         ///WYJ fix, original name: method_7
         private void updateClassificationGroups(DataSource dataSource_0)  ///WYJ note: update group specification for data source
         {
-            Class21.smethod_8(new object[0]);
+            Logger.LogParameters(new object[0]);
             YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
-            if (((this.class22_0 == null) || !classificationGroupsUpdater.FileExists()) || classificationGroupsUpdater.IsLastUpdatedDaysAgo(1))
+            if (((this.groupsToSymbolsUpdater == null) || !classificationGroupsUpdater.FileExists()) || classificationGroupsUpdater.IsLastUpdatedDaysAgo(1))
             {
                 if (!classificationGroupsUpdater.FileExists() || classificationGroupsUpdater.IsLastUpdatedDaysAgo(1))
                 {
@@ -266,18 +266,18 @@
                     }
                     this.DisplayUpdateMessage("Classification file updated.");
                 }
-                this.class22_0 = new Class22(classificationGroupsUpdater.ReadClassificationGroupFromFile());
+                this.groupsToSymbolsUpdater = new GroupsToSymbols(classificationGroupsUpdater.ReadClassificationGroupFromFile());
             }
             this.DisplayUpdateMessage("Checking the DataSet's Classification groups composition:");
-            Class17 class2 = new Class17(settings.Groups, Enum0.const_0);
-            Class17 class3 = new Class17(settings.Symbols, Enum0.const_0);
-            Class17 class4 = this.class22_0.method_3(class3, class2.list_0.ToArray());
-            this.DisplayUpdateMessage(string.Format("Symbols deleted {0}: {1}", this.class22_0.method_0().list_0.Count, this.class22_0.method_0().ToString()));
-            this.DisplayUpdateMessage(string.Format("Symbols added {0}: {1}", this.class22_0.method_1().list_0.Count, this.class22_0.method_1().ToString()));
-            if ((this.class22_0.method_0().list_0.Count > 0) || (this.class22_0.method_1().list_0.Count > 0))
+            SymbolList groupList = new SymbolList(settings.Groups, Enum0.const_0);
+            SymbolList symbolList = new SymbolList(settings.Symbols, Enum0.const_0);
+            SymbolList symbolListFromGroups = this.groupsToSymbolsUpdater.generateNewSymbolList(symbolList, groupList.list.ToArray());
+            this.DisplayUpdateMessage(string.Format("Symbols deleted {0}: {1}", this.groupsToSymbolsUpdater.GetDeleteList().list.Count, this.groupsToSymbolsUpdater.GetDeleteList().ToString()));
+            this.DisplayUpdateMessage(string.Format("Symbols added {0}: {1}", this.groupsToSymbolsUpdater.GetAddList().list.Count, this.groupsToSymbolsUpdater.GetAddList().ToString()));
+            if ((this.groupsToSymbolsUpdater.GetDeleteList().list.Count > 0) || (this.groupsToSymbolsUpdater.GetAddList().list.Count > 0))
             {
                 string str = Directory.GetParent(string_0).Parent.FullName + @"\DataSets\";
-                settings.Symbols = class4.ToString();
+                settings.Symbols = symbolListFromGroups.ToString();
                 dataSource_0.DSString = settings.SerializeToString();
                 dataSource_0.SaveToFile(str + SymbolFileNameConverter.SymbolToFileName(dataSource_0.Name) + ".xml");
             }
@@ -299,7 +299,7 @@
             else
             {
                 class27_0.method_6(time2);
-                DateTime time3 = this.barDataStore_0.SymbolLastUpdated(Class23.encode(class27_0.getSymbol()), BarScale.Daily, 0);
+                DateTime time3 = this.barDataStore_0.SymbolLastUpdated(Encoder.encode(class27_0.getSymbol()), BarScale.Daily, 0);
                 if (time3 != DateTime.MinValue)
                 {
                     time = time3.AddDays(-10.0);
@@ -313,13 +313,13 @@
             try
             {
                 this.DisplayUpdateMessage("Updating Security Names for " + list_2.Count + " symbols...");
-                this.dictionary_0 = this.class26_0.GetSymbolNames(list_2);
-                Class21.smethod_2("Sec. Names");
+                this.dictionary_0 = this.dataFetcher.GetSymbolNames(list_2);
+                Logger.Log("Sec. Names");
                 foreach (KeyValuePair<string, string> pair in this.dictionary_0)
                 {
-                    Class21.smethod_2(pair.Key + " " + pair.Value);
+                    Logger.Log(pair.Key + " " + pair.Value);
                 }
-                Class21.smethod_2("-----");
+                Logger.Log("-----");
                 this.DisplayUpdateMessage("Security Names updated.");
             }
             catch (Exception exception)
@@ -330,8 +330,8 @@
 
         public override string ModifySymbols(DataSource dataSource_0, List<string> symbols)
         {
-            Class21.smethod_8(new object[0]);
-            Class17 class2 = new Class17(symbols);
+            Logger.LogParameters(new object[0]);
+            SymbolList class2 = new SymbolList(symbols);
             YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
             settings.Symbols = class2.ToString().ToUpper();
             return settings.SerializeToString();
@@ -339,20 +339,20 @@
 
         public override void PopulateSymbols(DataSource dataSource_0, List<string> symbols)
         {
-            Class21.smethod_8(new object[] { dataSource_0.Name });
+            Logger.LogParameters(new object[] { dataSource_0.Name });
             if (!string.IsNullOrEmpty(dataSource_0.Name))
             {
                 YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
-                Class17 class2 = new Class17(settings.Symbols, Enum0.const_0);
-                symbols.AddRange(class2.list_0);
+                SymbolList class2 = new SymbolList(settings.Symbols, Enum0.const_0);
+                symbols.AddRange(class2.list);
             }
         }
 
         public override Bars RequestData(DataSource dataSource_0, string symbol, DateTime startDate, DateTime symbolEndDate, int maxBars, bool includePartialBar)
         {
-            Class21.smethod_7(new object[] { dataSource_0.DSString, symbol, startDate, symbolEndDate, maxBars, includePartialBar });
+            Logger.LogWithStackTrace(new object[] { dataSource_0.DSString, symbol, startDate, symbolEndDate, maxBars, includePartialBar });
             symbol = symbol.Trim(new char[] { ' ', '"' });
-            Class21.smethod_2("On Demand Update Enabled: " + base.DataHost.OnDemandUpdateEnabled);
+            Logger.Log("On Demand Update Enabled: " + base.DataHost.OnDemandUpdateEnabled);
             if (base.DataHost.OnDemandUpdateEnabled && !ClientSettings.NeverPerformOnDemandUpdates)
             {
                 try
@@ -376,21 +376,21 @@
                         class27
                     };
                     this.updateSecurityNames(list2);
-                    this.class26_0.updateSecurityData(list2);
+                    this.dataFetcher.updateSecurityData(list2);
                 }
                 catch (Exception exception)
                 {
                     string str = "On Demand Update Error: " + exception.Message;
-                    Class21.smethod_4(Enum2.const_3, str);
+                    Logger.Log(Enum2.const_3, str);
                     MessageBox.Show(str, "On Demand Update Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 }
             }
-            Bars bars2 = new Bars(Class23.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
-            if (this.barDataStore_0.ContainsSymbol(Class23.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval))
+            Bars bars2 = new Bars(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
+            if (this.barDataStore_0.ContainsSymbol(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval))
             {
                 this.barDataStore_0.LoadBarsObject(bars2, startDate, DateTime.MaxValue, maxBars);
             }
-            if (symbol != Class23.encode(symbol))
+            if (symbol != Encoder.encode(symbol))
             {
                 Bars toBars = new Bars(symbol, dataSource_0.Scale, dataSource_0.BarInterval);
                 toBars.Append(bars2);
@@ -401,29 +401,29 @@
                 }
                 bars2 = toBars;
             }
-            Class19 class3 = this.method_11(symbol, symbolEndDate);
-            if (class3 != null)
+            SnDHandler snDHandler = this.getSnDHandler(symbol, symbolEndDate);
+            if (snDHandler != null)
             {
-                bars2 = class3.method_4(bars2);
+                bars2 = snDHandler.ProcessSplitAndDividend(bars2);
             }
             return bars2;
         }
 
         public Bars RequestHistoricalData(string symbol, DateTime startDate, DateTime endDate)
         {
-            return this.class26_0.method_29(symbol, startDate, endDate);
+            return this.dataFetcher.method_29(symbol, startDate, endDate);
         }
 
         public override void SaveEditedSymbolDataFile(DataSource dataSource_0, Bars bars)
         {
             Bars bars2 = new Bars(bars.Symbol, bars.Scale, bars.BarInterval);
-            Class19 class2 = this.method_11(bars.Symbol, DateTime.MaxValue);
+            SnDHandler snDHandler = this.getSnDHandler(bars.Symbol, DateTime.MaxValue);
             this.barDataStore_0.LoadBarsObject(bars2);
             if (bars.Count >= bars2.Count)
             {
                 if (bars.Count > bars2.Count)
                 {
-                    if ((class2 != null) && !this.method_6())
+                    if ((snDHandler != null) && !this.method_6())
                     {
                         return;
                     }
@@ -432,7 +432,7 @@
                         if (bars2.ConvertDateToBar(time, true) == -1)
                         {
                             int num5 = bars.ConvertDateToBar(time, true);
-                            if (class2 != null)
+                            if (snDHandler != null)
                             {
                                 DataSeries series;
                                 int num6;
@@ -444,19 +444,19 @@
                                 int num9;
                                 DataSeries series5;
                                 int num10;
-                                class2.method_4(bars);
-                                Class20 class4 = class2.method_3(time);
-                                (series = bars.Open)[num6 = num5] = series[num6] / class4.method_2();
-                                (series2 = bars.High)[num7 = num5] = series2[num7] / class4.method_2();
-                                (series3 = bars.Low)[num8 = num5] = series3[num8] / class4.method_2();
-                                (series4 = bars.Close)[num9 = num5] = series4[num9] / class4.method_2();
-                                (series5 = bars.Volume)[num10 = num5] = series5[num10] / class4.method_4();
+                                snDHandler.ProcessSplitAndDividend(bars);
+                                SnDFactor class4 = snDHandler.GetFactorForDateTime(time);
+                                (series = bars.Open)[num6 = num5] = series[num6] / class4.FactorForSnD();
+                                (series2 = bars.High)[num7 = num5] = series2[num7] / class4.FactorForSnD();
+                                (series3 = bars.Low)[num8 = num5] = series3[num8] / class4.FactorForSnD();
+                                (series4 = bars.Close)[num9 = num5] = series4[num9] / class4.FactorForSnD();
+                                (series5 = bars.Volume)[num10 = num5] = series5[num10] / class4.FactorForSplit();
                             }
                         }
                     }
                     bars2 = bars;
                 }
-                else if (class2 == null)
+                else if (snDHandler == null)
                 {
                     bars2 = bars;
                 }
@@ -466,11 +466,11 @@
                     {
                         return;
                     }
-                    class2.method_4(bars2);
+                    snDHandler.ProcessSplitAndDividend(bars2);
                     int num2 = 0;
                     for (int i = 0; i < bars.Count; i++)
                     {
-                        class2.method_3(bars.Date[i]);
+                        snDHandler.GetFactorForDateTime(bars.Date[i]);
                         if (((bars2.Open[i] != bars.Open[i]) || (bars2.High[i] != bars.High[i])) || (((bars2.Low[i] != bars.Low[i]) || (bars2.Close[i] != bars.Close[i])) || (bars2.Volume[i] != bars.Volume[i])))
                         {
                             num2++;
@@ -480,15 +480,15 @@
                     {
                         foreach (DateTime time2 in bars.UserEditedDates)
                         {
-                            Class20 class5 = class2.method_3(time2);
+                            SnDFactor class5 = snDHandler.GetFactorForDateTime(time2);
                             int num11 = bars.ConvertDateToBar(time2, true);
                             if (((bars2.Open[num11] != bars.Open[num11]) || (bars2.High[num11] != bars.High[num11])) || (((bars2.Low[num11] != bars.Low[num11]) || (bars2.Close[num11] != bars.Close[num11])) || (bars2.Volume[num11] != bars.Volume[num11])))
                             {
-                                bars2.Open[num11] = bars.Open[num11] / class5.method_2();
-                                bars2.High[num11] = bars.High[num11] / class5.method_2();
-                                bars2.Low[num11] = bars.Low[num11] / class5.method_2();
-                                bars2.Close[num11] = bars.Close[num11] / class5.method_2();
-                                bars2.Volume[num11] = bars.Volume[num11] / class5.method_4();
+                                bars2.Open[num11] = bars.Open[num11] / class5.FactorForSnD();
+                                bars2.High[num11] = bars.High[num11] / class5.FactorForSnD();
+                                bars2.Low[num11] = bars.Low[num11] / class5.FactorForSnD();
+                                bars2.Close[num11] = bars.Close[num11] / class5.FactorForSnD();
+                                bars2.Volume[num11] = bars.Volume[num11] / class5.FactorForSplit();
                             }
                         }
                     }
@@ -496,12 +496,12 @@
                     {
                         for (int j = 0; j < bars.Count; j++)
                         {
-                            Class20 class3 = class2.method_3(bars.Date[j]);
-                            bars.Open[j] /= class3.method_2();
-                            bars.High[j] /= class3.method_2();
-                            bars.Low[j] /= class3.method_2();
-                            bars.Close[j] /= class3.method_2();
-                            bars.Volume[j] /= class3.method_4();
+                            SnDFactor class3 = snDHandler.GetFactorForDateTime(bars.Date[j]);
+                            bars.Open[j] /= class3.FactorForSnD();
+                            bars.High[j] /= class3.FactorForSnD();
+                            bars.Low[j] /= class3.FactorForSnD();
+                            bars.Close[j] /= class3.FactorForSnD();
+                            bars.Volume[j] /= class3.FactorForSplit();
                         }
                         bars2 = bars;
                     }
@@ -525,19 +525,19 @@
 
         public override bool SupportsDynamicUpdate(BarScale scale)
         {
-            Class21.smethod_8(new object[0]);
+            Logger.LogParameters(new object[0]);
             return false;
         }
 
         public override void UpdateDataSource(DataSource dataSource_0, IDataUpdateMessage dataUpdateMsg)
         {
-            Class21.smethod_8(new object[] { dataSource_0.Name, dataSource_0.Symbols[0] });
-            this.class26_0.SetCancelFlag(false);
+            Logger.LogParameters(new object[] { dataSource_0.Name, dataSource_0.Symbols[0] });
+            this.dataFetcher.SetCancelFlag(false);
             SymbolInfoList list = null;
             this.idataUpdateMessage_0 = dataUpdateMsg;
             try
             {
-                Class17 class2;
+                SymbolList class2;
                 YahooStaticSettings settings = null;
                 if (!string.IsNullOrEmpty(dataSource_0.Name))
                 {
@@ -547,17 +547,17 @@
                         this.updateClassificationGroups(dataSource_0);
                         settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
                     }
-                    class2 = new Class17(settings.Symbols, Enum0.const_0);
+                    class2 = new SymbolList(settings.Symbols, Enum0.const_0);
                 }
                 else
                 {
-                    class2 = new Class17(dataSource_0.Symbols);
+                    class2 = new SymbolList(dataSource_0.Symbols);
                 }
                 list = SymbolInfoList.Deserialize(string_0 + "SymbolsStartDate.xml");
                 list.Synchronize(this.barDataStore_0);
                 List<Class27> list2 = new List<Class27>();
                 this.DisplayUpdateMessage("Preparing requests ...");
-                foreach (string str in class2.list_0)
+                foreach (string str in class2.list)
                 {
                     Class27 class3 = new Class27(str);
                     if (!string.IsNullOrEmpty(dataSource_0.Name))
@@ -571,7 +571,7 @@
                     class3.method_8(DateTime.Now.AddDays(2.0));
                     class3.setDataType(Enum4.flag_1 | Enum4.flag_0);
                     list2.Add(class3);
-                    if (this.class26_0.GetCancelFlag())
+                    if (this.dataFetcher.GetCancelFlag())
                     {
                         return;
                     }
@@ -582,12 +582,12 @@
                     this.numberOfSymbolsToUpdate = list2.Count;
                     this.numberOfSymbolsUpdated = 0;
                     this.updateSecurityNames(list2);
-                    this.class26_0.updateSecurityData(list2);
+                    this.dataFetcher.updateSecurityData(list2);
                 }
             }
             catch (Exception exception)
             {
-                Class21.smethod_4(Enum2.const_3, "UpdateDataSource " + exception.Message);
+                Logger.Log(Enum2.const_3, "UpdateDataSource " + exception.Message);
                 this.idataUpdateMessage_0.DisplayUpdateMessage("Error: " + exception.Message);
             }
             finally
@@ -599,8 +599,8 @@
 
         public override void UpdateProvider(IDataUpdateMessage dataUpdateMsg, List<DataSource> dataSources, bool updateNonDSSymbols, bool deleteNonDSSymbols)
         {
-            Class21.smethod_8(new object[0]);
-            this.class26_0.SetCancelFlag(false);
+            Logger.LogParameters(new object[0]);
+            this.dataFetcher.SetCancelFlag(false);
             this.idataUpdateMessage_0 = dataUpdateMsg;
             List<Class27> list = new List<Class27>();
             SymbolInfoList list2 = null;
@@ -612,8 +612,8 @@
                 foreach (DataSource source in dataSources)
                 {
                     YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(source.DSString);
-                    Class17 class3 = new Class17(settings.Symbols, Enum0.const_0);
-                    foreach (string str3 in class3.list_0)
+                    SymbolList class3 = new SymbolList(settings.Symbols, Enum0.const_0);
+                    foreach (string str3 in class3.list)
                     {
                         Class27 class4 = new Class27(str3);
                         this.method_8(ref class4, list2, settings.StartDate);
@@ -627,7 +627,7 @@
                             }
                         }
                         list.Add(class4);
-                        if (this.class26_0.GetCancelFlag())
+                        if (this.dataFetcher.GetCancelFlag())
                         {
                             return;
                         }
@@ -636,7 +636,7 @@
                 if (updateNonDSSymbols)
                 {
                     IList<string> existingSymbols = this.barDataStore_0.GetExistingSymbols(BarScale.Daily, 0);
-                    Class21.smethod_2("symbolsInDataStore.Count " + existingSymbols.Count);
+                    Logger.Log("symbolsInDataStore.Count " + existingSymbols.Count);
                     foreach (string str4 in existingSymbols)
                     {
                         bool flag2 = true;
@@ -652,13 +652,13 @@
                         if (flag2)
                         {
                             Class27 item = new Class27(str4);
-                            DateTime time2 = this.barDataStore_0.SymbolLastUpdated(Class23.encode(item.getSymbol()), BarScale.Daily, 0);
+                            DateTime time2 = this.barDataStore_0.SymbolLastUpdated(Encoder.encode(item.getSymbol()), BarScale.Daily, 0);
                             item.method_4(time2.AddDays(-10.0));
                             item.method_8(DateTime.Now.AddDays(2.0));
                             item.setDataType(Enum4.flag_1 | Enum4.flag_0);
                             list.Add(item);
                         }
-                        if (this.class26_0.GetCancelFlag())
+                        if (this.dataFetcher.GetCancelFlag())
                         {
                             return;
                         }
@@ -671,7 +671,7 @@
                     this.numberOfSymbolsToUpdate = list.Count;
                     this.numberOfSymbolsUpdated = 0;
                     this.updateSecurityNames(list);
-                    this.class26_0.updateSecurityData(list);
+                    this.dataFetcher.updateSecurityData(list);
                 }
                 if (deleteNonDSSymbols)
                 {
@@ -697,7 +697,7 @@
                         if (!flag)
                         {
                             num++;
-                            this.barDataStore_0.RemoveFile(Class23.encode(str2), BarScale.Daily, 0);
+                            this.barDataStore_0.RemoveFile(Encoder.encode(str2), BarScale.Daily, 0);
                             if (str != string.Empty)
                             {
                                 str = str + ",";
@@ -714,7 +714,7 @@
             }
             catch (Exception exception)
             {
-                Class21.smethod_4(Enum2.const_3, "UpdateDataSource " + exception.Message);
+                Logger.Log(Enum2.const_3, "UpdateDataSource " + exception.Message);
                 this.idataUpdateMessage_0.DisplayUpdateMessage("Error: " + exception.Message);
             }
             finally
@@ -753,11 +753,11 @@
                 }
                 return this.yahooWizardPageSymbols_0;
             }
-            if ((currentPage == this.yahooWizardPageSymbols_0) && (this.yahooWizardPageSymbols_0.method_0().list_0.Count == 0))
+            if ((currentPage == this.yahooWizardPageSymbols_0) && (this.yahooWizardPageSymbols_0.method_0().list.Count == 0))
             {
                 throw new WizardValidationException("Symbols are not specified");
             }
-            if ((currentPage == this.yahooWizardPageClassification_0) && (this.yahooWizardPageClassification_0.method_0().list_0.Count == 0))
+            if ((currentPage == this.yahooWizardPageClassification_0) && (this.yahooWizardPageClassification_0.method_0().list.Count == 0))
             {
                 throw new WizardValidationException("Group is not selected");
             }
@@ -781,7 +781,7 @@
         {
             get
             {
-                Class21.smethod_8(new object[0]);
+                Logger.LogParameters(new object[0]);
                 return true;
             }
         }
@@ -802,7 +802,7 @@
             }
         }
 
-        internal static Class16 ClassificationFile
+        internal static ClassificationGroupsFileUpdater ClassificationFile
         {
             get
             {
@@ -852,7 +852,7 @@
             {
                 List<DataBehaviorUserControl> list = new List<DataBehaviorUserControl>();
                 ProviderSettingsControl item = new ProviderSettingsControl();
-                item.method_1();
+                item.SetStates();
                 list.Add(item);
                 return list;
             }
@@ -878,7 +878,7 @@
         {
             get
             {
-                Class21.smethod_8(new object[0]);
+                Logger.LogParameters(new object[0]);
                 if (this.yahooWizardPageStart_0.method_2())
                 {
                     return this.yahooWizardPageClassification_0.method_1();
@@ -891,7 +891,7 @@
         {
             get
             {
-                Class21.smethod_8(new object[0]);
+                Logger.LogParameters(new object[0]);
                 return true;
             }
         }
@@ -900,7 +900,7 @@
         {
             get
             {
-                Class21.smethod_8(new object[0]);
+                Logger.LogParameters(new object[0]);
                 return true;
             }
         }

@@ -5,37 +5,37 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 
-internal static class Class21  ///WYJ note, probably the Logger class, only for data fetching
+internal static class Logger  ///WYJ note, probably the Logger class, only for data fetching
 {
-    private static bool bool_0;
+    private static bool writeLog;
     private static DefaultTraceListener defaultTraceListener_0;
     private static readonly object object_0 = new object();
     private static TextWriter textWriter_0;
 
-    static Class21()
+    static Logger()
     {
         foreach (string str in Environment.GetCommandLineArgs())
         {
             if (((str.ToLower() == "/log") || (str.ToLower() == "log")) || (str.ToLower() == "-log"))
             {
-                bool_0 = true;
+                writeLog = true;
             }
         }
-        if (bool_0)
+        if (writeLog)
         {
             FileStream stream = new FileStream(Assembly.GetExecutingAssembly().GetName().Name + ".Log.txt", FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
             textWriter_0 = new StreamWriter(stream);
             defaultTraceListener_0 = new DefaultTraceListener();
-            smethod_6();
+            Log();
         }
     }
 
-    public static bool smethod_0()
+    public static bool getWriteLog()
     {
-        return bool_0;
+        return writeLog;
     }
 
-    private static void smethod_1(Enum2 enum2_0, string string_0)
+    private static void log(Enum2 enum2_0, string string_0)
     {
         string str;
         switch (enum2_0)
@@ -86,20 +86,20 @@ internal static class Class21  ///WYJ note, probably the Logger class, only for 
         defaultTraceListener_0.Flush();
     }
 
-    public static void smethod_2(object object_1)
+    public static void Log(object object_1)
     {
-        if (bool_0)
+        if (writeLog)
         {
             lock (object_0)
             {
-                smethod_1(Enum2.const_0, object_1.ToString());
+                log(Enum2.const_0, object_1.ToString());
             }
         }
     }
 
-    public static void smethod_3(params object[] object_1)
+    public static void Log(params object[] object_1)
     {
-        if (bool_0)
+        if (writeLog)
         {
             lock (object_0)
             {
@@ -109,25 +109,25 @@ internal static class Class21  ///WYJ note, probably the Logger class, only for 
                     builder.Append(obj3.ToString());
                     builder.Append(" ");
                 }
-                smethod_1(Enum2.const_0, builder.ToString());
+                log(Enum2.const_0, builder.ToString());
             }
         }
     }
-
-    public static void smethod_4(Enum2 enum2_0, object object_1)
+    
+    public static void Log(Enum2 enum2_0, object object_1)
     {
-        if (bool_0)
+        if (writeLog)
         {
             lock (object_0)
             {
-                smethod_1(enum2_0, object_1.ToString());
+                log(enum2_0, object_1.ToString());
             }
         }
     }
 
-    public static void smethod_5(Enum2 enum2_0, params object[] object_1)
+    public static void Log(Enum2 enum2_0, params object[] object_1)
     {
-        if (bool_0)
+        if (writeLog)
         {
             lock (object_0)
             {
@@ -139,31 +139,31 @@ internal static class Class21  ///WYJ note, probably the Logger class, only for 
                 }
                 lock (object_0)
                 {
-                    smethod_1(enum2_0, builder.ToString());
+                    log(enum2_0, builder.ToString());
                 }
             }
         }
     }
 
-    public static void smethod_6()
+    public static void Log()
     {
-        if (bool_0)
+        if (writeLog)
         {
             lock (object_0)
             {
-                smethod_1(Enum2.const_1, string.Format("Command Line: {0}", Environment.CommandLine));
-                smethod_1(Enum2.const_1, string.Format("Assembly: {0}", Assembly.GetExecutingAssembly().FullName));
-                smethod_1(Enum2.const_1, string.Format("OS: {0}", Environment.OSVersion));
-                smethod_1(Enum2.const_1, string.Format("NET: {0}", Environment.Version));
-                smethod_1(Enum2.const_1, string.Format("UTC: {0}", DateTime.UtcNow.ToString("o")));
-                smethod_1(Enum2.const_1, "------------------------------------------------");
+                log(Enum2.const_1, string.Format("Command Line: {0}", Environment.CommandLine));
+                log(Enum2.const_1, string.Format("Assembly: {0}", Assembly.GetExecutingAssembly().FullName));
+                log(Enum2.const_1, string.Format("OS: {0}", Environment.OSVersion));
+                log(Enum2.const_1, string.Format("NET: {0}", Environment.Version));
+                log(Enum2.const_1, string.Format("UTC: {0}", DateTime.UtcNow.ToString("o")));
+                log(Enum2.const_1, "------------------------------------------------");
             }
         }
     }
 
-    public static void smethod_7(params object[] object_1)
+    public static void LogWithStackTrace(params object[] object_1)
     {
-        if (bool_0)
+        if (writeLog)
         {
             lock (object_0)
             {
@@ -174,14 +174,14 @@ internal static class Class21  ///WYJ note, probably the Logger class, only for 
                 {
                     builder.AppendFormat("\r\n{0}", obj3.ToString());
                 }
-                smethod_1(Enum2.const_2, builder.ToString());
+                log(Enum2.const_2, builder.ToString());
             }
         }
     }
 
-    public static void smethod_8(params object[] object_1)
+    public static void LogParameters(params object[] object_1)
     {
-        if (bool_0)
+        if (writeLog)
         {
             lock (object_0)
             {
@@ -208,7 +208,7 @@ internal static class Class21  ///WYJ note, probably the Logger class, only for 
                         }
                     }
                 }
-                smethod_1(Enum2.const_2, builder.ToString());
+                log(Enum2.const_2, builder.ToString());
             }
         }
     }

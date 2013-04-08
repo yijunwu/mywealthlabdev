@@ -63,7 +63,7 @@ internal class ProviderSettingsForm : Form
         settings.Serialize();
         if ((this.string_1 != this.txtLogin.Text.Trim()) || (this.string_2 != this.txtPassword.Text.Trim()))
         {
-            Class18.smethod_4();
+            Login.Reset();
         }
         YahooStaticProvider.ClientSettings = settings;
     }

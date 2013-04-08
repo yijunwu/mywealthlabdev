@@ -2,13 +2,14 @@
 using System.Threading;
 using System.Windows.Forms;
 
-internal static class Class18
+///WYJ fix, original name Class18
+internal static class Login  ///WYJ note, Login class
 {
     private static ManualResetEvent manualResetEvent_0 = new ManualResetEvent(true);
     private static string cookie = null;
     private static string errorMessage = null;
-    private static string string_2;
-    private static string string_3;
+    private static string user;
+    private static string password;
 
     public static string GetCookie()
     {
@@ -20,39 +21,39 @@ internal static class Class18
         return errorMessage;
     }
 
-    public static string smethod_2()
+    public static string GetUser()
     {
-        return string_2;
+        return user;
     }
 
-    public static string smethod_3()
+    public static string GetPassword()
     {
-        return string_3;
+        return password;
     }
 
-    public static void smethod_4()
+    public static void Reset()
     {
-        Class21.smethod_8(new object[0]);
+        Logger.LogParameters(new object[0]);
         cookie = null;
     }
 
-    private static void smethod_5()
+    private static void doLogin()
     {
         try
         {
             WebBrowser browser = new WebBrowser();
-            browser.Navigate(string.Format("https://login.yahoo.com/config/login?.done=http://finance.yahoo.com%2f&.src=quote&.intl=us&login={0}&passwd={1}", string_2, string_3));
+            browser.Navigate(string.Format("https://login.yahoo.com/config/login?.done=http://finance.yahoo.com%2f&.src=quote&.intl=us&login={0}&passwd={1}", user, password));
             while (!browser.IsBusy)
             {
                 Thread.Sleep(50);
                 Application.DoEvents();
             }
             cookie = browser.Document.Cookie;
-            Class21.smethod_2("Cookie: " + cookie);
+            Logger.Log("Cookie: " + cookie);
         }
         catch (Exception exception)
         {
-            Class21.smethod_4(Enum2.const_3, exception.Message);
+            Logger.Log(Enum2.const_3, exception.Message);
             errorMessage = exception.Message;
         }
         finally
@@ -61,16 +62,16 @@ internal static class Class18
         }
     }
 
-    public static void smethod_6(string string_4, string string_5)
+    public static void LoginWith(string pUser, string pPassword)
     {
-        Class21.smethod_8(new object[] { string_4, string_5 });
+        Logger.LogParameters(new object[] { pUser, pPassword });
         manualResetEvent_0.Reset();
         cookie = string.Empty;
         errorMessage = null;
-        string_2 = string_4;
-        string_3 = string_5.Trim();
-        string_3 = string_3.Trim(new char[1]);
-        Thread thread = new Thread(new ThreadStart(Class18.smethod_5));
+        user = pUser;
+        password = pPassword.Trim();
+        password = password.Trim(new char[1]);
+        Thread thread = new Thread(new ThreadStart(Login.doLogin));
         thread.SetApartmentState(ApartmentState.STA);
         thread.IsBackground = true;
         thread.Start();

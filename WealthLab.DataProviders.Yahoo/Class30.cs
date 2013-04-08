@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Threading;
 
-internal class Class30
+internal class ThreadControl  ///WYJ note, thread control for DataFetcher
 {
     private ManualResetEvent manualResetEvent_0;
     private ManualResetEvent manualResetEvent_1;
-    private Thread thread_0;
+    private Thread thread;
 
-    public Class30(Thread thread_1)
+    public ThreadControl(Thread thread_1)
     {
-        this.thread_0 = thread_1;
+        this.thread = thread_1;
         this.manualResetEvent_0 = new ManualResetEvent(true);
         this.manualResetEvent_1 = new ManualResetEvent(false);
     }
 
-    public Thread method_0()
+    public Thread GetThread()
     {
-        return this.thread_0;
+        return this.thread;
     }
 
     public ManualResetEvent method_1()
