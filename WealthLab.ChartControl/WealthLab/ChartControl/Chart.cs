@@ -612,39 +612,42 @@
                             else
                                 moveBy = 1;
 
-                            int cursorPointBar = 0;
-                            double doubleValue = 100;//current.ConvertYToValue(y);
-                            int y = 300;
-
                             if (this.cursorPointData != null)
                             {
-                                //find barNum, doubleValue, y
-                                this.cursorPointData.barNum -= moveBy;
-                                if (this.cursorPointData.barNum < 0)
-                                    this.cursorPointData.barNum = 0;
-
-                                if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
-                                    this.cursorPointData.barNum = this.chartRenderer_0.RightEdgeBar;
-
-                                cursorPointBar = this.cursorPointData.barNum;
-
                                 if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar + 1)
                                 {
-                                    moveBy = this.chartRenderer_0.LeftEdgeBar + 1 - this.cursorPointData.barNum;
-                                    this.ScrollBy(moveBy);
+                                    this.cursorPointData.barNum = this.chartRenderer_0.LeftEdgeBar + 1;  
+                                }
+                                else
+                                {
+                                    this.cursorPointData.barNum -= moveBy;
+                                    if (this.cursorPointData.barNum < 0)
+                                        this.cursorPointData.barNum = 0;
+
+                                    if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
+                                        this.cursorPointData.barNum = this.chartRenderer_0.RightEdgeBar;
+
+                                    if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar + 1)
+                                    {
+                                        moveBy = this.chartRenderer_0.LeftEdgeBar + 1 - this.cursorPointData.barNum;
+                                        this.ScrollBy(moveBy);
+                                    }
                                 }
                             }
                             else
                             {
-                                cursorPointBar = this.Renderer.ConvertXToBar(10000);
-                                if (cursorPointBar == -1)
+                                int barNum = this.Renderer.ConvertXToBar(10000);
+                                if (barNum == -1)
                                 {
-                                    cursorPointBar = this.Renderer.RightEdgeBar;
+                                    barNum = this.Renderer.RightEdgeBar;
                                 }
+
+                                this.cursorPointData = new Chart.Class2(barNum, 0.0, 0);
+
                             }
 
-                            doubleValue = this.Bars.Close[cursorPointBar];
-                            y = this.chartRenderer_0.PricePane.ConvertValueToY(doubleValue);
+                            double doubleValue = this.Bars.Close[this.cursorPointData.barNum];
+                            int y = this.chartRenderer_0.PricePane.ConvertValueToY(doubleValue);
                             this.cursorPointData.doubleValue = doubleValue;
                             this.cursorPointData.y = y;
 
@@ -669,40 +672,40 @@
                             else
                                 moveBy = 1;
 
-                            int cursorPointBar = 0;
-                            double doubleValue = 100;//current.ConvertYToValue(y);
-                            int y = 300;
-
                             if (this.cursorPointData != null)
                             {
-                                //find barNum, doubleValue, y
-                                this.cursorPointData.barNum+=moveBy;
-
-                                if (this.cursorPointData.barNum >= this.Bars.Count)
-                                    this.cursorPointData.barNum = this.Bars.Count - 1;
-
-                                if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar)
-                                    this.cursorPointData.barNum = this.chartRenderer_0.LeftEdgeBar;
-
-                                cursorPointBar = this.cursorPointData.barNum;
-
                                 if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
+                                    this.cursorPointData.barNum = this.chartRenderer_0.RightEdgeBar;
+
+                                else
                                 {
-                                    moveBy = this.cursorPointData.barNum - this.chartRenderer_0.RightEdgeBar;
-                                    this.ScrollBy(-1*moveBy);
+                                    this.cursorPointData.barNum += moveBy;
+
+                                    if (this.cursorPointData.barNum >= this.Bars.Count)
+                                        this.cursorPointData.barNum = this.Bars.Count - 1;
+
+                                    if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar)
+                                        this.cursorPointData.barNum = this.chartRenderer_0.LeftEdgeBar;
+
+                                    if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
+                                    {
+                                        moveBy = this.cursorPointData.barNum - this.chartRenderer_0.RightEdgeBar;
+                                        this.ScrollBy(-1 * moveBy);
+                                    }
                                 }
                             }
                             else
                             {
-                                cursorPointBar = this.Renderer.ConvertXToBar(10000);
-                                if (cursorPointBar == -1)
+                                int barNum = this.Renderer.ConvertXToBar(10000);
+                                if (barNum == -1)
                                 {
-                                    cursorPointBar = this.Renderer.LeftEdgeBar;
+                                    barNum = this.Renderer.LeftEdgeBar;
                                 }
+                                this.cursorPointData = new Chart.Class2(barNum, 0.0, 0);
                             }
 
-                            doubleValue = this.Bars.Close[cursorPointBar];
-                            y = this.chartRenderer_0.PricePane.ConvertValueToY(doubleValue);
+                            double doubleValue = this.Bars.Close[this.cursorPointData.barNum];
+                            int y = this.chartRenderer_0.PricePane.ConvertValueToY(doubleValue);
                             this.cursorPointData.doubleValue = doubleValue;
                             this.cursorPointData.y = y;
 
