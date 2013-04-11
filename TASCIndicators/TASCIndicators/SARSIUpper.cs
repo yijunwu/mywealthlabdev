@@ -18,7 +18,7 @@
             RSI rsi = RSI.Series(ds, period);
             SMA sma = SMA.Series(rsi, period);
             DataSeries series = (DataSeries) (SMA.Series(DataSeries.Abs(rsi - sma), period) * multiplier);
-            series += (DataSeries) 50.0;
+            series += 50.0;
             base.FirstValidValue = period - 1;
             if ((base.FirstValidValue > ds.Count) || (base.FirstValidValue < 0))
             {

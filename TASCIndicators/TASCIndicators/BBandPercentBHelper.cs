@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Drawing;
     using WealthLab;
+    using WealthLab.Indicators;
 
     public class BBandPercentBHelper : IndicatorHelper
     {

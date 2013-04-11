@@ -48,11 +48,11 @@
             int num12 = 0;
             EMACalculation modern = EMACalculation.Modern;
             EMA ema = EMA.Series(bars.Close, ShLTAvg, modern);
-            DataSeries series = bars.Open + ((DataSeries) 0.0);
-            DataSeries series2 = bars.High + ((DataSeries) 0.0);
-            DataSeries series3 = bars.Low + ((DataSeries) 0.0);
+            DataSeries series = bars.Open + 0.0;  ///WYJ fix, original: DataSeries series = bars.Open + ((DataSeries) 0.0);
+            DataSeries series2 = bars.High + 0.0;
+            DataSeries series3 = bars.Low + 0.0;
             DataSeries series4 = (DataSeries) ((((bars.Open + bars.High) + bars.Low) + bars.Close) / 4.0);
-            DataSeries ds = series4 + ((DataSeries) 0.0);
+            DataSeries ds = series4 + 0.0;
             ds.Description = "Heikin-Ashi Close";
             for (int i = 1; i < bars.Count; i++)
             {

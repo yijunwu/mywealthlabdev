@@ -27,7 +27,7 @@
                 this._pc = CumUp.Series(source, 1);
                 this._pc /= this._pc;
                 DataSeries series = Sum.Series(this._pc, period);
-                DataSeries series2 = ((DataSeries) period) - series;
+                DataSeries series2 = ((double) period) - series;
                 base[0] = ds[0];
                 double num = 0.0;
                 double num2 = 0.0;
