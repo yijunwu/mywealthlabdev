@@ -127,7 +127,7 @@
             this.check_series(Series, "Series");
             DataSeries series = this.priceSeries[Series];
             int key = this.priceSeriesKey++;
-            this.priceSeries.Add(key, series + ((DataSeries) Value));
+            this.priceSeries.Add(key, series + Value);
             return key;
         }
 
@@ -2927,7 +2927,7 @@
             this.check_series(Series1, "Series1");
             DataSeries series = this.priceSeries[Series1];
             int key = this.priceSeriesKey++;
-            this.priceSeries.Add(key, series - ((DataSeries) value));
+            this.priceSeries.Add(key, series - value);
             return key;
         }
 
@@ -2936,7 +2936,7 @@
             this.check_series(Series1, "Series1");
             DataSeries series = this.priceSeries[Series1];
             int key = this.priceSeriesKey++;
-            this.priceSeries.Add(key, ((DataSeries) value) - series);
+            this.priceSeries.Add(key, value - series);
             return key;
         }
 
