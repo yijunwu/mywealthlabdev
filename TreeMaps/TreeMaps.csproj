@@ -50,4 +50,7 @@
     <EmbeddedResource Include="TreeMaps.Properties.Resources.resources" />
     <EmbeddedResource Include="TreeMaps.g.resources" />
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\TreeMaps.dll" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

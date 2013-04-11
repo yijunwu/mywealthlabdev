@@ -82,4 +82,7 @@
     <EmbeddedResource Include="Fidelity.Components.ColorPickerPanel.bmp" />
     <EmbeddedResource Include="Fidelity.Components.Distribution.bmp" />
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\Fidelity.Components.dll" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

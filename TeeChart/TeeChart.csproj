@@ -1925,4 +1925,7 @@
     <EmbeddedResource Include="Steema.TeeChart.Editors.AxisMaxMin.resources" />
     <EmbeddedResource Include="Steema.TeeChart.Editors.AxesEditor.resources" />
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\TeeChart.dll" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
