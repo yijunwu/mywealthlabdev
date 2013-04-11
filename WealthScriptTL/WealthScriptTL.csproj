@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>4a4aff37-f940-4094-89f7-37e9f8d42b00</ProjectGuid>
+    <ProjectGuid>{29DB8F94-1762-4C78-9F33-9A3E4B972D97}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>WealthScriptTL</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -31,11 +32,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="WealthLab" />
-    <Reference Include="WealthLab.Indicators" />
     <Reference Include="System.Drawing" />
-    <Reference Include="WealthLab.Rules" />
-    <Reference Include="Fidelity.Components" />
     <Reference Include="System" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System.Windows.Forms" />
@@ -47,4 +44,25 @@
     <Compile Include="finantic\TL\WealthScriptTL.cs" />
     <Compile Include="finantic\TL\WSTL.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.Indicators\WealthLab.Indicators.csproj">
+      <Project>{779CDAD0-90C6-4757-889E-62369148F934}</Project>
+      <Name>WealthLab.Indicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.Rules\WealthLab.Rules.csproj">
+      <Project>{0A00F37C-6A44-4935-A9B8-610B6A3A7D89}</Project>
+      <Name>WealthLab.Rules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\WealthScriptTL.dll" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
