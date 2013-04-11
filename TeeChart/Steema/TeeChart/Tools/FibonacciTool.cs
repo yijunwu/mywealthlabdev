@@ -111,7 +111,7 @@
 
         protected void ClipDrawingRegion()
         {
-            Rectangle chartRect;
+            Rectangle chartRect = new Rectangle();
             if (base.iSeries != null)
             {
                 chartRect = new Rectangle {

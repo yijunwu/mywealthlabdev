@@ -66,7 +66,7 @@
 
         private void CBVolume_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Series dest = this.series.chart.series.WithTitle(this.CBVolume.Items[this.CBVolume.SelectedIndex].ToString());
+            Steema.TeeChart.Styles.Series dest = this.series.chart.series.WithTitle(this.CBVolume.Items[this.CBVolume.SelectedIndex].ToString());
             if (dest != null)
             {
                 this.series.CheckOtherSeries(dest);

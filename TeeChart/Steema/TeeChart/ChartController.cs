@@ -38,7 +38,7 @@
         private int oldX;
         private int oldY;
         private TChart panel;
-        private ToolStripItem[] theItems;
+        private ToolStripItemCollection theItems;
 
         public event SetLabelEventHandler SetLabel;
 
@@ -56,7 +56,7 @@
             this.editor = null;
         }
 
-        private void AddToolBarButtons(ToolStripItem[] tItems)
+        private void AddToolBarButtons(ToolStripItemCollection tItems)
         {
             this.theItems = tItems;
             this.Items.AddRange(tItems);
@@ -123,7 +123,7 @@
             return num;
         }
 
-        private ToolStripItem[] CreateStandardItems()
+        private ToolStripItemCollection CreateStandardItems()
         {
             string str = "16x16";
             ImageList list = new ImageList();
@@ -205,7 +205,9 @@
             this.bExport.Tag = "bExport";
             this.bLabel.DisplayStyle = ToolStripItemDisplayStyle.Text;
             this.bLabel.Tag = "bLabel";
-            return new ToolStripItem[] { this.bNormal, this.bSeparator, this.bRotate, this.bMove, this.bZoom, this.bDepth, this.bView3D, this.bSeparator, this.bEdit, this.bPrint, this.bCopy, this.bExport, this.bLabel };
+            ///WYJ fix, original: return new ToolStripItem[] { this.bNormal, this.bSeparator, this.bRotate, this.bMove, this.bZoom, this.bDepth, this.bView3D, this.bSeparator, this.bEdit, this.bPrint, this.bCopy, this.bExport, this.bLabel };
+            ToolStripItem[] ret = new ToolStripItem[] { this.bNormal, this.bSeparator, this.bRotate, this.bMove, this.bZoom, this.bDepth, this.bView3D, this.bSeparator, this.bEdit, this.bPrint, this.bCopy, this.bExport, this.bLabel };
+            return new ToolStripItemCollection(null, ret);
         }
 
         protected override void Dispose(bool disposing)
@@ -645,7 +647,7 @@
         }
 
         [Browsable(false)]
-        public ToolStripItem[] Items
+        public ToolStripItemCollection Items   ///WYJ fix, original public ToolStripItem[] Items
         {
             get
             {

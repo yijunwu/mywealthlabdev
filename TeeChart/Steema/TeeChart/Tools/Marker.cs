@@ -99,6 +99,8 @@
             return base.CalcTempWidth(tmp, out NumLines);
         }
 
+        ///WYJ fix, code from Reflector
+        /*
         protected override void DrawString(Graphics3D g, int x, int y, int t, int tmpHeight, string[] s)
         {
             if (!base.Shape.Font.UsePrivateFont)
@@ -251,6 +253,165 @@
                 Label_02C4:
                     num6 += num;
                 }
+            }
+        } */
+
+        ///WYJ fix, code from JustDecompile
+        protected override void DrawString(Graphics3D g, int x, int y, int t, int tmpHeight, string[] s)
+        {
+            if (!base.Shape.Font.UsePrivateFont)
+            {
+                base.DrawString(g, x, y, t, tmpHeight, s);
+                return;
+            }
+            else
+            {
+                int num = Utils.Round((double)g.TextWidth("W") * this.textWidth);
+                int num1 = Utils.Round((double)g.FontHeight * 0.5);
+                int num2 = 0;
+                int num3 = 0;
+                int num4 = 0;
+                string name = g.Font.Name;
+                string str = name;
+                if (name != null)
+                {
+                    if (str == "DS-Digital")
+                    {
+                        num2 = Utils.Round((double)g.TextWidth(",") * this.barfontSpace);
+                    }
+                    else
+                    {
+                        if (str == "Elektra")
+                        {
+                            num2 = Utils.Round((double)g.TextWidth(",") * this.dotfontSpace);
+                            num3 = Utils.Round((double)g.TextWidth("'") * this.dotfontSpace);
+                        }
+                    }
+                }
+                int num5 = x - num2;
+                string str1 = s[t - 1];
+                for (int i = 0; i < str1.Length; i++)
+                {
+                    char chr = str1[i];
+                    if (chr != '.')
+                    {
+                        if (chr != ',')
+                        {
+                            if (chr == '1')
+                            {
+                                string name1 = g.Font.Name;
+                                string str2 = name1;
+                                if (name1 != null && str2 == "DS-Digital")
+                                {
+                                    num5 = num5 + Utils.Round((double)num * this.barfontSpace);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            string name2 = g.Font.Name;
+                            string str3 = name2;
+                            if (name2 != null)
+                            {
+                                if (str3 == "DS-Digital")
+                                {
+                                    num5 = num5 - num2;
+                                }
+                                else
+                                {
+                                    if (str3 == "Elektra")
+                                    {
+                                        chr = '\'';
+                                        num5 = num5 - num3;
+                                        num4 = y + num1 + 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        num5 = num5 - num2;
+                    }
+                    if (chr != '\'')
+                    {
+                        g.TextOut(num5, y, chr.ToString());
+                    }
+                    else
+                    {
+                        g.TextOut(num5, num4, chr.ToString());
+                    }
+                    if (chr != '.')
+                    {
+                        if (chr != ',')
+                        {
+                            if (chr != '\'')
+                            {
+                                if (chr != '1')
+                                {
+                                    num5 = num5 + num;
+                                }
+                                else
+                                {
+                                    string name3 = g.Font.Name;
+                                    string str4 = name3;
+                                    if (name3 != null)
+                                    {
+                                        if (str4 == "DS-Digital")
+                                        {
+                                            num5 = num5 + num - Utils.Round((double)num * this.barfontSpace);
+                                        }
+                                        else
+                                        {
+                                            if (str4 == "Elektra")
+                                            {
+                                                num5 = num5 + num;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                string name4 = g.Font.Name;
+                                string str5 = name4;
+                                if (name4 != null && str5 == "Elektra")
+                                {
+                                    num5 = num5 + Utils.Round((float)num3);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            string name5 = g.Font.Name;
+                            string str6 = name5;
+                            if (name5 != null && str6 == "DS-Digital")
+                            {
+                                num5 = num5 + Utils.Round((float)num2);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        string name6 = g.Font.Name;
+                        string str7 = name6;
+                        if (name6 != null)
+                        {
+                            if (str7 == "DS-Digital")
+                            {
+                                num5 = num5 + Utils.Round((float)num2);
+                            }
+                            else
+                            {
+                                if (str7 == "Elektra")
+                                {
+                                    num5 = num5 + Utils.Round((float)num2);
+                                }
+                            }
+                        }
+                    }
+                }
+                return;
             }
         }
 

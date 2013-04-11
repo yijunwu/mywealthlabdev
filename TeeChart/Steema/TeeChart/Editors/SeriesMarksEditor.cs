@@ -214,7 +214,7 @@
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            foreach (Series series in this.marks.Chart.Series)
+            foreach (Steema.TeeChart.Styles.Series series in this.marks.Chart.Series)
             {
                 series.Marks.Visible = this.cbAllVisible.Checked;
             }

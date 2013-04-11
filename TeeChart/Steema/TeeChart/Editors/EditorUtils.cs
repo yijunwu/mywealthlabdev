@@ -9,6 +9,8 @@
     using System.Drawing;
     using System.Reflection;
     using System.Windows.Forms;
+    using Steema.TeeChart.Editors.Tools;
+    using Steema.TeeChart.Editors.Series;
 
     public sealed class EditorUtils
     {

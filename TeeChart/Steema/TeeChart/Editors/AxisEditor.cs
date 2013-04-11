@@ -123,7 +123,7 @@
 
         private void button5_Click(object sender, EventArgs e)
         {
-            AxisIncrement increment;
+            AxisIncrement increment = new AxisIncrement();
             increment = new AxisIncrement {
                 Text = string.Format(Texts.DesiredIncrement, this.axis.TitleOrName()),
                 isDateTime = this.axis.IsDateTime,

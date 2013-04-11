@@ -1186,7 +1186,8 @@
 
             private void OnAbout(object sender, EventArgs e)
             {
-                AboutBox.ShowModal();
+                ///WYJ fix, original: AboutBox.ShowModal();
+                Steema.TeeChart.Editors.AboutBox.ShowModal();
             }
 
             private void OnClear(object sender, EventArgs e)

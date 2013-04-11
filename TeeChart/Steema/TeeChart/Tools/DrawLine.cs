@@ -146,7 +146,7 @@
 
         protected void ClipDrawingRegion()
         {
-            Rectangle chartRect;
+            Rectangle chartRect = new Rectangle();
             if (base.iSeries != null)
             {
                 chartRect = new Rectangle {
@@ -385,7 +385,7 @@
 
         internal Rectangle InternalGetAxisRect()
         {
-            Rectangle rectangle;
+            Rectangle rectangle = new Rectangle();
             return new Rectangle { X = base.GetHorizAxis.IStartPos, Width = base.GetHorizAxis.IEndPos - rectangle.X, Y = base.GetVertAxis.IStartPos, Height = base.GetVertAxis.IEndPos - rectangle.Y };
         }
 

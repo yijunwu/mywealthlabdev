@@ -518,7 +518,7 @@
                             Green = Marshal.ReadByte(ptr, ofs + 1),
                             Blue = Marshal.ReadByte(ptr, ofs)
                         };
-                        *(Lines[i, j]) = rgb;
+                        Lines[i, j] = rgb;  ///WYJ fix, original: *(Lines[i, j]) = rgb;  
                     }
                 }
                 bitmap.UnlockBits(bitmapdata);
@@ -2735,7 +2735,7 @@
                                 break;
                             }
                             num19 = numArray[index];
-                            rgb = *(rgbArray[num20, num23]);
+                            rgb = rgbArray[num20, num23];  ///WYJ fix, original: rgb = *(rgbArray[num20, num23]);
                             num15 += Convert.ToInt32(rgb.Alpha) * num19;
                             num16 += Convert.ToInt32(rgb.Red) * num19;
                             num17 += Convert.ToInt32(rgb.Green) * num19;
@@ -2803,7 +2803,7 @@
                             break;
                         }
                         num19 = numArray[index];
-                        rgb = *(rgbArray2[num24, num21]);
+                        rgb = rgbArray2[num24, num21];  ///WYJ fix, original: rgb = *(rgbArray2[num24, num21]);
                         num15 += Convert.ToInt32(rgb.Alpha) * num19;
                         num16 += Convert.ToInt32(rgb.Red) * num19;
                         num17 += Convert.ToInt32(rgb.Green) * num19;

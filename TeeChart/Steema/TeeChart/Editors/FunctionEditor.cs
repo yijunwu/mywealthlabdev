@@ -409,7 +409,7 @@
             if (this.singleSource)
             {
                 object dataSource = this.series.DataSource;
-                if ((dataSource != null) && (dataSource is Series))
+                if ((dataSource != null) && (dataSource is Steema.TeeChart.Styles.Series))
                 {
                     int index = this.CBSingle.Items.IndexOf(dataSource);
                     if (index != this.CBSingle.SelectedIndex)

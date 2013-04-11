@@ -360,7 +360,7 @@
             }
         }
 
-        [Editor(typeof(BitmapEditor), typeof(UITypeEditor)), DefaultValue((string) null)]
+        [Editor(typeof(System.Drawing.Design.BitmapEditor), typeof(UITypeEditor)), DefaultValue((string) null)]
         public System.Drawing.Image Image
         {
             get

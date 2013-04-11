@@ -33,7 +33,7 @@
 
         public Chart Load(Stream stream)
         {
-            Theme.ApplyChartTheme(stream, base.chart);
+            Steema.TeeChart.Themes.Theme.ApplyChartTheme(stream, base.chart);
             if ((ThemeProperties.Instance.Base64 != "") && (ThemeProperties.Instance.Base64 != null))
             {
                 MemoryStream savedState = base.chart.Import.DecodeBase64(ThemeProperties.Instance.Base64);

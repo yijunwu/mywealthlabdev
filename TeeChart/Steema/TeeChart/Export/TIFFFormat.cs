@@ -115,7 +115,7 @@
                     compressionLZW = EncoderValue.CompressionRle;
                 }
                 EncoderParameters parameters = new EncoderParameters(1);
-                parameters.Param[0] = new EncoderParameter(Encoder.Compression, (long) compressionLZW);
+                parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Compression, (long)compressionLZW);
                 return parameters;
             }
         }

@@ -334,15 +334,15 @@
                     base.chart.graphics3D.TextAlign = ((num2 > 90.0) && (num2 < 270.0)) ? StringAlignment.Far : StringAlignment.Near;
                 }
                 int num3 = Utils.Round((float) (base.chart.graphics3D.TextWidth("0") / 2f));
-                switch (num2)
+                //switch (num2)   ///WYJ fix, original: switch (num2)   
                 {
-                    case 0.0:
+                    if (num2 == 0.0)
                         X += num3;
-                        break;
+                        //break;
 
-                    case 180.0:
+                    if (num2 == 180.0)
                         X -= num3;
-                        break;
+                        //break;
                 }
                 base.chart.graphics3D.TextOut(X, Y, base.EndZ, xCircleLabel);
             }

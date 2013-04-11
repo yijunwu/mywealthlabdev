@@ -321,7 +321,7 @@
             this.EWeb.Text = Texts.TextSrcURL;
             for (int i = 0; i < base.series.ValuesLists.Count; i++)
             {
-                TextBox box;
+                TextBox box = new TextBox();
                 Steema.TeeChart.Styles.ValueList list = base.series.ValuesLists[i];
                 box = new TextBox {
                     Top = ((2 * i) + this.labelText.Top) + (box.Height * (i + 1)),

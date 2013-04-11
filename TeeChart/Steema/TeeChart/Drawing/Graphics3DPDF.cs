@@ -312,10 +312,10 @@
                 {
                     this.AddToStream(this.PenProperties(pn) + " ");
                 }
-                base.m_string = this.PointToStr(*((PointF*) &(p[0]))) + " m ";
+                base.m_string = this.PointToStr(p[0]) + " m "; ///WYJ fix, original: base.m_string = this.PointToStr(*((PointF*) &(p[0]))) + " m "; 
                 for (int i = 1; i <= p.GetUpperBound(0); i++)
                 {
-                    base.m_string = base.m_string + this.PointToStr(*((PointF*) &(p[i]))) + " l ";
+                    base.m_string = base.m_string + this.PointToStr(p[i]) + " l ";
                 }
                 if (!PolyLine)
                 {

@@ -34,7 +34,7 @@
 
         private void chartListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Series selectedSeries = this.chartListBox1.SelectedSeries;
+            Steema.TeeChart.Styles.Series selectedSeries = this.chartListBox1.SelectedSeries;
             this.galleryPanel1.AddSubCharts(selectedSeries);
             this.bOk.Enabled = false;
         }
@@ -66,7 +66,7 @@
                     string str = GalleryPanel.GalleryPages(Utils.SeriesGalleryPage[i]);
                     if (this.comboBox1.SelectedItem.ToString() == str)
                     {
-                        Series series = this.c.Series.Add(Utils.SeriesTypesOf[i]);
+                        Steema.TeeChart.Styles.Series series = this.c.Series.Add(Utils.SeriesTypesOf[i]);
                         series.Title = series.Description;
                     }
                 }

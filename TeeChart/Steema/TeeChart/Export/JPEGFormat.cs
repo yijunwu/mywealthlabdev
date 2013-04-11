@@ -44,7 +44,7 @@
             get
             {
                 EncoderParameters parameters = new EncoderParameters(1);
-                parameters.Param[0] = new EncoderParameter(Encoder.Quality, (long) this.Quality);
+                parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, (long) this.Quality);
                 return parameters;
             }
         }

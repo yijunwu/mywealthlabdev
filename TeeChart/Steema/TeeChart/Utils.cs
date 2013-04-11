@@ -4,6 +4,7 @@
     using Steema.TeeChart.Editors;
     using Steema.TeeChart.Styles;
     using Steema.TeeChart.Tools;
+    using Steema.TeeChart.Functions;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -25,7 +26,7 @@
             1, 1, 1, 1, 0, 0, 3, 2, 1
          };
         private static System.Type[] aFunctionTypesOf = new System.Type[] { 
-            typeof(Add), typeof(Subtract), typeof(Multiply), typeof(Divide), typeof(High), typeof(Low), typeof(Average), typeof(Count), typeof(Momentum), typeof(MomentumDivision), typeof(Cumulative), typeof(ExpAverage), typeof(Smoothing), typeof(Custom), typeof(RootMeanSquare), typeof(StdDeviation), 
+            typeof(Add), typeof(Subtract), typeof(Multiply), typeof(Divide), typeof(High), typeof(Low), typeof(Average), typeof(Count), typeof(Momentum), typeof(MomentumDivision), typeof(Cumulative), typeof(ExpAverage), typeof(Smoothing), typeof(Steema.TeeChart.Functions.Custom), typeof(RootMeanSquare), typeof(StdDeviation), 
             typeof(Stochastic), typeof(ExpMovAverage), typeof(Performance), typeof(CrossPoints), typeof(CompressOHLC), typeof(CLVFunction), typeof(OBVFunction), typeof(CCIFunction), typeof(MovingAverage), typeof(PVOFunction), typeof(DownSampling), typeof(TrendFunction), typeof(CorrelationFunction), typeof(VarianceFunction), typeof(PerimeterFunction), typeof(PolyFitting), 
             typeof(Bollinger), typeof(MACDFunction), typeof(RSIFunction), typeof(ADXFunction), typeof(MedianFunction), typeof(ModeFunction), typeof(ExpTrendFunction), typeof(HistogramFunction), typeof(SARFunction)
          };
