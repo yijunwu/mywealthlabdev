@@ -383,6 +383,8 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\ControlLibrary.dll" "C:\Program Files\Wealth-Lab Developer 6"
 copy "$(ProjectDir)\bin\Debug\Fidelity.Components.dll" "C:\Program Files\Wealth-Lab Developer 6"
+copy "$(ProjectDir)\bin\Debug\QWhale.*.dll" "C:\Program Files\Wealth-Lab Developer 6"
+copy "$(ProjectDir)\bin\Debug\SyntaxSettingsConverter.dll" "C:\Program Files\Wealth-Lab Developer 6"
 copy "$(ProjectDir)\bin\Debug\WealthLab*.dll" "C:\Program Files\Wealth-Lab Developer 6"
 copy "$(ProjectDir)\bin\Debug\WealthLabDev.exe" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
   </PropertyGroup>
