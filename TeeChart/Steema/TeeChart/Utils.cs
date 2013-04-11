@@ -73,9 +73,10 @@
         public static List<System.Type> SeriesTypesOf = new List<System.Type>(aSeriesTypesOf);
         private const int standard = 0;
         private const int stats = 2;
-        public static string TeeChartKeyName = (TeeChartRoot + @"\" + TeeChartSubKey);
         public static string TeeChartRoot = "HKEY_LOCAL_MACHINE";
         public static string TeeChartSubKey = @"Software\Steema Software\TeeChart.NET";
+        public static string TeeChartKeyName = (TeeChartRoot + @"\" + TeeChartSubKey);
+        
         private const int threed = 4;
         public static List<System.Type> ToolTypesOf = new List<System.Type>(aToolTypesOf);
 

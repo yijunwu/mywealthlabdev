@@ -26,7 +26,7 @@
                     return access;
                 }
                 string key = Utils.DesignKeyV3();
-                if ((key != null) && this.IsKeyValid(key, type))
+                if ((key != null) && this.IsKeyValid(key, type))  ///WYJ fix, Cracked version of IsKeyValid()
                 {
                     access = new FrAccess(this, string.Format("{0} is a licensed component.", type.FullName));
                 }
@@ -52,7 +52,7 @@
                     }
                 }
             }
-            return false;
+            return true; ///WYJ fix, cracked, original: return false;
         }
 
         internal virtual bool IsRuntimeKeyValid(string key, Type type)
