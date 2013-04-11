@@ -38,35 +38,35 @@
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Class16.cs" />
+    <Compile Include="ClassificationGroupsFileUpdater.cs" />
     <Compile Include="ProviderSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ProviderSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Class17.cs" />
+    <Compile Include="SymbolList.cs" />
     <Compile Include="Enum0.cs" />
-    <Compile Include="Class18.cs" />
-    <Compile Include="Class19.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="SnDHandler.cs" />
     <Compile Include="Enum1.cs" />
-    <Compile Include="Class20.cs" />
-    <Compile Include="Class21.cs" />
+    <Compile Include="SnDFactor.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Enum2.cs" />
-    <Compile Include="Class22.cs" />
+    <Compile Include="GroupsToSymbols.cs" />
     <Compile Include="YahooWizardPageStart.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="YahooWizardPageClassification.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Class23.cs" />
+    <Compile Include="Encoder.cs" />
     <Compile Include="YahooWizardPageSymbols.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Class25.cs" />
     <Compile Include="Enum3.cs" />
-    <Compile Include="Class26.cs" />
+    <Compile Include="DataFetcher.cs" />
     <Compile Include="EventArgs1.cs" />
     <Compile Include="EventArgs2.cs" />
     <Compile Include="EventArgs3.cs" />
@@ -76,9 +76,9 @@
     <Compile Include="Class27.cs" />
     <Compile Include="Exception0.cs" />
     <Compile Include="Exception1.cs" />
-    <Compile Include="Class28.cs" />
-    <Compile Include="Class29.cs" />
-    <Compile Include="Class30.cs" />
+    <Compile Include="SplitAndDividend.cs" />
+    <Compile Include="DateTimeVolume.cs" />
+    <Compile Include="ThreadControl.cs" />
     <Compile Include="WealthLab\DataProviders\Helper\AdjustedModeWhenDataRange.cs" />
     <Compile Include="WealthLab\DataProviders\Helper\ClassificationGroup.cs" />
     <Compile Include="WealthLab\DataProviders\Helper\DataSetSettings.cs" />
@@ -112,4 +112,7 @@
       <Name>WealthLab</Name>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\WealthLab.DataProviders.Yahoo.dll" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
