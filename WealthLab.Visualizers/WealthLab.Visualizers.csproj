@@ -40,9 +40,6 @@
       <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="TeeChart">
-      <HintPath>..\ExternalLib\TeeChart.dll</HintPath>
-    </Reference>
     <Reference Include="WealthLab.Indicators">
       <HintPath>..\ExternalLib\WealthLab.Indicators.dll</HintPath>
     </Reference>
@@ -89,5 +86,11 @@
     <EmbeddedResource Include="WealthLab.Visualizers.PVReport.resources" />
     <EmbeddedResource Include="WealthLab.Visualizers.PVBySymbol.resources" />
     <EmbeddedResource Include="WealthLab.Visualizers.Properties.Resources.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TeeChart\TeeChart.csproj">
+      <Project>{DD030632-81E4-4843-BB14-68C7C96CBD26}</Project>
+      <Name>TeeChart</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
