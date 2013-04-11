@@ -58,18 +58,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLib\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="QWhale.Common">
-      <HintPath>..\ExternalLib\QWhale.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="QWhale.Editor">
-      <HintPath>..\ExternalLib\QWhale.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="QWhale.Syntax">
-      <HintPath>..\ExternalLib\QWhale.Syntax.dll</HintPath>
-    </Reference>
-    <Reference Include="QWhale.Syntax.Parsers">
-      <HintPath>..\ExternalLib\QWhale.Syntax.Parsers.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -362,6 +350,22 @@
     <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
       <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
       <Name>Fidelity.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QWhale.Common\QWhale.Common.csproj">
+      <Project>{00F8046C-A484-4170-8273-E80F22903A40}</Project>
+      <Name>QWhale.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QWhale.Editor\QWhale.Editor.csproj">
+      <Project>{24C21168-7E33-481B-8729-68C8E4827D0E}</Project>
+      <Name>QWhale.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QWhale.Syntax.Parsers\QWhale.Syntax.Parsers.csproj">
+      <Project>{41BD61C1-285C-4AA7-B538-217EAC294833}</Project>
+      <Name>QWhale.Syntax.Parsers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QWhale.Syntax\QWhale.Syntax.csproj">
+      <Project>{92D3D425-DCB3-4253-8295-08509BCE00B7}</Project>
+      <Name>QWhale.Syntax</Name>
     </ProjectReference>
     <ProjectReference Include="..\WealthLab.ChartControl\WealthLab.ChartControl.csproj">
       <Project>{6822E234-082C-4756-89B7-D44634D8C013}</Project>
