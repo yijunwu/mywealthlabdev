@@ -523,49 +523,45 @@
             set { base.Parent = value; }
         }
 
-        int IControl.get_Top()
+        int IControl.Top
         {
-            return base.Top;
+            get 
+            {
+                return base.Top;
+            }
+            set
+            {
+                base.Top = value;
+            }
         }
 
-        bool IControl.get_Visible()
+        bool IControl.Visible
         {
-            return base.Visible;
+            get
+            {
+                return base.Visible;
+            }
+            set
+            {
+                base.Visible = value;
+            }
         }
 
-        int IControl.get_Width()
+        int IControl.Width
         {
-            return base.Width;
+            get
+            {
+                return base.Width;
+            }
+            set
+            {
+                base.Width = value;
+            }
         }
 
         void IControl.remove_Click(EventHandler handler1)
         {
             base.Click -= handler1;
-        }
-
-        void IControl.set_Bounds(Rectangle rectangle1)
-        {
-            base.Bounds = rectangle1;
-        }
-
-        void IControl.set_Parent(Control control1)
-        {
-            base.Parent = control1;
-        }
-
-        void IControl.set_Top(int num1)
-        {
-            base.Top = num1;
-        }
-
-        void IControl.set_Visible(bool flag1)
-        {
-            base.Visible = flag1;
-        }
-
-        void IControl.set_Width(int num1)
-        {
-            base.Width = num1;
         }
 
         void ICodeCompletionWindow.add_HelpRequested(HelpEventHandler handler1)

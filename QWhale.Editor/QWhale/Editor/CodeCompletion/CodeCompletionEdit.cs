@@ -109,64 +109,135 @@
             base.Click += handler1;
         }
 
-        bool IControl.get_CanFocus()
+        bool IControl.CanFocus
         {
-            return base.CanFocus;
+            get
+            {
+                return base.CanFocus;
+            }
         }
 
-        Rectangle IControl.get_ClientRectangle()
+        Rectangle IControl.ClientRectangle
         {
-            return base.ClientRectangle;
+            get
+            {
+                return base.ClientRectangle;
+            }
         }
 
-        bool IControl.get_Created()
+        bool IControl.Created
         {
-            return base.Created;
+            get
+            {
+                return base.Created;
+            }
         }
 
-        bool IControl.get_Enabled()
+        bool IControl.Enabled
         {
-            return base.Enabled;
+            get
+            {
+                return base.Enabled;
+            }
+
+            set
+            {
+                base.Enabled = value;
+            }
         }
 
-        int IControl.get_Height()
+        int IControl.Height
         {
-            return base.Height;
+            get
+            {
+                return base.Height;
+            }
+            set
+            {
+                base.Height = value;
+            }
         }
 
-        bool IControl.get_IsHandleCreated()
+        bool IControl.IsHandleCreated
         {
-            return base.IsHandleCreated;
+            get
+            {
+                return base.IsHandleCreated;
+            }
         }
 
-        int IControl.get_Left()
+        int IControl.Left
         {
-            return base.Left;
+            get
+            {
+                return base.Left;
+            }
+            set
+            {
+                base.Left = value;
+            }
         }
 
-        Point IControl.get_Location()
+        Point IControl.Location
         {
-            return base.Location;
+            get
+            {
+                return base.Location;
+            }
+            set
+            {
+                base.Location = value;
+            }
+
         }
 
-        Control IControl.get_Parent()
+        Control IControl.Parent
         {
-            return base.Parent;
+            get
+            {
+                return base.Parent;
+            }
+            set
+            {
+                base.Parent = value;
+            }
         }
 
-        int IControl.get_Top()
+        int IControl.Top
         {
-            return base.Top;
+            get
+            {
+                return base.Top;
+            }
+            set
+            {
+                base.Top = value;
+            }
         }
 
-        bool IControl.get_Visible()
+        bool IControl.Visible
         {
-            return base.Visible;
+            get
+            {
+                return base.Visible;
+            }
+
+            set
+            {
+                base.Visible = value;
+            }
         }
 
-        int IControl.get_Width()
+        int IControl.Width
         {
-            return base.Width;
+            get
+            {
+                return base.Width;
+            }
+            set
+            {
+                base.Width = value;
+            }
         }
 
         void IControl.remove_Click(EventHandler handler1)
@@ -174,49 +245,16 @@
             base.Click -= handler1;
         }
 
-        void IControl.set_Bounds(Rectangle rectangle1)
+        Rectangle IControl.Bounds
         {
-            base.Bounds = rectangle1;
-        }
-
-        void IControl.set_Enabled(bool flag1)
-        {
-            base.Enabled = flag1;
-        }
-
-        void IControl.set_Height(int num1)
-        {
-            base.Height = num1;
-        }
-
-        void IControl.set_Left(int num1)
-        {
-            base.Left = num1;
-        }
-
-        void IControl.set_Location(Point point1)
-        {
-            base.Location = point1;
-        }
-
-        void IControl.set_Parent(Control control1)
-        {
-            base.Parent = control1;
-        }
-
-        void IControl.set_Top(int num1)
-        {
-            base.Top = num1;
-        }
-
-        void IControl.set_Visible(bool flag1)
-        {
-            base.Visible = flag1;
-        }
-
-        void IControl.set_Width(int num1)
-        {
-            base.Width = num1;
+            get
+            {
+                return base.Bounds;
+            }
+            set
+            {
+                base.Bounds = value;
+            }
         }
 
         void ICodeCompletionWindow.add_HelpRequested(HelpEventHandler handler1)
