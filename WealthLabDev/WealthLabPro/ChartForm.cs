@@ -112,7 +112,7 @@
         private ToolStripMenuItem mniReload;
         private ToolStripMenuItem mniStockSplit;
         private WealthLabPro.Optimization optimization_0;
-        private TabPage pageChart;
+        private TabPage pageChart;  ///WYJ note: the tab page for chart
         private ToolStripMenuItem plotAFundamentalDataItemOnTheChartToolStripMenuItem;
         private Panel pnlMultiSymbol;
         private Panel pnlSymbol;
@@ -200,7 +200,7 @@
             int moveBy = 0;
             switch (e.KeyCode)
             {
-                case Keys.Left:
+                /*case Keys.Left:
                     if (e.Control)
                         moveBy = 40;
                     else
@@ -214,7 +214,7 @@
                     else
                         moveBy = -10;
                     this.chart.ScrollBy(moveBy);///WYJ fix
-                    break;
+                    break; */
                 case Keys.Up:
                     this.IncreaseBarSpacing();
                     break;
@@ -1149,7 +1149,7 @@
             this.editBarToolStripMenuItem.Text = "Edit Bar Data";
             this.editBarToolStripMenuItem.Click += new EventHandler(this.editBarToolStripMenuItem_Click);
             this.tabChart.Controls.Add(this.pageChart);
-            this.tabChart.Dock = DockStyle.Fill; //WYJ fix: original: .Fill;
+            this.tabChart.Dock = DockStyle.Fill; ///WYJ fix: original: .Fill;
             this.tabChart.ItemSize = new Size(0x2a, 0x12);
             this.tabChart.Location = new Point(0, 0);
             this.tabChart.Name = "tabChart";
@@ -1161,6 +1161,19 @@
             this.pageChart.Controls.Add(this.statusChart);
             this.pageChart.Controls.Add(this.pnlMultiSymbol);
             this.pageChart.Controls.Add(this.chart);
+
+            ///WYJ fix, add data view to chart window
+            Panel pnlDataView = new Panel();
+            pnlDataView.Location = new Point(600, 4);
+            pnlDataView.Name = "dataView";
+            pnlDataView.Size = new Size(600,200);
+            pnlDataView.ForeColor = Color.Blue;
+            pnlDataView.BackColor = Color.Red;
+            //pnlDataView.SizingGrip = false;
+            //pnlDataView.TabIndex = 1;
+            pnlDataView.Text = "Data View";
+            this.pageChart.Controls.Add(pnlDataView);
+
             this.pageChart.Location = new Point(4, 0x16);
             this.pageChart.Name = "pageChart";
             this.pageChart.Padding = new Padding(3);
@@ -1336,8 +1349,8 @@
             this.posSize.TabIndex = 12;
             this.posSize.Visible = false;
             this.chart.AllowDrop = true;
-            this.chart.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
-            //this.chart.Anchor = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top; //WYJ fix
+            //this.chart.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
+            this.chart.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top; ///WYJ fix
             this.chart.ContextMenuStrip = this.popupChart;
             this.chart.Cursor = Cursors.Default;
             this.chart.DragDropManager = this.indicatorDragDropManager_0;
@@ -1357,7 +1370,7 @@
             this.chart.DoubleClick += new EventHandler(this.chart_DoubleClick);
             this.chart.MouseLeave += new EventHandler(this.chart_MouseLeave);
             this.chart.Click += new EventHandler(this.chart_Click);
-            this.chart.MouseWheelMoved += new EventHandler<MouseEventArgs>(this.method_50);
+            this.chart.MouseWheelMoved += new EventHandler<MouseEventArgs>(this.mouseWheelHandler);
             this.chart.DrawingObjectOperationCompleted += new EventHandler<EventArgs>(this.method_29);
             this.chart.OnException += new EventHandler<ExceptionEventArgs>(this.method_72);
             this.chart.KeyPress += new KeyPressEventHandler(this.chart_KeyPress);
@@ -1727,7 +1740,7 @@
             return str;
         }
 
-        private void method_11(int int_6, bool bool_18, bool bool_19)
+        private void method_11(int int_6, bool bool_18, bool bool_19) ///WYJ fix: update datawindow
         {
             if (DataWindowForm.Instance != null)
             {
@@ -2995,7 +3008,8 @@
             }
         }
 
-        private void method_50(object sender, MouseEventArgs e)
+        ///WYJ fix, original name method_50
+        private void mouseWheelHandler(object sender, MouseEventArgs e)
         {
             if (e.Delta > 0)
             {

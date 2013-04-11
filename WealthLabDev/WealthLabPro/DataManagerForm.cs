@@ -18,7 +18,7 @@
         private BackgroundWorker backgroundWorker_2;
         private BarsLoader barsLoader_0;
         private bool bool_0;
-        private bool bool_1;
+        private bool cancelUpdate;
         private bool bool_2;
         private bool bool_3 = true;
         private bool bool_4;
@@ -110,7 +110,7 @@
             {
                 foreach (HistoricalProvider provider2 in this.list_0)
                 {
-                    if (this.bool_1)
+                    if (this.cancelUpdate)
                     {
                         break;
                     }
@@ -130,7 +130,7 @@
             this.dateTime_0 = DateTime.Now;
             foreach (HistoricalProvider provider in this.list_0)
             {
-                if (this.bool_1)
+                if (this.cancelUpdate)
                 {
                     break;
                 }
@@ -145,7 +145,7 @@
                     }
                 }
                 provider.UpdateProvider(this, dataSources, this.rbUpdateAllData.Checked, this.cbCleanup.Checked);
-                if (!this.bool_1)
+                if (!this.cancelUpdate)
                 {
                     this.backgroundWorker_2.ReportProgress(-1, provider);
                 }
@@ -207,7 +207,7 @@
             this.bool_2 = false;
             TimeSpan span = (TimeSpan) (DateTime.Now - this.dateTime_0);
             StringBuilder builder = new StringBuilder();
-            if (this.bool_1)
+            if (this.cancelUpdate)
             {
                 builder.Append("Update cancelled (");
             }
@@ -270,7 +270,7 @@
             builder.Append(Environment.NewLine);
             this.txtUpdateLog.Text = this.txtUpdateLog.Text + builder.ToString();
             this.txtUpdateLog.Cursor = Cursors.WaitCursor;
-            this.bool_1 = true;
+            this.cancelUpdate = true;
             this.historicalProvider_0.CancelUpdate();
         }
 
@@ -376,7 +376,7 @@
             this.tabDSM.SelectedTab = this.pageUpdateLog;
             this.btnCancelUpdate.Enabled = true;
             this.progUpdate.Value = 0;
-            this.bool_1 = false;
+            this.cancelUpdate = false;
             this.dateTime_0 = DateTime.Now;
             this.list_0.Clear();
             foreach (ListViewItem item in this.lvProviders.Items)
@@ -1457,7 +1457,7 @@
         {
             this.list_1.Clear();
             this.progUpdate.Value = 0;
-            this.bool_1 = false;
+            this.cancelUpdate = false;
             this.tabDSM.SelectedTab = this.pageUpdateLog;
             this.btnCancelUpdate.Enabled = true;
             this.list_0.Clear();

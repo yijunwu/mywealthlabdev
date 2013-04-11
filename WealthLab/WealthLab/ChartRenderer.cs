@@ -1554,7 +1554,7 @@
             }
         } */
 
-        /* ///WYJ fix: code from Reflector */
+        /* ///WYJ fix: code from Reflector, original name: method_1 */
         
         private void doRender(Bars bars_1, Graphics graphics_0, int int_12, int int_13, ChartStyle chartStyle_1, bool bool_15, int int_14, string string_4, bool bool_16)
         {
