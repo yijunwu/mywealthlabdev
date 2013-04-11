@@ -258,14 +258,16 @@
             this.Options = this.chbDisplayProgress.Checked ? (this.Options | PrintOptions.DisplayProgress) : (this.Options & ~PrintOptions.DisplayProgress);
         }
 
-        void IPrintOptionsDialog.add_HelpRequested(HelpEventHandler handler1)
+        event HelpEventHandler IPrintOptionsDialog.HelpRequested
         {
-            base.HelpRequested += handler1;
-        }
-
-        void IPrintOptionsDialog.remove_HelpRequested(HelpEventHandler handler1)
-        {
-            base.HelpRequested -= handler1;
+            add
+            {
+                base.HelpRequested += value;
+            }
+            remove
+            {
+                base.HelpRequested -= value;
+            }
         }
 
         DialogResult IPrintOptionsDialog.ShowDialog()

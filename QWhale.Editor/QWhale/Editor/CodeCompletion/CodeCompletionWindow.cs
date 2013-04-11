@@ -495,9 +495,16 @@
             return ((((((m.Msg == 0x102) && (m.WParam.ToInt32() != 0x1b)) && (m.WParam.ToInt32() != 13)) || (none == Keys.Back)) && this.PerformSearch()) || base.ProcessKeyPreview(ref m));
         }
 
-        void IControl.add_Click(EventHandler handler1)
+        event EventHandler IControl.Click
         {
-            base.Click += handler1;
+            add
+            {
+                base.Click += value;
+            }
+            remove
+            {
+                base.Click -= value;
+            }
         }
 
         void IControl.BringToFront()
@@ -679,24 +686,21 @@
             return base.PointToScreen(point1);
         }
 
-        void IControl.remove_Click(EventHandler handler1)
-        {
-            base.Click -= handler1;
-        }
-
         void IControl.Update()
         {
             base.Update();
         }
 
-        void ICodeCompletionWindow.add_HelpRequested(HelpEventHandler handler1)
+        event HelpEventHandler ICodeCompletionWindow.HelpRequested
         {
-            base.HelpRequested += handler1;
-        }
-
-        void ICodeCompletionWindow.remove_HelpRequested(HelpEventHandler handler1)
-        {
-            base.HelpRequested -= handler1;
+            add
+            {
+                base.HelpRequested += value;
+            }
+            remove
+            {
+                base.HelpRequested -= value;
+            }
         }
 
         public virtual void ResetAutoSize()

@@ -4,6 +4,7 @@
     using QWhale.Editor.TextSource;
     using QWhale.Syntax;
     using QWhale.Syntax.Lexer;
+    using QWhale.Common;
     using System;
     using System.Drawing;
     using System.IO;

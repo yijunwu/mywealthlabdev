@@ -486,9 +486,16 @@
             this.UpdateRuler();
         }
 
-        void IControl.add_Click(EventHandler handler1)
+        event EventHandler IControl.Click
         {
-            base.Click += handler1;
+            add
+            {
+                base.Click += value;
+            }
+            remove
+            {
+                base.Click -= value;
+            }
         }
 
         void IControl.BringToFront()
@@ -669,12 +676,6 @@
         {
             return base.PointToScreen(point1);
         }
-
-        void IControl.remove_Click(EventHandler handler1)
-        {
-            base.Click -= handler1;
-        }
-
 
         void IControl.Update()
         {

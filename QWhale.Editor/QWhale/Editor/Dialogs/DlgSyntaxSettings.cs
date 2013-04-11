@@ -1408,14 +1408,16 @@
             this.StyleSelected();
         }
 
-        void IEditorSettingsDialog.add_HelpRequested(HelpEventHandler handler1)
+        event HelpEventHandler IEditorSettingsDialog.HelpRequested
         {
-            base.HelpRequested += handler1;
-        }
-
-        void IEditorSettingsDialog.remove_HelpRequested(HelpEventHandler handler1)
-        {
-            base.HelpRequested -= handler1;
+            add
+            {
+                base.HelpRequested += value;
+            }
+            remove
+            {
+                base.HelpRequested -= value;
+            }
         }
 
         DialogResult IEditorSettingsDialog.ShowDialog()

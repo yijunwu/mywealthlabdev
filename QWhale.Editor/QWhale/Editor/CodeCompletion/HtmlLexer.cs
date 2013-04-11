@@ -2,6 +2,7 @@
 {
     using QWhale.Editor;
     using QWhale.Editor.TextSource;
+    using QWhale.Editor.Serialization;
     using QWhale.Syntax;
     using QWhale.Syntax.Lexer;
     using System;

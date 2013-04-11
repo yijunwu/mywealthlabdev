@@ -468,9 +468,16 @@
             return base.ProcessKeyPreview(ref m);
         }
 
-        void IControl.add_Click(EventHandler handler1)
+        event EventHandler IControl.Click
         {
-            base.Click += handler1;
+            add
+            {
+                base.Click += value;
+            }
+            remove
+            {
+                base.Click -= value;
+            }
         }
 
         bool IControl.CanFocus
@@ -559,19 +566,16 @@
             }
         }
 
-        void IControl.remove_Click(EventHandler handler1)
+        event HelpEventHandler ICodeCompletionWindow.HelpRequested
         {
-            base.Click -= handler1;
-        }
-
-        void ICodeCompletionWindow.add_HelpRequested(HelpEventHandler handler1)
-        {
-            base.HelpRequested += handler1;
-        }
-
-        void ICodeCompletionWindow.remove_HelpRequested(HelpEventHandler handler1)
-        {
-            base.HelpRequested -= handler1;
+            add
+            {
+                base.HelpRequested += value;
+            }
+            remove
+            {
+                base.HelpRequested -= value;
+            }
         }
 
         public virtual void RemoveColumnAt(int index)

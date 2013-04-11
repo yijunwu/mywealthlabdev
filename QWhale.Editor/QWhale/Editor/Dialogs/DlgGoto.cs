@@ -121,14 +121,16 @@
             this.btCancel.Text = StringConsts.CancelCaption_GotoDlg;
         }
 
-        void IGotoLineDialog.add_HelpRequested(HelpEventHandler handler1)
+        event HelpEventHandler IGotoLineDialog.HelpRequested
         {
-            base.HelpRequested += handler1;
-        }
-
-        void IGotoLineDialog.remove_HelpRequested(HelpEventHandler handler1)
-        {
-            base.HelpRequested -= handler1;
+            add
+            {
+                base.HelpRequested += value;
+            }
+            remove
+            {
+                base.HelpRequested -= value;
+            }
         }
 
         private void tbNewLineNumber_KeyPress(object sender, KeyPressEventArgs e)
