@@ -114,7 +114,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 position.EntryPrice += this.tradingSystemExecutor_0.method_14(this.bars_0.Close[int_1], false, this.bars_0);
-                position.EntryPrice = this.method_3(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.AtClose);
+                position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.AtClose);
                 if (position.EntryPrice > this.bars_0.High[int_1])
                 {
                     position.EntryPrice = this.bars_0.High[int_1];
@@ -142,7 +142,7 @@
             }
             this.method_1(limitPrice);
             this.method_0(int_1, 0, this.bars_0.Count);
-            limitPrice = this.method_3(this.bars_0, limitPrice, true, PositionType.Long, OrderType.Limit);
+            limitPrice = this.roundPriceToTickMultiple(this.bars_0, limitPrice, true, PositionType.Long, OrderType.Limit);
             double shares = this.tradingSystemExecutor_0.CalcPositionSize(this.bars_0, int_1, limitPrice, PositionType.Long, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
             {
@@ -209,7 +209,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 position.EntryPrice += this.tradingSystemExecutor_0.method_14(this.bars_0.Open[int_1], false, this.bars_0);
-                position.EntryPrice = this.method_3(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.Market);
+                position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.Market);
                 if (position.EntryPrice > this.bars_0.High[int_1])
                 {
                     position.EntryPrice = this.bars_0.High[int_1];
@@ -236,7 +236,7 @@
             }
             this.method_1(stopPrice);
             this.method_0(int_1, 0, this.bars_0.Count);
-            stopPrice = this.method_3(this.bars_0, stopPrice, true, PositionType.Long, OrderType.Stop);
+            stopPrice = this.roundPriceToTickMultiple(this.bars_0, stopPrice, true, PositionType.Long, OrderType.Stop);
             double shares = this.tradingSystemExecutor_0.CalcPositionSize(this.bars_0, int_1, stopPrice, PositionType.Long, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
             {
@@ -271,7 +271,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 position.EntryPrice += this.tradingSystemExecutor_0.method_14(stopPrice, false, this.bars_0);
-                position.EntryPrice = this.method_3(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.Stop);
+                position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.Stop);
                 if (position.EntryPrice > this.bars_0.High[int_1])
                 {
                     position.EntryPrice = this.bars_0.High[int_1];
@@ -384,7 +384,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 num3 += this.tradingSystemExecutor_0.method_14(num3, false, this.bars_0);
-                num3 = this.method_3(position_0.Bars, num3, false, PositionType.Short, OrderType.AtClose);
+                num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Short, OrderType.AtClose);
             }
             position_0.method_1(int_1, num3, OrderType.AtClose);
             this.tradingSystemExecutor_0.ActivePositions.Remove(position_0);
@@ -407,7 +407,7 @@
             {
                 return false;
             }
-            limitPrice = this.method_3(position_0.Bars, limitPrice, false, PositionType.Short, OrderType.Limit);
+            limitPrice = this.roundPriceToTickMultiple(position_0.Bars, limitPrice, false, PositionType.Short, OrderType.Limit);
             if (position_0 == Position.AllPositions)
             {
                 bool flag = false;
@@ -516,7 +516,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 num3 += this.tradingSystemExecutor_0.method_14(num3, false, position_0.Bars);
-                num3 = this.method_3(position_0.Bars, num3, false, PositionType.Short, OrderType.Market);
+                num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Short, OrderType.Market);
             }
             position_0.method_1(int_1, num3, OrderType.Market);
             this.tradingSystemExecutor_0.ActivePositions.Remove(position_0);
@@ -539,7 +539,7 @@
             {
                 return false;
             }
-            stopPrice = this.method_3(position_0.Bars, stopPrice, false, PositionType.Short, OrderType.Stop);
+            stopPrice = this.roundPriceToTickMultiple(position_0.Bars, stopPrice, false, PositionType.Short, OrderType.Stop);
             if (position_0 == Position.AllPositions)
             {
                 bool flag = false;
@@ -592,7 +592,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 num3 += this.tradingSystemExecutor_0.method_14(num3, false, position_0.Bars);
-                num3 = this.method_3(position_0.Bars, num3, false, PositionType.Short, OrderType.Stop);
+                num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Short, OrderType.Stop);
             }
             position_0.method_1(int_1, num3, OrderType.Stop);
             this.tradingSystemExecutor_0.ActivePositions.Remove(position_0);
@@ -637,7 +637,7 @@
             {
                 return false;
             }
-            stopPrice = this.method_3(position_0.Bars, stopPrice, false, PositionType.Short, OrderType.Stop);
+            stopPrice = this.roundPriceToTickMultiple(position_0.Bars, stopPrice, false, PositionType.Short, OrderType.Stop);
             if ((stopPrice < position_0.TrailingStop) || (position_0.TrailingStop == 0.0))
             {
                 position_0.TrailingStop = stopPrice;
@@ -673,7 +673,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 num3 += this.tradingSystemExecutor_0.method_14(stopPrice, false, position_0.Bars);
-                num3 = this.method_3(position_0.Bars, num3, false, PositionType.Short, OrderType.Stop);
+                num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Short, OrderType.Stop);
             }
             position_0.method_1(int_1, num3, OrderType.Stop);
             this.tradingSystemExecutor_0.ActivePositions.Remove(position_0);
@@ -1024,14 +1024,13 @@
                     current = enumerator.Current;
                     if (current.Name.ToUpper() == name.ToUpper())
                     {
-                        goto Label_0038;
+                        ///goto  Label_0038; ///WYJ fix, simplify the flow
+                        parameter2 = current;
+                        return parameter2;
                     }
                 }
                 return null;
-            Label_0038:
-                parameter2 = current;
             }
-            return parameter2;
         }
 
         public void FlushDebug()
@@ -1401,7 +1400,8 @@
             }
         }
 
-        private double method_3(WealthLab.Bars bars_2, double double_0, bool bool_0, PositionType positionType_0, OrderType orderType_0)
+        ///WYJ fix, original name method_3
+        private double roundPriceToTickMultiple(WealthLab.Bars bars_2, double double_0, bool bool_0, PositionType positionType_0, OrderType orderType_0)
         {
             Enum5 enum2;
             if (this.tradingSystemExecutor_0.NoDecimalRoundingForLimitStopPrice)
@@ -1802,14 +1802,13 @@
                         current = enumerator.Current;
                         if (current.Value == value)
                         {
-                            goto Label_003D;
+                            ///goto  Label_003D; ///WYJ fix, simplify the flow
+                            dictionary_0.Remove(current.Key);
+                            return ;
                         }
                     }
-                    goto Label_006B;
-                Label_003D:
-                    dictionary_0.Remove(current.Key);
+                    return;
                 }
-            Label_006B:;
             }
         }
 
@@ -1935,7 +1934,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 num3 -= this.tradingSystemExecutor_0.method_14(num3, false, position_0.Bars);
-                num3 = this.method_3(position_0.Bars, num3, false, PositionType.Long, OrderType.AtClose);
+                num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Long, OrderType.AtClose);
             }
             position_0.method_1(int_1, num3, OrderType.AtClose);
             this.tradingSystemExecutor_0.ActivePositions.Remove(position_0);
@@ -1958,7 +1957,7 @@
             {
                 return false;
             }
-            limitPrice = this.method_3(position_0.Bars, limitPrice, false, PositionType.Long, OrderType.Limit);
+            limitPrice = this.roundPriceToTickMultiple(position_0.Bars, limitPrice, false, PositionType.Long, OrderType.Limit);
             if (position_0 == Position.AllPositions)
             {
                 bool flag = false;
@@ -2067,7 +2066,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 num3 -= this.tradingSystemExecutor_0.method_14(num3, false, position_0.Bars);
-                num3 = this.method_3(position_0.Bars, num3, false, PositionType.Long, OrderType.Market);
+                num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Long, OrderType.Market);
             }
             position_0.method_1(int_1, num3, OrderType.Market);
             this.tradingSystemExecutor_0.ActivePositions.Remove(position_0);
@@ -2090,7 +2089,7 @@
             {
                 return false;
             }
-            stopPrice = this.method_3(position_0.Bars, stopPrice, false, PositionType.Long, OrderType.Stop);
+            stopPrice = this.roundPriceToTickMultiple(position_0.Bars, stopPrice, false, PositionType.Long, OrderType.Stop);
             if (position_0 == Position.AllPositions)
             {
                 bool flag = false;
@@ -2143,7 +2142,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 num3 -= this.tradingSystemExecutor_0.method_14(stopPrice, false, position_0.Bars);
-                num3 = this.method_3(position_0.Bars, num3, false, PositionType.Long, OrderType.Stop);
+                num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Long, OrderType.Stop);
             }
             position_0.method_1(int_1, num3, OrderType.Stop);
             this.tradingSystemExecutor_0.ActivePositions.Remove(position_0);
@@ -2188,7 +2187,7 @@
             {
                 return false;
             }
-            stopPrice = this.method_3(position_0.Bars, stopPrice, false, PositionType.Long, OrderType.Stop);
+            stopPrice = this.roundPriceToTickMultiple(position_0.Bars, stopPrice, false, PositionType.Long, OrderType.Stop);
             if (stopPrice > position_0.TrailingStop)
             {
                 position_0.TrailingStop = stopPrice;
@@ -2224,7 +2223,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 num3 -= this.tradingSystemExecutor_0.method_14(stopPrice, false, position_0.Bars);
-                num3 = this.method_3(position_0.Bars, num3, false, PositionType.Long, OrderType.Stop);
+                num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Long, OrderType.Stop);
             }
             position_0.method_1(int_1, num3, OrderType.Stop);
             this.tradingSystemExecutor_0.ActivePositions.Remove(position_0);
@@ -2430,7 +2429,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 position.EntryPrice -= this.tradingSystemExecutor_0.method_14(this.bars_0.Close[int_1], false, this.bars_0);
-                position.EntryPrice = this.method_3(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.AtClose);
+                position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.AtClose);
                 if (position.EntryPrice < this.bars_0.Low[int_1])
                 {
                     position.EntryPrice = this.bars_0.Low[int_1];
@@ -2458,7 +2457,7 @@
             }
             this.method_1(limitPrice);
             this.method_0(int_1, 0, this.bars_0.Count);
-            limitPrice = this.method_3(this.bars_0, limitPrice, true, PositionType.Short, OrderType.Limit);
+            limitPrice = this.roundPriceToTickMultiple(this.bars_0, limitPrice, true, PositionType.Short, OrderType.Limit);
             double shares = this.tradingSystemExecutor_0.CalcPositionSize(this.bars_0, int_1, limitPrice, PositionType.Short, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
             {
@@ -2525,7 +2524,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 position.EntryPrice -= this.tradingSystemExecutor_0.method_14(this.bars_0.Open[int_1], false, this.bars_0);
-                position.EntryPrice = this.method_3(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.Market);
+                position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.Market);
                 if (position.EntryPrice < this.bars_0.Low[int_1])
                 {
                     position.EntryPrice = this.bars_0.Low[int_1];
@@ -2552,7 +2551,7 @@
             }
             this.method_1(stopPrice);
             this.method_0(int_1, 0, this.bars_0.Count);
-            stopPrice = this.method_3(this.bars_0, stopPrice, true, PositionType.Short, OrderType.Stop);
+            stopPrice = this.roundPriceToTickMultiple(this.bars_0, stopPrice, true, PositionType.Short, OrderType.Stop);
             double shares = this.tradingSystemExecutor_0.CalcPositionSize(this.bars_0, int_1, stopPrice, PositionType.Short, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
             {
@@ -2587,7 +2586,7 @@
             if (this.tradingSystemExecutor_0.EnableSlippage)
             {
                 position.EntryPrice -= this.tradingSystemExecutor_0.method_14(stopPrice, false, this.bars_0);
-                position.EntryPrice = this.method_3(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.Stop);
+                position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.Stop);
                 if (position.EntryPrice < this.bars_0.Low[int_1])
                 {
                     position.EntryPrice = this.bars_0.Low[int_1];

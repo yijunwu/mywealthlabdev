@@ -671,14 +671,12 @@
                                         Order current = enumerator8.Current;
                                         if ((current != order11) && this.method_1(current, order11))
                                         {
-                                            goto Label_0565;
+                                            ///goto  Label_0565;   ///WYJ fix, simplify the flow
+                                            flag6 = true;
+                                            break;
                                         }
                                     }
-                                    goto Label_0578;
-                                Label_0565:
-                                    flag6 = true;
                                 }
-                            Label_0578:
                                 if (!flag6)
                                 {
                                     list6.Add(order11);
@@ -700,14 +698,12 @@
                                             Order order9 = enumerator6.Current;
                                             if (order9.Matches(order7, false))
                                             {
-                                                goto Label_061A;
+                                                ///goto  Label_061A;  ///WYJ fix, simplify the flow
+                                                flag5 = false;
+                                                break;
                                             }
                                         }
-                                        goto Label_062D;
-                                    Label_061A:
-                                        flag5 = false;
                                     }
-                                Label_062D:
                                     if (flag5)
                                     {
                                         order7.Status = OrderStatus.CancelPending;
@@ -748,14 +744,12 @@
                                         Order order18 = enumerator4.Current;
                                         if (((order18.AlertType == TradeType.Sell) || (order18.AlertType == TradeType.Cover)) && (order18.OrderType == OrderType.Market))
                                         {
-                                            goto Label_076E;
+                                            ///goto  Label_076E;  ///WYJ fix, simplify the flow
+                                            flag4 = true;
+                                            break;
                                         }
                                     }
-                                    goto Label_0781;
-                                Label_076E:
-                                    flag4 = true;
                                 }
-                            Label_0781:
                                 if (flag4)
                                 {
                                     for (int n = list3.Count - 1; n >= 0; n--)
@@ -786,19 +780,19 @@
                                             order13 = enumerator.Current;
                                             if (order13.MatchesExactly(order14))
                                             {
-                                                goto Label_0887;
+                                                ///goto  Label_0887; ///WYJ fix, simplify the flow
+                                                list3.RemoveAt(k);
+                                                order13.TimeStamp = order14.TimeStamp;
+                                                if (this.eventHandler_1 != null)
+                                                {
+                                                    this.eventHandler_1(this, new OrderEventArgs(order13));
+                                                }
+                                                list.Remove(order13);
+                                                this.list_0.Remove(order14);
+
+                                                break;
                                             }
                                         }
-                                        continue;
-                                    Label_0887:
-                                        list3.RemoveAt(k);
-                                        order13.TimeStamp = order14.TimeStamp;
-                                        if (this.eventHandler_1 != null)
-                                        {
-                                            this.eventHandler_1(this, new OrderEventArgs(order13));
-                                        }
-                                        list.Remove(order13);
-                                        this.list_0.Remove(order14);
                                     }
                                 }
                                 for (int m = list3.Count - 1; m >= 0; m--)
@@ -812,29 +806,29 @@
                                             order20 = enumerator.Current;
                                             if ((order19.MatchesCancelReplace(order20) && this.BrokerProvider.CancelReplaceOrderTypesAllowed(order20).Contains(order19.OrderType.ToString())) && this.BrokerProvider.AllowCancelReplace(order19, ""))
                                             {
-                                                goto Label_096F;
+                                                ///goto  Label_096F; ///WYJ fix, simplify the flow
+                                                list3.RemoveAt(m);
+                                                list.Remove(order20);
+                                                order19.Status = OrderStatus.Submitted;
+                                                order19.IsCancelReplace = true;
+                                                order20.Status = OrderStatus.CancelPending;
+                                                lock ((list5 = this.list_0))
+                                                {
+                                                    this.list_0.Add(order19);
+                                                }
+                                                if (this.eventHandler_2 != null)
+                                                {
+                                                    this.eventHandler_2(this, new OrderEventArgs(order19));
+                                                }
+                                                if (this.eventHandler_1 != null)
+                                                {
+                                                    this.eventHandler_1(this, new OrderEventArgs(order20));
+                                                }
+                                                this.BrokerProvider.CancelReplace(order20, order19);
+
+                                                break;
                                             }
                                         }
-                                        continue;
-                                    Label_096F:
-                                        list3.RemoveAt(m);
-                                        list.Remove(order20);
-                                        order19.Status = OrderStatus.Submitted;
-                                        order19.IsCancelReplace = true;
-                                        order20.Status = OrderStatus.CancelPending;
-                                        lock ((list5 = this.list_0))
-                                        {
-                                            this.list_0.Add(order19);
-                                        }
-                                        if (this.eventHandler_2 != null)
-                                        {
-                                            this.eventHandler_2(this, new OrderEventArgs(order19));
-                                        }
-                                        if (this.eventHandler_1 != null)
-                                        {
-                                            this.eventHandler_1(this, new OrderEventArgs(order20));
-                                        }
-                                        this.BrokerProvider.CancelReplace(order20, order19);
                                     }
                                 }
                                 foreach (Order order6 in this.list_0)
@@ -1063,14 +1057,13 @@
                     current = enumerator.Current;
                     if (current.AccountNumber == acctNum)
                     {
-                        goto Label_003D;
+                        ///goto  Label_003D;  ///WYJ fix, simplify the flow
+                        account2 = current;
+                        return account2;
                     }
                 }
                 return null;
-            Label_003D:
-                account2 = current;
             }
-            return account2;
         }
 
         public HistoricalTrade FindHistoricalTrade(string orderID)
@@ -1389,14 +1382,13 @@
                     current = enumerator.Current;
                     if ((((current.Status == OrderStatus.Staged) && (current.Strategy == order_0.Strategy)) && ((current.DataScale == order_0.DataScale) && (current.AlertType == order_0.AlertType))) && (((current.OrderType == order_0.OrderType) && (current.Symbol == order_0.Symbol)) && ((current.Account == order_0.Account) && Alert.AccountTradeTypeMatch(current.AccountTradeType, order_0.AccountTradeType))))
                     {
-                        goto Label_00BA;
+                        ///goto  Label_00BA; ///WYJ fix, simplify the flow
+                        order2 = current;
+                        return order2;
                     }
                 }
                 return null;
-            Label_00BA:
-                order2 = current;
             }
-            return order2;
         }
 
         public void OrderStatusUpdate(string orderID, OrderStatus status, DateTime timestamp, double fillPrice, double fillQty, int code, string message)
@@ -1419,226 +1411,225 @@
                     order2 = this.list_0[i];
                     if (order2.OrderID == orderID)
                     {
-                        goto Label_0106;
-                    }
-                }
-                goto Label_08D2;
-            Label_0106:
-                message3 = new OrderMessage();
-                message3.DateTime = timestamp;
-                message3.Message = "Status Update: " + status;
-                order2.Messages.Add(message3);
-                this.method_2(string.Concat(new object[] { "Matched Order: Symbol=", order2.Symbol, " CurrentStatus=", order2.Status, " Type=", order2.AlertType, " Shares=", order2.Shares, " Order=", order2.OrderType, " Price=", order2.Price, " Filled=", order2.FillQty, " FillPrice=", order2.FillPrice }));
-                if (((order2.Status == status) && (order2.FillPrice == fillPrice)) && ((order2.FillQty == fillQty) && (message == "")))
-                {
-                    this.method_2("Status, FillPrice, FillQty already matches, bypass processing.");
-                    this.method_2("");
-                    return;
-                }
-                if (status == OrderStatus.ErrorCancelReplace)
-                {
-                    lock (this.list_0)
-                    {
-                        this.list_0.Remove(order2);
-                    }
-                    if (this.eventHandler_3 != null)
-                    {
-                        this.eventHandler_3(this, new OrderEventArgs(order2));
-                    }
-                    if (this.eventHandler_0 != null)
-                    {
-                        this.eventHandler_0(this, EventArgs.Empty);
-                    }
-                }
-                if (order2.Status == OrderStatus.Filled)
-                {
-                    this.method_2("Status of order already Filled, bypass processing.");
-                    this.method_2("");
-                    return;
-                }
-                order2.Status = status;
-                order2.TimeStamp = timestamp;
-                double num3 = 0.0;
-                if (fillQty > order2.FillQty)
-                {
-                    order2.FillPrice = fillPrice;
-                    num3 = fillQty - order2.FillQty;
-                    order2.FillQty = fillQty;
-                }
-                if (message != "")
-                {
-                    OrderMessage item = new OrderMessage {
-                        Message = code + ": " + message,
-                        DateTime = timestamp
-                    };
-                    order2.Messages.Add(item);
-                }
-                if ((status == OrderStatus.Filled) || (status == OrderStatus.PartialFilled))
-                {
-                    Account account = this.FindAccount(order2.Account);
-                    if (account != null)
-                    {
-                        AccountPosition position = this.FindPosition(order2);
-                        if ((order2.AlertType != TradeType.Buy) && (order2.AlertType != TradeType.Short))
+                        ///goto  Label_0106;  ///WYJ fix, simplify the flow
+                        //Label_0106:
+                        message3 = new OrderMessage();
+                        message3.DateTime = timestamp;
+                        message3.Message = "Status Update: " + status;
+                        order2.Messages.Add(message3);
+                        this.method_2(string.Concat(new object[] { "Matched Order: Symbol=", order2.Symbol, " CurrentStatus=", order2.Status, " Type=", order2.AlertType, " Shares=", order2.Shares, " Order=", order2.OrderType, " Price=", order2.Price, " Filled=", order2.FillQty, " FillPrice=", order2.FillPrice }));
+                        if (((order2.Status == status) && (order2.FillPrice == fillPrice)) && ((order2.FillQty == fillQty) && (message == "")))
                         {
-                            if (position != null)
+                            this.method_2("Status, FillPrice, FillQty already matches, bypass processing.");
+                            this.method_2("");
+                            return;
+                        }
+                        if (status == OrderStatus.ErrorCancelReplace)
+                        {
+                            lock (this.list_0)
                             {
-                                this.method_2("Remove shares from position");
-                                position.Quantity -= num3;
-                                if (position.Quantity < 0.0)
+                                this.list_0.Remove(order2);
+                            }
+                            if (this.eventHandler_3 != null)
+                            {
+                                this.eventHandler_3(this, new OrderEventArgs(order2));
+                            }
+                            if (this.eventHandler_0 != null)
+                            {
+                                this.eventHandler_0(this, EventArgs.Empty);
+                            }
+                        }
+                        if (order2.Status == OrderStatus.Filled)
+                        {
+                            this.method_2("Status of order already Filled, bypass processing.");
+                            this.method_2("");
+                            return;
+                        }
+                        order2.Status = status;
+                        order2.TimeStamp = timestamp;
+                        double num3 = 0.0;
+                        if (fillQty > order2.FillQty)
+                        {
+                            order2.FillPrice = fillPrice;
+                            num3 = fillQty - order2.FillQty;
+                            order2.FillQty = fillQty;
+                        }
+                        if (message != "")
+                        {
+                            OrderMessage item = new OrderMessage {
+                                Message = code + ": " + message,
+                                DateTime = timestamp
+                            };
+                            order2.Messages.Add(item);
+                        }
+                        if ((status == OrderStatus.Filled) || (status == OrderStatus.PartialFilled))
+                        {
+                            Account account = this.FindAccount(order2.Account);
+                            if (account != null)
+                            {
+                                AccountPosition position = this.FindPosition(order2);
+                                if ((order2.AlertType != TradeType.Buy) && (order2.AlertType != TradeType.Short))
                                 {
-                                    position.Quantity = 0.0;
-                                }
-                                if (position.Quantity == 0.0)
-                                {
-                                    this.method_2("Remove Position");
-                                    account.Positions.Remove(position);
-                                    if (this.eventHandler_10 != null)
+                                    if (position != null)
                                     {
-                                        this.eventHandler_10(this, new AccountPositionEventArgs(position));
+                                        this.method_2("Remove shares from position");
+                                        position.Quantity -= num3;
+                                        if (position.Quantity < 0.0)
+                                        {
+                                            position.Quantity = 0.0;
+                                        }
+                                        if (position.Quantity == 0.0)
+                                        {
+                                            this.method_2("Remove Position");
+                                            account.Positions.Remove(position);
+                                            if (this.eventHandler_10 != null)
+                                            {
+                                                this.eventHandler_10(this, new AccountPositionEventArgs(position));
+                                            }
+                                        }
+                                        else if (this.eventHandler_11 != null)
+                                        {
+                                            this.eventHandler_11(this, new AccountPositionEventArgs(position));
+                                        }
+                                        this.BrokerProvider.AccountPositionsMofidied(account);
                                     }
                                 }
-                                else if (this.eventHandler_11 != null)
+                                else
                                 {
-                                    this.eventHandler_11(this, new AccountPositionEventArgs(position));
-                                }
-                                this.BrokerProvider.AccountPositionsMofidied(account);
-                            }
-                        }
-                        else
-                        {
-                            if (position == null)
-                            {
-                                this.method_2("Adding new Position");
-                                position = new AccountPosition {
-                                    Account = account,
-                                    EntryPrice = fillPrice,
-                                    LastPrice = fillPrice,
-                                    PositionType = order2.PositionType,
-                                    Quantity = fillQty,
-                                    Symbol = order2.Symbol
-                                };
-                                account.Positions.Add(position);
-                                this.BrokerProvider.AccountPositionsMofidied(account);
-                                if (this.eventHandler_9 != null)
-                                {
-                                    this.eventHandler_9(this, new AccountPositionEventArgs(position));
-                                }
-                            }
-                            else
-                            {
-                                this.method_2("Add Shares to existing Position");
-                                position.Quantity += num3;
-                                this.BrokerProvider.AccountPositionsMofidied(account);
-                                if (this.eventHandler_11 != null)
-                                {
-                                    this.eventHandler_11(this, new AccountPositionEventArgs(position));
-                                }
-                            }
-                            if ((((status == OrderStatus.Filled) && this.SameBarExits) && (order2.FromAutoTrading && this.method_3(order2.Account))) && ((order2.RiskStopLevel > 0.0) || (order2.AutoProfitLevel > 0.0)))
-                            {
-                                List<Alert> alerts = new List<Alert>();
-                                if (order2.RiskStopLevel > 0.0)
-                                {
-                                    this.method_2("Create same-bar stop order");
-                                    Alert alert = new Alert();
-                                    this.method_7(alert, order2);
-                                    alert.AlertType = (order2.AlertType == TradeType.Buy) ? TradeType.Sell : TradeType.Cover;
-                                    alert.OrderType = OrderType.Stop;
-                                    alert.Price = order2.RiskStopLevel;
-                                    alert.SameBarParentOrderNumber = order2.OrderID;
-                                    alerts.Add(alert);
-                                }
-                                if (order2.AutoProfitLevel > 0.0)
-                                {
-                                    this.method_2("Create same bar limit order");
-                                    Alert alert2 = new Alert();
-                                    this.method_7(alert2, order2);
-                                    alert2.AlertType = (order2.AlertType == TradeType.Buy) ? TradeType.Sell : TradeType.Cover;
-                                    alert2.OrderType = OrderType.Limit;
-                                    alert2.Price = order2.AutoProfitLevel;
-                                    alert2.SameBarParentOrderNumber = order2.OrderID;
-                                    alerts.Add(alert2);
-                                }
-                                this.AddAlerts(alerts, true, true);
-                            }
-                        }
-                    }
-                }
-                flag2 = true;
-                if (stateIndex >= 0)
-                {
-                    order2.StateIndex = stateIndex;
-                }
-                if (this.eventHandler_1 != null)
-                {
-                    this.eventHandler_1(this, new OrderEventArgs(order2));
-                }
-                if ((status == OrderStatus.Filled) || (status == OrderStatus.PartialFilled))
-                {
-                    this.method_2("Add local trade history item");
-                    bool flag3 = false;
-                    HistoricalTrade trade = this.FindHistoricalTrade(order2.OrderID);
-                    if (trade == null)
-                    {
-                        trade = new HistoricalTrade(order2);
-                        lock (this.list_3)
-                        {
-                            this.list_3.Add(trade);
-                        }
-                        flag3 = true;
-                    }
-                    trade.TimeStamp = timestamp;
-                    trade.Quantity = fillQty;
-                    trade.Price = fillPrice;
-                    if (flag3)
-                    {
-                        if (this.eventHandler_6 != null)
-                        {
-                            this.eventHandler_6(this, new HistoricalTradeEventArgs(trade));
-                        }
-                    }
-                    else if (this.eventHandler_5 != null)
-                    {
-                        this.eventHandler_5(this, new HistoricalTradeEventArgs(trade));
-                    }
-                    this.bool_3 = true;
-                }
-                if (status == OrderStatus.Canceled)
-                {
-                    for (int j = this.list_4.Count - 1; j >= 0; j--)
-                    {
-                        OrderCancelSubmitGroup group = this.list_4[j];
-                        if (group.CancelPending.Contains(order2))
-                        {
-                            this.method_2("Process CancelSubmitGroup");
-                            group.CancelPending.Remove(order2);
-                            if (group.CancelPending.Count == 0)
-                            {
-                                this.method_2("Submit new CSG orders");
-                                this.list_4.RemoveAt(j);
-                                foreach (Order order3 in group.SubmitPending)
-                                {
-                                    lock (this.list_0)
+                                    if (position == null)
                                     {
-                                        this.list_0.Add(order3);
+                                        this.method_2("Adding new Position");
+                                        position = new AccountPosition {
+                                            Account = account,
+                                            EntryPrice = fillPrice,
+                                            LastPrice = fillPrice,
+                                            PositionType = order2.PositionType,
+                                            Quantity = fillQty,
+                                            Symbol = order2.Symbol
+                                        };
+                                        account.Positions.Add(position);
+                                        this.BrokerProvider.AccountPositionsMofidied(account);
+                                        if (this.eventHandler_9 != null)
+                                        {
+                                            this.eventHandler_9(this, new AccountPositionEventArgs(position));
+                                        }
                                     }
-                                    order3.Status = OrderStatus.Submitted;
-                                    if (this.eventHandler_2 != null)
+                                    else
                                     {
-                                        this.eventHandler_2(this, new OrderEventArgs(order3));
+                                        this.method_2("Add Shares to existing Position");
+                                        position.Quantity += num3;
+                                        this.BrokerProvider.AccountPositionsMofidied(account);
+                                        if (this.eventHandler_11 != null)
+                                        {
+                                            this.eventHandler_11(this, new AccountPositionEventArgs(position));
+                                        }
+                                    }
+                                    if ((((status == OrderStatus.Filled) && this.SameBarExits) && (order2.FromAutoTrading && this.method_3(order2.Account))) && ((order2.RiskStopLevel > 0.0) || (order2.AutoProfitLevel > 0.0)))
+                                    {
+                                        List<Alert> alerts = new List<Alert>();
+                                        if (order2.RiskStopLevel > 0.0)
+                                        {
+                                            this.method_2("Create same-bar stop order");
+                                            Alert alert = new Alert();
+                                            this.method_7(alert, order2);
+                                            alert.AlertType = (order2.AlertType == TradeType.Buy) ? TradeType.Sell : TradeType.Cover;
+                                            alert.OrderType = OrderType.Stop;
+                                            alert.Price = order2.RiskStopLevel;
+                                            alert.SameBarParentOrderNumber = order2.OrderID;
+                                            alerts.Add(alert);
+                                        }
+                                        if (order2.AutoProfitLevel > 0.0)
+                                        {
+                                            this.method_2("Create same bar limit order");
+                                            Alert alert2 = new Alert();
+                                            this.method_7(alert2, order2);
+                                            alert2.AlertType = (order2.AlertType == TradeType.Buy) ? TradeType.Sell : TradeType.Cover;
+                                            alert2.OrderType = OrderType.Limit;
+                                            alert2.Price = order2.AutoProfitLevel;
+                                            alert2.SameBarParentOrderNumber = order2.OrderID;
+                                            alerts.Add(alert2);
+                                        }
+                                        this.AddAlerts(alerts, true, true);
                                     }
                                 }
-                                foreach (Order order4 in group.SubmitPending)
+                            }
+                        }
+                        flag2 = true;
+                        if (stateIndex >= 0)
+                        {
+                            order2.StateIndex = stateIndex;
+                        }
+                        if (this.eventHandler_1 != null)
+                        {
+                            this.eventHandler_1(this, new OrderEventArgs(order2));
+                        }
+                        if ((status == OrderStatus.Filled) || (status == OrderStatus.PartialFilled))
+                        {
+                            this.method_2("Add local trade history item");
+                            bool flag3 = false;
+                            HistoricalTrade trade = this.FindHistoricalTrade(order2.OrderID);
+                            if (trade == null)
+                            {
+                                trade = new HistoricalTrade(order2);
+                                lock (this.list_3)
                                 {
-                                    list.Add(order4);
+                                    this.list_3.Add(trade);
                                 }
-                                flag2 = true;
+                                flag3 = true;
+                            }
+                            trade.TimeStamp = timestamp;
+                            trade.Quantity = fillQty;
+                            trade.Price = fillPrice;
+                            if (flag3)
+                            {
+                                if (this.eventHandler_6 != null)
+                                {
+                                    this.eventHandler_6(this, new HistoricalTradeEventArgs(trade));
+                                }
+                            }
+                            else if (this.eventHandler_5 != null)
+                            {
+                                this.eventHandler_5(this, new HistoricalTradeEventArgs(trade));
+                            }
+                            this.bool_3 = true;
+                        }
+                        if (status == OrderStatus.Canceled)
+                        {
+                            for (int j = this.list_4.Count - 1; j >= 0; j--)
+                            {
+                                OrderCancelSubmitGroup group = this.list_4[j];
+                                if (group.CancelPending.Contains(order2))
+                                {
+                                    this.method_2("Process CancelSubmitGroup");
+                                    group.CancelPending.Remove(order2);
+                                    if (group.CancelPending.Count == 0)
+                                    {
+                                        this.method_2("Submit new CSG orders");
+                                        this.list_4.RemoveAt(j);
+                                        foreach (Order order3 in group.SubmitPending)
+                                        {
+                                            lock (this.list_0)
+                                            {
+                                                this.list_0.Add(order3);
+                                            }
+                                            order3.Status = OrderStatus.Submitted;
+                                            if (this.eventHandler_2 != null)
+                                            {
+                                                this.eventHandler_2(this, new OrderEventArgs(order3));
+                                            }
+                                        }
+                                        foreach (Order order4 in group.SubmitPending)
+                                        {
+                                            list.Add(order4);
+                                        }
+                                        flag2 = true;
+                                    }
+                                }
                             }
                         }
                     }
+                    break;
                 }
-            Label_08D2:
                 if (flag2)
                 {
                     this.UpdateOrders();

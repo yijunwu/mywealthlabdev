@@ -295,14 +295,13 @@
                 {
                     if (enumerator.Current == name)
                     {
-                        goto Label_0030;
+                        ///goto  Label_0030;  ///WYJ fix, simplify the flow
+                        series = this.dictionary_0[name];
+                        return series;
                     }
                 }
                 return null;
-            Label_0030:
-                series = this.dictionary_0[name];
             }
-            return series;
         }
 
         public string FormatValue(double value)
@@ -564,7 +563,15 @@
                         {
                             if ((endDate != DateTime.MaxValue) && (now.Date > endDate))
                             {
-                                goto Label_0468;
+                                ///goto  Label_0468;  ///WYJ fix, simplify the flow
+                                if (maxBars > 0)
+                                {
+                                    while (this.Count > maxBars)
+                                    {
+                                        this.Delete(0);
+                                    }
+                                }
+                                return;
                             }
                             num10 = reader.ReadDouble();
                             num11 = reader.ReadDouble();
@@ -582,14 +589,6 @@
                 }
                 catch (Exception)
                 {
-                }
-            Label_0468:
-                if (maxBars > 0)
-                {
-                    while (this.Count > maxBars)
-                    {
-                        this.Delete(0);
-                    }
                 }
             }
             catch (EndOfStreamException)

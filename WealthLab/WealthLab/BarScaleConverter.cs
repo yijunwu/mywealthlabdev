@@ -99,6 +99,7 @@
             }
         }
 
+        ///WYJ fix, code from Reflector, modified
         public static Bars Synchronize(Bars source, Bars bars)
         {
             if (bars.DataScale > source.DataScale)
@@ -138,18 +139,16 @@
                         {
                             if (num2 == (source.Count - 1))
                             {
-                                goto Label_0168;
+                                ///goto  Label_0168;  ///WYJ fix, simplify the flow
+                                flag = true;
+                                int num9 = source.Count - 1;
+                                bars2.Add(time2, source.Open[num9], source.High[num9], source.Low[num9], source.Close[num9], source.Volume[num9]);
+                                smethod_2(source, bars2, num9);
+                                break; 
                             }
                             num2++;
                             time = source.Date[num2];
                         }
-                        goto Label_01C7;
-                    Label_0168:
-                        flag = true;
-                        int num9 = source.Count - 1;
-                        bars2.Add(time2, source.Open[num9], source.High[num9], source.Low[num9], source.Close[num9], source.Volume[num9]);
-                        smethod_2(source, bars2, num9);
-                    Label_01C7:
                         if (!flag)
                         {
                             if (num2 == 0)
@@ -243,7 +242,24 @@
                     {
                         if (time <= time2)
                         {
-                            goto Label_05AE;
+                            while (num2 < (source.Count - 1))
+                            {
+                                ///goto  Label_0593;  ///WYJ fix, simplify the flow
+                                if (source.Date[num2 + 1] >= time2)
+                                {
+                                    ///goto Label_05B9;  ///WYJ fix, simplify the flow
+                                    if (((source.Date[num2] < time2) && (num2 < (source.Count - 1))) && (source.Date[num2 + 1] == time2))
+                                    {
+                                        num2++;
+                                    }
+                                    bars2.Add(source.Date[num2], source.Open[num2], source.High[num2], source.Low[num2], source.Close[num2], source.Volume[num2]);
+                                    smethod_2(source, bars2, num2);
+                                    num2++;
+                                    continue;
+                                }
+                                num2++;
+                            }
+                            continue; 
                         }
                         if (num2 == 0)
                         {
@@ -262,26 +278,6 @@
                             smethod_2(source, bars2, num6);
                         }
                     }
-                    continue;
-                Label_0593:
-                    if (source.Date[num2 + 1] >= time2)
-                    {
-                        goto Label_05B9;
-                    }
-                    num2++;
-                Label_05AE:
-                    if (num2 < (source.Count - 1))
-                    {
-                        goto Label_0593;
-                    }
-                Label_05B9:
-                    if (((source.Date[num2] < time2) && (num2 < (source.Count - 1))) && (source.Date[num2 + 1] == time2))
-                    {
-                        num2++;
-                    }
-                    bars2.Add(source.Date[num2], source.Open[num2], source.High[num2], source.Low[num2], source.Close[num2], source.Volume[num2]);
-                    smethod_2(source, bars2, num2);
-                    num2++;
                 }
                 bars2.Open.Description = source.Open.Description;
                 bars2.High.Description = source.High.Description;
@@ -290,7 +286,222 @@
                 bars2.Volume.Description = source.Volume.Description;
             }
             return bars2;
-        }
+        } 
+
+        ///WYJ fix, code from JustDecompile
+        /*
+        public static Bars Synchronize(Bars source, Bars bars)
+        {
+            int count;
+            DateTime item;
+            DateTime dateTime;
+            bool flag;
+            bool flag1;
+            if (bars.DataScale > source.DataScale)
+            {
+                source = BarScaleConverter.ReScale(source, bars.Scale, bars.BarInterval);
+            }
+            Bars bar = new Bars(source.Symbol, bars.Scale, bars.BarInterval);
+            bar.SecurityName = source.SecurityName;
+            bar.SymbolInfo = source.SymbolInfo;
+            bar.MarketInfo = source.MarketInfo;
+            flag = (!source.IsIntraday ? true : !bars.IsIntraday);
+            bool flag2 = flag;
+            if (bars.Count != 0)
+            {
+                if (source.Date[0] <= bars.Date[bars.Count - 1])
+                {
+                    BarScaleConverter.smethod_0(source, bar);
+                    if (source.DataScale >= bars.DataScale)
+                    {
+                        if (source.IsIntraday || !bars.IsIntraday)
+                        {
+                            count = 0;
+                            count = 0;
+                            for (int i = 0; i < bars.Count; i++)
+                            {
+                                if (count >= source.Count)
+                                {
+                                    count = source.Count - 1;
+                                }
+                                dateTime = bars.Date[i];
+                                item = source.Date[count];
+                                flag1 = (flag2 ? item.Date == dateTime.Date : item == dateTime);
+                                if (!flag1)
+                                {
+                                    if (item <= dateTime)
+                                    {
+                                        while (count < source.Count - 1 && source.Date[count + 1] < dateTime)
+                                        {
+                                            count++;
+                                        }
+                                        if (source.Date[count] < dateTime && count < source.Count - 1 && source.Date[count + 1] == dateTime)
+                                        {
+                                            count++;
+                                        }
+                                        bar.Add(source.Date[count], source.Open[count], source.High[count], source.Low[count], source.Close[count], source.Volume[count]);
+                                        BarScaleConverter.smethod_2(source, bar, count);
+                                        count++;
+                                    }
+                                    else
+                                    {
+                                        if (count != 0)
+                                        {
+                                            int num = count - 1;
+                                            if (num < 0)
+                                            {
+                                                num = 0;
+                                            }
+                                            bar.Add(source.Date[num], source.Open[num], source.High[num], source.Low[num], source.Close[num], source.Volume[num]);
+                                            BarScaleConverter.smethod_2(source, bar, num);
+                                        }
+                                        else
+                                        {
+                                            bar.Add(bars.Date[0], 0, 0, 0, 0, 0);
+                                            BarScaleConverter.smethod_2(source, bar, 0);
+                                            bar.FirstActualBar = bar.Count;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    int num1 = count;
+                                    bar.Add(source.Date[num1], source.Open[num1], source.High[num1], source.Low[num1], source.Close[num1], source.Volume[num1]);
+                                    BarScaleConverter.smethod_2(source, bar, num1);
+                                    count++;
+                                }
+                            }
+                            bar.Open.Description = source.Open.Description;
+                            bar.High.Description = source.High.Description;
+                            bar.Low.Description = source.Low.Description;
+                            bar.Close.Description = source.Close.Description;
+                            bar.Volume.Description = source.Volume.Description;
+                            return bar;
+                        }
+                        else
+                        {
+                            count = 0;
+                            for (int j = 0; j < bars.Count; j++)
+                            {
+                                DateTime item1 = bars.Date[j];
+                                DateTime date = item1.Date;
+                                bool flag3 = true;
+                                while (flag3)
+                                {
+                                    if (count != source.Count - 1)
+                                    {
+                                        DateTime dateTime1 = source.Date[count];
+                                        if (dateTime1.Date != date)
+                                        {
+                                            DateTime item2 = source.Date[count + 1];
+                                            if (item2.Date > date)
+                                            {
+                                                flag3 = false;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            flag3 = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        flag3 = false;
+                                    }
+                                    if (!flag3)
+                                    {
+                                        continue;
+                                    }
+                                    count++;
+                                }
+                                int count1 = count;
+                                DateTime dateTime2 = source.Date[count];
+                                if (date == dateTime2.Date && !bars.IsLastBarOfDay(j))
+                                {
+                                    count1--;
+                                    if (count1 < 0)
+                                    {
+                                        count1 = 0;
+                                    }
+                                    if (date > source.Date[source.Count - 1])
+                                    {
+                                        count1 = source.Count - 1;
+                                    }
+                                }
+                                bar.Add(source.Date[count1], source.Open[count1], source.High[count1], source.Low[count1], source.Close[count1], source.Volume[count1]);
+                                BarScaleConverter.smethod_2(source, bar, count1);
+                            }
+                            return bar;
+                        }
+                    }
+                    else
+                    {
+                        count = 0;
+                        item = source.Date[0];
+                        for (int k = 0; k < bars.Count; k++)
+                        {
+                            bool flag4 = false;
+                            dateTime = bars.Date[k];
+                            DateTime dateTime3 = dateTime;
+                            if (source.IsIntraday && !bars.IsIntraday)
+                            {
+                                DateTime date1 = dateTime.Date;
+                                DateTime dateTime4 = date1.AddDays(1);
+                                dateTime3 = dateTime4.AddMinutes(-1);
+                            }
+                            while (true)
+                            {
+                                if (item <= dateTime3)
+                                {
+                                    if (count != source.Count - 1)
+                                    {
+                                        count++;
+                                        item = source.Date[count];
+                                    }
+                                    else
+                                    {
+                                        flag4 = true;
+                                        int count2 = source.Count - 1;
+                                        bar.Add(dateTime, source.Open[count2], source.High[count2], source.Low[count2], source.Close[count2], source.Volume[count2]);
+                                        BarScaleConverter.smethod_2(source, bar, count2);
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            if (!flag4)
+                            {
+                                if (count != 0)
+                                {
+                                    int num2 = count - 1;
+                                    bar.Add(dateTime, source.Open[num2], source.High[num2], source.Low[num2], source.Close[num2], source.Volume[num2]);
+                                    BarScaleConverter.smethod_2(source, bar, num2);
+                                }
+                                else
+                                {
+                                    bar.Add(dateTime, 0, 0, 0, 0, 0);
+                                    BarScaleConverter.smethod_2(source, bar, 0);
+                                    bar.FirstActualBar = bar.Count;
+                                }
+                            }
+                        }
+                        return bar;
+                    }
+                }
+                else
+                {
+                    throw new SynchronizationException("Cannot Synchronize, no overlapping Dates");
+                }
+            }
+            else
+            {
+                return bar;
+            }
+        } */
+
 
         public static DataSeries Synchronize(DataSeries source, Bars bars)
         {

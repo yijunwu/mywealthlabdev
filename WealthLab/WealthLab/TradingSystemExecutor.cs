@@ -610,25 +610,25 @@
                         current = enumerator10.Current;
                         if (current.FriendlyName == this.PosSize.SimuScriptName)
                         {
-                            goto Label_036D;
+                            ///goto  Label_036D;  WYJ fix, simplify the flow
+                            this.posSizer_0 = (WealthLab.PosSizer)Activator.CreateInstance(current.GetType());
+                            if ((this.PosSize.PosSizerConfig != "") && ((this.PosSize.SimuScriptName == this.PosSize.PosSizerThatWasConfigured) || (this.PosSize.PosSizerThatWasConfigured == "")))
+                            {
+                                try
+                                {
+                                    this.posSizer_0.ApplyConfigString(WealthLab.PosSizer.ParseConfigString(this.PosSize.PosSizerConfig));
+                                }
+                                catch
+                                {
+                                }
+                            }
+                            break;
                         }
                     }
-                    goto Label_0400;
-                Label_036D:
-                    this.posSizer_0 = (WealthLab.PosSizer) Activator.CreateInstance(current.GetType());
-                    if ((this.PosSize.PosSizerConfig != "") && ((this.PosSize.SimuScriptName == this.PosSize.PosSizerThatWasConfigured) || (this.PosSize.PosSizerThatWasConfigured == "")))
-                    {
-                        try
-                        {
-                            this.posSizer_0.ApplyConfigString(WealthLab.PosSizer.ParseConfigString(this.PosSize.PosSizerConfig));
-                        }
-                        catch
-                        {
-                        }
-                    }
+                    ///goto  Label_0400; ///WYJ fix, simplify the code
                 }
             }
-        Label_0400:
+        ///Label_0400: ///WYJ fix, simplify the code
             foreach (Bars bars7 in this.ilist_0)
             {
                 this.systemPerformance_0.method_1(bars7);
@@ -943,6 +943,8 @@
             this.Execute(strategy_1, wealthScript_1, bars, barsCollection);
         }
 
+        ///WYJ fix, code from Reflector
+        /*
         public void Execute(WealthLab.Strategy strategy_1, WealthScript wealthScript_1, Bars barsCharted, List<Bars> barsCollection)
         {
             if (wealthScript_1 != null)
@@ -993,7 +995,7 @@
                         Label_01C4:
                             if (!enumerator3.MoveNext())
                             {
-                                goto Label_0917;
+                                goto  Label_0917;
                             }
                             CombinedStrategyInfo current = enumerator3.Current;
                             WealthLab.Strategy strategy = null;
@@ -1005,7 +1007,7 @@
                             }
                             if (strategy == null)
                             {
-                                goto Label_01C4;
+                                goto  Label_01C4;
                             }
                             TradingSystemExecutor executor = new TradingSystemExecutor {
                                 BarsLoader = this.BarsLoader,
@@ -1072,10 +1074,10 @@
                                         Bars bars5 = enumerator9.Current;
                                         if ((bars5.ToString() == str) && (bars5.DataScale == bars6.DataScale))
                                         {
-                                            goto Label_045D;
+                                            goto  Label_045D;
                                         }
                                     }
-                                    goto Label_046E;
+                                    goto  Label_046E;
                                 Label_045D:
                                     flag = true;
                                 }
@@ -1132,7 +1134,7 @@
                                 executor.method_15("Exception in Combination Strategy Child: " + strategy.Name);
                                 executor.method_15(exception.Message);
                             }
-                            goto Label_08A6;
+                            goto  Label_08A6;
                         Label_0666:
                             try
                             {
@@ -1179,7 +1181,7 @@
                             resultsShort.TradesNSF += executor.Performance.ResultsShort.TradesNSF;
                             executor.LookupDataSource -= this.eventHandler_1;
                             executor.LookupStrategy -= this.eventHandler_0;
-                            goto Label_01C4;
+                            goto  Label_01C4;
                         Label_08A6:
                             executor.ExecutionCompletedForSymbol -= new EventHandler<BarsEventArgs>(this.method_0);
                             executor.ExternalSymbolRequested -= this.eventHandler_2;
@@ -1187,7 +1189,7 @@
                             executor.WealthScriptException -= new EventHandler<WSExceptionEventArgs>(this.method_1);
                             list2.AddRange(executor.DebugStrings);
                             enumerator = executor.list_3.GetEnumerator();
-                            goto Label_0666;
+                            goto  Label_0666;
                         }
                     Label_0917:
                         this.list_0.Clear();
@@ -1221,6 +1223,287 @@
                 {
                     this.ApplyPositionSize();
                 }
+            }
+        } */
+
+        ///WYJ fix, code from JustDecompile
+        public void Execute(Strategy strategy_1, WealthScript wealthScript_1, Bars barsCharted, List<Bars> barsCollection)
+        {
+            ChartRenderer chartRenderer0;
+            if (wealthScript_1 != null)
+            {
+                wealthScript_1.StrategyWindowID = this.StrategyWindowID;
+            }
+            List<Bars> bars = new List<Bars>();
+            foreach (Bars bar in barsCollection)
+            {
+                bars.Add(bar);
+            }
+            this.Strategy = strategy_1;
+            this.systemPerformance_0.Strategy = strategy_1;
+            this.list_7.Clear();
+            GC.Collect();
+            this.double_2 = 0;
+            this.double_8 = 0;
+            this.list_0.Clear();
+            this.bool_11 = false;
+            if (barsCollection == null || barsCollection.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                this.Clear();
+                this.ilist_0 = barsCollection;
+                foreach (Bars bar1 in barsCollection)
+                {
+                    this.Performance.method_1(bar1);
+                }
+                this.Performance.Scale = barsCollection[0].Scale;
+                this.Performance.BarInterval = barsCollection[0].BarInterval;
+                this.Performance.PositionSize = this.PosSize;
+                this.wealthScript_0 = wealthScript_1;
+                PositionSize posSize = this.PosSize;
+                this.bool_16 = this.PosSize.RawProfitMode;
+                if (!this.PosSize.RawProfitMode && this.PosSize.Mode != PosSizeMode.ScriptOverride)
+                {
+                    this.PosSize = TradingSystemExecutor.positionSize_1;
+                }
+                if (this.Strategy.StrategyType != StrategyType.CombinedStrategy)
+                {
+                    try
+                    {
+                        foreach (Bars bar2 in barsCollection)
+                        {
+                            if (barsCharted == bar2)
+                            {
+                                chartRenderer0 = this.chartRenderer_0;
+                            }
+                            else
+                            {
+                                chartRenderer0 = null;
+                            }
+                            ChartRenderer chartRenderer = chartRenderer0;
+                            this.method_2(bar2, wealthScript_1, chartRenderer);
+                        }
+                    }
+                    finally
+                    {
+                        this.PosSize = posSize;
+                        this.list_7.Clear();
+                    }
+                }
+                else
+                {
+                    TradingSystemExecutor.bool_0 = true;
+                    try
+                    {
+                        this.Performance.PositionSize = this.PosSize;
+                        List<string> strs = new List<string>();
+                        foreach (CombinedStrategyInfo combinedStrategyChild in this.Strategy.CombinedStrategyChildren)
+                        {
+                            Strategy strategy = null;
+                            if (this.eventHandler_0 != null)
+                            {
+                                Guid strategyID = combinedStrategyChild.StrategyID;
+                                StrategyEventArgs strategyEventArg = new StrategyEventArgs(strategyID.ToString());
+                                this.eventHandler_0(this, strategyEventArg);
+                                strategy = strategyEventArg.Strategy;
+                            }
+                            if (strategy == null)
+                            {
+                                continue;
+                            }
+                            TradingSystemExecutor tradingSystemExecutor = new TradingSystemExecutor();
+                            tradingSystemExecutor.BarsLoader = this.BarsLoader;
+                            tradingSystemExecutor.StrategyName = strategy.Name;
+                            tradingSystemExecutor.FundamentalsLoader = this.FundamentalsLoader;
+                            List<Bars> bars1 = new List<Bars>();
+                            if (strategy.StrategyType != StrategyType.CombinedStrategy)
+                            {
+                                if (!combinedStrategyChild.UseDefaultDataSet)
+                                {
+                                    if (this.eventHandler_1 != null)
+                                    {
+                                        DataSourceLookupEventArgs dataSourceLookupEventArg = new DataSourceLookupEventArgs(combinedStrategyChild.DataSetName);
+                                        this.eventHandler_1(this, dataSourceLookupEventArg);
+                                        if (dataSourceLookupEventArg.DataSource != null)
+                                        {
+                                            BarsLoader barsLoader = new BarsLoader();
+                                            barsLoader.DataHost = this.BarsLoader.DataHost;
+                                            barsLoader.BarDataScale = combinedStrategyChild.DataScale;
+                                            barsLoader.StartDate = this.BarsLoader.StartDate;
+                                            barsLoader.EndDate = this.BarsLoader.EndDate;
+                                            barsLoader.MaxBars = this.BarsLoader.MaxBars;
+                                            barsLoader.AutoCreateProvider = true;
+                                            if (combinedStrategyChild.Symbol == "")
+                                            {
+                                                foreach (string symbol in dataSourceLookupEventArg.DataSource.Symbols)
+                                                {
+                                                    Bars data = barsLoader.GetData(dataSourceLookupEventArg.DataSource, symbol);
+                                                    if (data == null)
+                                                    {
+                                                        continue;
+                                                    }
+                                                    bars1.Add(data);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Bars data1 = barsLoader.GetData(dataSourceLookupEventArg.DataSource, combinedStrategyChild.Symbol);
+                                                if (data1 != null)
+                                                {
+                                                    bars1.Add(data1);
+                                                }
+                                            }
+                                            tradingSystemExecutor.DataSet = dataSourceLookupEventArg.DataSource;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    bars1.AddRange(bars);
+                                    tradingSystemExecutor.DataSet = this.DataSet;
+                                }
+                            }
+                            else
+                            {
+                                foreach (Bars bar3 in bars)
+                                {
+                                    bars1.Add(bar3);
+                                }
+                            }
+                            foreach (Bars bar4 in bars1)
+                            {
+                                string str = bar4.ToString();
+                                bool flag = false;
+                                IEnumerator<Bars> enumerator = this.ilist_0.GetEnumerator();
+                                using (enumerator)
+                                {
+                                    while (true)
+                                    {
+                                        if (enumerator.MoveNext())
+                                        {
+                                            Bars current = enumerator.Current;
+                                            if (current.ToString() == str && current.DataScale == bar4.DataScale)
+                                            {
+                                                flag = true;
+                                                break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (flag)
+                                {
+                                    continue;
+                                }
+                                this.ilist_0.Add(bar4);
+                            }
+                            WealthScript tag = (WealthScript)strategy.Tag;
+                            tradingSystemExecutor.ApplySettings(this);
+                            tradingSystemExecutor.LookupDataSource += this.eventHandler_1;
+                            tradingSystemExecutor.LookupStrategy += this.eventHandler_0;
+                            tradingSystemExecutor.PosSize = combinedStrategyChild.PositionSize;
+                            double startingCapital = posSize.StartingCapital;
+                            startingCapital = (combinedStrategyChild.Allocation.Mode != PosSizeMode.PctEquity ? combinedStrategyChild.Allocation.DollarSize : startingCapital * combinedStrategyChild.Allocation.PctSize / 100);
+                            tradingSystemExecutor.PosSize.StartingCapital = startingCapital;
+                            if (tradingSystemExecutor.PosSize.Mode == PosSizeMode.RawProfitDollar)
+                            {
+                                tradingSystemExecutor.PosSize.Mode = PosSizeMode.Dollar;
+                                tradingSystemExecutor.PosSize.DollarSize = tradingSystemExecutor.PosSize.RawProfitDollarSize;
+                            }
+                            if (tradingSystemExecutor.PosSize.Mode == PosSizeMode.RawProfitShare)
+                            {
+                                tradingSystemExecutor.PosSize.Mode = PosSizeMode.Share;
+                                tradingSystemExecutor.PosSize.ShareSize = tradingSystemExecutor.PosSize.RawProfitShareSize;
+                            }
+                            if (tag != null)
+                            {
+                                for (int i = 0; i < combinedStrategyChild.ParameterValues.Count; i++)
+                                {
+                                    tag.Parameters[i].Value = combinedStrategyChild.ParameterValues[i];
+                                }
+                                strategy.UsePreferredValues = combinedStrategyChild.UsePreferredValues;
+                            }
+                            tradingSystemExecutor.ExecutionCompletedForSymbol += new EventHandler<BarsEventArgs>(this.method_0);
+                            tradingSystemExecutor.ExternalSymbolRequested += this.eventHandler_2;
+                            tradingSystemExecutor.ExternalSymbolFromDataSetRequested += this.eventHandler_3;
+                            tradingSystemExecutor.ExceptionEvents = true;
+                            tradingSystemExecutor.WealthScriptException += new EventHandler<WSExceptionEventArgs>(this.method_1);
+                            try
+                            {
+                                tradingSystemExecutor.Execute(strategy, tag, null, bars1);
+                            }
+                            catch (Exception exception1)
+                            {
+                                Exception exception = exception1;
+                                tradingSystemExecutor.method_15(string.Concat("Exception in Combination Strategy Child: ", strategy.Name));
+                                tradingSystemExecutor.method_15(exception.Message);
+                            }
+                            tradingSystemExecutor.ExecutionCompletedForSymbol -= new EventHandler<BarsEventArgs>(this.method_0);
+                            tradingSystemExecutor.ExternalSymbolRequested -= this.eventHandler_2;
+                            tradingSystemExecutor.ExternalSymbolFromDataSetRequested -= this.eventHandler_3;
+                            tradingSystemExecutor.WealthScriptException -= new EventHandler<WSExceptionEventArgs>(this.method_1);
+                            strs.AddRange(tradingSystemExecutor.DebugStrings);
+                            foreach (Position list3 in tradingSystemExecutor.list_3)
+                            {
+                                list3.CombinedPriority = combinedStrategyChild.Priority;
+                                list3.CSI = combinedStrategyChild;
+                            }
+                            foreach (Alert alert in tradingSystemExecutor.Performance.Results.Alerts)
+                            {
+                                alert.Account = combinedStrategyChild.AccountNumber;
+                            }
+                            tradingSystemExecutor.ApplyPositionSize();
+                            foreach (Position position in tradingSystemExecutor.Performance.Results.Positions)
+                            {
+                                foreach (Bars ilist0 in this.ilist_0)
+                                {
+                                    if (ilist0.ToString() != position.Bars.ToString())
+                                    {
+                                        continue;
+                                    }
+                                    position.method_0(ilist0);
+                                }
+                            }
+                            this.list_3.AddRange(tradingSystemExecutor.Performance.Results.Positions);
+                            this.list_4.AddRange(tradingSystemExecutor.Performance.Results.Alerts);
+                            if (!this.BenchmarkBuyAndHoldON)
+                            {
+                                foreach (Position position1 in tradingSystemExecutor.systemPerformance_0.ResultsBuyHold.Positions)
+                                {
+                                    this.systemPerformance_0.ResultsBuyHold.method_4(position1);
+                                }
+                            }
+                            SystemResults results = this.Performance.Results;
+                            results.TradesNSF = results.TradesNSF + tradingSystemExecutor.Performance.Results.TradesNSF;
+                            SystemResults resultsLong = this.Performance.ResultsLong;
+                            resultsLong.TradesNSF = resultsLong.TradesNSF + tradingSystemExecutor.Performance.ResultsLong.TradesNSF;
+                            SystemResults resultsShort = this.Performance.ResultsShort;
+                            resultsShort.TradesNSF = resultsShort.TradesNSF + tradingSystemExecutor.Performance.ResultsShort.TradesNSF;
+                            tradingSystemExecutor.LookupDataSource -= this.eventHandler_1;
+                            tradingSystemExecutor.LookupStrategy -= this.eventHandler_0;
+                        }
+                        this.list_0.Clear();
+                        this.list_0.AddRange(strs);
+                    }
+                    finally
+                    {
+                        this.PosSize = posSize;
+                        this.list_7.Clear();
+                        TradingSystemExecutor.bool_0 = false;
+                    }
+                }
+                this.list_3.Sort(this);
+                if (this.BuildEquityCurves)
+                {
+                    this.ApplyPositionSize();
+                }
+                return;
             }
         }
 
@@ -1262,14 +1545,12 @@
                     current = enumerator.Current;
                     if (current.Symbol == string_2)
                     {
-                        goto Label_0051;
+                        ///goto  Label_0051; ///WYJ fix, simplify the flow
+                        item = current;
+                        break;
                     }
                 }
-                goto Label_0064;
-            Label_0051:
-                item = current;
             }
-        Label_0064:
             if ((item == null) && (this.BarsLoader != null))
             {
                 if (this.IsStreaming)
@@ -1695,14 +1976,13 @@
                     current = enumerator.Current;
                     if (((current.Symbol == string_2) && (current.Scale == barScale_0)) && (current.BarInterval == int_3))
                     {
-                        goto Label_0040;
+                        ///goto  Label_0040;  ///WYJ fix, simplify the flow
+                        bars2 = current;
+                        return bars2;
                     }
                 }
                 return null;
-            Label_0040:
-                bars2 = current;
             }
-            return bars2;
         }
 
         internal Bars method_9(string string_2, string string_3, bool bool_19)
