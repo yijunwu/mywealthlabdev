@@ -20,4 +20,6 @@
 [assembly: System.Reflection.AssemblyTrademark("")]
 [assembly: System.CLSCompliant(true)]
 [assembly: System.Runtime.InteropServices.ComVisible(true)]
+[assembly: System.Security.SecurityRules(System.Security.SecurityRuleSet.Level1)]
+[assembly: System.Security.SecurityCritical]
 

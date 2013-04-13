@@ -9,6 +9,7 @@
     using Steema.TeeChart.Themes;
     using Steema.TeeChart.Tools;
     using System;
+    using System.Security;
     using System.Collections;
     using System.Collections.Specialized;
     using System.ComponentModel;
@@ -664,7 +665,7 @@
             return builder.ToString();
         }
 
-        [SecurityPermission(SecurityAction.Demand)]
+        [SecurityPermission(SecurityAction.Demand), SecurityCritical]
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             this.Chart.Export.Template.Serialize(info, context);
