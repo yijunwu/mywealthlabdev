@@ -248,18 +248,18 @@
                                 if (source.Date[num2 + 1] >= time2)
                                 {
                                     ///goto Label_05B9;  ///WYJ fix, simplify the flow
-                                    if (((source.Date[num2] < time2) && (num2 < (source.Count - 1))) && (source.Date[num2 + 1] == time2))
-                                    {
-                                        num2++;
-                                    }
-                                    bars2.Add(source.Date[num2], source.Open[num2], source.High[num2], source.Low[num2], source.Close[num2], source.Volume[num2]);
-                                    smethod_2(source, bars2, num2);
-                                    num2++;
-                                    continue;
+                                    break;
                                 }
                                 num2++;
                             }
-                            continue; 
+                            if (((source.Date[num2] < time2) && (num2 < (source.Count - 1))) && (source.Date[num2 + 1] == time2))
+                            {
+                                num2++;
+                            }
+                            bars2.Add(source.Date[num2], source.Open[num2], source.High[num2], source.Low[num2], source.Close[num2], source.Volume[num2]);
+                            smethod_2(source, bars2, num2);
+                            num2++;
+                            continue;
                         }
                         if (num2 == 0)
                         {
@@ -543,16 +543,14 @@
                         {
                             if (num == (source.Count - 1))
                             {
-                                goto Label_0152;
+                                ///goto  Label_0152;  ///WYJ fix, simplify the flow
+                                flag2 = true;
+                                series.Add(source[num], time2);
+                                break;
                             }
                             num++;
                             time7 = source.Date[num];
                         }
-                        goto Label_0164;
-                    Label_0152:
-                        flag2 = true;
-                        series.Add(source[num], time2);
-                    Label_0164:
                         if (!flag2)
                         {
                             if (num == 0)
