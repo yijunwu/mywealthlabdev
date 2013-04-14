@@ -64,9 +64,10 @@
             throw new ArgumentException("standardTimeZoneName not found.");
         }
 
-        private Struct3 method_0()
+        ///WYJ fix, original name: method_0
+        private TimeZone getTimeZone()
         {
-            return new Struct3 { int_0 = this.struct2_0.int_0, struct1_0 = this.struct2_0.struct1_0, int_1 = this.struct2_0.int_1, struct1_1 = this.struct2_0.struct1_1, int_2 = this.struct2_0.int_2 };
+            return new TimeZone { bias = this.struct2_0.int_0, standardDate = this.struct2_0.struct1_0, standardBias = this.struct2_0.int_1, daylightDate = this.struct2_0.struct1_1, daylightBias = this.struct2_0.int_2 };
         }
 
         private void method_1(byte[] byte_0)
@@ -86,36 +87,55 @@
             }
         }
 
-        private static Struct1 smethod_0(DateTime dateTime_0)
+        ///WYJ fix, original name: smethod_0
+        private static SystemTime toSystemTime(DateTime dt)
         {
-            Struct1 struct2;
-            FILETIME filetime = new FILETIME {
+            SystemTime st = new SystemTime();
+            /*
+             Struct1 struct2;
+             FILETIME filetime = new FILETIME {
                 dwHighDateTime = (int) (dateTime_0.Ticks >> 0x20),
-                dwLowDateTime = (int) (((ulong) dateTime_0.Ticks) & 0xffffffffL)
+                dwLowDateTime = (int) (((ulong) dateTime_0.Ticks) & 0x0000ffffL) ///WYJ fix, original: 0xffffffffL
             };
-            Struct4.FileTimeToSystemTime(ref filetime, out struct2);
-            return struct2;
+            Struct4.FileTimeToSystemTime(ref filetime, out struct2); 
+            return struct2; */
+            dt = dt.ToLocalTime();
+            st.year = Convert.ToUInt16(dt.Year);
+            st.month = Convert.ToUInt16(dt.Month);
+            st.dayOfWeek = Convert.ToUInt16(dt.DayOfWeek);
+            st.day = Convert.ToUInt16(dt.Day);
+            st.hour = Convert.ToUInt16(dt.Hour);
+            st.minute = Convert.ToUInt16(dt.Minute);
+            st.second = Convert.ToUInt16(dt.Second);
+            st.milliseconds = Convert.ToUInt16(dt.Millisecond);
+            return st;
         }
 
-        private static DateTime smethod_1(ref Struct1 struct1_0)
+        /*private static DateTime smethod_1(ref SystemTime struct1_0)
         {
             FILETIME filetime = new FILETIME();
             Struct4.SystemTimeToFileTime(ref struct1_0, out filetime);
             return new DateTime((filetime.dwHighDateTime << 0x20) | ((long) ((ulong) filetime.dwLowDateTime)));
+        } */
+
+        private static DateTime fromSystemDate(ref SystemTime st, DateTimeKind kind)  ///WYJ fix, original name: smethod_1
+        {
+            DateTime dt = new DateTime(st.year, st.month, st.day, st.hour, st.minute, st.second, st.milliseconds, kind);
+            return dt;
         }
 
         public DateTime ToLocalTime(DateTime dateTime_0)
         {
-            TimeZoneInformation.Struct1 struct1;
-            TimeZoneInformation.Struct1 struct11 = TimeZoneInformation.smethod_0(dateTime_0);
-            TimeZoneInformation.Struct3 struct3 = this.method_0();
-            TimeZoneInformation.Struct4.SystemTimeToTzSpecificLocalTime(ref struct3, ref struct11, out struct1);
-            return TimeZoneInformation.smethod_1(ref struct1);
+            TimeZoneInformation.SystemTime result;
+            TimeZoneInformation.SystemTime systemTime = TimeZoneInformation.toSystemTime(dateTime_0);
+            TimeZoneInformation.TimeZone timezone = this.getTimeZone();
+            TimeZoneInformation.Struct4.SystemTimeToTzSpecificLocalTime(ref timezone, ref systemTime, out result);
+            return TimeZoneInformation.fromSystemDate(ref result, DateTimeKind.Local);
         }
 
-        public static DateTime ToLocalTime(DateTime dateTime_0, string targetTimeZoneName)
+        public static DateTime ToLocalTime(DateTime utcTime, string targetTimeZoneName)
         {
-            return GetTimeZone(targetTimeZoneName).ToLocalTime(dateTime_0);
+            return GetTimeZone(targetTimeZoneName).ToLocalTime(utcTime);
         }
 
         public static DateTime ToLocalTime(string sourceTimeZoneName, DateTime localTime, string targetTimeZoneName)
@@ -131,13 +151,13 @@
         public DateTime ToUniversalTime(DateTime local)
         {
             DateTime time;
-            Struct1 struct2 = smethod_0(local);
-            Struct3 struct3 = this.method_0();
+            SystemTime struct2 = toSystemTime(local);
+            TimeZone struct3 = this.getTimeZone();
             try
             {
-                Struct1 struct4;
+                SystemTime struct4;
                 Struct4.TzSpecificLocalTimeToSystemTime(ref struct3, ref struct2, out struct4);
-                time = smethod_1(ref struct4);
+                time = fromSystemDate(ref struct4, DateTimeKind.Utc);
             }
             catch (EntryPointNotFoundException exception)
             {
@@ -155,7 +175,7 @@
         {
             get
             {
-                string standardName = TimeZone.CurrentTimeZone.StandardName;
+                string standardName = System.TimeZone.CurrentTimeZone.StandardName;
                 foreach (TimeZoneInformation information in TimeZones)
                 {
                     if (information.StandardName.Equals(standardName, StringComparison.OrdinalIgnoreCase))
@@ -253,16 +273,16 @@
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct Struct1
+        private struct SystemTime  ///WYJ fix, original name: Struct1
         {
-            public ushort ushort_0;
-            public ushort ushort_1;
-            public ushort ushort_2;
-            public ushort ushort_3;
-            public ushort ushort_4;
-            public ushort ushort_5;
-            public ushort ushort_6;
-            public ushort ushort_7;
+            public ushort year; ///WYJ fix, original name: ushort_0
+            public ushort month; ///WYJ fix, original name: ushort_1
+            public ushort dayOfWeek; ///WYJ fix, original name: ushort_2
+            public ushort day; ///WYJ fix, original name: ushort_3
+            public ushort hour; ///WYJ fix, original name: ushort_4
+            public ushort minute; ///WYJ fix, original name: ushort_5
+            public ushort second; ///WYJ fix, original name: ushort_6
+            public ushort milliseconds; ///WYJ fix, original name: ushort_7
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -271,25 +291,25 @@
             public int int_0;
             public int int_1;
             public int int_2;
-            public TimeZoneInformation.Struct1 struct1_0;
-            public TimeZoneInformation.Struct1 struct1_1;
+            public TimeZoneInformation.SystemTime struct1_0;
+            public TimeZoneInformation.SystemTime struct1_1;
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
-        private struct Struct3
+        private struct TimeZone  ///WYJ fix, original name: Struct3
         {
             [MarshalAs(UnmanagedType.I4)]
-            public int int_0;
+            public int bias;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst=0x20)]
-            public string string_0;
-            public TimeZoneInformation.Struct1 struct1_0;
+            public string standardName;
+            public TimeZoneInformation.SystemTime standardDate;
             [MarshalAs(UnmanagedType.I4)]
-            public int int_1;
+            public int standardBias;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst=0x20)]
-            public string string_1;
-            public TimeZoneInformation.Struct1 struct1_1;
+            public string daylightName;
+            public TimeZoneInformation.SystemTime daylightDate;
             [MarshalAs(UnmanagedType.I4)]
-            public int int_2;
+            public int daylightBias;
         }
 
         [StructLayout(LayoutKind.Sequential, Size=1)]
@@ -297,15 +317,15 @@
         {
             private const string string_0 = "kernel32.dll";
             [DllImport("kernel32.dll")]
-            public static extern uint GetTimeZoneInformation(out TimeZoneInformation.Struct3 struct3_0);
+            public static extern uint GetTimeZoneInformation(out TimeZoneInformation.TimeZone struct3_0);
             [DllImport("kernel32.dll")]
-            public static extern bool SystemTimeToTzSpecificLocalTime([In] ref TimeZoneInformation.Struct3 struct3_0, [In] ref TimeZoneInformation.Struct1 struct1_0, out TimeZoneInformation.Struct1 struct1_1);
+            public static extern bool SystemTimeToTzSpecificLocalTime([In] ref TimeZoneInformation.TimeZone struct3_0, [In] ref TimeZoneInformation.SystemTime struct1_0, out TimeZoneInformation.SystemTime struct1_1);
             [DllImport("kernel32.dll")]
-            public static extern bool SystemTimeToFileTime([In] ref TimeZoneInformation.Struct1 struct1_0, out FILETIME filetime_0);
+            public static extern bool SystemTimeToFileTime([In] ref TimeZoneInformation.SystemTime struct1_0, out FILETIME filetime_0);
             [DllImport("kernel32.dll")]
-            public static extern bool FileTimeToSystemTime([In] ref FILETIME filetime_0, out TimeZoneInformation.Struct1 struct1_0);
+            public static extern bool FileTimeToSystemTime([In] ref FILETIME filetime_0, out TimeZoneInformation.SystemTime struct1_0);
             [DllImport("kernel32.dll")]
-            public static extern bool TzSpecificLocalTimeToSystemTime([In] ref TimeZoneInformation.Struct3 struct3_0, [In] ref TimeZoneInformation.Struct1 struct1_0, out TimeZoneInformation.Struct1 struct1_1);
+            public static extern bool TzSpecificLocalTimeToSystemTime([In] ref TimeZoneInformation.TimeZone struct3_0, [In] ref TimeZoneInformation.SystemTime struct1_0, out TimeZoneInformation.SystemTime struct1_1);
         }
     }
 }
