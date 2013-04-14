@@ -885,8 +885,8 @@
         }
 
         ///WYJ fix: code from Reflector
-        
-        protected /*override*/ void OnMouseMove2(MouseEventArgs mevent)
+        /*
+        protected override void OnMouseMove2(MouseEventArgs mevent)
         {
             try
             {
@@ -1215,7 +1215,7 @@
             {
             }
             base.OnMouseMove(mevent);
-        }
+        } */
 
         ///WYJ fix, code from JustDecompile, protected override void OnMouseMove(MouseEventArgs mevent)
         protected override void OnMouseMove(MouseEventArgs mevent)
