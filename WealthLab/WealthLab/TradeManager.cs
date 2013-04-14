@@ -1627,8 +1627,8 @@
                                 }
                             }
                         }
+                        break;
                     }
-                    break;
                 }
                 if (flag2)
                 {
