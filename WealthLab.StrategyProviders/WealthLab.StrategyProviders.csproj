@@ -39,12 +39,9 @@
     <Reference Include="System" />
     <Reference Include="System.Web.Services" />
     <Reference Include="MS123.Web.Strategies">
-      <HintPath>..\ExternalLib\MS123.Web.Strategies.dll</HintPath>
+      <HintPath>..\MS123.Web.Strategies\bin\Debug\MS123.Web.Strategies.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
@@ -61,5 +58,11 @@
     <Compile Include="WealthLab\StrategyProviders\WLWebServices\GetPrivateStrategiesCompletedEventHandler.cs" />
     <Compile Include="WealthLab\StrategyProviders\WLWebServices\GetPrivateStrategiesCompletedEventArgs.cs" />
     <EmbeddedResource Include="WealthLab.StrategyProviders.WLLogin.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

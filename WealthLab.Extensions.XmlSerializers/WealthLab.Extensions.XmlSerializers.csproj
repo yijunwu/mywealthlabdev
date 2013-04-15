@@ -74,7 +74,7 @@
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer31.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializerContract.cs" />
     <Reference Include="WealthLab.Extensions">
-      <HintPath>..\ExternalLib\WealthLab.Extensions.dll</HintPath>
+      <HintPath>..\WealthLab.Extensions\bin\Debug\WealthLab.Extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

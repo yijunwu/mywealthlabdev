@@ -33,10 +33,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+      <HintPath>..\Fidelity.Components\bin\Debug\Fidelity.Components.dll</HintPath>
     </Reference>
     <Reference Include="WealthLab">
-      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />

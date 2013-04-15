@@ -32,9 +32,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -115,5 +112,11 @@
     <EmbeddedResource Include="WealthLab.ChartDrawingObjects.BitmapSettings.resources" />
     <EmbeddedResource Include="WealthLab.ChartDrawingObjects.RegressionChannelSettings.resources" />
     <EmbeddedResource Include="WealthLab.ChartDrawingObjects.LineSettings.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

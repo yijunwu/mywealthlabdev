@@ -36,7 +36,7 @@
       <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
     </Reference>
     <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+      <HintPath>..\Fidelity.Components\bin\Debug\Fidelity.Components.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -66,4 +66,7 @@
       <Name>TeeChart</Name>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\WealthLab.Optimizers.dll" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

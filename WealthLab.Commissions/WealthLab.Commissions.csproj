@@ -37,12 +37,6 @@
     <Reference Include="ControlLibrary">
       <HintPath>..\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="WealthLab">
-      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
-    </Reference>
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
@@ -56,5 +50,15 @@
     <Compile Include="WealthLab\Commissions\PerShareCommission.cs" />
     <EmbeddedResource Include="WealthLab.Commissions.FidelityFlatRateSettings.resources" />
     <EmbeddedResource Include="WealthLab.Commissions.PerShareCommissionSettings.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

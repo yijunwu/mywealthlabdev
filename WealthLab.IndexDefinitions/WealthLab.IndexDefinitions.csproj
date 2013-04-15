@@ -32,7 +32,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="WealthLab">
-      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
@@ -40,11 +40,11 @@
       <HintPath>..\WealthLab.Indicators\bin\Debug\WealthLab.Indicators.dll</HintPath>
     </Reference>
     <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
+      <HintPath>..\Fidelity.Components\bin\Debug\Fidelity.Components.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="WealthLab.ChartControl">
-      <HintPath>..\ExternalLib\WealthLab.ChartControl.dll</HintPath>
+      <HintPath>..\WealthLab.ChartControl\bin\Debug\WealthLab.ChartControl.dll</HintPath>
     </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />

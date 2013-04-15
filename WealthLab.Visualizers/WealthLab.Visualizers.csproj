@@ -32,17 +32,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="WealthLab">
-      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="WealthLab.Indicators">
-      <HintPath>..\ExternalLib\WealthLab.Indicators.dll</HintPath>
-    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\Visualizers\PVTradeList.cs">
@@ -88,9 +79,24 @@
     <EmbeddedResource Include="WealthLab.Visualizers.Properties.Resources.resources" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TeeChart\TeeChart.csproj">
       <Project>{DD030632-81E4-4843-BB14-68C7C96CBD26}</Project>
       <Name>TeeChart</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WealthLab.Indicators\WealthLab.Indicators.csproj">
+      <Project>{779CDAD0-90C6-4757-889E-62369148F934}</Project>
+      <Name>WealthLab.Indicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\WealthLab.Visualizers.dll" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -1,14 +1,15 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectType>local</ProjectType>
     <ProjectVersion>7.10.377</ProjectVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>a5cbc89b-7591-4bf0-be15-b3ab86eac9fe</ProjectGuid>
+    <ProjectGuid>{5486154B-9BCC-4177-8C93-A409D035C06A}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AssemblyName>MS123.Web.Strategies</AssemblyName>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>

@@ -36,9 +36,6 @@
     <Reference Include="WealthLab">
       <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
     </Reference>
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="WealthLab.Extensions.Attribute">
       <HintPath>..\WealthLab.Extensions.Attribute\bin\Debug\WealthLab.Extensions.Attribute.dll</HintPath>
@@ -61,5 +58,11 @@
     <EmbeddedResource Include="WealthLab.Commissions.Community.Properties.Resources.resources" />
     <EmbeddedResource Include="WealthLab.Commissions.Community.uxDollarsPer.resources" />
     <EmbeddedResource Include="WealthLab.Commissions.Community.uxIBBundled.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

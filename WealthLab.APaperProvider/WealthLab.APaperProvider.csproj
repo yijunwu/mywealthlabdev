@@ -35,9 +35,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\APaperProvider\ErrorForm.cs">
@@ -51,6 +48,10 @@
     <EmbeddedResource Include="WealthLab.APaperProvider.Properties.Resources.resources" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WealthLab.PaperProvider\WealthLab.PaperProvider.csproj">
       <Project>{7A35CAE9-326E-4C82-9492-E4E55476F254}</Project>
       <Name>WealthLab.PaperProvider</Name>

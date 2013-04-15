@@ -31,9 +31,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="WealthLab">
-      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
@@ -199,5 +196,11 @@
     <Compile Include="WealthLab\Indicators\CMOHelper.cs" />
     <Compile Include="WealthLab\Indicators\AccumDist.cs" />
     <Compile Include="WealthLab\Indicators\AccumDistHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

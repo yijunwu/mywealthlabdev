@@ -33,14 +33,11 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="WealthLab">
-      <HintPath>..\ExternalLib\WealthLab.dll</HintPath>
+      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\ExternalLib\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\ChartStyles\EquivolumeChartStyle.cs" />
@@ -59,5 +56,11 @@
     <EmbeddedResource Include="WealthLab.ChartStyles.LineChartStyleSettings.resources" />
     <EmbeddedResource Include="WealthLab.ChartStyles.CandleChartStyleSettings.resources" />
     <EmbeddedResource Include="WealthLab.ChartStyles.Properties.Resources.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

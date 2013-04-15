@@ -38,7 +38,7 @@
       <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
     </Reference>
     <Reference Include="WealthLab.Extensions">
-      <HintPath>..\ExternalLib\WealthLab.Extensions.dll</HintPath>
+      <HintPath>..\WealthLab.Extensions\bin\Debug\WealthLab.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
