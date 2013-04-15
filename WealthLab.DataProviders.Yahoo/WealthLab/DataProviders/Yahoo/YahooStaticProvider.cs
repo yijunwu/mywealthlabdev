@@ -644,7 +644,7 @@
                         {
                             if (list[j].getSymbol() == str4)
                             {
-                                //goto Label_01E9; ///WYJ fix
+                                //goto  Label_01E9; ///WYJ fix, simplify the flow
                                 flag2 = false; 
                                 break;
                             }
@@ -688,7 +688,7 @@
                                 Class27 current = enumerator4.Current;
                                 if (current.getSymbol() == str2)
                                 {
-                                    ///goto Label_032F;
+                                    ///goto  Label_032F;  ///WYJ fix, simplify the flow
                                     flag = true;
                                     break;
                                 }

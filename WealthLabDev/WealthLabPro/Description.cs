@@ -700,7 +700,6 @@
 
         private bool method_2()
         {
-            bool flag;
             using (IEnumerator<IPerformanceVisualizer> enumerator = MainModule.Instance.VisualizersChecked.GetEnumerator())
             {
                 while (enumerator.MoveNext())
@@ -708,14 +707,12 @@
                     IPerformanceVisualizer current = enumerator.Current;
                     if (current.TabText.Equals("Performance"))
                     {
-                        goto Label_0036;
+                        ///goto  Label_0036;  ///WYJ fix, simplify the flow
+                        return true;
                     }
                 }
                 return false;
-            Label_0036:
-                flag = true;
             }
-            return flag;
         }
 
         private void method_3(PrintPageEventArgs printPageEventArgs_0, ref Rectangle rectangle_0, bool bool_1)

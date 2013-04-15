@@ -123,13 +123,13 @@ internal class TextFilesWizardPageData : UserControl
                 zero = FindWindowEx(window, IntPtr.Zero, null, "<- Previous");
                 if (((int) zero) != 0)
                 {
-                    goto Label_0048;
+                    ///goto  Label_0048;  ///WYJ fix, simplify the flow
+                    SendMessage((int)zero, 0xf5, 0, IntPtr.Zero);
+                    return;
                 }
                 window = GetWindow(window, 2);
             }
             return;
-        Label_0048:
-            SendMessage((int) zero, 0xf5, 0, IntPtr.Zero);
         }
         catch
         {

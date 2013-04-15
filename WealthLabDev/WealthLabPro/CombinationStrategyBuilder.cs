@@ -806,24 +806,22 @@
                         current = enumerator2.Current;
                         if (info.StrategyID == current.ID)
                         {
-                            goto Label_0065;
+                            ///goto  Label_0065;  ///WYJ fix, simplify the flow
+                            item = this.lvStrategies.Items.Add(current.Name);
+                            for (int i = 1; i <= this.lvStrategies.Columns.Count; i++)
+                            {
+                                item.SubItems.Add("");
+                            }
+                            item.Tag = info;
+                            this.method_5(item, info);
+                            WealthScript wealthScriptObject = MainModule.Instance.Strategies.GetWealthScriptObject(current);
+                            info.Tag = wealthScriptObject;
+                            this.cbUsePreferredValues.Checked = info.UsePreferredValues;
+                            flag = true;
+                            break;
                         }
                     }
-                    goto Label_00F7;
-                Label_0065:
-                    item = this.lvStrategies.Items.Add(current.Name);
-                    for (int i = 1; i <= this.lvStrategies.Columns.Count; i++)
-                    {
-                        item.SubItems.Add("");
-                    }
-                    item.Tag = info;
-                    this.method_5(item, info);
-                    WealthScript wealthScriptObject = MainModule.Instance.Strategies.GetWealthScriptObject(current);
-                    info.Tag = wealthScriptObject;
-                    this.cbUsePreferredValues.Checked = info.UsePreferredValues;
-                    flag = true;
                 }
-            Label_00F7:
                 if (!flag)
                 {
                     ListViewItem item2 = this.lvStrategies.Items.Add(info.Name);
@@ -1040,12 +1038,12 @@
                     CombinedStrategyInfo current = enumerator.Current;
                     if (strategy_1.ID == current.StrategyID)
                     {
-                        goto Label_003A;
+                        ///goto  Label_003A;  ///WYJ fix, simplify the flow
+                        MessageBox.Show("Strategy you are trying to add has already been added to Combination Strategy", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
                     }
                 }
                 return;
-            Label_003A:
-                MessageBox.Show("Strategy you are trying to add has already been added to Combination Strategy", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

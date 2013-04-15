@@ -11,7 +11,6 @@
 
         private bool method_0(string string_0)
         {
-            bool flag;
             using (List<MarketManagerInfoAttribute>.Enumerator enumerator = this._items.GetEnumerator())
             {
                 while (enumerator.MoveNext())
@@ -19,14 +18,12 @@
                     MarketManagerInfoAttribute current = enumerator.Current;
                     if (current.Name == string_0)
                     {
-                        goto Label_0030;
+                        ///goto  Label_0030;
+                        return true;
                     }
                 }
                 return false;
-            Label_0030:
-                flag = true;
             }
-            return flag;
         }
 
         public void Search()

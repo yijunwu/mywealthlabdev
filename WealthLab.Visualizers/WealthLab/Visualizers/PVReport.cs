@@ -643,14 +643,12 @@
                     current = enumerator.Current;
                     if (str == current.StrategyID.ToString())
                     {
-                        goto Label_0056;
+                        ///goto  Label_0056;  ///WYJ fix, simplify the flow
+                        info = current;
+                        break;
                     }
                 }
-                goto Label_0068;
-            Label_0056:
-                info = current;
             }
-        Label_0068:
             this.cmbChildStrategy.SelectedItem = info;
             this.ivisualizerHost_0.SelectPV(this.TabText);
         }

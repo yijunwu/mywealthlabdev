@@ -210,14 +210,12 @@
                     current = enumerator.Current;
                     if (str == current.Name.ToUpper())
                     {
-                        goto Label_003C;
+                        ///goto  Label_003C; ///WYJ fix, simplify the flow
+                        return current;
                     }
                 }
                 return null;
-            Label_003C:
-                source2 = current;
             }
-            return source2;
         }
 
         public StaticDataProvider FindProvider(string name)

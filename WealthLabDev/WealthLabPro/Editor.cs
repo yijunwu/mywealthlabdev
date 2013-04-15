@@ -510,17 +510,15 @@
                         current = enumerator4.Current;
                         if (current.Trim().StartsWith("public class"))
                         {
-                            goto Label_0175;
+                            ///goto  Label_0175; ///WYJ fix, simplify the flow 
+                            str7 = current.Trim().Split(new char[] { ' ' })[2];
+                            index = num4;
+                            break;
                         }
                         num4++;
                     }
-                    goto Label_01AC;
-                Label_0175:;
-                    str7 = current.Trim().Split(new char[] { ' ' })[2];
-                    index = num4;
                 }
             }
-        Label_01AC:
             num6 = 0;
             int num3 = flag ? (index + 2) : (index - 2);
             foreach (StrategyParameter parameter3 in wealthScript_0.Parameters)

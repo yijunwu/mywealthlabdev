@@ -140,15 +140,13 @@
                             current = enumerator.Current;
                             if (current.Name == this.DataSourceName)
                             {
-                                goto Label_0042;
+                                ///goto  Label_0042;  ///WYJ fix, simplify the flow
+                                source = current;
+                                break;
                             }
                         }
-                        goto Label_0050;
-                    Label_0042:
-                        source = current;
                     }
                 }
-            Label_0050:
                 if (source == null)
                 {
                     throw new DataSetNotFoundException();

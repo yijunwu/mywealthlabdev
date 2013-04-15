@@ -65,14 +65,12 @@
                         num3 = num5;
                         if ((this.dataSeries_0[num6] * num7) <= this.dataSeries_1[num6])
                         {
-                            goto Label_0118;
+                            ///goto  Label_0118;  ///WYJ fix, simplify the flow
+                            rightEdgeBar = num6;
+                            break;
                         }
                         num6++;
                     }
-                    goto Label_011C;
-                Label_0118:
-                    rightEdgeBar = num6;
-                Label_011C:
                     if (rightEdgeBar == chartRenderer_0.RightEdgeBar)
                     {
                         num2 = num4;

@@ -161,14 +161,12 @@ internal class Class43
             {
                 if (!this.webClient_0.IsBusy)
                 {
-                    goto Label_0041;
+                    ///goto  Label_0041;  ///WYJ fix, simplify the flow
+                    flag = true;
+                    break;
                 }
                 Thread.Sleep(100);
             }
-            goto Label_0043;
-        Label_0041:
-            flag = true;
-        Label_0043:
             if (!flag)
             {
                 MessageBox.Show("Download cancel request failed", "Cancellation error", MessageBoxButtons.OK, MessageBoxIcon.Hand);

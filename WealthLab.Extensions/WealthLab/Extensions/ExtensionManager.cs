@@ -168,22 +168,19 @@
                         ExtensionInfoAttribute attribute = current.method_7();
                         if (enum8_0 != Enum8.const_0)
                         {
-                            goto Label_0094;
+                            ///goto  Label_0094;  ///WYJ fix, simplify the flow
+                            this.bool_0 = true;
+                            break;
                         }
                         if (((attribute != null) && !string.IsNullOrEmpty(attribute.PreInstallBatch)) && attribute.PreInstallBatch.ToLower().Contains("[fidelityapproved=true]"))
                         {
-                            goto Label_008B;
+                            ///goto  Label_008B;
+                            this.bool_0 = true;
+                            break;
                         }
                     }
                 }
-                goto Label_00AB;
-            Label_008B:
-                this.bool_0 = true;
-                goto Label_00AB;
-            Label_0094:
-                this.bool_0 = true;
             }
-        Label_00AB:
             if (this.bool_0)
             {
                 Delegate6 method = new Delegate6(this.method_6);

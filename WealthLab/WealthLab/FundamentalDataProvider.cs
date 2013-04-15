@@ -87,7 +87,6 @@
                 symbolSpecificItemsProvided = this.NonSymbolSpecificItemsProvided;
                 if (symbolSpecificItemsProvided != null)
                 {
-                    bool flag;
                     using (IEnumerator<string> enumerator2 = symbolSpecificItemsProvided.GetEnumerator())
                     {
                         while (enumerator2.MoveNext())
@@ -95,16 +94,12 @@
                             string current = enumerator2.Current;
                             if (this.CanDragDropItem(current))
                             {
-                                goto Label_006D;
+                                ///goto  Label_006D;  ///WYJ fix, simplify the flow
+                                return true;
                             }
                         }
-                        goto Label_007F;
-                    Label_006D:
-                        flag = true;
                     }
-                    return flag;
                 }
-            Label_007F:
                 return false;
             }
         }

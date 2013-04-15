@@ -288,15 +288,14 @@
                         DateTime time = dataSource.Provider.DataStore.SymbolLastUpdated(current, dataSource.Scale, dataSource.BarInterval);
                         if (time2 < time)
                         {
-                            goto Label_009D;
+                            ///goto  Label_009D;  ///WYJ fix, simplify the flow
+                            flag = true;
+                            return flag;
                         }
                     }
                 }
                 return false;
-            Label_009D:
-                flag = true;
             }
-            return flag;
         }
 
         private void method_8(IDataUpdateMessage idataUpdateMessage_0, Bars bars_0)

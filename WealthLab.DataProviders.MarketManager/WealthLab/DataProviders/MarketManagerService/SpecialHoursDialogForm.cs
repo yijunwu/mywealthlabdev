@@ -131,15 +131,12 @@
                     WealthLab.MarketSpecialHours current = enumerator.Current;
                     if (current.Date.Equals(this.MarketSpecialHours.Date))
                     {
-                        goto Label_00A1;
+                        ///goto  Label_00A1;  ///WYJ fix, simplify the flow
+                        base.errProvider.SetError(this.dtDate, "This date already exists");
+                        return;
                     }
                 }
-                goto Label_00C7;
-            Label_00A1:
-                base.errProvider.SetError(this.dtDate, "This date already exists");
-                return;
             }
-        Label_00C7:
             base.DialogResult = DialogResult.OK;
         }
 

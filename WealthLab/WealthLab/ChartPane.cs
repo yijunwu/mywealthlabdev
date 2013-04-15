@@ -733,14 +733,13 @@
                         current = enumerator.Current;
                         if (current.Selected)
                         {
-                            goto Label_0028;
+                            ///goto  Label_0028;  ///WYJ fix, simplify the flow
+                            indicator2 = current;
+                            return indicator2;
                         }
                     }
                     return null;
-                Label_0028:
-                    indicator2 = current;
                 }
-                return indicator2;
             }
         }
 

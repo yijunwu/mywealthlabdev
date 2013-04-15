@@ -47,14 +47,12 @@
                             StreamingRequest current = enumerator3.Current;
                             if (current.Symbol == request.Symbol)
                             {
-                                goto Label_00EB;
+                                ///goto  Label_00EB;  ///WYJ fix, simplify the flow
+                                flag2 = true;
+                                break;
                             }
                         }
-                        goto Label_00FE;
-                    Label_00EB:
-                        flag2 = true;
                     }
-                Label_00FE:
                     if (!flag2)
                     {
                         this.UnSubscribe(request.Symbol);
@@ -207,15 +205,13 @@
                         StreamingRequest current = enumerator.Current;
                         if (current.Symbol == symbol)
                         {
-                            goto Label_005A;
+                            ///goto  Label_005A;  ///WYJ fix, simplify the flow
+                            flag = true;
+                            break;
                         }
                     }
-                    goto Label_0079;
-                Label_005A:
-                    flag = true;
                 }
             }
-        Label_0079:
             if (!flag)
             {
                 this.Subscribe(symbol);
@@ -268,15 +264,13 @@
                         StreamingBarRequest current = enumerator.Current;
                         if (item.Code == current.Code)
                         {
-                            goto Label_00C8;
+                            ///goto  Label_00C8;  ///WYJ fix, simplify the flow
+                            flag3 = true;
+                            break;
                         }
                     }
-                    goto Label_00E9;
-                Label_00C8:
-                    flag3 = true;
                 }
             }
-        Label_00E9:
             if (!flag3)
             {
                 this.SubscribeBars(symbol, baseInterval);
@@ -306,14 +300,12 @@
                         StreamingRequest current = enumerator.Current;
                         if (current.Symbol == symbol)
                         {
-                            goto Label_0072;
+                            ///goto  Label_0072;  ///WYJ fix, simplify the flow
+                            flag2 = false;
+                            break;
                         }
                     }
-                    goto Label_0084;
-                Label_0072:
-                    flag2 = false;
                 }
-            Label_0084:
                 if (flag2)
                 {
                     this.UnSubscribe(symbol);
@@ -335,15 +327,13 @@
                 {
                     if (list_0[index].Request == update)
                     {
-                        goto Label_0042;
+                        ///goto  Label_0042;  ///WYJ fix, simplify the flow
+                        list_0.RemoveAt(index);
+                        break;
                     }
                     index++;
                 }
-                goto Label_005B;
-            Label_0042:
-                list_0.RemoveAt(index);
             }
-        Label_005B:
             flag3 = false;
             lock (list_0)
             {
@@ -354,14 +344,12 @@
                         StreamingBarRequest current = enumerator.Current;
                         if ((current.Symbol == symbol) && (current.BarInterval == barInterval))
                         {
-                            goto Label_00AB;
+                            ///goto  Label_00AB;  ///WYJ fix, simplify the flow
+                            flag3 = true;
+                            break;
                         }
                     }
-                    goto Label_00CA;
-                Label_00AB:
-                    flag3 = true;
                 }
-            Label_00CA:;
             }
             if (!flag3)
             {

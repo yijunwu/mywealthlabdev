@@ -438,14 +438,12 @@
                     current = enumerator.Current;
                     if (current.Symbol == symbol)
                     {
-                        goto Label_0034;
+                        ///goto  Label_0034; ///WYJ fix, simplify the flow
+                        parameter = current;
+                        break;
                     }
                 }
-                goto Label_0047;
-            Label_0034:
-                parameter = current;
             }
-        Label_0047:
             if (parameter != null)
             {
                 int num = parameter.Count - 1;

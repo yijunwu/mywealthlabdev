@@ -208,7 +208,6 @@ internal class Class40
 
     private Class46 method_22(ExtensionInfoAttribute extensionInfoAttribute_0)
     {
-        Class46 class3;
         using (List<Class46>.Enumerator enumerator = this.list_0.GetEnumerator())
         {
             Class46 current;
@@ -217,14 +216,12 @@ internal class Class40
                 current = enumerator.Current;
                 if (current.method_9().StrongName == extensionInfoAttribute_0.StrongName)
                 {
-                    goto Label_003A;
+                    ///goto  Label_003A;  ///WYJ fix, simplify the flow
+                    return current;
                 }
             }
             return null;
-        Label_003A:
-            class3 = current;
         }
-        return class3;
     }
 
     private List<ExtensionInfoAttribute> method_23()
@@ -304,7 +301,6 @@ internal class Class40
 
     private ExtensionInfoAttribute method_25(List<ExtensionInfoAttribute> list_3, string string_0)
     {
-        ExtensionInfoAttribute attribute2;
         using (List<ExtensionInfoAttribute>.Enumerator enumerator = list_3.GetEnumerator())
         {
             ExtensionInfoAttribute current;
@@ -313,14 +309,12 @@ internal class Class40
                 current = enumerator.Current;
                 if (current.StrongName == string_0)
                 {
-                    goto Label_002B;
+                    ///goto  Label_002B;  ///WYJ fix, simplify the flow
+                    return current; 
                 }
             }
             return null;
-        Label_002B:
-            attribute2 = current;
         }
-        return attribute2;
     }
 
     public void method_26()

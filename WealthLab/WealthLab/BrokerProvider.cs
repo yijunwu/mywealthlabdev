@@ -66,14 +66,13 @@
                     current = enumerator.Current;
                     if (current.AccountNumber == acctNum)
                     {
-                        goto Label_002E;
+                        ///goto  Label_002E;  ///WYJ fix, simplify the flow
+                        account2 = current;
+                        return account2;
                     }
                 }
                 return null;
-            Label_002E:
-                account2 = current;
             }
-            return account2;
         }
 
         protected abstract List<Account> GetAccounts();

@@ -148,14 +148,12 @@
                         DataSource current = enumerator.Current;
                         if (index2.DataSourceParent.Name == current.Name)
                         {
-                            goto Label_01E5;
+                            ///goto  Label_01E5;  ///WYJ fix, simplify the flow
+                            flag = true;
+                            break;
                         }
                     }
-                    goto Label_01F6;
-                Label_01E5:
-                    flag = true;
                 }
-            Label_01F6:
                 if (!flag)
                 {
                     MainModule.Instance.DataSources.Add(index2.DataSourceParent);
@@ -611,15 +609,13 @@
                         current = enumerator2.Current;
                         if ((current.IsIndexLabDataset && (current.Scale == tag.Scale)) && (current.BarInterval == tag.BarInterval))
                         {
-                            goto Label_00A7;
+                            ///goto  Label_00A7; ///WYJ fix, simplify the flow
+                            flag = true;
+                            this.method_0(current, tag);
+                            break;
                         }
                     }
-                    goto Label_00C1;
-                Label_00A7:
-                    flag = true;
-                    this.method_0(current, tag);
                 }
-            Label_00C1:
                 if (!flag)
                 {
                     DataSource source3 = this.method_2(tag);

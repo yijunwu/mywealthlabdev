@@ -46,14 +46,12 @@
                     current = enumerator.Current;
                     if (current.Name == str)
                     {
-                        goto Label_0042;
+                        ///goto  Label_0042;  ///WYJ fix, simplify the flow
+                        this.IndicatorType = current;
+                        break;
                     }
                 }
-                goto Label_005A;
-            Label_0042:
-                this.IndicatorType = current;
             }
-        Label_005A:
             if ((this.IndicatorType == null) && (str != "*Fundamental*"))
             {
                 throw new InvalidDataException("Type not found in IndicatorDescriptor Read: " + str);

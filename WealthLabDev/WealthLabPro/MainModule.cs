@@ -192,13 +192,11 @@
                     {
                         if (attribute is ProductionBrokerProvider)
                         {
-                            goto Label_04C9;
+                            ///goto  Label_04C9;  ///WYJ fix, simplify the flow
+                            flag = true;
+                            break;
                         }
                     }
-                    goto Label_04CC;
-                Label_04C9:
-                    flag = true;
-                Label_04CC:
                     if (flag)
                     {
                         this.brokerProvider_0 = (WealthLab.BrokerProvider) loader3.CreateInstance(type2);
@@ -290,13 +288,12 @@
                         current = enumerator2.Current;
                         if (current.TabText == str8)
                         {
-                            goto Label_0850;
+                            ///goto  Label_0850;  ///WYJ fix, simplify the flow
+                            this.list_1.Add(current);
+                            list.Remove(current);
+                            break;
                         }
                     }
-                    continue;
-                Label_0850:
-                    this.list_1.Add(current);
-                    list.Remove(current);
                 }
             }
             foreach (IPerformanceVisualizer visualizer3 in list)
@@ -313,12 +310,11 @@
                         visualizer4 = enumerator2.Current;
                         if (visualizer4.TabText == str10)
                         {
-                            goto Label_0934;
+                            ///goto  Label_0934;  ///WYJ fix, simplify the flow
+                            this.list_2.Add(visualizer4);
+                            break;
                         }
                     }
-                    continue;
-                Label_0934:
-                    this.list_2.Add(visualizer4);
                 }
             }
             this.chartRenderer_0.BarSpacing = this.settingsManager_0.Get("BarSpacing", 6);
@@ -350,14 +346,12 @@
                     type5 = enumerator.Current;
                     if (type5.Name == str11)
                     {
-                        goto Label_0C02;
+                        ///goto  Label_0C02;  ///WYJ fix, simplify the flow
+                        type4 = type5;
+                        break;
                     }
                 }
-                goto Label_0C16;
-            Label_0C02:
-                type4 = type5;
             }
-        Label_0C16:
             this.tradingSystemExecutor_0.Commission = (Commission) this.assemblyLoader_1.CreateInstance(type4);
             if (this.tradingSystemExecutor_0.Commission is ICustomSettings)
             {
@@ -423,14 +417,12 @@
                     type8 = enumerator.Current;
                     if (type8.Name == str14)
                     {
-                        goto Label_1075;
+                        ///goto  Label_1075; ///WYJ fix, simplify the flow
+                        this.StreamingProvider = (StreamingDataProvider)this.assemblyLoader_2.CreateInstance(type8);
+                        break; 
                     }
                 }
-                goto Label_109D;
-            Label_1075:
-                this.StreamingProvider = (StreamingDataProvider) this.assemblyLoader_2.CreateInstance(type8);
             }
-        Label_109D:
             flag4 = this.settingsManager_0.Get("BadTickFilter", false);
             double threshold = this.settingsManager_0.Get("BadTickThreshold", (double) 20.0);
             StreamingDataProvider.SetBadTickFilterSettings(flag4, threshold);
@@ -571,14 +563,12 @@
                     current = enumerator.Current;
                     if (strategy_0.ID == current.ID)
                     {
-                        goto Label_0037;
+                        ///goto  Label_0037;  ///WYJ fix, simplify the flow
+                        item = current;
+                        break;
                     }
                 }
-                goto Label_0049;
-            Label_0037:
-                item = current;
             }
-        Label_0049:
             if (item != null)
             {
                 this.list_3.Remove(item);
@@ -949,14 +939,13 @@
                     current = enumerator.Current;
                     if (current.Name == dataSetName)
                     {
-                        goto Label_0035;
+                        ///goto  Label_0035;  ///WYJ fix, simplify the flow
+                        bars = current.Provider.RequestData(current, symbol, DateTime.MinValue, DateTime.MaxValue, 0, false);
+                        return bars; 
                     }
                 }
                 return bars;
-            Label_0035:
-                bars = current.Provider.RequestData(current, symbol, DateTime.MinValue, DateTime.MaxValue, 0, false);
             }
-            return bars;
         }
 
         public Bars LoadExternalSymbol(string symbol, BarScale scale, int barInterval, bool includePartialBar)
@@ -973,16 +962,13 @@
                         bars3 = current.Provider.RequestData(current, symbol, DateTime.MinValue, DateTime.MaxValue, 0, includePartialBar);
                         if ((bars3 != null) && (bars3.Count > 0))
                         {
-                            goto Label_0075;
+                            ///goto  Label_0075;  ///WYJ fix, simplify the flow
+                            this.method_4(bars3);
+                            return bars3;
                         }
                     }
                 }
-                goto Label_0090;
-            Label_0075:
-                this.method_4(bars3);
-                return bars3;
             }
-        Label_0090:
             using (IEnumerator<StaticDataProvider> enumerator3 = this.dataSourceManager_0.Providers.GetEnumerator())
             {
                 Bars bars4;
@@ -998,16 +984,13 @@
                         bars4 = provider.RequestData(source3, symbol, DateTime.MinValue, DateTime.MaxValue, 0, includePartialBar);
                         if ((bars4 != null) && (bars4.Count > 0))
                         {
-                            goto Label_0103;
+                            ///goto  Label_0103;  ///WYJ fix, simplify the flow
+                            this.method_4(bars4);
+                            return bars4;
                         }
                     }
                 }
-                goto Label_0120;
-            Label_0103:
-                this.method_4(bars4);
-                return bars4;
             }
-        Label_0120:
             scale3 = new BarDataScale(scale, barInterval);
             using (IEnumerator<DataSource> enumerator2 = this.dataSourceManager_0.DataSources.GetEnumerator())
             {
@@ -1023,15 +1006,14 @@
                             bars = BarScaleConverter.ReScale(bars, scale, barInterval);
                             if ((bars != null) && (bars.Count > 0))
                             {
-                                goto Label_01A2;
+                                ///goto  Label_01A2;  ///WYJ fix, simplify the flow
+                                this.method_4(bars);
+                                return bars;
                             }
                         }
                     }
                 }
                 return null;
-            Label_01A2:
-                this.method_4(bars);
-                return bars;
             }
         }
 
@@ -1353,13 +1335,13 @@
                     current = enumerator.Current;
                     if (current.Symbol == bars_0.Symbol)
                     {
-                        goto Label_0032;
+                        ///goto  Label_0032; ///WYJ fix, simplify the flow
+                        info2 = new SymbolInfo(current);
+                        bars_0.SymbolInfo = info2;
+                        return;
                     }
                 }
                 return;
-            Label_0032:
-                info2 = new SymbolInfo(current);
-                bars_0.SymbolInfo = info2;
             }
         }
 
@@ -2044,14 +2026,12 @@
                                                 {
                                                     if (this.NicAddress == strArray[i])
                                                     {
-                                                        goto Label_0149;
+                                                        ///goto  Label_0149;  ///WYJ fix, simplify the flow 
+                                                        flag = true;
+                                                        break;
                                                     }
                                                     this.int_0++;
                                                 }
-                                                goto Label_014C;
-                                            Label_0149:
-                                                flag = true;
-                                            Label_014C:
                                                 if (flag)
                                                 {
                                                     break;

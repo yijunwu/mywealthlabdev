@@ -62,18 +62,15 @@
                     string current = enumerator.Current;
                     if (current.ToUpper() == str)
                     {
-                        goto Label_0035;
+                        ///goto  Label_0035;  ///WYJ fix, simplify the flow
+                        if (messageOnError)
+                        {
+                            MessageBox.Show("A Folder with this name already exists");
+                        }
+                        return false;
                     }
                 }
-                goto Label_0052;
-            Label_0035:
-                if (messageOnError)
-                {
-                    MessageBox.Show("A Folder with this name already exists");
-                }
-                return false;
             }
-        Label_0052:
             str2 = this.RootPath + @"\Strategies\" + folderName;
             try
             {
@@ -136,17 +133,15 @@
                             current = enumerator.Current;
                             if (strategy_0.ID == current.ID)
                             {
-                                goto Label_005D;
+                                ///goto  Label_005D; ///WYJ fix, simplify the flow
+                                flag = false;
+                                reason = "Strategy ID already exists as " + current.Folder + @"\" + strategy_0.Name;
+                                break;
                             }
                         }
-                        goto Label_008D;
-                    Label_005D:
-                        flag = false;
-                        reason = "Strategy ID already exists as " + current.Folder + @"\" + strategy_0.Name;
                     }
                 }
             }
-        Label_008D:
             if (flag)
             {
                 try
@@ -376,14 +371,13 @@
                     current = enumerator.Current;
                     if (current.Name.ToUpper() == str)
                     {
-                        goto Label_003C;
+                        ///goto  Label_003C;  ///WYJ fix, simplify the flow
+                        strategy2 = current;
+                        return strategy2;
                     }
                 }
                 return null;
-            Label_003C:
-                strategy2 = current;
             }
-            return strategy2;
         }
 
         public Strategy Lookup(string name, string folder, string networkPath)
@@ -399,14 +393,13 @@
                     current = enumerator.Current;
                     if (((current.Name.ToUpper() == str) && (current.Folder.ToUpper() == str2)) && (current.NetworkDrivePath == networkPath))
                     {
-                        goto Label_0064;
+                        ///goto  Label_0064;  ///WYJ fix, simplify the flow
+                        strategy2 = current;
+                        return strategy2;
                     }
                 }
                 return null;
-            Label_0064:
-                strategy2 = current;
             }
-            return strategy2;
         }
 
         public Strategy LookupID(string ID)
@@ -420,16 +413,17 @@
                     current = enumerator.Current;
                     if (current.ID.ToString() == ID)
                     {
-                        goto Label_003E;
+                        ///goto  Label_003E; ///WYJ fix, simplify the flow
+                        strategy2 = current;
+                        return strategy2;
                     }
                 }
                 return null;
-            Label_003E:
-                strategy2 = current;
             }
-            return strategy2;
         }
 
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having too many goto statements. Try version from ILSpy
+        /*
         private void method_0(string string_1, string string_2)
         {
             string[] directories = Directory.GetDirectories(string_1);
@@ -478,6 +472,48 @@
             {
                 text = text + str2;
                 ilog_0.Error("Error loading strategies - " + text);
+                MessageBox.Show(text, "Error Loading Strategies", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+        } */
+
+        ///WYJ fix, code from ILSpy
+        private void method_0(string string_1, string string_2)
+        {
+            string[] directories = Directory.GetDirectories(string_1);
+            string text = "Strategy could not be loaded due to an error in the XML source file \n";
+            string text2 = string.Empty;
+            string[] array = directories;
+            for (int i = 0; i < array.Length; i++)
+            {
+                string text3 = array[i];
+                string text4 = text3.Substring(string_1.Length);
+                if (string_2 == "")
+                {
+                    this.list_0.Add(text4);
+                }
+                string[] files = Directory.GetFiles(text3, "*.xml");
+                string[] array2 = files;
+                for (int j = 0; j < array2.Length; j++)
+                {
+                    string text5 = array2[j];
+                    try
+                    {
+                        Strategy strategy = Strategy.FromFile(text5);
+                        strategy.FileName = text5;
+                        strategy.Folder = text4;
+                        strategy.NetworkDrivePath = string_2;
+                        this.list_2.Add(strategy);
+                    }
+                    catch (Exception)
+                    {
+                        text2 = text2 + "\"" + text5 + "\"";
+                    }
+                }
+            }
+            if (text2.Length > 0)
+            {
+                text += text2;
+                StrategyManager.ilog_0.Error("Error loading strategies - " + text);
                 MessageBox.Show(text, "Error Loading Strategies", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
         }

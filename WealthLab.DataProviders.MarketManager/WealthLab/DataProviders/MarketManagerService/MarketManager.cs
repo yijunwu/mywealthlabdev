@@ -180,14 +180,12 @@
                     current = enumerator.Current;
                     if (current.Name == string_1)
                     {
-                        goto Label_0031;
+                        ///goto  Label_0031;
+                        item = current;
+                        break;
                     }
                 }
-                goto Label_0043;
-            Label_0031:
-                item = current;
             }
-        Label_0043:
             if (item == null)
             {
                 item = new MarketInfoSettings(string_1);
@@ -291,14 +289,13 @@
                     current = enumerator2.Current;
                     if (current.UseMarketByDefault)
                     {
-                        goto Label_0083;
+                        ///goto  Label_0083;
+                        str = current.Name;
+                        return str;
                     }
                 }
                 return null;
-            Label_0083:
-                str = current.Name;
             }
-            return str;
         }
 
         internal static MarketInfo smethod_27(string string_1)
@@ -350,14 +347,12 @@
                     MarketInfo current = enumerator.Current;
                     if (current.Name == marketInfo_1.Name)
                     {
-                        goto Label_0034;
+                        ///goto  Label_0034;
+                        return true;
                     }
                 }
                 return false;
-            Label_0034:
-                flag = true;
             }
-            return flag;
         }
 
         private static void smethod_30(Class10 class10_0, TimeZoneInfo timeZoneInfo_0, MarketInfo marketInfo_1, DateTime dateTime_0, DateTime dateTime_1, int int_0)
@@ -428,7 +423,6 @@
 
         private static bool smethod_31(DateTime dateTime_0, List<MarketSpecialHours> list_4)
         {
-            bool flag;
             using (List<MarketSpecialHours>.Enumerator enumerator = list_4.GetEnumerator())
             {
                 while (enumerator.MoveNext())
@@ -436,14 +430,12 @@
                     MarketSpecialHours current = enumerator.Current;
                     if (dateTime_0.Date == current.Date)
                     {
-                        goto Label_0031;
+                        ///goto  Label_0031;
+                        return true;
                     }
                 }
                 return false;
-            Label_0031:
-                flag = true;
             }
-            return flag;
         }
 
         private static void smethod_32(Class10 class10_0, MarketInfo marketInfo_1, DateTime dateTime_0, DateTime dateTime_1, int int_0)
@@ -571,7 +563,6 @@
 
         private static bool smethod_38(DateTime dateTime_0, List<DateTime> list_4)
         {
-            bool flag;
             using (List<DateTime>.Enumerator enumerator = list_4.GetEnumerator())
             {
                 while (enumerator.MoveNext())
@@ -579,14 +570,12 @@
                     DateTime current = enumerator.Current;
                     if (dateTime_0.Date == current.Date)
                     {
-                        goto Label_0032;
+                        ///goto  Label_0032;
+                        return true;
                     }
                 }
                 return false;
-            Label_0032:
-                flag = true;
             }
-            return flag;
         }
 
         private static bool smethod_39(DateTime dateTime_0, List<MarketSpecialHours> list_4)

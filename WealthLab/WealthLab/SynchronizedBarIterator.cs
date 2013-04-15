@@ -64,14 +64,12 @@
                     Bars current = enumerator2.Current;
                     if (this.dictionary_0[current.UniqueDescription] < (current.Count - 1))
                     {
-                        goto Label_00D2;
+                        ///goto  Label_00D2;  ///WYJ fix, simplify the flow
+                        flag = false;
+                        break;
                     }
                 }
-                goto Label_00E0;
-            Label_00D2:
-                flag = false;
             }
-        Label_00E0:
             if (flag)
             {
                 return false;

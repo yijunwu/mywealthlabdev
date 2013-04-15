@@ -501,14 +501,12 @@
                         double current = enumerator.Current;
                         if (double.IsInfinity(current))
                         {
-                            goto Label_002B;
+                            ///goto  Label_002B; ///WYJ fix, simplify the flow
+                            return true;
                         }
                     }
                     return false;
-                Label_002B:
-                    flag = true;
                 }
-                return flag;
             }
         }
 

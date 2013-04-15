@@ -800,14 +800,12 @@
                         Order current = enumerator.Current;
                         if (!current.IsActive)
                         {
-                            goto Label_00A2;
+                            ///goto  Label_00A2;  ///WYJ fix, simplify the flow
+                            flag2 = true;
+                            break;
                         }
                     }
-                    goto Label_00B4;
-                Label_00A2:
-                    flag2 = true;
                 }
-            Label_00B4:
                 this.btnRemove.Enabled = flag2;
                 bool flag3 = false;
                 using (List<Order>.Enumerator enumerator2 = this.list_1.GetEnumerator())
@@ -817,14 +815,12 @@
                         Order order2 = enumerator2.Current;
                         if (order2.IsActiveAtBackEnd && this.method_6(order2))
                         {
-                            goto Label_00FA;
+                            ///goto  Label_00FA;  ///WYJ fix, simplify the flow
+                            flag3 = true;
+                            break;
                         }
                     }
-                    goto Label_010D;
-                Label_00FA:
-                    flag3 = true;
                 }
-            Label_010D:
                 this.btnCancelSelected.Enabled = flag3;
                 bool flag4 = ((MainModule.Instance.BrokerProvider != null) && (this.SelectedOrder != null)) && MainModule.Instance.BrokerProvider.AllowCancelReplace(this.SelectedOrder, null);
                 this.btnCancelReplace.Enabled = ((flag && (count == 1)) && this.SelectedOrder.IsActiveAtBackEnd) && flag4;
@@ -836,14 +832,12 @@
                         Order order3 = enumerator3.Current;
                         if ((order3.Status == OrderStatus.Staged) && this.method_6(order3))
                         {
-                            goto Label_01A7;
+                            ///goto  Label_01A7;  ///WYJ fix, simplify the flow
+                            flag5 = true;
+                            break;
                         }
                     }
-                    goto Label_01BA;
-                Label_01A7:
-                    flag5 = true;
                 }
-            Label_01BA:
                 this.btnPlace.Enabled = flag5;
                 this.lvMessages.Items.Clear();
                 if (count == 1)

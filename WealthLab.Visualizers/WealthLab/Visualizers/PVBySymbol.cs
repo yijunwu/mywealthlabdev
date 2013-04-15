@@ -76,12 +76,12 @@
                             current = enumerator3.Current;
                             if (!bars.Cache.ContainsKey(current) && (bars.Count > 0))
                             {
-                                goto Label_0133;
+                                ///goto  Label_0133;  ///WYJ fix, simplify the flow
+                                list.Remove(current);
+                                break;
                             }
                         }
                         continue;
-                    Label_0133:
-                        list.Remove(current);
                     }
                 }
                 foreach (string str2 in list)

@@ -174,14 +174,12 @@
                     current = enumerator.Current;
                     if (current.GUID == guid_0)
                     {
-                        goto Label_0030;
+                        ///goto  Label_0030;  ///WYJ fix, simplify the flow
+                        return current;
                     }
                 }
                 return null;
-            Label_0030:
-                type2 = current;
             }
-            return type2;
         }
 
         private void method_3()

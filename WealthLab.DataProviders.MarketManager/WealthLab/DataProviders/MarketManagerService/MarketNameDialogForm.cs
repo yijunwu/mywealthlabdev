@@ -84,15 +84,12 @@
                     MarketInfo current = enumerator.Current;
                     if (current.Name == this.MarketName)
                     {
-                        goto Label_0087;
+                        ///goto  Label_0087;
+                        base.errProvider.SetError(this.txtMarketName, "This Market name already exists.");
+                        return;
                     }
                 }
-                goto Label_00AD;
-            Label_0087:
-                base.errProvider.SetError(this.txtMarketName, "This Market name already exists.");
-                return;
             }
-        Label_00AD:
             base.DialogResult = DialogResult.OK;
         }
 

@@ -83,14 +83,13 @@
                     current = enumerator.Current;
                     if (current.Name == typeName)
                     {
-                        goto Label_0030;
+                        ///goto  Label_0030;  ///WYJ fix, simplify the flow
+                        obj2 = Activator.CreateInstance(current);
+                        return obj2;
                     }
                 }
                 return null;
-            Label_0030:
-                obj2 = Activator.CreateInstance(current);
             }
-            return obj2;
         }
 
         public object CreateInstance(Type type_0)

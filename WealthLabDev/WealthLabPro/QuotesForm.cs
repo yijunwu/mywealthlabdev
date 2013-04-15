@@ -1237,21 +1237,18 @@
                     current = enumerator.Current;
                     if (current.Symbol.ToUpper() == string_1.ToUpper())
                     {
-                        goto Label_005F;
+                        ///goto  Label_005F;  ///WYJ fix, simplify the flow
+                        pricing = current.Decimals;
+                        break;
                     }
                     if (Regex.IsMatch(string_1, "^" + current.Symbol + "$"))
                     {
-                        goto Label_0068;
+                        ///goto  Label_0068;
+                        pricing = current.Decimals;
+                        break;
                     }
                 }
-                goto Label_007B;
-            Label_005F:
-                pricing = current.Decimals;
-                goto Label_007B;
-            Label_0068:
-                pricing = current.Decimals;
             }
-        Label_007B:
             return ("N" + pricing.ToString());
         }
 

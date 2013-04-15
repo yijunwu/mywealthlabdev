@@ -32,16 +32,14 @@
                             PlottedIndicator current = enumerator2.Current;
                             if ((current.Series != this.Series) && (current.Series.Description == series.Description))
                             {
-                                goto Label_0080;
+                                ///goto  Label_0080; ///WYJ fix, simplify the flow
+                                series.Description = description + "_" + num;
+                                num++;
+                                flag = false;
+                                break;
                             }
                         }
-                        goto Label_00AB;
-                    Label_0080:
-                        series.Description = description + "_" + num;
-                        num++;
-                        flag = false;
                     }
-                Label_00AB:
                     if (!flag)
                     {
                         break;

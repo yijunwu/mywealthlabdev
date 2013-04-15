@@ -610,14 +610,14 @@
                         current = enumerator.Current;
                         if (current.FriendlyName == ((string) this.cmbScorecard.SelectedItem))
                         {
-                            goto Label_004D;
+                            ///goto  Label_004D;  ///WYJ fix, simplify the flow
+                            this.strategyScorecard_0 = current;
+                            this.method_15(current);
+                            this.method_16();
+                            return;
                         }
                     }
                     return;
-                Label_004D:
-                    this.strategyScorecard_0 = current;
-                    this.method_15(current);
-                    this.method_16();
                 }
             }
         }
@@ -1098,7 +1098,8 @@
                 {
                     Bars item = barsLoader_0.GetData(this.dataSource_0, this.string_1);
                     this.list_1.Add(item);
-                    goto Label_00C0;
+                    ///goto  Label_00C0;  ///WYJ fix, simplify the flow
+                    return true;
                 }
                 catch
                 {
@@ -1107,7 +1108,6 @@
                 }
                 return flag;
             }
-        Label_00C0:
             return true;
         }
 
