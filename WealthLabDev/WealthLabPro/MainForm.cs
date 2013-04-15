@@ -624,51 +624,51 @@
                                                 {
                                                     keyword = "strategywindow.htm";
                                                 }
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 1:
                                                 keyword = "editor.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 2:
                                                 keyword = "strategysummary.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 3:
                                                 keyword = "rules_view.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 4:
                                                 keyword = "performance.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 5:
                                                 keyword = "bysymbol.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 6:
                                                 keyword = "trades.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 7:
                                                 keyword = "equitycurve.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 8:
                                                 keyword = "drawdown.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 9:
                                                 keyword = "profitdistribution.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 10:
                                                 keyword = "byperiod.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
 
                                             case 11:
                                                 keyword = "maemfe.htm";
-                                                goto Label_0309;
+                                                goto  Label_ShowHelp;
                                         }
                                     }
                                 }
@@ -677,45 +677,45 @@
                                     keyword = "alertview.htm";
                                 }
                                 keyword = "strategywindow.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
                             }
                             case 1:
                                 keyword = "home_page.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
 
                             case 2:
                                 keyword = "datamanager.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
 
                             case 3:
                                 keyword = "strategymonitor.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
 
                             case 4:
                                 keyword = "quotes.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
 
                             case 5:
                                 keyword = "accountbalancespos.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
 
                             case 6:
                                 keyword = "orders.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
 
                             case 7:
                                 keyword = "symbol_info_manager.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
 
                             case 8:
                                 keyword = "INDEXLAB.htm";
-                                goto Label_0309;
+                                goto  Label_ShowHelp;
                         }
                     }
                 }
                 keyword = "introduction.htm";
             }
-        Label_0309:
+        Label_ShowHelp:
             MainModule.Instance.ContextSensitiveHelp(keyword);
         }
 
@@ -4446,9 +4446,11 @@
                             case 3:
                                 if (StrategyCenterForm.Instance == null)
                                 {
-                                    goto Label_0390;
+                                    //goto  Label_0390; ///WYJ fix, simplify the flow
+                                    form = new StrategyCenterForm();
                                 }
-                                MessageBox.Show("There is a Strategy Monitor already open, cannot open one in this Workspace window");
+                                else
+                                    MessageBox.Show("There is a Strategy Monitor already open, cannot open one in this Workspace window");
                                 break;
 
                             case 4:
@@ -4477,10 +4479,6 @@
                         }
                     }
                 }
-                goto Label_03CD;
-            Label_0390:
-                form = new StrategyCenterForm();
-            Label_03CD:
                 if (form != null)
                 {
                     workspace = form as IWorkspace;
@@ -6263,18 +6261,18 @@
                             INotifier authProvider = MainModule.Instance.AuthProvider as INotifier;
                             authProvider.TNP = _tamperCode;
                         }
-                        goto Label_01A2;
+                        goto  Label_01A2;
 
                     case 2:
                         this.method_44(random.Next(100, 0x3e8));
-                        goto Label_01A2;
+                        goto  Label_01A2;
 
                     case 3:
                         if (--int_6 < 0)
                         {
                             Application.Exit();
                         }
-                        goto Label_01A2;
+                        goto  Label_01A2;
                 }
                 this.Disconnect();
                 MainModule.Instance.AutoTradingEnabled = AutoTradingMode.Off;

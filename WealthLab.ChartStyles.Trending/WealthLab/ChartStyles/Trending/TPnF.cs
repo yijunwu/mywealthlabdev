@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using WealthLab;
+    //using WealthLab;
 
     public class TPnF
     {
@@ -123,19 +123,24 @@
                                         {
                                             sbsNone = StepBackState.sbsProbationary;
                                         }
-                                        goto Label_03E9;
+                                        ///goto  Label_03E9;  ///WYJ fix, simplify the flow
+                                        break;
 
                                     case StepBackState.sbsProbationary:
                                         sbsNone = StepBackState.sbsConfirmed;
-                                        goto Label_03E9;
-                                }
-                                if (flag6)
-                                {
-                                    sbsNone = StepBackState.sbsProbationary;
-                                }
-                                else
-                                {
-                                    sbsNone = StepBackState.sbsNone;
+                                        ///goto  Label_03E9;
+                                        break;
+
+                                    default:
+                                        if (flag6)
+                                        {
+                                            sbsNone = StepBackState.sbsProbationary;
+                                        }
+                                        else
+                                        {
+                                            sbsNone = StepBackState.sbsNone;
+                                        }
+                                        break;
                                 }
                             }
                         }
@@ -160,23 +165,29 @@
                                     {
                                         sbsNone = StepBackState.sbsProbationary;
                                     }
-                                    goto Label_03E9;
+                                    ///goto  Label_03E9;  ///WYJ fix, simplify the flow
+                                    break;
 
                                 case StepBackState.sbsProbationary:
                                     sbsNone = StepBackState.sbsConfirmed;
-                                    goto Label_03E9;
+                                    ///goto  Label_03E9;
+                                    break;
+                                
+                                default:
+                                    if (flag7)
+                                    {
+                                        sbsNone = StepBackState.sbsProbationary;
+                                    }
+                                    else
+                                    {
+                                        sbsNone = StepBackState.sbsNone;
+                                    }
+                                    break;
                             }
-                            if (flag7)
-                            {
-                                sbsNone = StepBackState.sbsProbationary;
-                            }
-                            else
-                            {
-                                sbsNone = StepBackState.sbsNone;
-                            }
+                            
                         }
                     }
-                Label_03E9:
+                //Label_03E9:
                     if (!flag && (i == (num10 + 1)))
                     {
                         nf = this.method_2(nf, i, flag, sbsNone == StepBackState.sbsProbationary);
@@ -404,6 +415,7 @@
             }
         }
 
+        ///WYJ note, code from Reflector, too many goto statements. But the version from ILSpy has some problems too. Will keep Reflector one.
         internal void method_1()
         {
             for (int i = 0; i < this.bars_0.Count; i++)

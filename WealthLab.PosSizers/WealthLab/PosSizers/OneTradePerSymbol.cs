@@ -32,7 +32,6 @@
 
         public override double SizePosition(Position currentPos, Bars bars, int int_0, double basisPrice, PositionType positionType_0, double riskStopLevel, double equity, double cash)
         {
-            double num;
             using (List<Position>.Enumerator enumerator = base.ActivePositions.GetEnumerator())
             {
                 while (enumerator.MoveNext())
@@ -40,14 +39,12 @@
                     Position current = enumerator.Current;
                     if (current.Symbol == bars.Symbol)
                     {
-                        goto Label_0035;
+                        ///goto  Label_0035; ///WYJ fix, simplify the flow
+                        return 0.0;
                     }
                 }
                 return base.CalcBasicPositionSize(bars, int_0, positionType_0, basisPrice, riskStopLevel, equity);
-            Label_0035:
-                num = 0.0;
             }
-            return num;
         }
 
         public void WriteSettings(ISettingsHost host)

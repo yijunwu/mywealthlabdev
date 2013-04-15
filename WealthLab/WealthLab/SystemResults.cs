@@ -354,6 +354,8 @@
             }
         }
 
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having too many goto statements. Try version from ILSpy
+        /*
         private void method_3(Position position_0, int int_2, ref double double_7)
         {
             if (position_0.Bars.DivTag != null)
@@ -447,7 +449,92 @@
                     }
                 }
             }
+        } */
+
+        ///WYJ fix, code from ILSpy
+        private void method_3(Position position_0, int int_2, ref double double_7)
+        {
+            if (position_0.Bars.DivTag != null)
+            {
+                IList<FundamentalItem> list = (IList<FundamentalItem>)position_0.Bars.DivTag;
+                DateTime date = position_0.Bars.Date[int_2].Date;
+                DateTime t;
+                if (int_2 >= 1)
+                {
+                    t = position_0.Bars.Date[int_2 - 1].Date;
+                }
+                else
+                {
+                    t = position_0.Bars.Date[int_2].Date.AddYears(-1);
+                }
+                foreach (FundamentalItem current in list)
+                {
+                    DateTime date2 = current.Date;
+                    if (position_0.Bars.IsIntraday)
+                    {
+                        if (!(date2 == date) || position_0.Bars.IntradayBarNumber(int_2) != 0 || !(position_0.EntryDate.Date != date2.Date))
+                        {
+                            continue;
+                        }
+                        double num = current.Value * position_0.Shares;
+                        if (position_0.PositionType == PositionType.Short)
+                        {
+                            num = -num;
+                        }
+                        this.double_1 += num;
+                        double_7 += num;
+                        this.DividendsPaid += num;
+                        if (list.Count == 0)
+                        {
+                            position_0.Bars.DivTag = null;
+                        }
+                    }
+                    else
+                    {
+                        if (position_0.Bars.Scale == BarScale.Daily)
+                        {
+                            if (!(date2 == date) || !(position_0.EntryDate < date2))
+                            {
+                                continue;
+                            }
+                            double num2 = current.Value * position_0.Shares;
+                            if (position_0.PositionType == PositionType.Short)
+                            {
+                                num2 = -num2;
+                            }
+                            this.double_1 += num2;
+                            double_7 += num2;
+                            this.DividendsPaid += num2;
+                            if (list.Count == 0)
+                            {
+                                position_0.Bars.DivTag = null;
+                            }
+                        }
+                        else
+                        {
+                            if (!(date2 <= date) || !(date2 > t) || !(position_0.EntryDate < date2) || (!position_0.Active && !(position_0.ExitDate >= date2)))
+                            {
+                                continue;
+                            }
+                            double num3 = current.Value * position_0.Shares;
+                            if (position_0.PositionType == PositionType.Short)
+                            {
+                                num3 = -num3;
+                            }
+                            this.double_1 += num3;
+                            double_7 += num3;
+                            this.DividendsPaid += num3;
+                            if (list.Count == 0)
+                            {
+                                position_0.Bars.DivTag = null;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
         }
+
 
         internal void method_4(Position position_0)
         {

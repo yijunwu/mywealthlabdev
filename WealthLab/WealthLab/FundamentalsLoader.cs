@@ -52,6 +52,8 @@
             base.Dispose(disposing);
         }
 
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having to many goto statements, try using version from ILSpy
+        /*
         public List<FundamentalItem> FundamentalItemsOffset(List<FundamentalItem> item1, int offset)
         {
             if ((offset < 1) || (offset > item1.Count))
@@ -191,7 +193,134 @@
                 list.Add(item2);
             }
             return list;
+        } */
+
+        // WealthLab.FundamentalsLoader
+        public List<FundamentalItem> FundamentalItemsOffset(List<FundamentalItem> item1, int offset)
+        {
+            if (offset >= 1 && offset <= item1.Count)
+            {
+                List<FundamentalItem> list = new List<FundamentalItem>();
+                string name = item1[0].Name;
+                string detail = item1[0].GetDetail("period");
+                if (detail == "quarterly" && item1[0].GetDetail("current quarter") != "" && item1[0].GetDetail("fiscal year") != "")
+                {
+                    for (int i = item1.Count - 1; i >= 0; i--)
+                    {
+                        int num = int.Parse(item1[i].GetDetail("current quarter"));
+                        int num2 = int.Parse(item1[i].GetDetail("fiscal year"));
+                        int num3 = num - offset % 4;
+                        int num4 = num2 - offset / 4;
+                        if (num3 <= 0)
+                        {
+                            num3 += 4;
+                            num4--;
+                        }
+                        double value = 0.0;
+                        int num5 = i - offset;
+                        while (num5 < i && num5 >= 0)
+                        {
+                            num = int.Parse(item1[num5].GetDetail("current quarter"));
+                            num2 = int.Parse(item1[num5].GetDetail("fiscal year"));
+                            if (num4 == num2)
+                            {
+                                if (num3 == num)
+                                {
+                                    value = item1[num5].Value;
+                                    break;
+                                }
+                                if (num3 < num)
+                                {
+                                    break;
+                                }
+                            }
+                            num5++;
+                        }
+                        FundamentalItem fundamentalItem = new FundamentalItem(name);
+                        this.method_11(item1[i], fundamentalItem);
+                        fundamentalItem.Value = value;
+                        list.Insert(0, fundamentalItem);
+                    }
+                }
+                else
+                {
+                    if (detail != "" && detail != "quarterly")
+                    {
+                        for (int j = item1.Count - 1; j >= 0; j--)
+                        {
+                            DateTime dateTime = this.method_10(item1[j], offset);
+                            double value2 = 0.0;
+                            int num6 = j - offset;
+                            while (num6 < j && num6 >= 0)
+                            {
+                                DateTime dateTime2 = this.method_6(item1[num6], false);
+                                if (dateTime2 == dateTime)
+                                {
+                                    value2 = item1[num6].Value;
+                                    break;
+                                }
+                                if (detail != "weekly")
+                                {
+                                    if (dateTime2.Year == dateTime.Year)
+                                    {
+                                        if (!(detail == "annual"))
+                                        {
+                                            if (dateTime2.Month != dateTime.Month)
+                                            {
+                                                if (dateTime2.Month > dateTime.Month)
+                                                {
+                                                    break;
+                                                }
+                                                goto IL_27B;
+                                            }
+                                        }
+                                        value2 = item1[num6].Value;
+                                        break;
+                                    }
+                                    if (dateTime2.Year > dateTime.Year)
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    if (dateTime2 > dateTime)
+                                    {
+                                        break;
+                                    }
+                                }
+                            IL_27B:
+                                num6++;
+                            }
+                            FundamentalItem fundamentalItem2 = new FundamentalItem(name);
+                            this.method_11(item1[j], fundamentalItem2);
+                            fundamentalItem2.Value = value2;
+                            list.Insert(0, fundamentalItem2);
+                        }
+                    }
+                    else
+                    {
+                        for (int k = 0; k < item1.Count; k++)
+                        {
+                            FundamentalItem fundamentalItem3 = new FundamentalItem(name);
+                            this.method_11(item1[k], fundamentalItem3);
+                            if (k < offset)
+                            {
+                                fundamentalItem3.Value = 0.0;
+                            }
+                            else
+                            {
+                                fundamentalItem3.Value = item1[k - offset].Value;
+                            }
+                            list.Add(fundamentalItem3);
+                        }
+                    }
+                }
+                return list;
+            }
+            return item1;
         }
+
 
         private void method_0()
         {
@@ -510,6 +639,8 @@
             return num;
         }
 
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having too many goto statements. Try using version from ILSpy
+        /*
         public DataSeries RequestDataSeries(Bars bars, string itemName, int offset, int aggregate, bool average)
         {
             this.method_0();
@@ -743,8 +874,226 @@
             builder.Append(str);
             builder.Append(str3);
             return this.method_3(bars, list2, itemName + builder.ToString());
+        } */
+
+        ///WYJ fix, code from ILSpy
+        public DataSeries RequestDataSeries(Bars bars, string itemName, int offset, int aggregate, bool average)
+        {
+            this.method_0();
+            IList<FundamentalItem> list = this.RequestNonSymbolItems(bars, itemName);
+            if (list != null && aggregate + offset <= list.Count)
+            {
+                string value = "";
+                List<FundamentalItem> list2 = new List<FundamentalItem>();
+                if (aggregate < 2)
+                {
+                    using (IEnumerator<FundamentalItem> enumerator = list.GetEnumerator())
+                    {
+                        while (enumerator.MoveNext())
+                        {
+                            FundamentalItem current = enumerator.Current;
+                            list2.Add(current);
+                        }
+                        goto IL_4C4;
+                    }
+                }
+                string detail = list[0].GetDetail("period");
+                if (detail == "quarterly" && list[0].GetDetail("current quarter") != "" && list[0].GetDetail("fiscal year") != "")
+                {
+                    for (int i = list.Count - 1; i >= 0; i--)
+                    {
+                        int num = int.Parse(list[i].GetDetail("current quarter"));
+                        int num2 = int.Parse(list[i].GetDetail("fiscal year"));
+                        int num3 = num - aggregate % 4;
+                        int num4 = num2 - aggregate / 4;
+                        if (num3 <= 0)
+                        {
+                            num3 += 4;
+                            num4--;
+                        }
+                        int num5 = i - aggregate;
+                        if (num5 == -1)
+                        {
+                            num5 = 0;
+                        }
+                        while (num5 < i && num5 >= 0)
+                        {
+                            num = int.Parse(list[num5].GetDetail("current quarter"));
+                            num2 = int.Parse(list[num5].GetDetail("fiscal year"));
+                            if (num4 == num2)
+                            {
+                                if (num3 == num)
+                                {
+                                    num5++;
+                                    break;
+                                }
+                                if (num3 < num)
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                if (num4 < num2)
+                                {
+                                    break;
+                                }
+                            }
+                            num5++;
+                        }
+                        double num6 = 0.0;
+                        int num7 = 0;
+                        while (num5 <= i && num5 >= 0)
+                        {
+                            num6 += list[num5++].Value;
+                            num7++;
+                        }
+                        FundamentalItem fundamentalItem = new FundamentalItem(itemName);
+                        this.method_11(list[i], fundamentalItem);
+                        if (average && num7 > 0)
+                        {
+                            fundamentalItem.Value = num6 / (double)num7;
+                        }
+                        else
+                        {
+                            fundamentalItem.Value = num6;
+                        }
+                        list2.Insert(0, fundamentalItem);
+                    }
+                }
+                else
+                {
+                    if (detail != "" && detail != "quarterly")
+                    {
+                        for (int j = list.Count - 1; j >= 0; j--)
+                        {
+                            DateTime dateTime = this.method_6(list[j], false);
+                            DateTime dateTime2 = this.method_10(list[j], aggregate);
+                            int num8 = j - aggregate;
+                            if (num8 == -1)
+                            {
+                                num8 = 0;
+                            }
+                            while (num8 < j && num8 >= 0)
+                            {
+                                dateTime = this.method_6(list[num8], false);
+                                if (dateTime == dateTime2)
+                                {
+                                    num8++;
+                                    break;
+                                }
+                                if (detail != "weekly")
+                                {
+                                    if (dateTime2.Year == dateTime.Year)
+                                    {
+                                        if (!(detail == "annual"))
+                                        {
+                                            if (dateTime2.Month != dateTime.Month)
+                                            {
+                                                if (dateTime.Month > dateTime2.Month)
+                                                {
+                                                    break;
+                                                }
+                                                goto IL_32C;
+                                            }
+                                        }
+                                        num8++;
+                                        break;
+                                    }
+                                    if (dateTime.Year > dateTime2.Year)
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    if (dateTime > dateTime2)
+                                    {
+                                        break;
+                                    }
+                                }
+                            IL_32C:
+                                num8++;
+                            }
+                            double num9 = 0.0;
+                            int num10 = 0;
+                            while (num8 <= j && num8 >= 0)
+                            {
+                                num9 += list[num8++].Value;
+                                num10++;
+                            }
+                            FundamentalItem fundamentalItem2 = new FundamentalItem(itemName);
+                            this.method_11(list[j], fundamentalItem2);
+                            if (average && num10 > 0)
+                            {
+                                fundamentalItem2.Value = num9 / (double)num10;
+                            }
+                            else
+                            {
+                                fundamentalItem2.Value = num9;
+                            }
+                            list2.Insert(0, fundamentalItem2);
+                        }
+                    }
+                    else
+                    {
+                        for (int k = 0; k < list.Count; k++)
+                        {
+                            FundamentalItem fundamentalItem3 = new FundamentalItem(itemName);
+                            this.method_11(list[k], fundamentalItem3);
+                            if (k < aggregate - 1)
+                            {
+                                fundamentalItem3.Value = 0.0;
+                            }
+                            else
+                            {
+                                int l = k - aggregate + 1;
+                                double num11 = 0.0;
+                                int num12 = 0;
+                                while (l <= k)
+                                {
+                                    num11 += list[l++].Value;
+                                    num12++;
+                                }
+                                if (average && num12 > 0)
+                                {
+                                    fundamentalItem3.Value = num11 / (double)num12;
+                                }
+                                else
+                                {
+                                    fundamentalItem3.Value = num11;
+                                }
+                            }
+                            list2.Add(fundamentalItem3);
+                        }
+                    }
+                }
+                if (average)
+                {
+                    value = ":Avg(" + aggregate.ToString() + ")";
+                }
+                else
+                {
+                    value = ":Sum(" + aggregate.ToString() + ")";
+                }
+            IL_4C4:
+                string value2 = "";
+                if (offset > 0)
+                {
+                    List<FundamentalItem> list3 = this.FundamentalItemsOffset(list2, offset);
+                    list2 = list3;
+                    value2 = ":Offset(" + offset.ToString() + ")";
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append(value);
+                stringBuilder.Append(value2);
+                return this.method_3(bars, list2, itemName + stringBuilder.ToString());
+            }
+            return this.method_3(bars, list, itemName);
         }
 
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having too many goto statements. Try version from ILSpy
+        /*
         public DataSeries RequestDataSeriesAnnual(Bars bars, string itemName, int offset)
         {
             this.method_0();
@@ -816,7 +1165,65 @@
             }
             builder.Append(")");
             return this.method_3(bars, list2, itemName + builder.ToString());
+        } */
+
+        ///WYJ fix, code from ILSpy
+        public DataSeries RequestDataSeriesAnnual(Bars bars, string itemName, int offset)
+        {
+            this.method_0();
+            IList<FundamentalItem> list = this.RequestNonSymbolItems(bars, itemName);
+            if (list != null && offset <= list.Count)
+            {
+                List<FundamentalItem> list2 = new List<FundamentalItem>();
+                double num = 0.0;
+                int num2 = 0;
+                for (int i = list.Count - 1; i >= 0; i--)
+                {
+                    int num3 = this.method_5(list[i]);
+                    if (num3 == 0)
+                    {
+                        num = 0.0;
+                    }
+                    else
+                    {
+                        if (num3 != num2 && !this.method_4(bars, list, i))
+                        {
+                            num2 = num3;
+                            num = 0.0;
+                            int num4 = num2 - (offset + 1);
+                            int num5 = i;
+                            while (num5 - 1 >= 0 && num3 > num4)
+                            {
+                                num3 = this.method_5(list[--num5]);
+                            }
+                            while (num3 == num4 && num5 >= 0)
+                            {
+                                num += list[num5].Value;
+                                if (--num5 >= 0)
+                                {
+                                    num3 = this.method_5(list[num5]);
+                                }
+                            }
+                        }
+                    }
+                    FundamentalItem fundamentalItem = new FundamentalItem(itemName);
+                    this.method_11(list[i], fundamentalItem);
+                    fundamentalItem.Value = num;
+                    list2.Insert(0, fundamentalItem);
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append("(Annual");
+                if (offset > 0)
+                {
+                    stringBuilder.Append("-");
+                    stringBuilder.Append(offset.ToString());
+                }
+                stringBuilder.Append(")");
+                return this.method_3(bars, list2, itemName + stringBuilder.ToString());
+            }
+            return this.method_3(bars, list, itemName);
         }
+
 
         public DataSeries RequestNonSymbolDataSeries(Bars bars, string itemName)
         {
@@ -919,14 +1326,13 @@
                         FundamentalDataProvider current = enumerator.Current;
                         if (current.HasDragDropItems)
                         {
-                            goto Label_002A;
+                            //goto  Label_002A;  ///WYJ fix, simplify the flow
+                            flag = true;
+                            return flag;
                         }
                     }
                     return false;
-                Label_002A:
-                    flag = true;
                 }
-                return flag;
             }
         }
 

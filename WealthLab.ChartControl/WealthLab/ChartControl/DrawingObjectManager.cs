@@ -293,41 +293,36 @@
                     current = enumerator.Current;
                     if ((chartPane_0 == current.Pane) && current.IsMouseOver(int_0, int_1))
                     {
-                        goto Label_003F;
-                    }
-                }
-                goto Label_00E7;
-            Label_003F:
-                using (List<ChartDrawingObjectHandle>.Enumerator enumerator2 = current.Handles.GetEnumerator())
-                {
-                    ChartDrawingObjectHandle handle;
-                    while (enumerator2.MoveNext())
-                    {
-                        handle = enumerator2.Current;
-                        if ((Math.Abs((int) (int_0 - handle.X)) <= 4) && (Math.Abs((int) (int_1 - handle.Y)) <= 4))
+                        ///goto  Label_003F; ///WYJ fix, simplify the flow
+                        using (List<ChartDrawingObjectHandle>.Enumerator enumerator2 = current.Handles.GetEnumerator())
                         {
-                            goto Label_0084;
+                            ChartDrawingObjectHandle handle;
+                            while (enumerator2.MoveNext())
+                            {
+                                handle = enumerator2.Current;
+                                if ((Math.Abs((int)(int_0 - handle.X)) <= 4) && (Math.Abs((int)(int_1 - handle.Y)) <= 4))
+                                {
+                                    ///goto  Label_0084;  ///WYJ fix, simplify the flow
+                                    this.SelectedHandle = handle;
+                                    break;
+                                }
+                            }
                         }
+                        if (current != this.chartDrawingObject_0)
+                        {
+                            if (this.chartDrawingObject_0 != null)
+                            {
+                                this.chartDrawingObject_0.Selected = false;
+                            }
+                            current.Selected = true;
+                            current.OnSelected(int_0, int_1);
+                            this.chartDrawingObject_0 = current;
+                            return true;
+                        }
+                        return false;
                     }
-                    goto Label_009C;
-                Label_0084:
-                    this.SelectedHandle = handle;
                 }
-            Label_009C:
-                if (current != this.chartDrawingObject_0)
-                {
-                    if (this.chartDrawingObject_0 != null)
-                    {
-                        this.chartDrawingObject_0.Selected = false;
-                    }
-                    current.Selected = true;
-                    current.OnSelected(int_0, int_1);
-                    this.chartDrawingObject_0 = current;
-                    return true;
-                }
-                return false;
             }
-        Label_00E7:
             if (this.chartDrawingObject_0 != null)
             {
                 this.chartDrawingObject_0.Selected = false;
@@ -373,7 +368,6 @@
 
         private DrawingObjectHelper method_7(System.Type type_0)
         {
-            DrawingObjectHelper helper2;
             using (List<DrawingObjectHelper>.Enumerator enumerator = this.list_1.GetEnumerator())
             {
                 DrawingObjectHelper current;
@@ -382,14 +376,12 @@
                     current = enumerator.Current;
                     if (current.DrawingObjectType == type_0)
                     {
-                        goto Label_0030;
+                        ///goto  Label_0030;  ///WYJ fix, simplify the flow
+                        return current;
                     }
                 }
                 return null;
-            Label_0030:
-                helper2 = current;
             }
-            return helper2;
         }
 
         public void RemoveDrawingObject(ChartDrawingObject chartDrawingObject_1)
@@ -560,7 +552,6 @@
         {
             get
             {
-                bool flag;
                 using (List<ChartDrawingObject>.Enumerator enumerator = this.DrawingObjects.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
@@ -568,14 +559,12 @@
                         ChartDrawingObject current = enumerator.Current;
                         if (current.CanTriggerAlerts)
                         {
-                            goto Label_002A;
+                            ///goto  Label_002A;  ///WYJ fix, simplify the flow
+                            return true;
                         }
                     }
                     return false;
-                Label_002A:
-                    flag = true;
                 }
-                return flag;
             }
         }
 

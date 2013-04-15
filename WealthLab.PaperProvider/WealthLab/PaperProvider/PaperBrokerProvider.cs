@@ -454,26 +454,28 @@
 
         private void ProcessingThreadExecute()
         {
-        Label_0000:
-            Thread.Sleep(500);
-            this.ActivateUnknownOrders();
-            if (this._orders.Count > 0)
+        ///Label_0000: ///WYJ fix, simplify the flow
+            while (true)
             {
-                this.ActivateOrders();
-                this.CancelOldOrders();
-                if (!this.IsMarketOpenNow)
+                Thread.Sleep(500);
+                this.ActivateUnknownOrders();
+                if (this._orders.Count > 0)
                 {
-                    goto Label_0000;
+                    this.ActivateOrders();
+                    this.CancelOldOrders();
+                    if (!this.IsMarketOpenNow)
+                    {
+                        continue;
+                    }
+                    this.FillMarketOrders();
+                    TimeSpan span = (TimeSpan)(DateTime.Now - this._lastProcessed);
+                    if (span.TotalSeconds > this.PollingInterval)
+                    {
+                        this.ProcessStopLimitOrders();
+                    }
                 }
-                this.FillMarketOrders();
-                TimeSpan span = (TimeSpan) (DateTime.Now - this._lastProcessed);
-                if (span.TotalSeconds > this.PollingInterval)
-                {
-                    this.ProcessStopLimitOrders();
-                }
+                this._firstPass = false;
             }
-            this._firstPass = false;
-            goto Label_0000;
         }
 
         private void ProcessStopLimitOrders()

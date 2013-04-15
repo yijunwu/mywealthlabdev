@@ -80,25 +80,20 @@
                     {
                         if ((values[i] != current.ParameterValues[i]) || (current.Symbol != symbol))
                         {
-                            goto Label_0076;
+                            //goto  Label_0076;   ///WYJ fix, simplify the flow
+                            flag = false;
+                            break;
                         }
                     }
-                    goto Label_0078;
-                Label_0076:
-                    flag = false;
-                Label_0078:
                     if (flag)
                     {
-                        goto Label_0086;
+                        ///goto  Label_0086;
+                        num = this.Names.IndexOf(metric);
+                        return current.Results[num];
                     }
                 }
-                goto Label_00B0;
-            Label_0086:
-                num = this.Names.IndexOf(metric);
-                return current.Results[num];
+                return double.NaN;
             }
-        Label_00B0:
-            return double.NaN;
         }
 
         public double FindMetric(string symbol, string metric, WealthScript wealthScript_0, StrategyParameter strategyParameter_0, double paramValue)
@@ -124,22 +119,19 @@
                     {
                         if ((i != index) && (current.ParameterValues[i] != wealthScript_0.Parameters[i].Value))
                         {
-                            goto Label_00AD;
+                            ///goto  Label_00AD; ///WYJ fix, simplify the flow
+                            flag = false;
+                            break;
                         }
                     }
-                    goto Label_00AF;
-                Label_00AD:
-                    flag = false;
-                Label_00AF:
                     if (flag)
                     {
-                        goto Label_00BD;
+                        ///goto  Label_00BD;
+                        num2 = this.Names.IndexOf(metric);
+                        return current.Results[num2];
                     }
                 }
                 return double.NaN;
-            Label_00BD:
-                num2 = this.Names.IndexOf(metric);
-                return current.Results[num2];
             }
         }
 
@@ -161,23 +153,20 @@
                     {
                         if (values[i] != current.ParameterValues[i])
                         {
-                            goto Label_0051;
+                            ///goto  Label_0051;  ///WYJ fix, simplify the flow
+                            flag = false;
+                            break;
                         }
                     }
-                    goto Label_0053;
-                Label_0051:
-                    flag = false;
-                Label_0053:
                     if (flag)
                     {
-                        goto Label_0061;
+                        ///goto  Label_0061;
+                        result2 = current;
+                        return result2;
                     }
                 }
                 return null;
-            Label_0061:
-                result2 = current;
             }
-            return result2;
         }
 
         public static OptimizationResultList LoadFromFile(string fileName)

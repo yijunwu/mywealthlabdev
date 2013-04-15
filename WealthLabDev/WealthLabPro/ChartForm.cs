@@ -1655,18 +1655,16 @@
                             current = enumerator.Current;
                             if (current.TabText == str3)
                             {
-                                goto Label_024A;
+                                ///goto  Label_024A;   ///WYJ fix, simplify the flow
+                                this.method_31(current);
+                                if (current is ISettingsProvider)
+                                {
+                                    this.dictionary_1[str3] = str2;
+                                }
+                                break;
                             }
                         }
-                        goto Label_0278;
-                    Label_024A:
-                        this.method_31(current);
-                        if (current is ISettingsProvider)
-                        {
-                            this.dictionary_1[str3] = str2;
-                        }
                     }
-                Label_0278:
                     num++;
                 }
             }
@@ -1828,43 +1826,39 @@
 
         private void method_13(TradingSystemExecutor tradingSystemExecutor_2, WealthLab.Bars bars_2, bool bool_18)
         {
-            if (this.combinationStrategyBuilder_0 == null)
+            if (this.combinationStrategyBuilder_0 != null)
             {
-                goto Label_0107;
-            }
-            if (this.MyMainForm.SelectingNodeForFormCreation)
-            {
-                this.MyMainForm.SelectingNodeForFormCreation = false;
-                throw new Exception("CS Error");
-            }
-            if (this.Strategy.CombinedStrategyChildren.Count == 0)
-            {
-                MessageBox.Show("Please add at least one Child Strategy to the Combined Strategy.");
-                throw new Exception("CS Error");
-            }
-            using (List<CombinedStrategyInfo>.Enumerator enumerator = this.Strategy.CombinedStrategyChildren.GetEnumerator())
-            {
-                while (enumerator.MoveNext())
+                if (this.MyMainForm.SelectingNodeForFormCreation)
                 {
-                    CombinedStrategyInfo current = enumerator.Current;
-                    if (MainModule.Instance.Strategies.LookupID(current.StrategyID.ToString()) == null)
+                    this.MyMainForm.SelectingNodeForFormCreation = false;
+                    throw new Exception("CS Error");
+                }
+                if (this.Strategy.CombinedStrategyChildren.Count == 0)
+                {
+                    MessageBox.Show("Please add at least one Child Strategy to the Combined Strategy.");
+                    throw new Exception("CS Error");
+                }
+                using (List<CombinedStrategyInfo>.Enumerator enumerator = this.Strategy.CombinedStrategyChildren.GetEnumerator())
+                {
+                    while (enumerator.MoveNext())
                     {
-                        goto Label_00AB;
+                        CombinedStrategyInfo current = enumerator.Current;
+                        if (MainModule.Instance.Strategies.LookupID(current.StrategyID.ToString()) == null)
+                        {
+                            ///goto  Label_00AB;  ///WYJ fix, simplify the flow
+                            MessageBox.Show("One or more the Child Strategies could not be located, and were possibly deleted.  Please remove the offending Child Strategy.");
+                            throw new Exception("CS Error");
+                        }
                     }
                 }
-                goto Label_00D1;
-            Label_00AB:
-                MessageBox.Show("One or more the Child Strategies could not be located, and were possibly deleted.  Please remove the offending Child Strategy.");
-                throw new Exception("CS Error");
+                if (this.combinationStrategyBuilder_0.CheckForCircularReference())
+                {
+                    MessageBox.Show("The Child Strategies assigned to this Combined Strategy would create a never-ending circular reference if executed, please remove one or more of the Child Strategies.");
+                    throw new Exception("CS Error");
+                }
+                base.Invoke(new Delegate43(this.method_14));
             }
-        Label_00D1:
-            if (this.combinationStrategyBuilder_0.CheckForCircularReference())
-            {
-                MessageBox.Show("The Child Strategies assigned to this Combined Strategy would create a never-ending circular reference if executed, please remove one or more of the Child Strategies.");
-                throw new Exception("CS Error");
-            }
-            base.Invoke(new Delegate43(this.method_14));
-        Label_0107:
+            
             this.CSDataSource = this.DataSource;
             this.CSSymbol = this.Symbol;
             this.chartRenderer_0.PaneSeparatorVisible = MainModule.Instance.Renderer.PaneSeparatorVisible;
@@ -2954,17 +2948,17 @@
                     current = enumerator.Current;
                     if (current.Name == e.TrendlineName)
                     {
-                        goto Label_005F;
+                        ///goto  Label_005F;  ///WYJ fix, simplify the flow
+                        if (current is CDOTrendline)
+                        {
+                            CDOTrendline trendline = current as CDOTrendline;
+                            trendline.Renderer = this.chartRenderer_0;
+                            e.Value = this.tradingSystemExecutor_1.WealthScriptExecuting.LineExtendY((double)trendline.LeftHandle.Bar, trendline.LeftHandle.Value, (double)trendline.RightHandle.Bar, trendline.RightHandle.Value, (double)e.Bar);
+                        }
+                        return;
                     }
                 }
                 return;
-            Label_005F:
-                if (current is CDOTrendline)
-                {
-                    CDOTrendline trendline = current as CDOTrendline;
-                    trendline.Renderer = this.chartRenderer_0;
-                    e.Value = this.tradingSystemExecutor_1.WealthScriptExecuting.LineExtendY((double) trendline.LeftHandle.Bar, trendline.LeftHandle.Value, (double) trendline.RightHandle.Bar, trendline.RightHandle.Value, (double) e.Bar);
-                }
             }
         }
 
@@ -3153,6 +3147,8 @@
             }
         }
 
+        ///WYJ fix, code from Reflector, workable but deprecated because of having too many goto statements. Try version from ILSpy
+        /*
         private void method_59(int int_6)
         {
             double high = this.Bars.High[int_6];
@@ -3273,7 +3269,137 @@
             this.DataSource.Provider.SaveEditedSymbolDataFile(this.DataSource, bars);
             this.barsLoader_0.OverrideOnDemand = true;
             this.GoButtonPressed(this.Symbol, true);
+        } */
+
+        ///WYJ fix, code from ILSpy
+        // WealthLabPro.ChartForm
+        private void method_59(int int_6)
+        {
+            double high = this.Bars.High[int_6];
+            double double_ = this.Bars.Low[int_6];
+            double open = this.Bars.Open[int_6];
+            double close = this.Bars.Close[int_6];
+            double volume = this.Bars.Volume[int_6];
+            DateTime dateTime_ = this.Bars.Date[int_6];
+            DateTime arg_7F_0 = this.Bars.Date[int_6];
+            DateTime arg_91_0 = this.Bars.Date[int_6];
+            DataEditor dataEditor = new DataEditor(this.Bars.Date[int_6], open, high, double_, close, volume, this.Bars.IsIntraday);
+            Bars bars;
+            int num;
+            while (true)
+            {
+                dataEditor.ShowDialog();
+                if (dataEditor.Action != DataEditor.Operation.Cancel)
+                {
+                    bars = null;
+                    switch (dataEditor.Action)
+                    {
+                        case DataEditor.Operation.Remove:
+                            bars = new Bars(this.Bars.Symbol, this.Bars.Scale, this.Bars.BarInterval);
+                            this.DataSource.Provider.DataStore.LoadBarsObject(bars);
+                            if (bars.IsIntraday)
+                            {
+                                this.method_61(dataEditor.DateAndTime, bars);
+                            }
+                            else
+                            {
+                                this.method_61(dataEditor.Date, bars);
+                            }
+                            int num2;
+                            if (bars.IsIntraday)
+                            {
+                                num2 = this.method_65(dataEditor.DateAndTime, bars);
+                            }
+                            else
+                            {
+                                num2 = this.method_65(dataEditor.Date, bars);
+                            }
+                            bars.Delete(num2);
+                            goto IL_4CC;
+                                        
+                        case DataEditor.Operation.Ok:
+                            {
+                                bool flag = false;
+                                bool flag2 = false;
+                                if (this.Bars.IsIntraday)
+                                {
+                                    if (this.Bars.Date[int_6] != dataEditor.DateAndTime)
+                                    {
+                                        flag = true;
+                                        flag2 = true;
+                                    }
+                                }
+                                else
+                                {
+                                    if (this.Bars.Date[int_6].Date != dataEditor.Date.Date)
+                                    {
+                                        flag = true;
+                                        flag2 = true;
+                                    }
+                                }
+                                if (!flag && (this.Bars.Open[int_6] != dataEditor.OPEN || this.Bars.High[int_6] != dataEditor.HIGH || this.Bars.Low[int_6] != dataEditor.LOW || this.Bars.Close[int_6] != dataEditor.CLOSE || this.Bars.Volume[int_6] != dataEditor.VOLUME))
+                                {
+                                    flag = true;
+                                }
+                                if (!flag)
+                                {
+                                    return;
+                                }
+                                bars = new Bars(this.Bars.Symbol, this.Bars.Scale, this.Bars.BarInterval);
+                                this.DataSource.Provider.DataStore.LoadBarsObject(bars);
+                                num = this.method_65(dateTime_, bars);
+                                if (!flag2)
+                                {
+                                    ///goto  IL_43A;  ///WYJ fix, simplify the flow
+                                    bars.Open[num] = dataEditor.OPEN;
+                                    bars.High[num] = dataEditor.HIGH;
+                                    bars.Low[num] = dataEditor.LOW;
+                                    bars.Close[num] = dataEditor.CLOSE;
+                                    bars.Volume[num] = dataEditor.VOLUME;
+                                    if (bars.IsIntraday)
+                                    {
+                                        this.method_60(dataEditor.DateAndTime, bars);
+                                    }
+                                    else
+                                    {
+                                        this.method_60(dataEditor.Date, bars);
+                                    }
+                                    goto IL_4CC;
+                                }
+                                if (!this.method_63(dataEditor.DateAndTime, this.Bars.Scale, this.Bars.BarInterval))
+                                {
+                                    MessageBox.Show("Invalid Date/Time. Date/Time must fit within the chart scale.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                                    continue;
+                                }
+                                if (this.method_64(dataEditor.DateAndTime, bars))
+                                {
+                                    MessageBox.Show("Invalid Date/Time. Can't create a bar when one already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                                    continue;
+                                }
+                                if (bars.IsIntraday)
+                                {
+                                    int num3 = this.method_62(dataEditor.DateAndTime, bars);
+                                    this.DataSource.Provider.DataStore.InsertBar(bars, num3, dataEditor.DateAndTime, dataEditor.OPEN, dataEditor.HIGH, dataEditor.LOW, dataEditor.CLOSE, dataEditor.VOLUME);
+                                    this.method_60(dataEditor.DateAndTime, bars);
+                                    goto IL_4CC;
+                                }
+                                int num4 = this.method_62(dataEditor.Date, bars);
+                                this.DataSource.Provider.DataStore.InsertBar(bars, num4, dataEditor.Date.Date, dataEditor.OPEN, dataEditor.HIGH, dataEditor.LOW, dataEditor.CLOSE, dataEditor.VOLUME);
+                                this.method_60(dataEditor.Date, bars);
+                                goto IL_4CC;
+                            }
+                    }
+                    break;
+                }
+                return;
+            }
+        
+        IL_4CC:
+            this.DataSource.Provider.SaveEditedSymbolDataFile(this.DataSource, bars);
+            this.barsLoader_0.OverrideOnDemand = true;
+            this.GoButtonPressed(this.Symbol, true);
         }
+
 
         internal void method_6()
         {
@@ -3412,6 +3538,8 @@
             return false;
         }
 
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having too many goto statements. Try version from ILSpy
+        /*
         private bool method_64(DateTime dateTime_0, WealthLab.Bars bars_2)
         {
             for (int i = 0; i < bars_2.Count; i++)
@@ -3718,7 +3846,134 @@
             return true;
         Label_068F:
             return true;
+        } */
+
+        ///WYJ fix, code from ILSpy
+        private bool method_64(DateTime dateTime_0, Bars bars_2)
+        {
+            for (int i = 0; i < bars_2.Count; i++)
+            {
+                if (bars_2.Date[i] == dateTime_0)
+                {
+                    return true;
+                }
+                switch (bars_2.Scale)
+                {
+                    case BarScale.Weekly:
+                        if (bars_2.Date[i].Year == dateTime_0.Year && bars_2.Date[i].Month == dateTime_0.Month)
+                        {
+                            switch (bars_2.Date[i].DayOfWeek)
+                            {
+                                case DayOfWeek.Sunday:
+                                    if (bars_2.Date[i].Day <= dateTime_0.Day + 6 && dateTime_0.Day >= bars_2.Date[i].Day)
+                                    {
+                                        return true;
+                                    }
+                                    break;
+                                case DayOfWeek.Monday:
+                                    if (bars_2.Date[i].Day > dateTime_0.Day + 5 || dateTime_0.Day < bars_2.Date[i].Day - 1)
+                                    {
+                                        if (bars_2.Date[i].Day < dateTime_0.Day - 1 || dateTime_0.Day > bars_2.Date[i].Day + 5)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    return true;
+                                case DayOfWeek.Tuesday:
+                                    if (bars_2.Date[i].Day > dateTime_0.Day + 4 || dateTime_0.Day < bars_2.Date[i].Day - 2)
+                                    {
+                                        if (bars_2.Date[i].Day < dateTime_0.Day - 2 || dateTime_0.Day > bars_2.Date[i].Day + 4)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    return true;
+                                case DayOfWeek.Wednesday:
+                                    if (bars_2.Date[i].Day > dateTime_0.Day + 3 || dateTime_0.Day < bars_2.Date[i].Day - 3)
+                                    {
+                                        if (bars_2.Date[i].Day < dateTime_0.Day - 3 || dateTime_0.Day > bars_2.Date[i].Day + 2)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    return true;
+                                case DayOfWeek.Thursday:
+                                    if (bars_2.Date[i].Day > dateTime_0.Day + 2 || dateTime_0.Day < bars_2.Date[i].Day - 2)
+                                    {
+                                        if (bars_2.Date[i].Day < dateTime_0.Day - 4 || dateTime_0.Day > bars_2.Date[i].Day + 4)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    return true;
+                                case DayOfWeek.Friday:
+                                    if (bars_2.Date[i].Day > dateTime_0.Day + 1 || dateTime_0.Day < bars_2.Date[i].Day - 1)
+                                    {
+                                        if (bars_2.Date[i].Day < dateTime_0.Day - 5 || dateTime_0.Day > bars_2.Date[i].Day + 5)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    return true;
+                                case DayOfWeek.Saturday:
+                                    if (bars_2.Date[i].Day >= dateTime_0.Day - 6 && dateTime_0.Day <= bars_2.Date[i].Day)
+                                    {
+                                        return true;
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                    case BarScale.Monthly:
+                        if (bars_2.Date[i].Year == dateTime_0.Year && bars_2.Date[i].Month == dateTime_0.Month)
+                        {
+                            return true;
+                        }
+                        break;
+                    case BarScale.Quarterly:
+                        if (bars_2.Date[i].Year == dateTime_0.Year)
+                        {
+                            if (bars_2.Date[i].Month == 1 || bars_2.Date[i].Month == 2 || bars_2.Date[i].Month == 3)
+                            {
+                                if (dateTime_0.Month == 1 || dateTime_0.Month == 2 || dateTime_0.Month == 3)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (bars_2.Date[i].Month == 4 || bars_2.Date[i].Month == 5 || bars_2.Date[i].Month == 6)
+                            {
+                                if (dateTime_0.Month == 4 || dateTime_0.Month == 5 || dateTime_0.Month == 6)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (bars_2.Date[i].Month == 7 || bars_2.Date[i].Month == 8 || bars_2.Date[i].Month == 9)
+                            {
+                                if (dateTime_0.Month == 7 || dateTime_0.Month == 8 || dateTime_0.Month == 9)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (bars_2.Date[i].Month == 10 || bars_2.Date[i].Month == 11 || bars_2.Date[i].Month == 12)
+                            {
+                                if (dateTime_0.Month == 10 || dateTime_0.Month == 11 || dateTime_0.Month == 12)
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                        break;
+                    case BarScale.Yearly:
+                        if (bars_2.Date[i].Year == dateTime_0.Year)
+                        {
+                            return true;
+                        }
+                        break;
+                }
+            }
+            return false;
         }
+
 
         private int method_65(DateTime dateTime_0, WealthLab.Bars bars_2)
         {
@@ -4691,14 +4946,12 @@
                     current = enumerator.Current;
                     if (current.StrategyID.ToString() == position.StrategyID)
                     {
-                        goto Label_0080;
+                        ///goto  Label_0080;  ///WYJ fix, simplify the flow
+                        info = current;
+                        break;
                     }
                 }
-                goto Label_0093;
-            Label_0080:
-                info = current;
             }
-        Label_0093:
             if (info == null)
             {
                 return;
@@ -4992,21 +5245,20 @@
                         current = enumerator.Current;
                         if (current.Symbol == symbol)
                         {
-                            goto Label_0079;
+                            ///goto  Label_0079;  ///WYJ fix, simplify the flow
+                            this.Bars = current;
+                            if (this.WealthScript != null)
+                            {
+                                this.WealthScript.Renderer = this.chartRenderer_0;
+                            }
+                            this.method_13(this.tradingSystemExecutor_0, current, false);
+                            this.tradingSystemExecutor_0.Clear();
+                            this.indicatorDragDropManager_0.CreateDragDropIndicators();
+                            this.chart.DoInvalidate();
+                            this.method_15();
+                            return;
                         }
                     }
-                    return;
-                Label_0079:
-                    this.Bars = current;
-                    if (this.WealthScript != null)
-                    {
-                        this.WealthScript.Renderer = this.chartRenderer_0;
-                    }
-                    this.method_13(this.tradingSystemExecutor_0, current, false);
-                    this.tradingSystemExecutor_0.Clear();
-                    this.indicatorDragDropManager_0.CreateDragDropIndicators();
-                    this.chart.DoInvalidate();
-                    this.method_15();
                     return;
                 }
             }

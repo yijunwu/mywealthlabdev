@@ -65,7 +65,26 @@
                 oldChild = this.DescendToNode(doc.FirstChild, nodeValue ? this.UpdateItems[i].OldText : this.UpdateItems[i].OldTag, nodeValue);
                 if (!nodeValue)
                 {
-                    goto Label_0203;
+                    ///goto  Label_0203;  ///WYJ fix, simplify the flow
+                    ///Label_0203:
+                    while (oldChild != null)
+                    {
+                        ///goto  Label_0154;  ///WYJ fix, simplify the flow
+                        ///Label_0154:
+                        if ((oldChild != null) && (oldChild.ParentNode != null))
+                        {
+                            if (this.UpdateItems[i].NewTag != string.Empty)
+                            {
+                                oldChild.ParentNode.InnerXml = oldChild.ParentNode.InnerXml.Replace(this.UpdateItems[i].OldTag, this.UpdateItems[i].NewTag);
+                            }
+                            else
+                            {
+                                oldChild.ParentNode.RemoveChild(oldChild);
+                            }
+                        }
+                        oldChild = this.DescendToNode(doc.FirstChild, nodeValue ? this.UpdateItems[i].OldText : this.UpdateItems[i].OldTag, nodeValue);
+                    }
+                    continue;
                 }
                 if ((oldChild != null) && (oldChild.ParentNode != null))
                 {
@@ -79,24 +98,6 @@
                     }
                 }
                 continue;
-            Label_0154:
-                if ((oldChild != null) && (oldChild.ParentNode != null))
-                {
-                    if (this.UpdateItems[i].NewTag != string.Empty)
-                    {
-                        oldChild.ParentNode.InnerXml = oldChild.ParentNode.InnerXml.Replace(this.UpdateItems[i].OldTag, this.UpdateItems[i].NewTag);
-                    }
-                    else
-                    {
-                        oldChild.ParentNode.RemoveChild(oldChild);
-                    }
-                }
-                oldChild = this.DescendToNode(doc.FirstChild, nodeValue ? this.UpdateItems[i].OldText : this.UpdateItems[i].OldTag, nodeValue);
-            Label_0203:
-                if (oldChild != null)
-                {
-                    goto Label_0154;
-                }
             }
         }
 

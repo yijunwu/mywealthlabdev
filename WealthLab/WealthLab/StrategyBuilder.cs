@@ -66,6 +66,8 @@
             this.method_0();
         }
 
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having too many goto statements. Try version from ILSpy
+        /*
         public string BuildCode(List<StrategyRule> rules, bool singlePosition)
         {
             string multiPosition;
@@ -452,7 +454,439 @@
                 return multiPosition.Replace("<#Constructor>", builder3.ToString());
             }
             return multiPosition.Replace("<#Constructor>", "");
+        } */
+
+        ///WYJ fix, code from ILSpy
+        public string BuildCode(List<StrategyRule> rules, bool singlePosition)
+        {
+            this.list_8.Clear();
+            this.list_6.Clear();
+            this.list_2.Clear();
+            this.list_3.Clear();
+            this.list_7.Clear();
+            this.dictionary_1.Clear();
+            this.int_1 = 1;
+            this.int_3 = 0;
+            this.int_4 = 0;
+            foreach (StrategyRule current in rules)
+            {
+                foreach (RuleParameter current2 in current.Parameters)
+                {
+                    current2.ReplaceValue = "";
+                }
+                foreach (Rule current3 in current.Conditions)
+                {
+                    foreach (RuleParameter current4 in current3.Parameters)
+                    {
+                        current4.ReplaceValue = "";
+                    }
+                }
+            }
+            this.list_1.Clear();
+            this.int_0 = 1;
+            foreach (StrategyRule current5 in rules)
+            {
+                this.method_3(current5);
+                foreach (Rule current6 in current5.Conditions)
+                {
+                    this.method_3(current6);
+                }
+            }
+            string text;
+            if (singlePosition)
+            {
+                text = Resources.SinglePosition;
+            }
+            else
+            {
+                text = Resources.MultiPosition;
+            }
+            this.int_2 = 3;
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (StrategyRule current7 in rules)
+            {
+                this.method_2(current7, stringBuilder);
+                foreach (Rule current8 in current7.Conditions)
+                {
+                    this.method_2(current8, stringBuilder);
+                }
+            }
+            string newValue = stringBuilder.ToString();
+            foreach (StrategyRule current9 in rules)
+            {
+                current9.ExitsAppliedTo.Clear();
+                current9.EntriesAppliedTo.Clear();
+            }
+            bool flag = false;
+            bool flag2 = false;
+            foreach (StrategyRule current10 in rules)
+            {
+                if (current10.RuleType == RuleType.LongEntry)
+                {
+                    flag = true;
+                }
+                else
+                {
+                    if (current10.RuleType == RuleType.ShortEntry)
+                    {
+                        flag2 = true;
+                    }
+                }
+                if (!flag && current10.RuleType == RuleType.LongExit)
+                {
+                    foreach (StrategyRule current11 in rules)
+                    {
+                        if (current11.RuleType == RuleType.LongEntry)
+                        {
+                            current11.ExitsAppliedTo.Add(current10);
+                            current10.EntriesAppliedTo.Add(current11);
+                        }
+                    }
+                }
+                if (!flag2 && current10.RuleType == RuleType.ShortExit)
+                {
+                    foreach (StrategyRule current12 in rules)
+                    {
+                        if (current12.RuleType == RuleType.ShortEntry)
+                        {
+                            current12.ExitsAppliedTo.Add(current10);
+                            current10.EntriesAppliedTo.Add(current12);
+                        }
+                    }
+                }
+            }
+            foreach (StrategyRule current13 in rules)
+            {
+                if (current13.RuleType == RuleType.LongExit)
+                {
+                    int num = rules.IndexOf(current13);
+                    for (int i = num - 1; i >= 0; i--)
+                    {
+                        StrategyRule strategyRule = rules[i];
+                        if (strategyRule.RuleType == RuleType.LongEntry)
+                        {
+                            strategyRule.ExitsAppliedTo.Add(current13);
+                            current13.EntriesAppliedTo.Add(strategyRule);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if (current13.RuleType == RuleType.ShortExit)
+                    {
+                        int num = rules.IndexOf(current13);
+                        for (int j = num - 1; j >= 0; j--)
+                        {
+                            StrategyRule strategyRule2 = rules[j];
+                            if (strategyRule2.RuleType == RuleType.ShortEntry)
+                            {
+                                strategyRule2.ExitsAppliedTo.Add(current13);
+                                current13.EntriesAppliedTo.Add(strategyRule2);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (StrategyRule current14 in rules)
+            {
+                if (current14.RuleType == RuleType.LongEntry && current14.ExitsAppliedTo.Count == 0)
+                {
+                    int num2 = rules.IndexOf(current14) + 1;
+                    for (int k = num2; k < rules.Count; k++)
+                    {
+                        StrategyRule strategyRule3 = rules[k];
+                        if (strategyRule3.RuleType == RuleType.LongExit)
+                        {
+                            current14.ExitsAppliedTo.Add(strategyRule3);
+                            strategyRule3.EntriesAppliedTo.Add(current14);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if (current14.RuleType == RuleType.ShortEntry && current14.ExitsAppliedTo.Count == 0)
+                    {
+                        int num2 = rules.IndexOf(current14) + 1;
+                        for (int l = num2; l < rules.Count; l++)
+                        {
+                            StrategyRule strategyRule4 = rules[l];
+                            if (strategyRule4.RuleType == RuleType.ShortExit)
+                            {
+                                current14.ExitsAppliedTo.Add(strategyRule4);
+                                strategyRule4.EntriesAppliedTo.Add(current14);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            int num3 = 1;
+            foreach (StrategyRule current15 in rules)
+            {
+                if (current15.IsExit)
+                {
+                    current15.ExitName = "Group" + num3;
+                    num3++;
+                }
+            }
+            List<StrategyRule> list = new List<StrategyRule>();
+            foreach (StrategyRule current16 in rules)
+            {
+                if (current16.IsEntry)
+                {
+                    list.Add(current16);
+                }
+            }
+            list.Sort(this);
+            this.int_2 = 5;
+            string text2 = "";
+            foreach (StrategyRule current17 in list)
+            {
+                string text3 = this.method_5(current17);
+                string text4 = "";
+                foreach (StrategyRule current18 in current17.ExitsAppliedTo)
+                {
+                    text4 = text4 + current18.ExitName + "|";
+                }
+                text4 = "\"" + text4 + "\"";
+                text3 = text3.Replace("<#SignalName>", text4);
+                text2 += text3;
+            }
+            text = text.Replace("<#EntryBlock>", text2);
+            list.Clear();
+            foreach (StrategyRule current19 in rules)
+            {
+                if (current19.IsExit)
+                {
+                    list.Add(current19);
+                }
+            }
+            list.Sort(this);
+            string text5 = "";
+            foreach (StrategyRule current20 in list)
+            {
+                string text6 = this.method_5(current20);
+                text6 = text6.Replace("<#SignalName>", "\"" + current20.ExitName + "\"");
+                text5 += text6;
+            }
+            text = text.Replace("<#ExitBlock>", text5);
+            text = text.Replace("<#Init>", newValue);
+            foreach (StrategyRule current21 in rules)
+            {
+                foreach (RuleParameter current22 in current21.Parameters)
+                {
+                    this.method_4(current22, true);
+                }
+                foreach (Rule current23 in current21.Conditions)
+                {
+                    foreach (RuleParameter current24 in current23.Parameters)
+                    {
+                        this.method_4(current24, true);
+                    }
+                }
+            }
+            StringBuilder stringBuilder2 = new StringBuilder();
+            foreach (string current25 in this.list_3)
+            {
+                string key;
+                if (StrategyBuilder.dictionary_0.ContainsKey(current25))
+                {
+                    key = StrategyBuilder.dictionary_0[current25];
+                }
+                else
+                {
+                    key = "Unknown";
+                }
+                string text7;
+                if (this.dictionary_1.ContainsKey(key))
+                {
+                    text7 = this.dictionary_1[key];
+                }
+                else
+                {
+                    text7 = "pane" + (this.dictionary_1.Count + 1);
+                    this.dictionary_1[key] = text7;
+                    stringBuilder2.AppendLine("\t\t\tChartPane " + text7 + " = CreatePane(75,true,true);");
+                }
+                if (StrategyBuilder.list_5.Contains(current25))
+                {
+                    stringBuilder2.AppendLine(string.Concat(new string[]
+			        {
+				        "\t\t\tPlotFundamentalItems(",
+				        text7,
+				        ",Bars.Symbol,\"",
+				        current25,
+				        "\",Color.Red,LineStyle.Solid,1);"
+			        }));
+                }
+                else
+                {
+                    stringBuilder2.AppendLine(string.Concat(new string[]
+			        {
+				        "\t\t\tPlotFundamentalItems(",
+				        text7,
+				        ",\"",
+				        current25,
+				        "\",Color.Blue,LineStyle.Solid,1);"
+			        }));
+                }
+            }
+            foreach (string current26 in this.list_2)
+            {
+                string[] array = current26.Split(new char[] { '.' });
+                string b = array[0];
+                IndicatorHelper indicatorHelper = null;
+                foreach (IndicatorHelper current27 in this.IndicatorHelpers)
+                {
+                    if (current27.IndicatorType.Name == b)
+                    {
+                        indicatorHelper = current27;
+                        break;
+                    }
+                }
+                if (indicatorHelper != null)
+                {
+                    if (indicatorHelper.IndicatorType.Namespace != "WealthLab.Indicators" && !this.list_6.Contains(indicatorHelper.IndicatorType.Namespace))
+                    {
+                        this.list_6.Add(indicatorHelper.IndicatorType.Namespace);
+                    }
+                    string text8 = "PricePane";
+                    if (current26.Contains("Volume"))
+                    {
+                        text8 = "VolumePane";
+                    }
+                    if (indicatorHelper.TargetPane != "")
+                    {
+                        text8 = indicatorHelper.TargetPane;
+                        if (this.dictionary_1.ContainsKey(text8))
+                        {
+                            text8 = this.dictionary_1[text8];
+                        }
+                        else
+                        {
+                            text8 = "pane" + (this.dictionary_1.Count + 1);
+                            this.dictionary_1[indicatorHelper.TargetPane] = text8;
+                            stringBuilder2.AppendLine("\t\t\tChartPane " + text8 + " = CreatePane(75,true,true);");
+                        }
+                    }
+                    Color defaultColor = indicatorHelper.DefaultColor;
+                    string text9;
+                    if (defaultColor.IsKnownColor)
+                    {
+                        text9 = defaultColor.ToString();
+                        int num4 = text9.IndexOf('[');
+                        text9 = text9.Substring(num4 + 1);
+                        text9 = "Color." + text9.Substring(0, text9.Length - 1);
+                    }
+                    else
+                    {
+                        text9 = string.Concat(new object[]
+				        {
+					        "Color.FromArgb(",
+					        defaultColor.R,
+					        ",",
+					        defaultColor.G,
+					        ",",
+					        defaultColor.B,
+					        ")"
+				        });
+                    }
+                    stringBuilder2.AppendLine(string.Concat(new object[]
+			        {
+				        "\t\t\tPlotSeries(",
+				        text8,
+				        ",",
+				        current26,
+				        ",",
+				        text9,
+				        ",LineStyle.",
+				        indicatorHelper.DefaultStyle,
+				        ",",
+				        indicatorHelper.DefaultWidth,
+				        ");"
+			        }));
+                }
+            }
+            this.int_2 = 3;
+            foreach (StrategyRule current28 in rules)
+            {
+                this.method_13(current28, stringBuilder2);
+                foreach (Rule current29 in current28.Conditions)
+                {
+                    this.method_13(current29, stringBuilder2);
+                }
+            }
+            string newValue2 = stringBuilder2.ToString();
+            text = text.Replace("<#Plot>", newValue2);
+            StringBuilder stringBuilder3 = new StringBuilder();
+            foreach (StrategyRule current30 in rules)
+            {
+                this.method_14(current30);
+                foreach (Rule current31 in current30.Conditions)
+                {
+                    this.method_14(current31);
+                }
+            }
+            if (this.list_6.Count > 0)
+            {
+                foreach (string current32 in this.list_6)
+                {
+                    stringBuilder3.AppendLine("using " + current32 + ";");
+                }
+            }
+            text = text.Replace("<#Using>", stringBuilder3.ToString());
+            this.int_4++;
+            text = text.Replace("<#StartBar>", "GetTradingLoopStartBar(" + this.int_4 + ")");
+            foreach (StrategyRule current33 in rules)
+            {
+                text = this.method_15(current33, text);
+                foreach (Rule current34 in current33.Conditions)
+                {
+                    text = this.method_15(current34, text);
+                }
+            }
+            if (this.list_8.Count > 0)
+            {
+                StringBuilder stringBuilder4 = new StringBuilder();
+                foreach (StrategyParameter current35 in this.list_8)
+                {
+                    stringBuilder4.AppendLine("\t\tprivate StrategyParameter " + current35.Name + ";");
+                }
+                stringBuilder4.AppendLine("\t\tpublic MyStrategy()");
+                stringBuilder4.AppendLine("\t\t{");
+                foreach (StrategyParameter current36 in this.list_8)
+                {
+                    stringBuilder4.AppendLine(string.Concat(new string[]
+			        {
+				        "\t\t\t",
+				        current36.Name,
+				        " = CreateParameter(\"",
+				        current36.Description,
+				        "\",",
+				        current36.Value.ToString(StrategyBuilder.cultureInfo_0),
+				        ",",
+				        current36.Start.ToString(StrategyBuilder.cultureInfo_0),
+				        ",",
+				        current36.Stop.ToString(StrategyBuilder.cultureInfo_0),
+				        ",",
+				        current36.Step.ToString(StrategyBuilder.cultureInfo_0),
+				        ");"
+			        }));
+                }
+                stringBuilder4.AppendLine("\t\t}");
+                stringBuilder4.AppendLine("");
+                text = text.Replace("<#Constructor>", stringBuilder4.ToString());
+            }
+            else
+            {
+                text = text.Replace("<#Constructor>", "");
+            }
+            return text;
         }
+
 
         public void Clear()
         {
@@ -500,15 +934,15 @@
                     current = enumerator.Current;
                     if (current.IndicatorType.Name == str2)
                     {
-                        goto Label_0059;
+                        ///goto  Label_0059;  ///WYJ fix, simplify the flow
+                        helper2 = current;
+                        return helper2;
                     }
                 }
                 return null;
-            Label_0059:
-                helper2 = current;
             }
-            return helper2;
-        }
+        } 
+
 
         public void LoadAllRules(string path)
         {
@@ -875,39 +1309,38 @@
                             current = enumerator.Current;
                             if (current.IndicatorType.Name.ToUpper() == str2)
                             {
-                                goto Label_00E0;
-                            }
-                        }
-                        goto Label_01A3;
-                    Label_00E0:
-                        strArray2[1] = strArray2[1].Replace(")", "");
-                        string[] strArray = strArray2[1].Split(new char[] { ',' });
-                        if ((strArray.Length == current.ParameterDescriptions.Count) && (strArray.Length > 0))
-                        {
-                            int index = 0;
-                            foreach (string str in current.ParameterDescriptions)
-                            {
-                                if (str.ToUpper().Contains("PERIOD"))
+                                ///goto  Label_00E0;   ///WYJ fix, simplify the flow
+                                strArray2[1] = strArray2[1].Replace(")", "");
+                                string[] strArray = strArray2[1].Split(new char[] { ',' });
+                                if ((strArray.Length == current.ParameterDescriptions.Count) && (strArray.Length > 0))
                                 {
-                                    try
+                                    int index = 0;
+                                    foreach (string str in current.ParameterDescriptions)
                                     {
-                                        int num3 = int.Parse(strArray[index]);
-                                        if (num3 > this.int_4)
+                                        if (str.ToUpper().Contains("PERIOD"))
                                         {
-                                            this.int_4 = num3;
+                                            try
+                                            {
+                                                int num3 = int.Parse(strArray[index]);
+                                                if (num3 > this.int_4)
+                                                {
+                                                    this.int_4 = num3;
+                                                }
+                                            }
+                                            catch
+                                            {
+                                            }
                                         }
-                                    }
-                                    catch
-                                    {
+                                        index++;
                                     }
                                 }
-                                index++;
+                                break;
                             }
                         }
+                   
                     }
                 }
             }
-        Label_01A3:
             if (bool_0)
             {
                 if ((ruleParameter_0.ParamType == RuleParamType.Indicator) && !this.list_2.Contains(ruleParameter_0.ReplaceValue))

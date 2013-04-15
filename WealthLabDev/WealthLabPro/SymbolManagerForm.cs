@@ -69,6 +69,8 @@
             BarsLoader.SaveSymbolInfo();
         }
 
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having too many goto statements. Try code from ILSpy
+        /*
         private void dgSymbol_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -196,7 +198,143 @@
                 MessageBox.Show(headerText + str5);
             }
             BarsLoader.SaveSymbolInfo();
+        } */
+
+        ///WYJ fix, code from ILSpy
+        private void dgSymbol_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            if (this.bool_0)
+            {
+                return;
+            }
+            int rowIndex = e.RowIndex;
+            int columnIndex = e.ColumnIndex;
+            string value = string.Empty;
+            string text = string.Empty;
+            bool flag = true;
+            string str = string.Empty;
+            if (this.dgSymbol[e.ColumnIndex, e.RowIndex].Value != null)
+            {
+                text = this.dgSymbol[e.ColumnIndex, e.RowIndex].Value.ToString();
+            }
+            SymbolInfo symbolInfo = this.dgSymbol.Rows[rowIndex].Tag as SymbolInfo;
+            if (symbolInfo == null)
+            {
+                return;
+            }
+            SymbolInfo symbolInfo2 = new SymbolInfo(symbolInfo.Symbol, symbolInfo.SecurityType, symbolInfo.Margin, symbolInfo.PointValue, symbolInfo.Tick, symbolInfo.Decimals);
+            BarsLoader.SymbolInfo.Remove(symbolInfo);
+            string name = this.dgSymbol.Columns[columnIndex].Name;
+            string headerText = this.dgSymbol.Columns[columnIndex].HeaderText;
+            try
+            {
+                string a;
+                if ((a = name) != null)
+                {
+                    if (!(a == "colSymbol"))
+                    {
+                        if (!(a == "colType"))
+                        {
+                            if (!(a == "colMargin"))
+                            {
+                                if (!(a == "colPointValue"))
+                                {
+                                    if (!(a == "colTick"))
+                                    {
+                                        if (a == "colDecimals")
+                                        {
+                                            value = symbolInfo.Decimals.ToString();
+                                            if (int.Parse(text) < 0)
+                                            {
+                                                flag = false;
+                                                str = " value must be greater than or equal to zero.";
+                                            }
+                                            symbolInfo2.Decimals = int.Parse(text);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        value = symbolInfo.Tick.ToString();
+                                        symbolInfo2.Tick = double.Parse(text);
+                                    }
+                                }
+                                else
+                                {
+                                    value = symbolInfo.PointValue.ToString();
+                                    double num = double.Parse(text);
+                                    if (num <= 0.0)
+                                    {
+                                        flag = false;
+                                        str = " must be greater than zero.";
+                                    }
+                                    symbolInfo2.PointValue = num;
+                                }
+                            }
+                            else
+                            {
+                                value = symbolInfo.Margin.ToString();
+                                double num = double.Parse(text);
+                                if (num <= 0.0)
+                                {
+                                    flag = false;
+                                    str = " value must be greater than zero.";
+                                }
+                                symbolInfo2.Margin = num;
+                            }
+                        }
+                        else
+                        {
+                            string a2;
+                            if ((a2 = text) != null)
+                            {
+                                if (a2 == "Future")
+                                {
+                                    symbolInfo2.SecurityType = SecurityType.Future;
+                                    goto IL_2C2;
+                                }
+                                if (a2 == "MutualFund")
+                                {
+                                    symbolInfo2.SecurityType = SecurityType.MutualFund;
+                                    goto IL_2C2;
+                                }
+                            }
+                            symbolInfo2.SecurityType = SecurityType.Equity;
+                        }
+                    }
+                    else
+                    {
+                        this.bool_0 = true;
+                        this.dgSymbol[e.ColumnIndex, e.RowIndex].Value = text;
+                        this.bool_0 = false;
+                        symbolInfo2.Symbol = text;
+                        value = symbolInfo.Symbol;
+                    }
+                }
+            IL_2C2: ;
+            }
+            catch (Exception)
+            {
+                flag = false;
+                str = " value must be numeric.";
+            }
+            if (flag)
+            {
+                this.dgSymbol.Rows[rowIndex].Tag = symbolInfo2;
+                BarsLoader.SymbolInfo.Add(symbolInfo2);
+            }
+            else
+            {
+                BarsLoader.SymbolInfo.Add(symbolInfo);
+                this.dgSymbol[columnIndex, rowIndex].Value = value;
+                MessageBox.Show(headerText + str);
+            }
+            BarsLoader.SaveSymbolInfo();
         }
+
 
         protected override void Dispose(bool disposing)
         {

@@ -1518,7 +1518,8 @@
             this.strategyScorecard_0.SetupListViewColumns(this.lvResults, this.chartForm_0.posSize.PositionSize, this.WealthScript.Parameters.Count + 1);
         }
 
-        private void method_6()
+        ///WYJ fix, code from Reflector, workable, but deprecated because of having too many goto statements. Try code from ILSpy.
+        private void method_6()  ///WYJ note, probably the method to run optimization
         {
             this.method_2();
             this.tradingSystemExecutor_0.ApplySettings(MainModule.Instance.Executor);
@@ -1528,7 +1529,7 @@
                 this.bool_0 = false;
                 this.optimizer_0.FirstRun();
             Label_01AE:
-                if (!this.bool_1)
+                while (!this.bool_1)
                 {
                     this.exception_0 = null;
                     try
@@ -1560,70 +1561,183 @@
                     }
                     if (this.optimizer_0.NextRun(this.systemPerformance_0, this.optimizationResultList_0.Results[this.optimizationResultList_0.Results.Count - 1]))
                     {
-                        goto Label_01AE;
+                        ///goto  Label_01AE;  ///WYJ fix, simplify the flow
+                        continue;
                     }
-                }
-                goto Label_02CA;
+                    else
+                        break;
+                } 
+                ///goto  Label_02CA;
+                base.Invoke(new Delegate63(this.method_8));
+                return;
             }
             this.bool_0 = true;
             string str = this.string_0;
             using (List<Bars>.Enumerator enumerator = this.list_0.GetEnumerator())
             {
-            Label_0066:
-                if (!enumerator.MoveNext())
+                while (enumerator.MoveNext())
                 {
-                    goto Label_0190;
+                Label_0066:
+                    Bars current = enumerator.Current;
+                    if (this.bool_1)
+                    {
+                        ///goto  Label_0190;
+                        break;
+                    }
+                    this.string_0 = current.Symbol;
+                    this.optimizer_0.FirstRun();
+                Label_009E:
+                    while (!this.bool_1)
+                    {
+                        List<Bars> barsCollection = new List<Bars> {
+                            current
+                        };
+                        this.exception_0 = null;
+                        try
+                        {
+                            this.tradingSystemExecutor_0.DataSet = this.dataSource_0;
+                            this.tradingSystemExecutor_0.Execute(this.optimizer_0.Strategy, this.WealthScript, null, barsCollection);
+                        }
+                        catch (Exception exception)
+                        {
+                            this.exception_0 = exception;
+                        }
+                        ///goto  Label_0153; ///WYJ fix, simplify the flow
+                        this.systemPerformance_0 = this.tradingSystemExecutor_0.Performance;
+                        this.bool_2 = true;
+                        base.Invoke(new Delegate63(this.method_7));
+
+                        while (this.bool_2)
+                        {
+                            Thread.Sleep(10);
+                        }
+                        current.Cache.Clear();
+                        if (this.optimizer_0.NextRun(this.systemPerformance_0, this.optimizationResultList_0.Results[this.optimizationResultList_0.Results.Count - 1]))
+                        {
+                            ///goto  Label_009E;
+                            continue;
+                        }
+                        else
+                            break;
+                    }
+                    //goto  Label_0066;
+                    continue;
                 }
-                Bars current = enumerator.Current;
-                if (this.bool_1)
-                {
-                    goto Label_0190;
-                }
-                this.string_0 = current.Symbol;
-                this.optimizer_0.FirstRun();
-            Label_009E:
-                if (this.bool_1)
-                {
-                    goto Label_0066;
-                }
-                List<Bars> barsCollection = new List<Bars> {
-                    current
-                };
-                this.exception_0 = null;
-                try
-                {
-                    this.tradingSystemExecutor_0.DataSet = this.dataSource_0;
-                    this.tradingSystemExecutor_0.Execute(this.optimizer_0.Strategy, this.WealthScript, null, barsCollection);
-                }
-                catch (Exception exception)
-                {
-                    this.exception_0 = exception;
-                }
-                goto Label_0153;
-            Label_00FB:
-                Thread.Sleep(10);
-            Label_0102:
-                if (this.bool_2)
-                {
-                    goto Label_00FB;
-                }
-                current.Cache.Clear();
-                if (this.optimizer_0.NextRun(this.systemPerformance_0, this.optimizationResultList_0.Results[this.optimizationResultList_0.Results.Count - 1]))
-                {
-                    goto Label_009E;
-                }
-                goto Label_0066;
-            Label_0153:
-                this.systemPerformance_0 = this.tradingSystemExecutor_0.Performance;
-                this.bool_2 = true;
-                base.Invoke(new Delegate63(this.method_7));
-                goto Label_0102;
             }
+
         Label_0190:
             this.string_0 = str;
         Label_02CA:
             base.Invoke(new Delegate63(this.method_8));
-        }
+        } 
+
+        ///WYJ fix, code from ILSpy
+        /*
+        private void method_6()
+        {
+            this.method_2();
+            this.tradingSystemExecutor_0.ApplySettings(MainModule.Instance.Executor);
+            this.tradingSystemExecutor_0.PosSize = this.chartForm_0.posSize.PositionSize;
+            if (this.tradingSystemExecutor_0.PosSize.RawProfitMode)
+            {
+                this.bool_0 = true;
+                string text = this.string_0;
+                foreach (Bars current in this.list_0)
+                {
+                    if (this.bool_1)
+                    {
+                        break;
+                    }
+                    this.string_0 = current.Symbol;
+                    this.optimizer_0.FirstRun();
+                    while (!this.bool_1)
+                    {
+                        List<Bars> list = new List<Bars>();
+                        list.Add(current);
+                        this.exception_0 = null;
+                        try
+                        {
+                            this.tradingSystemExecutor_0.DataSet = this.dataSource_0;
+                            this.tradingSystemExecutor_0.Execute(this.optimizer_0.Strategy, this.WealthScript, null, list);
+                            goto IL_153;
+                        }
+                        catch (Exception ex)
+                        {
+                            this.exception_0 = ex;
+                            goto IL_153;
+                        }
+                        goto IL_FB;
+                    IL_102:
+                        if (!this.bool_2)
+                        {
+                            current.Cache.Clear();
+                            if (!this.optimizer_0.NextRun(this.systemPerformance_0, this.optimizationResultList_0.Results[this.optimizationResultList_0.Results.Count - 1]))
+                            {
+                                break;
+                            }
+                            continue;
+                        }
+                    IL_FB:
+                        Thread.Sleep(10);
+                        goto IL_102;
+                    IL_153:
+                        this.systemPerformance_0 = this.tradingSystemExecutor_0.Performance;
+                        this.bool_2 = true;
+                        base.Invoke(new Optimization.Delegate63(this.method_7));
+                        goto IL_102;
+                    }
+                }
+                this.string_0 = text;
+            }
+            else
+            {
+                this.bool_0 = false;
+                this.optimizer_0.FirstRun();
+                while (!this.bool_1)
+                {
+                    this.exception_0 = null;
+                    try
+                    {
+                        this.tradingSystemExecutor_0.DataSet = this.dataSource_0;
+                        this.tradingSystemExecutor_0.Execute(this.optimizer_0.Strategy, this.WealthScript, null, this.list_0);
+                        goto IL_2AD;
+                    }
+                    catch (Exception ex2)
+                    {
+                        this.exception_0 = ex2;
+                        goto IL_2AD;
+                    }
+                    try
+                    {
+                    IL_208:
+                        base.Invoke(new Optimization.Delegate63(this.method_7));
+                        while (this.bool_2)
+                        {
+                            Thread.Sleep(10);
+                        }
+                    }
+                    catch
+                    {
+                        this.bool_2 = false;
+                    }
+                    foreach (Bars current2 in this.list_0)
+                    {
+                        current2.Cache.Clear();
+                    }
+                    if (!this.optimizer_0.NextRun(this.systemPerformance_0, this.optimizationResultList_0.Results[this.optimizationResultList_0.Results.Count - 1]))
+                    {
+                        break;
+                    }
+                    continue;
+                IL_2AD:
+                    this.systemPerformance_0 = this.tradingSystemExecutor_0.Performance;
+                    this.bool_2 = true;
+                    goto IL_208;
+                }
+            }
+            base.Invoke(new Optimization.Delegate63(this.method_8));
+        } */
+
 
         private void method_7()
         {
@@ -1681,49 +1795,54 @@
                 result.ParameterValues.Add(parameter.Value);
             }
             int num = this.WealthScript.Parameters.Count + 1;
-        Label_02AB:
-            if (num >= this.lvResults.Columns.Count)
-            {
-                this.optimizationResultList_0.Add(result);
-                item2.Tag = result;
-                if (item != null)
-                {
-                    item.Tag = result;
-                }
-                this.bool_2 = false;
-            }
-            else
-            {
-                ColumnHeader header = this.lvResults.Columns[num];
-                string tag = header.Tag as string;
-                double num8 = 0.0;
-                string s = item2.SubItems[num].Text;
-                switch (tag)
-                {
-                    case "N":
-                        try
-                        {
-                            num8 = double.Parse(s, NumberStyles.Number);
-                        }
-                        catch
-                        {
-                        }
-                        result.Results.Add(num8);
-                        break;
 
-                    case "C":
-                        try
-                        {
-                            double.Parse(s, NumberStyles.Currency);
-                        }
-                        catch
-                        {
-                        }
-                        result.Results.Add(num8);
-                        break;
+            while (true)
+            {
+                if (num >= this.lvResults.Columns.Count)
+                {
+                    this.optimizationResultList_0.Add(result);
+                    item2.Tag = result;
+                    if (item != null)
+                    {
+                        item.Tag = result;
+                    }
+                    this.bool_2 = false;
+                    break;
                 }
-                num++;
-                goto Label_02AB;
+                else
+                {
+                    ColumnHeader header = this.lvResults.Columns[num];
+                    string tag = header.Tag as string;
+                    double num8 = 0.0;
+                    string s = item2.SubItems[num].Text;
+                    switch (tag)
+                    {
+                        case "N":
+                            try
+                            {
+                                num8 = double.Parse(s, NumberStyles.Number);
+                            }
+                            catch
+                            {
+                            }
+                            result.Results.Add(num8);
+                            break;
+
+                        case "C":
+                            try
+                            {
+                                double.Parse(s, NumberStyles.Currency);
+                            }
+                            catch
+                            {
+                            }
+                            result.Results.Add(num8);
+                            break;
+                    }
+                    num++;
+                    ///goto  Label_02AB;  ///WYJ fix, simplify the flow
+                    continue;
+                }
             }
         }
 

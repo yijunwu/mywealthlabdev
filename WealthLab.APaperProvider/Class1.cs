@@ -42,14 +42,12 @@ internal class Class1
                 current = enumerator.Current;
                 if (current.Name == "i")
                 {
-                    goto Label_007A;
+                    ///goto  Label_007A;  ///WYJ fix, simplify the flow
+                    type = current;
+                    break;
                 }
             }
-            goto Label_008D;
-        Label_007A:
-            type = current;
         }
-    Label_008D:
         if (this.string_1 != null)
         {
             foreach (Type type2 in list)

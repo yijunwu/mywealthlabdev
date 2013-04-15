@@ -1342,14 +1342,13 @@
                             Strategy current = enumerator.Current;
                             if (current.StrategyType == StrategyType.CombinedStrategy)
                             {
-                                goto Label_006E;
+                                ///goto  Label_006E;  ///WYJ fix, simplify the flow
+                                MessageBox.Show("Combination Strategies can not be added to the Strategy Monitor", Application.ProductName);
+                                return false;
                             }
                             this.AddStrategyToStrategyCenter(current);
                         }
                         break;
-                    Label_006E:
-                        MessageBox.Show("Combination Strategies can not be added to the Strategy Monitor", Application.ProductName);
-                        return false;
                     }
                 }
                 case DialogResult.Cancel:
@@ -1535,33 +1534,33 @@
                     Bars bars = null;
                     if (strategyCenterItem_0.UsingStreamingFilters)
                     {
-                        goto Label_03FA;
+                        ///goto  Label_03FA;  ///WYJ fix, simplify the flow
+                        bars = bars_0;
+                        //goto  Label_03FD;
                     }
-                    using (List<Bars>.Enumerator enumerator = strategyCenterItem_0.BarsList.GetEnumerator())
+                    else
                     {
-                        Bars current;
-                        while (enumerator.MoveNext())
+                        using (List<Bars>.Enumerator enumerator = strategyCenterItem_0.BarsList.GetEnumerator())
                         {
-                            current = enumerator.Current;
-                            if (current.Symbol == bars_0.Symbol)
+                            Bars current;
+                            while (enumerator.MoveNext())
                             {
-                                goto Label_03BA;
+                                current = enumerator.Current;
+                                if (current.Symbol == bars_0.Symbol)
+                                {
+                                    ///goto  Label_03BA;  ///WYJ fix, simplify the flow
+                                    bars = current;
+                                    break;
+                                }
                             }
                         }
-                        goto Label_03CE;
-                    Label_03BA:
-                        bars = current;
+                        if (bars == null)
+                        {
+                            return;
+                        }
+                        this.method_6(strategyCenterItem_0, "Append: " + bars.Symbol);
+                        bars.Append(bars_0);
                     }
-                Label_03CE:
-                    if (bars == null)
-                    {
-                        return;
-                    }
-                    this.method_6(strategyCenterItem_0, "Append: " + bars.Symbol);
-                    bars.Append(bars_0);
-                    goto Label_03FD;
-                Label_03FA:
-                    bars = bars_0;
                 Label_03FD:
                     if (!strategyCenterItem_0.IsPopulating)
                     {
@@ -1955,45 +1954,42 @@
             }
             using (List<Bars>.Enumerator enumerator = sCEI.BarsList.GetEnumerator())
             {
-            Label_0135:
-                if (!enumerator.MoveNext())
+            //Label_0135:
+                while (enumerator.MoveNext())
                 {
-                    return;
-                }
-                Bars current = enumerator.Current;
-                try
-                {
-                    if (strategyCenterItem_0.ShouldExecute(current))
+                    Bars current = enumerator.Current;
+                    try
                     {
-                        this.method_6(strategyCenterItem_0, "Executing: " + current.Symbol);
-                        executor.Execute(strategyCenterItem_0.Strategy, strategyCenterItem_0.WealthScript, current);
-                        strategyCenterItem_0.HasRun = true;
+                        if (strategyCenterItem_0.ShouldExecute(current))
+                        {
+                            this.method_6(strategyCenterItem_0, "Executing: " + current.Symbol);
+                            executor.Execute(strategyCenterItem_0.Strategy, strategyCenterItem_0.WealthScript, current);
+                            strategyCenterItem_0.HasRun = true;
+                        }
                     }
-                }
-                catch (Exception exception2)
-                {
-                    this.method_6(strategyCenterItem_0, "Error(4): " + exception2.Message);
-                }
-                goto Label_022E;
-            Label_01AB:
-                try
-                {
-                    if (((executor.Performance.Results.Alerts.Count == 0) && strategyCenterItem_0.AutoStage) && MainModule.Instance.ShouldOrderBePlaced(strategyCenterItem_0.AccountNumber))
+                    catch (Exception exception2)
                     {
-                        MainModule.Instance.TradeManager.CancelStrategyOrders(strategyCenterItem_0.AccountNumber, strategyCenterItem_0.Strategy, current.Symbol, strategyCenterItem_0.DataScale);
+                        this.method_6(strategyCenterItem_0, "Error(4): " + exception2.Message);
                     }
-                }
-                catch (Exception exception)
-                {
-                    this.method_6(strategyCenterItem_0, "Error(T3): " + exception.Message);
-                }
-                this.method_27(executor);
-                goto Label_0135;
-            Label_022E:
-                executor.LookupStrategy -= new EventHandler<StrategyEventArgs>(this.method_33);
-                strategyCenterItem_0.Trades += executor.Performance.Results.Positions.Count;
-                this.method_29(executor.Performance.Results.Alerts, strategyCenterItem_0);
-                goto Label_01AB;
+                    ///goto  Label_022E; ///WYJ fix, simplify the flow
+                    executor.LookupStrategy -= new EventHandler<StrategyEventArgs>(this.method_33);
+                    strategyCenterItem_0.Trades += executor.Performance.Results.Positions.Count;
+                    this.method_29(executor.Performance.Results.Alerts, strategyCenterItem_0);
+                    //goto  Label_01AB;
+                    //Label_01AB:
+                    try
+                    {
+                        if (((executor.Performance.Results.Alerts.Count == 0) && strategyCenterItem_0.AutoStage) && MainModule.Instance.ShouldOrderBePlaced(strategyCenterItem_0.AccountNumber))
+                        {
+                            MainModule.Instance.TradeManager.CancelStrategyOrders(strategyCenterItem_0.AccountNumber, strategyCenterItem_0.Strategy, current.Symbol, strategyCenterItem_0.DataScale);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        this.method_6(strategyCenterItem_0, "Error(T3): " + exception.Message);
+                    }
+                    this.method_27(executor);
+                }  //goto  Label_0135;
             }
         }
 
@@ -2541,7 +2537,6 @@
 
         private bool method_4(StrategyCenterItem strategyCenterItem_0)
         {
-            bool flag;
             using (List<StrategyCenterExecutionItem>.Enumerator enumerator = this.list_0.GetEnumerator())
             {
                 while (enumerator.MoveNext())
@@ -2549,14 +2544,12 @@
                     StrategyCenterExecutionItem current = enumerator.Current;
                     if (current.Item == strategyCenterItem_0)
                     {
-                        goto Label_002D;
+                        ///goto  Label_002D;  ///WYJ fix, simplify the flow
+                        return true;
                     }
                 }
                 return false;
-            Label_002D:
-                flag = true;
             }
-            return flag;
         }
 
         private void method_5(StrategyCenterItem strategyCenterItem_0)

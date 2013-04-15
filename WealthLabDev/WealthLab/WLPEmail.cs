@@ -162,23 +162,27 @@
         private static void smethod_0()
         {
             WLPEmail email;
-        Label_0000:
-            email = null;
-            lock (stack_0)
+        ///Label_0000:   ///WYJ fix, simplify the flow
+            while (true)
             {
-                if (stack_0.Count > 0)
+                email = null;
+                lock (stack_0)
                 {
-                    email = stack_0.Pop();
+                    if (stack_0.Count > 0)
+                    {
+                        email = stack_0.Pop();
+                    }
+                    if (email == null)
+                    {
+                        //goto  Label_003D;
+                    //Label_003D:
+                        Thread.Sleep(20);
+                        continue;
+                    }
                 }
-                if (email == null)
-                {
-                    goto Label_003D;
-                }
+                email.method_0(true);
+                Thread.Sleep(20);
             }
-            email.method_0(true);
-        Label_003D:
-            Thread.Sleep(20);
-            goto Label_0000;
         }
 
         public string Product

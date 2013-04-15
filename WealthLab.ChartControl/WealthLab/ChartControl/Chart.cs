@@ -481,14 +481,12 @@
                     current = enumerator.Current;
                     if (current.IsPricePane)
                     {
-                        goto Label_0060;
+                        ///goto  Label_0060;  ///WYJ fix, simplify the flow
+                        num = current.Top + current.Height;
+                        break;
                     }
                 }
-                goto Label_007A;
-            Label_0060:
-                num = current.Top + current.Height;
             }
-        Label_007A:
             this.scaleSelector_0.Top = num - this.scaleSelector_0.Height;
             this.scaleSelector_0.Left = 5;
             this.scaleSelector_0.Visible = true;
@@ -741,30 +739,29 @@
                         current = enumerator.Current;
                         if (current.HideDisplayPaneButton(mouseEventArgs_0.X, mouseEventArgs_0.Y))
                         {
-                            goto Label_005B;
-                        }
-                    }
-                    goto Label_00D1;
-                Label_005B:
-                    this.chartPane_0 = current;
-                    try
-                    {
-                        Graphics graphics = base.CreateGraphics();
-                        this.Renderer.HideDisplayPane(this.Bars, graphics, base.Width, base.Height, this.ChartStyle, this.chartPane_0);
-                        graphics.Dispose();
-                        this.Refresh();
-                        this.int_3 = 0;
-                    }
-                    catch (Exception exception)
-                    {
-                        if (this.eventHandler_3 != null)
-                        {
-                            this.eventHandler_3(this, new ExceptionEventArgs(exception));
+                            ///goto  Label_005B;  ///WYJ fix, simplify the flow
+                            //Label_005B:
+                            this.chartPane_0 = current;
+                            try
+                            {
+                                Graphics graphics = base.CreateGraphics();
+                                this.Renderer.HideDisplayPane(this.Bars, graphics, base.Width, base.Height, this.ChartStyle, this.chartPane_0);
+                                graphics.Dispose();
+                                this.Refresh();
+                                this.int_3 = 0;
+                            }
+                            catch (Exception exception)
+                            {
+                                if (this.eventHandler_3 != null)
+                                {
+                                    this.eventHandler_3(this, new ExceptionEventArgs(exception));
+                                }
+                            }
+                            break;
                         }
                     }
                 }
             }
-        Label_00D1:
             base.OnMouseClick(mouseEventArgs_0);
         }
 
@@ -772,7 +769,9 @@
         {
             if (!this.HasValidChart)
             {
-                goto Label_029B;
+                ///goto  Label_029B;  ///WYJ fix, simplify the flow
+                base.OnMouseDown(mevent);
+                return;
             }
             bool flag = false;
             if (mevent.Button == MouseButtons.Left)
@@ -784,15 +783,13 @@
                         ChartPane current = enumerator.Current;
                         if (current.HideDisplayPaneButton(mevent.X, mevent.Y))
                         {
-                            goto Label_0055;
+                            ///goto  Label_0055;  ///WYJ fix, simplify the flow
+                            flag = true;
+                            break;
                         }
                     }
-                    goto Label_0063;
-                Label_0055:
-                    flag = true;
                 }
             }
-        Label_0063:
             if (!flag)
             {
                 if ((type_0 != null) && (this.drawingObjectManager_0 != null))
@@ -871,7 +868,7 @@
                     this.DrawingManager.SelectedHandle = null;
                 }
             }
-        Label_029B:
+        ///Label_029B:
             base.OnMouseDown(mevent);
         }
 

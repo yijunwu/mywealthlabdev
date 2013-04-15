@@ -154,6 +154,8 @@
             base.Dispose(disposing);
         }
 
+        ///WYJ fix, code from Reflector
+        /*
         public Bars GetData(DataSource dataSource_1, string symbol)
         {
             Bars bars4;
@@ -442,7 +444,662 @@
                 bars4 = bars;
             }
             return bars4;
+        } */
+
+        ///WYJ fix, code from JustDecompile
+        /*
+        public Bars GetData(DataSource dataSource_1, string symbol)
+        {
+            Bars marketInfo;
+            StaticDataProvider staticDataProvider = null;
+            Bars bar;
+            lock ()
+            {
+                int maxBars = this.MaxBars;
+                if (this.MaxBars > 0 && (dataSource_1.Scale != this.Scale || dataSource_1.IsIntraday && dataSource_1.BarInterval != this.BarInterval))
+                {
+                    BarScale scale = dataSource_1.Scale;
+                    switch (scale)
+                    {
+                        case BarScale.Daily:
+                        {
+                            if (this.Scale != BarScale.Weekly)
+                            {
+                                if (this.Scale != BarScale.Monthly)
+                                {
+                                    if (this.Scale != BarScale.Quarterly)
+                                    {
+                                        if (this.Scale != BarScale.Yearly)
+                                        {
+                                            break;
+                                        }
+                                        maxBars = this.MaxBars * 400;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        maxBars = this.MaxBars * 120;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    maxBars = this.MaxBars * 40;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                maxBars = this.MaxBars * 8;
+                                break;
+                            }
+                        }
+                        case BarScale.Weekly:
+                        {
+                            if (this.Scale != BarScale.Monthly)
+                            {
+                                if (this.Scale != BarScale.Quarterly)
+                                {
+                                    if (this.Scale != BarScale.Yearly)
+                                    {
+                                        break;
+                                    }
+                                    maxBars = this.MaxBars * 60;
+                                    break;
+                                }
+                                else
+                                {
+                                    maxBars = this.MaxBars * 18;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                maxBars = this.MaxBars * 6;
+                                break;
+                            }
+                        }
+                        case BarScale.Monthly:
+                        {
+                            if (this.Scale != BarScale.Quarterly)
+                            {
+                                if (this.Scale != BarScale.Yearly)
+                                {
+                                    break;
+                                }
+                                maxBars = this.MaxBars * 12;
+                                break;
+                            }
+                            else
+                            {
+                                maxBars = this.MaxBars * 3;
+                                break;
+                            }
+                        }
+                        case BarScale.Minute:
+                        {
+                            if (this.Scale != BarScale.Minute)
+                            {
+                                maxBars = 0;
+                                break;
+                            }
+                            else
+                            {
+                                maxBars = (int)(1.2 * (double)(this.MaxBars * this.BarInterval / dataSource_1.BarInterval));
+                                break;
+                            }
+                        }
+                        case BarScale.Second:
+                        {
+                            if (this.Scale != BarScale.Second)
+                            {
+                                maxBars = 0;
+                                break;
+                            }
+                            else
+                            {
+                                maxBars = (int)(1.2 * (double)(this.MaxBars * this.BarInterval / dataSource_1.BarInterval));
+                                break;
+                            }
+                        }
+                        case BarScale.Tick:
+                        {
+                            maxBars = 0;
+                            break;
+                        }
+                        case BarScale.Quarterly:
+                        {
+                            if (this.Scale != BarScale.Yearly)
+                            {
+                                break;
+                            }
+                            maxBars = this.MaxBars * 4;
+                            break;
+                        }
+                    }
+                }
+                BarDataScale barDataScale = dataSource_1.BarDataScale;
+                if (barDataScale.CanConvertTo(this.BarDataScale) || !staticDataProvider.SupportsDynamicUpdate(this.Scale))
+                {
+                    marketInfo = staticDataProvider.RequestData(dataSource_1, symbol, this.StartDate, this.EndDate, maxBars, this.IncludePartialBar);
+                }
+                else
+                {
+                    DateTime startDate = this.StartDate;
+                    if (this.StartDate == DateTime.MinValue && maxBars > 0)
+                    {
+                        BarDataScale barDataScale1 = this.BarDataScale;
+                        BarScale barScale = barDataScale1.Scale;
+                        switch (barScale)
+                        {
+                            case BarScale.Daily:
+                            {
+                                DateTime now = DateTime.Now;
+                                DateTime date = now.Date;
+                                startDate = date.AddDays((double)(-maxBars) * 1.4 * 1.2);
+                                goto case BarScale.Tick;
+                            }
+                            case BarScale.Weekly:
+                            {
+                                DateTime dateTime = DateTime.Now;
+                                DateTime date1 = dateTime.Date;
+                                startDate = date1.AddDays((double)(-maxBars * 7) * 1.2);
+                                goto case BarScale.Tick;
+                            }
+                            case BarScale.Monthly:
+                            {
+                                DateTime now1 = DateTime.Now;
+                                DateTime dateTime1 = now1.Date;
+                                startDate = dateTime1.AddDays((double)(-maxBars * 30) * 1.2);
+                                goto case BarScale.Tick;
+                            }
+                            case BarScale.Minute:
+                            {
+                                int num = (maxBars / 390 + 1) * 3;
+                                DateTime now2 = DateTime.Now;
+                                DateTime date2 = now2.Date;
+                                BarDataScale barDataScale2 = this.BarDataScale;
+                                startDate = date2.AddDays((double)(-num * barDataScale2.BarInterval));
+                                goto case BarScale.Tick;
+                            }
+                            case BarScale.Second:
+                            case BarScale.Tick:
+                            {
+                                if (startDate == DateTime.MinValue)
+                                {
+                                    break;
+                                }
+                                maxBars = 0;
+                                break;
+                            }
+                            case BarScale.Quarterly:
+                            {
+                                DateTime dateTime2 = DateTime.Now;
+                                DateTime date3 = dateTime2.Date;
+                                startDate = date3.AddDays((double)(-maxBars * 90) * 1.2);
+                                goto case BarScale.Tick;
+                            }
+                            case BarScale.Yearly:
+                            {
+                                DateTime now3 = DateTime.Now;
+                                DateTime dateTime3 = now3.Date;
+                                startDate = dateTime3.AddDays((double)(-maxBars * 365) * 1.2);
+                                goto case BarScale.Tick;
+                            }
+                            default:
+                            {
+                                goto case BarScale.Tick;
+                            }
+                        }
+                    }
+                    DataSource dataSource = new DataSource();
+                    dataSource.Scale = this.Scale;
+                    dataSource.BarInterval = this.BarInterval;
+                    dataSource.DSString = dataSource_1.DSString;
+                    marketInfo = staticDataProvider.RequestData(dataSource, symbol, startDate, this.EndDate, maxBars, this.IncludePartialBar);
+                }
+                marketInfo.MarketInfo = staticDataProvider.GetMarketInfo(marketInfo.Symbol);
+                if (this.AutoConvertScale && (this.Scale != marketInfo.Scale || this.BarInterval != marketInfo.BarInterval))
+                {
+                    BarScale scale1 = this.Scale;
+                    switch (scale1)
+                    {
+                        case BarScale.Daily:
+                        {
+                            marketInfo = BarScaleConverter.ToDaily(marketInfo);
+                            break;
+                        }
+                        case BarScale.Weekly:
+                        {
+                            marketInfo = BarScaleConverter.ToWeekly(marketInfo);
+                            break;
+                        }
+                        case BarScale.Monthly:
+                        {
+                            marketInfo = BarScaleConverter.ToMonthly(marketInfo);
+                            break;
+                        }
+                        case BarScale.Minute:
+                        {
+                            marketInfo = BarScaleConverter.ToIntradayCompressed(marketInfo, BarScale.Minute, this.BarInterval);
+                            break;
+                        }
+                        case BarScale.Second:
+                        {
+                            marketInfo = BarScaleConverter.ToIntradayCompressed(marketInfo, BarScale.Second, this.BarInterval);
+                            break;
+                        }
+                        case BarScale.Tick:
+                        {
+                            marketInfo = BarScaleConverter.ToIntradayCompressed(marketInfo, BarScale.Tick, this.BarInterval);
+                            break;
+                        }
+                        case BarScale.Quarterly:
+                        {
+                            marketInfo = BarScaleConverter.ToQuarterly(marketInfo);
+                            break;
+                        }
+                        case BarScale.Yearly:
+                        {
+                            marketInfo = BarScaleConverter.ToYearly(marketInfo);
+                            break;
+                        }
+                    }
+                }
+                bool flag = false;
+                if (this.StartDate != DateTime.MinValue && marketInfo.Count > 0 && marketInfo.Date[0] <= this.StartDate)
+                {
+                    flag = true;
+                }
+                if (this.EndDate != DateTime.MaxValue && marketInfo.Count > 0 && marketInfo.Date[marketInfo.Count - 1] >= this.EndDate)
+                {
+                    flag = true;
+                }
+                if (flag)
+                {
+                    Bars bar1 = new Bars(marketInfo);
+                    for (int i = 0; i < marketInfo.Count; i++)
+                    {
+                        DateTime item = marketInfo.Date[i];
+                        if (item.Date > this.EndDate)
+                        {
+                            break;
+                        }
+                        DateTime item1 = marketInfo.Date[i];
+                        if (item1.Date >= this.StartDate)
+                        {
+                            bar1.Add(marketInfo.Date[i], marketInfo.Open[i], marketInfo.High[i], marketInfo.Low[i], marketInfo.Close[i], marketInfo.Volume[i]);
+                            foreach (DataSeries namedSeries in marketInfo.NamedSeries)
+                            {
+                                DataSeries dataSeries = bar1.FindNamedSeries(namedSeries.Description);
+                                dataSeries[dataSeries.Count - 1] = namedSeries[i];
+                            }
+                        }
+                    }
+                    marketInfo = bar1;
+                }
+                if (this.MaxBars > 0 && marketInfo.Count > this.MaxBars)
+                {
+                    Bars bar2 = new Bars(marketInfo);
+                    int count = marketInfo.Count - this.MaxBars;
+                    for (int j = count; j < marketInfo.Count; j++)
+                    {
+                        bar2.Add(marketInfo.Date[j], marketInfo.Open[j], marketInfo.High[j], marketInfo.Low[j], marketInfo.Close[j], marketInfo.Volume[j]);
+                        foreach (DataSeries namedSeries1 in marketInfo.NamedSeries)
+                        {
+                            DataSeries dataSeries1 = bar2.FindNamedSeries(namedSeries1.Description);
+                            dataSeries1[dataSeries1.Count - 1] = namedSeries1[j];
+                        }
+                    }
+                    marketInfo = bar2;
+                }
+                if (!BarsLoader.bool_4)
+                {
+                    List<SymbolInfo>.Enumerator enumerator = BarsLoader.list_0.GetEnumerator();
+                    try
+                    {
+                        while (true)
+                        {
+                            if (enumerator.MoveNext())
+                            {
+                                SymbolInfo current = enumerator.Current;
+                                if (Regex.IsMatch(symbol, string.Concat("^", current.Symbol, "$")))
+                                {
+                                    if (marketInfo.SymbolInfo == null)
+                                    {
+                                        break;
+                                    }
+                                    marketInfo.SymbolInfo.Tick = current.Tick;
+                                    marketInfo.SymbolInfo.Decimals = current.Decimals;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        ((IDisposable)enumerator).Dispose();
+                    }
+                }
+                else
+                {
+                    List<SymbolInfo>.Enumerator enumerator1 = BarsLoader.list_0.GetEnumerator();
+                    try
+                    {
+                        while (true)
+                        {
+                            if (enumerator1.MoveNext())
+                            {
+                                SymbolInfo symbolInfo = enumerator1.Current;
+                                if (symbolInfo.Symbol.ToUpper() == symbol.ToUpper())
+                                {
+                                    marketInfo.SymbolInfo = symbolInfo;
+                                    break;
+                                }
+                                else
+                                {
+                                    if (Regex.IsMatch(symbol, string.Concat("^", symbolInfo.Symbol, "$")))
+                                    {
+                                        marketInfo.SymbolInfo = symbolInfo;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        ((IDisposable)enumerator1).Dispose();
+                    }
+                }
+                bar = marketInfo;
+            }
+            return bar;
+        }  */
+
+        ///WYJ fix, code from ILSpy
+        // WealthLab.BarsLoader
+        public Bars GetData(DataSource dataSource_1, string symbol)
+        {
+            if (BarsLoader.list_0 == null && BarsLoader.string_0 != "")
+            {
+                BarsLoader.LoadSymbolInfo();
+            }
+            StaticDataProvider staticDataProvider = this.method_3(dataSource_1);
+            Monitor.Enter(this.object_1);
+            Bars result;
+            try
+            {
+                int num = this.MaxBars;
+                if (this.MaxBars > 0 && (dataSource_1.Scale != this.Scale || (dataSource_1.IsIntraday && dataSource_1.BarInterval != this.BarInterval)))
+                {
+                    switch (dataSource_1.Scale)
+                    {
+                        case BarScale.Daily:
+                            if (this.Scale == BarScale.Weekly)
+                            {
+                                num = this.MaxBars * 8;
+                            }
+                            else
+                            {
+                                if (this.Scale == BarScale.Monthly)
+                                {
+                                    num = this.MaxBars * 40;
+                                }
+                                else
+                                {
+                                    if (this.Scale == BarScale.Quarterly)
+                                    {
+                                        num = this.MaxBars * 120;
+                                    }
+                                    else
+                                    {
+                                        if (this.Scale == BarScale.Yearly)
+                                        {
+                                            num = this.MaxBars * 400;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        case BarScale.Weekly:
+                            if (this.Scale == BarScale.Monthly)
+                            {
+                                num = this.MaxBars * 6;
+                            }
+                            else
+                            {
+                                if (this.Scale == BarScale.Quarterly)
+                                {
+                                    num = this.MaxBars * 18;
+                                }
+                                else
+                                {
+                                    if (this.Scale == BarScale.Yearly)
+                                    {
+                                        num = this.MaxBars * 60;
+                                    }
+                                }
+                            }
+                            break;
+                        case BarScale.Monthly:
+                            if (this.Scale == BarScale.Quarterly)
+                            {
+                                num = this.MaxBars * 3;
+                            }
+                            else
+                            {
+                                if (this.Scale == BarScale.Yearly)
+                                {
+                                    num = this.MaxBars * 12;
+                                }
+                            }
+                            break;
+                        case BarScale.Minute:
+                            if (this.Scale == BarScale.Minute)
+                            {
+                                num = (int)(1.2 * (double)(this.MaxBars * this.BarInterval / dataSource_1.BarInterval));
+                            }
+                            else
+                            {
+                                num = 0;
+                            }
+                            break;
+                        case BarScale.Second:
+                            if (this.Scale == BarScale.Second)
+                            {
+                                num = (int)(1.2 * (double)(this.MaxBars * this.BarInterval / dataSource_1.BarInterval));
+                            }
+                            else
+                            {
+                                num = 0;
+                            }
+                            break;
+                        case BarScale.Tick:
+                            num = 0;
+                            break;
+                        case BarScale.Quarterly:
+                            if (this.Scale == BarScale.Yearly)
+                            {
+                                num = this.MaxBars * 4;
+                            }
+                            break;
+                    }
+                }
+                Bars bars;
+                if (!dataSource_1.BarDataScale.CanConvertTo(this.BarDataScale) && staticDataProvider.SupportsDynamicUpdate(this.Scale))
+                {
+                    DateTime dateTime = this.StartDate;
+                    if (this.StartDate == DateTime.MinValue && num > 0)
+                    {
+                        switch (this.BarDataScale.Scale)
+                        {
+                            case BarScale.Daily:
+                                dateTime = DateTime.Now.Date.AddDays((double)(-(double)num) * 1.4 * 1.2);
+                                break;
+                            case BarScale.Weekly:
+                                dateTime = DateTime.Now.Date.AddDays((double)(-(double)num * 7) * 1.2);
+                                break;
+                            case BarScale.Monthly:
+                                dateTime = DateTime.Now.Date.AddDays((double)(-(double)num * 30) * 1.2);
+                                break;
+                            case BarScale.Minute:
+                                {
+                                    int num2 = (num / 390 + 1) * 3;
+                                    dateTime = DateTime.Now.Date.AddDays((double)(-(double)num2 * this.BarDataScale.BarInterval));
+                                    break;
+                                }
+                            case BarScale.Quarterly:
+                                dateTime = DateTime.Now.Date.AddDays((double)(-(double)num * 90) * 1.2);
+                                break;
+                            case BarScale.Yearly:
+                                dateTime = DateTime.Now.Date.AddDays((double)(-(double)num * 365) * 1.2);
+                                break;
+                        }
+                        if (dateTime != DateTime.MinValue)
+                        {
+                            num = 0;
+                        }
+                    }
+                    bars = staticDataProvider.RequestData(new DataSource
+                    {
+                        Scale = this.Scale,
+                        BarInterval = this.BarInterval,
+                        DSString = dataSource_1.DSString
+                    }, symbol, dateTime, this.EndDate, num, this.IncludePartialBar);
+                }
+                else
+                {
+                    bars = staticDataProvider.RequestData(dataSource_1, symbol, this.StartDate, this.EndDate, num, this.IncludePartialBar);
+                }
+                bars.MarketInfo = staticDataProvider.GetMarketInfo(bars.Symbol);
+                if (this.AutoConvertScale && (this.Scale != bars.Scale || this.BarInterval != bars.BarInterval))
+                {
+                    switch (this.Scale)
+                    {
+                        case BarScale.Daily:
+                            bars = BarScaleConverter.ToDaily(bars);
+                            break;
+                        case BarScale.Weekly:
+                            bars = BarScaleConverter.ToWeekly(bars);
+                            break;
+                        case BarScale.Monthly:
+                            bars = BarScaleConverter.ToMonthly(bars);
+                            break;
+                        case BarScale.Minute:
+                            bars = BarScaleConverter.ToIntradayCompressed(bars, BarScale.Minute, this.BarInterval);
+                            break;
+                        case BarScale.Second:
+                            bars = BarScaleConverter.ToIntradayCompressed(bars, BarScale.Second, this.BarInterval);
+                            break;
+                        case BarScale.Tick:
+                            bars = BarScaleConverter.ToIntradayCompressed(bars, BarScale.Tick, this.BarInterval);
+                            break;
+                        case BarScale.Quarterly:
+                            bars = BarScaleConverter.ToQuarterly(bars);
+                            break;
+                        case BarScale.Yearly:
+                            bars = BarScaleConverter.ToYearly(bars);
+                            break;
+                    }
+                }
+                bool flag = false;
+                if (this.StartDate != DateTime.MinValue && bars.Count > 0 && bars.Date[0] <= this.StartDate)
+                {
+                    flag = true;
+                }
+                if (this.EndDate != DateTime.MaxValue && bars.Count > 0 && bars.Date[bars.Count - 1] >= this.EndDate)
+                {
+                    flag = true;
+                }
+                if (flag)
+                {
+                    Bars bars2 = new Bars(bars);
+                    int num3 = 0;
+                    while (num3 < bars.Count && !(bars.Date[num3].Date > this.EndDate))
+                    {
+                        if (bars.Date[num3].Date >= this.StartDate)
+                        {
+                            bars2.Add(bars.Date[num3], bars.Open[num3], bars.High[num3], bars.Low[num3], bars.Close[num3], bars.Volume[num3]);
+                            foreach (DataSeries current in bars.NamedSeries)
+                            {
+                                DataSeries dataSeries = bars2.FindNamedSeries(current.Description);
+                                dataSeries[dataSeries.Count - 1] = current[num3];
+                            }
+                        }
+                        num3++;
+                    }
+                    bars = bars2;
+                }
+                if (this.MaxBars > 0 && bars.Count > this.MaxBars)
+                {
+                    Bars bars3 = new Bars(bars);
+                    int num4 = bars.Count - this.MaxBars;
+                    for (int i = num4; i < bars.Count; i++)
+                    {
+                        bars3.Add(bars.Date[i], bars.Open[i], bars.High[i], bars.Low[i], bars.Close[i], bars.Volume[i]);
+                        foreach (DataSeries current2 in bars.NamedSeries)
+                        {
+                            DataSeries dataSeries2 = bars3.FindNamedSeries(current2.Description);
+                            dataSeries2[dataSeries2.Count - 1] = current2[i];
+                        }
+                    }
+                    bars = bars3;
+                }
+                if (BarsLoader.bool_4)
+                {
+                    using (List<SymbolInfo>.Enumerator enumerator3 = BarsLoader.list_0.GetEnumerator())
+                    {
+                        while (enumerator3.MoveNext())
+                        {
+                            SymbolInfo current3 = enumerator3.Current;
+                            if (!(current3.Symbol.ToUpper() == symbol.ToUpper()))
+                            {
+                                if (!Regex.IsMatch(symbol, "^" + current3.Symbol + "$"))
+                                {
+                                    continue;
+                                }
+                                bars.SymbolInfo = current3;
+                            }
+                            else
+                            {
+                                bars.SymbolInfo = current3;
+                            }
+                            break;
+                        }
+                    }
+                    result = bars;   ///WYJ fix, replace goto with more friendly statements
+                    return result;
+                }
+                foreach (SymbolInfo current4 in BarsLoader.list_0)
+                {
+                    if (Regex.IsMatch(symbol, "^" + current4.Symbol + "$"))
+                    {
+                        if (bars.SymbolInfo != null)
+                        {
+                            bars.SymbolInfo.Tick = current4.Tick;
+                            bars.SymbolInfo.Decimals = current4.Decimals;
+                        }
+                        break;
+                    }
+                }
+                result = bars;
+            }
+            finally
+            {
+                Monitor.Exit(this.object_1);
+            }
+            return result;
         }
+
 
         public static WealthLab.SymbolInfo GetSymbolInfo(string symbol)
         {
@@ -463,14 +1120,13 @@
                     }
                     if (Regex.IsMatch(symbol, "^" + current.Symbol + "$"))
                     {
-                        goto Label_0062;
+                        ///goto  Label_0062;  ///WYJ fix, simplify the flow
+                        info2 = current;
+                        return info2;
                     }
                 }
                 return null;
-            Label_0062:
-                info2 = current;
             }
-            return info2;
         }
 
         public static void LoadSymbolInfo()
