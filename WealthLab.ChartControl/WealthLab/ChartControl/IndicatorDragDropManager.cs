@@ -386,7 +386,12 @@
                 }
                 if (!(obj2 is IndicatorDescriptionString))
                 {
-                    goto Label_0173;
+                    ///goto  Label_0173; ///WYJ fix, simplify the flow
+                    if (obj2 is BarsDescriptorString)
+                    {
+                        objArray[i] = this.chart_0.Bars;
+                    }
+                    continue;
                 }
                 IndicatorDescriptionString str = (IndicatorDescriptionString) obj2;
                 if (this.chart_0.Renderer.FindPane(indicatorDescriptor_0.PaneDescription) == null)
@@ -396,7 +401,9 @@
                 PlottedIndicator indicator = this.chart_0.Renderer.FindPlottedIndicator(str.Description);
                 if (indicator != null)
                 {
-                    goto Label_0168;
+                    ///goto  Label_0168;
+                    objArray[i] = indicator.Series;
+                    continue;
                 }
                 using (List<IndicatorDescriptor>.Enumerator enumerator = this.list_5.GetEnumerator())
                 {
@@ -406,27 +413,18 @@
                         current = enumerator.Current;
                         if (current.LinkDescription == str.Description)
                         {
-                            goto Label_0135;
+                            ///goto  Label_0135;  ///WYJ fix, simplify the flow
+                            indicator = current.PlottedIndicator;
+                            str.Description = current.PlottedIndicator.Series.Description;
+                            break;
                         }
                     }
-                    goto Label_0165;
-                Label_0135:
-                    indicator = current.PlottedIndicator;
-                    str.Description = current.PlottedIndicator.Series.Description;
                 }
-            Label_0165:
                 if (indicator == null)
                 {
                     return null;
                 }
-            Label_0168:
                 objArray[i] = indicator.Series;
-                continue;
-            Label_0173:
-                if (obj2 is BarsDescriptorString)
-                {
-                    objArray[i] = this.chart_0.Bars;
-                }
             }
             return objArray;
         }
@@ -519,7 +517,6 @@
 
         private IndicatorHelper method_15(PlottedIndicator plottedIndicator_1)
         {
-            IndicatorHelper helper2;
             using (List<IndicatorHelper>.Enumerator enumerator = this.list_8.GetEnumerator())
             {
                 IndicatorHelper current;
@@ -528,19 +525,16 @@
                     current = enumerator.Current;
                     if (current.IndicatorType == plottedIndicator_1.Series.GetType())
                     {
-                        goto Label_003A;
+                        ///goto  Label_003A;  ///WYJ fix, simplify the flow
+                        return current; 
                     }
                 }
                 return null;
-            Label_003A:
-                helper2 = current;
             }
-            return helper2;
         }
 
         private IndicatorHelper method_16(IndicatorDescriptor indicatorDescriptor_0)
         {
-            IndicatorHelper helper2;
             using (List<IndicatorHelper>.Enumerator enumerator = this.list_8.GetEnumerator())
             {
                 IndicatorHelper current;
@@ -549,14 +543,12 @@
                     current = enumerator.Current;
                     if (current.IndicatorType == indicatorDescriptor_0.IndicatorType)
                     {
-                        goto Label_0035;
+                        ///goto  Label_0035;
+                        return current;
                     }
                 }
                 return null;
-            Label_0035:
-                helper2 = current;
             }
-            return helper2;
         }
 
         private void method_17(IndicatorParametersForm indicatorParametersForm_0, PlottedIndicator plottedIndicator_1)
@@ -639,6 +631,8 @@
             }
         }
 
+        ///WYJ fix, code from Reflector, deprecated because of having too many goto statements. Try code from ILSpy
+        /*
         private string method_2(List<string> list_9, Dictionary<string, string> dictionary_0, IndicatorDescriptor indicatorDescriptor_0)
         {
             StringBuilder builder = new StringBuilder();
@@ -785,7 +779,166 @@
             string str6 = builder2.ToString();
             dictionary_0[str6] = builder.ToString();
             return builder.ToString();
+        } */
+
+        ///WYJ fix, code from ILSpy
+        // WealthLab.ChartControl.IndicatorDragDropManager
+        private string method_2(List<string> list_9, Dictionary<string, string> dictionary_0, IndicatorDescriptor indicatorDescriptor_0)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(indicatorDescriptor_0.IndicatorType.Name);
+            stringBuilder.Append(".Series(");
+            StringBuilder stringBuilder2 = new StringBuilder();
+            stringBuilder2.Append(indicatorDescriptor_0.IndicatorType.Name);
+            stringBuilder2.Append("(");
+            int num = 0;
+            IndicatorHelper indicatorHelper = this.method_16(indicatorDescriptor_0);
+            for (int i = 0; i < indicatorDescriptor_0.Parameters.Length; i++)
+            {
+                Type type = indicatorHelper.ParameterDefaultValues[i].GetType();
+                object obj = indicatorDescriptor_0.Parameters[i];
+                string text = indicatorDescriptor_0.Parameters[i].ToString();
+                if (obj is BarsDescriptorString)
+                {
+                    text = "Bars";
+                }
+                else
+                {
+                    stringBuilder2.Append((num++ > 0) ? "," : "");
+                    stringBuilder2.Append(text);
+                    if (obj is Enum && type != typeof(CoreDataSeries))
+                    {
+                        if (type == typeof(BarDataType))
+                        {
+                            text = "Bars";
+                        }
+                        else
+                        {
+                            text = type.Name + "." + text;
+                        }
+                    }
+                    else
+                    {
+                        if (type == typeof(string))
+                        {
+                            text = "\"" + indicatorDescriptor_0.Parameters[i].ToString() + "\"";
+                        }
+                        else
+                        {
+                            if (!(type == typeof(RangeBoundInt32)) && !(type == typeof(RangeBoundDouble)))
+                            {
+                                if (obj is IndicatorDescriptionString)
+                                {
+                                    IndicatorDescriptionString indicatorDescriptionString = (IndicatorDescriptionString)obj;
+                                    if (dictionary_0.ContainsKey(indicatorDescriptionString.Description))
+                                    {
+                                        text = dictionary_0[indicatorDescriptionString.Description];
+                                    }
+                                    else
+                                    {
+                                        PlottedIndicator plottedIndicator = this.chart_0.Renderer.FindPlottedIndicator(indicatorDescriptionString.Description);
+                                        if (plottedIndicator == null)
+                                        {
+                                            foreach (IndicatorDescriptor current in this.list_5)
+                                            {
+                                                if (current.LinkDescription == indicatorDescriptionString.Description)
+                                                {
+                                                    plottedIndicator = current.PlottedIndicator;
+                                                    indicatorDescriptionString.Description = current.PlottedIndicator.Series.Description;
+                                                    break;
+                                                }
+                                            }
+                                            if (plottedIndicator == null)
+                                            {
+                                                return null;
+                                            }
+                                        }
+                                        IndicatorDescriptor indicatorDescriptor_ = this.method_14(plottedIndicator);
+                                        text = this.method_2(list_9, dictionary_0, indicatorDescriptor_);
+                                    }
+                                }
+                                else
+                                {
+                                    if (obj is bool)
+                                    {
+                                        text = text.ToLower();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                int num2 = list_9.Count;
+                                string text2;
+                                do
+                                {
+                                    num2++;
+                                    text2 = "slider" + num2.ToString();
+                                }
+                                while (list_9.Contains(text2) || this.string_6.Contains(text2));
+                                list_9.Add(text2);
+                                this.list_3.Add("private StrategyParameter " + text2 + ";");
+                                string text3 = string.Concat(new string[]
+						        {
+							        "\"",
+							        indicatorDescriptor_0.IndicatorType.Name,
+							        "_",
+							        indicatorHelper.ParameterDescriptions[i],
+							        "_",
+							        num2.ToString(),
+							        "\""
+						        });
+                                double num3;
+                                double num4;
+                                if (type == typeof(RangeBoundInt32))
+                                {
+                                    RangeBoundInt32 rangeBoundInt = (RangeBoundInt32)indicatorHelper.ParameterDefaultValues[i];
+                                    num3 = (double)rangeBoundInt.MinimumValue;
+                                    num4 = (double)rangeBoundInt.MaximumValue;
+                                }
+                                else
+                                {
+                                    RangeBoundDouble rangeBoundDouble = (RangeBoundDouble)indicatorHelper.ParameterDefaultValues[i];
+                                    num3 = rangeBoundDouble.MinimumValue;
+                                    num4 = rangeBoundDouble.MaximumValue;
+                                }
+                                double gridIncrement = new GridLines
+                                {
+                                    WholeNumbersOnly = num3 == (double)((int)num3) && num4 == (double)((int)num4),
+                                    LinesDesired = 15,
+                                    RangeMin = num3,
+                                    RangeMax = num4
+                                }.GridIncrement;
+                                string item = string.Concat(new string[]
+						        {
+							        text2,
+							        " = CreateParameter(",
+							        text3,
+							        ",",
+							        text,
+							        ",",
+							        num3.ToString(),
+							        ",",
+							        num4.ToString(),
+							        ",",
+							        gridIncrement.ToString(),
+							        ");"
+						        });
+                                this.list_4.Add(item);
+                                text = text2 + "." + ((type == typeof(RangeBoundInt32)) ? "ValueInt" : "Value");
+                            }
+                        }
+                    }
+                }
+                stringBuilder.Append((i > 0) ? "," : "");
+                stringBuilder.Append(text);
+            }
+            stringBuilder.Append(")");
+            stringBuilder2.Append(")");
+            string key = stringBuilder2.ToString();
+            dictionary_0[key] = stringBuilder.ToString();
+            return stringBuilder.ToString();
         }
+
 
         private void method_20()
         {
@@ -800,14 +953,12 @@
                         IndicatorDescriptor current = enumerator.Current;
                         if (current.PaneDescription == descriptor.Description)
                         {
-                            goto Label_0059;
+                            ///goto  Label_0059;  ///WYJ fix, simplify the flow
+                            flag = false;
+                            break;
                         }
                     }
-                    goto Label_006B;
-                Label_0059:
-                    flag = false;
                 }
-            Label_006B:
                 if (flag)
                 {
                     this.chart_0.Renderer.RemovePane(descriptor.Description);

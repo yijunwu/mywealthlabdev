@@ -105,16 +105,13 @@
                     current = enumerator.Current;
                     if (current.Date == dateTime_1)
                     {
-                        goto Label_003E;
+                        ///goto  Label_003E; ///WYJ fix, simplify the flow
+                        openTime = current.OpenTimeNative;
+                        closeTime = current.CloseTimeNative;
+                        return;
                     }
                 }
-                goto Label_0066;
-            Label_003E:
-                openTime = current.OpenTimeNative;
-                closeTime = current.CloseTimeNative;
-                return;
             }
-        Label_0066:
             openTime = this.MarketOpenTimeNative;
             closeTime = this.MarketCloseTimeNative;
         }
@@ -216,21 +213,43 @@
                         case 5:
                         case 6:
                             num = 6;
-                            goto Label_0342;
+                            //goto  Label_0342;
+                            break;
 
                         case 7:
                         case 8:
                         case 9:
                             num = 9;
-                            goto Label_0342;
+                            //goto  Label_0342;
+                            break;
 
                         case 13:
                             num = 1;
                             num5++;
-                            goto Label_0337;
+                            ///goto  Label_0337; ///WYJ fix, simplify the flow
+                            num = 3;
+                            //goto  Label_0342;
+                            break;
+                        default:
+                            num = 12;
+                            //goto  Label_0342;
+                            break;
                     }
-                    num = 12;
-                    goto Label_0342;
+                    
+                    //Label_0342:
+                    time2 = new DateTime(num5, num, 0x1c);
+                    do
+                    {
+                        time2 = time2.AddDays(1.0);
+                    }
+                    while (time2.Month == num);
+                    time2 = time2.AddDays(-1.0);
+                    time2 = this.AdvanceToNextMarketOpen(time2);
+                    while (!this.IsTradingDay(time2))
+                    {
+                        time2 = time2.AddDays(-1.0);
+                    }
+                    return time2;
 
                 case BarScale.Yearly:
                     time2 = new DateTime(time2.Year + 1, 12, 0x1f);
@@ -244,22 +263,6 @@
                 default:
                     return time2;
             }
-        Label_0337:
-            num = 3;
-        Label_0342:
-            time2 = new DateTime(num5, num, 0x1c);
-            do
-            {
-                time2 = time2.AddDays(1.0);
-            }
-            while (time2.Month == num);
-            time2 = time2.AddDays(-1.0);
-            time2 = this.AdvanceToNextMarketOpen(time2);
-            while (!this.IsTradingDay(time2))
-            {
-                time2 = time2.AddDays(-1.0);
-            }
-            return time2;
         }
 
         public bool IsMarketOpen(DateTime dateTime_1)
@@ -322,14 +325,13 @@
                     current = enumerator.Current;
                     if (current.Date == dateTime_1.Date)
                     {
-                        goto Label_003B;
+                        ///goto  Label_003B;  ///WYJ fix, simplify the flow
+                        hours2 = current;
+                        return hours2;
                     }
                 }
                 return null;
-            Label_003B:
-                hours2 = current;
             }
-            return hours2;
         }
 
         public static void SaveConfiguration()
@@ -417,15 +419,13 @@
                             current = enumerator.Current;
                             if (current.Name == "US Equities")
                             {
-                                goto Label_003B;
+                                ///goto  Label_003B; ///WYJ fix, simplify the flow
+                                this.marketInfo_0 = current;
+                                break;
                             }
                         }
-                        goto Label_004F;
-                    Label_003B:
-                        this.marketInfo_0 = current;
                     }
                 }
-            Label_004F:
                 if (this.marketInfo_0 == null)
                 {
                     MarketInfo info = new MarketInfo {
@@ -445,12 +445,11 @@
                             time = new DateTime(i, 9, j);
                             if (time.DayOfWeek == DayOfWeek.Monday)
                             {
-                                goto Label_0140;
+                                ///goto  Label_0140;  ///WYJ fix, simplify the flow
+                                info.Holidays.Add(time);
+                                break;
                             }
                         }
-                        continue;
-                    Label_0140:
-                        info.Holidays.Add(time);
                     }
                     this.marketInfo_0 = info;
                     Markets.Add(this.marketInfo_0);
@@ -496,12 +495,12 @@
                         current = enumerator.Current;
                         if (current.Name == value)
                         {
-                            goto Label_002D;
+                            ///goto  Label_002D;  ///WYJ fix, simplify the flow
+                            this.marketInfo_0 = current;
+                            return;
                         }
                     }
                     return;
-                Label_002D:
-                    this.marketInfo_0 = current;
                 }
             }
         }

@@ -187,7 +187,8 @@
                     {
                         dateTime_3 = dateTime_3.AddDays(1.0);
                     }
-                    goto Label_0399;
+                    ///goto  Label_0399;  ///WYJ fix, simplify the flow
+                    break;
 
                 case BarScale.Weekly:
                     time = dateTime_3.Date.AddDays(1.0);
@@ -200,7 +201,8 @@
                         time = time.AddDays(1.0);
                     }
                     dateTime_3 = time;
-                    goto Label_0399;
+                    ///goto  Label_0399;
+                    break;
 
                 case BarScale.Monthly:
                 {
@@ -217,7 +219,8 @@
                         time = time.AddDays(1.0);
                     }
                     dateTime_3 = time;
-                    goto Label_0399;
+                    ///goto  Label_0399;
+                    break;
                 }
                 case BarScale.Minute:
                     if ((dateTime_3.TimeOfDay < this.marketHours_0.MarketCloseTimeNative.TimeOfDay) || (dateTime_3.Date >= DateTime.Now.Date))
@@ -251,26 +254,42 @@
                         case 2:
                         case 3:
                             num = 3;
-                            goto Label_030C;
+                            ///goto  Label_030C;
+                            break;
 
                         case 4:
                         case 5:
                         case 6:
                             num = 6;
-                            goto Label_030C;
+                            ///goto  Label_030C;
+                            break;
 
                         case 7:
                         case 8:
                         case 9:
                             num = 9;
-                            goto Label_030C;
+                            ///goto  Label_030C;
+                            break;
 
                         case 10:
                         case 11:
                         case 12:
                             num = 12;
-                            goto Label_030C;
+                            ///goto  Label_030C;
+                            break;
                     }
+                    //Label_030C:
+                    time = new DateTime(year, num, 0x1c, 0, 0, 0);
+                    while (time.Month == num)
+                    {
+                        time = time.AddDays(1.0);
+                    }
+                    while (!this.marketHours_0.IsTradingDay(time))
+                    {
+                        time = time.AddDays(1.0);
+                    }
+                    dateTime_3 = time;
+                    ///goto  Label_0399;
                     break;
 
                 case BarScale.Yearly:
@@ -280,23 +299,13 @@
                         time = time.AddDays(1.0);
                     }
                     dateTime_3 = time;
-                    goto Label_0399;
+                    ///goto  Label_0399;
+                    break;
 
                 default:
-                    goto Label_0399;
+                    ///goto  Label_0399;
+                    break;
             }
-        Label_030C:
-            time = new DateTime(year, num, 0x1c, 0, 0, 0);
-            while (time.Month == num)
-            {
-                time = time.AddDays(1.0);
-            }
-            while (!this.marketHours_0.IsTradingDay(time))
-            {
-                time = time.AddDays(1.0);
-            }
-            dateTime_3 = time;
-        Label_0399:
             if (!this.BarDataScale.IsIntraday)
             {
                 DateTime marketCloseTimeNative = this.marketHours_0.MarketCloseTimeNative;

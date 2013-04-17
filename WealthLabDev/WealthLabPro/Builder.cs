@@ -1091,238 +1091,240 @@
         {
             TreeNode node = e.Node;
             this.pnlParams.Controls.Clear();
-            if (node != null)
+            if (node == null)
             {
-                Rule tag = (Rule) node.Tag;
-                if (tag != null)
+                return;
+            }
+            Rule tag = (Rule) node.Tag;
+            if (tag == null)
+            {
+                return;
+            }
+            int num = 0;
+            using (List<RuleParameter>.Enumerator enumerator = tag.Parameters.GetEnumerator())
+            {
+                NumericUpDown down;
+                ComboBox box6;
+                string[] strArray2;
+                int num2;
+                string str;
+                int num3;
+                ///Label_003E:  ///WYJ fix, simplify the flow
+                while (enumerator.MoveNext())
                 {
-                    int num = 0;
-                    using (List<RuleParameter>.Enumerator enumerator = tag.Parameters.GetEnumerator())
+                    RuleParameter current = enumerator.Current;
+                    Button button = new Button {
+                        FlatStyle = FlatStyle.Flat,
+                        Width = int_0,
+                        Height = 0x10,
+                        Left = 4,
+                        Top = num
+                    };
+                    this.pnlParams.Controls.Add(button);
+                    button.Tag = current;
+                    button.Image = Resources.Slider;
+                    if (current.ExposeAsSlider)
                     {
-                        NumericUpDown down;
-                        ComboBox box6;
-                        string[] strArray2;
-                        int num2;
-                        string str;
-                        int num3;
-                    Label_003E:
-                        if (!enumerator.MoveNext())
-                        {
-                            return;
-                        }
-                        RuleParameter current = enumerator.Current;
-                        Button button = new Button {
-                            FlatStyle = FlatStyle.Flat,
-                            Width = int_0,
-                            Height = 0x10,
-                            Left = 4,
-                            Top = num
-                        };
-                        this.pnlParams.Controls.Add(button);
-                        button.Tag = current;
-                        button.Image = Resources.Slider;
-                        if (current.ExposeAsSlider)
-                        {
-                            button.BackColor = Color.Red;
-                        }
-                        else
-                        {
-                            button.BackColor = Color.FromKnownColor(KnownColor.Control);
-                        }
-                        if (current.ParamType == RuleParamType.Indicator)
-                        {
-                            this.toolTip_0.SetToolTip(button, "Click to expose this indicator's parameters as sliders in the Strategy Parameters window");
-                        }
-                        else
-                        {
-                            this.toolTip_0.SetToolTip(button, "Click to expose parameter as slider in the Strategy Parameters window");
-                        }
-                        button.Visible = ((current.ParamType == RuleParamType.Integer) || (current.ParamType == RuleParamType.Float)) ? (((current.Start != 0.0) || (current.Stop != 0.0)) ? (current.Step != 0.0) : false) : false;
-                        if ((current.ParamType == RuleParamType.Indicator) && this.method_12(current))
-                        {
-                            button.Visible = true;
-                        }
-                        button.Tag = current;
-                        button.Click += new EventHandler(this.method_11);
-                        Label label = new LinkLabel {
-                            AutoSize = false,
-                            AutoEllipsis = true,
-                            Width = ((0x61 - int_0) - 4) + 40,
-                            Height = 13,
-                            Left = (4 + int_0) + 4,
-                            Top = num,
-                            Text = current.DisplayName
-                        };
-                        label.Click += new EventHandler(this.method_13);
-                        label.Tag = current;
-                        this.pnlParams.Controls.Add(label);
-                        Control control = null;
-                        switch (current.ParamType)
-                        {
-                            case RuleParamType.Integer:
-                            case RuleParamType.Float:
-                                down = new NumericUpDown();
-                                if (current.ParamType == RuleParamType.Float)
-                                {
-                                    down.DecimalPlaces = 2;
-                                }
-                                down.Minimum = -79228162514264337593543950335M;
-                                down.Maximum = 79228162514264337593543950335M;
-                                if (current.Step == 0.0)
-                                {
-                                    down.Increment = 1M;
-                                }
-                                else
-                                {
-                                    down.Increment = (decimal) current.Step;
-                                }
-                                try
-                                {
-                                    down.Value = (decimal) double.Parse(current.Value, cultureInfo_0);
-                                }
-                                catch
-                                {
-                                    down.Value = (decimal) double.Parse(current.DefaultValue, cultureInfo_0);
-                                }
-                                goto Label_06CB;
-
-                            case RuleParamType.String:
+                        button.BackColor = Color.Red;
+                    }
+                    else
+                    {
+                        button.BackColor = Color.FromKnownColor(KnownColor.Control);
+                    }
+                    if (current.ParamType == RuleParamType.Indicator)
+                    {
+                        this.toolTip_0.SetToolTip(button, "Click to expose this indicator's parameters as sliders in the Strategy Parameters window");
+                    }
+                    else
+                    {
+                        this.toolTip_0.SetToolTip(button, "Click to expose parameter as slider in the Strategy Parameters window");
+                    }
+                    button.Visible = ((current.ParamType == RuleParamType.Integer) || (current.ParamType == RuleParamType.Float)) ? (((current.Start != 0.0) || (current.Stop != 0.0)) ? (current.Step != 0.0) : false) : false;
+                    if ((current.ParamType == RuleParamType.Indicator) && this.method_12(current))
+                    {
+                        button.Visible = true;
+                    }
+                    button.Tag = current;
+                    button.Click += new EventHandler(this.method_11);
+                    Label label = new LinkLabel {
+                        AutoSize = false,
+                        AutoEllipsis = true,
+                        Width = ((0x61 - int_0) - 4) + 40,
+                        Height = 13,
+                        Left = (4 + int_0) + 4,
+                        Top = num,
+                        Text = current.DisplayName
+                    };
+                    label.Click += new EventHandler(this.method_13);
+                    label.Tag = current;
+                    this.pnlParams.Controls.Add(label);
+                    Control control = null;
+                    switch (current.ParamType)
+                    {
+                        case RuleParamType.Integer:
+                        case RuleParamType.Float:
+                            down = new NumericUpDown();
+                            if (current.ParamType == RuleParamType.Float)
                             {
-                                TextBox box = new TextBox {
-                                    Text = current.Value
-                                };
-                                box.TextChanged += new EventHandler(this.method_6);
-                                control = box;
-                                goto Label_05CB;
+                                down.DecimalPlaces = 2;
                             }
-                            case RuleParamType.Boolean:
+                            down.Minimum = -79228162514264337593543950335M;
+                            down.Maximum = 79228162514264337593543950335M;
+                            if (current.Step == 0.0)
                             {
-                                CheckBox box4 = new CheckBox {
-                                    Text = label.Text
-                                };
-                                label.Text = "";
-                                box4.Checked = current.Value == "true";
-                                box4.CheckedChanged += new EventHandler(this.method_8);
-                                control = box4;
-                                goto Label_05CB;
-                            }
-                            case RuleParamType.Indicator:
-                                TextBox box2 = new TextBox();
-                                
-                                box2.ReadOnly = true;
-                                box2.Font = new Font(box2.Font, FontStyle.Underline);
-                                box2.Cursor = Cursors.Hand;
-                                box2.Text = current.Value;
-                                
-                                box2.TextChanged += new EventHandler(this.method_6);
-                                box2.Click += new EventHandler(this.method_9);
-                                control = box2;
-                                goto Label_05CB;
-
-                            case RuleParamType.Fundamental:
-                                TextBox box3 = new TextBox();
-
-                                box3.ReadOnly = true;
-                                box3.Font = new Font(box3.Font, FontStyle.Underline);
-                                box3.Cursor = Cursors.Hand;
-                                box3.Text = current.Value;
-
-                                box3.TextChanged += new EventHandler(this.method_6);
-                                box3.Click += new EventHandler(this.method_10);
-                                control = box3;
-                                goto Label_05CB;
-
-                            case RuleParamType.StandardDataSeries:
-                            {
-                                ComboBox box5 = new ComboBox {
-                                    DropDownStyle = ComboBoxStyle.DropDownList
-                                };
-                                box5.Items.Add("Open");
-                                box5.Items.Add("High");
-                                box5.Items.Add("Low");
-                                box5.Items.Add("Close");
-                                box5.Items.Add("Volume");
-                                if (current.Value == "")
-                                {
-                                    current.Value = "Close";
-                                }
-                                box5.Text = current.Value;
-                                box5.SelectedIndexChanged += new EventHandler(this.method_6);
-                                control = box5;
-                                goto Label_05CB;
-                            }
-                            case RuleParamType.ListOfStrings:
-                                box6 = new ComboBox {
-                                    DropDownStyle = ComboBoxStyle.DropDownList
-                                };
-                                strArray2 = current.DefaultValue.Split(new char[] { ';' });
-                                num2 = 0;
-                                goto Label_0561;
-
-                            default:
-                                throw new InvalidOperationException("Unexpected rule parameter type: " + current.ParamType);
-                        }
-                    Label_052D:
-                        str = strArray2[num2];
-                        if (str.Trim() != "")
-                        {
-                            box6.Items.Add(str.Trim());
-                        }
-                        num2++;
-                    Label_0561:
-                        if (num2 < strArray2.Length)
-                        {
-                            goto Label_052D;
-                        }
-                        if (box6.Items.Count == 0)
-                        {
-                            box6.Items.Add("Value");
-                        }
-                        box6.SelectedIndex = box6.Items.IndexOf(current.Value);
-                        if (box6.SelectedIndex == -1)
-                        {
-                            box6.SelectedIndex = 0;
-                        }
-                        box6.SelectedIndexChanged += new EventHandler(this.method_6);
-                        control = box6;
-                    Label_05CB:
-                        num3 = 0x62;
-                        if (control != null)
-                        {
-                            control.Tag = current;
-                            control.Left = 0x93;
-                            control.Top = num;
-                            if (current.Decoration.Length > 0)
-                            {
-                                if (this.pnlParams.Width < 0x139)
-                                {
-                                    num3 = (this.pnlParams.Width - 0x75) / 2;
-                                }
+                                down.Increment = 1M;
                             }
                             else
                             {
-                                num3 = 2;
+                                down.Increment = (decimal) current.Step;
                             }
-                            control.Width = (this.pnlParams.Width - (0x75 + num3)) - 30;
-                            this.pnlParams.Controls.Add(control);
+                            try
+                            {
+                                down.Value = (decimal) double.Parse(current.Value, cultureInfo_0);
+                            }
+                            catch
+                            {
+                                down.Value = (decimal) double.Parse(current.DefaultValue, cultureInfo_0);
+                            }
+                            ///goto  Label_06CB;  ///WYJ fix, simplify the flow
+                            down.ValueChanged += new EventHandler(this.method_7);
+                            control = down;
+                            //goto  Label_05CB;
+                            break;
+
+                        case RuleParamType.String:
+                        {
+                            TextBox box = new TextBox {
+                                Text = current.Value
+                            };
+                            box.TextChanged += new EventHandler(this.method_6);
+                            control = box;
+                            break;
                         }
-                        Label label2 = new Label {
-                            AutoSize = false,
-                            AutoEllipsis = true,
-                            Left = this.pnlParams.Width - (5 + num3),
-                            Width = num3,
-                            Height = 13,
-                            Top = num,
-                            Text = current.Decoration
-                        };
-                        this.pnlParams.Controls.Add(label2);
-                        num += 0x18;
-                        goto Label_003E;
-                    Label_06CB:
-                        down.ValueChanged += new EventHandler(this.method_7);
-                        control = down;
-                        goto Label_05CB;
+                        case RuleParamType.Boolean:
+                        {
+                            CheckBox box4 = new CheckBox {
+                                Text = label.Text
+                            };
+                            label.Text = "";
+                            box4.Checked = current.Value == "true";
+                            box4.CheckedChanged += new EventHandler(this.method_8);
+                            control = box4;
+                            break;
+                        }
+                        case RuleParamType.Indicator:
+                            TextBox box2 = new TextBox();
+                                
+                            box2.ReadOnly = true;
+                            box2.Font = new Font(box2.Font, FontStyle.Underline);
+                            box2.Cursor = Cursors.Hand;
+                            box2.Text = current.Value;
+                                
+                            box2.TextChanged += new EventHandler(this.method_6);
+                            box2.Click += new EventHandler(this.method_9);
+                            control = box2;
+                            break;
+
+                        case RuleParamType.Fundamental:
+                            TextBox box3 = new TextBox();
+
+                            box3.ReadOnly = true;
+                            box3.Font = new Font(box3.Font, FontStyle.Underline);
+                            box3.Cursor = Cursors.Hand;
+                            box3.Text = current.Value;
+
+                            box3.TextChanged += new EventHandler(this.method_6);
+                            box3.Click += new EventHandler(this.method_10);
+                            control = box3;
+                            break;
+
+                        case RuleParamType.StandardDataSeries:
+                        {
+                            ComboBox box5 = new ComboBox {
+                                DropDownStyle = ComboBoxStyle.DropDownList
+                            };
+                            box5.Items.Add("Open");
+                            box5.Items.Add("High");
+                            box5.Items.Add("Low");
+                            box5.Items.Add("Close");
+                            box5.Items.Add("Volume");
+                            if (current.Value == "")
+                            {
+                                current.Value = "Close";
+                            }
+                            box5.Text = current.Value;
+                            box5.SelectedIndexChanged += new EventHandler(this.method_6);
+                            control = box5;
+                            break;
+                        }
+                        case RuleParamType.ListOfStrings:
+                            box6 = new ComboBox {
+                                DropDownStyle = ComboBoxStyle.DropDownList
+                            };
+                            strArray2 = current.DefaultValue.Split(new char[] { ';' });
+                            num2 = 0;
+                            //goto  Label_0561;
+                            //Label_0561:
+                            while (num2 < strArray2.Length)
+                            {
+                                ///goto Label_052D;
+                            //Label_052D:
+                                str = strArray2[num2];
+                                if (str.Trim() != "")
+                                {
+                                    box6.Items.Add(str.Trim());
+                                }
+                                num2++;
+                            }
+                            if (box6.Items.Count == 0)
+                            {
+                                box6.Items.Add("Value");
+                            }
+                            box6.SelectedIndex = box6.Items.IndexOf(current.Value);
+                            if (box6.SelectedIndex == -1)
+                            {
+                                box6.SelectedIndex = 0;
+                            }
+                            box6.SelectedIndexChanged += new EventHandler(this.method_6);
+                            control = box6;
+                            break;
+
+                        default:
+                            throw new InvalidOperationException("Unexpected rule parameter type: " + current.ParamType);
                     }
+                
+                //Label_05CB:
+                    num3 = 0x62;
+                    if (control != null)
+                    {
+                        control.Tag = current;
+                        control.Left = 0x93;
+                        control.Top = num;
+                        if (current.Decoration.Length > 0)
+                        {
+                            if (this.pnlParams.Width < 0x139)
+                            {
+                                num3 = (this.pnlParams.Width - 0x75) / 2;
+                            }
+                        }
+                        else
+                        {
+                            num3 = 2;
+                        }
+                        control.Width = (this.pnlParams.Width - (0x75 + num3)) - 30;
+                        this.pnlParams.Controls.Add(control);
+                    }
+                    Label label2 = new Label {
+                        AutoSize = false,
+                        AutoEllipsis = true,
+                        Left = this.pnlParams.Width - (5 + num3),
+                        Width = num3,
+                        Height = 13,
+                        Top = num,
+                        Text = current.Decoration
+                    };
+                    this.pnlParams.Controls.Add(label2);
+                    num += 0x18;
                 }
             }
         }

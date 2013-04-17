@@ -247,7 +247,7 @@
                                 ///goto  Label_0593;  ///WYJ fix, simplify the flow
                                 if (source.Date[num2 + 1] >= time2)
                                 {
-                                    ///goto Label_05B9;  ///WYJ fix, simplify the flow
+                                    ///goto  Label_05B9;  ///WYJ fix, simplify the flow
                                     break;
                                 }
                                 num2++;
@@ -636,7 +636,22 @@
                     {
                         if (time7 <= time2)
                         {
-                            goto Label_03BC;
+                            ///goto  Label_03BC;  ///WYJ fix, simplify the flow
+                            while (num < (source.Count - 1))
+                            {
+                                if (source.Date[num + 1] >= time2)
+                                {
+                                    break;
+                                }
+                                num++;
+                            }
+                            if (((source.Date[num] < time2) && (num < (source.Count - 1))) && (source.Date[num + 1] == time2))
+                            {
+                                num++;
+                            }
+                            series.Add(source[num], source.Date[num]);
+                            num++;
+                            continue;
                         }
                         if (num == 0)
                         {
@@ -653,24 +668,7 @@
                         }
                     }
                     continue;
-                Label_03A1:
-                    if (source.Date[num + 1] >= time2)
-                    {
-                        goto Label_03C7;
-                    }
-                    num++;
-                Label_03BC:
-                    if (num < (source.Count - 1))
-                    {
-                        goto Label_03A1;
-                    }
-                Label_03C7:
-                    if (((source.Date[num] < time2) && (num < (source.Count - 1))) && (source.Date[num + 1] == time2))
-                    {
-                        num++;
-                    }
-                    series.Add(source[num], source.Date[num]);
-                    num++;
+                
                 }
             }
             return series;
@@ -712,16 +710,14 @@
                         {
                             if (num == (source.Count - 1))
                             {
-                                goto Label_012B;
+                                ///goto  Label_012B;  ///WYJ fix, simplify the flow
+                                flag = true;
+                                series.Add(source[num], time2);
+                                break;
                             }
                             num++;
                             time = source.Date[num];
                         }
-                        goto Label_013D;
-                    Label_012B:
-                        flag = true;
-                        series.Add(source[num], time2);
-                    Label_013D:
                         if (!flag)
                         {
                             if (num == 0)
@@ -807,7 +803,22 @@
                     {
                         if (time <= time2)
                         {
-                            goto Label_039B;
+                            ///goto  Label_039B;  ///WYJ fix, simplify the flow
+                            while (num < (source.Count - 1))
+                            {
+                                if (source.Date[num + 1] >= time2)
+                                {
+                                    break;
+                                }
+                                num++;
+                            }
+                            if (((source.Date[num] < time2) && (num < (source.Count - 1))) && (source.Date[num + 1] == time2))
+                            {
+                                num++;
+                            }
+                            series.Add(source[num], source.Date[num]);
+                            num++;
+                            continue;
                         }
                         if (num == 0)
                         {
@@ -824,24 +835,7 @@
                         }
                     }
                     continue;
-                Label_0380:
-                    if (source.Date[num + 1] >= time2)
-                    {
-                        goto Label_03A6;
-                    }
-                    num++;
-                Label_039B:
-                    if (num < (source.Count - 1))
-                    {
-                        goto Label_0380;
-                    }
-                Label_03A6:
-                    if (((source.Date[num] < time2) && (num < (source.Count - 1))) && (source.Date[num + 1] == time2))
-                    {
-                        num++;
-                    }
-                    series.Add(source[num], source.Date[num]);
-                    num++;
+                
                 }
             }
             return series;
@@ -904,6 +898,8 @@
             return bars;
         }
 
+        ///WYJ fix, code from Reflector
+        /*
         public static Bars ToIntradayCompressed(Bars bars_0, BarScale scale, int barInterval)
         {
             int num;
@@ -1152,6 +1148,302 @@
             bars.IsLastCompressedBarPartial = minValue != bars_0.Date[num];
             smethod_2(bars_0, bars, num);
             return bars;
+        } */
+
+        ///WYJ fix, code from JustDecompile
+        public static Bars ToIntradayCompressed(Bars bars_0, BarScale scale, int barInterval)
+        {
+            int i;
+            DateTime item;
+            double num;
+            double num1;
+            bool flag;
+            DateTime dateTime;
+            bool flag1;
+            if (bars_0.Scale != scale || bars_0.BarInterval != barInterval)
+            {
+                bool flag2 = false;
+                BarScale barScale = bars_0.Scale;
+                switch (barScale)
+                {
+                    case BarScale.Minute:
+                        {
+                            if (scale == BarScale.Minute)
+                            {
+                                flag2 = barInterval % bars_0.BarInterval == 0;
+                                break;
+                            }
+                            else
+                            {
+                                flag2 = false;
+                                break;
+                            }
+                        }
+                    case BarScale.Second:
+                        {
+                            BarScale barScale1 = scale;
+                            switch (barScale1)
+                            {
+                                case BarScale.Minute:
+                                    {
+                                        flag2 = true;
+                                        break;
+                                    }
+                                case BarScale.Second:
+                                    {
+                                        flag2 = barInterval % bars_0.BarInterval == 0;
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                    case BarScale.Tick:
+                        {
+                            BarScale barScale2 = scale;
+                            switch (barScale2)
+                            {
+                                case BarScale.Minute:
+                                    {
+                                        flag2 = true;
+                                        break;
+                                    }
+                                case BarScale.Second:
+                                    {
+                                        flag2 = true;
+                                        break;
+                                    }
+                                case BarScale.Tick:
+                                    {
+                                        flag2 = barInterval % bars_0.BarInterval == 0;
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                }
+                if (flag2)
+                {
+                    Bars bar = new Bars(bars_0.Symbol, scale, barInterval);
+                    bar.SymbolInfo = bars_0.SymbolInfo;
+                    bar.MarketInfo = bars_0.MarketInfo;
+                    bar.SecurityName = bars_0.SecurityName;
+                    if (bars_0.Count != 0)
+                    {
+                        if (scale != BarScale.Tick)
+                        {
+                            Dictionary<TimeSpan, int> timeSpans = new Dictionary<TimeSpan, int>();
+                            double num2 = 0;
+                            double item1 = num2;
+                            double item2 = num2;
+                            double item3 = num2;
+                            double num3 = num2;
+                            if (bars_0.MarketInfo == null)
+                            {
+                                item = bars_0.Date[0];
+                                i = 0;
+                                while (true)
+                                {
+                                    if (i < bars_0.Count)
+                                    {
+                                        DateTime dateTime1 = bars_0.Date[i];
+                                        if (dateTime1.Date > item.Date)
+                                        {
+                                            item = bars_0.Date[i];
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            i++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                BarScale barScale3 = bars_0.Scale;
+                                switch (barScale3)
+                                {
+                                    case BarScale.Minute:
+                                        {
+                                            item = item.AddMinutes((double)(-bars_0.BarInterval));
+                                            break;
+                                        }
+                                    case BarScale.Second:
+                                        {
+                                            item = item.AddSeconds((double)(-bars_0.BarInterval));
+                                            break;
+                                        }
+                                }
+                            }
+                            else
+                            {
+                                DateTime openTimeNative = bars_0.MarketInfo.OpenTimeNative;
+                                DateTime dateTime2 = bars_0.Date[0];
+                                item = new DateTime(dateTime2.Year, dateTime2.Month, dateTime2.Day, openTimeNative.Hour, openTimeNative.Minute, openTimeNative.Second);
+                            }
+                            item = new DateTime(item.Year, item.Month, item.Day, item.Hour, item.Minute, 0);
+                            DateTime minValue = DateTime.MinValue;
+                            for (i = 0; i < bars_0.Count; i++)
+                            {
+                                if (bars_0.Date[i] <= minValue)
+                                {
+                                    num = (bars_0.High[i] > item3 ? bars_0.High[i] : item3);
+                                    item3 = num;
+                                    num1 = (bars_0.Low[i] < item2 ? bars_0.Low[i] : item2);
+                                    item2 = num1;
+                                    item1 = item1 + bars_0.Volume[i];
+                                    BarScaleConverter.smethod_4(bars_0, bar, i);
+                                }
+                                else
+                                {
+                                    if (i <= 0)
+                                    {
+                                        DateTime dateTime3 = bars_0.Date[i];
+                                        DateTime item4 = bars_0.Date[i];
+                                        DateTime dateTime4 = bars_0.Date[i];
+                                        minValue = new DateTime(dateTime3.Year, item4.Month, dateTime4.Day, item.Hour, item.Minute, item.Second);
+                                        BarScaleConverter.smethod_0(bars_0, bar);
+                                    }
+                                    else
+                                    {
+                                        DateTime item5 = bars_0.Date[i];
+                                        DateTime dateTime5 = bars_0.Date[i - 1];
+                                        if (item5.Date != dateTime5.Date)
+                                        {
+                                            bar.Add(bars_0.Date[i - 1], num3, item3, item2, bars_0.Close[i - 1], item1, false);
+                                            BarScaleConverter.smethod_1(bars_0, bar);
+                                            DateTime item6 = bars_0.Date[i];
+                                            DateTime dateTime6 = bars_0.Date[i];
+                                            DateTime item7 = bars_0.Date[i];
+                                            minValue = new DateTime(item6.Year, dateTime6.Month, item7.Day, item.Hour, item.Minute, item.Second);
+                                            DateTime dateTime7 = bars_0.Date[i - 1];
+                                            if (!timeSpans.ContainsKey(dateTime7.TimeOfDay))
+                                            {
+                                                DateTime item8 = bars_0.Date[i - 1];
+                                                timeSpans.Add(item8.TimeOfDay, 1);
+                                            }
+                                            else
+                                            {
+                                                Dictionary<TimeSpan, int> timeSpans1 = timeSpans;
+                                                Dictionary<TimeSpan, int> timeSpans2 = timeSpans1;
+                                                DateTime dateTime8 = bars_0.Date[i - 1];
+                                                TimeSpan timeOfDay = dateTime8.TimeOfDay;
+                                                TimeSpan timeSpan = timeOfDay;
+                                                timeSpans1[timeOfDay] = timeSpans2[timeSpan] + 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            bar.Add(minValue, num3, item3, item2, bars_0.Close[i - 1], item1, false);
+                                            BarScaleConverter.smethod_1(bars_0, bar);
+                                        }
+                                    }
+                                    DateTime item9 = bars_0.Date[i];
+                                    if (item9.TimeOfDay < item.TimeOfDay)
+                                    {
+                                        while (bars_0.Date[i] < minValue)
+                                        {
+                                            minValue = (scale != BarScale.Minute ? minValue.AddSeconds((double)(-barInterval)) : minValue.AddMinutes((double)(-barInterval)));
+                                        }
+                                        minValue = (scale != BarScale.Minute ? minValue.AddSeconds((double)barInterval) : minValue.AddMinutes((double)barInterval));
+                                    }
+                                    else
+                                    {
+                                        while (bars_0.Date[i] > minValue)
+                                        {
+                                            minValue = (scale != BarScale.Minute ? minValue.AddSeconds((double)barInterval) : minValue.AddMinutes((double)barInterval));
+                                        }
+                                    }
+                                    num3 = bars_0.Open[i];
+                                    item3 = bars_0.High[i];
+                                    item2 = bars_0.Low[i];
+                                    item1 = bars_0.Volume[i];
+                                }
+                            }
+                            TimeSpan? nullable = null;
+                            int num4 = 0;
+                            foreach (int value in timeSpans.Values)
+                            {
+                                num4 = num4 + value;
+                            }
+                            if (num4 > 2)
+                            {
+                                Dictionary<TimeSpan, int>.Enumerator enumerator = timeSpans.GetEnumerator();
+                                try
+                                {
+                                    while (true)
+                                    {
+                                        if (enumerator.MoveNext())
+                                        {
+                                            KeyValuePair<TimeSpan, int> current = enumerator.Current;
+                                            if ((double)current.Value / (double)num4 > 0.5)
+                                            {
+                                                nullable = new TimeSpan?(current.Key);
+                                                break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                finally
+                                {
+                                    ((IDisposable)enumerator).Dispose();
+                                }
+                            }
+                            if (nullable.HasValue)
+                            {
+                                TimeSpan timeOfDay1 = minValue.TimeOfDay;
+                                TimeSpan? nullable1 = nullable;
+                                flag = (nullable1.HasValue ? timeOfDay1 > nullable1.GetValueOrDefault() : false);
+                                if (flag)
+                                {
+                                    dateTime = (scale == BarScale.Minute ? minValue.AddMinutes((double)(-barInterval)) : minValue.AddSeconds((double)(-barInterval)));
+                                    DateTime dateTime9 = dateTime;
+                                    TimeSpan timeSpan1 = dateTime9.TimeOfDay;
+                                    TimeSpan? nullable2 = nullable;
+                                    flag1 = (nullable2.HasValue ? timeSpan1 < nullable2.GetValueOrDefault() : false);
+                                    if (flag1)
+                                    {
+                                        TimeSpan value1 = nullable.Value;
+                                        TimeSpan value2 = nullable.Value;
+                                        TimeSpan timeSpan2 = nullable.Value;
+                                        minValue = new DateTime(minValue.Year, minValue.Month, minValue.Day, value1.Hours, value2.Minutes, timeSpan2.Seconds);
+                                    }
+                                }
+                            }
+                            i = bars_0.Count - 1;
+                            bar.Add(minValue, num3, item3, item2, bars_0.Close[i], item1, false);
+                            bar.IsLastCompressedBarPartial = minValue != bars_0.Date[i];
+                            BarScaleConverter.smethod_2(bars_0, bar, i);
+                        }
+                        return bar;
+                    }
+                    else
+                    {
+                        return bar;
+                    }
+                }
+                else
+                {
+                    object[] str = new object[] { "Cannot convert ", null, null, null, null, null, null };
+                    BarDataScale dataScale = bars_0.DataScale;
+                    str[1] = dataScale.ToString();
+                    str[2] = " Bars to ";
+                    str[3] = barInterval;
+                    str[4] = " ";
+                    str[5] = scale;
+                    str[6] = " Bars";
+                    throw new BarConversionException(string.Concat(str));
+                }
+            }
+            else
+            {
+                return bars_0;
+            }
         }
 
         public static Bars ToMonthly(Bars bars_0)

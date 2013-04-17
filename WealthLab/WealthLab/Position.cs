@@ -229,21 +229,24 @@
                             case OrderType.Stop:
                                 if (this.PositionType != WealthLab.PositionType.Long)
                                 {
-                                    break;
+                                    ///break; ///WYJ fix, simplify the flow
+                                    //double num6 = Math.Max(this.Bars.Close[i], this.EntryPrice);
+                                    num4 = this.EntryPrice - Math.Max(this.Bars.Close[i], this.EntryPrice);
                                 }
-                                num4 = Math.Min(this.Bars.Close[i], this.EntryPrice) - this.EntryPrice;
-                                goto Label_02AC;
+                                else
+                                    num4 = Math.Min(this.Bars.Close[i], this.EntryPrice) - this.EntryPrice;
+                                ///goto  Label_02AC; ///WYJ fix, simplify the flow
+                                break;
 
                             case OrderType.AtClose:
                                 num4 = 0.0;
-                                goto Label_02AC;
+                                break;
 
                             default:
                                 num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.Bars.Low[i] - this.EntryPrice) : (this.EntryPrice - this.Bars.High[i]);
-                                goto Label_02AC;
+                                break;
                         }
-                        double num6 = Math.Max(this.Bars.Close[i], this.EntryPrice);
-                        num4 = this.EntryPrice - num6;
+                        
                     }
                     else if (i == this.ExitBar)
                     {
@@ -252,32 +255,33 @@
                             case OrderType.Limit:
                                 if (this.PositionType != WealthLab.PositionType.Long)
                                 {
-                                    break;
+                                    ///break;  ///WYJ fix, simplify the flow
+                                    //double num5 = Math.Max(this.Bars.Open[i], this.ExitPrice);
+                                    num4 = this.EntryPrice - Math.Max(this.Bars.Open[i], this.ExitPrice);
                                 }
-                                num4 = Math.Min(this.Bars.Open[i], this.ExitPrice) - this.EntryPrice;
-                                goto Label_02AC;
+                                else
+                                    num4 = Math.Min(this.Bars.Open[i], this.ExitPrice) - this.EntryPrice;
+                                break;
 
                             case OrderType.Stop:
                                 num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.ExitPrice - this.EntryPrice) : (this.EntryPrice - this.ExitPrice);
-                                goto Label_02AC;
+                                break;
 
                             case OrderType.AtClose:
                                 num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.Bars.Low[i] - this.EntryPrice) : (this.EntryPrice - this.Bars.High[i]);
-                                goto Label_02AC;
+                                break;
 
                             default:
                                 num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.Bars.Open[i] - this.EntryPrice) : (this.EntryPrice - this.Bars.Open[i]);
-                                goto Label_02AC;
+                                break;
                         }
-                        double num5 = Math.Max(this.Bars.Open[i], this.ExitPrice);
-                        num4 = this.EntryPrice - num5;
                     }
                     else
                     {
                         num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.Bars.Low[i] - this.EntryPrice) : (this.EntryPrice - this.Bars.High[i]);
                     }
-                Label_02AC:
-                    if (num4 < maxValue)
+                //Label_02AC:
+                    if (maxValue > num4)
                     {
                         maxValue = num4;
                     }
@@ -361,21 +365,22 @@
                             case OrderType.Limit:
                                 if (this.PositionType != WealthLab.PositionType.Long)
                                 {
-                                    break;
+                                    ///break;  ///WYJ fix, simplify the flow
+                                    num4 = this.EntryPrice - Math.Min(this.Bars.Close[i], this.EntryPrice);
                                 }
-                                num4 = Math.Max(this.Bars.Close[i], this.EntryPrice) - this.EntryPrice;
-                                goto Label_02B9;
+                                else 
+                                    num4 = Math.Max(this.Bars.Close[i], this.EntryPrice) - this.EntryPrice;
+                                ///goto  Label_02B9;
+                                break;
 
                             case OrderType.AtClose:
                                 num4 = 0.0;
-                                goto Label_02B9;
+                                break;
 
                             default:
                                 num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.Bars.High[i] - this.EntryPrice) : (this.EntryPrice - this.Bars.Low[i]);
-                                goto Label_02B9;
+                                break;
                         }
-                        double num7 = Math.Min(this.Bars.Close[i], this.EntryPrice);
-                        num4 = this.EntryPrice - num7;
                     }
                     else if (i == this.ExitBar)
                     {
@@ -383,33 +388,34 @@
                         {
                             case OrderType.Limit:
                                 num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.ExitPrice - this.EntryPrice) : (this.EntryPrice - this.ExitPrice);
-                                goto Label_02B9;
+                                break;
 
                             case OrderType.Stop:
                                 if (this.PositionType != WealthLab.PositionType.Long)
                                 {
-                                    break;
+                                    ///break;  ///WYJ fix, simplify the flow
+                                    num4 = this.EntryPrice - Math.Min(this.Bars.Open[i], this.ExitPrice);
                                 }
-                                num4 = Math.Max(this.Bars.Open[i], this.ExitPrice) - this.EntryPrice;
-                                goto Label_02B9;
+                                else 
+                                    num4 = Math.Max(this.Bars.Open[i], this.ExitPrice) - this.EntryPrice;
+                                break;
 
                             case OrderType.AtClose:
                                 num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.Bars.High[i] - this.EntryPrice) : (this.EntryPrice - this.Bars.Low[i]);
-                                goto Label_02B9;
+                                break;
 
                             default:
                                 num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.Bars.Open[i] - this.EntryPrice) : (this.EntryPrice - this.Bars.Open[i]);
-                                goto Label_02B9;
+                                break;
                         }
-                        double num6 = Math.Min(this.Bars.Open[i], this.ExitPrice);
-                        num4 = this.EntryPrice - num6;
+                        
                     }
                     else
                     {
                         num4 = (this.PositionType == WealthLab.PositionType.Long) ? (this.Bars.High[i] - this.EntryPrice) : (this.EntryPrice - this.Bars.Low[i]);
                     }
-                Label_02B9:
-                    if (num4 > minValue)
+                //Label_02B9:
+                    if (minValue < num4)
                     {
                         minValue = num4;
                     }
