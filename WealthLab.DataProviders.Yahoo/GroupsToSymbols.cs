@@ -50,7 +50,7 @@ internal class GroupsToSymbols
         {
             this.symbols = string.Empty;
             this.getSymbolsOfGroup(group, this.classificationGroup_0);
-            newSymbolList.AddSymbols(this.symbols, Enum0.const_1);
+            newSymbolList.AddSymbols(this.symbols, DelimeterSetEnum.ForGuiInput);
         }
         this.deleteList.list.Clear();
         this.addList.list.Clear();

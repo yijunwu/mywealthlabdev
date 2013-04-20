@@ -1,8 +1,9 @@
 ﻿using System;
 
-internal class Exception0 : Exception
+///WYJ fix, original name: Exception0
+internal class QuoteDataParseException : Exception
 {
-    public Exception0(string string_0) : base(string_0)
+    public QuoteDataParseException(string string_0) : base(string_0)
     {
     }
 }

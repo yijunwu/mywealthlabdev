@@ -1,12 +1,13 @@
 ﻿using System;
 
-internal class EventArgs3 : EventArgs1
+///WYJ fix, original name EventArgs3, candidate name: StaticErrorEventArgs
+internal class StaticErrorEventArgs : RequestResultEventArgs
 {
-    public readonly Exception exception_0;
+    public readonly Exception exception;
 
-    public EventArgs3(Class27 class27_1, Exception exception_1) : base(class27_1)
+    public StaticErrorEventArgs(DataRequest request, Exception exception_1) : base(request)
     {
-        this.exception_0 = exception_1;
+        this.exception = exception_1;
     }
 }
 

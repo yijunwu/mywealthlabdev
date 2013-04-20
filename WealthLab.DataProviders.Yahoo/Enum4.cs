@@ -1,10 +1,10 @@
 ﻿using System;
 
 [Flags]
-internal enum Enum4
+internal enum DataTypeEnum
 {
-    flag_0 = 1,  ///WYJ note: quotes - price and volume
-    flag_1 = 2,  ///WYJ note: Dividend and split data
-    flag_2 = 4   ///WYJ note: probably means real-time data, which requires login
+    Quote = 1,  ///WYJ note: quotes - price and volume
+    SnD = 2,  ///WYJ note: Dividend and split data
+    RealTime = 4   ///WYJ note: probably means real-time data, which requires login
 }
 

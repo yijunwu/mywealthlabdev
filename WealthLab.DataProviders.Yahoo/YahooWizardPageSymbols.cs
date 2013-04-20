@@ -25,20 +25,20 @@ internal class YahooWizardPageSymbols : UserControl
         if (e.Index >= 0)
         {
             Font font2 = (e.Index == 0) ? e.Font : font;
-            string s = (this.cmbPrefix.Items[e.Index] as Class24).string_0;
-            string str2 = (this.cmbPrefix.Items[e.Index] as Class24).string_1;
+            string s = (this.cmbPrefix.Items[e.Index] as Surfix).surfix;
+            string d = (this.cmbPrefix.Items[e.Index] as Surfix).description;
             if ((e.State & DrawItemState.Selected) != DrawItemState.None)
             {
                 e.Graphics.FillRectangle(new SolidBrush(Color.FromKnownColor(KnownColor.Highlight)), bounds);
                 graphics.DrawString(s, font2, new SolidBrush(Color.FromKnownColor(KnownColor.HighlightText)), bounds);
-                graphics.DrawString("\t" + str2, e.Font, new SolidBrush(Color.FromKnownColor(KnownColor.HighlightText)), bounds);
+                graphics.DrawString("\t" + d, e.Font, new SolidBrush(Color.FromKnownColor(KnownColor.HighlightText)), bounds);
                 e.DrawFocusRectangle();
             }
             else
             {
                 e.Graphics.FillRectangle(new SolidBrush(e.BackColor), bounds);
                 graphics.DrawString(s, font2, new SolidBrush(e.ForeColor), bounds);
-                graphics.DrawString("\t" + str2, e.Font, new SolidBrush(e.ForeColor), bounds);
+                graphics.DrawString("\t" + d, e.Font, new SolidBrush(e.ForeColor), bounds);
             }
         }
         graphics.Dispose();
@@ -46,12 +46,12 @@ internal class YahooWizardPageSymbols : UserControl
 
     private void cmbPrefix_SelectedIndexChanged(object sender, EventArgs e)
     {
-        SymbolList class2 = new SymbolList(this.txtSymbols.Text, Enum0.const_1) {
+        SymbolList sList = new SymbolList(this.txtSymbols.Text, DelimeterSetEnum.ForGuiInput) {
             sortNeeded = false,
             delimiterForDisplay = ' '
         };
-        class2.AddSurfixToSymbolNames((this.cmbPrefix.SelectedItem as Class24).string_0, '.');
-        this.txtSymbols.Text = class2.ToString();
+        sList.AddSurfixToSymbolNames((this.cmbPrefix.SelectedItem as Surfix).surfix, '.');
+        this.txtSymbols.Text = sList.ToString();
     }
 
     protected override void Dispose(bool disposing)
@@ -123,79 +123,80 @@ internal class YahooWizardPageSymbols : UserControl
         base.ResumeLayout(false);
     }
 
-    public SymbolList method_0()
+    public SymbolList generateSymbolList()
     {
-        return new SymbolList(this.txtSymbols.Text, Enum0.const_1);
+        return new SymbolList(this.txtSymbols.Text, DelimeterSetEnum.ForGuiInput);
     }
 
-    public void method_1()
+    ///WYJ fix, original name: method_1
+    public void InitStates()
     {
         if (this.cmbPrefix.Items.Count == 0)
         {
-            this.cmbPrefix.Items.Add(new Class24("None", ""));
-            this.cmbPrefix.Items.Add(new Class24(".CBT", "USA\t\tChicago Board of Trade"));
-            this.cmbPrefix.Items.Add(new Class24(".CME", "USA\t\tChicago Mercantile Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".NYB", "USA\t\tNew York Board of Trade"));
-            this.cmbPrefix.Items.Add(new Class24(".CMX", "USA\t\tNew York Commodities Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".NYM", "USA\t\tNew York Mercantile Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".OB", "USA\t\tOTC Bulletin Board Market"));
-            this.cmbPrefix.Items.Add(new Class24(".PK", "USA\t\tPink Sheets"));
-            this.cmbPrefix.Items.Add(new Class24(".BA", "Argentina\tBuenos Aires Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".VI", "Austria\t\tVienna Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".AX", "Australia\tAustralian Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".SA", "Brazil\t\tSao Paolo Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".TO", "Canada\t\tToronto Stock Exchangee"));
-            this.cmbPrefix.Items.Add(new Class24(".V", "Canada\t\tTSX Venture Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".SS", "China\t\tShanghai Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".SZ", "China\t\tShenzhen Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".CO", "Denmark\tCopenhagen Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".PA", "France\t\tParis Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".BE", "Germany\tBerlin Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".BM", "Germany\tBremen Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".DU", "Germany\tDusseldorf Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".F", "Germany\tFrankfurt Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".HM", "Germany\tHamburg Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".HA", "Germany\tHanover Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".MU", "Germany\tMunich Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".SG", "Germany\tStuttgart Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".DE", "Germany\tXETRA Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".HK", "Hong Kong\tHong Kong Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".BO", "India\t\tBombay Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".NS", "India\t\tNational Stock Exchange of India"));
-            this.cmbPrefix.Items.Add(new Class24(".JK", "Indonesia\tJakarta Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".TA", "Israel\t\tTel Aviv Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".MI", "Italy\t\tMilan Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".KS", "South Korea\tKorea Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".KQ", "South Korea\tKOSDAQ"));
-            this.cmbPrefix.Items.Add(new Class24(".MX", "Mexico\t\tMexico Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".AS", "Netherlands\tAmsterdam Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".NZ", "New Zealand\tNew Zealand Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".OL", "Norway\t\tOslo Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".SI", "Singapore\tSingapore Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".BC", "Spain\t\tBarcelona Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".BI", "Spain\t\tBilbao Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".MF", "Spain\t\tMadrid Fixed Income Market"));
-            this.cmbPrefix.Items.Add(new Class24(".MC", "Spain\t\tMadrid SE C.A.T.S."));
-            this.cmbPrefix.Items.Add(new Class24(".MA", "Spain\t\tMadrid Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".ST", "Sweden\t\tStockholm Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".SW", "Switzerland\tSwiss Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".TWO", "Taiwan\t\tTaiwan OTC Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".TW", "Taiwan\t\tTaiwan Stock Exchange"));
-            this.cmbPrefix.Items.Add(new Class24(".L", "United Kingdom\tLondon Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix("None", ""));
+            this.cmbPrefix.Items.Add(new Surfix(".CBT", "USA\t\tChicago Board of Trade"));
+            this.cmbPrefix.Items.Add(new Surfix(".CME", "USA\t\tChicago Mercantile Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".NYB", "USA\t\tNew York Board of Trade"));
+            this.cmbPrefix.Items.Add(new Surfix(".CMX", "USA\t\tNew York Commodities Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".NYM", "USA\t\tNew York Mercantile Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".OB", "USA\t\tOTC Bulletin Board Market"));
+            this.cmbPrefix.Items.Add(new Surfix(".PK", "USA\t\tPink Sheets"));
+            this.cmbPrefix.Items.Add(new Surfix(".BA", "Argentina\tBuenos Aires Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".VI", "Austria\t\tVienna Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".AX", "Australia\tAustralian Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".SA", "Brazil\t\tSao Paolo Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".TO", "Canada\t\tToronto Stock Exchangee"));
+            this.cmbPrefix.Items.Add(new Surfix(".V", "Canada\t\tTSX Venture Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".SS", "China\t\tShanghai Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".SZ", "China\t\tShenzhen Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".CO", "Denmark\tCopenhagen Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".PA", "France\t\tParis Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".BE", "Germany\tBerlin Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".BM", "Germany\tBremen Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".DU", "Germany\tDusseldorf Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".F", "Germany\tFrankfurt Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".HM", "Germany\tHamburg Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".HA", "Germany\tHanover Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".MU", "Germany\tMunich Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".SG", "Germany\tStuttgart Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".DE", "Germany\tXETRA Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".HK", "Hong Kong\tHong Kong Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".BO", "India\t\tBombay Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".NS", "India\t\tNational Stock Exchange of India"));
+            this.cmbPrefix.Items.Add(new Surfix(".JK", "Indonesia\tJakarta Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".TA", "Israel\t\tTel Aviv Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".MI", "Italy\t\tMilan Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".KS", "South Korea\tKorea Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".KQ", "South Korea\tKOSDAQ"));
+            this.cmbPrefix.Items.Add(new Surfix(".MX", "Mexico\t\tMexico Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".AS", "Netherlands\tAmsterdam Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".NZ", "New Zealand\tNew Zealand Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".OL", "Norway\t\tOslo Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".SI", "Singapore\tSingapore Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".BC", "Spain\t\tBarcelona Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".BI", "Spain\t\tBilbao Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".MF", "Spain\t\tMadrid Fixed Income Market"));
+            this.cmbPrefix.Items.Add(new Surfix(".MC", "Spain\t\tMadrid SE C.A.T.S."));
+            this.cmbPrefix.Items.Add(new Surfix(".MA", "Spain\t\tMadrid Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".ST", "Sweden\t\tStockholm Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".SW", "Switzerland\tSwiss Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".TWO", "Taiwan\t\tTaiwan OTC Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".TW", "Taiwan\t\tTaiwan Stock Exchange"));
+            this.cmbPrefix.Items.Add(new Surfix(".L", "United Kingdom\tLondon Stock Exchange"));
         }
         this.txtSymbols.Clear();
         this.cmbPrefix.SelectedIndex = 0;
     }
 
-    internal class Class24   ///WYJ note, surfix
+    internal class Surfix   ///WYJ note, surfix
     {
-        public string string_0;
-        public string string_1;
+        public string surfix;
+        public string description;
 
-        public Class24(string string_2, string string_3)
+        public Surfix(string s, string d)
         {
-            this.string_0 = string_2;
-            this.string_1 = string_3;
+            this.surfix = s;
+            this.description = d;
         }
     }
 }

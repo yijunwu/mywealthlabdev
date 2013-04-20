@@ -1,12 +1,13 @@
 ﻿using System;
 
-internal abstract class EventArgs1 : EventArgs
+///WYJ fix, original name EventArgs1, candidate name: RequestResultEventArgs
+internal abstract class RequestResultEventArgs : EventArgs
 {
-    public readonly Class27 class27_0;
+    public readonly DataRequest request;
 
-    public EventArgs1(Class27 class27_1)
+    public RequestResultEventArgs(DataRequest r)
     {
-        this.class27_0 = class27_1;
+        this.request = r;
     }
 }
 

@@ -1,8 +1,8 @@
 ﻿using System;
 
-internal enum Enum0
+internal enum DelimeterSetEnum
 {
-    const_0,
-    const_1
+    ForProgram,
+    ForGuiInput
 }
 

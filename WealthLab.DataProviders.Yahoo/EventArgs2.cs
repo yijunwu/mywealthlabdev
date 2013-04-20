@@ -1,15 +1,17 @@
 ﻿using System;
 using WealthLab;
 
-internal class EventArgs2 : EventArgs1
+///WYJ fix, original name EventArgs2, candidate name: StaticDataEventArgs
+internal class StaticDataEventArgs : RequestResultEventArgs
 {
-    public readonly Bars bars_0;
-    public readonly SplitAndDividend class28_0;
+    public readonly Bars bars;
+    public readonly SplitAndDividend splitAndDividend;
 
-    public EventArgs2(Class27 class27_1, Bars bars_1, SplitAndDividend class28_1) : base(class27_1)
+    public StaticDataEventArgs(DataRequest request, Bars bars_1, SplitAndDividend snd_1)
+        : base(request)
     {
-        this.bars_0 = bars_1;
-        this.class28_0 = class28_1;
+        this.bars = bars_1;
+        this.splitAndDividend = snd_1;
     }
 }
 

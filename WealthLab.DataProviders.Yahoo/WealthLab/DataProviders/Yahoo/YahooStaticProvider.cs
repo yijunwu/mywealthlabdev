@@ -14,7 +14,7 @@
 
     public class YahooStaticProvider : StaticDataProvider
     {
-        private BarDataStore barDataStore_0;
+        private BarDataStore barDataStore;
         private static ClassificationGroupsFileUpdater classificationGroupsUpdater;
         private GroupsToSymbols groupsToSymbolsUpdater;
         private DataFetcher dataFetcher;
@@ -22,14 +22,14 @@
         private IDataUpdateMessage idataUpdateMessage_0;
         private int numberOfSymbolsToUpdate;
         private int numberOfSymbolsUpdated;
-        private List<string> list_1 = new List<string>();
-        private object object_0 = new object();
-        private static string string_0;
+        private List<string> symbolsLoadedBefore = new List<string>();  ///WYJ fix, original name list_1
+        private object lockForSaveBars = new object();
+        private static string providerDataDir;
         private static YahooClientSettings yahooClientSettings_0 = null;
-        private YahooFundamentalProvider yahooFundamentalProvider_0;
-        private YahooWizardPageClassification yahooWizardPageClassification_0;
-        private YahooWizardPageStart yahooWizardPageStart_0;
-        private YahooWizardPageSymbols yahooWizardPageSymbols_0;
+        private YahooFundamentalProvider yahooFundamentalProvider;
+        private YahooWizardPageClassification yahooWizardPageClassification;
+        private YahooWizardPageStart yahooWizardPageStart;
+        private YahooWizardPageSymbols yahooWizardPageSymbols;
 
         public YahooStaticProvider()
         {
@@ -53,17 +53,17 @@
             Logger.LogParameters(new object[0]);
             DataSource source = new DataSource(this);
             YahooStaticSettings settings = new YahooStaticSettings();
-            if (this.yahooWizardPageStart_0.method_2())
+            if (this.yahooWizardPageStart.optChooseFromClassification())
             {
-                settings.Symbols = this.yahooWizardPageClassification_0.method_0().ToString();
-                settings.Groups = this.yahooWizardPageClassification_0.method_2();
-                settings.UpdateGroups = this.yahooWizardPageStart_0.method_3();
+                settings.Symbols = this.yahooWizardPageClassification.generateSymbolList().ToString();
+                settings.Groups = this.yahooWizardPageClassification.getGroupListString();
+                settings.UpdateGroups = this.yahooWizardPageStart.optUpdateGroup();
             }
             else
             {
-                settings.Symbols = this.yahooWizardPageSymbols_0.method_0().ToString();
+                settings.Symbols = this.yahooWizardPageSymbols.generateSymbolList().ToString();
             }
-            settings.StartDate = this.yahooWizardPageStart_0.method_1();
+            settings.StartDate = this.yahooWizardPageStart.optStartDate();
             source.DSString = settings.SerializeToString();
             source.Scale = BarScale.Daily;
             source.BarInterval = 0;
@@ -73,22 +73,22 @@
         public override void DeleteSymbolDataFile(DataSource dataSource_0, string symbol)
         {
             Logger.LogParameters(new object[0]);
-            this.barDataStore_0.RemoveFile(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
+            this.barDataStore.RemoveFile(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
         }
 
         public override void Initialize(IDataHost dataHost)
         {
             Logger.LogParameters(new object[0]);
             base.Initialize(dataHost);
-            this.barDataStore_0 = new BarDataStore(dataHost, this);
-            string_0 = this.barDataStore_0.RootPath;
+            this.barDataStore = new BarDataStore(dataHost, this);
+            providerDataDir = this.barDataStore.RootPath;
             this.dataFetcher = new DataFetcher();
-            this.dataFetcher.AddStaticDataHandler(new DataFetcher.Delegate1(this.onData));
-            this.dataFetcher.AddStaticErrorHandler(new DataFetcher.Delegate2(this.onError));
-            classificationGroupsUpdater = new ClassificationGroupsFileUpdater(string_0 + "YahooClassification.xml", "http://67.199.28.171/Classification/Yahoo/YahooClassification.xml");
+            this.dataFetcher.AddStaticDataHandler(new DataFetcher.StaticDataHandler(this.onData));
+            this.dataFetcher.AddStaticErrorHandler(new DataFetcher.StaticErrorHandler(this.onError));
+            classificationGroupsUpdater = new ClassificationGroupsFileUpdater(providerDataDir + "YahooClassification.xml", "http://67.199.28.171/Classification/Yahoo/YahooClassification.xml");
             if (yahooClientSettings_0 == null)
             {
-                yahooClientSettings_0 = YahooClientSettings.Deserialize(string_0);
+                yahooClientSettings_0 = YahooClientSettings.Deserialize(providerDataDir);
             }
             ServicePointManager.MaxServicePointIdleTime = 0x2710;
             ServicePointManager.UseNagleAlgorithm = true;
@@ -97,71 +97,72 @@
             ServicePointManager.FindServicePoint(new Uri("http://ichart.finance.yahoo.com"));
         }
 
-        private void onError(object sender, EventArgs3 e)  ///WYJ note: looks like an error handler
+        private void onError(object sender, StaticErrorEventArgs e)  ///WYJ note: looks like an error handler
         {
             Logger.LogParameters(new object[0]);
-            if (e.class27_0 != null)
+            if (e.request != null)
             {
                 this.numberOfSymbolsUpdated++;
-                this.DisplayUpdateMessage(e.class27_0.getSymbol(), "Error: " + e.exception_0.Message, Thread.CurrentThread.Name);
+                this.DisplayUpdateMessage(e.request.getSymbol(), "Error: " + e.exception.Message, Thread.CurrentThread.Name);
                 this.DisplayUpdateProgress();
             }
             else
             {
-                this.DisplayUpdateMessage("Thread (" + Thread.CurrentThread.Name + ") execution error! " + e.exception_0.Message);
+                this.DisplayUpdateMessage("Thread (" + Thread.CurrentThread.Name + ") execution error! " + e.exception.Message);
             }
         }
 
-        private void onData(object sender, EventArgs2 e) ///WYJ fix, update Bars for security
+        private void onData(object sender, StaticDataEventArgs e) ///WYJ fix, update Bars for security
         {
             Logger.LogParameters(new object[0]);
-            if ((e.class27_0.getDataType() & Enum4.flag_0) != 0)
+            if ((e.request.getDataType() & DataTypeEnum.Quote) != 0)
             {
-                if (e.bars_0 != null)
+                if (e.bars != null)
                 {
                     int num2;
-                    lock (this.list_1)
+                    lock (this.symbolsLoadedBefore)
                     {
-                        if (this.list_1.Contains(e.class27_0.getSymbol()))
+                        if (this.symbolsLoadedBefore.Contains(e.request.getSymbol())) ///WYJ fix, if symbol is loaded before, need to remove the file first
                         {
-                            this.barDataStore_0.RemoveFile(Encoder.encode(e.class27_0.getSymbol()), BarScale.Daily, 0);
-                            this.list_1.Remove(e.class27_0.getSymbol());
+                            this.barDataStore.RemoveFile(Encoder.encode(e.request.getSymbol()), BarScale.Daily, 0);
+                            this.symbolsLoadedBefore.Remove(e.request.getSymbol());
                         }
                     }
-                    Bars bars = new Bars(Encoder.encode(e.class27_0.getSymbol()), BarScale.Daily, 0);
-                    this.barDataStore_0.LoadBarsObject(bars);
+                    Bars bars = new Bars(Encoder.encode(e.request.getSymbol()), BarScale.Daily, 0);
+                    this.barDataStore.LoadBarsObject(bars);
                     int count = bars.Count;
-                    bars.AppendWithCorrections(e.bars_0, out num2);
-                    if (this.dictionary_0.ContainsKey(e.class27_0.getSymbol()))
+                    bars.AppendWithCorrections(e.bars, out num2);
+                    if (this.dictionary_0.ContainsKey(e.request.getSymbol()))
                     {
-                        string str = this.dictionary_0[e.class27_0.getSymbol()];
+                        string str = this.dictionary_0[e.request.getSymbol()];
                         if (str != string.Empty)
                         {
                             bars.SecurityName = str.ToUpper();
                         }
                     }
-                    lock (this.object_0)
+                    lock (this.lockForSaveBars)
                     {
-                        this.barDataStore_0.SaveBarsObject(bars);
+                        this.barDataStore.SaveBarsObject(bars);
                     }
                     this.numberOfSymbolsUpdated++;
                     this.DisplayUpdateMessage(bars, count, num2, Thread.CurrentThread.Name);
                     this.DisplayUpdateProgress();
                 }
-                if (e.class28_0 != null)
+                if (e.splitAndDividend != null)
                 {
-                    if (this.yahooFundamentalProvider_0 == null)
+                    if (this.yahooFundamentalProvider == null)
                     {
-                        this.yahooFundamentalProvider_0 = new YahooFundamentalProvider();
-                        this.yahooFundamentalProvider_0.Initialize(base.DataHost);
+                        this.yahooFundamentalProvider = new YahooFundamentalProvider();
+                        this.yahooFundamentalProvider.Initialize(base.DataHost);
                     }
-                    this.yahooFundamentalProvider_0.UpdateData(e.class27_0.getSymbol(), e.class28_0.getDividend(), "Dividend (Yahoo! Finance)");
-                    this.yahooFundamentalProvider_0.UpdateData(e.class27_0.getSymbol(), e.class28_0.getSplit(), "Split (Yahoo! Finance)");
+                    this.yahooFundamentalProvider.UpdateData(e.request.getSymbol(), e.splitAndDividend.getDividend(), "Dividend (Yahoo! Finance)");
+                    this.yahooFundamentalProvider.UpdateData(e.request.getSymbol(), e.splitAndDividend.getSplit(), "Split (Yahoo! Finance)");
                 }
             }
         }
 
-        private void method_10(Bars bars_0)
+        ///WYJ fix, original name: method_10
+        private void clearUserEditedDates(Bars bars_0)
         {
             bars_0.UserEditedDates.Clear();
         }
@@ -172,19 +173,19 @@
             {
                 return null;
             }
-            Enum1 enum2 = Enum1.flag_1;
+            SnDEnum enum2 = SnDEnum.Dividend;
             if (yahooClientSettings_0.SplitAdj)
             {
-                enum2 = Enum1.flag_0;
+                enum2 = SnDEnum.Split;
             }
             if (yahooClientSettings_0.DividendAdj && yahooClientSettings_0.SplitAdj)
             {
-                enum2 = Enum1.flag_1 | Enum1.flag_0;
+                enum2 = SnDEnum.Dividend | SnDEnum.Split;
             }
-            this.yahooFundamentalProvider_0 = new YahooFundamentalProvider();
-            this.yahooFundamentalProvider_0.Initialize(base.DataHost);
-            IList<FundamentalItem> splitList = this.yahooFundamentalProvider_0.RequestItems(symbol, "Split (Yahoo! Finance)");
-            IList<FundamentalItem> divList = this.yahooFundamentalProvider_0.RequestItems(symbol, "Dividend (Yahoo! Finance)");
+            this.yahooFundamentalProvider = new YahooFundamentalProvider();
+            this.yahooFundamentalProvider.Initialize(base.DataHost);
+            IList<FundamentalItem> splitList = this.yahooFundamentalProvider.RequestItems(symbol, "Split (Yahoo! Finance)");
+            IList<FundamentalItem> divList = this.yahooFundamentalProvider.RequestItems(symbol, "Dividend (Yahoo! Finance)");
             if (dateTime_0 != DateTime.MaxValue)
             {
                 return new SnDHandler(splitList, divList, enum2, yahooClientSettings_0.AdjModeWhenDataRange, dateTime_0);
@@ -238,7 +239,8 @@
             }
         }
 
-        private bool method_6()
+        ///WYJ fix, original name: method_6
+        private bool adjModeAllowingEditing()
         {
             if (yahooClientSettings_0.AdjModeWhenDataRange == AdjustedModeWhenDataRange.Ignore)
             {
@@ -269,46 +271,58 @@
                 this.groupsToSymbolsUpdater = new GroupsToSymbols(classificationGroupsUpdater.ReadClassificationGroupFromFile());
             }
             this.DisplayUpdateMessage("Checking the DataSet's Classification groups composition:");
-            SymbolList groupList = new SymbolList(settings.Groups, Enum0.const_0);
-            SymbolList symbolList = new SymbolList(settings.Symbols, Enum0.const_0);
+            SymbolList groupList = new SymbolList(settings.Groups, DelimeterSetEnum.ForProgram);
+            SymbolList symbolList = new SymbolList(settings.Symbols, DelimeterSetEnum.ForProgram);
             SymbolList symbolListFromGroups = this.groupsToSymbolsUpdater.generateNewSymbolList(symbolList, groupList.list.ToArray());
             this.DisplayUpdateMessage(string.Format("Symbols deleted {0}: {1}", this.groupsToSymbolsUpdater.GetDeleteList().list.Count, this.groupsToSymbolsUpdater.GetDeleteList().ToString()));
             this.DisplayUpdateMessage(string.Format("Symbols added {0}: {1}", this.groupsToSymbolsUpdater.GetAddList().list.Count, this.groupsToSymbolsUpdater.GetAddList().ToString()));
             if ((this.groupsToSymbolsUpdater.GetDeleteList().list.Count > 0) || (this.groupsToSymbolsUpdater.GetAddList().list.Count > 0))
             {
-                string str = Directory.GetParent(string_0).Parent.FullName + @"\DataSets\";
+                string str = Directory.GetParent(providerDataDir).Parent.FullName + @"\DataSets\";
                 settings.Symbols = symbolListFromGroups.ToString();
                 dataSource_0.DSString = settings.SerializeToString();
                 dataSource_0.SaveToFile(str + SymbolFileNameConverter.SymbolToFileName(dataSource_0.Name) + ".xml");
             }
         }
 
-        private void method_8(ref Class27 class27_0, SymbolInfoList symbolInfoList_0, DateTime dateTime_0)
+        ///WYJ note, update start date for request; update the symbols start date
+        private void setStartDateForRequest(ref DataRequest dataRequest, SymbolInfoList symbolsStartDate, DateTime startDateTime)
         {
-            DateTime time = dateTime_0;
-            DateTime time2 = symbolInfoList_0.Search(class27_0.getSymbol(), BarScale.Daily, 0);
-            if (time < time2)
-            {
-                class27_0.method_6(time);
-                if (time2 != DateTime.MaxValue)
+            //This method does three things:
+            //1. set the startDate of data request
+            //2. mark the symbol in this.symbolsLoadedBefore
+            //3. update symbolsStartDate
+            DateTime time = startDateTime;
+            DateTime timeInList = symbolsStartDate.Search(dataRequest.getSymbol(), BarScale.Daily, 0);   ///WYJ note, get start date of the symbol if existing in Symbol info list
+
+            if (time >= timeInList) ///WYJ note, when timeInList <= time, that means it's in the symbol info list
+            {   
+                dataRequest.setSnDStartDate(timeInList);
+                DateTime lastUpdated = this.barDataStore.SymbolLastUpdated(Encoder.encode(dataRequest.getSymbol()), BarScale.Daily, 0);
+                if (lastUpdated != DateTime.MinValue)
                 {
-                    this.list_1.Add(class27_0.getSymbol());
+                    time = lastUpdated.AddDays(-10.0);
                 }
-                symbolInfoList_0.Add(class27_0.getSymbol(), BarScale.Daily, 0, time);
+
+                //1. this.symbolsLoadedBefore should need to change, but somehow it doesn't matter? because in onData method, 
+                //whether it removes the file or not, the file is going to be overwritten. 
+                //2. symbolsStartDate doesn't need to change
             }
-            else
+            else  ///if (timeInList > time)
             {
-                class27_0.method_6(time2);
-                DateTime time3 = this.barDataStore_0.SymbolLastUpdated(Encoder.encode(class27_0.getSymbol()), BarScale.Daily, 0);
-                if (time3 != DateTime.MinValue)
+                ///time is earlier that start time in list, that means we can't use cashed data and only fetch for recent days, we have to start from time
+                dataRequest.setSnDStartDate(time);
+                if (timeInList != DateTime.MaxValue)
                 {
-                    time = time3.AddDays(-10.0);
+                    this.symbolsLoadedBefore.Add(dataRequest.getSymbol());
                 }
+                symbolsStartDate.Add(dataRequest.getSymbol(), BarScale.Daily, 0, time);
             }
-            class27_0.method_4(time);
+            
+            dataRequest.setStartDate(time);
         }
 
-        private void updateSecurityNames(List<Class27> list_2)
+        private void updateSecurityNames(List<DataRequest> list_2)
         {
             try
             {
@@ -343,7 +357,7 @@
             if (!string.IsNullOrEmpty(dataSource_0.Name))
             {
                 YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
-                SymbolList class2 = new SymbolList(settings.Symbols, Enum0.const_0);
+                SymbolList class2 = new SymbolList(settings.Symbols, DelimeterSetEnum.ForProgram);
                 symbols.AddRange(class2.list);
             }
         }
@@ -362,33 +376,31 @@
                     {
                         settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
                     }
-                    SymbolInfoList list = SymbolInfoList.Deserialize(string_0 + "SymbolsStartDate.xml");
-                    list.Synchronize(this.barDataStore_0);
-                    Class27 class27 = new Class27(symbol);
-                    this.method_8(ref class27, list, settings.StartDate);
-                    class27.method_8(DateTime.Now.AddDays(2.0));
-                    class27.setDataType(Enum4.flag_1 | Enum4.flag_0);
+                    SymbolInfoList list = SymbolInfoList.Deserialize(providerDataDir + "SymbolsStartDate.xml");
+                    list.Synchronize(this.barDataStore);
+                    DataRequest req = new DataRequest(symbol);
+                    this.setStartDateForRequest(ref req, list, settings.StartDate);
+                    req.setEndDate(DateTime.Now.AddDays(2.0));
+                    req.setDataType(DataTypeEnum.SnD | DataTypeEnum.Quote);
                     if (includePartialBar)
                     {
-                        class27.setDataType(class27.getDataType() | Enum4.flag_2);
+                        req.setDataType(req.getDataType() | DataTypeEnum.RealTime);
                     }
-                    List<Class27> list2 = new List<Class27> {
-                        class27
-                    };
+                    List<DataRequest> list2 = new List<DataRequest> { req };
                     this.updateSecurityNames(list2);
                     this.dataFetcher.updateSecurityData(list2);
                 }
                 catch (Exception exception)
                 {
                     string str = "On Demand Update Error: " + exception.Message;
-                    Logger.Log(Enum2.const_3, str);
+                    Logger.Log(LogLevel.ERROR, str);
                     MessageBox.Show(str, "On Demand Update Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 }
             }
             Bars bars2 = new Bars(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
-            if (this.barDataStore_0.ContainsSymbol(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval))
+            if (this.barDataStore.ContainsSymbol(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval))
             {
-                this.barDataStore_0.LoadBarsObject(bars2, startDate, DateTime.MaxValue, maxBars);
+                this.barDataStore.LoadBarsObject(bars2, startDate, DateTime.MaxValue, maxBars);
             }
             if (symbol != Encoder.encode(symbol))
             {
@@ -418,12 +430,12 @@
         {
             Bars bars2 = new Bars(bars.Symbol, bars.Scale, bars.BarInterval);
             SnDHandler snDHandler = this.getSnDHandler(bars.Symbol, DateTime.MaxValue);
-            this.barDataStore_0.LoadBarsObject(bars2);
+            this.barDataStore.LoadBarsObject(bars2);
             if (bars.Count >= bars2.Count)
             {
                 if (bars.Count > bars2.Count)
                 {
-                    if ((snDHandler != null) && !this.method_6())
+                    if ((snDHandler != null) && !this.adjModeAllowingEditing())
                     {
                         return;
                     }
@@ -462,7 +474,7 @@
                 }
                 else
                 {
-                    if (!this.method_6())
+                    if (!this.adjModeAllowingEditing())
                     {
                         return;
                     }
@@ -520,7 +532,7 @@
             }
             bars2.UserEditedDates.Clear();
             bars2.UserEditedDates.AddRange(bars.UserEditedDates);
-            this.barDataStore_0.SaveBarsObject(bars2);
+            this.barDataStore.SaveBarsObject(bars2);
         }
 
         public override bool SupportsDynamicUpdate(BarScale scale)
@@ -533,11 +545,11 @@
         {
             Logger.LogParameters(new object[] { dataSource_0.Name, dataSource_0.Symbols[0] });
             this.dataFetcher.SetCancelFlag(false);
-            SymbolInfoList list = null;
+            SymbolInfoList symbolInfoList = null;
             this.idataUpdateMessage_0 = dataUpdateMsg;
             try
             {
-                SymbolList class2;
+                SymbolList list;
                 YahooStaticSettings settings = null;
                 if (!string.IsNullOrEmpty(dataSource_0.Name))
                 {
@@ -547,52 +559,52 @@
                         this.updateClassificationGroups(dataSource_0);
                         settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
                     }
-                    class2 = new SymbolList(settings.Symbols, Enum0.const_0);
+                    list = new SymbolList(settings.Symbols, DelimeterSetEnum.ForProgram);
                 }
                 else
                 {
-                    class2 = new SymbolList(dataSource_0.Symbols);
+                    list = new SymbolList(dataSource_0.Symbols);
                 }
-                list = SymbolInfoList.Deserialize(string_0 + "SymbolsStartDate.xml");
-                list.Synchronize(this.barDataStore_0);
-                List<Class27> list2 = new List<Class27>();
+                symbolInfoList = SymbolInfoList.Deserialize(providerDataDir + "SymbolsStartDate.xml");
+                symbolInfoList.Synchronize(this.barDataStore);
+                List<DataRequest> requestList = new List<DataRequest>();
                 this.DisplayUpdateMessage("Preparing requests ...");
-                foreach (string str in class2.list)
+                foreach (string s in list.list)
                 {
-                    Class27 class3 = new Class27(str);
+                    DataRequest request = new DataRequest(s);
                     if (!string.IsNullOrEmpty(dataSource_0.Name))
                     {
-                        this.method_8(ref class3, list, settings.StartDate);
+                        this.setStartDateForRequest(ref request, symbolInfoList, settings.StartDate);
                     }
                     else
                     {
-                        this.method_8(ref class3, list, new DateTime(0x7d0, 1, 1));
+                        this.setStartDateForRequest(ref request, symbolInfoList, new DateTime(2000, 1, 1));
                     }
-                    class3.method_8(DateTime.Now.AddDays(2.0));
-                    class3.setDataType(Enum4.flag_1 | Enum4.flag_0);
-                    list2.Add(class3);
+                    request.setEndDate(DateTime.Now.AddDays(2.0));
+                    request.setDataType(DataTypeEnum.SnD | DataTypeEnum.Quote);
+                    requestList.Add(request);
                     if (this.dataFetcher.GetCancelFlag())
                     {
                         return;
                     }
                 }
                 this.DisplayUpdateMessage("Requests are ready to go.");
-                if (list2.Count > 0)
+                if (requestList.Count > 0)
                 {
-                    this.numberOfSymbolsToUpdate = list2.Count;
+                    this.numberOfSymbolsToUpdate = requestList.Count;
                     this.numberOfSymbolsUpdated = 0;
-                    this.updateSecurityNames(list2);
-                    this.dataFetcher.updateSecurityData(list2);
+                    this.updateSecurityNames(requestList);
+                    this.dataFetcher.updateSecurityData(requestList);
                 }
             }
             catch (Exception exception)
             {
-                Logger.Log(Enum2.const_3, "UpdateDataSource " + exception.Message);
+                Logger.Log(LogLevel.ERROR, "UpdateDataSource " + exception.Message);
                 this.idataUpdateMessage_0.DisplayUpdateMessage("Error: " + exception.Message);
             }
             finally
             {
-                list.Serialize(string_0 + "SymbolsStartDate.xml");
+                symbolInfoList.Serialize(providerDataDir + "SymbolsStartDate.xml");
                 this.idataUpdateMessage_0 = null;
             }
         }
@@ -602,31 +614,31 @@
             Logger.LogParameters(new object[0]);
             this.dataFetcher.SetCancelFlag(false);
             this.idataUpdateMessage_0 = dataUpdateMsg;
-            List<Class27> list = new List<Class27>();
-            SymbolInfoList list2 = null;
+            List<DataRequest> requestList = new List<DataRequest>();
+            SymbolInfoList symbolInfoList = null;
             try
             {
-                list2 = SymbolInfoList.Deserialize(string_0 + "SymbolsStartDate.xml");
-                list2.Synchronize(this.barDataStore_0);
+                symbolInfoList = SymbolInfoList.Deserialize(providerDataDir + "SymbolsStartDate.xml");
+                symbolInfoList.Synchronize(this.barDataStore);
                 this.DisplayUpdateMessage("Preparing requests ...");
                 foreach (DataSource source in dataSources)
                 {
                     YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(source.DSString);
-                    SymbolList class3 = new SymbolList(settings.Symbols, Enum0.const_0);
-                    foreach (string str3 in class3.list)
+                    SymbolList symbolList = new SymbolList(settings.Symbols, DelimeterSetEnum.ForProgram);
+                    foreach (string symbol in symbolList.list)
                     {
-                        Class27 class4 = new Class27(str3);
-                        this.method_8(ref class4, list2, settings.StartDate);
-                        class4.method_8(DateTime.Now.AddDays(2.0));
-                        class4.setDataType(Enum4.flag_1 | Enum4.flag_0);
-                        for (int i = list.Count - 1; i >= 0; i--)
+                        DataRequest class4 = new DataRequest(symbol);
+                        this.setStartDateForRequest(ref class4, symbolInfoList, settings.StartDate);
+                        class4.setEndDate(DateTime.Now.AddDays(2.0));
+                        class4.setDataType(DataTypeEnum.SnD | DataTypeEnum.Quote);
+                        for (int i = requestList.Count - 1; i >= 0; i--)
                         {
-                            if (list[i].getSymbol() == class4.getSymbol())
+                            if (requestList[i].getSymbol() == class4.getSymbol())
                             {
-                                list.RemoveAt(i);
+                                requestList.RemoveAt(i);
                             }
                         }
-                        list.Add(class4);
+                        requestList.Add(class4);
                         if (this.dataFetcher.GetCancelFlag())
                         {
                             return;
@@ -635,14 +647,14 @@
                 }
                 if (updateNonDSSymbols)
                 {
-                    IList<string> existingSymbols = this.barDataStore_0.GetExistingSymbols(BarScale.Daily, 0);
+                    IList<string> existingSymbols = this.barDataStore.GetExistingSymbols(BarScale.Daily, 0);
                     Logger.Log("symbolsInDataStore.Count " + existingSymbols.Count);
-                    foreach (string str4 in existingSymbols)
+                    foreach (string s in existingSymbols)
                     {
                         bool flag2 = true;
-                        for (int j = list.Count - 1; j >= 0; j--)
+                        for (int j = requestList.Count - 1; j >= 0; j--)
                         {
-                            if (list[j].getSymbol() == str4)
+                            if (requestList[j].getSymbol() == s)
                             {
                                 //goto  Label_01E9; ///WYJ fix, simplify the flow
                                 flag2 = false; 
@@ -651,12 +663,12 @@
                         }
                         if (flag2)
                         {
-                            Class27 item = new Class27(str4);
-                            DateTime time2 = this.barDataStore_0.SymbolLastUpdated(Encoder.encode(item.getSymbol()), BarScale.Daily, 0);
-                            item.method_4(time2.AddDays(-10.0));
-                            item.method_8(DateTime.Now.AddDays(2.0));
-                            item.setDataType(Enum4.flag_1 | Enum4.flag_0);
-                            list.Add(item);
+                            DataRequest item = new DataRequest(s);
+                            DateTime time2 = this.barDataStore.SymbolLastUpdated(Encoder.encode(item.getSymbol()), BarScale.Daily, 0);
+                            item.setStartDate(time2.AddDays(-10.0));
+                            item.setEndDate(DateTime.Now.AddDays(2.0));
+                            item.setDataType(DataTypeEnum.SnD | DataTypeEnum.Quote);
+                            requestList.Add(item);
                         }
                         if (this.dataFetcher.GetCancelFlag())
                         {
@@ -664,28 +676,28 @@
                         }
                     }
                 }
-                list.Sort();
+                requestList.Sort();
                 this.DisplayUpdateMessage("Requests are ready to go.");
-                if (list.Count > 0)
+                if (requestList.Count > 0)
                 {
-                    this.numberOfSymbolsToUpdate = list.Count;
+                    this.numberOfSymbolsToUpdate = requestList.Count;
                     this.numberOfSymbolsUpdated = 0;
-                    this.updateSecurityNames(list);
-                    this.dataFetcher.updateSecurityData(list);
+                    this.updateSecurityNames(requestList);
+                    this.dataFetcher.updateSecurityData(requestList);
                 }
                 if (deleteNonDSSymbols)
                 {
-                    IList<string> list4 = this.barDataStore_0.GetExistingSymbols(BarScale.Daily, 0);
+                    IList<string> list4 = this.barDataStore.GetExistingSymbols(BarScale.Daily, 0);
                     string str = string.Empty;
                     int num = 0;
                     foreach (string str2 in list4)
                     {
                         bool flag = false;
-                        using (List<Class27>.Enumerator enumerator4 = list.GetEnumerator())
+                        using (List<DataRequest>.Enumerator enumerator4 = requestList.GetEnumerator())
                         {
                             while (enumerator4.MoveNext())
                             {
-                                Class27 current = enumerator4.Current;
+                                DataRequest current = enumerator4.Current;
                                 if (current.getSymbol() == str2)
                                 {
                                     ///goto  Label_032F;  ///WYJ fix, simplify the flow
@@ -697,7 +709,7 @@
                         if (!flag)
                         {
                             num++;
-                            this.barDataStore_0.RemoveFile(Encoder.encode(str2), BarScale.Daily, 0);
+                            this.barDataStore.RemoveFile(Encoder.encode(str2), BarScale.Daily, 0);
                             if (str != string.Empty)
                             {
                                 str = str + ",";
@@ -714,12 +726,12 @@
             }
             catch (Exception exception)
             {
-                Logger.Log(Enum2.const_3, "UpdateDataSource " + exception.Message);
+                Logger.Log(LogLevel.ERROR, "UpdateDataSource " + exception.Message);
                 this.idataUpdateMessage_0.DisplayUpdateMessage("Error: " + exception.Message);
             }
             finally
             {
-                list2.Serialize(string_0 + "SymbolsStartDate.xml");
+                symbolInfoList.Serialize(providerDataDir + "SymbolsStartDate.xml");
                 this.idataUpdateMessage_0 = null;
             }
         }
@@ -731,33 +743,33 @@
 
         public override UserControl WizardFirstPage()
         {
-            if (this.yahooWizardPageStart_0 == null)
+            if (this.yahooWizardPageStart == null)
             {
-                this.yahooWizardPageStart_0 = new YahooWizardPageStart();
-                this.yahooWizardPageSymbols_0 = new YahooWizardPageSymbols();
-                this.yahooWizardPageClassification_0 = new YahooWizardPageClassification();
+                this.yahooWizardPageStart = new YahooWizardPageStart();
+                this.yahooWizardPageSymbols = new YahooWizardPageSymbols();
+                this.yahooWizardPageClassification = new YahooWizardPageClassification();
             }
-            this.yahooWizardPageStart_0.method_0();
-            this.yahooWizardPageSymbols_0.method_1();
-            this.yahooWizardPageClassification_0.method_8(string_0);
-            return this.yahooWizardPageStart_0;
+            this.yahooWizardPageStart.InitStates();
+            this.yahooWizardPageSymbols.InitStates();
+            this.yahooWizardPageClassification.InitStates(providerDataDir);
+            return this.yahooWizardPageStart;
         }
 
         public override UserControl WizardNextPage(UserControl currentPage)
         {
-            if (currentPage == this.yahooWizardPageStart_0)
+            if (currentPage == this.yahooWizardPageStart)
             {
-                if (this.yahooWizardPageStart_0.method_2())
+                if (this.yahooWizardPageStart.optChooseFromClassification())
                 {
-                    return this.yahooWizardPageClassification_0;
+                    return this.yahooWizardPageClassification;
                 }
-                return this.yahooWizardPageSymbols_0;
+                return this.yahooWizardPageSymbols;
             }
-            if ((currentPage == this.yahooWizardPageSymbols_0) && (this.yahooWizardPageSymbols_0.method_0().list.Count == 0))
+            if ((currentPage == this.yahooWizardPageSymbols) && (this.yahooWizardPageSymbols.generateSymbolList().list.Count == 0))
             {
                 throw new WizardValidationException("Symbols are not specified");
             }
-            if ((currentPage == this.yahooWizardPageClassification_0) && (this.yahooWizardPageClassification_0.method_0().list.Count == 0))
+            if ((currentPage == this.yahooWizardPageClassification) && (this.yahooWizardPageClassification.generateSymbolList().list.Count == 0))
             {
                 throw new WizardValidationException("Group is not selected");
             }
@@ -766,15 +778,15 @@
 
         public override UserControl WizardPreviousPage(UserControl currentPage)
         {
-            if (currentPage == this.yahooWizardPageStart_0)
+            if (currentPage == this.yahooWizardPageStart)
             {
                 return null;
             }
-            if ((currentPage != this.yahooWizardPageSymbols_0) && (currentPage != this.yahooWizardPageClassification_0))
+            if ((currentPage != this.yahooWizardPageSymbols) && (currentPage != this.yahooWizardPageClassification))
             {
                 return null;
             }
-            return this.yahooWizardPageStart_0;
+            return this.yahooWizardPageStart;
         }
 
         public override bool CanDeleteSymbolDataFile
@@ -826,7 +838,7 @@
         {
             get
             {
-                return string_0;
+                return providerDataDir;
             }
         }
 
@@ -834,7 +846,7 @@
         {
             get
             {
-                return this.barDataStore_0;
+                return this.barDataStore;
             }
         }
 
@@ -879,9 +891,9 @@
             get
             {
                 Logger.LogParameters(new object[0]);
-                if (this.yahooWizardPageStart_0.method_2())
+                if (this.yahooWizardPageStart.optChooseFromClassification())
                 {
-                    return this.yahooWizardPageClassification_0.method_1();
+                    return this.yahooWizardPageClassification.SuggestedDataSourceName();
                 }
                 return base.SuggestedDataSourceName;
             }

@@ -19,15 +19,15 @@
         {
             if (!string.IsNullOrEmpty(name))
             {
-                int num = this.method_0(name, scale, interval);
-                if (num == -1)
+                int index = this.indexOf(name, scale, interval);
+                if (index == -1)
                 {
                     this.Items.Add(new WealthLab.DataProviders.Helper.SymbolInfo(name, scale, interval, startDate));
                     return true;
                 }
-                if (startDate < this.Items[num].StartDate)
+                if (startDate < this.Items[index].StartDate)
                 {
-                    this.Items[num].StartDate = startDate;
+                    this.Items[index].StartDate = startDate;
                     return true;
                 }
             }
@@ -47,11 +47,11 @@
             return new SymbolInfoList();
         }
 
-        private int method_0(string string_0, BarScale barScale_0, int int_0)
+        private int indexOf(string string_0, BarScale barScale, int interval)
         {
             for (int i = 0; i < this.Items.Count; i++)
             {
-                if (((this.Items[i].Name == string_0) && (this.Items[i].Scale == barScale_0)) && (this.Items[i].Interval == int_0))
+                if (((this.Items[i].Name == string_0) && (this.Items[i].Scale == barScale)) && (this.Items[i].Interval == interval))
                 {
                     return i;
                 }
@@ -61,7 +61,7 @@
 
         public DateTime Search(string name, BarScale scale, int interval)
         {
-            int num = this.method_0(name, scale, interval);
+            int num = this.indexOf(name, scale, interval);
             if (num != -1)
             {
                 return this.Items[num].StartDate;

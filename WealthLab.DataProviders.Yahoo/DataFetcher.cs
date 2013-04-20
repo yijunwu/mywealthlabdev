@@ -11,18 +11,19 @@ using System.Windows.Forms;
 using WealthLab;
 using WealthLab.DataProviders.Yahoo;
 
+///WYJ fix, original name: Class26
 internal class DataFetcher
 {
     private bool cancelFlag;
-    private Delegate1 staticDataHandler;
-    private Delegate2 staticErrorHandler;
-    private Delegate3 streamingDataHandler;
-    private Delegate4 streamingErrorHandler;
+    private StaticDataHandler staticDataHandler;
+    private StaticErrorHandler staticErrorHandler;
+    private StreamingDataHandler streamingDataHandler;
+    private StreamingErrorHandler streamingErrorHandler;
     private Dictionary<string, DateTimeVolume> dictionary_0 = new Dictionary<string, DateTimeVolume>();
     private IFormatProvider iformatProvider_0;
     private List<string> subscribedSymbols = new List<string>();  ///WYJ note: probably the real-time symbol list
-    private List<ThreadControl> list_1 = new List<ThreadControl>();
-    private Queue<Class27> queue_0 = new Queue<Class27>();
+    private List<ThreadControl> threadControls = new List<ThreadControl>();
+    private Queue<DataRequest> queue_0 = new Queue<DataRequest>();
     private Thread thread_0;
 
     public DataFetcher()
@@ -33,28 +34,28 @@ internal class DataFetcher
         this.iformatProvider_0 = info;
     }
 
-    public void AddStaticDataHandler(Delegate1 handler)
+    public void AddStaticDataHandler(StaticDataHandler handler)
     {
-        Delegate1 prevHandler;
-        Delegate1 tmp = this.staticDataHandler;
+        StaticDataHandler prevHandler;
+        StaticDataHandler tmp = this.staticDataHandler;
         do
         {
             prevHandler = tmp;
-            Delegate1 delegate4 = (Delegate1) Delegate.Combine(prevHandler, handler);
-            tmp = Interlocked.CompareExchange<Delegate1>(ref this.staticDataHandler, delegate4, prevHandler);
+            StaticDataHandler delegate4 = (StaticDataHandler) Delegate.Combine(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<StaticDataHandler>(ref this.staticDataHandler, delegate4, prevHandler);
         }
         while (tmp != prevHandler);
     }
 
-    public void DeleteStaticDataHandler(Delegate1 handler)
+    public void DeleteStaticDataHandler(StaticDataHandler handler)
     {
-        Delegate1 prevHandler;
-        Delegate1 tmp = this.staticDataHandler;
+        StaticDataHandler prevHandler;
+        StaticDataHandler tmp = this.staticDataHandler;
         do
         {
             prevHandler = tmp;
-            Delegate1 delegate4 = (Delegate1) Delegate.Remove(prevHandler, handler);
-            tmp = Interlocked.CompareExchange<Delegate1>(ref this.staticDataHandler, delegate4, prevHandler);
+            StaticDataHandler delegate4 = (StaticDataHandler) Delegate.Remove(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<StaticDataHandler>(ref this.staticDataHandler, delegate4, prevHandler);
         }
         while (tmp != prevHandler);
     }
@@ -88,7 +89,7 @@ internal class DataFetcher
             Login.LoginWith(YahooStaticProvider.ClientSettings.Login, YahooStaticProvider.ClientSettings.Password);
             if (Login.GetErrorMessage() != null)
             {
-                Logger.Log(Enum2.const_3, Login.GetErrorMessage());
+                Logger.Log(LogLevel.ERROR, Login.GetErrorMessage());
                 MessageBox.Show("Yahoo! login failed. Error: " + Login.GetErrorMessage(), "Yahoo! login error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
@@ -101,12 +102,12 @@ internal class DataFetcher
         if (!this.cancelFlag)
         {
             this.cancelFlag = true;
-            lock (this.list_1)
+            lock (this.threadControls)
             {
-                foreach (ThreadControl class2 in this.list_1)
+                foreach (ThreadControl threadControl in this.threadControls)
                 {
-                    class2.method_1().WaitOne();
-                    class2.GetThread().Abort();
+                    threadControl.notErrorHandling().WaitOne();
+                    threadControl.GetThread().Abort();
                 }
             }
         }
@@ -207,14 +208,14 @@ internal class DataFetcher
             catch (Exception exception1)
             {
                 Exception exception = exception1;
-                Logger.Log(Enum2.const_3, exception.Message);
+                Logger.Log(LogLevel.ERROR, exception.Message);
                 if (exception as WebException == null || num >= YahooStaticProvider.ClientSettings.AttemptCount)
                 {
                     throw exception;
                 }
                 else
                 {
-                    Logger.Log(Enum2.const_4, string.Concat("New attempt ", string_0));
+                    Logger.Log(LogLevel.WARNING, string.Concat("New attempt ", string_0));
                 }
             }
             if (end != null)
@@ -229,12 +230,12 @@ internal class DataFetcher
         return end;
     }
 
-    public Bars processDataRequest(Class27 class27_0, bool isStreaming)  ///WYJ note, bool_1 probably means real-time data, which requires login
+    public Bars processDataRequest(DataRequest req, bool isStreaming)  ///WYJ note, bool_1 probably means real-time data, which requires login
     {
-        Logger.LogParameters(new object[] { class27_0.getSymbol() });
-        string str = this.getUrl(class27_0.getSymbol(), class27_0.method_3(), class27_0.method_7(), Enum4.flag_0);
+        Logger.LogParameters(new object[] { req.getSymbol() });
+        string str = this.getUrl(req.getSymbol(), req.getStartDate(), req.getEndDate(), DataTypeEnum.Quote);
         string str2 = this.requestData(str, false);
-        Bars bars = this.parseQuoteData(class27_0.getSymbol(), str2);
+        Bars bars = this.parseQuoteData(req.getSymbol(), str2);
         if (isStreaming || YahooStaticProvider.ClientSettings.AlwaysPartialBar)
         {
             double open;
@@ -245,7 +246,7 @@ internal class DataFetcher
             {
                 this.login();
             }
-            str = this.getRealTimeDataUrl(class27_0.getSymbol());
+            str = this.getRealTimeDataUrl(req.getSymbol());
             str2 = this.requestData(str, true);
             Quote quote = this.parseQuote(str2, out open, out high, out low, out volume);
             if ((quote == null) || ((quote.TimeStamp.Date <= bars.Date[bars.Count - 1]) && (bars.Count != 0)))
@@ -257,7 +258,8 @@ internal class DataFetcher
         return bars;
     }
 
-    private bool method_17(string string_0)
+    ///WYJ fix, original name: method_17
+    private bool isNotEmptyOrNA(string string_0)   ///WYJ note, this method is never used
     {
         return ((!(string_0 == "N/A") && !(string_0 == string.Empty)) && !(string_0.Trim(new char[] { '"' }) == string.Empty));
     }
@@ -306,15 +308,15 @@ internal class DataFetcher
         }
     }
 
-    public void AddStaticErrorHandler(Delegate2 delegate2_1)
+    public void AddStaticErrorHandler(StaticErrorHandler delegate2_1)
     {
-        Delegate2 delegate3;
-        Delegate2 delegate2 = this.staticErrorHandler;
+        StaticErrorHandler delegate3;
+        StaticErrorHandler delegate2 = this.staticErrorHandler;
         do
         {
             delegate3 = delegate2;
-            Delegate2 delegate4 = (Delegate2) Delegate.Combine(delegate3, delegate2_1);
-            delegate2 = Interlocked.CompareExchange<Delegate2>(ref this.staticErrorHandler, delegate4, delegate3);
+            StaticErrorHandler delegate4 = (StaticErrorHandler) Delegate.Combine(delegate3, delegate2_1);
+            delegate2 = Interlocked.CompareExchange<StaticErrorHandler>(ref this.staticErrorHandler, delegate4, delegate3);
         }
         while (delegate2 != delegate3);
     }
@@ -352,7 +354,7 @@ internal class DataFetcher
         catch (Exception exception)
         {
             string str = exception.Message + " Line: " + string_0;
-            Logger.Log(Enum2.const_3, str);
+            Logger.Log(LogLevel.ERROR, str);
             quote = null;
         }
         return quote;
@@ -370,7 +372,7 @@ internal class DataFetcher
             Quote quote = this.parseQuote(str, out open, out high, out low, out volume);
             if ((this.streamingDataHandler != null) && (quote != null))
             {
-                this.streamingDataHandler(this, new EventArgs4(quote, open, high, low));
+                this.streamingDataHandler(this, new StreamingDataEventArgs(quote, open, high, low));
             }
         }
     }
@@ -431,7 +433,7 @@ internal class DataFetcher
     ///WYJ fix, original signature: private void method_22()
     private void requestAndProcessStreaming()
     {
-        List<string> strs = new List<string>();
+        List<string> subscribed = new List<string>();
         while (!this.cancelFlag)
         {
             if (this.subscribedSymbols.Count > 0)
@@ -441,19 +443,19 @@ internal class DataFetcher
                     lock (this.subscribedSymbols)
                     {
                         StringBuilder stringBuilder = new StringBuilder();
-                        strs.Clear();
+                        subscribed.Clear();
                         for (int i = 0; i < this.subscribedSymbols.Count; i++)
                         {
                             stringBuilder.Append(this.subscribedSymbols[i]);
                             stringBuilder.Append("+");
                             if ((i + 1) % 50 == 0 || i == this.subscribedSymbols.Count - 1)
                             {
-                                strs.Add(stringBuilder.ToString());
+                                subscribed.Add(stringBuilder.ToString());
                                 stringBuilder.Remove(0, stringBuilder.Length);
                             }
                         }
                     }
-                    foreach (string str in strs)
+                    foreach (string str in subscribed)
                     {
                         if (this.cancelFlag)
                         {
@@ -469,7 +471,7 @@ internal class DataFetcher
                     Exception exception = exception1;
                     if (this.streamingErrorHandler != null)
                     {
-                        this.streamingErrorHandler(this, new EventArgs5(string.Empty, exception.Message));
+                        this.streamingErrorHandler(this, new StreamingErrorEventArgs(string.Empty, exception.Message));
                     }
                 }
             }
@@ -489,7 +491,7 @@ internal class DataFetcher
     ///WYJ fix, original signature: private Class28 method_24(string string_0)
     private SplitAndDividend parseDividendAndSplitData(string string_0)
     {
-        SplitAndDividend class2 = new SplitAndDividend();
+        SplitAndDividend snDData = new SplitAndDividend();
         foreach (string str in string_0.Split(new char[] { '\n' }))
         {
             if (str.StartsWith("DIVIDEND,"))
@@ -498,7 +500,7 @@ internal class DataFetcher
                 string[] strArray5 = str.Split(new char[] { ',' });
                 item2.Date = DateTime.ParseExact(strArray5[1].Trim(), "yyyyMMdd", this.iformatProvider_0);
                 item2.Value = Convert.ToDouble(strArray5[2].Trim(), this.iformatProvider_0);
-                class2.getDividend().Add(item2);
+                snDData.getDividend().Add(item2);
             }
             if (str.StartsWith("SPLIT,"))
             {
@@ -509,18 +511,18 @@ internal class DataFetcher
                 double num2 = Convert.ToDouble(strArray4[0], this.iformatProvider_0);
                 double num3 = Convert.ToDouble(strArray4[1], this.iformatProvider_0);
                 item.Value = num2 / num3;
-                class2.getSplit().Add(item);
+                snDData.getSplit().Add(item);
             }
         }
-        class2.getDividend().Reverse();
-        class2.getSplit().Reverse();
-        return class2;
+        snDData.getDividend().Reverse();
+        snDData.getSplit().Reverse();
+        return snDData;
     }
 
     ///WYJ fix, original name: method_25
-    private SplitAndDividend processDividendAndSplitDataRequest(Class27 class27_0)  ///WYJ note, get dividend and split data
+    private SplitAndDividend processSplitAndDividendDataRequest(DataRequest class27_0)  ///WYJ note, get dividend and split data
     {
-        string str = this.getUrl(class27_0.getSymbol(), class27_0.method_5(), class27_0.method_7(), Enum4.flag_1);
+        string str = this.getUrl(class27_0.getSymbol(), class27_0.getSnDStartDate(), class27_0.getEndDate(), DataTypeEnum.SnD);
         string str2 = this.requestData(str, true);
         return this.parseDividendAndSplitData(str2);
     }
@@ -621,18 +623,18 @@ internal class DataFetcher
     ///WYJ fix, original name: method_26
     private void processDataRequestQueue()  ///WYJ note, this is the method that is used in the downloading thread, see updateSecurityData method of this class
     {
-        ThreadControl item = null;
+        ThreadControl thread = null;
         try
         {
             try
             {
-                lock (this.list_1)
+                lock (this.threadControls)
                 {
-                    item = this.list_1[Convert.ToInt32(Thread.CurrentThread.Name)];
+                    thread = this.threadControls[Convert.ToInt32(Thread.CurrentThread.Name)];
                 }
                 while (!this.cancelFlag)
                 {
-                    Class27 class27 = null;
+                    DataRequest class27 = null;
                     lock (this.queue_0)
                     {
                         if (this.queue_0.Count <= 0)
@@ -653,37 +655,37 @@ internal class DataFetcher
                     SplitAndDividend class28 = null;
                     try
                     {
-                        bars = this.processDataRequest(class27, (int)(class27.getDataType() & Enum4.flag_2) != 0);
-                        if ((int)(class27.getDataType() & Enum4.flag_1) != 0)
+                        bars = this.processDataRequest(class27, (int)(class27.getDataType() & DataTypeEnum.RealTime) != 0);
+                        if ((int)(class27.getDataType() & DataTypeEnum.SnD) != 0)
                         {
-                            class28 = this.processDividendAndSplitDataRequest(class27);
+                            class28 = this.processSplitAndDividendDataRequest(class27);
                         }
                     }
                     catch (Exception exception2)
                     {
                         Exception exception1 = exception2;
-                        Logger.Log(Enum2.const_4, string.Concat(class27.getSymbol(), " ", exception1.Message));
+                        Logger.Log(LogLevel.WARNING, string.Concat(class27.getSymbol(), " ", exception1.Message));
                         exception = exception1;
                     }
-                    item.method_1().Reset();
+                    thread.notErrorHandling().Reset();
                     if (!this.cancelFlag)
                     {
                         if (exception != null)
                         {
                             if (this.staticErrorHandler != null)
                             {
-                                this.staticErrorHandler(this, new EventArgs3(class27, exception));
+                                this.staticErrorHandler(this, new StaticErrorEventArgs(class27, exception));
                             }
                         }
                         else
                         {
                             if (this.staticDataHandler != null)
                             {
-                                this.staticDataHandler(this, new EventArgs2(class27, bars, class28));
+                                this.staticDataHandler(this, new StaticDataEventArgs(class27, bars, class28));
                             }
                         }
                     }
-                    item.method_1().Set();
+                    thread.notErrorHandling().Set();
                 }
             }
             catch (ThreadAbortException threadAbortException)
@@ -693,28 +695,28 @@ internal class DataFetcher
             catch (Exception exception4)
             {
                 Exception exception3 = exception4;
-                Logger.Log(Enum2.const_3, string.Concat("Thread execution error. ", exception3.Message));
+                Logger.Log(LogLevel.ERROR, string.Concat("Thread execution error. ", exception3.Message));
                 if (this.staticErrorHandler != null)
                 {
-                    this.staticErrorHandler(this, new EventArgs3(null, exception3));
+                    this.staticErrorHandler(this, new StaticErrorEventArgs(null, exception3));
                 }
             }
         }
         finally
         {
-            if (item != null)
+            if (thread != null)
             {
-                item.method_2().Set();
+                thread.getThreadFinishEvent().Set();
             }
         }
     }
     ///WYJ fix, original signature: public void method_27(List<Class27> list_2)
-    public void updateSecurityData(List<Class27> list_2) ///WYJ note, probably method that fetches data
+    public void updateSecurityData(List<DataRequest> list_2) ///WYJ note, probably method that fetches data
     {
         Logger.LogParameters(new object[0]);
-        this.list_1.Clear();
-        List<ManualResetEvent> list = new List<ManualResetEvent>();
-        foreach (Class27 class3 in list_2)
+        this.threadControls.Clear();
+        List<ManualResetEvent> threadList = new List<ManualResetEvent>();
+        foreach (DataRequest class3 in list_2)
         {
             this.queue_0.Enqueue(class3);
         }
@@ -726,14 +728,14 @@ internal class DataFetcher
                 IsBackground = true
             };
             ThreadControl item = new ThreadControl(thread);
-            this.list_1.Add(item);
-            list.Add(item.method_2());
+            this.threadControls.Add(item);
+            threadList.Add(item.getThreadFinishEvent());
         }
-        foreach (ThreadControl class2 in this.list_1)
+        foreach (ThreadControl class2 in this.threadControls)
         {
             class2.GetThread().Start();
         }
-        WaitHandle.WaitAll(list.ToArray());
+        WaitHandle.WaitAll(threadList.ToArray());
     }
 
     ///WYJ fix, original signature: private Bars method_28(string string_0, string string_1)
@@ -767,15 +769,17 @@ internal class DataFetcher
         catch (Exception exception)
         {
             string str2 = string.Format("Data parsing error. Symbol: {0}, LineNumber: {1}, String:\r\n {2}\r\nMessage:\r\n{3}\r\nStack Trace:\r\n{4}", new object[] { string_0, index, str, exception.Message, exception.StackTrace });
-            Logger.Log(Enum2.const_3, str2);
-            throw new Exception0(str2);
+            Logger.Log(LogLevel.ERROR, str2);
+            throw new QuoteDataParseException(str2);
         }
         return bars;
     }
 
+    ///WYJ note, original name: method_29, this method is only used in RequestHistoricalData, which is never used anywhere
+    ///This method should be named: requestDataBetweenDates
     public Bars method_29(string string_0, DateTime dateTime_0, DateTime dateTime_1)  ///WYJ note, this method is only used by YahooStaticProvider.RequestHistoricalData(), which is not used anywhere
     {
-        Class27 class2 = new Class27(string_0, dateTime_0, dateTime_1, dateTime_1, Enum4.flag_0);
+        DataRequest class2 = new DataRequest(string_0, dateTime_0, dateTime_1, dateTime_1, DataTypeEnum.Quote);
         Bars bars = null;
         try
         {
@@ -798,15 +802,15 @@ internal class DataFetcher
         return new Bars(string_0, BarScale.Daily, 0);
     }
 
-    public void DeleteStaticErrorHandler(Delegate2 handler)
+    public void DeleteStaticErrorHandler(StaticErrorHandler handler)
     {
-        Delegate2 prevHandler;
-        Delegate2 tmp = this.staticErrorHandler;
+        StaticErrorHandler prevHandler;
+        StaticErrorHandler tmp = this.staticErrorHandler;
         do
         {
             prevHandler = tmp;
-            Delegate2 delegate4 = (Delegate2) Delegate.Remove(prevHandler, handler);
-            tmp = Interlocked.CompareExchange<Delegate2>(ref this.staticErrorHandler, delegate4, prevHandler);
+            StaticErrorHandler delegate4 = (StaticErrorHandler) Delegate.Remove(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<StaticErrorHandler>(ref this.staticErrorHandler, delegate4, prevHandler);
         }
         while (tmp != prevHandler);
     }
@@ -817,7 +821,7 @@ internal class DataFetcher
         return string.Format("http://download.finance.yahoo.com/d/quotes.csv?s={0}&f=sd1t1ohgl1vpba&e=.csv", string_0);  ///WYJ this is probably the real-time data url
     }
 
-    private string getUrl(string string_0, DateTime startDate, DateTime endDate, Enum4 enum4_0)
+    private string getUrl(string string_0, DateTime startDate, DateTime endDate, DataTypeEnum enum4_0)
     {
         int num = startDate.Month - 1;
         int day = startDate.Day;
@@ -828,19 +832,19 @@ internal class DataFetcher
         string str = "d";
         switch (enum4_0)
         {
-            case Enum4.flag_0:
+            case DataTypeEnum.Quote:
                 return string.Format("http://ichart.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv", new object[] { string_0, num, day, year, num4, num5, num6, str });
 
-            case Enum4.flag_1:
+            case DataTypeEnum.SnD:
                 return string.Format("http://ichart.yahoo.com/x?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g=v&y=0&z=40000", new object[] { string_0, num, day, year, num4, num5, num6 });
         }
         return string.Empty;
     }
 
-    public Dictionary<string, string> GetSymbolNames(List<Class27> requestList)
+    public Dictionary<string, string> GetSymbolNames(List<DataRequest> requestList)
     {
         List<string> list = new List<string>();
-        foreach (Class27 class2 in requestList)
+        foreach (DataRequest class2 in requestList)
         {
             list.Add(class2.getSymbol());
         }
@@ -882,54 +886,54 @@ internal class DataFetcher
     }
 
     ///WYJ fix, original name method_4
-    public void AddStreamingErrorHandler(Delegate4 handler)
+    public void AddStreamingErrorHandler(StreamingErrorHandler handler)
     {
-        Delegate4 prevHandler;
-        Delegate4 tmp = this.streamingErrorHandler;
+        StreamingErrorHandler prevHandler;
+        StreamingErrorHandler tmp = this.streamingErrorHandler;
         do
         {
             prevHandler = tmp;
-            Delegate4 delegate4 = (Delegate4) Delegate.Combine(prevHandler, handler);
-            tmp = Interlocked.CompareExchange<Delegate4>(ref this.streamingErrorHandler, delegate4, prevHandler);
+            StreamingErrorHandler delegate4 = (StreamingErrorHandler) Delegate.Combine(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<StreamingErrorHandler>(ref this.streamingErrorHandler, delegate4, prevHandler);
         }
         while (tmp != prevHandler);
     }
 
-    public void DeleteStreamingErrorHandler(Delegate4 handler)
+    public void DeleteStreamingErrorHandler(StreamingErrorHandler handler)
     {
-        Delegate4 prevHandler;
-        Delegate4 tmp = this.streamingErrorHandler;
+        StreamingErrorHandler prevHandler;
+        StreamingErrorHandler tmp = this.streamingErrorHandler;
         do
         {
             prevHandler = tmp;
-            Delegate4 delegate4 = (Delegate4) Delegate.Remove(prevHandler, handler);
-            tmp = Interlocked.CompareExchange<Delegate4>(ref this.streamingErrorHandler, delegate4, prevHandler);
+            StreamingErrorHandler delegate4 = (StreamingErrorHandler) Delegate.Remove(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<StreamingErrorHandler>(ref this.streamingErrorHandler, delegate4, prevHandler);
         }
         while (tmp != prevHandler);
     }
 
-    public void AddStreamingDataHandler(Delegate3 handler)
+    public void AddStreamingDataHandler(StreamingDataHandler handler)
     {
-        Delegate3 prevHandler;
-        Delegate3 tmp = this.streamingDataHandler;
+        StreamingDataHandler prevHandler;
+        StreamingDataHandler tmp = this.streamingDataHandler;
         do
         {
             prevHandler = tmp;
-            Delegate3 delegate4 = (Delegate3) Delegate.Combine(prevHandler, handler);
-            tmp = Interlocked.CompareExchange<Delegate3>(ref this.streamingDataHandler, delegate4, prevHandler);
+            StreamingDataHandler delegate4 = (StreamingDataHandler) Delegate.Combine(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<StreamingDataHandler>(ref this.streamingDataHandler, delegate4, prevHandler);
         }
         while (tmp != prevHandler);
     }
 
-    public void DeleteStreamingDataHandler(Delegate3 handler)
+    public void DeleteStreamingDataHandler(StreamingDataHandler handler)
     {
-        Delegate3 prevHandler;
-        Delegate3 tmp = this.streamingDataHandler;
+        StreamingDataHandler prevHandler;
+        StreamingDataHandler tmp = this.streamingDataHandler;
         do
         {
             prevHandler = tmp;
-            Delegate3 delegate4 = (Delegate3) Delegate.Remove(prevHandler, handler);
-            tmp = Interlocked.CompareExchange<Delegate3>(ref this.streamingDataHandler, delegate4, prevHandler);
+            StreamingDataHandler delegate4 = (StreamingDataHandler) Delegate.Remove(prevHandler, handler);
+            tmp = Interlocked.CompareExchange<StreamingDataHandler>(ref this.streamingDataHandler, delegate4, prevHandler);
         }
         while (tmp != prevHandler);
     }
@@ -944,12 +948,12 @@ internal class DataFetcher
         return this.cancelFlag;
     }
 
-    public delegate void Delegate1(object sender, EventArgs2 e);
+    public delegate void StaticDataHandler(object sender, StaticDataEventArgs e);
 
-    public delegate void Delegate2(object sender, EventArgs3 e);
+    public delegate void StaticErrorHandler(object sender, StaticErrorEventArgs e);
 
-    public delegate void Delegate3(object sender, EventArgs4 e);
+    public delegate void StreamingDataHandler(object sender, StreamingDataEventArgs e);
 
-    public delegate void Delegate4(object sender, EventArgs5 e);
+    public delegate void StreamingErrorHandler(object sender, StreamingErrorEventArgs e);
 }
 

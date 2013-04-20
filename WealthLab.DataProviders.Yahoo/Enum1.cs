@@ -1,9 +1,10 @@
 ﻿using System;
 
+///WYJ fix, original name: Enum1
 [Flags]
-internal enum Enum1
+internal enum SnDEnum
 {
-    flag_0 = 1,
-    flag_1 = 2
+    Split = 1,  ///SplitAdj
+    Dividend = 2   ///DividendAdj
 }
 

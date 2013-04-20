@@ -35,12 +35,12 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
     public ProviderSettingsControl()
     {
         this.InitializeComponent_1();
-        Application.ApplicationExit += new EventHandler(this.method_0);
+        Application.ApplicationExit += new EventHandler(this.onApplicationExit);
     }
 
     private void cbDividendAdj_CheckedChanged(object sender, EventArgs e)
     {
-        this.method_3();
+        this.enableOrDisableDataRangeOptions();
         this.updateSettings();
     }
 
@@ -253,7 +253,7 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
         Process.Start("http://billing.finance.yahoo.com/realtime_quotes/signup?.src=quote&.refer=qb");
     }
 
-    private void method_0(object sender, EventArgs e)
+    private void onApplicationExit(object sender, EventArgs e)
     {
         YahooStaticProvider.ClientSettings.Serialize();
     }
@@ -278,7 +278,7 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
         {
             this.rbDataRangeIgnore.Checked = true;
         }
-        this.method_3();
+        this.enableOrDisableDataRangeOptions();
         this.bool_0 = true;
     }
 
@@ -303,7 +303,7 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
         }
     }
 
-    private void method_3()
+    private void enableOrDisableDataRangeOptions()
     {
         this.lblDataRange.Enabled = this.rbDataRangeConstant.Enabled = this.rbDataRangeIgnore.Enabled = this.cbDividendAdj.Checked || this.cbSplitAdj.Checked;
     }

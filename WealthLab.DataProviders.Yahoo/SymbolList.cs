@@ -32,7 +32,7 @@ internal class SymbolList   ///WYJ note, Symbol list used in symbols page of new
         this.list = list_1;
     }
 
-    public SymbolList(string string_0, Enum0 enum0_0)
+    public SymbolList(string string_0, DelimeterSetEnum enum0_0)
     {
         this.sortNeeded = true;
         this.delimiterForDisplay = ',';
@@ -54,11 +54,11 @@ internal class SymbolList   ///WYJ note, Symbol list used in symbols page of new
     }
 
     ///WYJ fix, original name: method_2
-    public void AddSymbols(string string_0, Enum0 enum0_0)
+    public void AddSymbols(string string_0, DelimeterSetEnum enum0)
     {
-        switch (enum0_0)
+        switch (enum0)
         {
-            case Enum0.const_0:  ///WYJ note, do not check quote mark, split by ',', '\n', '\r', no ' ' as delimiter
+            case DelimeterSetEnum.ForProgram:  ///WYJ note, do not check quote mark, split by ',', '\n', '\r', no ' ' as delimiter
                 if (string_0 != null)
                 {
                     foreach (string str3 in string_0.Split(this.char_2, StringSplitOptions.RemoveEmptyEntries))
@@ -68,7 +68,7 @@ internal class SymbolList   ///WYJ note, Symbol list used in symbols page of new
                 }
                 break;
 
-            case Enum0.const_1:  ///WYJ note, check quote mark, split by ' ', ',', '\n', '\r', ' ' is one of the delimiters
+            case DelimeterSetEnum.ForGuiInput:  ///WYJ note, check quote mark, split by ' ', ',', '\n', '\r', ' ' is one of the delimiters
             {
                 if (string_0 != null)
                 {

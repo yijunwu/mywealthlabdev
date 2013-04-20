@@ -1,12 +1,13 @@
 ﻿using System;
 
-internal enum Enum2
+///WYJ fix, original name: Enum2
+internal enum LogLevel
 {
-    const_0,
-    const_1,
-    const_2,
-    const_3,
-    const_4,
-    const_5
+    LOG, //Log, original: const_0
+    INFO, //Info, original: const_1
+    METHOD, //Method, original: const_2
+    ERROR, //Error, original: const_3
+    WARNING, //Warning, original: const_4
+    CRITICAL //Critical, original: const_5
 }
 

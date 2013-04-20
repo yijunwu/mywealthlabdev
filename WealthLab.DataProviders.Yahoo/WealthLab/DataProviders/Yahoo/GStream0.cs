@@ -7,27 +7,27 @@
 
     public class GStream0 : StreamingDataProvider
     {
-        private bool bool_1;
-        private DataFetcher class26_0;
+        private bool connected;
+        private DataFetcher dataFetcher;
         private IConnectionStatus iconnectionStatus_1;
         private YahooStaticProvider yahooStaticProvider_0;
 
         public override void ConnectStreaming(IConnectionStatus connStatus)
         {
             this.iconnectionStatus_1 = connStatus;
-            this.method_2(true, this.iconnectionStatus_1);
+            this.createDataFetcher(true, this.iconnectionStatus_1);
         }
 
         public override void DisconnectStreaming()
         {
-            this.bool_1 = false;
+            this.connected = false;
             base.DisconnectStreaming();
         }
 
         public Quote GetQuote(string symbol)
         {
-            this.method_2(false, null);
-            return this.class26_0.GetRealTimeQuoteForSymbol(symbol);
+            this.createDataFetcher(false, null);
+            return this.dataFetcher.GetRealTimeQuoteForSymbol(symbol);
         }
 
         public override StaticDataProvider GetStaticProvider()
@@ -42,21 +42,22 @@
 
         private void updateStatus()
         {
-            this.iconnectionStatus_1.StatusUpdate(ConnStatus.OK, 0, this.class26_0.GetSubscribedSymbolCount() + " Symbols Subscribed");
+            this.iconnectionStatus_1.StatusUpdate(ConnStatus.OK, 0, this.dataFetcher.GetSubscribedSymbolCount() + " Symbols Subscribed");
         }
 
-        private void method_2(bool bool_2, IConnectionStatus iconnectionStatus_2)
+        ///WYJ fix, original name: method_2
+        private void createDataFetcher(bool startStreaming, IConnectionStatus iconnectionStatus_2)
         {
-            if (!this.bool_1)
+            if (!this.connected)
             {
-                this.bool_1 = true;
-                this.class26_0 = new DataFetcher();
-                this.class26_0.AddStreamingDataHandler(new DataFetcher.Delegate3(this.method_4));
-                this.class26_0.AddStreamingErrorHandler(new DataFetcher.Delegate4(this.onError));
-                this.class26_0.login();
-                if (bool_2)
+                this.connected = true;
+                this.dataFetcher = new DataFetcher();
+                this.dataFetcher.AddStreamingDataHandler(new DataFetcher.StreamingDataHandler(this.onData));
+                this.dataFetcher.AddStreamingErrorHandler(new DataFetcher.StreamingErrorHandler(this.onError));
+                this.dataFetcher.login();
+                if (startStreaming)
                 {
-                    this.class26_0.startStreamingRequesterAndProcessor();
+                    this.dataFetcher.startStreamingRequesterAndProcessor();
                 }
                 if (iconnectionStatus_2 != null)
                 {
@@ -65,26 +66,26 @@
             }
         }
 
-        private void onError(object sender, EventArgs5 e)
+        private void onError(object sender, StreamingErrorEventArgs e)
         {
-            base.ConnectionStatus.StatusUpdate(ConnStatus.Error, 0, e.string_0);
+            base.ConnectionStatus.StatusUpdate(ConnStatus.Error, 0, e.errorMsg);
         }
 
-        private void method_4(object sender, EventArgs4 e)
+        private void onData(object sender, StreamingDataEventArgs e)
         {
-            if ((((e.quote_0.Price != 0.0) && (e.double_1 != 0.0)) && (e.double_2 != 0.0)) && (e.double_0 != 0.0))
+            if ((((e.quote.Price != 0.0) && (e.high != 0.0)) && (e.low != 0.0)) && (e.open != 0.0))
             {
-                Logger.LogWithStackTrace(new object[] { e.quote_0.TimeStamp.ToString(), e.quote_0.Symbol, e.quote_0.Price, e.quote_0.Size, e.double_0, e.double_1, e.double_2 });
-                base.UpdateMiniBar(e.quote_0, e.double_0, e.double_1, e.double_2);
+                Logger.LogWithStackTrace(new object[] { e.quote.TimeStamp.ToString(), e.quote.Symbol, e.quote.Price, e.quote.Size, e.open, e.high, e.low });
+                base.UpdateMiniBar(e.quote, e.open, e.high, e.low);
             }
         }
 
         protected override void Subscribe(string symbol)
         {
             Logger.LogParameters(new object[] { symbol });
-            if (this.bool_1 && (symbol != string.Empty))
+            if (this.connected && (symbol != string.Empty))
             {
-                this.class26_0.subscribeSymbol(symbol.ToUpper());
+                this.dataFetcher.subscribeSymbol(symbol.ToUpper());
                 this.updateStatus();
             }
         }
@@ -92,9 +93,9 @@
         protected override void UnSubscribe(string symbol)
         {
             Logger.LogParameters(new object[] { symbol });
-            if (this.bool_1 && (symbol != string.Empty))
+            if (this.connected && (symbol != string.Empty))
             {
-                this.class26_0.unsubscribeSymbol(symbol.ToUpper());
+                this.dataFetcher.unsubscribeSymbol(symbol.ToUpper());
                 this.updateStatus();
             }
         }

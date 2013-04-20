@@ -1,24 +1,25 @@
 ﻿using System;
 
-internal class Class27 : IComparable
+///WYJ fix, original name: Class27
+internal class DataRequest : IComparable
 {
     private DateTime start;
-    private DateTime dateTime_1;
-    private DateTime dateTime_2;
-    private Enum4 dataType;
+    private DateTime snDStartDate;  ///WYJ note, start date for SnD data
+    private DateTime end;
+    private DataTypeEnum dataType;
     private string symbol;
 
-    public Class27(string symbol)
+    public DataRequest(string symbol)
     {
         this.symbol = symbol;
     }
 
-    public Class27(string string_1, DateTime dateTime_3, DateTime dateTime_4, DateTime dateTime_5, Enum4 enum4_1) : this(string_1)
+    public DataRequest(string symbol, DateTime startDateTime, DateTime endDateTime, DateTime sndStartDateTime, DataTypeEnum dataType) : this(symbol)
     {
-        this.start = dateTime_3;
-        this.dateTime_2 = dateTime_4;
-        this.dateTime_1 = dateTime_5;
-        this.dataType = enum4_1;
+        this.start = startDateTime;
+        this.end = endDateTime;
+        this.snDStartDate = sndStartDateTime;
+        this.dataType = dataType;
     }
 
     public string getSymbol()
@@ -26,50 +27,50 @@ internal class Class27 : IComparable
         return this.symbol;
     }
 
-    public Enum4 getDataType()
+    public DataTypeEnum getDataType()
     {
         return this.dataType;
     }
 
-    public void setDataType(Enum4 enum4_1)
+    public void setDataType(DataTypeEnum enum4_1)
     {
         this.dataType = enum4_1;
     }
 
     ///WYJ fix, original signature: public DateTime method_3()
-    public DateTime method_3()
+    public DateTime getStartDate()
     {
         return this.start;
     }
 
-    public void method_4(DateTime dateTime_3)
+    public void setStartDate(DateTime dateTime)
     {
-        this.start = dateTime_3;
+        this.start = dateTime;
     }
 
-    public DateTime method_5()
+    public DateTime getSnDStartDate()
     {
-        return this.dateTime_1;
+        return this.snDStartDate;
     }
 
-    public void method_6(DateTime dateTime_3)
+    public void setSnDStartDate(DateTime dateTime)
     {
-        this.dateTime_1 = dateTime_3;
+        this.snDStartDate = dateTime;
     }
 
-    public DateTime method_7()
+    public DateTime getEndDate()
     {
-        return this.dateTime_2;
+        return this.end;
     }
 
-    public void method_8(DateTime dateTime_3)
+    public void setEndDate(DateTime endDateTime)
     {
-        this.dateTime_2 = dateTime_3;
+        this.end = endDateTime;
     }
 
     int IComparable.CompareTo(object object_0)
     {
-        return this.getSymbol().CompareTo((object_0 as Class27).getSymbol());
+        return this.getSymbol().CompareTo((object_0 as DataRequest).getSymbol());
     }
 }
 

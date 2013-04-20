@@ -35,28 +35,28 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
         return writeLog;
     }
 
-    private static void log(Enum2 enum2_0, string string_0)
+    private static void log(LogLevel enum2_0, string string_0)
     {
         string str;
         switch (enum2_0)
         {
-            case Enum2.const_1:
+            case LogLevel.INFO:
                 str = "[I]";
                 break;
 
-            case Enum2.const_2:
+            case LogLevel.METHOD:
                 str = "[M]";
                 break;
 
-            case Enum2.const_3:
+            case LogLevel.ERROR:
                 str = "[E]";
                 break;
 
-            case Enum2.const_4:
+            case LogLevel.WARNING:
                 str = "[W]";
                 break;
 
-            case Enum2.const_5:
+            case LogLevel.CRITICAL:
                 str = "[C]";
                 break;
 
@@ -64,7 +64,7 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
                 str = "[L]";
                 break;
         }
-        if ((enum2_0 == Enum2.const_3) || (enum2_0 == Enum2.const_5))
+        if ((enum2_0 == LogLevel.ERROR) || (enum2_0 == LogLevel.CRITICAL))
         {
             string_0 = string.Format("{0}\r\n{1}", string_0, Environment.StackTrace);
         }
@@ -92,7 +92,7 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
         {
             lock (object_0)
             {
-                log(Enum2.const_0, object_1.ToString());
+                log(LogLevel.LOG, object_1.ToString());
             }
         }
     }
@@ -109,12 +109,12 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
                     builder.Append(obj3.ToString());
                     builder.Append(" ");
                 }
-                log(Enum2.const_0, builder.ToString());
+                log(LogLevel.LOG, builder.ToString());
             }
         }
     }
     
-    public static void Log(Enum2 enum2_0, object object_1)
+    public static void Log(LogLevel enum2_0, object object_1)
     {
         if (writeLog)
         {
@@ -125,7 +125,7 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
         }
     }
 
-    public static void Log(Enum2 enum2_0, params object[] object_1)
+    public static void Log(LogLevel enum2_0, params object[] object_1)
     {
         if (writeLog)
         {
@@ -151,12 +151,12 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
         {
             lock (object_0)
             {
-                log(Enum2.const_1, string.Format("Command Line: {0}", Environment.CommandLine));
-                log(Enum2.const_1, string.Format("Assembly: {0}", Assembly.GetExecutingAssembly().FullName));
-                log(Enum2.const_1, string.Format("OS: {0}", Environment.OSVersion));
-                log(Enum2.const_1, string.Format("NET: {0}", Environment.Version));
-                log(Enum2.const_1, string.Format("UTC: {0}", DateTime.UtcNow.ToString("o")));
-                log(Enum2.const_1, "------------------------------------------------");
+                log(LogLevel.INFO, string.Format("Command Line: {0}", Environment.CommandLine));
+                log(LogLevel.INFO, string.Format("Assembly: {0}", Assembly.GetExecutingAssembly().FullName));
+                log(LogLevel.INFO, string.Format("OS: {0}", Environment.OSVersion));
+                log(LogLevel.INFO, string.Format("NET: {0}", Environment.Version));
+                log(LogLevel.INFO, string.Format("UTC: {0}", DateTime.UtcNow.ToString("o")));
+                log(LogLevel.INFO, "------------------------------------------------");
             }
         }
     }
@@ -174,7 +174,7 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
                 {
                     builder.AppendFormat("\r\n{0}", obj3.ToString());
                 }
-                log(Enum2.const_2, builder.ToString());
+                log(LogLevel.METHOD, builder.ToString());
             }
         }
     }
@@ -208,7 +208,7 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
                         }
                     }
                 }
-                log(Enum2.const_2, builder.ToString());
+                log(LogLevel.METHOD, builder.ToString());
             }
         }
     }

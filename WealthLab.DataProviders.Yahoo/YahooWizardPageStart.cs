@@ -134,29 +134,31 @@ internal class YahooWizardPageStart : UserControl
         base.PerformLayout();
     }
 
-    public void method_0()
+    public void InitStates()
     {
         this.rbManual.Checked = true;
         this.cbUpdateGroup.Checked = false;
         this.cbUpdateGroup.Enabled = false;
     }
 
-    public DateTime method_1()
+    ///WYJ fix, original name: method_1
+    public DateTime optStartDate()
     {
         return this.dtStartingDate.Value;
     }
 
-    public bool method_2()
+    public bool optChooseFromClassification()
     {
         return this.rbClassification.Checked;
     }
 
-    public bool method_3()
+    public bool optUpdateGroup()
     {
-        return this.cbUpdateGroup.Checked;
+        return this.cbUpdateGroup.Checked;  ///the check box is unchecked and invisible
     }
 
-    private void method_4(object sender, EventArgs e)
+    ///WYJ fix, original name: method_4
+    private void showDialog(object sender, EventArgs e)
     {
         new ProviderSettingsForm().ShowDialog(this);
     }

@@ -53,7 +53,7 @@ internal static class Login  ///WYJ note, Login class
         }
         catch (Exception exception)
         {
-            Logger.Log(Enum2.const_3, exception.Message);
+            Logger.Log(LogLevel.ERROR, exception.Message);
             errorMessage = exception.Message;
         }
         finally

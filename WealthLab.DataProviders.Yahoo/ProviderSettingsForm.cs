@@ -70,7 +70,7 @@ internal class ProviderSettingsForm : Form
 
     private void cbSplitAdj_CheckedChanged(object sender, EventArgs e)
     {
-        this.method_1();
+        this.enableOrDisableDataRangeOptions();
     }
 
     private void InitializeComponent()
@@ -314,7 +314,7 @@ internal class ProviderSettingsForm : Form
         Process.Start("http://billing.finance.yahoo.com/realtime_quotes/signup?.src=quote&.refer=qb");
     }
 
-    private void method_0(YahooClientSettings yahooClientSettings_0)
+    private void InitializeStates(YahooClientSettings yahooClientSettings_0)
     {
         this.numThreadCount.Value = yahooClientSettings_0.ThreadCount;
         this.numAttemptCount.Value = yahooClientSettings_0.AttemptCount;
@@ -331,10 +331,10 @@ internal class ProviderSettingsForm : Form
         {
             this.rbDataRangeIgnore.Checked = true;
         }
-        this.method_1();
+        this.enableOrDisableDataRangeOptions();
     }
 
-    private void method_1()
+    private void enableOrDisableDataRangeOptions()
     {
         this.lblDataRange.Enabled = this.rbDataRangeConstant.Enabled = this.rbDataRangeIgnore.Enabled = this.cbDividendAdj.Checked || this.cbSplitAdj.Checked;
     }
@@ -343,7 +343,7 @@ internal class ProviderSettingsForm : Form
     {
         YahooClientSettings settings = YahooClientSettings.Deserialize(this.string_0);
         settings = (settings == null) ? new YahooClientSettings() : settings;
-        this.method_0(settings);
+        this.InitializeStates(settings);
     }
 
     // ///WYJ fix, original signature void Form.Dispose(bool disposing)

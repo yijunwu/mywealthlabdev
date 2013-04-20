@@ -8,27 +8,27 @@ using WealthLab.DataProviders.Yahoo;
 internal class SnDHandler  ///WYJ note, the class that handles split and dividend
 {
     private AdjustedModeWhenDataRange adjustedModeWhenDataRange_0;
-    private DateTime dateTime_0;
-    private Enum1 enum1_0;
+    private DateTime dateTime;
+    private SnDEnum snDEnum;
     private IList<FundamentalItem> splitList;
     private IList<FundamentalItem> dividendList;
     private List<FundamentalItem> splitAndDividendList;
     private List<SnDFactor> factorList;
 
-    public SnDHandler(IList<FundamentalItem> splitList, IList<FundamentalItem> dividendList, Enum1 enum1_1)
+    public SnDHandler(IList<FundamentalItem> splitList, IList<FundamentalItem> dividendList, SnDEnum enum1)
     {
-        this.dateTime_0 = DateTime.MaxValue;
+        this.dateTime = DateTime.MaxValue;
         this.factorList = new List<SnDFactor>();
-        Logger.LogWithStackTrace(new object[] { enum1_1 });
+        Logger.LogWithStackTrace(new object[] { enum1 });
         this.splitList = splitList;
         this.dividendList = dividendList;
-        this.enum1_0 = enum1_1;
+        this.snDEnum = enum1;
     }
 
-    public SnDHandler(IList<FundamentalItem> splitList, IList<FundamentalItem> dividendList, Enum1 enum1_1, AdjustedModeWhenDataRange adjustedModeWhenDataRange_1, DateTime dateTime_1) : this(splitList, dividendList, enum1_1)
+    public SnDHandler(IList<FundamentalItem> splitList, IList<FundamentalItem> dividendList, SnDEnum enum1, AdjustedModeWhenDataRange adjustedModeWhenDataRange_1, DateTime dateTime_1) : this(splitList, dividendList, enum1)
     {
         this.adjustedModeWhenDataRange_0 = adjustedModeWhenDataRange_1;
-        this.dateTime_0 = dateTime_1;
+        this.dateTime = dateTime_1;
     }
 
     ///WYJ fix, original name method_0
@@ -92,13 +92,13 @@ internal class SnDHandler  ///WYJ note, the class that handles split and dividen
         for (int i = this.splitAndDividendList.Count - 1; i >= 0; i--)
         {
             ///WYJ fix, original: if (((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) || (this.enum1_0 == Enum1.flag_1)) && ((this.list_0[i].Date > this.dateTime_0) || (this.enum1_0 == Enum1.flag_1)))
-            if ((this.enum1_0 == Enum1.flag_1) || (this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime_0))
+            if ((this.snDEnum == SnDEnum.Dividend) || (this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime))
             {
                 if (this.splitAndDividendList[i].Name.StartsWith("S"))
                 {
                     num *= this.splitAndDividendList[i].Value;
                 }
-                if ((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime_0))
+                if ((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime))
                 {
                     this.splitAndDividendList.RemoveAt(i);
                     continue;
@@ -250,12 +250,12 @@ internal class SnDHandler  ///WYJ note, the class that handles split and dividen
                         {
                             break;
                         }
-                        if (this.splitAndDividendList[this.splitAndDividendList.Count - 1].Name.StartsWith("D") && (int)(this.enum1_0 & Enum1.flag_1) != 0)
+                        if (this.splitAndDividendList[this.splitAndDividendList.Count - 1].Name.StartsWith("D") && (int)(this.snDEnum & SnDEnum.Dividend) != 0)
                         {
                             double value = this.splitAndDividendList[this.splitAndDividendList.Count - 1].Value;
                             factor = factor * (1 - value / (bars_0.Close[i] * num1));
                         }
-                        if (this.splitAndDividendList[this.splitAndDividendList.Count - 1].Name.StartsWith("S") && (int)(this.enum1_0 & Enum1.flag_0) != 0)
+                        if (this.splitAndDividendList[this.splitAndDividendList.Count - 1].Name.StartsWith("S") && (int)(this.snDEnum & SnDEnum.Split) != 0)
                         {
                             double value1 = 1 / this.splitAndDividendList[this.splitAndDividendList.Count - 1].Value;
                             factor = factor * value1;
