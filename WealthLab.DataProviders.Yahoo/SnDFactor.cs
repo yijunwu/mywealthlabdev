@@ -3,7 +3,7 @@
 ///WYJ fix, original name: Class20
 internal class SnDFactor   ///WYJ note: SnDFactor
 {
-    private DateTime dateTime_0;
+    private DateTime dateTime;
     private double factor;
     private double factorForSplit;
 
@@ -13,7 +13,7 @@ internal class SnDFactor   ///WYJ note: SnDFactor
 
     public SnDFactor(DateTime dateTime_1, double factor, double factorForSplit) : this()
     {
-        this.dateTime_0 = dateTime_1;
+        this.dateTime = dateTime_1;
         this.factor = factor;
         this.factorForSplit = factorForSplit;
     }
@@ -21,13 +21,13 @@ internal class SnDFactor   ///WYJ note: SnDFactor
     ///WYJ fix, original name: method_0
     public DateTime DateTime()
     {
-        return this.dateTime_0;
+        return this.dateTime;
     }
 
     ///WYJ fix, original name: method_1
     public void SetDateTime(DateTime dateTime_1)
     {
-        this.dateTime_0 = dateTime_1;
+        this.dateTime = dateTime_1;
     }
 
     ///WYJ fix, original name: method_2

@@ -47,11 +47,11 @@
             return new SymbolInfoList();
         }
 
-        private int indexOf(string string_0, BarScale barScale, int interval)
+        private int indexOf(string symbol, BarScale barScale, int interval)
         {
             for (int i = 0; i < this.Items.Count; i++)
             {
-                if (((this.Items[i].Name == string_0) && (this.Items[i].Scale == barScale)) && (this.Items[i].Interval == interval))
+                if (((this.Items[i].Name == symbol) && (this.Items[i].Scale == barScale)) && (this.Items[i].Interval == interval))
                 {
                     return i;
                 }

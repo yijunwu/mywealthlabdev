@@ -20,18 +20,18 @@ internal class DataFetcher
     private StreamingDataHandler streamingDataHandler;
     private StreamingErrorHandler streamingErrorHandler;
     private Dictionary<string, DateTimeVolume> dictionary_0 = new Dictionary<string, DateTimeVolume>();
-    private IFormatProvider iformatProvider_0;
+    private IFormatProvider formatProvider;
     private List<string> subscribedSymbols = new List<string>();  ///WYJ note: probably the real-time symbol list
     private List<ThreadControl> threadControls = new List<ThreadControl>();
-    private Queue<DataRequest> queue_0 = new Queue<DataRequest>();
-    private Thread thread_0;
+    private Queue<DataRequest> requestQueue = new Queue<DataRequest>();
+    private Thread streamingThread;
 
     public DataFetcher()
     {
         CultureInfo info = new CultureInfo("en-US") {
             NumberFormat = { NumberDecimalSeparator = "." }
         };
-        this.iformatProvider_0 = info;
+        this.formatProvider = info;
     }
 
     public void AddStaticDataHandler(StaticDataHandler handler)
@@ -170,17 +170,17 @@ internal class DataFetcher
         return str;
     } */
 
-    private string requestData(string string_0, bool bool_1)  ///WYJ note, the mothod that sends HTTP request to get data
+    private string requestData(string url, bool authNeeded)  ///WYJ note, the mothod that sends HTTP request to get data
     {
         string end = null;
         int num = 0;
         while (true)
         {
             num++;
-            object[] string0 = new object[] { string_0, bool_1, string.Concat("Attempt ", num) };
+            object[] string0 = new object[] { url, authNeeded, string.Concat("Attempt ", num) };
             Logger.LogParameters(string0);
-            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(string_0);
-            if (bool_1)
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            if (authNeeded)
             {
                 if (Login.GetCookie() == null)
                 {
@@ -201,7 +201,7 @@ internal class DataFetcher
                     using (StreamReader streamReader = new StreamReader(responseStream))
                     {
                         end = streamReader.ReadToEnd();
-                        Logger.Log(string.Concat("Result  ", string_0, "\r\n", end));
+                        Logger.Log(string.Concat("Result  ", url, "\r\n", end));
                     }
                 }
             }
@@ -215,7 +215,7 @@ internal class DataFetcher
                 }
                 else
                 {
-                    Logger.Log(LogLevel.WARNING, string.Concat("New attempt ", string_0));
+                    Logger.Log(LogLevel.WARNING, string.Concat("New attempt ", url));
                 }
             }
             if (end != null)
@@ -233,8 +233,8 @@ internal class DataFetcher
     public Bars processDataRequest(DataRequest req, bool isStreaming)  ///WYJ note, bool_1 probably means real-time data, which requires login
     {
         Logger.LogParameters(new object[] { req.getSymbol() });
-        string str = this.getUrl(req.getSymbol(), req.getStartDate(), req.getEndDate(), DataTypeEnum.Quote);
-        string str2 = this.requestData(str, false);
+        string url = this.getUrl(req.getSymbol(), req.getStartDate(), req.getEndDate(), DataTypeEnum.Quote);
+        string str2 = this.requestData(url, false);
         Bars bars = this.parseQuoteData(req.getSymbol(), str2);
         if (isStreaming || YahooStaticProvider.ClientSettings.AlwaysPartialBar)
         {
@@ -246,8 +246,8 @@ internal class DataFetcher
             {
                 this.login();
             }
-            str = this.getRealTimeDataUrl(req.getSymbol());
-            str2 = this.requestData(str, true);
+            url = this.getRealTimeDataUrl(req.getSymbol());
+            str2 = this.requestData(url, true);
             Quote quote = this.parseQuote(str2, out open, out high, out low, out volume);
             if ((quote == null) || ((quote.TimeStamp.Date <= bars.Date[bars.Count - 1]) && (bars.Count != 0)))
             {
@@ -259,9 +259,9 @@ internal class DataFetcher
     }
 
     ///WYJ fix, original name: method_17
-    private bool isNotEmptyOrNA(string string_0)   ///WYJ note, this method is never used
+    private bool isNotEmptyOrNA(string str)   ///WYJ note, this method is never used
     {
-        return ((!(string_0 == "N/A") && !(string_0 == string.Empty)) && !(string_0.Trim(new char[] { '"' }) == string.Empty));
+        return ((!(str == "N/A") && !(str == string.Empty)) && !(str.Trim(new char[] { '"' }) == string.Empty));
     }
 
 
@@ -290,17 +290,17 @@ internal class DataFetcher
     }
 
     ///WYJ fix, original signature public Quote method_19(string string_0)
-    public Quote GetRealTimeQuoteForSymbol(string string_0)
+    public Quote GetRealTimeQuoteForSymbol(string symbol)
     {
-        string str = this.getRealTimeDataUrl(string_0);
+        string url = this.getRealTimeDataUrl(symbol);
         try
         {
             double open;
             double high;
             double low;
             double volume;
-            string str2 = this.requestData(str, true);
-            return this.parseQuote(str2, out open, out high, out low, out volume);
+            string dataStr = this.requestData(url, true);
+            return this.parseQuote(dataStr, out open, out high, out low, out volume);
         }
         catch
         {
@@ -322,11 +322,11 @@ internal class DataFetcher
     }
 
     ///WYJ fix, original name method_20
-    private Quote parseQuote(string string_0, out double open, out double high, out double low, out double volume)
+    private Quote parseQuote(string dataString, out double open, out double high, out double low, out double volume)
     {
         double num;
         double num2;
-        string[] strArray = string_0.Split(new char[] { ',' });
+        string[] strArray = dataString.Split(new char[] { ',' });
         Quote quote = new Quote();
         volume = num = 0.0;
         low = num2 = num;
@@ -334,17 +334,17 @@ internal class DataFetcher
         try
         {
             quote.Symbol = strArray[0].Trim(new char[] { '"' });
-            quote.TimeStamp = DateTime.ParseExact(strArray[1].Trim(new char[] { '"' }) + " " + strArray[2].Trim(new char[] { '"' }), "M/d/yyyy h:mmtt", this.iformatProvider_0);
-            quote.Open = open = Convert.ToDouble(strArray[3], this.iformatProvider_0);
-            high = Convert.ToDouble(strArray[4], this.iformatProvider_0);
-            low = Convert.ToDouble(strArray[5], this.iformatProvider_0);
-            quote.Price = Convert.ToDouble(strArray[6], this.iformatProvider_0);
-            volume = Convert.ToDouble(strArray[7], this.iformatProvider_0);
-            quote.PreviousClose = Convert.ToDouble(strArray[8], this.iformatProvider_0);
+            quote.TimeStamp = DateTime.ParseExact(strArray[1].Trim(new char[] { '"' }) + " " + strArray[2].Trim(new char[] { '"' }), "M/d/yyyy h:mmtt", this.formatProvider);
+            quote.Open = open = Convert.ToDouble(strArray[3], this.formatProvider);
+            high = Convert.ToDouble(strArray[4], this.formatProvider);
+            low = Convert.ToDouble(strArray[5], this.formatProvider);
+            quote.Price = Convert.ToDouble(strArray[6], this.formatProvider);
+            volume = Convert.ToDouble(strArray[7], this.formatProvider);
+            quote.PreviousClose = Convert.ToDouble(strArray[8], this.formatProvider);
             try
             {
-                quote.Bid = Convert.ToDouble(strArray[9], this.iformatProvider_0);
-                quote.Ask = Convert.ToDouble(strArray[10], this.iformatProvider_0);
+                quote.Bid = Convert.ToDouble(strArray[9], this.formatProvider);
+                quote.Ask = Convert.ToDouble(strArray[10], this.formatProvider);
             }
             catch
             {
@@ -353,7 +353,7 @@ internal class DataFetcher
         }
         catch (Exception exception)
         {
-            string str = exception.Message + " Line: " + string_0;
+            string str = exception.Message + " Line: " + dataString;
             Logger.Log(LogLevel.ERROR, str);
             quote = null;
         }
@@ -361,9 +361,9 @@ internal class DataFetcher
     }
 
     ///WYJ fix, original name method_21
-    private void processStreamingQuoteData(string string_0)  ///WYJ fix, meaningful name candidate: processQuoteData
+    private void processStreamingQuoteData(string dataStr)  ///WYJ fix, meaningful name candidate: processQuoteData
     {
-        foreach (string str in string_0.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
+        foreach (string str in dataStr.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
         {
             double open;
             double high;
@@ -455,15 +455,15 @@ internal class DataFetcher
                             }
                         }
                     }
-                    foreach (string str in subscribed)
+                    foreach (string s in subscribed)
                     {
                         if (this.cancelFlag)
                         {
                             break;
                         }
-                        string str1 = this.getRealTimeDataUrl(str);
-                        string str2 = this.requestData(str1, true);
-                        this.processStreamingQuoteData(str2);
+                        string url = this.getRealTimeDataUrl(s);
+                        string dataStr = this.requestData(url, true);
+                        this.processStreamingQuoteData(dataStr);
                     }
                 }
                 catch (Exception exception1)
@@ -483,33 +483,33 @@ internal class DataFetcher
     public void startStreamingRequesterAndProcessor()
     {
         this.cancelFlag = false;
-        this.thread_0 = new Thread(new ThreadStart(this.requestAndProcessStreaming));
-        this.thread_0.IsBackground = true;
-        this.thread_0.Start();
+        this.streamingThread = new Thread(new ThreadStart(this.requestAndProcessStreaming));
+        this.streamingThread.IsBackground = true;
+        this.streamingThread.Start();
     }
 
     ///WYJ fix, original signature: private Class28 method_24(string string_0)
-    private SplitAndDividend parseDividendAndSplitData(string string_0)
+    private SplitAndDividend parseDividendAndSplitData(string dataStr)
     {
         SplitAndDividend snDData = new SplitAndDividend();
-        foreach (string str in string_0.Split(new char[] { '\n' }))
+        foreach (string str in dataStr.Split(new char[] { '\n' }))
         {
             if (str.StartsWith("DIVIDEND,"))
             {
                 FundamentalItem item2 = new FundamentalItemYahooDividend("Dividend (Yahoo! Finance)");
                 string[] strArray5 = str.Split(new char[] { ',' });
-                item2.Date = DateTime.ParseExact(strArray5[1].Trim(), "yyyyMMdd", this.iformatProvider_0);
-                item2.Value = Convert.ToDouble(strArray5[2].Trim(), this.iformatProvider_0);
+                item2.Date = DateTime.ParseExact(strArray5[1].Trim(), "yyyyMMdd", this.formatProvider);
+                item2.Value = Convert.ToDouble(strArray5[2].Trim(), this.formatProvider);
                 snDData.getDividend().Add(item2);
             }
             if (str.StartsWith("SPLIT,"))
             {
                 FundamentalItem item = new FundamentalItemYahooSplit("Split (Yahoo! Finance)");
                 string[] strArray3 = str.Split(new char[] { ',' });
-                item.Date = DateTime.ParseExact(strArray3[1].Trim(), "yyyyMMdd", this.iformatProvider_0);
+                item.Date = DateTime.ParseExact(strArray3[1].Trim(), "yyyyMMdd", this.formatProvider);
                 string[] strArray4 = strArray3[2].Split(new char[] { ':' });
-                double num2 = Convert.ToDouble(strArray4[0], this.iformatProvider_0);
-                double num3 = Convert.ToDouble(strArray4[1], this.iformatProvider_0);
+                double num2 = Convert.ToDouble(strArray4[0], this.formatProvider);
+                double num3 = Convert.ToDouble(strArray4[1], this.formatProvider);
                 item.Value = num2 / num3;
                 snDData.getSplit().Add(item);
             }
@@ -520,11 +520,11 @@ internal class DataFetcher
     }
 
     ///WYJ fix, original name: method_25
-    private SplitAndDividend processSplitAndDividendDataRequest(DataRequest class27_0)  ///WYJ note, get dividend and split data
+    private SplitAndDividend processSplitAndDividendDataRequest(DataRequest req)  ///WYJ note, get dividend and split data
     {
-        string str = this.getUrl(class27_0.getSymbol(), class27_0.getSnDStartDate(), class27_0.getEndDate(), DataTypeEnum.SnD);
-        string str2 = this.requestData(str, true);
-        return this.parseDividendAndSplitData(str2);
+        string url = this.getUrl(req.getSymbol(), req.getSnDStartDate(), req.getEndDate(), DataTypeEnum.SnD);
+        string dataStr = this.requestData(url, true);
+        return this.parseDividendAndSplitData(dataStr);
     }
 
     ///WYJ fix, code from Reflector
@@ -635,15 +635,15 @@ internal class DataFetcher
                 while (!this.cancelFlag)
                 {
                     DataRequest class27 = null;
-                    lock (this.queue_0)
+                    lock (this.requestQueue)
                     {
-                        if (this.queue_0.Count <= 0)
+                        if (this.requestQueue.Count <= 0)
                         {
                             break;
                         }
                         else
                         {
-                            class27 = this.queue_0.Dequeue();
+                            class27 = this.requestQueue.Dequeue();
                         }
                     }
                     if (class27 == null)
@@ -718,9 +718,9 @@ internal class DataFetcher
         List<ManualResetEvent> threadList = new List<ManualResetEvent>();
         foreach (DataRequest class3 in list_2)
         {
-            this.queue_0.Enqueue(class3);
+            this.requestQueue.Enqueue(class3);
         }
-        int num2 = (this.queue_0.Count < YahooStaticProvider.ClientSettings.ThreadCount) ? this.queue_0.Count : YahooStaticProvider.ClientSettings.ThreadCount;
+        int num2 = (this.requestQueue.Count < YahooStaticProvider.ClientSettings.ThreadCount) ? this.requestQueue.Count : YahooStaticProvider.ClientSettings.ThreadCount;
         for (int i = 0; i < num2; i++)
         {
             Thread thread = new Thread(new ThreadStart(this.processDataRequestQueue)) {
@@ -739,15 +739,15 @@ internal class DataFetcher
     }
 
     ///WYJ fix, original signature: private Bars method_28(string string_0, string string_1)
-    private Bars parseQuoteData(string string_0, string string_1)
+    private Bars parseQuoteData(string symbol, string dataStr)
     {
-        Logger.LogParameters(new object[] { string_0 });
-        Bars bars = new Bars(Encoder.encode(string_0), BarScale.Daily, 0);
+        Logger.LogParameters(new object[] { symbol });
+        Bars bars = new Bars(Encoder.encode(symbol), BarScale.Daily, 0);
         string str = string.Empty;
         int index = -1;
         try
         {
-            string[] strArray2 = string_1.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] strArray2 = dataStr.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
             index = strArray2.Length - 1;
             while (index >= 1)
             {
@@ -755,20 +755,20 @@ internal class DataFetcher
                 string[] strArray3 = str.Split(new char[] { ',' });
                 if (strArray3.Length == 7)
                 {
-                    DateTime time = DateTime.ParseExact(strArray3[0], new string[] { "yyyyMMdd", "yyyy-MM-dd" }, this.iformatProvider_0, DateTimeStyles.None);
-                    double open = Convert.ToDouble(strArray3[1], this.iformatProvider_0);
-                    double high = Convert.ToDouble(strArray3[2], this.iformatProvider_0);
-                    double num4 = Convert.ToDouble(strArray3[3], this.iformatProvider_0);
-                    double close = Convert.ToDouble(strArray3[4], this.iformatProvider_0);
-                    double volume = Convert.ToDouble(strArray3[5], this.iformatProvider_0);
-                    bars.Add(time, open, high, num4, close, volume);
+                    DateTime time = DateTime.ParseExact(strArray3[0], new string[] { "yyyyMMdd", "yyyy-MM-dd" }, this.formatProvider, DateTimeStyles.None);
+                    double open = Convert.ToDouble(strArray3[1], this.formatProvider);
+                    double high = Convert.ToDouble(strArray3[2], this.formatProvider);
+                    double low = Convert.ToDouble(strArray3[3], this.formatProvider);
+                    double close = Convert.ToDouble(strArray3[4], this.formatProvider);
+                    double volume = Convert.ToDouble(strArray3[5], this.formatProvider);
+                    bars.Add(time, open, high, low, close, volume);
                 }
                 index--;
             }
         }
         catch (Exception exception)
         {
-            string str2 = string.Format("Data parsing error. Symbol: {0}, LineNumber: {1}, String:\r\n {2}\r\nMessage:\r\n{3}\r\nStack Trace:\r\n{4}", new object[] { string_0, index, str, exception.Message, exception.StackTrace });
+            string str2 = string.Format("Data parsing error. Symbol: {0}, LineNumber: {1}, String:\r\n {2}\r\nMessage:\r\n{3}\r\nStack Trace:\r\n{4}", new object[] { symbol, index, str, exception.Message, exception.StackTrace });
             Logger.Log(LogLevel.ERROR, str2);
             throw new QuoteDataParseException(str2);
         }
@@ -816,27 +816,27 @@ internal class DataFetcher
     }
 
     ///WYJ fix, original signature: private string method_30(string string_0)
-    private string getRealTimeDataUrl(string string_0)
+    private string getRealTimeDataUrl(string symbol)
     {
-        return string.Format("http://download.finance.yahoo.com/d/quotes.csv?s={0}&f=sd1t1ohgl1vpba&e=.csv", string_0);  ///WYJ this is probably the real-time data url
+        return string.Format("http://download.finance.yahoo.com/d/quotes.csv?s={0}&f=sd1t1ohgl1vpba&e=.csv", symbol);  ///WYJ this is probably the real-time data url
     }
 
-    private string getUrl(string string_0, DateTime startDate, DateTime endDate, DataTypeEnum enum4_0)
+    private string getUrl(string symbol, DateTime startDate, DateTime endDate, DataTypeEnum dataType)
     {
-        int num = startDate.Month - 1;
-        int day = startDate.Day;
-        int year = startDate.Year;
-        int num4 = endDate.Month - 1;
-        int num5 = endDate.Day;
-        int num6 = endDate.Year;
+        int startMonth = startDate.Month - 1;
+        int startDay = startDate.Day;
+        int startYear = startDate.Year;
+        int endMonth = endDate.Month - 1;
+        int endDay = endDate.Day;
+        int endYear = endDate.Year;
         string str = "d";
-        switch (enum4_0)
+        switch (dataType)
         {
             case DataTypeEnum.Quote:
-                return string.Format("http://ichart.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv", new object[] { string_0, num, day, year, num4, num5, num6, str });
+                return string.Format("http://ichart.yahoo.com/table.csv?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g={7}&ignore=.csv", new object[] { symbol, startMonth, startDay, startYear, endMonth, endDay, endYear, str });
 
             case DataTypeEnum.SnD:
-                return string.Format("http://ichart.yahoo.com/x?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g=v&y=0&z=40000", new object[] { string_0, num, day, year, num4, num5, num6 });
+                return string.Format("http://ichart.yahoo.com/x?s={0}&a={1}&b={2}&c={3}&d={4}&e={5}&f={6}&g=v&y=0&z=40000", new object[] { symbol, startMonth, startDay, startYear, endMonth, endDay, endYear });
         }
         return string.Empty;
     }
@@ -844,13 +844,18 @@ internal class DataFetcher
     public Dictionary<string, string> GetSymbolNames(List<DataRequest> requestList)
     {
         List<string> list = new List<string>();
-        foreach (DataRequest class2 in requestList)
+        foreach (DataRequest req in requestList)
         {
-            list.Add(class2.getSymbol());
+            list.Add(req.getSymbol());
         }
         return this.GetSymbolNames(list);
     }
 
+    /// <summary>
+    /// Returns a mapping between symbol id's and symbol names
+    /// </summary>
+    /// <param name="symbolList"></param>
+    /// <returns></returns>
     public Dictionary<string, string> GetSymbolNames(List<string> symbolList)
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -861,14 +866,15 @@ internal class DataFetcher
             builder.Append("+");
             if (((((i % 0xc7) == 0) || (i == (symbolList.Count - 1))) && (i != 0)) || (symbolList.Count == 1))
             {
+                ///The url that returns symbol name for the symbol id
                 string url = string.Format("http://finance.yahoo.com/d/quotes.csv?s={0}&f=sn", builder.ToString());
-                foreach (string str5 in this.requestData(url, false).Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (string str in this.requestData(url, false).Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    string[] strArray4 = str5.Split(new string[] { "\",\"" }, StringSplitOptions.None);
-                    if (strArray4.Length == 2)
+                    string[] strArray = str.Split(new string[] { "\",\"" }, StringSplitOptions.None);
+                    if (strArray.Length == 2)
                     {
-                        string key = strArray4[0].Trim(new char[] { '"' });
-                        string name = strArray4[1].Trim(new char[] { '"', '\r' });
+                        string key = strArray[0].Trim(new char[] { '"' });
+                        string name = strArray[1].Trim(new char[] { '"', '\r' });
                         if (!dictionary.ContainsKey(key))
                         {
                             dictionary.Add(key, name);

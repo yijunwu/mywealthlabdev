@@ -8,9 +8,9 @@ using System.Threading;
 internal static class Logger  ///WYJ note, probably the Logger class, only for data fetching
 {
     private static bool writeLog;
-    private static DefaultTraceListener defaultTraceListener_0;
+    private static DefaultTraceListener defaultTraceListener;
     private static readonly object object_0 = new object();
-    private static TextWriter textWriter_0;
+    private static TextWriter textWriter;
 
     static Logger()
     {
@@ -24,8 +24,8 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
         if (writeLog)
         {
             FileStream stream = new FileStream(Assembly.GetExecutingAssembly().GetName().Name + ".Log.txt", FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-            textWriter_0 = new StreamWriter(stream);
-            defaultTraceListener_0 = new DefaultTraceListener();
+            textWriter = new StreamWriter(stream);
+            defaultTraceListener = new DefaultTraceListener();
             Log();
         }
     }
@@ -80,10 +80,10 @@ internal static class Logger  ///WYJ note, probably the Logger class, only for d
         }
         string str2 = DateTime.Now.ToString("HH:mm:ss.fff");
         string str3 = string.Format("{0} {1} {2} {3}", new object[] { str2, str, Thread.CurrentThread.ManagedThreadId, builder.ToString() });
-        textWriter_0.Write(str3);
-        defaultTraceListener_0.Write(str3);
-        textWriter_0.Flush();
-        defaultTraceListener_0.Flush();
+        textWriter.Write(str3);
+        defaultTraceListener.Write(str3);
+        textWriter.Flush();
+        defaultTraceListener.Flush();
     }
 
     public static void Log(object object_1)

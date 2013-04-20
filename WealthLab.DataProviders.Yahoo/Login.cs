@@ -5,7 +5,7 @@ using System.Windows.Forms;
 ///WYJ fix, original name Class18
 internal static class Login  ///WYJ note, Login class
 {
-    private static ManualResetEvent manualResetEvent_0 = new ManualResetEvent(true);
+    private static ManualResetEvent manualResetEvent_LoginFinished = new ManualResetEvent(true);
     private static string cookie = null;
     private static string errorMessage = null;
     private static string user;
@@ -58,14 +58,14 @@ internal static class Login  ///WYJ note, Login class
         }
         finally
         {
-            manualResetEvent_0.Set();
+            manualResetEvent_LoginFinished.Set();
         }
     }
 
     public static void LoginWith(string pUser, string pPassword)
     {
         Logger.LogParameters(new object[] { pUser, pPassword });
-        manualResetEvent_0.Reset();
+        manualResetEvent_LoginFinished.Reset();
         cookie = string.Empty;
         errorMessage = null;
         user = pUser;
@@ -75,7 +75,7 @@ internal static class Login  ///WYJ note, Login class
         thread.SetApartmentState(ApartmentState.STA);
         thread.IsBackground = true;
         thread.Start();
-        if (!manualResetEvent_0.WaitOne(0x2710, false))
+        if (!manualResetEvent_LoginFinished.WaitOne(10000/*0x2710*/, false))
         {
             errorMessage = "Time out";
         }

@@ -6,12 +6,12 @@ internal class GroupsToSymbols
 {
     private SymbolList deleteList = new SymbolList();  ///WYJ note, symbols deleted
     private SymbolList addList = new SymbolList();  ///WYJ note, symbols added
-    private ClassificationGroup classificationGroup_0;
+    private ClassificationGroup classificationGroup;
     private string symbols;
 
     public GroupsToSymbols(ClassificationGroup classificationGroup_1)
     {
-        this.classificationGroup_0 = classificationGroup_1;
+        this.classificationGroup = classificationGroup_1;
     }
 
     public SymbolList GetDeleteList()
@@ -49,7 +49,7 @@ internal class GroupsToSymbols
         foreach (string group in groupArray)
         {
             this.symbols = string.Empty;
-            this.getSymbolsOfGroup(group, this.classificationGroup_0);
+            this.getSymbolsOfGroup(group, this.classificationGroup);
             newSymbolList.AddSymbols(this.symbols, DelimeterSetEnum.ForGuiInput);
         }
         this.deleteList.list.Clear();

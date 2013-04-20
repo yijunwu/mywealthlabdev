@@ -29,7 +29,7 @@ internal class ProviderSettingsForm : Form
     private Panel pnlInfo;
     private RadioButton rbDataRangeConstant;
     private RadioButton rbDataRangeIgnore;
-    private string string_0 = string.Empty;
+    private string providerDataDir = string.Empty;
     private string string_1;
     private string string_2;
     private TextBox txtLogin;
@@ -37,13 +37,13 @@ internal class ProviderSettingsForm : Form
 
     public ProviderSettingsForm()
     {
-        this.string_0 = YahooStaticProvider.DataPath;
+        this.providerDataDir = YahooStaticProvider.DataPath;
         this.InitializeComponent();
     }
 
     private void btnOk_Click(object sender, EventArgs e)
     {
-        if (this.string_0 == string.Empty)
+        if (this.providerDataDir == string.Empty)
         {
             throw new Exception("The settings file folder is not specified");
         }
@@ -314,16 +314,16 @@ internal class ProviderSettingsForm : Form
         Process.Start("http://billing.finance.yahoo.com/realtime_quotes/signup?.src=quote&.refer=qb");
     }
 
-    private void InitializeStates(YahooClientSettings yahooClientSettings_0)
+    private void InitializeStates(YahooClientSettings yahooClientSettings)
     {
-        this.numThreadCount.Value = yahooClientSettings_0.ThreadCount;
-        this.numAttemptCount.Value = yahooClientSettings_0.AttemptCount;
-        this.cbDividendAdj.Checked = yahooClientSettings_0.DividendAdj;
-        this.cbSplitAdj.Checked = yahooClientSettings_0.SplitAdj;
-        this.cbPartialBar.Checked = yahooClientSettings_0.AlwaysPartialBar;
-        this.string_1 = this.txtPassword.Text = yahooClientSettings_0.Password;
-        this.string_2 = this.txtLogin.Text = yahooClientSettings_0.Login;
-        if (yahooClientSettings_0.AdjModeWhenDataRange == AdjustedModeWhenDataRange.Constant)
+        this.numThreadCount.Value = yahooClientSettings.ThreadCount;
+        this.numAttemptCount.Value = yahooClientSettings.AttemptCount;
+        this.cbDividendAdj.Checked = yahooClientSettings.DividendAdj;
+        this.cbSplitAdj.Checked = yahooClientSettings.SplitAdj;
+        this.cbPartialBar.Checked = yahooClientSettings.AlwaysPartialBar;
+        this.string_1 = this.txtPassword.Text = yahooClientSettings.Password;
+        this.string_2 = this.txtLogin.Text = yahooClientSettings.Login;
+        if (yahooClientSettings.AdjModeWhenDataRange == AdjustedModeWhenDataRange.Constant)
         {
             this.rbDataRangeConstant.Checked = true;
         }
@@ -341,7 +341,7 @@ internal class ProviderSettingsForm : Form
 
     private void ProviderSettingsForm_Shown(object sender, EventArgs e)
     {
-        YahooClientSettings settings = YahooClientSettings.Deserialize(this.string_0);
+        YahooClientSettings settings = YahooClientSettings.Deserialize(this.providerDataDir);
         settings = (settings == null) ? new YahooClientSettings() : settings;
         this.InitializeStates(settings);
     }

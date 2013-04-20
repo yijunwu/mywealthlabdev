@@ -18,14 +18,14 @@
         private static ClassificationGroupsFileUpdater classificationGroupsUpdater;
         private GroupsToSymbols groupsToSymbolsUpdater;
         private DataFetcher dataFetcher;
-        private Dictionary<string, string> dictionary_0 = new Dictionary<string, string>();
-        private IDataUpdateMessage idataUpdateMessage_0;
+        private Dictionary<string, string> symbolNames = new Dictionary<string, string>();
+        private IDataUpdateMessage idataUpdateMessage;
         private int numberOfSymbolsToUpdate;
         private int numberOfSymbolsUpdated;
         private List<string> symbolsLoadedBefore = new List<string>();  ///WYJ fix, original name list_1
         private object lockForSaveBars = new object();
         private static string providerDataDir;
-        private static YahooClientSettings yahooClientSettings_0 = null;
+        private static YahooClientSettings yahooClientSettings = null;
         private YahooFundamentalProvider yahooFundamentalProvider;
         private YahooWizardPageClassification yahooWizardPageClassification;
         private YahooWizardPageStart yahooWizardPageStart;
@@ -86,9 +86,9 @@
             this.dataFetcher.AddStaticDataHandler(new DataFetcher.StaticDataHandler(this.onData));
             this.dataFetcher.AddStaticErrorHandler(new DataFetcher.StaticErrorHandler(this.onError));
             classificationGroupsUpdater = new ClassificationGroupsFileUpdater(providerDataDir + "YahooClassification.xml", "http://67.199.28.171/Classification/Yahoo/YahooClassification.xml");
-            if (yahooClientSettings_0 == null)
+            if (yahooClientSettings == null)
             {
-                yahooClientSettings_0 = YahooClientSettings.Deserialize(providerDataDir);
+                yahooClientSettings = YahooClientSettings.Deserialize(providerDataDir);
             }
             ServicePointManager.MaxServicePointIdleTime = 0x2710;
             ServicePointManager.UseNagleAlgorithm = true;
@@ -119,7 +119,7 @@
             {
                 if (e.bars != null)
                 {
-                    int num2;
+                    int correctionCount;
                     lock (this.symbolsLoadedBefore)
                     {
                         if (this.symbolsLoadedBefore.Contains(e.request.getSymbol())) ///WYJ fix, if symbol is loaded before, need to remove the file first
@@ -131,10 +131,10 @@
                     Bars bars = new Bars(Encoder.encode(e.request.getSymbol()), BarScale.Daily, 0);
                     this.barDataStore.LoadBarsObject(bars);
                     int count = bars.Count;
-                    bars.AppendWithCorrections(e.bars, out num2);
-                    if (this.dictionary_0.ContainsKey(e.request.getSymbol()))
+                    bars.AppendWithCorrections(e.bars, out correctionCount);
+                    if (this.symbolNames.ContainsKey(e.request.getSymbol()))
                     {
-                        string str = this.dictionary_0[e.request.getSymbol()];
+                        string str = this.symbolNames[e.request.getSymbol()];
                         if (str != string.Empty)
                         {
                             bars.SecurityName = str.ToUpper();
@@ -145,7 +145,7 @@
                         this.barDataStore.SaveBarsObject(bars);
                     }
                     this.numberOfSymbolsUpdated++;
-                    this.DisplayUpdateMessage(bars, count, num2, Thread.CurrentThread.Name);
+                    this.DisplayUpdateMessage(bars, count, correctionCount, Thread.CurrentThread.Name);
                     this.DisplayUpdateProgress();
                 }
                 if (e.splitAndDividend != null)
@@ -169,16 +169,16 @@
 
         private SnDHandler getSnDHandler(string symbol, DateTime dateTime_0)
         {
-            if (!yahooClientSettings_0.DividendAdj && !yahooClientSettings_0.SplitAdj)
+            if (!yahooClientSettings.DividendAdj && !yahooClientSettings.SplitAdj)
             {
                 return null;
             }
             SnDEnum enum2 = SnDEnum.Dividend;
-            if (yahooClientSettings_0.SplitAdj)
+            if (yahooClientSettings.SplitAdj)
             {
                 enum2 = SnDEnum.Split;
             }
-            if (yahooClientSettings_0.DividendAdj && yahooClientSettings_0.SplitAdj)
+            if (yahooClientSettings.DividendAdj && yahooClientSettings.SplitAdj)
             {
                 enum2 = SnDEnum.Dividend | SnDEnum.Split;
             }
@@ -188,61 +188,61 @@
             IList<FundamentalItem> divList = this.yahooFundamentalProvider.RequestItems(symbol, "Dividend (Yahoo! Finance)");
             if (dateTime_0 != DateTime.MaxValue)
             {
-                return new SnDHandler(splitList, divList, enum2, yahooClientSettings_0.AdjModeWhenDataRange, dateTime_0);
+                return new SnDHandler(splitList, divList, enum2, yahooClientSettings.AdjModeWhenDataRange, dateTime_0);
             }
             return new SnDHandler(splitList, divList, enum2);
         }
 
         private void DisplayUpdateProgress()
         {
-            if (this.idataUpdateMessage_0 != null)
+            if (this.idataUpdateMessage != null)
             {
-                this.idataUpdateMessage_0.ReportUpdateProgress((this.numberOfSymbolsUpdated * 100) / this.numberOfSymbolsToUpdate);
+                this.idataUpdateMessage.ReportUpdateProgress((this.numberOfSymbolsUpdated * 100) / this.numberOfSymbolsToUpdate);
             }
         }
 
         private void DisplayUpdateMessage(string string_1)
         {
-            if (this.idataUpdateMessage_0 != null)
+            if (this.idataUpdateMessage != null)
             {
-                this.idataUpdateMessage_0.DisplayUpdateMessage(string_1);
+                this.idataUpdateMessage.DisplayUpdateMessage(string_1);
             }
         }
 
         private void DisplayUpdateMessage(string string_1, string string_2, string string_3)
         {
-            if (this.idataUpdateMessage_0 != null)
+            if (this.idataUpdateMessage != null)
             {
-                this.idataUpdateMessage_0.DisplayUpdateMessage(string.Format("{0,-4} {1,-9} {2}", "[" + string_3 + "]", string_1, string_2));
+                this.idataUpdateMessage.DisplayUpdateMessage(string.Format("{0,-4} {1,-9} {2}", "[" + string_3 + "]", string_1, string_2));
             }
         }
 
-        private void DisplayUpdateMessage(Bars bars_0, int int_2, int int_3, string string_1)
-        {
-            if (this.idataUpdateMessage_0 != null)
+        private void DisplayUpdateMessage(Bars bars, int count, int correctionCount, string string_1)
+        {   
+            if (this.idataUpdateMessage != null)
             {
                 string str = string.Empty;
-                if (bars_0.Count > 0)
+                if (bars.Count > 0)
                 {
-                    string str2 = bars_0.Date[bars_0.Count - 1].ToString("MM.dd.yyyy");
-                    str = string.Format("{0,-4} {1,-9} {2,-14} {3,-15} {4,-18}", new object[] { "[" + string_1 + "]", bars_0.Symbol, bars_0.Count + " bars", str2, (bars_0.Count - int_2) + " bars added" });
-                    if (int_3 > 0)
+                    string str2 = bars.Date[bars.Count - 1].ToString("MM.dd.yyyy");
+                    str = string.Format("{0,-4} {1,-9} {2,-14} {3,-15} {4,-18}", new object[] { "[" + string_1 + "]", bars.Symbol, bars.Count + " bars", str2, (bars.Count - count) + " bars added" });
+                    if (correctionCount > 0)
                     {
-                        str = string.Format("{0} {1,-18}", str, int_3 + " bars corrected");
+                        str = string.Format("{0} {1,-18}", str, correctionCount + " bars corrected");
                     }
                 }
                 else
                 {
-                    str = string.Format("{0,-4} {1,-9} {2}", "[" + string_1 + "]", bars_0.Symbol, "Error: No data");
+                    str = string.Format("{0,-4} {1,-9} {2}", "[" + string_1 + "]", bars.Symbol, "Error: No data");
                 }
-                this.idataUpdateMessage_0.DisplayUpdateMessage(str);
+                this.idataUpdateMessage.DisplayUpdateMessage(str);
             }
         }
 
         ///WYJ fix, original name: method_6
         private bool adjModeAllowingEditing()
         {
-            if (yahooClientSettings_0.AdjModeWhenDataRange == AdjustedModeWhenDataRange.Ignore)
+            if (yahooClientSettings.AdjModeWhenDataRange == AdjustedModeWhenDataRange.Ignore)
             {
                 MessageBox.Show("Editing Bars with the \"Ignore splits and dividends which fall out of the range\"\r\noption selected is not possible.\r\n\r\nPlease open Data Manager, change this setting of the Yahoo! provider,\r\nre-open the chart and try again.", "Yahoo! Provider", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
@@ -251,10 +251,10 @@
         }
 
         ///WYJ fix, original name: method_7
-        private void updateClassificationGroups(DataSource dataSource_0)  ///WYJ note: update group specification for data source
+        private void updateClassificationGroups(DataSource ds)  ///WYJ note: update group specification for data source
         {
             Logger.LogParameters(new object[0]);
-            YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
+            YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(ds.DSString);
             if (((this.groupsToSymbolsUpdater == null) || !classificationGroupsUpdater.FileExists()) || classificationGroupsUpdater.IsLastUpdatedDaysAgo(1))
             {
                 if (!classificationGroupsUpdater.FileExists() || classificationGroupsUpdater.IsLastUpdatedDaysAgo(1))
@@ -280,8 +280,8 @@
             {
                 string str = Directory.GetParent(providerDataDir).Parent.FullName + @"\DataSets\";
                 settings.Symbols = symbolListFromGroups.ToString();
-                dataSource_0.DSString = settings.SerializeToString();
-                dataSource_0.SaveToFile(str + SymbolFileNameConverter.SymbolToFileName(dataSource_0.Name) + ".xml");
+                ds.DSString = settings.SerializeToString();
+                ds.SaveToFile(str + SymbolFileNameConverter.SymbolToFileName(ds.Name) + ".xml");
             }
         }
 
@@ -322,14 +322,14 @@
             dataRequest.setStartDate(time);
         }
 
-        private void updateSecurityNames(List<DataRequest> list_2)
+        private void updateSecurityNames(List<DataRequest> reqList)
         {
             try
             {
-                this.DisplayUpdateMessage("Updating Security Names for " + list_2.Count + " symbols...");
-                this.dictionary_0 = this.dataFetcher.GetSymbolNames(list_2);
+                this.DisplayUpdateMessage("Updating Security Names for " + reqList.Count + " symbols...");
+                this.symbolNames = this.dataFetcher.GetSymbolNames(reqList);
                 Logger.Log("Sec. Names");
-                foreach (KeyValuePair<string, string> pair in this.dictionary_0)
+                foreach (KeyValuePair<string, string> pair in this.symbolNames)
                 {
                     Logger.Log(pair.Key + " " + pair.Value);
                 }
@@ -342,29 +342,29 @@
             }
         }
 
-        public override string ModifySymbols(DataSource dataSource_0, List<string> symbols)
+        public override string ModifySymbols(DataSource ds, List<string> symbols)
         {
             Logger.LogParameters(new object[0]);
-            SymbolList class2 = new SymbolList(symbols);
-            YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
-            settings.Symbols = class2.ToString().ToUpper();
+            SymbolList sList = new SymbolList(symbols);
+            YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(ds.DSString);
+            settings.Symbols = sList.ToString().ToUpper();
             return settings.SerializeToString();
         }
 
-        public override void PopulateSymbols(DataSource dataSource_0, List<string> symbols)
+        public override void PopulateSymbols(DataSource ds, List<string> symbols)
         {
-            Logger.LogParameters(new object[] { dataSource_0.Name });
-            if (!string.IsNullOrEmpty(dataSource_0.Name))
+            Logger.LogParameters(new object[] { ds.Name });
+            if (!string.IsNullOrEmpty(ds.Name))
             {
-                YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
-                SymbolList class2 = new SymbolList(settings.Symbols, DelimeterSetEnum.ForProgram);
-                symbols.AddRange(class2.list);
+                YahooStaticSettings settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(ds.DSString);
+                SymbolList sList = new SymbolList(settings.Symbols, DelimeterSetEnum.ForProgram);
+                symbols.AddRange(sList.list);
             }
         }
 
-        public override Bars RequestData(DataSource dataSource_0, string symbol, DateTime startDate, DateTime symbolEndDate, int maxBars, bool includePartialBar)
+        public override Bars RequestData(DataSource dataSource, string symbol, DateTime startDate, DateTime symbolEndDate, int maxBars, bool includePartialBar)
         {
-            Logger.LogWithStackTrace(new object[] { dataSource_0.DSString, symbol, startDate, symbolEndDate, maxBars, includePartialBar });
+            Logger.LogWithStackTrace(new object[] { dataSource.DSString, symbol, startDate, symbolEndDate, maxBars, includePartialBar });
             symbol = symbol.Trim(new char[] { ' ', '"' });
             Logger.Log("On Demand Update Enabled: " + base.DataHost.OnDemandUpdateEnabled);
             if (base.DataHost.OnDemandUpdateEnabled && !ClientSettings.NeverPerformOnDemandUpdates)
@@ -372,9 +372,9 @@
                 try
                 {
                     YahooStaticSettings settings = new YahooStaticSettings();
-                    if (dataSource_0.DSString != string.Empty)
+                    if (dataSource.DSString != string.Empty)
                     {
-                        settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
+                        settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource.DSString);
                     }
                     SymbolInfoList list = SymbolInfoList.Deserialize(providerDataDir + "SymbolsStartDate.xml");
                     list.Synchronize(this.barDataStore);
@@ -397,28 +397,28 @@
                     MessageBox.Show(str, "On Demand Update Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 }
             }
-            Bars bars2 = new Bars(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval);
-            if (this.barDataStore.ContainsSymbol(Encoder.encode(symbol), dataSource_0.Scale, dataSource_0.BarInterval))
+            Bars bars = new Bars(Encoder.encode(symbol), dataSource.Scale, dataSource.BarInterval);
+            if (this.barDataStore.ContainsSymbol(Encoder.encode(symbol), dataSource.Scale, dataSource.BarInterval))
             {
-                this.barDataStore.LoadBarsObject(bars2, startDate, DateTime.MaxValue, maxBars);
+                this.barDataStore.LoadBarsObject(bars, startDate, DateTime.MaxValue, maxBars);
             }
             if (symbol != Encoder.encode(symbol))
             {
-                Bars toBars = new Bars(symbol, dataSource_0.Scale, dataSource_0.BarInterval);
-                toBars.Append(bars2);
-                toBars.SecurityName = bars2.SecurityName;
+                Bars toBars = new Bars(symbol, dataSource.Scale, dataSource.BarInterval);
+                toBars.Append(bars);
+                toBars.SecurityName = bars.SecurityName;
                 if (VersionContainsUserEditedDates())
                 {
-                    AddUserEditedDates(toBars, bars2);
+                    AddUserEditedDates(toBars, bars);
                 }
-                bars2 = toBars;
+                bars = toBars;
             }
             SnDHandler snDHandler = this.getSnDHandler(symbol, symbolEndDate);
             if (snDHandler != null)
             {
-                bars2 = snDHandler.ProcessSplitAndDividend(bars2);
+                bars = snDHandler.ProcessSplitAndDividend(bars);
             }
-            return bars2;
+            return bars;
         }
 
         public Bars RequestHistoricalData(string symbol, DateTime startDate, DateTime endDate)
@@ -541,29 +541,29 @@
             return false;
         }
 
-        public override void UpdateDataSource(DataSource dataSource_0, IDataUpdateMessage dataUpdateMsg)
+        public override void UpdateDataSource(DataSource dataSource, IDataUpdateMessage dataUpdateMsg)
         {
-            Logger.LogParameters(new object[] { dataSource_0.Name, dataSource_0.Symbols[0] });
+            Logger.LogParameters(new object[] { dataSource.Name, dataSource.Symbols[0] });
             this.dataFetcher.SetCancelFlag(false);
             SymbolInfoList symbolInfoList = null;
-            this.idataUpdateMessage_0 = dataUpdateMsg;
+            this.idataUpdateMessage = dataUpdateMsg;
             try
             {
                 SymbolList list;
                 YahooStaticSettings settings = null;
-                if (!string.IsNullOrEmpty(dataSource_0.Name))
+                if (!string.IsNullOrEmpty(dataSource.Name))
                 {
-                    settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
+                    settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource.DSString);
                     if (settings.UpdateGroups)
                     {
-                        this.updateClassificationGroups(dataSource_0);
-                        settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource_0.DSString);
+                        this.updateClassificationGroups(dataSource);
+                        settings = (YahooStaticSettings) DataSetSettings.DeserializeFromString(dataSource.DSString);
                     }
                     list = new SymbolList(settings.Symbols, DelimeterSetEnum.ForProgram);
                 }
                 else
                 {
-                    list = new SymbolList(dataSource_0.Symbols);
+                    list = new SymbolList(dataSource.Symbols);
                 }
                 symbolInfoList = SymbolInfoList.Deserialize(providerDataDir + "SymbolsStartDate.xml");
                 symbolInfoList.Synchronize(this.barDataStore);
@@ -572,7 +572,7 @@
                 foreach (string s in list.list)
                 {
                     DataRequest request = new DataRequest(s);
-                    if (!string.IsNullOrEmpty(dataSource_0.Name))
+                    if (!string.IsNullOrEmpty(dataSource.Name))
                     {
                         this.setStartDateForRequest(ref request, symbolInfoList, settings.StartDate);
                     }
@@ -600,12 +600,12 @@
             catch (Exception exception)
             {
                 Logger.Log(LogLevel.ERROR, "UpdateDataSource " + exception.Message);
-                this.idataUpdateMessage_0.DisplayUpdateMessage("Error: " + exception.Message);
+                this.idataUpdateMessage.DisplayUpdateMessage("Error: " + exception.Message);
             }
             finally
             {
                 symbolInfoList.Serialize(providerDataDir + "SymbolsStartDate.xml");
-                this.idataUpdateMessage_0 = null;
+                this.idataUpdateMessage = null;
             }
         }
 
@@ -613,7 +613,7 @@
         {
             Logger.LogParameters(new object[0]);
             this.dataFetcher.SetCancelFlag(false);
-            this.idataUpdateMessage_0 = dataUpdateMsg;
+            this.idataUpdateMessage = dataUpdateMsg;
             List<DataRequest> requestList = new List<DataRequest>();
             SymbolInfoList symbolInfoList = null;
             try
@@ -727,12 +727,12 @@
             catch (Exception exception)
             {
                 Logger.Log(LogLevel.ERROR, "UpdateDataSource " + exception.Message);
-                this.idataUpdateMessage_0.DisplayUpdateMessage("Error: " + exception.Message);
+                this.idataUpdateMessage.DisplayUpdateMessage("Error: " + exception.Message);
             }
             finally
             {
                 symbolInfoList.Serialize(providerDataDir + "SymbolsStartDate.xml");
-                this.idataUpdateMessage_0 = null;
+                this.idataUpdateMessage = null;
             }
         }
 
@@ -826,11 +826,11 @@
         {
             get
             {
-                return yahooClientSettings_0;
+                return yahooClientSettings;
             }
             set
             {
-                yahooClientSettings_0 = value;
+                yahooClientSettings = value;
             }
         }
 

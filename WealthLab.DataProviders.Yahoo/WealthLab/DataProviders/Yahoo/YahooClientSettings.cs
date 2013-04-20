@@ -9,20 +9,20 @@
 
     public class YahooClientSettings
     {
-        private AdjustedModeWhenDataRange adjustedModeWhenDataRange_0;
-        private bool bool_0;
-        private bool bool_1 = true;
-        private bool bool_2;
-        private bool bool_3;
+        private AdjustedModeWhenDataRange adjustedModeWhenDataRange;
+        private bool dividendAdj;
+        private bool splitAdj = true;
+        private bool alwaysPartialBar;
+        private bool neverPerformOnDemandUpdates;
         private byte[] byte_0 = new byte[] { 
             0x68, 2, 0xcc, 0x37, 0x47, 0x54, 0x23, 9, 0x57, 0x41, 0x34, 0x93, 0x5b, 0x16, 0x29, 100, 
             220, 0xcc, 0x12, 0xd6, 0x4a, 0xfe, 0xb1, 0x9a, 0xd9, 0x40, 0x39, 0x31, 0x63, 0x36, 0x29, 0xc4
          };
         private byte[] byte_1 = new byte[] { 0x3f, 0x30, 0x25, 0x73, 220, 0xb6, 0xa3, 0x36, 0x25, 0x37, 11, 0xbc, 0x3b, 0x4d, 0x7a, 0x40 };
-        private int int_0 = 10;
-        private int int_1 = 5;
-        private string string_0 = string.Empty;
-        private string string_1 = string.Empty;
+        private int threadCount = 10;
+        private int attemptCount = 5;
+        private string user = string.Empty;
+        private string password = string.Empty;
         private static string string_2;
         public int Version = 2;
 
@@ -30,12 +30,12 @@
         {
             string_2 = folderName;
             YahooClientSettings settings = new YahooClientSettings();
-            if (!File.Exists(smethod_0(folderName)))
+            if (!File.Exists(getSettingsFilePath(folderName)))
             {
                 return settings;
             }
             XmlSerializer serializer = new XmlSerializer(typeof(YahooClientSettings));
-            using (TextReader reader = new StreamReader(smethod_0(folderName)))
+            using (TextReader reader = new StreamReader(getSettingsFilePath(folderName)))
             {
                 return (YahooClientSettings) serializer.Deserialize(reader);
             }
@@ -53,25 +53,25 @@
             }
         }
 
-        private static string smethod_0(string string_3)
+        private static string getSettingsFilePath(string dirPath)
         {
-            return (string_3 + Path.DirectorySeparatorChar + "YahooClientSettings.xml");
+            return (dirPath + Path.DirectorySeparatorChar + "YahooClientSettings.xml");
         }
 
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("ThreadCount " + this.int_0);
-            builder.AppendLine("AttemptCount " + this.int_1);
-            builder.AppendLine("DividendAdj " + this.bool_0);
-            builder.AppendLine("SplitAdj " + this.bool_1);
-            builder.AppendLine("PartialBar " + this.bool_2);
-            builder.AppendLine("NeverPerformOnDemandUpdates " + this.bool_3);
-            if ((this.string_0 != null) && (this.string_0.Length > 0))
+            builder.AppendLine("ThreadCount " + this.threadCount);
+            builder.AppendLine("AttemptCount " + this.attemptCount);
+            builder.AppendLine("DividendAdj " + this.dividendAdj);
+            builder.AppendLine("SplitAdj " + this.splitAdj);
+            builder.AppendLine("PartialBar " + this.alwaysPartialBar);
+            builder.AppendLine("NeverPerformOnDemandUpdates " + this.neverPerformOnDemandUpdates);
+            if ((this.user != null) && (this.user.Length > 0))
             {
                 builder.AppendLine("Login Yes");
             }
-            if ((this.string_1 != null) && (this.string_1.Length > 0))
+            if ((this.password != null) && (this.password.Length > 0))
             {
                 builder.AppendLine("Password Yes");
             }
@@ -82,11 +82,11 @@
         {
             get
             {
-                return this.adjustedModeWhenDataRange_0;
+                return this.adjustedModeWhenDataRange;
             }
             set
             {
-                this.adjustedModeWhenDataRange_0 = value;
+                this.adjustedModeWhenDataRange = value;
             }
         }
 
@@ -94,11 +94,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.alwaysPartialBar;
             }
             set
             {
-                this.bool_2 = value;
+                this.alwaysPartialBar = value;
             }
         }
 
@@ -106,11 +106,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.attemptCount;
             }
             set
             {
-                this.int_1 = value;
+                this.attemptCount = value;
             }
         }
 
@@ -118,11 +118,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.dividendAdj;
             }
             set
             {
-                this.bool_0 = value;
+                this.dividendAdj = value;
             }
         }
 
@@ -131,11 +131,11 @@
             get
             {
                 RijndaelCryptography cryptography = new RijndaelCryptography(this.byte_0, this.byte_1);
-                return cryptography.EncryptString(this.string_1);
+                return cryptography.EncryptString(this.password);
             }
             set
             {
-                this.string_1 = new RijndaelCryptography(this.byte_0, this.byte_1).DecryptString(value);
+                this.password = new RijndaelCryptography(this.byte_0, this.byte_1).DecryptString(value);
             }
         }
 
@@ -143,11 +143,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.user;
             }
             set
             {
-                this.string_0 = value;
+                this.user = value;
             }
         }
 
@@ -155,11 +155,11 @@
         {
             get
             {
-                return this.bool_3;
+                return this.neverPerformOnDemandUpdates;
             }
             set
             {
-                this.bool_3 = value;
+                this.neverPerformOnDemandUpdates = value;
             }
         }
 
@@ -168,11 +168,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.password;
             }
             set
             {
-                this.string_1 = value;
+                this.password = value;
             }
         }
 
@@ -180,11 +180,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.splitAdj;
             }
             set
             {
-                this.bool_1 = value;
+                this.splitAdj = value;
             }
         }
 
@@ -192,11 +192,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.threadCount;
             }
             set
             {
-                this.int_0 = value;
+                this.threadCount = value;
             }
         }
     }

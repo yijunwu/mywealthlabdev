@@ -9,13 +9,13 @@
     {
         private bool connected;
         private DataFetcher dataFetcher;
-        private IConnectionStatus iconnectionStatus_1;
-        private YahooStaticProvider yahooStaticProvider_0;
+        private IConnectionStatus connStatus;
+        private YahooStaticProvider yahooStaticProvider;
 
         public override void ConnectStreaming(IConnectionStatus connStatus)
         {
-            this.iconnectionStatus_1 = connStatus;
-            this.createDataFetcher(true, this.iconnectionStatus_1);
+            this.connStatus = connStatus;
+            this.createDataFetcher(true, this.connStatus);
         }
 
         public override void DisconnectStreaming()
@@ -32,17 +32,17 @@
 
         public override StaticDataProvider GetStaticProvider()
         {
-            if (this.yahooStaticProvider_0 == null)
+            if (this.yahooStaticProvider == null)
             {
-                this.yahooStaticProvider_0 = new YahooStaticProvider();
-                this.yahooStaticProvider_0.Initialize(base.DataHost);
+                this.yahooStaticProvider = new YahooStaticProvider();
+                this.yahooStaticProvider.Initialize(base.DataHost);
             }
-            return this.yahooStaticProvider_0;
+            return this.yahooStaticProvider;
         }
 
         private void updateStatus()
         {
-            this.iconnectionStatus_1.StatusUpdate(ConnStatus.OK, 0, this.dataFetcher.GetSubscribedSymbolCount() + " Symbols Subscribed");
+            this.connStatus.StatusUpdate(ConnStatus.OK, 0, this.dataFetcher.GetSubscribedSymbolCount() + " Symbols Subscribed");
         }
 
         ///WYJ fix, original name: method_2

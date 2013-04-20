@@ -9,7 +9,7 @@ using WealthLab.DataProviders.Yahoo;
 
 internal class ProviderSettingsControl : DataBehaviorUserControl
 {
-    private bool bool_0 = true;
+    private bool allowChangingSettings = true;
     private CheckBox cbDividendAdj;
     private CheckBox cbNeverPerformOnDemand;
     private CheckBox cbPartialBar;
@@ -261,7 +261,7 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
     ///WYJ fix, original name: method_1
     public void SetStates()
     {
-        this.bool_0 = false;
+        this.allowChangingSettings = false;
         this.numThreadCount.Value = YahooStaticProvider.ClientSettings.ThreadCount;
         this.numAttemptCount.Value = YahooStaticProvider.ClientSettings.AttemptCount;
         this.cbDividendAdj.Checked = YahooStaticProvider.ClientSettings.DividendAdj;
@@ -279,13 +279,13 @@ internal class ProviderSettingsControl : DataBehaviorUserControl
             this.rbDataRangeIgnore.Checked = true;
         }
         this.enableOrDisableDataRangeOptions();
-        this.bool_0 = true;
+        this.allowChangingSettings = true;
     }
 
     ///WYJ fix, original name: method_2
     private void updateSettings()
     {
-        if (this.bool_0)
+        if (this.allowChangingSettings)
         {
             YahooStaticProvider.ClientSettings.ThreadCount = (int) this.numThreadCount.Value;
             YahooStaticProvider.ClientSettings.AttemptCount = (int) this.numAttemptCount.Value;

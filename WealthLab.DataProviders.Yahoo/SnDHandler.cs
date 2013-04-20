@@ -7,7 +7,7 @@ using WealthLab.DataProviders.Yahoo;
 ///WYJ fix, original name: Class19
 internal class SnDHandler  ///WYJ note, the class that handles split and dividend
 {
-    private AdjustedModeWhenDataRange adjustedModeWhenDataRange_0;
+    private AdjustedModeWhenDataRange adjustedModeWhenDataRange;
     private DateTime dateTime;
     private SnDEnum snDEnum;
     private IList<FundamentalItem> splitList;
@@ -27,7 +27,7 @@ internal class SnDHandler  ///WYJ note, the class that handles split and dividen
 
     public SnDHandler(IList<FundamentalItem> splitList, IList<FundamentalItem> dividendList, SnDEnum enum1, AdjustedModeWhenDataRange adjustedModeWhenDataRange_1, DateTime dateTime_1) : this(splitList, dividendList, enum1)
     {
-        this.adjustedModeWhenDataRange_0 = adjustedModeWhenDataRange_1;
+        this.adjustedModeWhenDataRange = adjustedModeWhenDataRange_1;
         this.dateTime = dateTime_1;
     }
 
@@ -92,13 +92,13 @@ internal class SnDHandler  ///WYJ note, the class that handles split and dividen
         for (int i = this.splitAndDividendList.Count - 1; i >= 0; i--)
         {
             ///WYJ fix, original: if (((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) || (this.enum1_0 == Enum1.flag_1)) && ((this.list_0[i].Date > this.dateTime_0) || (this.enum1_0 == Enum1.flag_1)))
-            if ((this.snDEnum == SnDEnum.Dividend) || (this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime))
+            if ((this.snDEnum == SnDEnum.Dividend) || (this.adjustedModeWhenDataRange == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime))
             {
                 if (this.splitAndDividendList[i].Name.StartsWith("S"))
                 {
                     num *= this.splitAndDividendList[i].Value;
                 }
-                if ((this.adjustedModeWhenDataRange_0 == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime))
+                if ((this.adjustedModeWhenDataRange == AdjustedModeWhenDataRange.Ignore) && (this.splitAndDividendList[i].Date > this.dateTime))
                 {
                     this.splitAndDividendList.RemoveAt(i);
                     continue;
@@ -130,11 +130,11 @@ internal class SnDHandler  ///WYJ note, the class that handles split and dividen
         }
     }
 
-    public SnDFactor GetFactorForDateTime(DateTime dateTime_1)
+    public SnDFactor GetFactorForDateTime(DateTime dateTime)
     {
         for (int i = 0; i < this.factorList.Count; i++)
         {
-            if ((this.factorList[i].DateTime() < dateTime_1) || (i == (this.factorList.Count - 1)))
+            if ((this.factorList[i].DateTime() < dateTime) || (i == (this.factorList.Count - 1)))
             {
                 if (i == 0)
                 {
@@ -224,27 +224,27 @@ internal class SnDHandler  ///WYJ note, the class that handles split and dividen
     } */
 
     ///WYJ fix, original name: method_4
-    public Bars ProcessSplitAndDividend(Bars bars_0)
+    public Bars ProcessSplitAndDividend(Bars bars)
     {
-        object[] symbol = new object[] { bars_0.Symbol };
+        object[] symbol = new object[] { bars.Symbol };
         Logger.LogWithStackTrace(symbol);
         this.PreprocessSplitAndDividend();
         this.factorList.Clear();
-        Bars bar = new Bars(bars_0.Symbol, bars_0.Scale, bars_0.BarInterval);
+        Bars bar = new Bars(bars.Symbol, bars.Scale, bars.BarInterval);
         double factor = 1;
         double factorForSplit = 1;
         double num1 = 1;
-        for (int i = bars_0.Count - 1; i >= 0; i--)
+        for (int i = bars.Count - 1; i >= 0; i--)
         {
             if (this.splitAndDividendList.Count > 0)
             {
-                DateTime dateTime = bars_0.Date[i];
+                DateTime dateTime = bars.Date[i];
                 DateTime date = this.splitAndDividendList[this.splitAndDividendList.Count - 1].Date;
                 if (dateTime.Date < date.Date)
                 {
                     do
                     {
-                        DateTime item1 = bars_0.Date[i];
+                        DateTime item1 = bars.Date[i];
                         DateTime date1 = this.splitAndDividendList[this.splitAndDividendList.Count - 1].Date;
                         if (item1.Date >= date1.Date)
                         {
@@ -253,7 +253,7 @@ internal class SnDHandler  ///WYJ note, the class that handles split and dividen
                         if (this.splitAndDividendList[this.splitAndDividendList.Count - 1].Name.StartsWith("D") && (int)(this.snDEnum & SnDEnum.Dividend) != 0)
                         {
                             double value = this.splitAndDividendList[this.splitAndDividendList.Count - 1].Value;
-                            factor = factor * (1 - value / (bars_0.Close[i] * num1));
+                            factor = factor * (1 - value / (bars.Close[i] * num1));
                         }
                         if (this.splitAndDividendList[this.splitAndDividendList.Count - 1].Name.StartsWith("S") && (int)(this.snDEnum & SnDEnum.Split) != 0)
                         {
@@ -265,17 +265,17 @@ internal class SnDHandler  ///WYJ note, the class that handles split and dividen
                         this.splitAndDividendList.RemoveAt(this.splitAndDividendList.Count - 1);
                     }
                     while (this.splitAndDividendList.Count != 0);
-                    DateTime dateTime1 = bars_0.Date[i];
+                    DateTime dateTime1 = bars.Date[i];
                     this.factorList.Add(new SnDFactor(dateTime1.Date, factor, factorForSplit));
                 }
             }
-            bar.Add(bars_0.Date[i], bars_0.Open[i] * factor, bars_0.High[i] * factor, bars_0.Low[i] * factor, bars_0.Close[i] * factor, bars_0.Volume[i] * factorForSplit);
+            bar.Add(bars.Date[i], bars.Open[i] * factor, bars.High[i] * factor, bars.Low[i] * factor, bars.Close[i] * factor, bars.Volume[i] * factorForSplit);
         }
-        Bars barsToReturn = new Bars(bars_0.Symbol, bars_0.Scale, bars_0.BarInterval);
-        barsToReturn.SecurityName = bars_0.SecurityName;
+        Bars barsToReturn = new Bars(bars.Symbol, bars.Scale, bars.BarInterval);
+        barsToReturn.SecurityName = bars.SecurityName;
         if (YahooStaticProvider.VersionContainsUserEditedDates())
         {
-            YahooStaticProvider.AddUserEditedDates(barsToReturn, bars_0);
+            YahooStaticProvider.AddUserEditedDates(barsToReturn, bars);
         }
         for (int j = bar.Count - 1; j >= 0; j--)
         {

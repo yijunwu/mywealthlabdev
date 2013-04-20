@@ -13,8 +13,8 @@ internal class YahooWizardPageClassification : UserControl
     private Button btnAddGroup;
     private Button btnRemoveGroup;
     private Button btnUpdateClassification;
-    private ClassificationGroup classificationGroup_0;
-    private ColumnHeader columnHeader_0;
+    private ClassificationGroup classificationGroup;
+    private ColumnHeader columnHeader;
     private Font font;
     private Font boldFont;
     private GroupBox grpClassification;
@@ -25,7 +25,7 @@ internal class YahooWizardPageClassification : UserControl
     private Label lblSelectedGroups;
     private Label lblUpdateClassification;
     private ListView lvSelected;
-    private string string_0;
+    private string providerDataDir;
     private TreeView treeClassification;
 
     public YahooWizardPageClassification()
@@ -65,7 +65,7 @@ internal class YahooWizardPageClassification : UserControl
         this.btnRemoveGroup = new Button();
         this.btnAddGroup = new Button();
         this.lvSelected = new ListView();
-        this.columnHeader_0 = new ColumnHeader();
+        this.columnHeader = new ColumnHeader();
         this.lblUpdateClassification = new Label();
         this.btnUpdateClassification = new Button();
         this.lblClassification = new Label();
@@ -117,7 +117,7 @@ internal class YahooWizardPageClassification : UserControl
         this.btnAddGroup.Text = ">";
         this.btnAddGroup.UseVisualStyleBackColor = true;
         this.btnAddGroup.Click += new EventHandler(this.btnAddGroup_Click);
-        this.lvSelected.Columns.AddRange(new ColumnHeader[] { this.columnHeader_0 });
+        this.lvSelected.Columns.AddRange(new ColumnHeader[] { this.columnHeader });
         this.lvSelected.HeaderStyle = ColumnHeaderStyle.None;
         this.lvSelected.HideSelection = false;
         this.lvSelected.Location = new Point(0x123, 0x4b);
@@ -128,8 +128,8 @@ internal class YahooWizardPageClassification : UserControl
         this.lvSelected.View = View.Details;
         this.lvSelected.SelectedIndexChanged += new EventHandler(this.lvSelected_SelectedIndexChanged);
         this.lvSelected.DoubleClick += new EventHandler(this.lvSelected_DoubleClick);
-        this.columnHeader_0.Text = "Group";
-        this.columnHeader_0.Width = 0xdd;
+        this.columnHeader.Text = "Group";
+        this.columnHeader.Width = 0xdd;
         this.lblUpdateClassification.AutoSize = true;
         this.lblUpdateClassification.Location = new Point(170, 0x13e);
         this.lblUpdateClassification.Name = "lblUpdateClassification";
@@ -294,11 +294,11 @@ internal class YahooWizardPageClassification : UserControl
     }
 
     ///original name: method_4
-    private void updateGroupTreeWithData(ClassificationGroup classificationGroup_1, TreeNodeCollection treeNodeCollection_0)
+    private void updateGroupTreeWithData(ClassificationGroup classificationGroup_1, TreeNodeCollection treeNodeCollection)
     {
         for (int i = 0; i < classificationGroup_1.Groups.Count; i++)
         {
-            TreeNode node = treeNodeCollection_0.Add(classificationGroup_1.Groups[i].Name);
+            TreeNode node = treeNodeCollection.Add(classificationGroup_1.Groups[i].Name);
             node.Tag = classificationGroup_1.Groups[i];
             if (classificationGroup_1.Groups[i].Type == "Symbols")
             {
@@ -325,13 +325,13 @@ internal class YahooWizardPageClassification : UserControl
                 Application.DoEvents();
                 this.treeClassification.Nodes.Clear();
                 this.lvSelected.Items.Clear();
-                this.classificationGroup_0 = YahooStaticProvider.ClassificationFile.ReadClassificationGroupFromFile();
-                if (this.classificationGroup_0 != null)
+                this.classificationGroup = YahooStaticProvider.ClassificationFile.ReadClassificationGroupFromFile();
+                if (this.classificationGroup != null)
                 {
-                    this.updateGroupTreeWithData(this.classificationGroup_0, this.treeClassification.Nodes);
-                    if (this.classificationGroup_0 != null)
+                    this.updateGroupTreeWithData(this.classificationGroup, this.treeClassification.Nodes);
+                    if (this.classificationGroup != null)
                     {
-                        this.lblAvailableGroups.Text = string.Format("Available groups ({0} Symbols)", this.classificationGroup_0.SymbolsCount);
+                        this.lblAvailableGroups.Text = string.Format("Available groups ({0} Symbols)", this.classificationGroup.SymbolsCount);
                     }
                 }
             }
@@ -343,7 +343,7 @@ internal class YahooWizardPageClassification : UserControl
             {
                 this.showNormalStatus();
             }
-            this.lblUpdateClassification.Text = string.Format("Classification created: {0}", this.classificationGroup_0.Update.ToLocalTime());
+            this.lblUpdateClassification.Text = string.Format("Classification created: {0}", this.classificationGroup.Update.ToLocalTime());
             Application.DoEvents();
         }
     }
@@ -361,11 +361,11 @@ internal class YahooWizardPageClassification : UserControl
     }
 
     ///WYJ fix, original name method_8
-    public void InitStates(string string_1)
+    public void InitStates(string dir)
     {
         YahooStaticProvider.ClassificationFile.AddAsyncCompletedEventHandler(new AsyncCompletedEventHandler(this.onDownloadCompleted));
         YahooStaticProvider.ClassificationFile.AddDownloadProgressChangedEventHandler(new DownloadProgressChangedEventHandler(this.onDownloadProgress));
-        this.string_0 = string_1;
+        this.providerDataDir = dir;
         this.font = this.lblUpdateClassification.Font;
         this.boldFont = new Font(this.lblUpdateClassification.Font, FontStyle.Bold);
         this.lvSelected.Items.Clear();

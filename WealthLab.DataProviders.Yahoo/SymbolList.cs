@@ -32,14 +32,14 @@ internal class SymbolList   ///WYJ note, Symbol list used in symbols page of new
         this.list = list_1;
     }
 
-    public SymbolList(string string_0, DelimeterSetEnum enum0_0)
+    public SymbolList(string symbols, DelimeterSetEnum enum0_0)
     {
         this.sortNeeded = true;
         this.delimiterForDisplay = ',';
         this.list = new List<string>();
         this.char_1 = new char[] { ' ', ',', '\n', '\r' };
         this.char_2 = new char[] { ',', '\n', '\r' };
-        this.AddSymbols(string_0, enum0_0);
+        this.AddSymbols(symbols, enum0_0);
     }
 
     ///WYJ fix, original name: method_0
@@ -54,14 +54,14 @@ internal class SymbolList   ///WYJ note, Symbol list used in symbols page of new
     }
 
     ///WYJ fix, original name: method_2
-    public void AddSymbols(string string_0, DelimeterSetEnum enum0)
+    public void AddSymbols(string symbols, DelimeterSetEnum enum0)
     {
         switch (enum0)
         {
             case DelimeterSetEnum.ForProgram:  ///WYJ note, do not check quote mark, split by ',', '\n', '\r', no ' ' as delimiter
-                if (string_0 != null)
+                if (symbols != null)
                 {
-                    foreach (string str3 in string_0.Split(this.char_2, StringSplitOptions.RemoveEmptyEntries))
+                    foreach (string str3 in symbols.Split(this.char_2, StringSplitOptions.RemoveEmptyEntries))
                     {
                         this.add(str3.Trim(new char[] { ' ', '\n', '\r' }));
                     }
@@ -70,12 +70,12 @@ internal class SymbolList   ///WYJ note, Symbol list used in symbols page of new
 
             case DelimeterSetEnum.ForGuiInput:  ///WYJ note, check quote mark, split by ' ', ',', '\n', '\r', ' ' is one of the delimiters
             {
-                if (string_0 != null)
+                if (symbols != null)
                 {
-                    string_0 = string_0.Trim();
-                    if (!string_0.Contains("\""))
+                    symbols = symbols.Trim();
+                    if (!symbols.Contains("\""))
                     {
-                        foreach (string str in string_0.Split(this.char_1, StringSplitOptions.RemoveEmptyEntries))
+                        foreach (string str in symbols.Split(this.char_1, StringSplitOptions.RemoveEmptyEntries))
                         {
                             this.add(str.Trim(new char[] { ' ', '\n', '\r' }));
                         }
@@ -84,7 +84,7 @@ internal class SymbolList   ///WYJ note, Symbol list used in symbols page of new
                     else
                     {
                         int num4 = 1;
-                        string[] strArray2 = string_0.Split(new char[] { '"' });
+                        string[] strArray2 = symbols.Split(new char[] { '"' });
                         int index = 1;
                         while (index < strArray2.Length)
                         {

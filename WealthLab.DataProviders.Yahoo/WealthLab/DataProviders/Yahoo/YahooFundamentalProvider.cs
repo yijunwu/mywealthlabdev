@@ -10,8 +10,8 @@
     {
         public FundamentalDataStore _fds;
         private object object_0 = new object();
-        private string[] string_0 = new string[] { "Split (Yahoo! Finance)", "Dividend (Yahoo! Finance)" };
-        private string[] string_1 = new string[0];
+        private string[] symbolSpecificItemsProvided = new string[] { "Split (Yahoo! Finance)", "Dividend (Yahoo! Finance)" };
+        private string[] nonSymbolSpecificItemsProvided = new string[0];
 
         public override FundamentalItem CreateItem(string itemName)
         {
@@ -79,7 +79,7 @@
         {
             get
             {
-                return this.string_1;
+                return this.nonSymbolSpecificItemsProvided;
             }
         }
 
@@ -87,7 +87,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbolSpecificItemsProvided;
             }
         }
     }

@@ -31,17 +31,17 @@
             this.Groups = new List<ClassificationGroup>();
         }
 
-        public ClassificationGroup(string name, string string_0, string type)
+        public ClassificationGroup(string name, string id, string type)
         {
             this.Groups = new List<ClassificationGroup>();
             this.Name = name;
-            this.ID = string_0;
+            this.ID = id;
             this.Type = type;
         }
 
-        public ClassificationGroup(string name, string string_0, string type, string string_1, int func) : this(name, string_0, type)
+        public ClassificationGroup(string name, string id, string type, string url, int func) : this(name, id, type)
         {
-            this.URL = string_1;
+            this.URL = url;
             this.Func = func;
         }
 
