@@ -1,5 +1,6 @@
 ﻿using System;
 
+///WYJ fix, original name: Enum4
 [Flags]
 internal enum DataTypeEnum
 {
