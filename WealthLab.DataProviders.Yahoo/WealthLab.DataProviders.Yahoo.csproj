@@ -46,13 +46,13 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SymbolList.cs" />
-    <Compile Include="Enum0.cs" />
+    <Compile Include="DelimeterSetEnum.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="SnDHandler.cs" />
-    <Compile Include="Enum1.cs" />
+    <Compile Include="SnDEnum.cs" />
     <Compile Include="SnDFactor.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Enum2.cs" />
+    <Compile Include="LogLevel.cs" />
     <Compile Include="GroupsToSymbols.cs" />
     <Compile Include="YahooWizardPageStart.cs">
       <SubType>UserControl</SubType>
@@ -67,14 +67,14 @@
     <Compile Include="Class25.cs" />
     <Compile Include="Enum3.cs" />
     <Compile Include="DataFetcher.cs" />
-    <Compile Include="EventArgs1.cs" />
-    <Compile Include="EventArgs2.cs" />
-    <Compile Include="EventArgs3.cs" />
-    <Compile Include="EventArgs4.cs" />
-    <Compile Include="EventArgs5.cs" />
-    <Compile Include="Enum4.cs" />
-    <Compile Include="Class27.cs" />
-    <Compile Include="Exception0.cs" />
+    <Compile Include="RequestResultEventArgs.cs" />
+    <Compile Include="StaticDataEventArgs.cs" />
+    <Compile Include="StaticErrorEventArgs.cs" />
+    <Compile Include="StreamingDataEventArgs.cs" />
+    <Compile Include="StreamingErrorEventArgs.cs" />
+    <Compile Include="DataTypeEnum.cs" />
+    <Compile Include="DataRequest.cs" />
+    <Compile Include="QuoteDataParseException.cs" />
     <Compile Include="Exception1.cs" />
     <Compile Include="SplitAndDividend.cs" />
     <Compile Include="DateTimeVolume.cs" />
