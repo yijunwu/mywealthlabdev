@@ -1,0 +1,2 @@
+using System;
+internal delegate void Delegate184(object object_0, string string_0);

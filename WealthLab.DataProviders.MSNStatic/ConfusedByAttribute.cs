@@ -1,9 +1,7 @@
-﻿using System;
-
+using System;
 internal class ConfusedByAttribute : Attribute
 {
-    public ConfusedByAttribute(string)
-    {
-    }
+	public ConfusedByAttribute(string string_0)
+	{
+	}
 }
-
