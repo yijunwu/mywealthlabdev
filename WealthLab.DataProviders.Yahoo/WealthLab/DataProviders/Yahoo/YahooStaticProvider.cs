@@ -134,10 +134,10 @@
                     bars.AppendWithCorrections(e.bars, out correctionCount);
                     if (this.symbolNames.ContainsKey(e.request.getSymbol()))
                     {
-                        string str = this.symbolNames[e.request.getSymbol()];
-                        if (str != string.Empty)
+                        string symbolName = this.symbolNames[e.request.getSymbol()];
+                        if (symbolName != string.Empty)
                         {
-                            bars.SecurityName = str.ToUpper();
+                            bars.SecurityName = symbolName.ToUpper();
                         }
                     }
                     lock (this.lockForSaveBars)
@@ -386,9 +386,9 @@
                     {
                         req.setDataType(req.getDataType() | DataTypeEnum.RealTime);
                     }
-                    List<DataRequest> list2 = new List<DataRequest> { req };
-                    this.updateSecurityNames(list2);
-                    this.dataFetcher.updateSecurityData(list2);
+                    List<DataRequest> reqList = new List<DataRequest> { req };
+                    this.updateSecurityNames(reqList);
+                    this.dataFetcher.updateSecurityData(reqList);
                 }
                 catch (Exception exception)
                 {

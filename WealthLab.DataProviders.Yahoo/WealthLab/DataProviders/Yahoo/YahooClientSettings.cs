@@ -23,12 +23,12 @@
         private int attemptCount = 5;
         private string user = string.Empty;
         private string password = string.Empty;
-        private static string string_2;
+        private static string settingFolder;
         public int Version = 2;
 
         public static YahooClientSettings Deserialize(string folderName)
         {
-            string_2 = folderName;
+            settingFolder = folderName;
             YahooClientSettings settings = new YahooClientSettings();
             if (!File.Exists(getSettingsFilePath(folderName)))
             {
@@ -43,10 +43,10 @@
 
         public void Serialize()
         {
-            if (string_2 != null)
+            if (settingFolder != null)
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(YahooClientSettings));
-                using (TextWriter writer = new StreamWriter(string_2 + Path.DirectorySeparatorChar + "YahooClientSettings.xml"))
+                using (TextWriter writer = new StreamWriter(settingFolder + Path.DirectorySeparatorChar + "YahooClientSettings.xml"))
                 {
                     serializer.Serialize(writer, this);
                 }
