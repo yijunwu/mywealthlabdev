@@ -1564,7 +1564,7 @@
                 this.BarsLoader.Scale = bars.Scale;
                 this.BarsLoader.BarInterval = bars.BarInterval;
                 this.BarsLoader.AutoConvertScale = false;
-                item = this.BarsLoader.method_4(string_2);
+                item = this.BarsLoader.method_4(string_2);   ///WYJ note: load the symbol data
                 if ((item != null) && (item.Count > 0))
                 {
                     this.list_7.Add(item);

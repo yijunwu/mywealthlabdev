@@ -60,7 +60,7 @@ internal class ProviderSettingsForm : Form
         {
             settings.AdjModeWhenDataRange = AdjustedModeWhenDataRange.Ignore;
         }
-        settings.Serialize();
+        settings.Serialize(); ///WYJ note: serialize the settings
         if ((this.string_1 != this.txtLogin.Text.Trim()) || (this.string_2 != this.txtPassword.Text.Trim()))
         {
             Login.Reset();

@@ -5,7 +5,7 @@ using System.Text;
 
 ///WYJ fix, original name: Class17
 [DefaultMember("Item")]
-internal class SymbolList   ///WYJ note, Symbol list used in symbols page of new dataset wizard
+public class SymbolList   ///WYJ note, Symbol list used in symbols page of new dataset wizard
 {
     public bool sortNeeded;
     public char delimiterForDisplay;
