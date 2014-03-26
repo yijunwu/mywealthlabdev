@@ -3778,7 +3778,7 @@
             base.Width = bounds.Width - 40;
             base.Height = bounds.Height - 80;
             this.drawingObjectManager_0.RootPath = MainModule.Instance.DataPath;
-            this.treeDataSources.Populate(MainModule.Instance.DataSources);
+            this.treeDataSources.PopulateWithFilter(MainModule.Instance.DataSources);
             if (MainModule.Instance.Settings.Get("ExpandFirstDataSet", true) && (this.treeDataSources.Nodes.Count > 0))
             {
                 this.treeDataSources.Nodes[0].Expand();
