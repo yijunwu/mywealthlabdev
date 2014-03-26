@@ -5,6 +5,7 @@
     using System.Text;
     using System.Xml.Serialization;
 
+    [Serializable]
     public class DBProviderSettings : DataSetSettings
     {
         private bool dividendAdj;
@@ -24,12 +25,35 @@
         private static string settingFolder;
         public int Version = 2;
 
+        private string connStr = string.Empty;
+
         private string queryStr = string.Empty;
+        private string dateCol = "date";
+        private string symbolCol = "symbol";
+
         private string openCol = "open";
         private string highCol = "open";
         private string lowCol = "low";
         private string closeCol = "close";
         private string volumeCol = "volume";
+
+        public string DateCol
+        {
+            get { return dateCol; }
+            set { dateCol = value; }
+        }
+
+        public string SymbolCol
+        {
+            get { return symbolCol; }
+            set { symbolCol = value; }
+        }
+
+        public string ConnStr
+        {
+            get { return connStr; }
+            set { connStr = value; }
+        }
 
         public string QueryStr
         {
@@ -215,7 +239,7 @@
         private DateTime _startDate = new DateTime(0x7d0, 1, 1);
         private string _symbols = string.Empty;
         private bool _updateGroups;
-        public int Version = 2;
+        //public int Version = 2;
 
 
         public DateTime StartDate

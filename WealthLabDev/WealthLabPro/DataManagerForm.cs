@@ -30,6 +30,7 @@
         private ToolStripButton btnDetails;
         private ToolStripButton btnHelp;
         private Button btnModifySymbols;
+        private Button btnSaveDataSets;
         private ToolStripButton btnNewDS;
         private ToolStripButton btnUpdate;
         private ToolStripButton btnUpdatePricing;
@@ -357,6 +358,11 @@
             MainModule.Instance.ContextSensitiveHelp("dataManager.htm");
         }
 
+        private void btnSaveDataSets_Click(object sender, EventArgs e)
+        {
+            MainModule.Instance.DataSources.SaveDataSources();
+        }
+
         private void btnModifySymbols_Click(object sender, EventArgs e)
         {
             SymbolParser parser = new SymbolParser {
@@ -604,7 +610,7 @@
             this.lblProviderDesc = new Label();
             this.lblProviderName = new Label();
             this.lblProvider = new Label();
-            this.lvDataSets = new DataSourceListView();
+            this.lvDataSets = new DataSourceListView(true, true);
             this.grpSymbolDetails = new GroupBox();
             this.btnCancelSymbolDetails = new Button();
             this.progSymbolDetails = new ProgressBar();
@@ -616,6 +622,7 @@
             this.btnCloseSymbolDetails = new Button();
             this.grpSymbols = new GroupBox();
             this.btnModifySymbols = new Button();
+            this.btnSaveDataSets = new Button();
             this.txtSymbols = new TextBox();
             this.tabUpdate = new TabPage();
             this.grpOnDemand = new GroupBox();
@@ -807,6 +814,16 @@
             this.grpDataSets.Controls.Add(this.lblProviderName);
             this.grpDataSets.Controls.Add(this.lblProvider);
             this.grpDataSets.Controls.Add(this.lvDataSets);
+            this.grpDataSets.Controls.Add(this.btnSaveDataSets);
+            this.btnSaveDataSets.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom;
+            this.btnSaveDataSets.Enabled = true;
+            this.btnSaveDataSets.Location = new Point(6, 313); ///(6, 0x139);
+            this.btnSaveDataSets.Name = "btnSaveDataSets";
+            this.btnSaveDataSets.Size = new Size(0x10f, 0x17);
+            this.btnSaveDataSets.TabIndex = 1;
+            this.btnSaveDataSets.Text = "Save changes to DataSets";
+            this.btnSaveDataSets.UseVisualStyleBackColor = true;
+            this.btnSaveDataSets.Click += new EventHandler(this.btnSaveDataSets_Click);
             this.grpDataSets.Location = new Point(5, 3);
             this.grpDataSets.Name = "grpDataSets";
             this.grpDataSets.Size = new Size(0x12b, 0x156);
@@ -815,14 +832,14 @@
             this.grpDataSets.Text = "DataSets";
             this.picDataSet.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             this.picDataSet.BackColor = Color.Transparent;
-            this.picDataSet.Location = new Point(7, 0x10d);
+            this.picDataSet.Location = new Point(7, 269 - 30); ///(7, 0x10d);
             this.picDataSet.Name = "picDataSet";
             this.picDataSet.Size = new Size(0x10, 0x10);
             this.picDataSet.TabIndex = 6;
             this.picDataSet.TabStop = false;
             this.linkProvider.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             this.linkProvider.AutoSize = true;
-            this.linkProvider.Location = new Point(9, 0x143);
+            this.linkProvider.Location = new Point(9, 323 - 30); ///(9, 0x143);
             this.linkProvider.Name = "linkProvider";
             this.linkProvider.Size = new Size(0x2b, 13);
             this.linkProvider.TabIndex = 5;
@@ -831,20 +848,20 @@
             this.linkProvider.Visible = false;
             this.linkProvider.LinkClicked += new LinkLabelLinkClickedEventHandler(this.linkProvider_LinkClicked);
             this.lblProviderDesc.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom;
-            this.lblProviderDesc.Location = new Point(0x21, 0x11d);
+            this.lblProviderDesc.Location = new Point(33, 285 - 30); ///(0x21, 0x11d);
             this.lblProviderDesc.Name = "lblProviderDesc";
             this.lblProviderDesc.Size = new Size(260, 0x33);
             this.lblProviderDesc.TabIndex = 4;
             this.lblProviderName.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             this.lblProviderName.AutoSize = true;
             this.lblProviderName.ForeColor = SystemColors.Highlight;
-            this.lblProviderName.Location = new Point(0x74, 0x10d);
+            this.lblProviderName.Location = new Point(116, 269 - 30); //(0x74, 0x10d);
             this.lblProviderName.Name = "lblProviderName";
             this.lblProviderName.Size = new Size(0, 13);
             this.lblProviderName.TabIndex = 2;
             this.lblProvider.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             this.lblProvider.AutoSize = true;
-            this.lblProvider.Location = new Point(0x1d, 0x10d);
+            this.lblProvider.Location = new Point(29, 269 - 30); ///(0x1d, 0x10d);
             this.lblProvider.Name = "lblProvider";
             this.lblProvider.Size = new Size(0x54, 13);
             this.lblProvider.TabIndex = 1;
@@ -855,7 +872,7 @@
             this.lvDataSets.Location = new Point(7, 20);
             this.lvDataSets.MultiSelect = false;
             this.lvDataSets.Name = "lvDataSets";
-            this.lvDataSets.Size = new Size(0x11e, 0xf6);
+            this.lvDataSets.Size = new Size(286, 246 - 30); //(0x11e, 0xf6);
             this.lvDataSets.TabIndex = 0;
             this.lvDataSets.Text = "dataSourceListView1";
             this.lvDataSets.UseCompatibleStateImageBehavior = false;
