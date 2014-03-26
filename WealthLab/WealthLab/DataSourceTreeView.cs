@@ -504,7 +504,13 @@
 
         protected override void OnNodeMouseClick(TreeNodeMouseClickEventArgs treeNodeMouseClickEventArgs_0)
         {
+            TreeNode prevNode = this.treeNode_0;
+            
+            //if (this.treeNode_0 == treeNodeMouseClickEventArgs_0.Node)
+            //    return; 
+            
             this.treeNode_0 = treeNodeMouseClickEventArgs_0.Node;
+            
             base.SelectedNode = treeNodeMouseClickEventArgs_0.Node;
             if ((treeNodeMouseClickEventArgs_0.Node != null) && (treeNodeMouseClickEventArgs_0.Node.Tag != null))
             {
@@ -520,12 +526,45 @@
                         this.eventHandler_0(this, new DataSourceEventArgs(tag));
                     }
                 }
-                else if (this.eventHandler_1 != null)
+                else if (this.eventHandler_1 != null && prevNode != this.treeNode_0)
                 {
                     this.eventHandler_1(this, new DataSourceSymbolEventArgs(tag, treeNodeMouseClickEventArgs_0.Node.Text));
                 }
             }
             base.OnNodeMouseClick(treeNodeMouseClickEventArgs_0);
+        }
+
+        ///WYJ fix, to support filtering in the mainform dataset panel
+        public void PopulateWithFilter(DataSourceManager dataSourceManager_1) 
+        {
+            this.dataSourceManager_0 = dataSourceManager_1;
+            base.BeginUpdate();
+            base.Nodes.Clear();
+            this.imageList_0.Images.Clear();
+            this.imageList_0.Images.Add(Resources.Sphere);
+            foreach (StaticDataProvider provider2 in dataSourceManager_1.Providers)
+            {
+                this.imageList_0.Images.Add(provider2.Glyph);
+                int num2 = this.imageList_0.Images.Count - 1;
+                this.dictionary_0.Add(provider2, num2);
+            }
+            foreach (WealthLab.DataSource source in dataSourceManager_1.DataSources)
+            {
+                if (source.Filtered)
+                    continue;
+
+                StaticDataProvider provider = source.Provider;
+                if (provider != null)
+                {
+                    TreeNode node = base.Nodes.Add(source.Name);
+                    int num = this.dictionary_0[provider];
+                    node.ImageIndex = num;
+                    node.SelectedImageIndex = num;
+                    node.Tag = source;
+                    this.method_0(node, source);
+                }
+            }
+            base.EndUpdate();
         }
 
         public void Populate(DataSourceManager dataSourceManager_1)

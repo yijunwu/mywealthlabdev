@@ -9,6 +9,8 @@
     [XmlRoot(ElementName="DataSet", IsNullable=false)]
     public class DataSource
     {
+        bool filtered = false; ///WYJ fix, to support filtering datasource in datasource panel
+
         private BarScale barScale_0;
         private int int_0;
         private List<string> list_0;
@@ -34,6 +36,12 @@
             {
                 this.string_2 = staticDataProvider_1.GetType().Name;
             }
+        }
+
+        public bool Filtered
+        {
+            get { return filtered; }
+            set { filtered = value; }
         }
 
         public static DataSource FromFile(string fileName)

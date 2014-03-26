@@ -100,6 +100,48 @@
             this.ContextMenuStrip = this.popup;
         }
 
+        public DataSourceListView(bool showProvider)
+        {
+            this.method_1();
+            base.View = View.Details;
+            base.Columns.Add("Name", 120, HorizontalAlignment.Left);
+            base.Columns.Add("Scale", 60, HorizontalAlignment.Left);
+            base.Columns.Add("Symbols", 60, HorizontalAlignment.Right);
+            if (showProvider)
+                base.Columns.Add("Provider", 60, HorizontalAlignment.Left);
+            base.Columns[2].Tag = "N";
+            base.FullRowSelect = true;
+            base.SmallImageList = this.imageList_0;
+            base.MultiSelect = false;
+            this.ContextMenuStrip = this.popup;
+        }
+
+        public DataSourceListView(bool showProvider, bool showCheckBox)
+        {
+            this.method_1();
+            base.View = View.Details;
+            base.Columns.Add("Name", 120, HorizontalAlignment.Left);
+            base.Columns.Add("Scale", 60, HorizontalAlignment.Left);
+            base.Columns.Add("Symbols", 60, HorizontalAlignment.Right);
+            if (showProvider)
+                base.Columns.Add("Provider", 150, HorizontalAlignment.Left);
+            if (showCheckBox)
+                base.CheckBoxes = true;
+            base.Columns[2].Tag = "N";
+            base.FullRowSelect = true;
+            base.SmallImageList = this.imageList_0;
+            base.MultiSelect = false;
+            this.ContextMenuStrip = this.popup;
+        }
+
+        protected override void OnItemChecked(ItemCheckedEventArgs e)
+        {
+            base.OnItemChecked(e);
+            DataSource ds = (DataSource)e.Item.Tag;
+            if (ds != null)
+                ds.Filtered = !e.Item.Checked;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (this.icontainer_1 != null))
@@ -111,7 +153,7 @@
 
         public void ItemAdded(WealthLab.DataSource item)
         {
-            this.method_2(item);
+            this.addDataSource(item);
         }
 
         public void ItemChanged(WealthLab.DataSource item)
@@ -215,7 +257,8 @@
             base.ResumeLayout(false);
         }
 
-        private void method_2(WealthLab.DataSource dataSource_1)
+        ///WYJ fix, original name: method_2
+        private void addDataSource(WealthLab.DataSource dataSource_1)
         {
             StaticDataProvider provider = dataSource_1.Provider;
             if (provider != null)
@@ -226,6 +269,12 @@
                 item.Tag = dataSource_1;
                 item.SubItems.Add(dataSource_1.BarDataScale.ToString());
                 item.SubItems.Add(dataSource_1.Symbols.Count.ToString("N0"));
+                item.SubItems.Add(dataSource_1.ProviderName);
+                if (this.CheckBoxes)
+                {
+                    item.Checked = !dataSource_1.Filtered;
+                    //MainModule.
+                }
             }
         }
 
@@ -296,7 +345,7 @@
             }
             foreach (WealthLab.DataSource source in dataSourceManager_1.DataSources)
             {
-                this.method_2(source);
+                this.addDataSource(source);
             }
             base.EndUpdate();
         }
@@ -328,7 +377,7 @@
                 {
                     if (!source.IsIndexLabDataset)
                     {
-                        this.method_2(source);
+                        this.addDataSource(source);
                     }
                 }
                 base.EndUpdate();
