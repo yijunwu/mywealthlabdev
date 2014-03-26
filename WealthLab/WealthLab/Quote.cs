@@ -5,15 +5,15 @@
 
     public class Quote
     {
-        private DateTime dateTime_0;
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private double double_3;
-        private double double_4;
+        private DateTime timeStamp;
+        private double price;
+        private double size;
+        private double bid;
+        private double ask;
+        private double previousClose;
         [CompilerGenerated]
-        private double double_5;
-        private string string_0;
+        private double open;
+        private string symbol;
 
         public Quote()
         {
@@ -21,13 +21,13 @@
 
         public Quote(Quote quote_0)
         {
-            this.double_3 = quote_0.Ask;
-            this.double_2 = quote_0.Bid;
-            this.double_4 = quote_0.PreviousClose;
-            this.double_0 = quote_0.Price;
-            this.double_1 = quote_0.Size;
-            this.string_0 = quote_0.Symbol;
-            this.dateTime_0 = quote_0.TimeStamp;
+            this.ask = quote_0.Ask;
+            this.bid = quote_0.Bid;
+            this.previousClose = quote_0.PreviousClose;
+            this.price = quote_0.Price;
+            this.size = quote_0.Size;
+            this.symbol = quote_0.Symbol;
+            this.timeStamp = quote_0.TimeStamp;
         }
 
         public double DistanceFrom(Quote quote_0)
@@ -49,11 +49,11 @@
         {
             get
             {
-                return this.double_3;
+                return this.ask;
             }
             set
             {
-                this.double_3 = value;
+                this.ask = value;
             }
         }
 
@@ -61,11 +61,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.bid;
             }
             set
             {
-                this.double_2 = value;
+                this.bid = value;
             }
         }
 
@@ -74,12 +74,12 @@
             [CompilerGenerated]
             get
             {
-                return this.double_5;
+                return this.open;
             }
             [CompilerGenerated]
             set
             {
-                this.double_5 = value;
+                this.open = value;
             }
         }
 
@@ -87,11 +87,11 @@
         {
             get
             {
-                return this.double_4;
+                return this.previousClose;
             }
             set
             {
-                this.double_4 = value;
+                this.previousClose = value;
             }
         }
 
@@ -99,11 +99,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.price;
             }
             set
             {
-                this.double_0 = value;
+                this.price = value;
             }
         }
 
@@ -111,11 +111,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.size;
             }
             set
             {
-                this.double_1 = value;
+                this.size = value;
             }
         }
 
@@ -123,11 +123,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             set
             {
-                this.string_0 = value;
+                this.symbol = value;
             }
         }
 
@@ -135,11 +135,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.timeStamp;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.timeStamp = value;
             }
         }
     }
