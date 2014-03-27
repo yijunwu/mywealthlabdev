@@ -1754,6 +1754,13 @@
                     instance.method_2(DataWindowType.Low, this.Bars.Low[this.int_3].ToString(format));
                     instance.method_2(DataWindowType.Close, this.Bars.Close[this.int_3].ToString(format));
                     instance.method_2(DataWindowType.Volume, this.Bars.Volume[this.int_3].ToString("N0"));
+
+                    double changePercent = 0.0;
+                    if (this.int_3 > 0)
+                    {
+                        changePercent = (this.Bars.Close[this.int_3] - this.Bars.Close[this.int_3 - 1]) / this.Bars.Close[this.int_3 - 1]*100;
+                    }
+                    instance.method_2(DataWindowType.ChangePercent, changePercent.ToString(format));
                 }
                 if (bool_19)
                 {
@@ -1766,15 +1773,22 @@
                         foreach (PlottedSymbol symbol in pane.PlottedSymbols)
                         {
                             string str2 = symbol.Bars.Symbol;
-                            instance.method_3("Open(" + str2 + ")", symbol.Bars.Open[this.int_3].ToString(format));
-                            instance.method_3("High(" + str2 + ")", symbol.Bars.High[this.int_3].ToString(format));
-                            instance.method_3("Low(" + str2 + ")", symbol.Bars.Low[this.int_3].ToString(format));
-                            instance.method_3("Close(" + str2 + ")", symbol.Bars.Close[this.int_3].ToString(format));
-                            instance.method_3("Volume(" + str2 + ")", symbol.Bars.Volume[this.int_3].ToString("N0"));
+                            instance.addDataItem("Open(" + str2 + ")", symbol.Bars.Open[this.int_3].ToString(format));
+                            instance.addDataItem("High(" + str2 + ")", symbol.Bars.High[this.int_3].ToString(format));
+                            instance.addDataItem("Low(" + str2 + ")", symbol.Bars.Low[this.int_3].ToString(format));
+                            instance.addDataItem("Close(" + str2 + ")", symbol.Bars.Close[this.int_3].ToString(format));
+                            instance.addDataItem("Volume(" + str2 + ")", symbol.Bars.Volume[this.int_3].ToString("N0"));
+
+                            double changePercent = 0.0;
+                            if (this.int_3 > 0)
+                            {
+                                changePercent = (symbol.Bars.Close[this.int_3] - symbol.Bars.Close[this.int_3 - 1]) / symbol.Bars.Close[this.int_3 - 1];
+                            }
+                            instance.addDataItem("ChangePercent(" + str2 + ")", changePercent.ToString(format));
                         }
                         foreach (PlottedIndicator indicator in pane.PlottedIndicators)
                         {
-                            instance.method_3(indicator.Series.Description, indicator.Series[this.int_3].ToString("N" + DecimalsManager.Instance.Indicator));
+                            instance.addDataItem(indicator.Series.Description, indicator.Series[this.int_3].ToString("N" + DecimalsManager.Instance.Indicator));
                         }
                     }
                 }

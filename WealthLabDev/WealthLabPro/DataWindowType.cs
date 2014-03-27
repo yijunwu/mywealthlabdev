@@ -9,7 +9,8 @@
         High,
         Low,
         Close,
-        Volume
+        Volume,
+        ChangePercent
     }
 }
 

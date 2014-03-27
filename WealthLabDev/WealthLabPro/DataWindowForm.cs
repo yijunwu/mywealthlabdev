@@ -12,7 +12,7 @@
         private ColumnHeader columnHeader_1;
         private IContainer icontainer_0;
         public static DataWindowForm Instance;
-        private int int_0 = 6;
+        private int minItemCount = 7;
         private ListView lvDataWindow;
 
         public DataWindowForm()
@@ -56,6 +56,7 @@
             ListViewItem item4 = new ListViewItem(new string[] { "Low", "" }, -1);
             ListViewItem item5 = new ListViewItem(new string[] { "Close", "" }, -1);
             ListViewItem item6 = new ListViewItem(new string[] { "Volume", "" }, -1);
+            ListViewItem item7 = new ListViewItem(new string[] { "ChangePercent", "" }, -1);
             this.lvDataWindow = new ListView();
             this.columnHeader_0 = new ColumnHeader();
             this.columnHeader_1 = new ColumnHeader();
@@ -63,7 +64,7 @@
             this.lvDataWindow.Columns.AddRange(new ColumnHeader[] { this.columnHeader_0, this.columnHeader_1 });
             this.lvDataWindow.Dock = DockStyle.Fill;
             this.lvDataWindow.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            this.lvDataWindow.Items.AddRange(new ListViewItem[] { item, item2, item3, item4, item5, item6 });
+            this.lvDataWindow.Items.AddRange(new ListViewItem[] { item, item2, item3, item4, item5, item6, item7 });
             this.lvDataWindow.Location = new Point(0, 0);
             this.lvDataWindow.Name = "lvDataWindow";
             this.lvDataWindow.Size = new Size(0x11c, 0x106);
@@ -111,9 +112,10 @@
             this.lvDataWindow.Items[(int) dataWindowType_0].SubItems[1].Text = string_0;
         }
 
-        internal void method_3(string string_0, string string_1)
+        ///WYJ fix, original signature: internal void method_3(string string_0, string string_1)
+        internal void addDataItem(string string_0, string string_1)
         {
-            for (int i = this.int_0; i < this.lvDataWindow.Items.Count; i++)
+            for (int i = this.minItemCount; i < this.lvDataWindow.Items.Count; i++)
             {
                 if (this.lvDataWindow.Items[i].SubItems[0].Text == string_0)
                 {
@@ -126,9 +128,9 @@
 
         internal void method_4()
         {
-            while (this.lvDataWindow.Items.Count > this.int_0)
+            while (this.lvDataWindow.Items.Count > this.minItemCount)
             {
-                this.lvDataWindow.Items.RemoveAt(this.int_0);
+                this.lvDataWindow.Items.RemoveAt(this.minItemCount);
             }
         }
 
