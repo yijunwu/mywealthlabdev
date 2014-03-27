@@ -614,9 +614,9 @@
 
                             if (this.cursorPointData != null)
                             {
-                                if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar + 1)
+                                if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar )
                                 {
-                                    this.cursorPointData.barNum = this.chartRenderer_0.LeftEdgeBar + 1;  
+                                    this.cursorPointData.barNum = this.chartRenderer_0.LeftEdgeBar ;  
                                 }
                                 else
                                 {
