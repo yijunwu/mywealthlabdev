@@ -412,7 +412,7 @@
 
         private void chart_MouseLeave(object sender, EventArgs e)
         {
-            this.method_9(this, new BarNumberEventArgs(-1, 0.0, null));
+            this.UpdateCurrentDayDataDisplay(this, new BarNumberEventArgs(-1, 0.0, null));
         }
 
         private void ChartForm_Activated(object sender, EventArgs e)
@@ -1374,7 +1374,7 @@
             this.chart.DrawingObjectOperationCompleted += new EventHandler<EventArgs>(this.method_29);
             this.chart.OnException += new EventHandler<ExceptionEventArgs>(this.method_72);
             this.chart.KeyPress += new KeyPressEventHandler(this.chart_KeyPress);
-            this.chart.MouseMoveBarNumber += new EventHandler<BarNumberEventArgs>(this.method_9);
+            this.chart.MouseMoveBarNumber += new EventHandler<BarNumberEventArgs>(this.UpdateCurrentDayDataDisplay);
 
             //base.KeyDown += new KeyEventHandler(this.MainForm_KeyDown);
             //base.PreviewKeyDown += new PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
@@ -4086,7 +4086,8 @@
             }
         }
 
-        private void method_9(object sender, BarNumberEventArgs e)
+        ///WYJ fix, renamed from method_9
+        private void UpdateCurrentDayDataDisplay(object sender, BarNumberEventArgs e) ///WYJ fix: update display of the date-on-cursor data 
         {
             int barNumber = e.BarNumber;
             if (barNumber != this.int_2)

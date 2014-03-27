@@ -48,6 +48,8 @@
         private ScaleSelector scaleSelector_0 = new ScaleSelector();
         private static System.Type type_0 = null;
 
+        private int disableMouseMoveOnce = 0;
+
         private EventHandler<BarNumberEventArgs> eventHandler_0;
 
         private EventHandler<EventArgs> eventHandler_1;
@@ -721,6 +723,13 @@
                         break;
                 }
                 base.OnKeyDown(keyEventArgs_0);
+                ///WYJ fix: call the MouseMoveBarNumber event to update the display of the current day's data, it will trigger the UpdateCurrentDayDataDisplay method of ChartForm
+                if (keyEventArgs_0.KeyCode == Keys.Right || keyEventArgs_0.KeyCode == Keys.Left)
+                {
+                    BarNumberEventArgs e = new BarNumberEventArgs(this.cursorPointData.barNum, 0, null);
+                    disableMouseMoveOnce = 5;
+                    this.eventHandler_0(this, e);
+                }
             }
 
             
@@ -1221,6 +1230,11 @@
             bool flag1;
             bool flag2;
             bool flag3;
+            if (disableMouseMoveOnce > 0)
+            {
+                disableMouseMoveOnce --;
+                return;
+            }
             try
             {
                 bool flag4 = false;
