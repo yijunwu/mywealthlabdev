@@ -85,7 +85,7 @@
             this.pnlParams.Name = "pnlParams";
             this.pnlParams.Size = new Size(0x113, 0x6f);
             this.pnlParams.TabIndex = 0;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0xdb, 0x1bd);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -112,14 +112,14 @@
             this.indicators.AfterSelect += new TreeViewEventHandler(this.indicators_AfterSelect);
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x133, 0x1dc);
             base.Controls.Add(this.indicators);
             base.Controls.Add(this.btnOK);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.grpParameters);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "RuleIndicatorsForm";
             base.StartPosition = FormStartPosition.CenterParent;
             this.Text = "Select an Indicator";

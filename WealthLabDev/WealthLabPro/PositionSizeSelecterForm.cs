@@ -11,6 +11,7 @@
     using System.Globalization;
     using System.Windows.Forms;
     using WealthLab;
+    using Label = System.Windows.Forms.Label;
 
     public class PositionSizeSelecterForm : Form
     {
@@ -374,7 +375,7 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new EventHandler(this.btnOK_Click);
             this.btnCancel.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0x83, 0x131);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -469,7 +470,7 @@
             this.pnlPortSim.TabIndex = 0x1b;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.Linen;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0xd9, 0x152);
@@ -487,7 +488,7 @@
             base.Controls.Add(this.numRawDollar);
             base.Controls.Add(this.rbFixedDollar);
             base.Controls.Add(this.lblRawProfit);
-            base.FormBorderStyle = FormBorderStyle.None;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "PositionSizeSelecterForm";

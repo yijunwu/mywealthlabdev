@@ -115,7 +115,7 @@
         private void InitializeComponent()
         {
             this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(NewDataSourceForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(NewDataSourceForm));
             this.pnlButtons = new Panel();
             this.btnCancel = new Button();
             this.btnPrevious = new Button();
@@ -155,7 +155,7 @@
             this.pnlButtons.Name = "pnlButtons";
             this.pnlButtons.Size = new Size(0x23d, 0x20);
             this.pnlButtons.TabIndex = 0;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0xf2, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -252,7 +252,7 @@
             this.lblDataSource.Name = "lblDataSource";
             this.lblDataSource.Size = new Size(0x215, 0x21);
             this.lblDataSource.TabIndex = 0;
-            this.lblDataSource.Text = manager.GetString("lblDataSource.Text");
+            this.lblDataSource.Text = resources.GetString("lblDataSource.Text");
             this.pnlFinished.Controls.Add(this.grpName);
             this.pnlFinished.Location = new Point(0, 0);
             this.pnlFinished.Name = "pnlFinished";
@@ -282,14 +282,14 @@
             this.pnlContent.Size = new Size(570, 0x16c);
             this.pnlContent.TabIndex = 3;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x23d, 0x192);
             base.Controls.Add(this.pnlButtons);
             base.Controls.Add(this.pnlIntro);
             base.Controls.Add(this.pnlContent);
             base.Controls.Add(this.pnlFinished);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "NewDataSourceForm";

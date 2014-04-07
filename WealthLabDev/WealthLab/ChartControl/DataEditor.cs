@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
+    using Label = System.Windows.Forms.Label;
 
     public class DataEditor : Form
     {
@@ -206,7 +207,7 @@
             this.label5.Size = new Size(0x2d, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Volume:";
-            this.okBtn.DialogResult = DialogResult.OK;
+            this.okBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.okBtn.Location = new Point(12, 0x101);
             this.okBtn.Name = "okBtn";
             this.okBtn.Size = new Size(0x4b, 0x17);
@@ -214,7 +215,7 @@
             this.okBtn.Text = "Ok";
             this.okBtn.UseVisualStyleBackColor = true;
             this.okBtn.Click += new EventHandler(this.okBtn_Click);
-            this.removeBtn.DialogResult = DialogResult.OK;
+            this.removeBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.removeBtn.Location = new Point(100, 0x101);
             this.removeBtn.Name = "removeBtn";
             this.removeBtn.Size = new Size(0x4b, 0x17);
@@ -222,7 +223,7 @@
             this.removeBtn.Text = "Remove";
             this.removeBtn.UseVisualStyleBackColor = true;
             this.removeBtn.Click += new EventHandler(this.removeBtn_Click);
-            this.cancelBtn.DialogResult = DialogResult.Cancel;
+            this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelBtn.Location = new Point(0xbc, 0x101);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new Size(0x4b, 0x17);
@@ -364,7 +365,7 @@
             this.groupBox1.Text = "Create New Bar";
             base.AcceptButton = this.okBtn;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.cancelBtn;
             base.ClientSize = new Size(0x116, 0x125);
             base.Controls.Add(this.groupBox1);
@@ -388,14 +389,14 @@
             base.Controls.Add(this.label3);
             base.Controls.Add(this.label2);
             base.Controls.Add(this.label1);
-            base.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "DataEditor";
             base.ShowIcon = false;
             base.ShowInTaskbar = false;
-            base.SizeGripStyle = SizeGripStyle.Hide;
-            base.StartPosition = FormStartPosition.CenterParent;
+            base.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            base.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Bar Data Editor";
             base.FormClosing += new FormClosingEventHandler(this.DataEditor_FormClosing);
             this.groupBox1.ResumeLayout(false);

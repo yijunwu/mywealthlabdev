@@ -420,7 +420,7 @@
         private void InitializeComponent()
         {
             this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(StrategyExplorerForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(StrategyExplorerForm));
             this.status = new StatusStrip();
             this.lblStrategies = new ToolStripStatusLabel();
             this.toolbar = new ToolStrip();
@@ -505,13 +505,13 @@
             this.toolbar.Size = new Size(0x2c3, 0x19);
             this.toolbar.TabIndex = 0;
             this.toolbar.Text = "toolStrip1";
-            this.btnNewRules.Image = (Image) manager.GetObject("btnNewRules.Image");
+            this.btnNewRules.Image = (Image) resources.GetObject("btnNewRules.Image");
             this.btnNewRules.ImageTransparentColor = Color.Magenta;
             this.btnNewRules.Name = "btnNewRules";
             this.btnNewRules.Size = new Size(150, 0x16);
             this.btnNewRules.Text = "New Rule-Based Strategy";
             this.btnNewRules.Click += new EventHandler(this.btnNewRules_Click);
-            this.btnNewScript.Image = (Image) manager.GetObject("btnNewScript.Image");
+            this.btnNewScript.Image = (Image) resources.GetObject("btnNewScript.Image");
             this.btnNewScript.ImageTransparentColor = Color.Magenta;
             this.btnNewScript.Name = "btnNewScript";
             this.btnNewScript.Size = new Size(0x9c, 0x16);
@@ -519,14 +519,14 @@
             this.btnNewScript.Click += new EventHandler(this.btnNewScript_Click);
             this.sepImport.Name = "sepImport";
             this.sepImport.Size = new Size(6, 0x19);
-            this.btnImport.Image = (Image) manager.GetObject("btnImport.Image");
+            this.btnImport.Image = (Image) resources.GetObject("btnImport.Image");
             this.btnImport.ImageTransparentColor = Color.FromArgb(0xeb, 0xe9, 0xed);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new Size(0x4a, 0x16);
             this.btnImport.Text = "Import ...";
             this.btnImport.ToolTipText = "Import Strategies from external XML files";
             this.btnImport.Click += new EventHandler(this.btnImport_Click);
-            this.btnDownload.Image = (Image) manager.GetObject("btnDownload.Image");
+            this.btnDownload.Image = (Image) resources.GetObject("btnDownload.Image");
             this.btnDownload.ImageTransparentColor = Color.Magenta;
             this.btnDownload.Name = "btnDownload";
             this.btnDownload.Size = new Size(0x59, 0x16);
@@ -535,7 +535,7 @@
             this.sepDelete.Name = "sepDelete";
             this.sepDelete.Size = new Size(6, 0x19);
             this.btnDelete.Enabled = false;
-            this.btnDelete.Image = (Image) manager.GetObject("btnDelete.Image");
+            this.btnDelete.Image = (Image) resources.GetObject("btnDelete.Image");
             this.btnDelete.ImageTransparentColor = Color.Magenta;
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new Size(0x3a, 0x16);
@@ -546,7 +546,7 @@
             this.sepAccount.Size = new Size(6, 0x19);
             this.btnAccountNumber.DisplayStyle = ToolStripItemDisplayStyle.Text;
             this.btnAccountNumber.Enabled = false;
-            this.btnAccountNumber.Image = (Image) manager.GetObject("btnAccountNumber.Image");
+            this.btnAccountNumber.Image = (Image) resources.GetObject("btnAccountNumber.Image");
             this.btnAccountNumber.ImageTransparentColor = Color.Magenta;
             this.btnAccountNumber.Name = "btnAccountNumber";
             this.btnAccountNumber.Size = new Size(0x54, 0x16);
@@ -555,7 +555,7 @@
             this.btnAccountNumber.Click += new EventHandler(this.btnAccountNumber_Click);
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new Size(6, 0x19);
-            this.btnHelp.Image = (Image) manager.GetObject("btnHelp.Image");
+            this.btnHelp.Image = (Image) resources.GetObject("btnHelp.Image");
             this.btnHelp.ImageTransparentColor = Color.Magenta;
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new Size(0x30, 0x16);
@@ -581,7 +581,7 @@
             this.toolbarTree.TabIndex = 0;
             this.toolbarTree.Text = "toolStrip1";
             this.btnNewFolder.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnNewFolder.Image = (Image) manager.GetObject("btnNewFolder.Image");
+            this.btnNewFolder.Image = (Image) resources.GetObject("btnNewFolder.Image");
             this.btnNewFolder.ImageTransparentColor = Color.Magenta;
             this.btnNewFolder.Name = "btnNewFolder";
             this.btnNewFolder.Size = new Size(0x17, 0x16);
@@ -589,7 +589,7 @@
             this.btnNewFolder.Click += new EventHandler(this.btnNewFolder_Click);
             this.btnDeleteFolder.DisplayStyle = ToolStripItemDisplayStyle.Image;
             this.btnDeleteFolder.Enabled = false;
-            this.btnDeleteFolder.Image = (Image) manager.GetObject("btnDeleteFolder.Image");
+            this.btnDeleteFolder.Image = (Image) resources.GetObject("btnDeleteFolder.Image");
             this.btnDeleteFolder.ImageTransparentColor = Color.Magenta;
             this.btnDeleteFolder.Name = "btnDeleteFolder";
             this.btnDeleteFolder.Size = new Size(0x17, 0x16);
@@ -600,13 +600,13 @@
             this.sepFolders.Size = new Size(6, 0x19);
             this.btnTree.Checked = true;
             this.btnTree.CheckState = CheckState.Checked;
-            this.btnTree.Image = (Image) manager.GetObject("btnTree.Image");
+            this.btnTree.Image = (Image) resources.GetObject("btnTree.Image");
             this.btnTree.ImageTransparentColor = Color.Magenta;
             this.btnTree.Name = "btnTree";
             this.btnTree.Size = new Size(0x3e, 0x16);
             this.btnTree.Text = "Folders";
             this.btnTree.Click += new EventHandler(this.btnTree_Click);
-            this.btnSearch.Image = (Image) manager.GetObject("btnSearch.Image");
+            this.btnSearch.Image = (Image) resources.GetObject("btnSearch.Image");
             this.btnSearch.ImageTransparentColor = Color.Magenta;
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new Size(60, 0x16);
@@ -620,14 +620,14 @@
             this.toolbarNetFolder.Size = new Size(0x109, 0x19);
             this.toolbarNetFolder.TabIndex = 11;
             this.toolbarNetFolder.Text = "toolStrip1";
-            this.btnAddNetwork.Image = (Image) manager.GetObject("btnAddNetwork.Image");
+            this.btnAddNetwork.Image = (Image) resources.GetObject("btnAddNetwork.Image");
             this.btnAddNetwork.ImageTransparentColor = Color.Magenta;
             this.btnAddNetwork.Name = "btnAddNetwork";
             this.btnAddNetwork.Size = new Size(0x73, 0x16);
             this.btnAddNetwork.Text = "Map Network Path";
             this.btnAddNetwork.Click += new EventHandler(this.btnAddNetwork_Click);
             this.btnRemoveNetwork.Enabled = false;
-            this.btnRemoveNetwork.Image = (Image) manager.GetObject("btnRemoveNetwork.Image");
+            this.btnRemoveNetwork.Image = (Image) resources.GetObject("btnRemoveNetwork.Image");
             this.btnRemoveNetwork.ImageTransparentColor = Color.Magenta;
             this.btnRemoveNetwork.Name = "btnRemoveNetwork";
             this.btnRemoveNetwork.Size = new Size(0x80, 0x16);
@@ -648,7 +648,7 @@
             this.tree.DragEnter += new DragEventHandler(this.tree_DragOver);
             this.tree.DragOver += new DragEventHandler(this.tree_DragOver);
             this.tree.KeyDown += new KeyEventHandler(this.tree_KeyDown);
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "FolderClosed.bmp");
             this.imageList_0.Images.SetKeyName(1, "FolderOpen.bmp");
@@ -730,7 +730,7 @@
             this.lblSearchCode.Text = "Strategy Code:";
             this.btnShowDownloaded.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             this.btnShowDownloaded.AutoSize = true;
-            this.btnShowDownloaded.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            this.btnShowDownloaded.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnShowDownloaded.Location = new Point(0x66, 0xb2);
             this.btnShowDownloaded.Name = "btnShowDownloaded";
             this.btnShowDownloaded.Size = new Size(0x9d, 0x17);
@@ -814,7 +814,7 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new EventHandler(this.btnOK_Click);
             this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Top;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(360, 4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -829,7 +829,7 @@
             this.folderBrowserDialog_0.RootFolder = Environment.SpecialFolder.MyComputer;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x2c3, 0x1b5);
             base.Controls.Add(this.split);

@@ -26,7 +26,7 @@
         private static CultureInfo cultureInfo_0 = new CultureInfo("en-US");
         private GroupBox grpParameters;
         private GroupBox grpPositionManagement;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         private static int int_0 = 0x1d;
         private static int int_1 = 0;
@@ -293,9 +293,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -322,12 +322,12 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(Builder));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(Builder));
             this.tabBuilder = new TabControl();
             this.pageEntryExit = new TabPage();
             this.treeEntryExits = new TreeView();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.pageConditions = new TabPage();
             this.treeConditions = new TreeView();
             this.treeRules = new TreeView();
@@ -346,9 +346,9 @@
             this.btnRemove = new Button();
             this.txtDescription = new TextBox();
             this.splitContainer1 = new SplitContainer();
-            this.toolTip_0 = new ToolTip(this.icontainer_0);
-            this.strategyBuilder_0 = new StrategyBuilder(this.icontainer_0);
-            this.wealthScriptCompiler_0 = new WealthScriptCompiler(this.icontainer_0);
+            this.toolTip_0 = new ToolTip(this.components);
+            this.strategyBuilder_0 = new StrategyBuilder(this.components);
+            this.wealthScriptCompiler_0 = new WealthScriptCompiler(this.components);
             this.tabBuilder.SuspendLayout();
             this.pageEntryExit.SuspendLayout();
             this.pageConditions.SuspendLayout();
@@ -391,7 +391,7 @@
             this.treeEntryExits.DragEnter += new DragEventHandler(this.treeRules_DragEnter);
             this.treeEntryExits.ItemDrag += new ItemDragEventHandler(this.treeEntryExits_ItemDrag);
             this.treeEntryExits.DragOver += new DragEventHandler(this.treeRules_DragEnter);
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.White;
             this.imageList_0.Images.SetKeyName(0, "BuyArrow.bmp");
             this.imageList_0.Images.SetKeyName(1, "SellArrow.bmp");
@@ -492,19 +492,19 @@
             this.toolbar.Size = new Size(0x293, 0x19);
             this.toolbar.TabIndex = 6;
             this.toolbar.Text = "toolStrip1";
-            this.btnExecute.Image = (Image) manager.GetObject("btnExecute.Image");
+            this.btnExecute.Image = (Image) resources.GetObject("btnExecute.Image");
             this.btnExecute.ImageTransparentColor = Color.Magenta;
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new Size(0x75, 0x16);
             this.btnExecute.Text = "Run the Strategy";
             this.btnExecute.Click += new EventHandler(this.btnExecute_Click);
-            this.btnViewCode.Image = (Image) manager.GetObject("btnViewCode.Image");
+            this.btnViewCode.Image = (Image) resources.GetObject("btnViewCode.Image");
             this.btnViewCode.ImageTransparentColor = Color.Magenta;
             this.btnViewCode.Name = "btnViewCode";
             this.btnViewCode.Size = new Size(0x84, 0x16);
             this.btnViewCode.Text = "View Strategy Code";
             this.btnViewCode.Click += new EventHandler(this.btnViewCode_Click);
-            this.btnOpenNew.Image = (Image) manager.GetObject("btnOpenNew.Image");
+            this.btnOpenNew.Image = (Image) resources.GetObject("btnOpenNew.Image");
             this.btnOpenNew.ImageTransparentColor = Color.Magenta;
             this.btnOpenNew.Name = "btnOpenNew";
             this.btnOpenNew.Size = new Size(0xde, 0x16);
@@ -512,7 +512,7 @@
             this.btnOpenNew.Click += new EventHandler(this.btnOpenNew_Click);
             this.sepConvert.Name = "sepConvert";
             this.sepConvert.Size = new Size(6, 0x19);
-            this.btnConvert.Image = (Image) manager.GetObject("btnConvert.Image");
+            this.btnConvert.Image = (Image) resources.GetObject("btnConvert.Image");
             this.btnConvert.ImageTransparentColor = Color.Magenta;
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new Size(200, 20);
@@ -561,7 +561,7 @@
             this.strategyBuilder_0.RootPath = "";
             this.wealthScriptCompiler_0.SourceCode = null;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.splitContainer1);
             base.Controls.Add(this.toolbar);
             base.Name = "Builder";

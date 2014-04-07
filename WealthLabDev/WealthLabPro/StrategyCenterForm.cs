@@ -68,7 +68,7 @@
         private ColumnHeader columnHeader_8;
         private ColumnHeader columnHeader_9;
         private FundamentalsLoader fundamentalsLoader_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         private ImageList imageList_1;
         private ImageList imageList_2;
@@ -524,17 +524,17 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(StrategyCenterForm));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(StrategyCenterForm));
             PositionSize size = new PositionSize();
             this.splitMain = new SplitContainer();
             this.lvStrategies = new SortableListView();
@@ -551,7 +551,7 @@
             this.columnHeader_21 = new ColumnHeader();
             this.columnHeader_26 = new ColumnHeader();
             this.columnHeader_24 = new ColumnHeader();
-            this.popupStrategies = new ContextMenuStrip(this.icontainer_0);
+            this.popupStrategies = new ContextMenuStrip(this.components);
             this.mniAddStrategy = new ToolStripMenuItem();
             this.mniRemoveStrategy = new ToolStripMenuItem();
             this.mniChangeSettings = new ToolStripMenuItem();
@@ -570,8 +570,8 @@
             this.mniItemLogging = new ToolStripMenuItem();
             this.mniDisableLogging = new ToolStripMenuItem();
             this.mniViewItemLog = new ToolStripMenuItem();
-            this.imageList_0 = new ImageList(this.icontainer_0);
-            this.imageList_2 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
+            this.imageList_2 = new ImageList(this.components);
             this.toolbar = new ToolStrip();
             this.lblStrategies = new ToolStripLabel();
             this.btnAdd = new ToolStripButton();
@@ -601,7 +601,7 @@
             this.columnHeader_11 = new ColumnHeader();
             this.columnHeader_23 = new ColumnHeader();
             this.columnHeader_25 = new ColumnHeader();
-            this.popupAlerts = new ContextMenuStrip(this.icontainer_0);
+            this.popupAlerts = new ContextMenuStrip(this.components);
             this.mniSelectAll = new ToolStripMenuItem();
             this.mniEditAlert = new ToolStripMenuItem();
             this.sepSelectAll = new ToolStripSeparator();
@@ -614,7 +614,7 @@
             this.sepPrint = new ToolStripSeparator();
             this.mniCopyAlerts = new ToolStripMenuItem();
             this.mniPrintAlerts = new ToolStripMenuItem();
-            this.imageList_1 = new ImageList(this.icontainer_0);
+            this.imageList_1 = new ImageList(this.components);
             this.toolbarAlerts = new ToolStrip();
             this.lblAlerts = new ToolStripLabel();
             this.btnSelectAll = new ToolStripButton();
@@ -632,11 +632,11 @@
             this.statusActive = new ToolStripStatusLabel();
             this.statusAlerts = new ToolStripStatusLabel();
             this.statusSymbols = new ToolStripStatusLabel();
-            this.timer_0 = new System.Windows.Forms.Timer(this.icontainer_0);
-            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.icontainer_0);
-            this.barsLoader_0 = new BarsLoader(this.icontainer_0);
-            this.fundamentalsLoader_0 = new FundamentalsLoader(this.icontainer_0);
-            this.marketHours_0 = new MarketHours(this.icontainer_0);
+            this.timer_0 = new System.Windows.Forms.Timer(this.components);
+            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.components);
+            this.barsLoader_0 = new BarsLoader(this.components);
+            this.fundamentalsLoader_0 = new FundamentalsLoader(this.components);
+            this.marketHours_0 = new MarketHours(this.components);
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
             this.splitMain.SuspendLayout();
@@ -706,21 +706,21 @@
              });
             this.popupStrategies.Name = "popupStrategies";
             this.popupStrategies.Size = new Size(0x11a, 0x166);
-            this.mniAddStrategy.Image = (Image) manager.GetObject("mniAddStrategy.Image");
+            this.mniAddStrategy.Image = (Image) resources.GetObject("mniAddStrategy.Image");
             this.mniAddStrategy.ImageTransparentColor = Color.Fuchsia;
             this.mniAddStrategy.Name = "mniAddStrategy";
             this.mniAddStrategy.Size = new Size(0x119, 0x16);
             this.mniAddStrategy.Text = "Add a Strategy ...";
             this.mniAddStrategy.Click += new EventHandler(this.btnAdd_Click);
             this.mniRemoveStrategy.Enabled = false;
-            this.mniRemoveStrategy.Image = (Image) manager.GetObject("mniRemoveStrategy.Image");
+            this.mniRemoveStrategy.Image = (Image) resources.GetObject("mniRemoveStrategy.Image");
             this.mniRemoveStrategy.ImageTransparentColor = Color.Fuchsia;
             this.mniRemoveStrategy.Name = "mniRemoveStrategy";
             this.mniRemoveStrategy.Size = new Size(0x119, 0x16);
             this.mniRemoveStrategy.Text = "Remove Selected Strategy";
             this.mniRemoveStrategy.Click += new EventHandler(this.btnRemove_Click);
             this.mniChangeSettings.Enabled = false;
-            this.mniChangeSettings.Image = (Image) manager.GetObject("mniChangeSettings.Image");
+            this.mniChangeSettings.Image = (Image) resources.GetObject("mniChangeSettings.Image");
             this.mniChangeSettings.ImageTransparentColor = Color.Fuchsia;
             this.mniChangeSettings.Name = "mniChangeSettings";
             this.mniChangeSettings.Size = new Size(0x119, 0x16);
@@ -733,14 +733,14 @@
             this.sepMenu.Name = "sepMenu";
             this.sepMenu.Size = new Size(0x116, 6);
             this.mniActivate.Enabled = false;
-            this.mniActivate.Image = (Image) manager.GetObject("mniActivate.Image");
+            this.mniActivate.Image = (Image) resources.GetObject("mniActivate.Image");
             this.mniActivate.ImageTransparentColor = Color.Fuchsia;
             this.mniActivate.Name = "mniActivate";
             this.mniActivate.Size = new Size(0x119, 0x16);
             this.mniActivate.Text = "Activate Strategy";
             this.mniActivate.Click += new EventHandler(this.btnActivate_Click);
             this.mniGenerateOrders.Enabled = false;
-            this.mniGenerateOrders.Image = (Image) manager.GetObject("mniGenerateOrders.Image");
+            this.mniGenerateOrders.Image = (Image) resources.GetObject("mniGenerateOrders.Image");
             this.mniGenerateOrders.ImageTransparentColor = Color.Fuchsia;
             this.mniGenerateOrders.Name = "mniGenerateOrders";
             this.mniGenerateOrders.Size = new Size(0x119, 0x16);
@@ -749,21 +749,21 @@
             this.sepMenu2.Name = "sepMenu2";
             this.sepMenu2.Size = new Size(0x116, 6);
             this.mniEmailAlerts.Enabled = false;
-            this.mniEmailAlerts.Image = (Image) manager.GetObject("mniEmailAlerts.Image");
+            this.mniEmailAlerts.Image = (Image) resources.GetObject("mniEmailAlerts.Image");
             this.mniEmailAlerts.ImageScaling = ToolStripItemImageScaling.None;
             this.mniEmailAlerts.Name = "mniEmailAlerts";
             this.mniEmailAlerts.Size = new Size(0x119, 0x16);
             this.mniEmailAlerts.Text = "Auto-Email";
             this.mniEmailAlerts.Click += new EventHandler(this.btnEmailAlert_Click);
             this.mniOpen.Enabled = false;
-            this.mniOpen.Image = (Image) manager.GetObject("mniOpen.Image");
+            this.mniOpen.Image = (Image) resources.GetObject("mniOpen.Image");
             this.mniOpen.ImageTransparentColor = Color.Fuchsia;
             this.mniOpen.Name = "mniOpen";
             this.mniOpen.Size = new Size(0x119, 0x16);
             this.mniOpen.Text = "Open this Strategy in a Strategy window";
             this.mniOpen.Click += new EventHandler(this.mniOpen_Click);
             this.mniRunNow.Enabled = false;
-            this.mniRunNow.Image = (Image) manager.GetObject("mniRunNow.Image");
+            this.mniRunNow.Image = (Image) resources.GetObject("mniRunNow.Image");
             this.mniRunNow.ImageTransparentColor = Color.Fuchsia;
             this.mniRunNow.Name = "mniRunNow";
             this.mniRunNow.Size = new Size(0x119, 0x16);
@@ -771,13 +771,13 @@
             this.mniRunNow.Click += new EventHandler(this.mniRunNow_Click);
             this.sepMenu3.Name = "sepMenu3";
             this.sepMenu3.Size = new Size(0x116, 6);
-            this.mniCopyStrategies.Image = (Image) manager.GetObject("mniCopyStrategies.Image");
+            this.mniCopyStrategies.Image = (Image) resources.GetObject("mniCopyStrategies.Image");
             this.mniCopyStrategies.ImageTransparentColor = Color.Fuchsia;
             this.mniCopyStrategies.Name = "mniCopyStrategies";
             this.mniCopyStrategies.Size = new Size(0x119, 0x16);
             this.mniCopyStrategies.Text = "Copy Strategies to Clipboard";
             this.mniCopyStrategies.Click += new EventHandler(this.mniCopyStrategies_Click);
-            this.mniPrint.Image = (Image) manager.GetObject("mniPrint.Image");
+            this.mniPrint.Image = (Image) resources.GetObject("mniPrint.Image");
             this.mniPrint.Name = "mniPrint";
             this.mniPrint.Size = new Size(0x119, 0x16);
             this.mniPrint.Text = "Print Strategies";
@@ -796,12 +796,12 @@
             this.mniViewItemLog.Size = new Size(0x119, 0x16);
             this.mniViewItemLog.Text = "View the Item Log";
             this.mniViewItemLog.Click += new EventHandler(this.mniViewItemLog_Click);
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "Execute.bmp");
             this.imageList_0.Images.SetKeyName(1, "SendToOrderMgr.bmp");
             this.imageList_0.Images.SetKeyName(2, "Execute.bmp");
-            this.imageList_2.ImageStream = (ImageListStreamer) manager.GetObject("imagesState.ImageStream");
+            this.imageList_2.ImageStream = (ImageListStreamer) resources.GetObject("imagesState.ImageStream");
             this.imageList_2.TransparentColor = Color.Silver;
             this.imageList_2.Images.SetKeyName(0, "alertsent.bmp");
             this.toolbar.GripStyle = ToolStripGripStyle.Hidden;
@@ -815,14 +815,14 @@
             this.lblStrategies.Name = "lblStrategies";
             this.lblStrategies.Size = new Size(0x42, 0x16);
             this.lblStrategies.Text = "Strategies";
-            this.btnAdd.Image = (Image) manager.GetObject("btnAdd.Image");
+            this.btnAdd.Image = (Image) resources.GetObject("btnAdd.Image");
             this.btnAdd.ImageTransparentColor = Color.Magenta;
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new Size(0x5b, 0x16);
             this.btnAdd.Text = "Add Strategy";
             this.btnAdd.Click += new EventHandler(this.btnAdd_Click);
             this.btnRemove.Enabled = false;
-            this.btnRemove.Image = (Image) manager.GetObject("btnRemove.Image");
+            this.btnRemove.Image = (Image) resources.GetObject("btnRemove.Image");
             this.btnRemove.ImageTransparentColor = Color.Magenta;
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new Size(0x6f, 0x16);
@@ -838,7 +838,7 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new Size(6, 0x19);
             this.btnSettings.Enabled = false;
-            this.btnSettings.Image = (Image) manager.GetObject("btnSettings.Image");
+            this.btnSettings.Image = (Image) resources.GetObject("btnSettings.Image");
             this.btnSettings.ImageTransparentColor = Color.Magenta;
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new Size(0x6a, 0x16);
@@ -848,7 +848,7 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new Size(6, 0x19);
             this.btnActivate.Enabled = false;
-            this.btnActivate.Image = (Image) manager.GetObject("btnActivate.Image");
+            this.btnActivate.Image = (Image) resources.GetObject("btnActivate.Image");
             this.btnActivate.ImageTransparentColor = Color.Magenta;
             this.btnActivate.Name = "btnActivate";
             this.btnActivate.Size = new Size(0x70, 0x16);
@@ -857,7 +857,7 @@
             this.btnActivate.CheckStateChanged += new EventHandler(this.btnActivate_CheckStateChanged);
             this.btnActivate.Click += new EventHandler(this.btnActivate_Click);
             this.btnAutoStage.Enabled = false;
-            this.btnAutoStage.Image = (Image) manager.GetObject("btnAutoStage.Image");
+            this.btnAutoStage.Image = (Image) resources.GetObject("btnAutoStage.Image");
             this.btnAutoStage.ImageTransparentColor = Color.Magenta;
             this.btnAutoStage.Name = "btnAutoStage";
             this.btnAutoStage.Size = new Size(0x52, 0x16);
@@ -865,7 +865,7 @@
             this.btnAutoStage.ToolTipText = "Automatically Stage Orders from Strategy Alerts";
             this.btnAutoStage.Click += new EventHandler(this.btnAutoStage_Click);
             this.btnEmailAlert.Enabled = false;
-            this.btnEmailAlert.Image = (Image) manager.GetObject("btnEmailAlert.Image");
+            this.btnEmailAlert.Image = (Image) resources.GetObject("btnEmailAlert.Image");
             this.btnEmailAlert.ImageScaling = ToolStripItemImageScaling.None;
             this.btnEmailAlert.ImageTransparentColor = Color.Magenta;
             this.btnEmailAlert.Name = "btnEmailAlert";
@@ -875,7 +875,7 @@
             this.btnEmailAlert.Click += new EventHandler(this.btnEmailAlert_Click);
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new Size(6, 0x19);
-            this.btnHelp.Image = (Image) manager.GetObject("btnHelp.Image");
+            this.btnHelp.Image = (Image) resources.GetObject("btnHelp.Image");
             this.btnHelp.ImageTransparentColor = Color.Magenta;
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new Size(0x30, 0x16);
@@ -930,14 +930,14 @@
             this.popupAlerts.Items.AddRange(new ToolStripItem[] { this.mniSelectAll, this.mniEditAlert, this.sepSelectAll, this.mniPlace, this.mniStage, this.sepStage, this.mniSendToQuote, this.sepQuote, this.mniShowAllAlerts, this.sepPrint, this.mniCopyAlerts, this.mniPrintAlerts });
             this.popupAlerts.Name = "popupAlerts";
             this.popupAlerts.Size = new Size(0x11a, 0xcc);
-            this.mniSelectAll.Image = (Image) manager.GetObject("mniSelectAll.Image");
+            this.mniSelectAll.Image = (Image) resources.GetObject("mniSelectAll.Image");
             this.mniSelectAll.ImageTransparentColor = Color.Fuchsia;
             this.mniSelectAll.Name = "mniSelectAll";
             this.mniSelectAll.Size = new Size(0x119, 0x16);
             this.mniSelectAll.Text = "Select All";
             this.mniSelectAll.Click += new EventHandler(this.btnSelectAll_Click);
             this.mniEditAlert.Enabled = false;
-            this.mniEditAlert.Image = (Image) manager.GetObject("mniEditAlert.Image");
+            this.mniEditAlert.Image = (Image) resources.GetObject("mniEditAlert.Image");
             this.mniEditAlert.ImageTransparentColor = Color.Fuchsia;
             this.mniEditAlert.Name = "mniEditAlert";
             this.mniEditAlert.Size = new Size(0x119, 0x16);
@@ -946,14 +946,14 @@
             this.sepSelectAll.Name = "sepSelectAll";
             this.sepSelectAll.Size = new Size(0x116, 6);
             this.mniPlace.Enabled = false;
-            this.mniPlace.Image = (Image) manager.GetObject("mniPlace.Image");
+            this.mniPlace.Image = (Image) resources.GetObject("mniPlace.Image");
             this.mniPlace.ImageTransparentColor = Color.Fuchsia;
             this.mniPlace.Name = "mniPlace";
             this.mniPlace.Size = new Size(0x119, 0x16);
             this.mniPlace.Text = "Place Selected Orders";
             this.mniPlace.Click += new EventHandler(this.btnPlace_Click);
             this.mniStage.Enabled = false;
-            this.mniStage.Image = (Image) manager.GetObject("mniStage.Image");
+            this.mniStage.Image = (Image) resources.GetObject("mniStage.Image");
             this.mniStage.ImageTransparentColor = Color.Fuchsia;
             this.mniStage.Name = "mniStage";
             this.mniStage.Size = new Size(0x119, 0x16);
@@ -962,7 +962,7 @@
             this.sepStage.Name = "sepStage";
             this.sepStage.Size = new Size(0x116, 6);
             this.mniSendToQuote.Enabled = false;
-            this.mniSendToQuote.Image = (Image) manager.GetObject("mniSendToQuote.Image");
+            this.mniSendToQuote.Image = (Image) resources.GetObject("mniSendToQuote.Image");
             this.mniSendToQuote.ImageTransparentColor = Color.Fuchsia;
             this.mniSendToQuote.Name = "mniSendToQuote";
             this.mniSendToQuote.Size = new Size(0x119, 0x16);
@@ -976,18 +976,18 @@
             this.mniShowAllAlerts.Click += new EventHandler(this.btnShowAllAlerts_Click);
             this.sepPrint.Name = "sepPrint";
             this.sepPrint.Size = new Size(0x116, 6);
-            this.mniCopyAlerts.Image = (Image) manager.GetObject("mniCopyAlerts.Image");
+            this.mniCopyAlerts.Image = (Image) resources.GetObject("mniCopyAlerts.Image");
             this.mniCopyAlerts.ImageTransparentColor = Color.Fuchsia;
             this.mniCopyAlerts.Name = "mniCopyAlerts";
             this.mniCopyAlerts.Size = new Size(0x119, 0x16);
             this.mniCopyAlerts.Text = "Copy Alerts to Clipboard";
             this.mniCopyAlerts.Click += new EventHandler(this.mniCopyAlerts_Click);
-            this.mniPrintAlerts.Image = (Image) manager.GetObject("mniPrintAlerts.Image");
+            this.mniPrintAlerts.Image = (Image) resources.GetObject("mniPrintAlerts.Image");
             this.mniPrintAlerts.Name = "mniPrintAlerts";
             this.mniPrintAlerts.Size = new Size(0x119, 0x16);
             this.mniPrintAlerts.Text = "Print Alerts";
             this.mniPrintAlerts.Click += new EventHandler(this.mniPrintAlerts_Click);
-            this.imageList_1.ImageStream = (ImageListStreamer) manager.GetObject("imgOrders.ImageStream");
+            this.imageList_1.ImageStream = (ImageListStreamer) resources.GetObject("imgOrders.ImageStream");
             this.imageList_1.TransparentColor = Color.Silver;
             this.imageList_1.Images.SetKeyName(0, "buy.bmp");
             this.imageList_1.Images.SetKeyName(1, "sell.bmp");
@@ -1001,12 +1001,12 @@
             this.toolbarAlerts.TabIndex = 12;
             this.toolbarAlerts.Text = "toolStrip1";
             this.lblAlerts.Font = new Font("Tahoma", 8.25f, FontStyle.Bold);
-            this.lblAlerts.Image = (Image) manager.GetObject("lblAlerts.Image");
+            this.lblAlerts.Image = (Image) resources.GetObject("lblAlerts.Image");
             this.lblAlerts.ImageTransparentColor = Color.Silver;
             this.lblAlerts.Name = "lblAlerts";
             this.lblAlerts.Size = new Size(0x39, 0x16);
             this.lblAlerts.Text = "Alerts";
-            this.btnSelectAll.Image = (Image) manager.GetObject("btnSelectAll.Image");
+            this.btnSelectAll.Image = (Image) resources.GetObject("btnSelectAll.Image");
             this.btnSelectAll.ImageTransparentColor = Color.Magenta;
             this.btnSelectAll.Name = "btnSelectAll";
             this.btnSelectAll.Size = new Size(70, 0x16);
@@ -1015,7 +1015,7 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new Size(6, 0x19);
             this.btnPlace.Enabled = false;
-            this.btnPlace.Image = (Image) manager.GetObject("btnPlace.Image");
+            this.btnPlace.Image = (Image) resources.GetObject("btnPlace.Image");
             this.btnPlace.ImageTransparentColor = Color.Magenta;
             this.btnPlace.Name = "btnPlace";
             this.btnPlace.Size = new Size(0x58, 0x16);
@@ -1023,7 +1023,7 @@
             this.btnPlace.ToolTipText = "Place Orders for selected Alerts";
             this.btnPlace.Click += new EventHandler(this.btnPlace_Click);
             this.btnStage.Enabled = false;
-            this.btnStage.Image = (Image) manager.GetObject("btnStage.Image");
+            this.btnStage.Image = (Image) resources.GetObject("btnStage.Image");
             this.btnStage.ImageTransparentColor = Color.Magenta;
             this.btnStage.Name = "btnStage";
             this.btnStage.Size = new Size(0x5b, 0x16);
@@ -1033,7 +1033,7 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new Size(6, 0x19);
             this.btnSendToQuote.Enabled = false;
-            this.btnSendToQuote.Image = (Image) manager.GetObject("btnSendToQuote.Image");
+            this.btnSendToQuote.Image = (Image) resources.GetObject("btnSendToQuote.Image");
             this.btnSendToQuote.ImageTransparentColor = Color.Magenta;
             this.btnSendToQuote.Name = "btnSendToQuote";
             this.btnSendToQuote.Size = new Size(0x99, 0x16);
@@ -1043,7 +1043,7 @@
             this.sepQuotes.Name = "sepQuotes";
             this.sepQuotes.Size = new Size(6, 0x19);
             this.btnShowAllAlerts.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnShowAllAlerts.Image = (Image) manager.GetObject("btnShowAllAlerts.Image");
+            this.btnShowAllAlerts.Image = (Image) resources.GetObject("btnShowAllAlerts.Image");
             this.btnShowAllAlerts.ImageTransparentColor = Color.Magenta;
             this.btnShowAllAlerts.Name = "btnShowAllAlerts";
             this.btnShowAllAlerts.Size = new Size(150, 0x16);
@@ -1051,7 +1051,7 @@
             this.btnShowAllAlerts.Click += new EventHandler(this.btnShowAllAlerts_Click);
             this.sepHelp.Name = "sepHelp";
             this.sepHelp.Size = new Size(6, 0x19);
-            this.btnHelpAlerts.Image = (Image) manager.GetObject("btnHelpAlerts.Image");
+            this.btnHelpAlerts.Image = (Image) resources.GetObject("btnHelpAlerts.Image");
             this.btnHelpAlerts.ImageTransparentColor = Color.Magenta;
             this.btnHelpAlerts.Name = "btnHelpAlerts";
             this.btnHelpAlerts.Size = new Size(0x30, 0x16);
@@ -1135,11 +1135,11 @@
             this.barsLoader_0.Scale = BarScale.Daily;
             this.barsLoader_0.StartDate = new DateTime(0L);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x33f, 0x1d9);
             base.Controls.Add(this.splitMain);
             this.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.Name = "StrategyCenterForm";
             base.StartPosition = FormStartPosition.WindowsDefaultBounds;
             this.Text = "Strategy Monitor";

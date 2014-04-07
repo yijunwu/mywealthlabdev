@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
+    using Label = System.Windows.Forms.Label;
 
     public class StrategyAccountForm : Form
     {
@@ -53,14 +54,14 @@
             this.cmbAccount.Size = new Size(0xed, 0x15);
             this.cmbAccount.TabIndex = 1;
             this.cmbAccount.SelectedIndexChanged += new EventHandler(this.cmbAccount_SelectedIndexChanged);
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0xb1, 0x6c);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Enabled = false;
             this.btnOK.Location = new Point(0x60, 0x6c);
             this.btnOK.Name = "btnOK";
@@ -70,14 +71,14 @@
             this.btnOK.UseVisualStyleBackColor = true;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x109, 0x8d);
             base.Controls.Add(this.btnOK);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.cmbAccount);
             base.Controls.Add(this.lblAccount);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "StrategyAccountForm";

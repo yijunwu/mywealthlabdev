@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
+    using Button = System.Windows.Forms.Button;
 
     public class WLPException : Form
     {
@@ -83,17 +84,17 @@
             this.lblExceptionDetails.TabIndex = 0;
             this.lblExceptionDetails.Text = "Exception Details";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x16c, 0x4e);
             base.Controls.Add(this.pnlException);
             base.Controls.Add(this.lnkDetails);
             base.Controls.Add(this.lblException);
             base.Controls.Add(this.btnDetails);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "WLPException";
-            base.SizeGripStyle = SizeGripStyle.Hide;
+            base.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             base.StartPosition = FormStartPosition.CenterParent;
             this.Text = "Wealth Lab Pro Error";
             base.Load += new EventHandler(this.WLPException_Load);

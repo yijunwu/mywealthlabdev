@@ -15,7 +15,7 @@
         private Button btnOK;
         private GroupBox grpFolder;
         private GroupBox grpName;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         private const int int_0 = 2;
         private static string string_0 = "";
@@ -115,23 +115,23 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(SaveStrategyAsForm));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(SaveStrategyAsForm));
             this.grpName = new GroupBox();
             this.txtStrategyName = new TextBox();
             this.grpFolder = new GroupBox();
             this.btnNewFolder = new Button();
             this.tree = new TreeView();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.btnCancel = new Button();
             this.btnOK = new Button();
             this.grpName.SuspendLayout();
@@ -172,12 +172,12 @@
             this.tree.SelectedImageIndex = 0;
             this.tree.Size = new Size(0xde, 0xa1);
             this.tree.TabIndex = 0;
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "FolderClosed.bmp");
             this.imageList_0.Images.SetKeyName(1, "FolderOpen.bmp");
             this.imageList_0.Images.SetKeyName(2, "NetworkDrive.bmp");
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0xac, 0x132);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -193,14 +193,14 @@
             this.btnOK.Click += new EventHandler(this.btnOK_Click);
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(260, 0x152);
             base.Controls.Add(this.btnOK);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.grpFolder);
             base.Controls.Add(this.grpName);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "SaveStrategyAsForm";

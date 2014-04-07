@@ -21,7 +21,7 @@
         private WebBrowser browserWhatsNew;
         private CheckBox cbDontShow;
         private ColumnHeader columnHeader_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         public static HomeForm Instance;
         private Label label1;
@@ -93,9 +93,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -128,8 +128,8 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(HomeForm));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(HomeForm));
             this.pnlBanner = new Panel();
             this.lblFooter5 = new Label();
             this.lblHeader5 = new Label();
@@ -150,7 +150,7 @@
             this.label1 = new Label();
             this.lvRecent = new ListView();
             this.columnHeader_0 = new ColumnHeader();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.lblWhatsNew = new Label();
             this.browserWhatsNew = new WebBrowser();
             this.linkBack = new LinkLabel();
@@ -198,7 +198,7 @@
             this.lblHeader5.TabIndex = 20;
             this.lblHeader5.Text = "Manage Orders";
             this.picFlow5.Cursor = Cursors.Hand;
-            this.picFlow5.Image = (Image) manager.GetObject("picFlow5.Image");
+            this.picFlow5.Image = (Image) resources.GetObject("picFlow5.Image");
             this.picFlow5.Location = new Point(0x270, 0x30);
             this.picFlow5.Name = "picFlow5";
             this.picFlow5.Size = new Size(0x5c, 0x5c);
@@ -220,7 +220,7 @@
             this.lblHeader4.TabIndex = 0x10;
             this.lblHeader4.Text = "Activate Strategies";
             this.picFlow4.Cursor = Cursors.Hand;
-            this.picFlow4.Image = (Image) manager.GetObject("picFlow4.Image");
+            this.picFlow4.Image = (Image) resources.GetObject("picFlow4.Image");
             this.picFlow4.Location = new Point(0x1d8, 0x30);
             this.picFlow4.Name = "picFlow4";
             this.picFlow4.Size = new Size(0x5c, 0x5c);
@@ -242,7 +242,7 @@
             this.lblHeader3.TabIndex = 12;
             this.lblHeader3.Text = "Build && Backtest";
             this.picFlow3.Cursor = Cursors.Hand;
-            this.picFlow3.Image = (Image) manager.GetObject("picFlow3.Image");
+            this.picFlow3.Image = (Image) resources.GetObject("picFlow3.Image");
             this.picFlow3.Location = new Point(320, 0x30);
             this.picFlow3.Name = "picFlow3";
             this.picFlow3.Size = new Size(0x5c, 0x5c);
@@ -264,7 +264,7 @@
             this.lblHeader2.TabIndex = 8;
             this.lblHeader2.Text = "Explore && Backtest";
             this.picFlow2.Cursor = Cursors.Hand;
-            this.picFlow2.Image = (Image) manager.GetObject("picFlow2.Image");
+            this.picFlow2.Image = (Image) resources.GetObject("picFlow2.Image");
             this.picFlow2.Location = new Point(0xa8, 0x30);
             this.picFlow2.Name = "picFlow2";
             this.picFlow2.Size = new Size(0x5c, 0x5c);
@@ -286,7 +286,7 @@
             this.lblHeader1.TabIndex = 4;
             this.lblHeader1.Text = "New Chart";
             this.picFlow1.Cursor = Cursors.Hand;
-            this.picFlow1.Image = (Image) manager.GetObject("picFlow1.Image");
+            this.picFlow1.Image = (Image) resources.GetObject("picFlow1.Image");
             this.picFlow1.Location = new Point(12, 0x30);
             this.picFlow1.Name = "picFlow1";
             this.picFlow1.Size = new Size(0x5c, 0x5c);
@@ -329,7 +329,7 @@
             this.lvRecent.Click += new EventHandler(this.lvRecent_Click);
             this.columnHeader_0.Text = "Recently Viewed Strategies";
             this.columnHeader_0.Width = 200;
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "precompiled.bmp");
             this.imageList_0.Images.SetKeyName(1, "Wizard.bmp");
@@ -369,7 +369,7 @@
             this.cbDontShow.UseVisualStyleBackColor = true;
             this.cbDontShow.CheckedChanged += new EventHandler(this.cbDontShow_CheckedChanged);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x2e0, 0x1b6);
             base.Controls.Add(this.cbDontShow);
             base.Controls.Add(this.linkBack);
@@ -378,7 +378,7 @@
             base.Controls.Add(this.lvRecent);
             base.Controls.Add(this.label1);
             base.Controls.Add(this.pnlBanner);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.Name = "HomeForm";
             this.Text = "Home";
             base.FormClosed += new FormClosedEventHandler(this.HomeForm_FormClosed);

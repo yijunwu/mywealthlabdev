@@ -5,6 +5,7 @@
     using System.Drawing;
     using System.Windows.Forms;
     using WealthLab;
+    using RadioButton = System.Windows.Forms.RadioButton;
 
     public class BarDataRangeSelecterForm : Form
     {
@@ -207,7 +208,7 @@
             this.dtpTo.Size = new Size(0x59, 20);
             this.dtpTo.TabIndex = 9;
             this.dtpTo.Enter += new EventHandler(this.dtpTo_Enter);
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0x9d, 0x7c);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -223,7 +224,7 @@
             this.btnOK.Click += new EventHandler(this.btnOK_Click);
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.AliceBlue;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(240, 0x9c);
@@ -239,7 +240,7 @@
             base.Controls.Add(this.rbRecent);
             base.Controls.Add(this.rbFixed);
             base.Controls.Add(this.rbAllData);
-            base.FormBorderStyle = FormBorderStyle.None;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "BarDataRangeSelecterForm";

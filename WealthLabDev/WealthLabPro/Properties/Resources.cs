@@ -14,7 +14,7 @@
     internal class Resources
     {
         private static CultureInfo cultureInfo_0;
-        private static System.Resources.ResourceManager resourceManager_0;
+        private static System.Resources.ResourceManager resources;
 
         internal Resources()
         {
@@ -134,12 +134,12 @@
         {
             get
             {
-                if (object.ReferenceEquals(resourceManager_0, null))
+                if (object.ReferenceEquals(resources, null))
                 {
                     System.Resources.ResourceManager manager = new System.Resources.ResourceManager("WealthLabPro.Properties.Resources", typeof(Resources).Assembly);
-                    resourceManager_0 = manager;
+                    resources = manager;
                 }
-                return resourceManager_0;
+                return resources;
             }
         }
 

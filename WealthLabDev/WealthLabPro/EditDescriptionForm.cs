@@ -12,7 +12,7 @@
         private Button btnCancel;
         private Button btnOK;
         private HtmlParser htmlParser_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private Label lblEdit;
         private SyntaxEdit syntaxEdit;
 
@@ -23,21 +23,21 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(EditDescriptionForm));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(EditDescriptionForm));
             this.lblEdit = new Label();
             this.btnCancel = new Button();
             this.btnOK = new Button();
-            this.syntaxEdit = new SyntaxEdit(this.icontainer_0);
+            this.syntaxEdit = new SyntaxEdit(this.components);
             this.htmlParser_0 = new HtmlParser();
             base.SuspendLayout();
             this.lblEdit.AutoSize = true;
@@ -47,7 +47,7 @@
             this.lblEdit.TabIndex = 0;
             this.lblEdit.Text = "Edit HTML for Strategy Description below:";
             this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(610, 0x1aa);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -55,7 +55,7 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new Point(0x211, 0x1aa);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new Size(0x4b, 0x17);
@@ -75,10 +75,10 @@
             this.syntaxEdit.WordWrap = true;
             this.htmlParser_0.DefaultState = 0;
             this.htmlParser_0.Options = SyntaxOptions.SmartIndent | SyntaxOptions.Outline;
-            this.htmlParser_0.XmlScheme = manager.GetString("htmlParser.XmlScheme");
+            this.htmlParser_0.XmlScheme = resources.GetString("htmlParser.XmlScheme");
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x2b9, 0x1cd);
             base.Controls.Add(this.syntaxEdit);

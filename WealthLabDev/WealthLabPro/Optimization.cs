@@ -54,7 +54,7 @@
         private GroupBox grpMethod;
         private GroupBox grpOptimize;
         private GroupBox grpParameters;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ISettingsHost isettingsHost_0;
         private Label lblDefault;
         private Label lblDescription;
@@ -384,9 +384,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -602,7 +602,7 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
             PositionSize size = new PositionSize();
             this.tabOptimize = new TabControl();
             this.pageControl = new TabPage();
@@ -648,7 +648,7 @@
             this.pageResults = new TabPage();
             this.lvResults = new SortableListView();
             this.columnHeader_5 = new ColumnHeader();
-            this.popupResults = new ContextMenuStrip(this.icontainer_0);
+            this.popupResults = new ContextMenuStrip(this.components);
             this.mniCopyResults = new ToolStripMenuItem();
             this.mniSaveResults = new ToolStripMenuItem();
             this.mniLoadResults = new ToolStripMenuItem();
@@ -675,10 +675,10 @@
             this.columnHeader_6 = new ColumnHeader();
             this.columnHeader_7 = new ColumnHeader();
             this.columnHeader_8 = new ColumnHeader();
-            this.assemblyLoader_0 = new AssemblyLoader(this.icontainer_0);
+            this.assemblyLoader_0 = new AssemblyLoader(this.components);
             this.saveFileDialog_0 = new SaveFileDialog();
             this.openFileDialog_0 = new OpenFileDialog();
-            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.icontainer_0);
+            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.components);
             this.tabOptimize.SuspendLayout();
             this.pageControl.SuspendLayout();
             this.grpOptimize.SuspendLayout();
@@ -1187,7 +1187,7 @@
             this.tradingSystemExecutor_0.TrendlineGetValue += new EventHandler<TrendLineEventArgs>(this.method_21);
             this.tradingSystemExecutor_0.LookupStrategy += new EventHandler<StrategyEventArgs>(this.method_22);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.tabOptimize);
             base.Name = "Optimization";
             base.Size = new Size(0x2ab, 0x1b7);

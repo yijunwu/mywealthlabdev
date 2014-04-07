@@ -51,7 +51,7 @@
         private ColumnHeader columnHeader_9;
         private Font font_0;
         private Font font_1;
-        private IContainer icontainer_0;
+        private IContainer components;
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
         private ImageList imageList_1;
@@ -275,9 +275,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -298,9 +298,9 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(OrdersAlertsForm));
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(OrdersAlertsForm));
+            this.imageList_0 = new ImageList(this.components);
             this.status = new StatusStrip();
             this.statusOrders = new ToolStripStatusLabel();
             this.statusActive = new ToolStripStatusLabel();
@@ -324,7 +324,7 @@
             this.columnHeader_12 = new ColumnHeader();
             this.columnHeader_13 = new ColumnHeader();
             this.columnHeader_17 = new ColumnHeader();
-            this.popupOrders = new ContextMenuStrip(this.icontainer_0);
+            this.popupOrders = new ContextMenuStrip(this.components);
             this.mniEdit = new ToolStripMenuItem();
             this.mniPlace = new ToolStripMenuItem();
             this.mniPlaceLimit = new ToolStripMenuItem();
@@ -337,7 +337,7 @@
             this.sepCopy = new ToolStripSeparator();
             this.mniCopy = new ToolStripMenuItem();
             this.mniPrint = new ToolStripMenuItem();
-            this.imageList_1 = new ImageList(this.icontainer_0);
+            this.imageList_1 = new ImageList(this.components);
             this.toolbarManipulate = new ToolStrip();
             this.btnEdit = new ToolStripButton();
             this.btnPlace = new ToolStripButton();
@@ -380,7 +380,7 @@
             this.pnlMessage.SuspendLayout();
             this.toolbarMessages.SuspendLayout();
             base.SuspendLayout();
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("imgOrders.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("imgOrders.ImageStream");
             this.imageList_0.TransparentColor = Color.Silver;
             this.imageList_0.Images.SetKeyName(0, "buy.bmp");
             this.imageList_0.Images.SetKeyName(1, "sell.bmp");
@@ -468,13 +468,13 @@
             this.popupOrders.Items.AddRange(new ToolStripItem[] { this.mniEdit, this.mniPlace, this.mniPlaceLimit, this.sepPlace, this.mniCancel, this.mniCancelReplace, this.sepCancel, this.mniRemoveSelected, this.mniRemoveCompleted, this.sepCopy, this.mniCopy, this.mniPrint });
             this.popupOrders.Name = "popupOrders";
             this.popupOrders.Size = new Size(0xed, 220);
-            this.mniEdit.Image = (Image) manager.GetObject("mniEdit.Image");
+            this.mniEdit.Image = (Image) resources.GetObject("mniEdit.Image");
             this.mniEdit.ImageTransparentColor = Color.Fuchsia;
             this.mniEdit.Name = "mniEdit";
             this.mniEdit.Size = new Size(0xec, 0x16);
             this.mniEdit.Text = "Edit Selected Order";
             this.mniEdit.Click += new EventHandler(this.btnEdit_Click);
-            this.mniPlace.Image = (Image) manager.GetObject("mniPlace.Image");
+            this.mniPlace.Image = (Image) resources.GetObject("mniPlace.Image");
             this.mniPlace.ImageTransparentColor = Color.Fuchsia;
             this.mniPlace.Name = "mniPlace";
             this.mniPlace.Size = new Size(0xec, 0x16);
@@ -487,13 +487,13 @@
             this.mniPlaceLimit.Click += new EventHandler(this.mniPlaceLimit_Click);
             this.sepPlace.Name = "sepPlace";
             this.sepPlace.Size = new Size(0xe9, 6);
-            this.mniCancel.Image = (Image) manager.GetObject("mniCancel.Image");
+            this.mniCancel.Image = (Image) resources.GetObject("mniCancel.Image");
             this.mniCancel.ImageTransparentColor = Color.Fuchsia;
             this.mniCancel.Name = "mniCancel";
             this.mniCancel.Size = new Size(0xec, 0x16);
             this.mniCancel.Text = "Cancel Selected Order(s)";
             this.mniCancel.Click += new EventHandler(this.btnCancelSelected_Click);
-            this.mniCancelReplace.Image = (Image) manager.GetObject("mniCancelReplace.Image");
+            this.mniCancelReplace.Image = (Image) resources.GetObject("mniCancelReplace.Image");
             this.mniCancelReplace.ImageTransparentColor = Color.Fuchsia;
             this.mniCancelReplace.Name = "mniCancelReplace";
             this.mniCancelReplace.Size = new Size(0xec, 0x16);
@@ -501,13 +501,13 @@
             this.mniCancelReplace.Click += new EventHandler(this.btnCancelReplace_Click);
             this.sepCancel.Name = "sepCancel";
             this.sepCancel.Size = new Size(0xe9, 6);
-            this.mniRemoveSelected.Image = (Image) manager.GetObject("mniRemoveSelected.Image");
+            this.mniRemoveSelected.Image = (Image) resources.GetObject("mniRemoveSelected.Image");
             this.mniRemoveSelected.ImageTransparentColor = Color.Fuchsia;
             this.mniRemoveSelected.Name = "mniRemoveSelected";
             this.mniRemoveSelected.Size = new Size(0xec, 0x16);
             this.mniRemoveSelected.Text = "Remove Selected Order(s)";
             this.mniRemoveSelected.Click += new EventHandler(this.btnRemove_Click);
-            this.mniRemoveCompleted.Image = (Image) manager.GetObject("mniRemoveCompleted.Image");
+            this.mniRemoveCompleted.Image = (Image) resources.GetObject("mniRemoveCompleted.Image");
             this.mniRemoveCompleted.ImageTransparentColor = Color.Fuchsia;
             this.mniRemoveCompleted.Name = "mniRemoveCompleted";
             this.mniRemoveCompleted.Size = new Size(0xec, 0x16);
@@ -515,13 +515,13 @@
             this.mniRemoveCompleted.Click += new EventHandler(this.btnRemoveCompleted_Click);
             this.sepCopy.Name = "sepCopy";
             this.sepCopy.Size = new Size(0xe9, 6);
-            this.mniCopy.Image = (Image) manager.GetObject("mniCopy.Image");
+            this.mniCopy.Image = (Image) resources.GetObject("mniCopy.Image");
             this.mniCopy.ImageTransparentColor = Color.Fuchsia;
             this.mniCopy.Name = "mniCopy";
             this.mniCopy.Size = new Size(0xec, 0x16);
             this.mniCopy.Text = "Copy to Clipboard";
             this.mniCopy.Click += new EventHandler(this.mniCopy_Click);
-            this.mniPrint.Image = (Image) manager.GetObject("mniPrint.Image");
+            this.mniPrint.Image = (Image) resources.GetObject("mniPrint.Image");
             this.mniPrint.Name = "mniPrint";
             this.mniPrint.Size = new Size(0xec, 0x16);
             this.mniPrint.Text = "Print";
@@ -537,7 +537,7 @@
             this.toolbarManipulate.TabIndex = 15;
             this.toolbarManipulate.Text = "toolStrip1";
             this.btnEdit.Enabled = false;
-            this.btnEdit.Image = (Image) manager.GetObject("btnEdit.Image");
+            this.btnEdit.Image = (Image) resources.GetObject("btnEdit.Image");
             this.btnEdit.ImageTransparentColor = Color.Magenta;
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new Size(0x5e, 0x16);
@@ -545,7 +545,7 @@
             this.btnEdit.ToolTipText = "Edit the selected Order";
             this.btnEdit.Click += new EventHandler(this.btnEdit_Click);
             this.btnPlace.Enabled = false;
-            this.btnPlace.Image = (Image) manager.GetObject("btnPlace.Image");
+            this.btnPlace.Image = (Image) resources.GetObject("btnPlace.Image");
             this.btnPlace.ImageTransparentColor = Color.Magenta;
             this.btnPlace.Name = "btnPlace";
             this.btnPlace.Size = new Size(0x66, 0x16);
@@ -555,7 +555,7 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new Size(6, 0x19);
             this.btnCancelSelected.Enabled = false;
-            this.btnCancelSelected.Image = (Image) manager.GetObject("btnCancelSelected.Image");
+            this.btnCancelSelected.Image = (Image) resources.GetObject("btnCancelSelected.Image");
             this.btnCancelSelected.ImageTransparentColor = Color.Magenta;
             this.btnCancelSelected.Name = "btnCancelSelected";
             this.btnCancelSelected.Size = new Size(110, 0x16);
@@ -563,7 +563,7 @@
             this.btnCancelSelected.ToolTipText = "Cancel the selected Orders";
             this.btnCancelSelected.Click += new EventHandler(this.btnCancelSelected_Click);
             this.btnCancelReplace.Enabled = false;
-            this.btnCancelReplace.Image = (Image) manager.GetObject("btnCancelReplace.Image");
+            this.btnCancelReplace.Image = (Image) resources.GetObject("btnCancelReplace.Image");
             this.btnCancelReplace.ImageTransparentColor = Color.Magenta;
             this.btnCancelReplace.Name = "btnCancelReplace";
             this.btnCancelReplace.Size = new Size(0x9c, 0x16);
@@ -573,14 +573,14 @@
             this.sepRemove.Name = "sepRemove";
             this.sepRemove.Size = new Size(6, 0x19);
             this.btnRemove.Enabled = false;
-            this.btnRemove.Image = (Image) manager.GetObject("btnRemove.Image");
+            this.btnRemove.Image = (Image) resources.GetObject("btnRemove.Image");
             this.btnRemove.ImageTransparentColor = Color.Magenta;
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new Size(0x75, 0x16);
             this.btnRemove.Text = "Remove Selected";
             this.btnRemove.ToolTipText = "Remove the selected Orders";
             this.btnRemove.Click += new EventHandler(this.btnRemove_Click);
-            this.btnRemoveCompleted.Image = (Image) manager.GetObject("btnRemoveCompleted.Image");
+            this.btnRemoveCompleted.Image = (Image) resources.GetObject("btnRemoveCompleted.Image");
             this.btnRemoveCompleted.ImageTransparentColor = Color.Magenta;
             this.btnRemoveCompleted.Name = "btnRemoveCompleted";
             this.btnRemoveCompleted.Size = new Size(0x84, 0x16);
@@ -588,7 +588,7 @@
             this.btnRemoveCompleted.ToolTipText = "Remove all Completed Orders";
             this.btnRemoveCompleted.Click += new EventHandler(this.btnRemoveCompleted_Click);
             this.btnAutoRemove.CheckOnClick = true;
-            this.btnAutoRemove.Image = (Image) manager.GetObject("btnAutoRemove.Image");
+            this.btnAutoRemove.Image = (Image) resources.GetObject("btnAutoRemove.Image");
             this.btnAutoRemove.ImageTransparentColor = Color.Magenta;
             this.btnAutoRemove.Name = "btnAutoRemove";
             this.btnAutoRemove.Size = new Size(0x65, 0x16);
@@ -616,7 +616,7 @@
             this.cmbAccount.SelectedIndexChanged += new EventHandler(this.cmbAccount_SelectedIndexChanged);
             this.sepAccounts.Name = "sepAccounts";
             this.sepAccounts.Size = new Size(6, 0x19);
-            this.btnCancelAll.Image = (Image) manager.GetObject("btnCancelAll.Image");
+            this.btnCancelAll.Image = (Image) resources.GetObject("btnCancelAll.Image");
             this.btnCancelAll.ImageTransparentColor = Color.Fuchsia;
             this.btnCancelAll.Name = "btnCancelAll";
             this.btnCancelAll.Size = new Size(80, 0x16);
@@ -635,21 +635,21 @@
             this.cmbAutoTrading.SelectedIndexChanged += new EventHandler(this.cmbAutoTrading_SelectedIndexChanged);
             this.sepHelp.Name = "sepHelp";
             this.sepHelp.Size = new Size(6, 0x19);
-            this.btnUpdate.Image = (Image) manager.GetObject("btnUpdate.Image");
+            this.btnUpdate.Image = (Image) resources.GetObject("btnUpdate.Image");
             this.btnUpdate.ImageTransparentColor = Color.Magenta;
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new Size(0x41, 0x16);
             this.btnUpdate.Text = "Update";
             this.btnUpdate.ToolTipText = "Update all active orders";
             this.btnUpdate.Click += new EventHandler(this.btnUpdate_Click);
-            this.btnPreferences.Image = (Image) manager.GetObject("btnPreferences.Image");
+            this.btnPreferences.Image = (Image) resources.GetObject("btnPreferences.Image");
             this.btnPreferences.ImageTransparentColor = Color.Magenta;
             this.btnPreferences.Name = "btnPreferences";
             this.btnPreferences.Size = new Size(0x84, 0x16);
             this.btnPreferences.Text = "Trading Preferences";
             this.btnPreferences.ToolTipText = "Set Trading Preferences, including default Account to Trade";
             this.btnPreferences.Click += new EventHandler(this.btnPreferences_Click);
-            this.btnHelp.Image = (Image) manager.GetObject("btnHelp.Image");
+            this.btnHelp.Image = (Image) resources.GetObject("btnHelp.Image");
             this.btnHelp.ImageTransparentColor = Color.Magenta;
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new Size(0x34, 0x16);
@@ -708,11 +708,11 @@
             this.lblMessages.Text = "Order Messages";
             this.columnHeader_18.Text = "Trade Type";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x3dd, 400);
             base.Controls.Add(this.split);
             base.Controls.Add(this.status);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.Name = "OrdersAlertsForm";
             base.StartPosition = FormStartPosition.WindowsDefaultBounds;
             this.Text = "Orders";

@@ -157,7 +157,7 @@
         private void InitializeComponent()
         {
             this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(StrategyDownload));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(StrategyDownload));
             this.btnDownload = new Button();
             this.btnClose = new Button();
             this.cbGetPrivate = new CheckBox();
@@ -193,7 +193,7 @@
             this.btnDownload.UseVisualStyleBackColor = true;
             this.btnDownload.Click += new EventHandler(this.btnDownload_Click);
             this.btnClose.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnClose.DialogResult = DialogResult.Cancel;
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Location = new Point(0x16b, 4);
             this.btnClose.Margin = new Padding(4);
             this.btnClose.Name = "btnClose";
@@ -224,7 +224,7 @@
             this.lblWarning.Name = "lblWarning";
             this.lblWarning.Size = new Size(0x1cd, 0x34);
             this.lblWarning.TabIndex = 0;
-            this.lblWarning.Text = manager.GetString("lblWarning.Text");
+            this.lblWarning.Text = resources.GetString("lblWarning.Text");
             this.treeDownloadedStrategies.AllowDrop = true;
             this.treeDownloadedStrategies.Dock = DockStyle.Fill;
             this.treeDownloadedStrategies.ImageIndex = 0;
@@ -234,7 +234,7 @@
             this.treeDownloadedStrategies.SelectedImageIndex = 0;
             this.treeDownloadedStrategies.Size = new Size(0x1cd, 0xa7);
             this.treeDownloadedStrategies.TabIndex = 9;
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Transparent;
             this.imageList_0.Images.SetKeyName(0, "WLD5.ico");
             this.imageList_0.Images.SetKeyName(1, "Check.bmp");
@@ -317,8 +317,8 @@
             this.statuslbl.Size = new Size(0, 0x11);
             base.AcceptButton = this.btnClose;
             base.AutoScaleDimensions = new SizeF(7f, 15f);
-            base.AutoScaleMode = AutoScaleMode.Font;
-            this.AutoValidate = AutoValidate.EnablePreventFocusChange;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             base.CancelButton = this.btnClose;
             base.ClientSize = new Size(0x1d3, 0x1a1);
             base.Controls.Add(this.grpResults);
@@ -326,13 +326,13 @@
             base.Controls.Add(this.pnlButton);
             base.Controls.Add(this.status);
             this.Font = new Font("Microsoft Sans Serif", 9f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.Margin = new Padding(4);
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "StrategyDownload";
             base.ShowIcon = false;
-            base.SizeGripStyle = SizeGripStyle.Show;
+            base.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             base.StartPosition = FormStartPosition.CenterParent;
             this.Text = "Download Strategies";
             base.Load += new EventHandler(this.StrategyDownload_Load);

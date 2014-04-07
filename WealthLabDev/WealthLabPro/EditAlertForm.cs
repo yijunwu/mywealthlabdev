@@ -18,7 +18,7 @@
         private ComboBox cmbAccount;
         private ComboBox cmbAction;
         private ComboBox cmbOrderType;
-        private IContainer icontainer_0;
+        private IContainer components;
         private Label lblAccount;
         private Label lblAction;
         private Label lblOrderType;
@@ -56,9 +56,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -111,7 +111,7 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
             this.lblAccount = new Label();
             this.cmbAccount = new ComboBox();
             this.lblSymbol = new Label();
@@ -127,7 +127,7 @@
             this.btnCancel = new Button();
             this.btnOK = new Button();
             this.lblTradeType = new Label();
-            this.accountTypeSelector1 = new AccountTypeSelector(this.icontainer_0);
+            this.accountTypeSelector1 = new AccountTypeSelector(this.components);
             base.SuspendLayout();
             this.lblAccount.AutoSize = true;
             this.lblAccount.Location = new Point(13, 13);
@@ -205,7 +205,7 @@
             this.lblPrice.Size = new Size(0x22, 13);
             this.lblPrice.TabIndex = 11;
             this.lblPrice.Text = "Price:";
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0xb9, 210);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -234,7 +234,7 @@
             this.accountTypeSelector1.TabIndex = 0x10;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x110, 0xf6);
             base.Controls.Add(this.accountTypeSelector1);
@@ -253,7 +253,7 @@
             base.Controls.Add(this.lblSymbol);
             base.Controls.Add(this.cmbAccount);
             base.Controls.Add(this.lblAccount);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "EditAlertForm";

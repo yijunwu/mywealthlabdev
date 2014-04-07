@@ -14,7 +14,7 @@
     {
         private bool bool_0 = true;
         private WebBrowser browserDesc;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         private const int int_0 = 0;
         private const int int_1 = 1;
@@ -163,17 +163,17 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(Description));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(Description));
             this.browserDesc = new WebBrowser();
             this.lblName = new Label();
             this.lblStrategyName = new Label();
@@ -210,7 +210,7 @@
             this.lblRangeTestedValue = new Label();
             this.lblActivation = new Label();
             this.picActive = new PictureBox();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.lblStrategyActive = new Label();
             this.lblAlerts = new Label();
             this.linkAlerts = new LinkLabel();
@@ -218,7 +218,7 @@
             this.lblGenerating = new Label();
             this.linkActivate = new LinkLabel();
             this.lblStrategyMonitor = new Label();
-            this.popup = new ContextMenuStrip(this.icontainer_0);
+            this.popup = new ContextMenuStrip(this.components);
             this.mniCopy = new ToolStripMenuItem();
             this.mniPrint = new ToolStripMenuItem();
             this.mniPrintAll = new ToolStripMenuItem();
@@ -481,7 +481,7 @@
             this.picActive.Size = new Size(0x10, 0x10);
             this.picActive.TabIndex = 0x25;
             this.picActive.TabStop = false;
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("imagesStreaming.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("imagesStreaming.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "Streaming.bmp");
             this.imageList_0.Images.SetKeyName(1, "StreamingDisconnect.bmp");
@@ -536,13 +536,13 @@
             this.popup.Items.AddRange(new ToolStripItem[] { this.mniCopy, this.mniPrint, this.mniPrintAll });
             this.popup.Name = "popup";
             this.popup.Size = new Size(0xdb, 70);
-            this.mniCopy.Image = (Image) manager.GetObject("mniCopy.Image");
+            this.mniCopy.Image = (Image) resources.GetObject("mniCopy.Image");
             this.mniCopy.ImageTransparentColor = Color.Fuchsia;
             this.mniCopy.Name = "mniCopy";
             this.mniCopy.Size = new Size(0xda, 0x16);
             this.mniCopy.Text = "Copy Summary to Clipboard";
             this.mniCopy.Click += new EventHandler(this.mniCopy_Click);
-            this.mniPrint.Image = (Image) manager.GetObject("mniPrint.Image");
+            this.mniPrint.Image = (Image) resources.GetObject("mniPrint.Image");
             this.mniPrint.Name = "mniPrint";
             this.mniPrint.Size = new Size(0xda, 0x16);
             this.mniPrint.Text = "Print";
@@ -559,14 +559,14 @@
             this.lblStrategiesIncluded.TabIndex = 0x2d;
             this.lblStrategiesIncluded.Text = "Strategies included";
             this.richTextBox1.BackColor = SystemColors.Control;
-            this.richTextBox1.BorderStyle = BorderStyle.None;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Location = new Point(0x8e, 0x30);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new Size(0x92, 0x7c);
             this.richTextBox1.TabIndex = 0x2f;
             this.richTextBox1.Text = "";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ContextMenuStrip = this.popup;
             base.Controls.Add(this.richTextBox1);
             base.Controls.Add(this.lblStrategiesIncluded);

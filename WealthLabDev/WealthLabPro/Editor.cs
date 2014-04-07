@@ -27,7 +27,7 @@
         private ChartForm chartForm_0;
         private Class60 class60_0;
         private CsParserWealthScript csParserWealthScript_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ListBox lbResults;
         private Panel pnlBottom;
         private ToolStripSeparator sepCompile;
@@ -195,9 +195,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -250,8 +250,8 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(Editor));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(Editor));
             this.toolBar = new ToolStrip();
             this.btnRun = new ToolStripButton();
             this.btnCompile = new ToolStripButton();
@@ -266,8 +266,8 @@
             this.btnPrintOptions = new ToolStripMenuItem();
             this.pnlBottom = new Panel();
             this.lbResults = new ListBox();
-            this.wealthScriptCompiler_0 = new WealthScriptCompiler(this.icontainer_0);
-            this.syntaxEdit = new SyntaxEdit(this.icontainer_0);
+            this.wealthScriptCompiler_0 = new WealthScriptCompiler(this.components);
+            this.syntaxEdit = new SyntaxEdit(this.components);
             this.csParserWealthScript_0 = new CsParserWealthScript();
             this.btnReferences = new ToolStripButton();
             this.toolBar.SuspendLayout();
@@ -280,14 +280,14 @@
             this.toolBar.Size = new Size(0x273, 0x19);
             this.toolBar.TabIndex = 0;
             this.toolBar.Text = "toolStrip1";
-            this.btnRun.Image = (Image) manager.GetObject("btnRun.Image");
+            this.btnRun.Image = (Image) resources.GetObject("btnRun.Image");
             this.btnRun.ImageTransparentColor = Color.Magenta;
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new Size(110, 0x16);
             this.btnRun.Text = "Run the Strategy";
             this.btnRun.ToolTipText = "Compile and Run the Strategy";
             this.btnRun.Click += new EventHandler(this.btnRun_Click);
-            this.btnCompile.Image = (Image) manager.GetObject("btnCompile.Image");
+            this.btnCompile.Image = (Image) resources.GetObject("btnCompile.Image");
             this.btnCompile.ImageTransparentColor = Color.White;
             this.btnCompile.Name = "btnCompile";
             this.btnCompile.Size = new Size(0x40, 0x16);
@@ -301,7 +301,7 @@
             this.tslblExTimeValue.Size = new Size(0, 0x16);
             this.tslblExTimeValue.ToolTipText = "Time it took last Strategy to Execute";
             this.btnQuickRef.Alignment = ToolStripItemAlignment.Right;
-            this.btnQuickRef.Image = (Image) manager.GetObject("btnQuickRef.Image");
+            this.btnQuickRef.Image = (Image) resources.GetObject("btnQuickRef.Image");
             this.btnQuickRef.ImageTransparentColor = Color.Magenta;
             this.btnQuickRef.Name = "btnQuickRef";
             this.btnQuickRef.Size = new Size(70, 0x16);
@@ -309,7 +309,7 @@
             this.btnQuickRef.ToolTipText = "View the WealthScript QuickRef";
             this.btnQuickRef.Click += new EventHandler(this.btnQuickRef_Click);
             this.btnDebug.Alignment = ToolStripItemAlignment.Right;
-            this.btnDebug.Image = (Image) manager.GetObject("btnDebug.Image");
+            this.btnDebug.Image = (Image) resources.GetObject("btnDebug.Image");
             this.btnDebug.ImageTransparentColor = Color.Magenta;
             this.btnDebug.Name = "btnDebug";
             this.btnDebug.Size = new Size(0x4e, 0x16);
@@ -317,7 +317,7 @@
             this.btnDebug.ToolTipText = "View the Debug and Error Message Log Window";
             this.btnDebug.Click += new EventHandler(this.btnDebug_Click);
             this.btnEditorOptions.Alignment = ToolStripItemAlignment.Right;
-            this.btnEditorOptions.Image = (Image) manager.GetObject("btnEditorOptions.Image");
+            this.btnEditorOptions.Image = (Image) resources.GetObject("btnEditorOptions.Image");
             this.btnEditorOptions.ImageTransparentColor = Color.Magenta;
             this.btnEditorOptions.Name = "btnEditorOptions";
             this.btnEditorOptions.Size = new Size(0x4c, 0x16);
@@ -326,7 +326,7 @@
             this.btnEditorOptions.Click += new EventHandler(this.btnEditorOptions_Click);
             this.btnPrint.Alignment = ToolStripItemAlignment.Right;
             this.btnPrint.DropDownItems.AddRange(new ToolStripItem[] { this.btnPrintPrint, this.btnPrintPreview, this.btnPrintOptions });
-            this.btnPrint.Image = (Image) manager.GetObject("btnPrint.Image");
+            this.btnPrint.Image = (Image) resources.GetObject("btnPrint.Image");
             this.btnPrint.ImageTransparentColor = Color.Magenta;
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new Size(0x3a, 0x16);
@@ -377,10 +377,10 @@
             this.syntaxEdit.HelpRequested += new HelpEventHandler(this.syntaxEdit_HelpRequested);
             this.csParserWealthScript_0.DefaultState = 0;
             this.csParserWealthScript_0.Options = SyntaxOptions.SyntaxErrors | SyntaxOptions.CodeCompletion | SyntaxOptions.SmartIndent | SyntaxOptions.Outline;
-            this.csParserWealthScript_0.XmlScheme = manager.GetString("csParserWealthScript.XmlScheme");
+            this.csParserWealthScript_0.XmlScheme = resources.GetString("csParserWealthScript.XmlScheme");
             this.btnReferences.Alignment = ToolStripItemAlignment.Right;
             this.btnReferences.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnReferences.Image = (Image) manager.GetObject("btnReferences.Image");
+            this.btnReferences.Image = (Image) resources.GetObject("btnReferences.Image");
             this.btnReferences.ImageTransparentColor = Color.Magenta;
             this.btnReferences.Name = "btnReferences";
             this.btnReferences.Size = new Size(0x51, 0x16);
@@ -388,7 +388,7 @@
             this.btnReferences.ToolTipText = "Specify .NET Assembly References for this Strategy";
             this.btnReferences.Click += new EventHandler(this.btnReferences_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.syntaxEdit);
             base.Controls.Add(this.pnlBottom);
             base.Controls.Add(this.toolBar);

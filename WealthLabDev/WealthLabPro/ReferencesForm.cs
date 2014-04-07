@@ -7,6 +7,7 @@
     using System.Text;
     using System.Windows.Forms;
     using WealthLabPro.Properties;
+    using Button = System.Windows.Forms.Button;
 
     public class ReferencesForm : Form
     {
@@ -86,7 +87,7 @@
             this.pageBrowse.SuspendLayout();
             base.SuspendLayout();
             this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(450, 0x145);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -94,7 +95,7 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new Point(0x171, 0x145);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new Size(0x4b, 0x17);
@@ -166,7 +167,7 @@
             this.openFileDialog_0.Title = "Locate the .NET Assembly to Reference";
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x216, 0x165);
             base.Controls.Add(this.lblNote);

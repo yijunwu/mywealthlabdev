@@ -38,7 +38,7 @@
         private ColumnHeader columnHeader_7;
         private ColumnHeader columnHeader_8;
         private ColumnHeader columnHeader_9;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         public static AccountsPositionsForm Instance = null;
         private static int int_0 = 0;
@@ -321,18 +321,18 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(AccountsPositionsForm));
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(AccountsPositionsForm));
+            this.imageList_0 = new ImageList(this.components);
             this.toolbar = new ToolStrip();
             this.lblBalances = new ToolStripLabel();
             this.lblAccounts = new ToolStripLabel();
@@ -361,7 +361,7 @@
             this.statusAccountPositions = new ToolStripStatusLabel();
             this.statusAccountValue = new ToolStripStatusLabel();
             this.tabBalances = new TabControl();
-            this.popup = new ContextMenuStrip(this.icontainer_0);
+            this.popup = new ContextMenuStrip(this.components);
             this.mniCopy = new ToolStripMenuItem();
             this.mniPrint = new ToolStripMenuItem();
             this.pagePositions = new TabPage();
@@ -387,14 +387,14 @@
             this.columnHeader_18 = new ColumnHeader();
             this.columnHeader_13 = new ColumnHeader();
             this.columnHeader_14 = new ColumnHeader();
-            this.popupHistory = new ContextMenuStrip(this.icontainer_0);
+            this.popupHistory = new ContextMenuStrip(this.components);
             this.mniDeleteHistory = new ToolStripMenuItem();
             this.mniLoadHistory = new ToolStripMenuItem();
             this.toolStripSeparator2 = new ToolStripSeparator();
             this.mniCopyHistory = new ToolStripMenuItem();
             this.mniPrintHistory = new ToolStripMenuItem();
-            this.timer_0 = new Timer(this.icontainer_0);
-            this.streamingQuoteManager_0 = new StreamingQuoteManager(this.icontainer_0);
+            this.timer_0 = new Timer(this.components);
+            this.streamingQuoteManager_0 = new StreamingQuoteManager(this.components);
             this.toolbar.SuspendLayout();
             this.toolBarDetails.SuspendLayout();
             this.status.SuspendLayout();
@@ -404,7 +404,7 @@
             this.pageHistory.SuspendLayout();
             this.popupHistory.SuspendLayout();
             base.SuspendLayout();
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("imgPositions.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("imgPositions.ImageStream");
             this.imageList_0.TransparentColor = Color.Silver;
             this.imageList_0.Images.SetKeyName(0, "");
             this.imageList_0.Images.SetKeyName(1, "");
@@ -431,13 +431,13 @@
             this.sepAccount.Name = "sepAccount";
             this.sepAccount.Size = new Size(6, 0x19);
             this.btnStreaming.CheckOnClick = true;
-            this.btnStreaming.Image = (Image) manager.GetObject("btnStreaming.Image");
+            this.btnStreaming.Image = (Image) resources.GetObject("btnStreaming.Image");
             this.btnStreaming.ImageTransparentColor = Color.Magenta;
             this.btnStreaming.Name = "btnStreaming";
             this.btnStreaming.Size = new Size(0x76, 0x16);
             this.btnStreaming.Text = "Streaming Updates";
             this.btnStreaming.CheckStateChanged += new EventHandler(this.btnStreaming_CheckStateChanged);
-            this.toolStripButton1.Image = (Image) manager.GetObject("toolStripButton1.Image");
+            this.toolStripButton1.Image = (Image) resources.GetObject("toolStripButton1.Image");
             this.toolStripButton1.ImageTransparentColor = Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new Size(0x3e, 0x16);
@@ -448,13 +448,13 @@
             this.lblHistoryLoaded.Name = "lblHistoryLoaded";
             this.lblHistoryLoaded.Size = new Size(0x94, 0x16);
             this.lblHistoryLoaded.Text = "0 History Items Loaded (of 0)";
-            this.btnLoadHistory.Image = (Image) manager.GetObject("btnLoadHistory.Image");
+            this.btnLoadHistory.Image = (Image) resources.GetObject("btnLoadHistory.Image");
             this.btnLoadHistory.ImageTransparentColor = Color.Magenta;
             this.btnLoadHistory.Name = "btnLoadHistory";
             this.btnLoadHistory.Size = new Size(0x61, 0x16);
             this.btnLoadHistory.Text = "Load Next 500";
             this.btnLoadHistory.Click += new EventHandler(this.mniLoadHistory_Click);
-            this.btnHelp.Image = (Image) manager.GetObject("btnHelp.Image");
+            this.btnHelp.Image = (Image) resources.GetObject("btnHelp.Image");
             this.btnHelp.ImageTransparentColor = Color.Magenta;
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new Size(0x30, 0x16);
@@ -501,7 +501,7 @@
             this.lblPositionsProfit.Name = "lblPositionsProfit";
             this.lblPositionsProfit.Size = new Size(0x23, 13);
             this.lblPositionsProfit.Text = "$0.00";
-            this.btnConfigure.Image = (Image) manager.GetObject("btnConfigure.Image");
+            this.btnConfigure.Image = (Image) resources.GetObject("btnConfigure.Image");
             this.btnConfigure.ImageTransparentColor = Color.Magenta;
             this.btnConfigure.Name = "btnConfigure";
             this.btnConfigure.Size = new Size(0x98, 20);
@@ -540,14 +540,14 @@
             this.popup.Items.AddRange(new ToolStripItem[] { this.mniCopy, this.mniPrint });
             this.popup.Name = "popup";
             this.popup.Size = new Size(0x72, 0x30);
-            this.mniCopy.Image = (Image) manager.GetObject("mniCopy.Image");
+            this.mniCopy.Image = (Image) resources.GetObject("mniCopy.Image");
             this.mniCopy.ImageTransparentColor = Color.Fuchsia;
             this.mniCopy.Name = "mniCopy";
             this.mniCopy.Size = new Size(0x71, 0x16);
             this.mniCopy.Text = "Copy";
             this.mniCopy.ToolTipText = "Copy data to the clipboard";
             this.mniCopy.Click += new EventHandler(this.mniCopyHistory_Click);
-            this.mniPrint.Image = (Image) manager.GetObject("mniPrint.Image");
+            this.mniPrint.Image = (Image) resources.GetObject("mniPrint.Image");
             this.mniPrint.Name = "mniPrint";
             this.mniPrint.Size = new Size(0x71, 0x16);
             this.mniPrint.Text = "Print";
@@ -648,13 +648,13 @@
             this.popupHistory.Items.AddRange(new ToolStripItem[] { this.mniDeleteHistory, this.mniLoadHistory, this.toolStripSeparator2, this.mniCopyHistory, this.mniPrintHistory });
             this.popupHistory.Name = "popupHistory";
             this.popupHistory.Size = new Size(0xcf, 0x62);
-            this.mniDeleteHistory.Image = (Image) manager.GetObject("mniDeleteHistory.Image");
+            this.mniDeleteHistory.Image = (Image) resources.GetObject("mniDeleteHistory.Image");
             this.mniDeleteHistory.ImageTransparentColor = Color.Fuchsia;
             this.mniDeleteHistory.Name = "mniDeleteHistory";
             this.mniDeleteHistory.Size = new Size(0xce, 0x16);
             this.mniDeleteHistory.Text = "Delete Selected Item(s)";
             this.mniDeleteHistory.Click += new EventHandler(this.mniDeleteHistory_Click);
-            this.mniLoadHistory.Image = (Image) manager.GetObject("mniLoadHistory.Image");
+            this.mniLoadHistory.Image = (Image) resources.GetObject("mniLoadHistory.Image");
             this.mniLoadHistory.ImageTransparentColor = Color.Fuchsia;
             this.mniLoadHistory.Name = "mniLoadHistory";
             this.mniLoadHistory.Size = new Size(0xce, 0x16);
@@ -662,14 +662,14 @@
             this.mniLoadHistory.Click += new EventHandler(this.mniLoadHistory_Click);
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new Size(0xcb, 6);
-            this.mniCopyHistory.Image = (Image) manager.GetObject("mniCopyHistory.Image");
+            this.mniCopyHistory.Image = (Image) resources.GetObject("mniCopyHistory.Image");
             this.mniCopyHistory.ImageTransparentColor = Color.Fuchsia;
             this.mniCopyHistory.Name = "mniCopyHistory";
             this.mniCopyHistory.Size = new Size(0xce, 0x16);
             this.mniCopyHistory.Text = "Copy";
             this.mniCopyHistory.ToolTipText = "Copy data to the clipboard";
             this.mniCopyHistory.Click += new EventHandler(this.mniCopyHistory_Click);
-            this.mniPrintHistory.Image = (Image) manager.GetObject("mniPrintHistory.Image");
+            this.mniPrintHistory.Image = (Image) resources.GetObject("mniPrintHistory.Image");
             this.mniPrintHistory.Name = "mniPrintHistory";
             this.mniPrintHistory.Size = new Size(0xce, 0x16);
             this.mniPrintHistory.Text = "Print";
@@ -677,13 +677,13 @@
             this.timer_0.Interval = 0x3e8;
             this.timer_0.Tick += new EventHandler(this.timer_0_Tick);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x2d2, 0x1a9);
             base.Controls.Add(this.tabBalances);
             base.Controls.Add(this.status);
             base.Controls.Add(this.toolBarDetails);
             base.Controls.Add(this.toolbar);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.Name = "AccountsPositionsForm";
             base.StartPosition = FormStartPosition.WindowsDefaultBounds;
             this.Text = "Account Balances and Positions";

@@ -16,7 +16,7 @@
         private ComboBox cmbAccount;
         private ComboBox cmbTradeAction;
         private ComboBox cmbTradeOrder;
-        private IContainer icontainer_0;
+        private IContainer components;
         private Label lblAccount;
         private Label lblAction;
         private Label lblOrder;
@@ -81,16 +81,16 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
             this.lblPriceTrigger = new Label();
             this.cmbTradeOrder = new ComboBox();
             this.cmbTradeAction = new ComboBox();
@@ -107,7 +107,7 @@
             this.numTradePrice = new NumEdit();
             this.numQuantity = new NumEdit();
             this.lblTradeType = new Label();
-            this.accountTypeSelector1 = new AccountTypeSelector(this.icontainer_0);
+            this.accountTypeSelector1 = new AccountTypeSelector(this.components);
             base.SuspendLayout();
             this.lblPriceTrigger.Location = new Point(13, 13);
             this.lblPriceTrigger.Name = "lblPriceTrigger";
@@ -180,14 +180,14 @@
             this.lblTrigger.Size = new Size(0x43, 13);
             this.lblTrigger.TabIndex = 6;
             this.lblTrigger.Text = "Trigger Price";
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0x1ef, 0x68);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
             this.btnCancel.TabIndex = 13;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Enabled = false;
             this.btnOK.Location = new Point(0x19e, 0x68);
             this.btnOK.Name = "btnOK";
@@ -226,7 +226,7 @@
             this.accountTypeSelector1.TabIndex = 0x11;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x246, 0x8b);
             base.Controls.Add(this.accountTypeSelector1);
@@ -246,7 +246,7 @@
             base.Controls.Add(this.cmbTradeAction);
             base.Controls.Add(this.cmbAccount);
             base.Controls.Add(this.lblPriceTrigger);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "AddPriceTriggerForm";

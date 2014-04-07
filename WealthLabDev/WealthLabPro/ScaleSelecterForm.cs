@@ -5,6 +5,7 @@
     using System.Drawing;
     using System.Windows.Forms;
     using WealthLab;
+    using ListBox = System.Windows.Forms.ListBox;
 
     public class ScaleSelecterForm : Form
     {
@@ -89,7 +90,7 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new EventHandler(this.btnOK_Click);
             this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0x75, 0xd3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x39, 0x17);
@@ -98,7 +99,7 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.Cornsilk;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0xb2, 240);
@@ -108,7 +109,7 @@
             base.Controls.Add(this.numScale);
             base.Controls.Add(this.lblCustom);
             base.Controls.Add(this.lbScale);
-            base.FormBorderStyle = FormBorderStyle.None;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             base.Name = "ScaleSelecterForm";
             base.ShowInTaskbar = false;
             base.StartPosition = FormStartPosition.Manual;

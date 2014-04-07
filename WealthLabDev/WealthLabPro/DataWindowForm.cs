@@ -77,7 +77,7 @@
             this.columnHeader_1.TextAlign = HorizontalAlignment.Right;
             this.columnHeader_1.Width = 0x71;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x11c, 0x106);
             base.Controls.Add(this.lvDataWindow);
             base.MaximizeBox = false;

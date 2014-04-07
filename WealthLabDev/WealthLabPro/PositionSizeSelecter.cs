@@ -14,7 +14,7 @@
         [CompilerGenerated]
         private bool bool_0;
         private Button btnSelect;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         private Label lblCaption;
         private WealthLab.PositionSize positionSize_0 = new WealthLab.PositionSize();
@@ -82,33 +82,33 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(PositionSizeSelecter));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(PositionSizeSelecter));
             this.btnSelect = new Button();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.lblCaption = new Label();
             base.SuspendLayout();
             this.btnSelect.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             this.btnSelect.BackgroundImageLayout = ImageLayout.Center;
             this.btnSelect.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
             this.btnSelect.FlatStyle = FlatStyle.Flat;
-            this.btnSelect.Image = (Image) manager.GetObject("btnSelect.Image");
+            this.btnSelect.Image = (Image) resources.GetObject("btnSelect.Image");
             this.btnSelect.Location = new Point(0xa2, 0);
             this.btnSelect.Name = "btnSelect";
             this.btnSelect.Size = new Size(0x10, 20);
             this.btnSelect.TabIndex = 3;
             this.btnSelect.UseVisualStyleBackColor = true;
             this.btnSelect.Click += new EventHandler(this.btnSelect_Click);
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("imgList.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("imgList.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "Ellipsis.bmp");
             this.lblCaption.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
@@ -119,7 +119,7 @@
             this.lblCaption.TabIndex = 4;
             this.lblCaption.Text = "$5000";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.Honeydew;
             base.Controls.Add(this.lblCaption);
             base.Controls.Add(this.btnSelect);

@@ -81,7 +81,7 @@
 
         private void InitializeComponent()
         {
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(DebugForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(DebugForm));
             this.toolbar = new ToolStrip();
             this.btnClear = new ToolStripButton();
             this.btnTop = new ToolStripButton();
@@ -96,14 +96,14 @@
             this.toolbar.Size = new Size(0x159, 0x19);
             this.toolbar.TabIndex = 0;
             this.toolbar.Text = "toolStrip1";
-            this.btnClear.Image = (Image) manager.GetObject("btnClear.Image");
+            this.btnClear.Image = (Image) resources.GetObject("btnClear.Image");
             this.btnClear.ImageTransparentColor = Color.Magenta;
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new Size(0x34, 0x16);
             this.btnClear.Text = "Clear";
             this.btnClear.Click += new EventHandler(this.btnClear_Click);
             this.btnTop.Alignment = ToolStripItemAlignment.Right;
-            this.btnTop.Image = (Image) manager.GetObject("btnTop.Image");
+            this.btnTop.Image = (Image) resources.GetObject("btnTop.Image");
             this.btnTop.ImageTransparentColor = Color.Magenta;
             this.btnTop.Name = "btnTop";
             this.btnTop.Size = new Size(0x44, 0x16);
@@ -124,12 +124,12 @@
             this.txtDebug.Size = new Size(0x159, 280);
             this.txtDebug.TabIndex = 2;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x159, 0x147);
             base.Controls.Add(this.txtDebug);
             base.Controls.Add(this.status);
             base.Controls.Add(this.toolbar);
-            base.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             base.Name = "DebugForm";
             this.Text = "Debug and Error Messages";
             base.FormClosed += new FormClosedEventHandler(this.DebugForm_FormClosed);

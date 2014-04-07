@@ -35,7 +35,7 @@
         private GroupBox grpDataSet;
         private GroupBox grpDollars;
         private GroupBox grpParameters;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         private ImageList imageList_1;
         private const int int_0 = 0;
@@ -302,17 +302,17 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(CombinationStrategyBuilder));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(CombinationStrategyBuilder));
             this.toolStrip1 = new ToolStrip();
             this.btnRun = new ToolStripButton();
             this.lblStartingCapital = new ToolStripLabel();
@@ -329,18 +329,18 @@
             this.columnHeader_6 = new ColumnHeader();
             this.columnHeader_4 = new ColumnHeader();
             this.strategyTree = new TreeView();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.btnAdd = new Button();
             this.btnRemove = new Button();
             this.toolStrip2 = new ToolStrip();
             this.toolStripLabel1 = new ToolStripLabel();
             this.toolStrip3 = new ToolStrip();
             this.toolStripLabel2 = new ToolStripLabel();
-            this.imageList_1 = new ImageList(this.icontainer_0);
+            this.imageList_1 = new ImageList(this.components);
             this.grpDataSet = new GroupBox();
             this.treeDataSet = new DataSourceTreeView();
             this.cbDefaultDataSet = new CheckBox();
-            this.toolTip_0 = new ToolTip(this.icontainer_0);
+            this.toolTip_0 = new ToolTip(this.components);
             this.grpDollars = new GroupBox();
             this.cbUsePreferredValues = new CheckBox();
             this.cmbAccounts = new ComboBox();
@@ -381,7 +381,7 @@
             this.toolStrip1.Size = new Size(0x325, 0x19);
             this.toolStrip1.TabIndex = 0x29;
             this.toolStrip1.Text = "toolStrip1";
-            this.btnRun.Image = (Image) manager.GetObject("btnRun.Image");
+            this.btnRun.Image = (Image) resources.GetObject("btnRun.Image");
             this.btnRun.ImageTransparentColor = Color.Fuchsia;
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new Size(110, 0x16);
@@ -435,7 +435,7 @@
             this.strategyTree.Size = new Size(0x173, 0xc6);
             this.strategyTree.TabIndex = 0;
             this.strategyTree.DoubleClick += new EventHandler(this.strategyTree_DoubleClick);
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "FolderClosed.bmp");
             this.imageList_0.Images.SetKeyName(1, "FolderOpen.bmp");
@@ -482,7 +482,7 @@
             this.toolStripLabel2.Name = "toolStripLabel2";
             this.toolStripLabel2.Size = new Size(0x7d, 0x13);
             this.toolStripLabel2.Text = "Your Selected Strategies";
-            this.imageList_1.ImageStream = (ImageListStreamer) manager.GetObject("imageList1.ImageStream");
+            this.imageList_1.ImageStream = (ImageListStreamer) resources.GetObject("imageList1.ImageStream");
             this.imageList_1.TransparentColor = Color.Fuchsia;
             this.imageList_1.Images.SetKeyName(0, "Execute.bmp");
             this.imageList_1.Images.SetKeyName(1, "Delete.bmp");
@@ -686,7 +686,7 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new Size(6, 0x19);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.browser);
             base.Controls.Add(this.grpAllocations);
             base.Controls.Add(this.grpParameters);

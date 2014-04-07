@@ -347,7 +347,7 @@
 
         private void InitializeComponent()
         {
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(SymbolManagerForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(SymbolManagerForm));
             DataGridViewCellStyle style = new DataGridViewCellStyle();
             DataGridViewCellStyle style2 = new DataGridViewCellStyle();
             DataGridViewCellStyle style3 = new DataGridViewCellStyle();
@@ -380,13 +380,13 @@
             this.toolbar.Size = new Size(0x219, 0x19);
             this.toolbar.TabIndex = 1;
             this.toolbar.Text = "toolStrip1";
-            this.btnNew.Image = (Image) manager.GetObject("btnNew.Image");
+            this.btnNew.Image = (Image) resources.GetObject("btnNew.Image");
             this.btnNew.ImageTransparentColor = Color.Magenta;
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new Size(0x5e, 0x16);
             this.btnNew.Text = "New Symbol";
             this.btnNew.Click += new EventHandler(this.btnNew_Click);
-            this.btnDelete.Image = (Image) manager.GetObject("btnDelete.Image");
+            this.btnDelete.Image = (Image) resources.GetObject("btnDelete.Image");
             this.btnDelete.ImageTransparentColor = Color.Magenta;
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new Size(0xa6, 0x16);
@@ -394,7 +394,7 @@
             this.btnDelete.Click += new EventHandler(this.btnDelete_Click);
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new Size(6, 0x19);
-            this.btnFuturesMode.Image = (Image) manager.GetObject("btnFuturesMode.Image");
+            this.btnFuturesMode.Image = (Image) resources.GetObject("btnFuturesMode.Image");
             this.btnFuturesMode.ImageTransparentColor = Color.Magenta;
             this.btnFuturesMode.Name = "btnFuturesMode";
             this.btnFuturesMode.Size = new Size(0x92, 0x16);
@@ -466,12 +466,12 @@
             this.colDecimals.Name = "colDecimals";
             this.colDecimals.Width = 70;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x219, 0x1c3);
             base.Controls.Add(this.dgSymbol);
             base.Controls.Add(this.status);
             base.Controls.Add(this.toolbar);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.Name = "SymbolManagerForm";
             this.Text = "Symbol Info Manager";
             base.Load += new EventHandler(this.SymbolManagerForm_Load);

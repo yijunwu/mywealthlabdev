@@ -57,7 +57,7 @@
 
         private void InitializeComponent()
         {
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(IndicatorsForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(IndicatorsForm));
             this.status = new StatusStrip();
             this.stlblIndicators = new ToolStripStatusLabel();
             this.stLink = new ToolStripStatusLabel();
@@ -124,7 +124,7 @@
             this.toolbar.TabIndex = 0;
             this.toolbar.Text = "toolStrip1";
             this.btnTop.Alignment = ToolStripItemAlignment.Right;
-            this.btnTop.Image = (Image) manager.GetObject("btnTop.Image");
+            this.btnTop.Image = (Image) resources.GetObject("btnTop.Image");
             this.btnTop.ImageTransparentColor = Color.Magenta;
             this.btnTop.Name = "btnTop";
             this.btnTop.Size = new Size(0x44, 0x16);
@@ -145,12 +145,12 @@
             this.txtDescription.Size = new Size(0xe8, 0x54);
             this.txtDescription.TabIndex = 0;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.AliceBlue;
             base.ClientSize = new Size(0xe8, 0x1da);
             base.Controls.Add(this.splitIndicators);
             base.Controls.Add(this.status);
-            base.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             base.Name = "IndicatorsForm";
             base.ShowInTaskbar = false;
             this.Text = "Technical Indicators";

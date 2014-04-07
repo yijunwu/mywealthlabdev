@@ -125,7 +125,7 @@
         private GroupBox grpTooltips;
         private GroupBox grpTradingOptions;
         private GroupBox grpVisDesc;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         private ImageList imageList_1;
         private NumericUpDown indicatorDecimalPlaces;
@@ -471,9 +471,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -485,7 +485,7 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
             TreeNode node = new TreeNode("Chart Colors and Styles");
             TreeNode node2 = new TreeNode("Chart Annotations");
             TreeNode node3 = new TreeNode("Bad Tick Filter");
@@ -498,7 +498,7 @@
             TreeNode node10 = new TreeNode("Advanced Options");
             TreeNode node11 = new TreeNode("Trading");
             TreeNode node12 = new TreeNode("Email Settings");
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(PreferencesForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(PreferencesForm));
             this.toolbar = new ToolStrip();
             this.pnlBottom = new Panel();
             this.btnApply = new Button();
@@ -579,7 +579,7 @@
             this.btnAddFund = new Button();
             this.lvFundAvailable = new ListView();
             this.columnHeader_2 = new ColumnHeader();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.lvFundSelected = new ListView();
             this.columnHeader_3 = new ColumnHeader();
             this.lblChartAnnotations = new Label();
@@ -620,7 +620,7 @@
             this.lblChartBackground = new Label();
             this.pnlPV = new Panel();
             this.btnMovePvDown = new Button();
-            this.imageList_1 = new ImageList(this.icontainer_0);
+            this.imageList_1 = new ImageList(this.components);
             this.btnMovePvUp = new Button();
             this.grpVisDesc = new GroupBox();
             this.lblPVDesc = new Label();
@@ -706,10 +706,10 @@
             this.cbInterest = new CheckBox();
             this.fontDialog_0 = new FontDialog();
             this.openFileDialog_0 = new OpenFileDialog();
-            this.assemblyLoader_0 = new AssemblyLoader(this.icontainer_0);
-            this.assemblyLoader_1 = new AssemblyLoader(this.icontainer_0);
-            this.fundamentalsLoader_0 = new FundamentalsLoader(this.icontainer_0);
-            this.symbolParser_0 = new SymbolParser(this.icontainer_0);
+            this.assemblyLoader_0 = new AssemblyLoader(this.components);
+            this.assemblyLoader_1 = new AssemblyLoader(this.components);
+            this.fundamentalsLoader_0 = new FundamentalsLoader(this.components);
+            this.symbolParser_0 = new SymbolParser(this.components);
             this.pnlBottom.SuspendLayout();
             this.split.Panel1.SuspendLayout();
             this.split.Panel2.SuspendLayout();
@@ -793,7 +793,7 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new EventHandler(this.btnOK_Click);
             this.btnCancel.CausesValidation = false;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0x181, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -1778,7 +1778,7 @@
             this.btnMovePvDown.Text = "Move Down";
             this.btnMovePvDown.UseVisualStyleBackColor = true;
             this.btnMovePvDown.Click += new EventHandler(this.btnMovePvDown_Click);
-            this.imageList_1.ImageStream = (ImageListStreamer) manager.GetObject("imagesButtons.ImageStream");
+            this.imageList_1.ImageStream = (ImageListStreamer) resources.GetObject("imagesButtons.ImageStream");
             this.imageList_1.TransparentColor = Color.Fuchsia;
             this.imageList_1.Images.SetKeyName(0, "MoveUp.bmp");
             this.imageList_1.Images.SetKeyName(1, "MoveDown.bmp");
@@ -1824,7 +1824,7 @@
             this.lblPV.Name = "lblPV";
             this.lblPV.Size = new Size(0x163, 0x38);
             this.lblPV.TabIndex = 0;
-            this.lblPV.Text = manager.GetString("lblPV.Text");
+            this.lblPV.Text = resources.GetString("lblPV.Text");
             this.pnlBadTickFilter.Controls.Add(this.numBadTick);
             this.pnlBadTickFilter.Controls.Add(this.lblBadTickThreshold);
             this.pnlBadTickFilter.Controls.Add(this.cbBadTickFilter);
@@ -2365,7 +2365,7 @@
             this.lblLimitDays.Name = "lblLimitDays";
             this.lblLimitDays.Size = new Size(0x14e, 0x34);
             this.lblLimitDays.TabIndex = 2;
-            this.lblLimitDays.Text = manager.GetString("lblLimitDays.Text");
+            this.lblLimitDays.Text = resources.GetString("lblLimitDays.Text");
             this.cbLimitDays.AutoSize = true;
             this.cbLimitDays.Location = new Point(7, 0x11);
             this.cbLimitDays.Name = "cbLimitDays";
@@ -2439,13 +2439,13 @@
             this.symbolParser_0.Text = null;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0x22c, 0x1e3);
             base.Controls.Add(this.split);
             base.Controls.Add(this.pnlBottom);
             base.Controls.Add(this.toolbar);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "PreferencesForm";

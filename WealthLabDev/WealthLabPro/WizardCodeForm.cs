@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
+    using TextBox = System.Windows.Forms.TextBox;
 
     public class WizardCodeForm : Form
     {
@@ -48,7 +49,7 @@
             this.txtCode.TabIndex = 0;
             this.txtCode.WordWrap = false;
             this.btnOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new Point(0x1b3, 440);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new Size(0x4b, 0x17);
@@ -65,7 +66,7 @@
             this.btnCopy.Click += new EventHandler(this.btnCopy_Click);
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x20b, 0x1d9);
             base.Controls.Add(this.btnCopy);
             base.Controls.Add(this.btnOK);

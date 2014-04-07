@@ -60,7 +60,7 @@
         private void InitializeComponent()
         {
             this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(FundamentalsForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(FundamentalsForm));
             this.splitIndicators = new SplitContainer();
             this.treeItems = new FundamentalTreeView();
             this.toolbar = new ToolStrip();
@@ -118,7 +118,7 @@
             this.toolbar.Text = "toolStrip1";
             this.btnTop.Alignment = ToolStripItemAlignment.Right;
             this.btnTop.ForeColor = SystemColors.ControlText;
-            this.btnTop.Image = (Image) manager.GetObject("btnTop.Image");
+            this.btnTop.Image = (Image) resources.GetObject("btnTop.Image");
             this.btnTop.ImageTransparentColor = Color.Magenta;
             this.btnTop.Name = "btnTop";
             this.btnTop.Size = new Size(0x44, 0x16);
@@ -155,12 +155,12 @@
             this.stLink.Visible = false;
             this.stLink.Click += new EventHandler(this.stLink_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0xe8, 0x1da);
             base.Controls.Add(this.splitIndicators);
             base.Controls.Add(this.status);
             this.ForeColor = Color.FromArgb(0xff, 0xe3, 0xff);
-            base.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             base.Name = "FundamentalsForm";
             base.ShowInTaskbar = false;
             this.Text = "Fundamental Data";

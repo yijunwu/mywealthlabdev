@@ -54,6 +54,71 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\AccountsPositionsForm.resx">
+      <DependentUpon>AccountsPositionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\Alerts.resx">
+      <DependentUpon>Alerts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\BarDataRangeSelecter.resx">
+      <DependentUpon>BarDataRangeSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\Builder.resx">
+      <DependentUpon>Builder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\ChartForm.resx">
+      <DependentUpon>ChartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\CombinationStrategyBuilder.resx">
+      <DependentUpon>CombinationStrategyBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\DataManagerForm.resx">
+      <DependentUpon>DataManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\Description.resx">
+      <DependentUpon>Description.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\HomeForm.resx">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\OrdersAlertsForm.resx">
+      <DependentUpon>OrdersAlertsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\PositionSizeSelecter.resx">
+      <DependentUpon>PositionSizeSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\PreferencesForm.resx">
+      <DependentUpon>PreferencesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\QuickRefForm.resx">
+      <DependentUpon>QuickRefForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\QuotesForm.resx">
+      <DependentUpon>QuotesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\SaveStrategyAsForm.resx">
+      <DependentUpon>SaveStrategyAsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\StrategyCenterForm.resx">
+      <DependentUpon>StrategyCenterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\StrategyDownload.resx">
+      <DependentUpon>StrategyDownload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\StrategyExplorerForm.resx">
+      <DependentUpon>StrategyExplorerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\StrategyRanking.resx">
+      <DependentUpon>StrategyRanking.cs</DependentUpon>
+    </EmbeddedResource>
+    <Reference Include="mscorlib" />
     <Reference Include="log4net, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLib\log4net.dll</HintPath>
@@ -62,23 +127,14 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
-    <Reference Include="SyntaxSettingsConverter">
-      <HintPath>..\SyntaxSettingsConverter\bin\Debug\SyntaxSettingsConverter.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Configuration" />
-    <Reference Include="WealthLab.PosSizers">
-      <HintPath>..\WealthLab.PosSizers\bin\Debug\WealthLab.PosSizers.dll</HintPath>
-    </Reference>
-    <Reference Include="WealthLab.Commissions">
-      <HintPath>..\WealthLab.Commissions\bin\Debug\WealthLab.Commissions.dll</HintPath>
-    </Reference>
-    <Reference Include="WealthLab.IndexDefinitions">
-      <HintPath>..\WealthLab.IndexDefinitions\bin\Debug\WealthLab.IndexDefinitions.dll</HintPath>
-    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Class62.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="WealthLabPro\ChartForm.Designer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="WealthLabPro\StrategySettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -258,22 +314,15 @@
     </Compile>
     <EmbeddedResource Include="WealthLabPro.PositionSizeSelecter.bmp" />
     <EmbeddedResource Include="WealthLabPro.ScaleSelecter.resources" />
-    <EmbeddedResource Include="WealthLabPro.Description.resources" />
     <EmbeddedResource Include="WealthLabPro.ScaleSelecterForm.resources" />
-    <EmbeddedResource Include="AboutBox1.resources" />
     <EmbeddedResource Include="WealthLabPro.Properties.Resources.resources" />
     <EmbeddedResource Include="WealthLabPro.StrategyBuilder.bmp" />
     <EmbeddedResource Include="WealthLabPro.WLPException.resources" />
-    <EmbeddedResource Include="WealthLabPro.OrdersAlertsForm.resources" />
     <EmbeddedResource Include="WealthLabPro.Optimization.resources" />
     <EmbeddedResource Include="WealthLabPro.IndexManagerForm.resources" />
     <EmbeddedResource Include="WealthLabPro.AddPriceTriggerForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.MainForm.resources" />
     <EmbeddedResource Include="WealthLabPro.BarDataRangeSelecter.bmp" />
-    <EmbeddedResource Include="WealthLabPro.PositionSizeSelecter.resources" />
-    <EmbeddedResource Include="WealthLabPro.HomeForm.resources" />
     <EmbeddedResource Include="WealthLabPro.EditDescriptionForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.BarDataRangeSelecter.resources" />
     <EmbeddedResource Include="WealthLabPro.StockSplitForm.resources" />
     <EmbeddedResource Include="WealthLabPro.RuleFundamentalsForm.resources" />
     <EmbeddedResource Include="WealthLabPro.ChartSettingsForm.resources" />
@@ -288,34 +337,21 @@
     <EmbeddedResource Include="WealthLabPro.ScaleSelecter.bmp" />
     <EmbeddedResource Include="WealthLabPro.RuleIndicatorsForm.resources" />
     <EmbeddedResource Include="WealthLabPro.WizardCodeForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.StrategyRanking.resources" />
-    <EmbeddedResource Include="WealthLabPro.SaveStrategyAsForm.resources" />
     <EmbeddedResource Include="WealthLabPro.MainModule.resources" />
     <EmbeddedResource Include="WealthLabPro.EditAlertForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.Alerts.resources" />
-    <EmbeddedResource Include="WealthLabPro.StrategyCenterForm.resources" />
     <EmbeddedResource Include="WealthLabPro.QuickRefManager.bmp" />
     <EmbeddedResource Include="WealthLabPro.StrategySettingsForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.StrategyExplorerForm.resources" />
     <EmbeddedResource Include="WealthLabPro.StrategyAccountForm.resources" />
     <EmbeddedResource Include="WealthLabPro.BarDataRangeSelecterForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.QuotesForm.resources" />
     <EmbeddedResource Include="WealthLabDev.exe.licenses" />
-    <EmbeddedResource Include="WealthLabPro.PreferencesForm.resources" />
     <EmbeddedResource Include="WealthLabPro.PositionSizeSelecterForm.resources" />
     <EmbeddedResource Include="WealthLabPro.OptimizerSettings.resources" />
     <EmbeddedResource Include="WealthLabPro.DataWindowForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.DataManagerForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.StrategyDownload.resources" />
-    <EmbeddedResource Include="WealthLabPro.QuickRefForm.resources" />
     <EmbeddedResource Include="WealthLab.ChartControl.DataEditor.resources" />
-    <EmbeddedResource Include="WealthLabPro.CombinationStrategyBuilder.resources" />
-    <EmbeddedResource Include="WealthLabPro.Builder.resources" />
-    <EmbeddedResource Include="WealthLabPro.AccountsPositionsForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.ChartForm.resources" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico32512.ico" />
@@ -367,6 +403,10 @@
       <Project>{92D3D425-DCB3-4253-8295-08509BCE00B7}</Project>
       <Name>QWhale.Syntax</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SyntaxSettingsConverter\SyntaxSettingsConverter.csproj">
+      <Project>{1BA423C1-87DF-45EE-A667-9118FF160746}</Project>
+      <Name>SyntaxSettingsConverter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WealthLab.ChartControl\WealthLab.ChartControl.csproj">
       <Project>{6822E234-082C-4756-89B7-D44634D8C013}</Project>
       <Name>WealthLab.ChartControl</Name>
@@ -375,10 +415,29 @@
       <Project>{1820912A-E2C5-4AEC-9E7D-BF37609874A3}</Project>
       <Name>WealthLab.ChartStyles</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WealthLab.Commissions\WealthLab.Commissions.csproj">
+      <Project>{80E567A2-ACCA-4901-B842-89D2CF6F1DFC}</Project>
+      <Name>WealthLab.Commissions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.IndexDefinitions\WealthLab.IndexDefinitions.csproj">
+      <Project>{341100B2-A16F-4558-B977-21991E2D94C8}</Project>
+      <Name>WealthLab.IndexDefinitions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.Indicators\WealthLab.Indicators.csproj">
+      <Project>{779CDAD0-90C6-4757-889E-62369148F934}</Project>
+      <Name>WealthLab.Indicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.PosSizers\WealthLab.PosSizers.csproj">
+      <Project>{70906CE1-54D3-44C0-A65C-F080EC84EECA}</Project>
+      <Name>WealthLab.PosSizers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WealthLab\WealthLab.csproj">
       <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
       <Name>WealthLab</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\ControlLibrary.dll" "C:\Program Files\Wealth-Lab Developer 6"

@@ -75,7 +75,7 @@
         private void InitializeComponent()
         {
             this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(QuickRefForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(QuickRefForm));
             this.status = new StatusStrip();
             this.lblEntries = new ToolStripStatusLabel();
             this.lblMoreInfo = new ToolStripStatusLabel();
@@ -121,7 +121,7 @@
             this.toolbar.TabIndex = 0;
             this.toolbar.Text = "toolStrip1";
             this.btnTop.Alignment = ToolStripItemAlignment.Right;
-            this.btnTop.Image = (Image) manager.GetObject("btnTop.Image");
+            this.btnTop.Image = (Image) resources.GetObject("btnTop.Image");
             this.btnTop.ImageTransparentColor = Color.Magenta;
             this.btnTop.Name = "btnTop";
             this.btnTop.Size = new Size(0x44, 0x16);
@@ -160,7 +160,7 @@
             this.treeQuickRef.Size = new Size(180, 0x16d);
             this.treeQuickRef.TabIndex = 0;
             this.treeQuickRef.AfterSelect += new TreeViewEventHandler(this.treeQuickRef_AfterSelect);
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "FolderClosed.bmp");
             this.imageList_0.Images.SetKeyName(1, "FolderOpen.bmp");
@@ -177,7 +177,7 @@
             this.html.TabIndex = 0;
             this.btnPrint.Alignment = ToolStripItemAlignment.Right;
             this.btnPrint.DropDownItems.AddRange(new ToolStripItem[] { this.btnPrintPrint, this.btnPrintPreview });
-            this.btnPrint.Image = (Image) manager.GetObject("btnPrint.Image");
+            this.btnPrint.Image = (Image) resources.GetObject("btnPrint.Image");
             this.btnPrint.ImageTransparentColor = Color.Magenta;
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new Size(0x3a, 0x16);
@@ -195,7 +195,7 @@
             base.Controls.Add(this.split);
             base.Controls.Add(this.toolbar);
             base.Controls.Add(this.status);
-            base.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             base.Name = "QuickRefForm";
             base.ShowInTaskbar = false;
             this.Text = "WealthScript QuickRef";

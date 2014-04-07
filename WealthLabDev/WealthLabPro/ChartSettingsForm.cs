@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
+    using DialogResult = System.Windows.Forms.DialogResult;
 
     public class ChartSettingsForm : Form
     {
@@ -54,8 +55,8 @@
             this.btnCancel = new Button();
             this.pnlSettings = new Panel();
             base.SuspendLayout();
-            this.btnOK.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-            this.btnOK.DialogResult = DialogResult.OK;
+            this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new Point(0xd4, 0x88);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new Size(0x4b, 0x17);
@@ -63,7 +64,7 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnCancel.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0x125, 0x88);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -78,15 +79,15 @@
             this.pnlSettings.TabIndex = 2;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(380, 0xa6);
             base.Controls.Add(this.pnlSettings);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.btnOK);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.Name = "ChartSettingsForm";
-            base.StartPosition = FormStartPosition.CenterParent;
+            base.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Chart Settings";
             base.ResumeLayout(false);
         }

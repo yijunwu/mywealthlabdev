@@ -39,7 +39,7 @@ internal class AboutBox1 : Form
 
     private void InitializeComponent()
     {
-        ComponentResourceManager manager = new ComponentResourceManager(typeof(AboutBox1));
+        ComponentResourceManager resources = new ComponentResourceManager(typeof(AboutBox1));
         this.tableLayoutPanel = new TableLayoutPanel();
         this.logoPictureBox = new PictureBox();
         this.labelProductName = new Label();
@@ -74,7 +74,7 @@ internal class AboutBox1 : Form
         this.tableLayoutPanel.Size = new Size(0x1a1, 0x109);
         this.tableLayoutPanel.TabIndex = 0;
         this.logoPictureBox.Dock = DockStyle.Fill;
-        this.logoPictureBox.Image = (Image) manager.GetObject("logoPictureBox.Image");
+        this.logoPictureBox.Image = (Image) resources.GetObject("logoPictureBox.Image");
         this.logoPictureBox.Location = new Point(3, 3);
         this.logoPictureBox.Name = "logoPictureBox";
         this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 6);
@@ -130,7 +130,7 @@ internal class AboutBox1 : Form
         this.textBoxDescription.TabStop = false;
         this.textBoxDescription.Text = "Description";
         this.okButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-        this.okButton.DialogResult = DialogResult.Cancel;
+        this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
         this.okButton.Location = new Point(0x153, 0xef);
         this.okButton.Name = "okButton";
         this.okButton.Size = new Size(0x4b, 0x17);
@@ -138,10 +138,10 @@ internal class AboutBox1 : Form
         this.okButton.Text = "&OK";
         base.AcceptButton = this.okButton;
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.ClientSize = new Size(0x1b3, 0x11b);
         base.Controls.Add(this.tableLayoutPanel);
-        base.FormBorderStyle = FormBorderStyle.FixedDialog;
+        base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
         base.MaximizeBox = false;
         base.MinimizeBox = false;
         base.Name = "AboutBox1";

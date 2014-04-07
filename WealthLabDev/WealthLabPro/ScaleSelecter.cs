@@ -90,7 +90,7 @@
 
         private void InitializeComponent()
         {
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(ScaleSelecter));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(ScaleSelecter));
             this.btnSelect = new Button();
             this.lblCaption = new Label();
             base.SuspendLayout();
@@ -98,7 +98,7 @@
             this.btnSelect.BackgroundImageLayout = ImageLayout.Center;
             this.btnSelect.FlatAppearance.BorderColor = SystemColors.ControlDarkDark;
             this.btnSelect.FlatStyle = FlatStyle.Flat;
-            this.btnSelect.Image = (Image) manager.GetObject("btnSelect.Image");
+            this.btnSelect.Image = (Image) resources.GetObject("btnSelect.Image");
             this.btnSelect.Location = new Point(0xa2, 0);
             this.btnSelect.Name = "btnSelect";
             this.btnSelect.Size = new Size(0x10, 20);
@@ -113,7 +113,7 @@
             this.lblCaption.TabIndex = 3;
             this.lblCaption.Text = "Daily";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = Color.Cornsilk;
             base.Controls.Add(this.lblCaption);
             base.Controls.Add(this.btnSelect);

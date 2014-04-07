@@ -239,7 +239,7 @@
 
         private void InitializeComponent()
         {
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(IndexManagerForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(IndexManagerForm));
             ListViewGroup group = new ListViewGroup("Indicators", HorizontalAlignment.Left);
             ListViewGroup group2 = new ListViewGroup("Indexes", HorizontalAlignment.Left);
             this.tabMain = new TabControl();
@@ -323,7 +323,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new Size(0x23d, 30);
             this.label1.TabIndex = 0;
-            this.label1.Text = manager.GetString("label1.Text");
+            this.label1.Text = resources.GetString("label1.Text");
             this.pageIndexBuilder.Controls.Add(this.tabBuild);
             this.pageIndexBuilder.Location = new Point(4, 0x16);
             this.pageIndexBuilder.Name = "pageIndexBuilder";
@@ -523,10 +523,10 @@
             this.label3.TextAlign = ContentAlignment.MiddleCenter;
             this.label3.Visible = false;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x256, 0x1ab);
             base.Controls.Add(this.tabMain);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.Name = "IndexManagerForm";
             this.Text = "Index-Lab \x00ae";
             base.FormClosed += new FormClosedEventHandler(this.IndexManagerForm_FormClosed);
@@ -597,6 +597,7 @@
             this.list_0.Clear();
             this.lstCustomIndexes.Items.Clear();
             bool flag = false;
+            
             foreach (ListViewItem item in this.lvDataSets.SelectedItems)
             {
                 DataSource tag = (DataSource) item.Tag;

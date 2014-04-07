@@ -41,7 +41,7 @@
         private DateTime dateTime_0;
         private DrawingObjectManager drawingObjectManager_0;
         private System.Windows.Forms.HelpProvider helpProvider_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public static MainModule Instance = new MainModule();
         private int int_0;
@@ -753,9 +753,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -767,24 +767,24 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
             PositionSize size = new PositionSize();
-            this.timer_0 = new System.Windows.Forms.Timer(this.icontainer_0);
+            this.timer_0 = new System.Windows.Forms.Timer(this.components);
             this.helpProvider_0 = new System.Windows.Forms.HelpProvider();
-            this.settingsManager_0 = new SettingsManager(this.icontainer_0);
-            this.assemblyLoader_0 = new AssemblyLoader(this.icontainer_0);
-            this.assemblyLoader_1 = new AssemblyLoader(this.icontainer_0);
-            this.assemblyLoader_2 = new AssemblyLoader(this.icontainer_0);
-            this.assemblyLoader_3 = new AssemblyLoader(this.icontainer_0);
+            this.settingsManager_0 = new SettingsManager(this.components);
+            this.assemblyLoader_0 = new AssemblyLoader(this.components);
+            this.assemblyLoader_1 = new AssemblyLoader(this.components);
+            this.assemblyLoader_2 = new AssemblyLoader(this.components);
+            this.assemblyLoader_3 = new AssemblyLoader(this.components);
             this.barRange = new BarDataRangeSelecter();
-            this.dataSourceManager_0 = new DataSourceManager(this.icontainer_0);
-            this.chartRenderer_0 = new ChartRenderer(this.icontainer_0);
-            this.strategyManager_0 = new StrategyManager(this.icontainer_0);
-            this.drawingObjectManager_0 = new DrawingObjectManager(this.icontainer_0);
-            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.icontainer_0);
-            this.strategyManager_1 = new StrategyManager(this.icontainer_0);
-            this.tradeManager_0 = new WealthLab.TradeManager(this.icontainer_0);
-            this.assemblyLoader_4 = new AssemblyLoader(this.icontainer_0);
+            this.dataSourceManager_0 = new DataSourceManager(this.components);
+            this.chartRenderer_0 = new ChartRenderer(this.components);
+            this.strategyManager_0 = new StrategyManager(this.components);
+            this.drawingObjectManager_0 = new DrawingObjectManager(this.components);
+            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.components);
+            this.strategyManager_1 = new StrategyManager(this.components);
+            this.tradeManager_0 = new WealthLab.TradeManager(this.components);
+            this.assemblyLoader_4 = new AssemblyLoader(this.components);
             base.SuspendLayout();
             this.timer_0.Interval = 0xea60;
             this.timer_0.Tick += new EventHandler(this.timer_0_Tick);
@@ -918,7 +918,7 @@
             this.assemblyLoader_4.Path = null;
             this.assemblyLoader_4.PathMask = "*.dll";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.barRange);
             this.helpProvider_0.SetHelpKeyword(this, "introduction.htm");
             this.helpProvider_0.SetHelpNavigator(this, HelpNavigator.Topic);

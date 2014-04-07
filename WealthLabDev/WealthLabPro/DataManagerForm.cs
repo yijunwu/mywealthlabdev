@@ -10,6 +10,8 @@
     using System.Text;
     using System.Windows.Forms;
     using WealthLab;
+    using PictureBox = System.Windows.Forms.PictureBox;
+    using Point = System.Drawing.Point;
 
     public class DataManagerForm : Form, IItemTracker<DataSource>, IDataUpdateMessage, IWorkspace, IExtendedBehaviorHost
     {
@@ -70,7 +72,7 @@
         private LinkLabel linkProvider;
         private List<HistoricalProvider> list_0 = new List<HistoricalProvider>();
         private List<string> list_1 = new List<string>();
-        private DataSourceListView lvDataSets;
+        private DataSourceListView lvDataSets = new DataSourceListView();
         private ListView lvProviders;
         private SortableListView lvSymbolDetails;
         private ToolStripMenuItem mniAddSymbols;
@@ -581,7 +583,7 @@
         private void InitializeComponent()
         {
             this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(DataManagerForm));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(DataManagerForm));
             this.imageList_0 = new ImageList(this.icontainer_0);
             this.popupSymDetails = new ContextMenuStrip(this.icontainer_0);
             this.mniAddSymbols = new ToolStripMenuItem();
@@ -670,21 +672,21 @@
             this.pageUpdateLog.SuspendLayout();
             this.toolbarUpdate.SuspendLayout();
             base.SuspendLayout();
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "NewDS.bmp");
             this.popupSymDetails.Items.AddRange(new ToolStripItem[] { this.mniAddSymbols, this.mniRemoveSymbols, this.mniReloadSymbolData, this.mniStockSplit });
             this.popupSymDetails.Name = "popupSymDetails";
             this.popupSymDetails.Size = new Size(0xdb, 0x5c);
             this.mniAddSymbols.Enabled = false;
-            this.mniAddSymbols.Image = (Image) manager.GetObject("mniAddSymbols.Image");
+            this.mniAddSymbols.Image = (Image) resources.GetObject("mniAddSymbols.Image");
             this.mniAddSymbols.ImageTransparentColor = Color.Fuchsia;
             this.mniAddSymbols.Name = "mniAddSymbols";
             this.mniAddSymbols.Size = new Size(0xda, 0x16);
             this.mniAddSymbols.Text = "Add Symbols ...";
             this.mniAddSymbols.Click += new EventHandler(this.mniAddSymbols_Click);
             this.mniRemoveSymbols.Enabled = false;
-            this.mniRemoveSymbols.Image = (Image) manager.GetObject("mniRemoveSymbols.Image");
+            this.mniRemoveSymbols.Image = (Image) resources.GetObject("mniRemoveSymbols.Image");
             this.mniRemoveSymbols.ImageTransparentColor = Color.Fuchsia;
             this.mniRemoveSymbols.Name = "mniRemoveSymbols";
             this.mniRemoveSymbols.Size = new Size(0xda, 0x16);
@@ -739,14 +741,14 @@
             this.toolStrip1.Size = new Size(0x266, 0x19);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
-            this.btnNewDS.Image = (Image) manager.GetObject("btnNewDS.Image");
+            this.btnNewDS.Image = (Image) resources.GetObject("btnNewDS.Image");
             this.btnNewDS.ImageTransparentColor = Color.Magenta;
             this.btnNewDS.Name = "btnNewDS";
             this.btnNewDS.Size = new Size(0x86, 0x16);
             this.btnNewDS.Text = "Create a new DataSet";
             this.btnNewDS.Click += new EventHandler(this.btnNewDS_Click);
             this.btnUpdate.Enabled = false;
-            this.btnUpdate.Image = (Image) manager.GetObject("btnUpdate.Image");
+            this.btnUpdate.Image = (Image) resources.GetObject("btnUpdate.Image");
             this.btnUpdate.ImageTransparentColor = Color.Magenta;
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new Size(0x68, 0x16);
@@ -754,7 +756,7 @@
             this.btnUpdate.ToolTipText = "Update pricing and fundamentals data for the selected DataSet";
             this.btnUpdate.Click += new EventHandler(this.btnUpdate_Click);
             this.btnUpdatePricing.Enabled = false;
-            this.btnUpdatePricing.Image = (Image) manager.GetObject("btnUpdatePricing.Image");
+            this.btnUpdatePricing.Image = (Image) resources.GetObject("btnUpdatePricing.Image");
             this.btnUpdatePricing.ImageTransparentColor = Color.Magenta;
             this.btnUpdatePricing.Name = "btnUpdatePricing";
             this.btnUpdatePricing.Size = new Size(0x92, 0x16);
@@ -762,14 +764,14 @@
             this.btnUpdatePricing.ToolTipText = "Update pricing data for the selected DataSet";
             this.btnUpdatePricing.Click += new EventHandler(this.btnUpdatePricing_Click);
             this.btnDetails.Enabled = false;
-            this.btnDetails.Image = (Image) manager.GetObject("btnDetails.Image");
+            this.btnDetails.Image = (Image) resources.GetObject("btnDetails.Image");
             this.btnDetails.ImageTransparentColor = Color.Magenta;
             this.btnDetails.Name = "btnDetails";
             this.btnDetails.Size = new Size(0x60, 0x16);
             this.btnDetails.Text = "Symbol Details";
             this.btnDetails.ToolTipText = "Get Symbol details for the selected DataSet";
             this.btnDetails.Click += new EventHandler(this.btnDetails_Click);
-            this.btnHelp.Image = (Image) manager.GetObject("btnHelp.Image");
+            this.btnHelp.Image = (Image) resources.GetObject("btnHelp.Image");
             this.btnHelp.ImageTransparentColor = Color.Magenta;
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new Size(0x30, 0x16);
@@ -832,14 +834,14 @@
             this.grpDataSets.Text = "DataSets";
             this.picDataSet.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             this.picDataSet.BackColor = Color.Transparent;
-            this.picDataSet.Location = new Point(7, 269 - 30); ///(7, 0x10d);
+            this.picDataSet.Location = new Point(7, 239); ///(7, 269 - 30); ///(7, 0x10d);
             this.picDataSet.Name = "picDataSet";
             this.picDataSet.Size = new Size(0x10, 0x10);
             this.picDataSet.TabIndex = 6;
             this.picDataSet.TabStop = false;
             this.linkProvider.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             this.linkProvider.AutoSize = true;
-            this.linkProvider.Location = new Point(9, 323 - 30); ///(9, 0x143);
+            this.linkProvider.Location = new Point(9, 293); ///(9, 323 - 30); ///(9, 0x143);
             this.linkProvider.Name = "linkProvider";
             this.linkProvider.Size = new Size(0x2b, 13);
             this.linkProvider.TabIndex = 5;
@@ -848,20 +850,20 @@
             this.linkProvider.Visible = false;
             this.linkProvider.LinkClicked += new LinkLabelLinkClickedEventHandler(this.linkProvider_LinkClicked);
             this.lblProviderDesc.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom;
-            this.lblProviderDesc.Location = new Point(33, 285 - 30); ///(0x21, 0x11d);
+            this.lblProviderDesc.Location = new Point(33, 255); //(33, 285 - 30); ///(0x21, 0x11d);
             this.lblProviderDesc.Name = "lblProviderDesc";
             this.lblProviderDesc.Size = new Size(260, 0x33);
             this.lblProviderDesc.TabIndex = 4;
             this.lblProviderName.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             this.lblProviderName.AutoSize = true;
             this.lblProviderName.ForeColor = SystemColors.Highlight;
-            this.lblProviderName.Location = new Point(116, 269 - 30); //(0x74, 0x10d);
+            this.lblProviderName.Location = new Point(116, 239); ///(116, 269 - 30); //(0x74, 0x10d);
             this.lblProviderName.Name = "lblProviderName";
             this.lblProviderName.Size = new Size(0, 13);
             this.lblProviderName.TabIndex = 2;
             this.lblProvider.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             this.lblProvider.AutoSize = true;
-            this.lblProvider.Location = new Point(29, 269 - 30); ///(0x1d, 0x10d);
+            this.lblProvider.Location = new Point(29, 239); ///(29, 269 - 30); ///(0x1d, 0x10d);
             this.lblProvider.Name = "lblProvider";
             this.lblProvider.Size = new Size(0x54, 13);
             this.lblProvider.TabIndex = 1;
@@ -872,7 +874,7 @@
             this.lvDataSets.Location = new Point(7, 20);
             this.lvDataSets.MultiSelect = false;
             this.lvDataSets.Name = "lvDataSets";
-            this.lvDataSets.Size = new Size(286, 246 - 30); //(0x11e, 0xf6);
+            this.lvDataSets.Size = new Size(286, 216); ///(286, 246 - 30); //(0x11e, 0xf6);
             this.lvDataSets.TabIndex = 0;
             this.lvDataSets.Text = "dataSourceListView1";
             this.lvDataSets.UseCompatibleStateImageBehavior = false;
@@ -1138,7 +1140,7 @@
             this.progUpdate.Name = "progUpdate";
             this.progUpdate.Size = new Size(200, 0x16);
             this.btnCancelUpdate.Enabled = false;
-            this.btnCancelUpdate.Image = (Image) manager.GetObject("btnCancelUpdate.Image");
+            this.btnCancelUpdate.Image = (Image) resources.GetObject("btnCancelUpdate.Image");
             this.btnCancelUpdate.ImageTransparentColor = Color.White;
             this.btnCancelUpdate.Name = "btnCancelUpdate";
             this.btnCancelUpdate.Size = new Size(0x61, 0x16);
@@ -1147,19 +1149,19 @@
             this.sepUpdate.Name = "sepUpdate";
             this.sepUpdate.Size = new Size(6, 0x19);
             this.btnClearLog.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnClearLog.Image = (Image) manager.GetObject("btnClearLog.Image");
+            this.btnClearLog.Image = (Image) resources.GetObject("btnClearLog.Image");
             this.btnClearLog.ImageTransparentColor = Color.Magenta;
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new Size(0x38, 0x16);
             this.btnClearLog.Text = "Clear Log";
             this.btnClearLog.Click += new EventHandler(this.btnClearLog_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x266, 0x1b2);
             base.Controls.Add(this.tabDSM);
             base.Controls.Add(this.toolStrip1);
             base.Controls.Add(this.statusStrip1);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.Name = "DataManagerForm";
             base.ShowInTaskbar = false;
             base.StartPosition = FormStartPosition.Manual;
@@ -1447,7 +1449,7 @@
             this.btnUpdate.Enabled = flag;
             if (flag)
             {
-                DataSource tag = (DataSource) this.lvDataSets.SelectedItems[0].Tag;
+                DataSource tag = (DataSource)this.lvDataSets.SelectedItems[0].Tag;
                 this.btnUpdate.Enabled = tag.Provider.SupportsDataSourceUpdate;
             }
             this.btnUpdatePricing.Enabled = this.btnUpdate.Enabled;
