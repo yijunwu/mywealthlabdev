@@ -60,11 +60,17 @@
     <EmbeddedResource Include="WealthLabPro\AccountsPositionsForm.resx">
       <DependentUpon>AccountsPositionsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\AddPriceTriggerForm.resx">
+      <DependentUpon>AddPriceTriggerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\Alerts.resx">
       <DependentUpon>Alerts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\BarDataRangeSelecter.resx">
       <DependentUpon>BarDataRangeSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\BarDataRangeSelecterForm.resx">
+      <DependentUpon>BarDataRangeSelecterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\Builder.resx">
       <DependentUpon>Builder.cs</DependentUpon>
@@ -72,27 +78,66 @@
     <EmbeddedResource Include="WealthLabPro\ChartForm.resx">
       <DependentUpon>ChartForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\ChartSettingsForm.resx">
+      <DependentUpon>ChartSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\CombinationStrategyBuilder.resx">
       <DependentUpon>CombinationStrategyBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\DataManagerForm.resx">
       <DependentUpon>DataManagerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\DataWindowForm.resx">
+      <DependentUpon>DataWindowForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\Description.resx">
       <DependentUpon>Description.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\EditAlertForm.resx">
+      <DependentUpon>EditAlertForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\EditOrderForm.resx">
+      <DependentUpon>EditOrderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\FundamentalsForm.resx">
+      <DependentUpon>FundamentalsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\HomeForm.resx">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\IndexManagerForm.resx">
+      <DependentUpon>IndexManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\IndicatorsForm.resx">
+      <DependentUpon>IndicatorsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\MainModule.resx">
+      <DependentUpon>MainModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\NewDataSourceForm.resx">
+      <DependentUpon>NewDataSourceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\Optimization.resx">
+      <DependentUpon>Optimization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\OptimizerSettings.resx">
+      <DependentUpon>OptimizerSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\OrdersAlertsForm.resx">
       <DependentUpon>OrdersAlertsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\PositionSizeSelecter.resx">
       <DependentUpon>PositionSizeSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\PositionSizeSelecterForm.resx">
+      <DependentUpon>PositionSizeSelecterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\PreferencesForm.resx">
       <DependentUpon>PreferencesForm.cs</DependentUpon>
@@ -103,8 +148,29 @@
     <EmbeddedResource Include="WealthLabPro\QuotesForm.resx">
       <DependentUpon>QuotesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\ReferencesForm.resx">
+      <DependentUpon>ReferencesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\RuleFundamentalsForm.resx">
+      <DependentUpon>RuleFundamentalsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\RuleIndicatorsForm.resx">
+      <DependentUpon>RuleIndicatorsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\SaveStrategyAsForm.resx">
       <DependentUpon>SaveStrategyAsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\ScaleSelecter.resx">
+      <DependentUpon>ScaleSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\ScaleSelecterForm.resx">
+      <DependentUpon>ScaleSelecterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\StockSplitForm.resx">
+      <DependentUpon>StockSplitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\StrategyAccountForm.resx">
+      <DependentUpon>StrategyAccountForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\StrategyCenterForm.resx">
       <DependentUpon>StrategyCenterForm.cs</DependentUpon>
@@ -117,6 +183,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\StrategyRanking.resx">
       <DependentUpon>StrategyRanking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\StrategySettingsForm.resx">
+      <DependentUpon>StrategySettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\SymbolManagerForm.resx">
+      <DependentUpon>SymbolManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\WizardCodeForm.resx">
+      <DependentUpon>WizardCodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\WLPException.resx">
+      <DependentUpon>WLPException.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\ChartControl\DataEditor.resx">
+      <DependentUpon>DataEditor.cs</DependentUpon>
     </EmbeddedResource>
     <Reference Include="mscorlib" />
     <Reference Include="log4net, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
@@ -313,41 +394,14 @@
       <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="WealthLabPro.PositionSizeSelecter.bmp" />
-    <EmbeddedResource Include="WealthLabPro.ScaleSelecter.resources" />
-    <EmbeddedResource Include="WealthLabPro.ScaleSelecterForm.resources" />
     <EmbeddedResource Include="WealthLabPro.Properties.Resources.resources" />
     <EmbeddedResource Include="WealthLabPro.StrategyBuilder.bmp" />
-    <EmbeddedResource Include="WealthLabPro.WLPException.resources" />
-    <EmbeddedResource Include="WealthLabPro.Optimization.resources" />
-    <EmbeddedResource Include="WealthLabPro.IndexManagerForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.AddPriceTriggerForm.resources" />
     <EmbeddedResource Include="WealthLabPro.BarDataRangeSelecter.bmp" />
     <EmbeddedResource Include="WealthLabPro.EditDescriptionForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.StockSplitForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.RuleFundamentalsForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.ChartSettingsForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.NewDataSourceForm.resources" />
     <EmbeddedResource Include="WealthLabPro.Editor.resources" />
-    <EmbeddedResource Include="WealthLabPro.SymbolManagerForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.ReferencesForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.FundamentalsForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.EditOrderForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.DebugForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.IndicatorsForm.resources" />
     <EmbeddedResource Include="WealthLabPro.ScaleSelecter.bmp" />
-    <EmbeddedResource Include="WealthLabPro.RuleIndicatorsForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.WizardCodeForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.MainModule.resources" />
-    <EmbeddedResource Include="WealthLabPro.EditAlertForm.resources" />
     <EmbeddedResource Include="WealthLabPro.QuickRefManager.bmp" />
-    <EmbeddedResource Include="WealthLabPro.StrategySettingsForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.StrategyAccountForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.BarDataRangeSelecterForm.resources" />
     <EmbeddedResource Include="WealthLabDev.exe.licenses" />
-    <EmbeddedResource Include="WealthLabPro.PositionSizeSelecterForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.OptimizerSettings.resources" />
-    <EmbeddedResource Include="WealthLabPro.DataWindowForm.resources" />
-    <EmbeddedResource Include="WealthLab.ChartControl.DataEditor.resources" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
