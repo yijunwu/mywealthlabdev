@@ -2,7 +2,7 @@
 {
     using System;
     using System.Drawing;
-    using WealthLab.ChartControl.Properties;
+    //using Properties;
 
     public class TrendlineHelper : DrawingObjectHelper
     {
@@ -34,7 +34,7 @@
         {
             get
             {
-                return Resources.Trendline;
+                return Properties.Resources.Trendline;
             }
         }
 

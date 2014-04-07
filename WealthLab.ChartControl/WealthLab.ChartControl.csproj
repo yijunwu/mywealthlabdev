@@ -30,17 +30,31 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>WealthLab.ChartControl</RootNamespace>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\ChartControl\ScaleSelector.resx">
+      <DependentUpon>ScaleSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="WealthLab\ChartControl\PolygonBasedObjectSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WealthLab\ChartControl\Properties\Resources.cs" />
     <Compile Include="WealthLab\ChartControl\GeneralToolTip.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -101,7 +115,6 @@
     <Compile Include="WealthLab\ChartControl\ScaleChangeEventArgs.cs" />
     <Compile Include="WealthLab\ChartControl\PaneDescriptor.cs" />
     <Compile Include="WealthLab\ChartControl\DroppedIndicatorEventArgs.cs" />
-    <EmbeddedResource Include="WealthLab.ChartControl.Properties.Resources.resources" />
     <EmbeddedResource Include="WealthLab.ChartControl.PolygonBasedObjectSettings.resources" />
     <EmbeddedResource Include="WealthLab.ChartControl.IndicatorParametersForm.resources" />
     <EmbeddedResource Include="WealthLab.ChartControl.LineBasedObjectSettings.resources" />
@@ -113,7 +126,6 @@
     <EmbeddedResource Include="WealthLab.ChartControl.Chart.resources" />
     <EmbeddedResource Include="WealthLab.ChartControl.DrawingObjectManager.bmp" />
     <EmbeddedResource Include="WealthLab.ChartControl.IndicatorDragDropManager.bmp" />
-    <EmbeddedResource Include="WealthLab.ChartControl.ScaleSelector.resources" />
     <EmbeddedResource Include="WealthLab.ChartControl.GlyphToolTip.resources" />
     <EmbeddedResource Include="WealthLab.ChartControl.DrawingObjectProperties.resources" />
   </ItemGroup>
@@ -126,5 +138,11 @@
       <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
       <Name>WealthLab</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WealthLab\ChartControl\Properties\" />
   </ItemGroup>
 </Project>

@@ -6,8 +6,9 @@
     using System.Drawing.Drawing2D;
     using System.IO;
     using System.Windows.Forms;
-    using WealthLab;
-    using WealthLab.ChartControl.Properties;
+    using Properties;
+    ///using WealthLab;
+    
 
     public class CDOTrendline : CDOLineBased
     {

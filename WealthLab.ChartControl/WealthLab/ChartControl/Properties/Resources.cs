@@ -103,7 +103,7 @@
             {
                 if (object.ReferenceEquals(resourceManager_0, null))
                 {
-                    System.Resources.ResourceManager manager = new System.Resources.ResourceManager("WealthLab.ChartControl.Properties.Resources", typeof(Resources).Assembly);
+                    System.Resources.ResourceManager manager = new System.Resources.ResourceManager("WealthLab.ChartControl.Properties.Resources", typeof(WealthLab.ChartControl.Properties.Resources).Assembly);
                     resourceManager_0 = manager;
                 }
                 return resourceManager_0;

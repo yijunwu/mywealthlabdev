@@ -6,8 +6,9 @@
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Windows.Forms;
-    using WealthLab;
-    using WealthLab.ChartControl.Properties;
+    //using WealthLab;
+    using Properties;
+    //using Resources = Properties.Resources;
 
     public class ScaleSelector : UserControl
     {
@@ -15,7 +16,7 @@
         private bool bool_0;
         [CompilerGenerated]
         private bool bool_1;
-        private IContainer icontainer_0;
+        private IContainer components;
         private int int_0;
         private ToolStripLabel lblArrow;
         private ToolStrip toolScale;
@@ -79,9 +80,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -118,6 +119,7 @@
             this.lblArrow.AutoToolTip = true;
             this.lblArrow.DisplayStyle = ToolStripItemDisplayStyle.Image;
             this.lblArrow.Image = Resources.arrow;
+            ///this.lblArrow.Image = (Bitmap)WealthLab.ChartControl.Properties.Resources.ResourceManager.GetObject("arrow", null); ; 
             this.lblArrow.Name = "lblArrow";
             this.lblArrow.Size = new Size(0x10, 0x1b);
             this.lblArrow.Text = "Scale";
@@ -154,7 +156,8 @@
             this.tsb15.Click += new EventHandler(this.tsbD_Click);
             this.tsb10.Alignment = ToolStripItemAlignment.Right;
             this.tsb10.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.tsb10.Image = Resources.Bitmap_1;
+            ///this.tsb10.Image = Resources.Bitmap_1;   ///WYJ fix, map to Resources.ten according to original Resources.cs
+            this.tsb10.Image = Resources.ten;
             this.tsb10.ImageTransparentColor = Color.Magenta;
             this.tsb10.Name = "tsb10";
             this.tsb10.Size = new Size(0x17, 0x1b);
@@ -172,7 +175,8 @@
             this.tsb5.Click += new EventHandler(this.tsbD_Click);
             this.tsb1.Alignment = ToolStripItemAlignment.Right;
             this.tsb1.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.tsb1.Image = Resources.Bitmap_0;
+            ///this.tsb1.Image = Resources.Bitmap_0; ///WYJ fix, map to Resources.one according to original Resources.cs
+            this.tsb1.Image = Resources.one;
             this.tsb1.ImageTransparentColor = Color.Magenta;
             this.tsb1.Name = "tsb1";
             this.tsb1.Size = new Size(0x17, 0x1b);
@@ -208,9 +212,9 @@
             this.tsbD.ToolTipText = "Daily Chart Data";
             this.tsbD.Click += new EventHandler(this.tsbD_Click);
             base.AutoScaleDimensions = new SizeF(96f, 96f);
-            base.AutoScaleMode = AutoScaleMode.Dpi;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = Color.Transparent;
-            base.BorderStyle = BorderStyle.FixedSingle;
+            base.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             base.Controls.Add(this.toolScale);
             base.Name = "ScaleSelector";
             base.Size = new Size(0xed, 0x18);
