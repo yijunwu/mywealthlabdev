@@ -18,7 +18,7 @@
     using WealthLab.ChartControl;
     using WealthLabPro.Properties;
 
-    public class ChartForm : Form, IWorkspace, IConnectionStatus, ICDOBehavior, IVisualizerHost, IWealthScriptProvider
+    public partial class ChartForm : Form, IWorkspace, IConnectionStatus, ICDOBehavior, IVisualizerHost, IWealthScriptProvider
     {
         private Alerts alerts_0;
         private AutoResetEvent autoResetEvent_0 = new AutoResetEvent(false);
@@ -28,8 +28,8 @@
         internal BarsLoader barsLoader_0;
         private bool bool_0;
         private bool bool_1;
-        private bool bool_10;
-        private bool bool_11;
+        private bool multiSymbol;  ///WYJ fix, original name: bool_10
+        private bool cancel;  ///WYJ fix, original name: bool_11
         private bool bool_12;
         private bool bool_13;
         private bool bool_14;
@@ -71,7 +71,7 @@
         private ToolStripMenuItem enableDisableStreamingHiddenMenuItem;
         internal FundamentalsLoader fundamentalsLoader_0;
         private GroupBox grpMultiSymbol;
-        private IContainer icontainer_0;
+        private IContainer components;  ///WYJ fix, renamed from icontainer_0 to components, according to: http://blog.stephencleary.com/2009/11/reverse-compiling-windows-forms.html
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
         private IndicatorDragDropManager indicatorDragDropManager_0;
@@ -168,7 +168,7 @@
             {
                 this.chartRenderer_0.FundamentalGlyphs = "Split;Dividend;";
             }
-            this.chart.DataScaleChange += new EventHandler<ScaleChangeEventArgs>(this.method_0);
+            this.chart.DataScaleChange += new EventHandler<ScaleChangeEventArgs>(this.scaleChangeEventHandler);
         }
 
         /// <summary>
@@ -297,7 +297,7 @@
                 {
                     this.WealthScript.RestoreParameterDefaults();
                 }
-                if (((this.Symbol != null) && (this.Symbol != "")) && !this.bool_10)
+                if (((this.Symbol != null) && (this.Symbol != "")) && !this.multiSymbol)
                 {
                     this.GoButtonPressed(this.Symbol, true);
                 }
@@ -311,8 +311,8 @@
 
         private void btnRunAllCancel_Click(object sender, EventArgs e)
         {
-            this.bool_11 = true;
-            this.bool_10 = false;
+            this.cancel = true;
+            this.multiSymbol = false;
         }
 
         private void btnStreaming_CheckedChanged(object sender, EventArgs e)
@@ -381,7 +381,7 @@
                 }
                 else if (this.AllowEditBarData && this.DataSource.Provider.DataStore.ContainsSymbol(this.Bars.Symbol, this.Bars.Scale, this.Bars.BarInterval))
                 {
-                    this.method_59(this.int_2);
+                    this.editBarData(this.int_2);
                 }
                 else
                 {
@@ -637,9 +637,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -652,7 +652,7 @@
 
         private void editBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.method_59(this.int_4);
+            this.editBarData(this.int_4);
         }
 
         public void EditCopy()
@@ -770,7 +770,7 @@
 
         public void GoButtonPressed(string symbol, bool force)
         {
-            if (!this.bool_10 || force)
+            if (!this.multiSymbol || force)
             {
                 if ((symbol == "") && !this.bool_3)
                 {
@@ -779,9 +779,9 @@
                 else if (symbol != "")
                 {
                     this.Symbol = symbol;
-                    this.bool_10 = false;
+                    this.multiSymbol = false;
                     this.ShowMultiSymbolControls(false);
-                    this.method_16();
+                    this.runStrategy();
                 }
             }
         }
@@ -795,8 +795,9 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(ChartForm));
+            this.components = new Container();
+            ///WYJ fix, 'manager' renamed to 'resources', according to http://blog.stephencleary.com/2009/11/reverse-compiling-windows-forms.html
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WealthLabPro.ChartForm));
             WealthLab.PositionSize size = new WealthLab.PositionSize();
             WealthLab.PositionSize size2 = new WealthLab.PositionSize();
             this.status = new StatusStrip();
@@ -812,7 +813,7 @@
             this.stlblBHPerBar = new ToolStripStatusLabel();
             this.stlblLastDate = new ToolStripStatusLabel();
             this.stlblBars = new ToolStripStatusLabel();
-            this.popupChart = new ContextMenuStrip(this.icontainer_0);
+            this.popupChart = new ContextMenuStrip(this.components);
             this.mniChartBuy = new ToolStripMenuItem();
             this.mniChartSell = new ToolStripMenuItem();
             this.sepBuySell = new ToolStripSeparator();
@@ -862,7 +863,7 @@
             this.barRange = new BarDataRangeSelecter();
             this.grpMultiSymbol = new GroupBox();
             this.btnRunAllCancel = new Button();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.lblRunAllStatus = new Label();
             this.lblStatus = new Label();
             this.progRunAll = new ProgressBar();
@@ -870,17 +871,17 @@
             this.btnRunAll = new Button();
             this.posSize = new PositionSizeSelecter();
             this.chart = new Chart();
-            this.indicatorDragDropManager_0 = new IndicatorDragDropManager(this.icontainer_0);
-            this.drawingObjectManager_0 = new DrawingObjectManager(this.icontainer_0);
-            this.timer_0 = new System.Windows.Forms.Timer(this.icontainer_0);
-            this.chartRenderer_0 = new ChartRenderer(this.icontainer_0);
-            this.tradingSystemExecutor_1 = new TradingSystemExecutor(this.icontainer_0);
-            this.barsLoader_0 = new BarsLoader(this.icontainer_0);
-            this.fundamentalsLoader_0 = new FundamentalsLoader(this.icontainer_0);
-            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.icontainer_0);
-            this.streamingChartManager_0 = new StreamingChartManager(this.icontainer_0);
-            this.marketHours_0 = new MarketHours(this.icontainer_0);
-            this.drawingObjectManager_1 = new DrawingObjectManager(this.icontainer_0);
+            this.indicatorDragDropManager_0 = new IndicatorDragDropManager(this.components);
+            this.drawingObjectManager_0 = new DrawingObjectManager(this.components);
+            this.timer_0 = new System.Windows.Forms.Timer(this.components);
+            this.chartRenderer_0 = new ChartRenderer(this.components);
+            this.tradingSystemExecutor_1 = new TradingSystemExecutor(this.components);
+            this.barsLoader_0 = new BarsLoader(this.components);
+            this.fundamentalsLoader_0 = new FundamentalsLoader(this.components);
+            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.components);
+            this.streamingChartManager_0 = new StreamingChartManager(this.components);
+            this.marketHours_0 = new MarketHours(this.components);
+            this.drawingObjectManager_1 = new DrawingObjectManager(this.components);
             this.status.SuspendLayout();
             this.popupChart.SuspendLayout();
             this.tabChart.SuspendLayout();
@@ -899,7 +900,7 @@
             this.status.TabIndex = 0;
             this.status.Text = "statusStrip1";
             this.btnStreaming.Alignment = ToolStripItemAlignment.Right;
-            this.btnStreaming.Image = (Image) manager.GetObject("btnStreaming.Image");
+            this.btnStreaming.Image = (Image) resources.GetObject("btnStreaming.Image");
             this.btnStreaming.ImageTransparentColor = Color.Magenta;
             this.btnStreaming.Name = "btnStreaming";
             this.btnStreaming.Size = new Size(0x3d, 20);
@@ -909,7 +910,7 @@
             this.btnStreaming.Click += new EventHandler(this.enableDisableStreamingHiddenMenuItem_Click);
             this.btnPV.Alignment = ToolStripItemAlignment.Right;
             this.btnPV.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnPV.Image = (Image) manager.GetObject("btnPV.Image");
+            this.btnPV.Image = (Image) resources.GetObject("btnPV.Image");
             this.btnPV.ImageTransparentColor = Color.White;
             this.btnPV.Name = "btnPV";
             this.btnPV.Size = new Size(0x17, 20);
@@ -919,7 +920,7 @@
             this.btnPV.Click += new EventHandler(this.btnPV_Click);
             this.btnLink.Alignment = ToolStripItemAlignment.Right;
             this.btnLink.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnLink.Image = (Image) manager.GetObject("btnLink.Image");
+            this.btnLink.Image = (Image) resources.GetObject("btnLink.Image");
             this.btnLink.ImageTransparentColor = Color.Magenta;
             this.btnLink.Name = "btnLink";
             this.btnLink.Size = new Size(0x17, 20);
@@ -987,13 +988,13 @@
             this.popupChart.Name = "popupChart";
             this.popupChart.Size = new Size(0x182, 0x23e);
             this.popupChart.Opening += new CancelEventHandler(this.popupChart_Opening);
-            this.mniChartBuy.Image = (Image) manager.GetObject("mniChartBuy.Image");
+            this.mniChartBuy.Image = (Image) resources.GetObject("mniChartBuy.Image");
             this.mniChartBuy.ImageTransparentColor = Color.Silver;
             this.mniChartBuy.Name = "mniChartBuy";
             this.mniChartBuy.Size = new Size(0x181, 0x16);
             this.mniChartBuy.Text = "Buy 100";
             this.mniChartBuy.Click += new EventHandler(this.mniChartBuy_Click);
-            this.mniChartSell.Image = (Image) manager.GetObject("mniChartSell.Image");
+            this.mniChartSell.Image = (Image) resources.GetObject("mniChartSell.Image");
             this.mniChartSell.ImageTransparentColor = Color.Silver;
             this.mniChartSell.Name = "mniChartSell";
             this.mniChartSell.Size = new Size(0x181, 0x16);
@@ -1001,13 +1002,13 @@
             this.mniChartSell.Click += new EventHandler(this.mniChartSell_Click);
             this.sepBuySell.Name = "sepBuySell";
             this.sepBuySell.Size = new Size(0x17e, 6);
-            this.mniChartShort.Image = (Image) manager.GetObject("mniChartShort.Image");
+            this.mniChartShort.Image = (Image) resources.GetObject("mniChartShort.Image");
             this.mniChartShort.ImageTransparentColor = Color.Silver;
             this.mniChartShort.Name = "mniChartShort";
             this.mniChartShort.Size = new Size(0x181, 0x16);
             this.mniChartShort.Text = "Short 100";
             this.mniChartShort.Click += new EventHandler(this.mniChartShort_Click);
-            this.mniChartCover.Image = (Image) manager.GetObject("mniChartCover.Image");
+            this.mniChartCover.Image = (Image) resources.GetObject("mniChartCover.Image");
             this.mniChartCover.ImageTransparentColor = Color.Silver;
             this.mniChartCover.Name = "mniChartCover";
             this.mniChartCover.Size = new Size(0x181, 0x16);
@@ -1015,32 +1016,33 @@
             this.mniChartCover.Click += new EventHandler(this.mniChartCover_Click);
             this.sepShortCover.Name = "sepShortCover";
             this.sepShortCover.Size = new Size(0x17e, 6);
-            this.mniAddStrategy.Image = (Image) manager.GetObject("mniAddStrategy.Image");
+            this.mniAddStrategy.Image = (Image) resources.GetObject("mniAddStrategy.Image");
             this.mniAddStrategy.ImageTransparentColor = Color.Fuchsia;
             this.mniAddStrategy.Name = "mniAddStrategy";
             this.mniAddStrategy.Size = new Size(0x181, 0x16);
             this.mniAddStrategy.Text = "Open a Strategy ...";
             this.mniAddStrategy.Click += new EventHandler(this.mniAddDifferent_Click);
-            this.mniAddDifferent.Image = (Image) manager.GetObject("mniAddDifferent.Image");
+            this.mniAddDifferent.Image = (Image) resources.GetObject("mniAddDifferent.Image");
             this.mniAddDifferent.ImageTransparentColor = Color.Fuchsia;
             this.mniAddDifferent.Name = "mniAddDifferent";
             this.mniAddDifferent.Size = new Size(0x181, 0x16);
             this.mniAddDifferent.Text = "Open a different Strategy ...";
             this.mniAddDifferent.Visible = false;
             this.mniAddDifferent.Click += new EventHandler(this.mniAddDifferent_Click);
-            this.mniPlotIndicator.Image = (Image) manager.GetObject("mniPlotIndicator.Image");
+            this.mniPlotIndicator.Image = (Image) resources.GetObject("mniPlotIndicator.Image");
             this.mniPlotIndicator.ImageTransparentColor = Color.Fuchsia;
             this.mniPlotIndicator.Name = "mniPlotIndicator";
             this.mniPlotIndicator.Size = new Size(0x181, 0x16);
             this.mniPlotIndicator.Text = "Plot an Indicator on the Chart ...";
             this.mniPlotIndicator.Click += new EventHandler(this.mniPlotIndicator_Click);
-            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Image = (Image) manager.GetObject("plotAFundamentalDataItemOnTheChartToolStripMenuItem.Image");
+            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Image = (Image) resources.GetObject("plotAFundamentalDataItemOnTheChartToolStripMenuItem.Image");
             this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.ImageTransparentColor = Color.Fuchsia;
             this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Name = "plotAFundamentalDataItemOnTheChartToolStripMenuItem";
             this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Size = new Size(0x181, 0x16);
             this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Text = "Plot a Fundamental Data Item on the Chart ...";
             this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Click += new EventHandler(this.plotAFundamentalDataItemOnTheChartToolStripMenuItem_Click);
-            this.mniPushCode.Image = Resources.wlp_push;
+            ///this.mniPushCode.Image = WealthLabPro.Properties.Resources.wlp_push;
+            this.mniPushCode.Image = (Image)resources.GetObject("wlp_push");  ///WYJ fix
             this.mniPushCode.ImageTransparentColor = Color.Fuchsia;
             this.mniPushCode.Name = "mniPushCode";
             this.mniPushCode.Size = new Size(0x181, 0x16);
@@ -1049,7 +1051,7 @@
             this.mniPushCode.Click += new EventHandler(this.mniPushCode_Click);
             this.sepPlot.Name = "sepPlot";
             this.sepPlot.Size = new Size(0x17e, 6);
-            this.mniCopyChart.Image = (Image) manager.GetObject("mniCopyChart.Image");
+            this.mniCopyChart.Image = (Image) resources.GetObject("mniCopyChart.Image");
             this.mniCopyChart.ImageTransparentColor = Color.Fuchsia;
             this.mniCopyChart.Name = "mniCopyChart";
             this.mniCopyChart.Size = new Size(0x181, 0x16);
@@ -1065,7 +1067,7 @@
             this.mniAddSymbolToDataSet.Size = new Size(0x181, 0x16);
             this.mniAddSymbolToDataSet.Text = "Add this Symbol to the selected DataSet";
             this.mniAddSymbolToDataSet.Click += new EventHandler(this.mniAddSymbolToDataSet_Click);
-            this.mniPrint.Image = (Image) manager.GetObject("mniPrint.Image");
+            this.mniPrint.Image = (Image) resources.GetObject("mniPrint.Image");
             this.mniPrint.Name = "mniPrint";
             this.mniPrint.Size = new Size(0x181, 0x16);
             this.mniPrint.Text = "Print";
@@ -1078,14 +1080,14 @@
             this.mniPrintAll.Click += new EventHandler(this.mniPrintAll_Click);
             this.sepCopyChart.Name = "sepCopyChart";
             this.sepCopyChart.Size = new Size(0x17e, 6);
-            this.mniIndicatorProperties.Image = (Image) manager.GetObject("mniIndicatorProperties.Image");
+            this.mniIndicatorProperties.Image = (Image) resources.GetObject("mniIndicatorProperties.Image");
             this.mniIndicatorProperties.ImageTransparentColor = Color.Fuchsia;
             this.mniIndicatorProperties.Name = "mniIndicatorProperties";
             this.mniIndicatorProperties.Size = new Size(0x181, 0x16);
             this.mniIndicatorProperties.Text = "Change Indicator Properties";
             this.mniIndicatorProperties.Visible = false;
             this.mniIndicatorProperties.Click += new EventHandler(this.mniIndicatorProperties_Click);
-            this.mniDeleteIndicator.Image = (Image) manager.GetObject("mniDeleteIndicator.Image");
+            this.mniDeleteIndicator.Image = (Image) resources.GetObject("mniDeleteIndicator.Image");
             this.mniDeleteIndicator.ImageTransparentColor = Color.Fuchsia;
             this.mniDeleteIndicator.Name = "mniDeleteIndicator";
             this.mniDeleteIndicator.Size = new Size(0x181, 0x16);
@@ -1095,14 +1097,14 @@
             this.sepIndicators.Name = "sepIndicators";
             this.sepIndicators.Size = new Size(0x17e, 6);
             this.sepIndicators.Visible = false;
-            this.mniDrawingObjectProperties.Image = (Image) manager.GetObject("mniDrawingObjectProperties.Image");
+            this.mniDrawingObjectProperties.Image = (Image) resources.GetObject("mniDrawingObjectProperties.Image");
             this.mniDrawingObjectProperties.ImageTransparentColor = Color.Fuchsia;
             this.mniDrawingObjectProperties.Name = "mniDrawingObjectProperties";
             this.mniDrawingObjectProperties.Size = new Size(0x181, 0x16);
             this.mniDrawingObjectProperties.Text = "Change Drawing Object Properties";
             this.mniDrawingObjectProperties.Visible = false;
             this.mniDrawingObjectProperties.Click += new EventHandler(this.mniDrawingObjectProperties_Click);
-            this.mniDeleteDrawingObject.Image = (Image) manager.GetObject("mniDeleteDrawingObject.Image");
+            this.mniDeleteDrawingObject.Image = (Image) resources.GetObject("mniDeleteDrawingObject.Image");
             this.mniDeleteDrawingObject.ImageTransparentColor = Color.Fuchsia;
             this.mniDeleteDrawingObject.Name = "mniDeleteDrawingObject";
             this.mniDeleteDrawingObject.Size = new Size(0x181, 0x16);
@@ -1112,7 +1114,7 @@
             this.sepDrawing.Name = "sepDrawing";
             this.sepDrawing.Size = new Size(0x17e, 6);
             this.sepDrawing.Visible = false;
-            this.mniChartOptions.Image = (Image) manager.GetObject("mniChartOptions.Image");
+            this.mniChartOptions.Image = (Image) resources.GetObject("mniChartOptions.Image");
             this.mniChartOptions.ImageTransparentColor = Color.Fuchsia;
             this.mniChartOptions.Name = "mniChartOptions";
             this.mniChartOptions.ShortcutKeys = Keys.Control | Keys.F12;
@@ -1143,7 +1145,7 @@
             this.enableDisableStreamingHiddenMenuItem.Text = "Enable/Disable Streaming";
             this.enableDisableStreamingHiddenMenuItem.Visible = false;
             this.enableDisableStreamingHiddenMenuItem.Click += new EventHandler(this.enableDisableStreamingHiddenMenuItem_Click);
-            this.editBarToolStripMenuItem.Image = (Image) manager.GetObject("editBarToolStripMenuItem.Image");
+            this.editBarToolStripMenuItem.Image = (Image) resources.GetObject("editBarToolStripMenuItem.Image");
             this.editBarToolStripMenuItem.Name = "editBarToolStripMenuItem";
             this.editBarToolStripMenuItem.Size = new Size(0x181, 0x16);
             this.editBarToolStripMenuItem.Text = "Edit Bar Data";
@@ -1304,7 +1306,7 @@
             this.btnRunAllCancel.Text = "Cancel";
             this.btnRunAllCancel.UseVisualStyleBackColor = true;
             this.btnRunAllCancel.Click += new EventHandler(this.btnRunAllCancel_Click);
-            this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("images.ImageStream");
+            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "Execute.bmp");
             this.imageList_0.Images.SetKeyName(1, "Delete.bmp");
@@ -1468,7 +1470,7 @@
             this.tradingSystemExecutor_1.WealthScriptException += new EventHandler<WSExceptionEventArgs>(this.method_33);
             this.tradingSystemExecutor_1.ExternalSymbolRequested += new EventHandler<LoadSymbolEventArgs>(this.method_34);
             this.tradingSystemExecutor_1.ExternalSymbolFromDataSetRequested += new EventHandler<LoadSymbolFromDataSetEventArgs>(this.method_67);
-            this.tradingSystemExecutor_1.ExecutionCompletedForChildStrategySymbol += new EventHandler<BarsEventArgs>(this.method_75);
+            this.tradingSystemExecutor_1.ExecutionCompletedForChildStrategySymbol += new EventHandler<BarsEventArgs>(this.onChildStrategyCompletion);
             this.barsLoader_0.AutoConvertScale = true;
             this.barsLoader_0.AutoCreateProvider = true;
             this.barsLoader_0.BarInterval = 0;
@@ -1528,11 +1530,11 @@
             this.drawingObjectManager_1.ChartBookName = "Standard";
             this.drawingObjectManager_1.RootPath = null;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x3e3, 0x1cb);
             base.Controls.Add(this.tabChart);
             base.Controls.Add(this.status);
-            base.Icon = (Icon) manager.GetObject("$this.Icon");
+            base.Icon = (Icon) resources.GetObject("$this.Icon");
             base.KeyPreview = true;
             base.Name = "ChartForm";
             base.ShowInTaskbar = false;
@@ -1700,7 +1702,9 @@
             return ("Unknown Strategy: " + strategyID);
         }
 
-        private void method_0(object sender, ScaleChangeEventArgs e)
+        ///WYJ fix, original signature: private void method_0(object sender, ScaleChangeEventArgs e)
+        ///WYJ note, event is dispatched from Chart, see Chart.handleScaleChangeEvent()
+        private void scaleChangeEventHandler(object sender, ScaleChangeEventArgs e)
         {
             if (this.method_17(e.ChartScale))
             {
@@ -1728,17 +1732,19 @@
             this.Cursor = Cursors.Default;
         }
 
-        private string method_10(int int_6)
+        ///WYJ fix, original signature: private string method_10(int barNum)
+        private string getStringForBarNum(int barNum)
         {
-            string str = this.Bars.Date[int_6].ToShortDateString();
+            string str = this.Bars.Date[barNum].ToShortDateString();
             if (this.Bars.IsIntraday)
             {
-                str = str + " " + this.Bars.Date[int_6].ToShortTimeString();
+                str = str + " " + this.Bars.Date[barNum].ToShortTimeString();
             }
             return str;
         }
 
-        private void method_11(int int_6, bool bool_18, bool bool_19) ///WYJ fix: update datawindow
+        ///WYJ fix, original signature: private void method_11(int int_6, bool bool_18, bool bool_19) 
+        private void updateDataWindow(int int_6, bool bool_18, bool bool_19) ///WYJ fix: update datawindow
         {
             if (DataWindowForm.Instance != null)
             {
@@ -1748,7 +1754,7 @@
                 string format = "N" + this.Bars.SymbolInfo.Decimals;
                 if (bool_18)
                 {
-                    instance.method_2(DataWindowType.Date, this.method_10(this.int_3));
+                    instance.method_2(DataWindowType.Date, this.getStringForBarNum(this.int_3));
                     instance.method_2(DataWindowType.Open, this.Bars.Open[this.int_3].ToString(format));
                     instance.method_2(DataWindowType.High, this.Bars.High[this.int_3].ToString(format));
                     instance.method_2(DataWindowType.Low, this.Bars.Low[this.int_3].ToString(format));
@@ -1838,7 +1844,8 @@
             }
         }
 
-        private void method_13(TradingSystemExecutor tradingSystemExecutor_2, WealthLab.Bars bars_2, bool bool_18)
+        ///WYJ fix, original signature: private void method_13(TradingSystemExecutor tradingSystemExecutor_2, WealthLab.Bars bars_2, bool bool_18)
+        private void executeStrategy(TradingSystemExecutor tradingSystemExecutor_2, WealthLab.Bars bars_2, bool multiSymbol)
         {
             if (this.combinationStrategyBuilder_0 != null)
             {
@@ -1883,7 +1890,7 @@
                 DateTime now = DateTime.Now;
                 tradingSystemExecutor_2.StrategyName = this.Strategy.Name;
                 tradingSystemExecutor_2.StrategyWindowID = this.int_1;
-                if (bool_18)
+                if (multiSymbol)
                 {
                     tradingSystemExecutor_2.Execute(this.Strategy, this.WealthScript, bars_2, this.list_0);
                 }
@@ -1912,12 +1919,12 @@
 
                         case AbortReason.ESC:
                             exception2 = new Exception("Thread Aborted. User pressed ESC.");
-                            this.method_26(-100, exception2);
+                            this.updateProgressForRunOnAllSymbols(-100, exception2);
                             return;
 
                         case AbortReason.Streaming:
                             exception2 = new Exception("Thread Aborted. Streaming status changed by user.");
-                            this.method_26(-100, exception2);
+                            this.updateProgressForRunOnAllSymbols(-100, exception2);
                             return;
                     }
                 }
@@ -1926,11 +1933,11 @@
                     unknown = AbortReason.Unknown;
                     unknown = AbortReason.Unknown;
                 }
-                this.method_26(-100, exception);
+                this.updateProgressForRunOnAllSymbols(-100, exception);
             }
             catch (Exception exception3)
             {
-                this.method_26(-100, exception3);
+                this.updateProgressForRunOnAllSymbols(-100, exception3);
             }
         }
 
@@ -1962,7 +1969,7 @@
             {
                 str = "Chart";
             }
-            if (this.bool_10)
+            if (this.multiSymbol)
             {
                 object obj2 = str;
                 str = string.Concat(new object[] { obj2, " - ", this.DataSource.Name, " (", this.DataSource.Symbols.Count, " Symbols) " }) + this.barsLoader_0.BarDataScale.ToString();
@@ -1975,7 +1982,8 @@
             this.Text = str;
         }
 
-        private void method_16()
+        ///WYJ fix, original signature: private void method_16()
+        private void runStrategy()
         {
             this.bool_6 = false;
             if (!this.IsBusy && ((this.builder_0 == null) || this.builder_0.CompileIfNeeded()))
@@ -1999,7 +2007,7 @@
                 {
                     this.dataSource_0 = this.DataSource;
                     this.list_0.Clear();
-                    if (this.bool_10 && !this.bool_3)
+                    if (this.multiSymbol && !this.bool_3)
                     {
                         this.dataSource_1 = this.DataSource;
                         if (this.DataSource.Symbols.Count == 0)
@@ -2042,7 +2050,7 @@
                     {
                         this.thread_0.Abort();
                     }
-                    this.thread_0 = new Thread(new ThreadStart(this.method_21));
+                    this.thread_0 = new Thread(new ThreadStart(this.threadWorkerRunningStrategy));
                     this.thread_0.IsBackground = true;
                     this.thread_0.Start();
                 }
@@ -2120,7 +2128,8 @@
             this.tabChart.SelectedTab.Cursor = Cursors.WaitCursor;
         }
 
-        private void method_21()
+        ///WYJ fix, original signature: private void method_21()
+        private void threadWorkerRunningStrategy()
         {
             Exception exception = null;
             try
@@ -2137,7 +2146,7 @@
                     this.list_0.Add(this.bars_1);
                     this.method_23();
                 }
-                else if (this.bool_10)
+                else if (this.multiSymbol)
                 {
                     foreach (string str in this.dataSource_0.Symbols)
                     {
@@ -2148,7 +2157,7 @@
                         }
                         this.list_0.Add(data);
                         this.method_23();
-                        if (this.bool_11)
+                        if (this.cancel)
                         {
                             break;
                         }
@@ -2161,11 +2170,11 @@
                     this.list_0.Add(bars);
                     this.method_23();
                 }
-                if (((this.WealthScript != null) || ((this.Strategy != null) && (this.Strategy.StrategyType == StrategyType.CombinedStrategy))) && !this.bool_11)
+                if ((this.WealthScript != null || (this.Strategy != null && this.Strategy.StrategyType == StrategyType.CombinedStrategy)) && !this.cancel)
                 {
                     if (!this.bool_9)
                     {
-                        this.method_13(this.tradingSystemExecutor_1, this.bars_0, this.bool_10);
+                        this.executeStrategy(this.tradingSystemExecutor_1, this.bars_0, this.multiSymbol);
                     }
                     else
                     {
@@ -2181,7 +2190,7 @@
             }
             try
             {
-                base.Invoke(new Delegate47(this.method_24), new object[] { exception });
+                base.Invoke(new Delegate47(this.checkExceptionAndRunStrategy), new object[] { exception });
             }
             catch (InvalidOperationException)
             {
@@ -2192,15 +2201,16 @@
             }
         }
 
-        private void method_22()
+        ///WYJ fix, original signature: private void method_22()
+        private void updateStatusAndResult()
         {
             int num;
             bool flag;
-            PositionType positionType;
+            PositionType positionType = PositionType.Long;
             bool flag1;
             bool flag2;
             this.btnRunAllCancel.Enabled = false;
-            if (!this.bool_10)
+            if (!this.multiSymbol)
             {
                 this.lblRunAllStatus.Text = "";
             }
@@ -2224,7 +2234,7 @@
                 this.chartRenderer_0.LogScale = this.chartRenderer_0.PricePane.LogScale;
                 this.MyMainForm.SetLogScaleButtonState(this.chartRenderer_0.LogScale);
             }
-            this.chart.MultiSymbolMode = this.bool_10;
+            this.chart.MultiSymbolMode = this.multiSymbol;
             this.chart.DoInvalidate();
             if (this.editor_0 != null)
             {
@@ -2273,7 +2283,7 @@
                 {
                     UserControl item = list1.Controls[0] as UserControl;
                     IPerformanceVisualizer performanceVisualizer = item as IPerformanceVisualizer;
-                    flag = (!this.bool_10 ? (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) > 0 : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) > 0);
+                    flag = (!this.multiSymbol ? (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) > 0 : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) > 0);
                     if (!this.posSize.PositionSize.RawProfitMode)
                     {
                         flag1 = (!flag ? false : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) > 0);
@@ -2531,16 +2541,12 @@
                 this.tradingSystemExecutor_1.PosSize = this.posSize.PositionSize;
                 if (tradeType != TradeType.Buy)
                 {
-                    if (tradeType == TradeType.Sell)
-                    {
-                        goto Label4;
-                    }
-                    positionType = PositionType.Short;
-                    goto Label2;
+                    if (tradeType == TradeType.Sell)   ///WYJ fix, simplify the flow
+                        positionType = PositionType.Long;
+                    else 
+                        positionType = PositionType.Short;                    
                 }
-            Label4:
-                positionType = PositionType.Long;
-            Label2:
+                
                 double num4 = this.tradingSystemExecutor_1.CalcPositionSize(this.Bars, this.Bars.Count, this.Bars.Close[this.Bars.Count - 1], positionType, 0, this.posSize.PositionSize.StartingCapital);
                 Alert positionSize = new Alert(this.Strategy, this.Bars, this.Bars.Date[this.Bars.Count - 1], tradeType, OrderType.Market, num4, str1);
                 positionSize.PosSize = this.PositionSize;
@@ -2572,11 +2578,11 @@
                 this.alerts_0.UpdateStatus();
             }
             this.method_12(true);
-            if (this.bool_10 && this.tabChart.SelectedIndex == 0)
+            if (this.multiSymbol && this.tabChart.SelectedIndex == 0)
             {
                 this.SelectTab("Performance");
             }
-            if (this.bool_12 && this.bool_10 && DebugForm.Instance != null)
+            if (this.bool_12 && this.multiSymbol && DebugForm.Instance != null)
             {
                 DebugForm.Instance.BringToFront();
             }
@@ -2602,10 +2608,11 @@
 
         private void method_23()
         {
-            this.method_26(this.progRunAll.Value + 1, null);
+            this.updateProgressForRunOnAllSymbols(this.progRunAll.Value + 1, null);
         }
 
-        private void method_24(Exception exception_0)
+        ///WYJ fix, original signature: private void method_24(Exception exception_0)
+        private void checkExceptionAndRunStrategy(Exception exception_0)
         {
             if (exception_0 != null)
             {
@@ -2630,7 +2637,7 @@
             }
             else
             {
-                this.method_22();
+                this.updateStatusAndResult();
             }
             if (this.tabChart.SelectedTab != null)
             {
@@ -2649,29 +2656,32 @@
                 }
             }
             this.Cursor = Cursors.Default;
-            if (this.bool_11)
+            if (this.cancel)
             {
                 this.lblRunAllStatus.Text = "User Canceled Backtest";
-                this.bool_11 = false;
+                this.cancel = false;
             }
         }
 
-        private void method_25()
+        ///WYJ fix, original signature: private void method_25()
+        private void updateProgressBar()
         {
             this.combinationStrategyBuilder_0.UpdateProgressBar();
         }
 
-        private void method_26(int int_6, object object_0)
+        ///WYJ fix, original signature: private void method_26(int int_6, object object_0)
+        private void updateProgressForRunOnAllSymbols(int int_6, object object_0)
         {
-            base.Invoke(new Delegate48(this.method_27), new object[] { int_6, object_0 });
+            base.Invoke(new Delegate48(this.doUpdateProgressForRunOnAllSymbols), new object[] { int_6, object_0 });
         }
 
-        private void method_27(int int_6, object object_0)
+        ///WYJ fix, original signature: private void method_27(int int_6, object object_0)
+        private void doUpdateProgressForRunOnAllSymbols(int progressValue, object object_0)
         {
-            if (int_6 == -100)
+            if (progressValue == -100)
             {
                 Exception exception = (Exception) object_0;
-                if (this.bool_10)
+                if (this.multiSymbol)
                 {
                     if (DebugForm.Instance == null)
                     {
@@ -2702,7 +2712,7 @@
                 }
                 this.method_12(true);
             }
-            else if (int_6 == 0)
+            else if (progressValue == 0)
             {
                 WealthLab.Bars bars = (WealthLab.Bars) object_0;
                 this.Bars = bars;
@@ -2713,7 +2723,7 @@
             {
                 try
                 {
-                    this.progRunAll.Value = int_6;
+                    this.progRunAll.Value = progressValue;
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -2736,7 +2746,7 @@
         private void method_28(WealthLab.Bars bars_2)
         {
             this.bars_0 = null;
-            this.method_26(0, bars_2);
+            this.updateProgressForRunOnAllSymbols(0, bars_2);
             this.autoResetEvent_0.WaitOne();
         }
 
@@ -2745,7 +2755,8 @@
             this.MyMainForm.ClearDrawingObjectSelectedTool();
         }
 
-        private void method_3(string string_2)
+        ///WYJ fix, original signature: private void method_3(string string_2)
+        private void restoreResizedPanes(string string_2)
         {
             if ((string_2 != null) && (string_2.Length > 0))
             {
@@ -2755,7 +2766,7 @@
 
         private void method_30(object sender, BarsEventArgs e)
         {
-            if (this.bool_10 && (e.Bars.Symbol == this.DataSource.Symbols[this.DataSource.Symbols.Count - 1]))
+            if (this.multiSymbol && (e.Bars.Symbol == this.DataSource.Symbols[this.DataSource.Symbols.Count - 1]))
             {
                 this.method_23();
             }
@@ -2804,7 +2815,7 @@
 
         private void method_33(object sender, WSExceptionEventArgs e)
         {
-            this.method_26(-100, e.Exception);
+            this.updateProgressForRunOnAllSymbols(-100, e.Exception);
         }
 
         internal void method_34(object sender, LoadSymbolEventArgs e)
@@ -2847,7 +2858,7 @@
             if (this.description_0 != null)
             {
                 string symbol = this.Symbol;
-                if (this.bool_10)
+                if (this.multiSymbol)
                 {
                     symbol = "";
                 }
@@ -2976,7 +2987,8 @@
             }
         }
 
-        private void method_47()
+        ///WYJ fix, original signature: private void method_47()
+        private void savePanelSize()
         {
             this.Strategy.PanelSize = this.chartRenderer_0.SavePaneSizes();
         }
@@ -3287,7 +3299,8 @@
 
         ///WYJ fix, code from ILSpy
         // WealthLabPro.ChartForm
-        private void method_59(int int_6)
+        ///WYJ fix, original signature: private void method_59(int int_6)
+        private void editBarData(int int_6)
         {
             double high = this.Bars.High[int_6];
             double double_ = this.Bars.Low[int_6];
@@ -3385,7 +3398,7 @@
                                     MessageBox.Show("Invalid Date/Time. Date/Time must fit within the chart scale.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                                     continue;
                                 }
-                                if (this.method_64(dataEditor.DateAndTime, bars))
+                                if (this.barsContainDatetime(dataEditor.DateAndTime, bars))
                                 {
                                     MessageBox.Show("Invalid Date/Time. Can't create a bar when one already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                                     continue;
@@ -3863,7 +3876,8 @@
         } */
 
         ///WYJ fix, code from ILSpy
-        private bool method_64(DateTime dateTime_0, Bars bars_2)
+        ///WYJ fix, original signature: private bool method_64(DateTime dateTime_0, Bars bars_2)
+        private bool barsContainDatetime(DateTime dateTime_0, Bars bars_2)
         {
             for (int i = 0; i < bars_2.Count; i++)
             {
@@ -4079,9 +4093,10 @@
             e.DataSource = MainModule.Instance.DataSources.FindDataSource(e.DataSourceName);
         }
 
-        private void method_75(object sender, BarsEventArgs e)
+        ///WYJ fix, original signature: private void method_75(object sender, BarsEventArgs e)
+        private void onChildStrategyCompletion(object sender, BarsEventArgs e)
         {
-            base.Invoke(new Delegate43(this.method_25));
+            base.Invoke(new Delegate43(this.updateProgressBar));
         }
 
         private void method_8()
@@ -4111,14 +4126,14 @@
                 {
                     string format = "N" + this.Bars.SymbolInfo.Decimals;
                     this.stlblBar.Text = "Bar: " + barNumber.ToString("N0");
-                    string str2 = this.method_10(barNumber);
+                    string str2 = this.getStringForBarNum(barNumber);
                     this.stlblDate.Text = str2;
                     this.stlblOpen.Text = "O: " + this.Bars.Open[barNumber].ToString(format);
                     this.stlblHigh.Text = "H: " + this.Bars.High[barNumber].ToString(format);
                     this.stlblLow.Text = "L: " + this.Bars.Low[barNumber].ToString(format);
                     this.stlblClose.Text = "C: " + this.Bars.Close[barNumber].ToString(format);
                     this.stlblVolume.Text = "V: " + this.Bars.Volume[barNumber].ToString("N0");
-                    this.method_11(barNumber, true, false);
+                    this.updateDataWindow(barNumber, true, false);
                 }
                 else
                 {
@@ -4362,7 +4377,7 @@
                 this.NeedSave = true;
                 if (DataWindowForm.Instance != null)
                 {
-                    this.method_11(this.int_2, false, true);
+                    this.updateDataWindow(this.int_2, false, true);
                 }
             }
             this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
@@ -4483,7 +4498,7 @@
         {
             if (this.DataSource != null)
             {
-                if (this.bool_10)
+                if (this.multiSymbol)
                 {
                     if (this.list_0 != null)
                     {
@@ -4494,7 +4509,7 @@
                         {
                             this.tradingSystemExecutor_1.ApplySettings(MainModule.Instance.Executor);
                             this.tradingSystemExecutor_1.ApplyPositionSize();
-                            this.method_22();
+                            this.updateStatusAndResult();
                         }
                         finally
                         {
@@ -4515,7 +4530,7 @@
         public void PreferredValuesChanged()
         {
             this.SaveStrategy();
-            if ((this.btnPV.Checked && !this.bool_10) && ((this.Symbol != null) && (this.Symbol != "")))
+            if ((this.btnPV.Checked && !this.multiSymbol) && ((this.Symbol != null) && (this.Symbol != "")))
             {
                 this.GoButtonPressed(this.Symbol, true);
             }
@@ -4699,7 +4714,8 @@
 
         public void RunOnAllSymbols()
         {
-            if (((((this.Strategy == null) || (this.Strategy.StrategyType != StrategyType.CombinedStrategy)) ? 0 : 1) != 0) || (this.WealthScript != null))
+            ///WYJ fix, original: if (((((this.Strategy == null) || (this.Strategy.StrategyType != StrategyType.CombinedStrategy)) ? 0 : 1) != 0) || (this.WealthScript != null))
+            if ((this.Strategy != null && this.Strategy.StrategyType == StrategyType.CombinedStrategy)  || (this.WealthScript != null))
             {
                 if (this.IsStreaming)
                 {
@@ -4718,12 +4734,12 @@
                     }
                 }
                 this.BarDataScale = this.MyMainForm.BarDataScale;
-                this.bool_10 = true;
+                this.multiSymbol = true;
                 this.bool_12 = false;
-                this.bool_11 = false;
+                this.cancel = false;
                 this.progRunAll.Enabled = true;
                 this.progRunAll.Value = 0;
-                this.method_16();
+                this.runStrategy();
             }
         }
 
@@ -4754,7 +4770,7 @@
                         this.builder_0.PushRulesToStrategy(this.Strategy);
                     }
                     this.method_48();
-                    this.method_47();
+                    this.savePanelSize();
                     this.RememberStrategySettings();
                     if (this.ParametersNeedSave && MainModule.Instance.Settings.Get("RememberParameterSliders", false))
                     {
@@ -4794,7 +4810,7 @@
                     }
                     this.strategy_0 = item;
                     this.method_48();
-                    this.method_47();
+                    this.savePanelSize();
                     this.Strategy = item;
                     flag = true;
                 }
@@ -4847,7 +4863,7 @@
                 MainModule.Instance.AddStrategyToMRU(this.Strategy);
                 this.RememberStrategySettings();
                 this.method_48();
-                this.method_47();
+                this.savePanelSize();
                 MainModule.Instance.Strategies.SaveStrategy(this.strategy_0, form.FolderName, form.NetworkPath);
                 if (this.ParametersNeedSave && MainModule.Instance.Settings.Get("RememberParameterSliders", false))
                 {
@@ -5159,10 +5175,10 @@
             bool flag2;
             if ((flag2 = (this.Strategy != null) && (this.Strategy.StrategyType == StrategyType.CombinedStrategy)) || (this.WealthScript != null))
             {
-                bool flag = (show || this.bool_10) ? (this.WealthScript != null) : false;
+                bool flag = (show || this.multiSymbol) ? (this.WealthScript != null) : false;
                 if (flag2)
                 {
-                    flag = show || this.bool_10;
+                    flag = show || this.multiSymbol;
                 }
                 this.pnlMultiSymbol.Visible = show;
                 if (show)
@@ -5246,11 +5262,11 @@
             this.Symbol = symbol;
             if (this.dataSource_1 != this.DataSource)
             {
-                this.bool_10 = false;
+                this.multiSymbol = false;
                 this.ShowMultiSymbolControls(false);
             }
-            this.chart.MultiSymbolMode = this.bool_10;
-            if (this.bool_10)
+            this.chart.MultiSymbolMode = this.multiSymbol;
+            if (this.multiSymbol)
             {
                 using (List<WealthLab.Bars>.Enumerator enumerator = this.list_0.GetEnumerator())
                 {
@@ -5266,7 +5282,7 @@
                             {
                                 this.WealthScript.Renderer = this.chartRenderer_0;
                             }
-                            this.method_13(this.tradingSystemExecutor_0, current, false);
+                            this.executeStrategy(this.tradingSystemExecutor_0, current, false);
                             this.tradingSystemExecutor_0.Clear();
                             this.indicatorDragDropManager_0.CreateDragDropIndicators();
                             this.chart.DoInvalidate();
@@ -5279,9 +5295,9 @@
             }
             if ((this.Strategy == null) || (this.Strategy.StrategyType != StrategyType.CombinedStrategy))
             {
-                this.bool_10 = false;
+                this.multiSymbol = false;
                 this.ShowMultiSymbolControls(false);
-                this.method_16();
+                this.runStrategy();
             }
         }
 
@@ -5637,7 +5653,7 @@
         {
             get
             {
-                return this.bool_10;
+                return this.multiSymbol;
             }
         }
 
@@ -5858,7 +5874,7 @@
                     this.description_0.Strategy = this.strategy_0;
                     this.method_39();
                     this.LoadDragDropIndicators(this.strategy_0.Indicators);
-                    this.method_3(this.strategy_0.PanelSize);
+                    this.restoreResizedPanes(this.strategy_0.PanelSize);
                     this.bool_7 = true;
                     this.btnPV.Checked = this.Strategy.UsePreferredValues;
                     this.bool_7 = false;
