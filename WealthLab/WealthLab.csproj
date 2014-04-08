@@ -305,7 +305,6 @@
     <EmbeddedResource Include="WealthLab.StrategyBuilder.bmp" />
     <EmbeddedResource Include="WealthLab.DataSourceManager.bmp" />
     <EmbeddedResource Include="WealthLab.BarsLoader.bmp" />
-    <EmbeddedResource Include="WealthLab.ParameterForm.resources" />
     <EmbeddedResource Include="WealthLab.ParameterSlidersContainer.bmp" />
     <EmbeddedResource Include="WealthLab.MarketHours.bmp" />
     <EmbeddedResource Include="WealthLab.WealthScriptCompiler.bmp" />
@@ -313,11 +312,8 @@
     <EmbeddedResource Include="WealthLab.Properties.Resources.resources" />
     <EmbeddedResource Include="WealthLab.StreamingQuoteManager.bmp" />
     <EmbeddedResource Include="WealthLab.ParameterSlider.bmp" />
-    <EmbeddedResource Include="WealthLab.ParameterSlidersContainer.resources" />
-    <EmbeddedResource Include="WealthLab.PrintPreview.resources" />
     <EmbeddedResource Include="WealthLab.DataSourceTreeView.resources" />
     <EmbeddedResource Include="WealthLab.SymbolParser.bmp" />
-    <EmbeddedResource Include="WealthLab.ParameterSlider.resources" />
     <EmbeddedResource Include="WealthLab.IndicatorTreeView.resources" />
     <EmbeddedResource Include="WealthLab.DataSourceListView.resources" />
     <EmbeddedResource Include="WealthLab.StrategyManager.bmp" />
@@ -325,9 +321,7 @@
     <EmbeddedResource Include="WealthLab.TradeManager.bmp" />
     <EmbeddedResource Include="WealthLab.DataSourceTreeView.bmp" />
     <EmbeddedResource Include="WealthLab.FundamentalTreeView.resources" />
-    <EmbeddedResource Include="WealthLab.IndexInformationControl.resources" />
     <EmbeddedResource Include="WealthLab.ChartRenderer.bmp" />
-    <EmbeddedResource Include="WealthLab.DataBehaviorUserControl.resources" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
