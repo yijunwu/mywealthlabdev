@@ -2,7 +2,7 @@
 
 [assembly: System.Reflection.AssemblyConfiguration("")]
 [assembly: System.Reflection.AssemblyDescription("")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
+//[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
 [assembly: System.Reflection.AssemblyCopyright("Copyright \x00a9  2006-2010 Fidelity Investments")]
 [assembly: System.Reflection.AssemblyProduct("WealthLab.ChartControl")]
 [assembly: System.Reflection.AssemblyCompany("Fidelity Investments")]

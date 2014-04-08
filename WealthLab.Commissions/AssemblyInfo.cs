@@ -8,7 +8,7 @@
 [assembly: System.Reflection.AssemblyTrademark("")]
 [assembly: System.Reflection.AssemblyProduct("WealthLab.Commissions")]
 [assembly: System.Reflection.AssemblyTitle("WealthLab.Commissions")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
+//[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
 [assembly: System.Reflection.AssemblyCopyright("Copyright \x00a9  2007-2010 Fidelity Investments")]
 [assembly: System.Reflection.AssemblyCompany("Fidelity Investments")]
 [assembly: System.Reflection.AssemblyConfiguration("")]

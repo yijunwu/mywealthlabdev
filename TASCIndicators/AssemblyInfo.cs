@@ -12,7 +12,7 @@
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Runtime.InteropServices.Guid("9111e5e2-6cee-400c-8ed2-89797ef5b55e")]
 [assembly: System.Reflection.AssemblyFileVersion("2012.10.0.0")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
+//[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
 [assembly: System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints)]
 [assembly: System.Runtime.CompilerServices.CompilationRelaxations(8)]
 

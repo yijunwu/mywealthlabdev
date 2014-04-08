@@ -2,7 +2,7 @@
 
 [assembly: System.Reflection.AssemblyProduct("WealthLab.PaperProvider")]
 [assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
+//[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
 [assembly: System.Reflection.AssemblyTitle("WealthLab.PaperProvider")]
 [assembly: System.Reflection.AssemblyDescription("")]
 [assembly: System.Reflection.AssemblyConfiguration("")]

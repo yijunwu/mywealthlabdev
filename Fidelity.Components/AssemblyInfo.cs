@@ -1,6 +1,6 @@
 ﻿// Assembly Fidelity.Components, Version 1.0.0.0
 
-[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
+//[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
 [assembly: System.Runtime.InteropServices.Guid("c7208dda-2a27-478d-8fa6-5ca99e7ec679")]
 [assembly: System.Reflection.AssemblyProduct("Fidelity.Components")]
 [assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]

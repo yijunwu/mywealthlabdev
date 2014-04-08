@@ -3,7 +3,7 @@
 [assembly: System.Runtime.CompilerServices.CompilationRelaxations(8)]
 [assembly: System.Reflection.AssemblyFileVersion("1.2.7.0")]
 [assembly: System.Reflection.AssemblyCopyright("Copyright \x00a9  2011-2012 MS123")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
+//[assembly: System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.0", FrameworkDisplayName=".NET Framework 4")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Runtime.InteropServices.Guid("2fa5b9d0-c3ef-4e6b-a4a1-7ae3067cb9ac")]
 [assembly: System.Reflection.AssemblyDescription("")]
