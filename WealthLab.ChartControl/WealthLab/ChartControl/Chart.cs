@@ -19,7 +19,7 @@
         private bool bool_1 = true;
         private bool bool_2 = true;
         private bool bool_3 = true;
-        private bool bool_4;
+        private bool canDropOnIndicator;   ///WYJ fix, original name bool_4
         private static bool displayCrossHair = false;
         [CompilerGenerated]
         private bool bool_6;
@@ -205,7 +205,10 @@
         public Chart()
         {
             this.DoubleBuffered = true;
-            this.method_6();
+            //this.method_6();
+            base.SuspendLayout();
+            base.ResumeLayout(false);
+
             this.hscrollBar_0.Left = 0;
             this.hscrollBar_0.LargeChange = 10;
             this.hscrollBar_0.Visible = this.bool_0;
@@ -221,7 +224,7 @@
             base.Controls.Add(this.glyphToolTip_0);
             this.scaleSelector_0.Visible = true;
             base.Controls.Add(this.scaleSelector_0);
-            this.scaleSelector_0.ScaleChangeEvent += new EventHandler<ScaleChangeEventArgs>(this.method_4);
+            this.scaleSelector_0.ScaleChangeEvent += new EventHandler<ScaleChangeEventArgs>(this.handleScaleChangeEvent);
             this.MultiSymbolMode = false;
 
             //base.KeyDown += new KeyEventHandler(this.MainForm_KeyDown);
@@ -398,7 +401,8 @@
             }
         }
 
-        private void method_0(UserControl userControl_0, int int_4, int int_5)
+        ///WYJ fix, original signature: private void method_0(UserControl userControl_0, int int_4, int int_5)
+        private void setControlPosition(UserControl userControl_0, int int_4, int int_5)
         {
             int num;
             int num2;
@@ -437,7 +441,8 @@
             userControl_0.Location = new Point(num, num2);
         }
 
-        private void method_1(DragEventArgs dragEventArgs_0)
+        ///WYJ fix, original signature: private void method_1(DragEventArgs dragEventArgs_0)
+        private void changeMode(DragEventArgs dragEventArgs_0)
         {
             if ((this.DragDropManager != null) && this.HasValidChart)
             {
@@ -449,7 +454,7 @@
                     if (data != null)
                     {
                         this.Mode = ChartMode.DraggingIndicator;
-                        this.bool_4 = data.Helper.CanDropOnIndicator;
+                        this.canDropOnIndicator = data.Helper.CanDropOnIndicator;
                     }
                     else
                     {
@@ -459,7 +464,8 @@
             }
         }
 
-        private void method_2()
+        ///WYJ fix, original signature: private void method_2()
+        private void hideToolTips()
         {
             this.priceToolTip_0.Visible = false;
             this.indicatorToolTip_0.Visible = false;
@@ -467,7 +473,8 @@
             this.glyphToolTip_0.Visible = false;
         }
 
-        private void method_3()
+        ///WYJ fix, original signature: private void method_3()
+        private void showScaleSelector()
         {
             if (!this.scaleSelector_0.ValidScale || this.MultiSymbolMode)
             {
@@ -494,9 +501,10 @@
             this.scaleSelector_0.Visible = true;
         }
 
-        private void method_4(object sender, ScaleChangeEventArgs e)
+        ///WYJ fix, original signature: private void method_4(object sender, ScaleChangeEventArgs e)
+        private void handleScaleChangeEvent(object sender, ScaleChangeEventArgs e)
         {
-            EventHandler<ScaleChangeEventArgs> handler = this.eventHandler_4;
+            EventHandler<ScaleChangeEventArgs> handler = this.eventHandler_4;  ///WYJ note, it's delegated to ChartForm.method_0
             if (handler != null)
             {
                 handler(this, e);
@@ -534,11 +542,13 @@
             }
         }
 
+        ///WYJ fix, make this method inline, in constructor: Chart()
+        /*
         private void method_6()
         {
             base.SuspendLayout();
             base.ResumeLayout(false);
-        }
+        }*/
 
         protected override void OnDragDrop(DragEventArgs drgevent)
         {
@@ -567,7 +577,7 @@
 
         protected override void OnDragEnter(DragEventArgs drgevent)
         {
-            this.method_1(drgevent);
+            this.changeMode(drgevent);
             base.OnDragEnter(drgevent);
         }
 
@@ -579,7 +589,7 @@
 
         protected override void OnDragOver(DragEventArgs drgevent)
         {
-            this.method_1(drgevent);
+            this.changeMode(drgevent);
             Point point = base.PointToClient(new Point(drgevent.X, drgevent.Y));
             this.OnMouseMove(new MouseEventArgs(MouseButtons.None, 0, point.X, point.Y, 0));
             base.OnDragOver(drgevent);
@@ -1278,7 +1288,7 @@
                                 this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.ThumbPosition, this.hscrollBar_0.Value));
                                 base.Invalidate();
                             }
-                            this.method_2();
+                            this.hideToolTips();
                             base.OnMouseMove(mevent);
                             return;
                         }
@@ -1435,7 +1445,7 @@
                                             }
                                             selectedHandle.Owner.OnDrag(selectedHandle);
                                             base.Invalidate();
-                                            this.method_2();
+                                            this.hideToolTips();
                                             base.OnMouseMove(mevent);
                                             return;
                                         }
@@ -1451,7 +1461,7 @@
                                             }
                                             if (current.HideDisplayPaneButton(x, y))
                                             {
-                                                this.method_0(this.generalToolTip_0, x, y);
+                                                this.setControlPosition(this.generalToolTip_0, x, y);
                                                 this.generalToolTip_0.RenderValue(current.GetHashCode(), current.HideDisplayPaneTooltip);
                                                 flag6 = true;
                                             }
@@ -1473,12 +1483,12 @@
                                                         {
                                                             if (this.indicatorToolTip_0.RepositionRequired(current1, bar))
                                                             {
-                                                                this.method_0(this.indicatorToolTip_0, x, y);
+                                                                this.setControlPosition(this.indicatorToolTip_0, x, y);
                                                                 this.indicatorToolTip_0.RenderValue(current1, bar);
                                                             }
                                                             flag5 = true;
                                                             plottedIndicator1 = current1;
-                                                            if (this.Mode != ChartMode.DraggingIndicator || !this.bool_4)
+                                                            if (this.Mode != ChartMode.DraggingIndicator || !this.canDropOnIndicator)
                                                             {
                                                                 break;
                                                             }
@@ -1498,7 +1508,7 @@
                                                 {
                                                     if (this.priceToolTip_0.RepositionRequired(this.bars_0, bar))
                                                     {
-                                                        this.method_0(this.priceToolTip_0, x, y);
+                                                        this.setControlPosition(this.priceToolTip_0, x, y);
                                                         this.priceToolTip_0.RenderValues(this.bars_0, bar);
                                                     }
                                                     flag4 = true;
@@ -1514,7 +1524,7 @@
                                                             if (this.glyphToolTip_0.RepositionRequired(chartGlyph))
                                                             {
                                                                 this.glyphToolTip_0.Glyph = chartGlyph;
-                                                                this.method_0(this.glyphToolTip_0, x, y);
+                                                                this.setControlPosition(this.glyphToolTip_0, x, y);
                                                             }
                                                             flag7 = true;
                                                             position = chartGlyph.Position;
@@ -1541,7 +1551,7 @@
                                                     }
                                                     if (this.priceToolTip_0.RepositionRequired(plottedSymbol.Bars, bar))
                                                     {
-                                                        this.method_0(this.priceToolTip_0, x, y);
+                                                        this.setControlPosition(this.priceToolTip_0, x, y);
                                                         this.priceToolTip_0.RenderValues(plottedSymbol.Bars, bar);
                                                     }
                                                     flag4 = true;
@@ -1671,7 +1681,7 @@
                     {
                         this.drawingObjectManager_0.method_3(graphics);
                     }
-                    this.method_3();
+                    this.showScaleSelector();
                     if (this.position_0 != null)
                     {
                         int num2;
