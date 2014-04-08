@@ -99,6 +99,12 @@
     <EmbeddedResource Include="WealthLabPro\EditAlertForm.resx">
       <DependentUpon>EditAlertForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\EditDescriptionForm.resx">
+      <DependentUpon>EditDescriptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLabPro\Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLabPro\EditOrderForm.resx">
       <DependentUpon>EditOrderForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -397,8 +403,6 @@
     <EmbeddedResource Include="WealthLabPro.Properties.Resources.resources" />
     <EmbeddedResource Include="WealthLabPro.StrategyBuilder.bmp" />
     <EmbeddedResource Include="WealthLabPro.BarDataRangeSelecter.bmp" />
-    <EmbeddedResource Include="WealthLabPro.EditDescriptionForm.resources" />
-    <EmbeddedResource Include="WealthLabPro.Editor.resources" />
     <EmbeddedResource Include="WealthLabPro.ScaleSelecter.bmp" />
     <EmbeddedResource Include="WealthLabPro.QuickRefManager.bmp" />
     <EmbeddedResource Include="WealthLabDev.exe.licenses" />
