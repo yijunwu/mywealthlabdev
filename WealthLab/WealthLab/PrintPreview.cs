@@ -205,7 +205,7 @@
 
         private void InitializeComponent()
         {
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(PrintPreview));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(PrintPreview));
             this.toolStrip1 = new ToolStrip();
             this.btnPrint = new ToolStripButton();
             this.toolStripSeparator4 = new ToolStripSeparator();
@@ -234,7 +234,7 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             this.btnPrint.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnPrint.Image = (Image) manager.GetObject("btnPrint.Image");
+            this.btnPrint.Image = (Image) resources.GetObject("btnPrint.Image");
             this.btnPrint.ImageTransparentColor = Color.Magenta;
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new Size(0x2d, 0x16);
@@ -244,7 +244,7 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new Size(6, 0x19);
             this.btnSetup.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnSetup.Image = (Image) manager.GetObject("btnSetup.Image");
+            this.btnSetup.Image = (Image) resources.GetObject("btnSetup.Image");
             this.btnSetup.ImageTransparentColor = Color.Magenta;
             this.btnSetup.Name = "btnSetup";
             this.btnSetup.Size = new Size(0x27, 0x16);
@@ -284,7 +284,7 @@
             this.lblPages.Text = "1";
             this.btnDown.DisplayStyle = ToolStripItemDisplayStyle.Image;
             this.btnDown.Enabled = false;
-            this.btnDown.Image = (Image) manager.GetObject("btnDown.Image");
+            this.btnDown.Image = (Image) resources.GetObject("btnDown.Image");
             this.btnDown.ImageTransparentColor = Color.Magenta;
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new Size(0x17, 0x16);
@@ -293,7 +293,7 @@
             this.btnDown.Click += new EventHandler(this.btnDown_Click);
             this.btnUp.DisplayStyle = ToolStripItemDisplayStyle.Image;
             this.btnUp.Enabled = false;
-            this.btnUp.Image = (Image) manager.GetObject("btnUp.Image");
+            this.btnUp.Image = (Image) resources.GetObject("btnUp.Image");
             this.btnUp.ImageTransparentColor = Color.Magenta;
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new Size(0x17, 0x16);
@@ -303,7 +303,7 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new Size(6, 0x19);
             this.btnClose.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnClose.Image = (Image) manager.GetObject("btnClose.Image");
+            this.btnClose.Image = (Image) resources.GetObject("btnClose.Image");
             this.btnClose.ImageTransparentColor = Color.Magenta;
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new Size(0x25, 0x16);
@@ -319,7 +319,7 @@
             this.printPreviewControl1.StartPageChanged += new EventHandler(this.printPreviewControl1_StartPageChanged);
             this.printDialog_0.UseEXDialog = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x2b9, 0x1e7);
             base.Controls.Add(this.printPreviewControl1);
             base.Controls.Add(this.toolStrip1);

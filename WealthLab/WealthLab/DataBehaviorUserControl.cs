@@ -44,7 +44,7 @@
         {
             base.SuspendLayout();
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Name = "DataBehaviorUserControl";
             base.Size = new Size(410, 0x12b);
             base.ResumeLayout(false);

@@ -5,6 +5,7 @@
     using System.Drawing;
     using System.Threading;
     using System.Windows.Forms;
+    using Panel = System.Windows.Forms.Panel;
 
     [ToolboxBitmap(typeof(ParameterSlidersContainer), "ParameterSlidersContainer")]
     public class ParameterSlidersContainer : UserControl
@@ -111,7 +112,7 @@
             this.pnlParameters.TabIndex = 0;
             this.pnlParameters.Resize += new EventHandler(this.pnlParameters_Resize);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.pnlParamHousing);
             base.Name = "ParameterSlidersContainer";
             base.Size = new Size(0xa5, 0x72);

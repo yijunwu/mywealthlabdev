@@ -5,6 +5,7 @@
     using System.Drawing;
     using System.Threading;
     using System.Windows.Forms;
+    using Panel = System.Windows.Forms.Panel;
 
     [ToolboxBitmap(typeof(ParameterSlider), "ParameterSlider")]
     public class ParameterSlider : UserControl
@@ -66,7 +67,7 @@
             base.SuspendLayout();
             this.pnlSlider.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
             this.pnlSlider.BackColor = Color.Azure;
-            this.pnlSlider.BorderStyle = BorderStyle.FixedSingle;
+            this.pnlSlider.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlSlider.Cursor = Cursors.Hand;
             this.pnlSlider.Location = new Point(0x4a, 2);
             this.pnlSlider.Name = "pnlSlider";
@@ -87,7 +88,7 @@
             this.linkParameter.DoubleClick += new EventHandler(this.linkParameter_Click);
             this.linkParameter.Click += new EventHandler(this.linkParameter_Click);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.pnlSlider);
             base.Controls.Add(this.linkParameter);
             base.Name = "ParameterSlider";

@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
+    using Button = System.Windows.Forms.Button;
 
     public class ParameterForm : Form
     {
@@ -102,7 +103,7 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new EventHandler(this.btnOK_Click);
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0x8e, 0x9d);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -197,7 +198,7 @@
             this.tbWarning.Visible = false;
             base.AcceptButton = this.btnOK;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             base.CancelButton = this.btnCancel;
             base.ClientSize = new Size(0xe5, 0xf5);
@@ -207,13 +208,13 @@
             base.Controls.Add(this.grpGuideline);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.btnOK);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
             base.Name = "ParameterForm";
             base.ShowIcon = false;
             base.ShowInTaskbar = false;
-            base.SizeGripStyle = SizeGripStyle.Hide;
+            base.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Change Parameter Value";
             base.Shown += new EventHandler(this.ParameterForm_Shown);
             this.grpGuideline.ResumeLayout(false);

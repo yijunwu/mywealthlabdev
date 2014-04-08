@@ -5,6 +5,7 @@
     using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
+    using Label = System.Windows.Forms.Label;
 
     public class IndexInformationControl : UserControl
     {
@@ -104,7 +105,7 @@
             this.label1.TabIndex = 0x27;
             this.label1.Text = "%";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.label1);
             base.Controls.Add(this.txtSourceDataSet);
             base.Controls.Add(this.label6);
