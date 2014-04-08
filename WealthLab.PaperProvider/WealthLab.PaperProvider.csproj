@@ -32,17 +32,8 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\Fidelity.Components\bin\Debug\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="WealthLab">
-      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="ControlLibrary">
-      <HintPath>..\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Compile Include="AssemblyInfo.cs" />
@@ -52,5 +43,19 @@
     </Compile>
     <Compile Include="WealthLab\PaperProvider\PaperBrokerProvider.cs" />
     <EmbeddedResource Include="WealthLab.PaperProvider.PaperBrokerProviderSettings.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ControlLibrary\ControlLibrary.csproj">
+      <Project>{AB461C43-796D-4FC8-87B0-86A8E5E6DC54}</Project>
+      <Name>ControlLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

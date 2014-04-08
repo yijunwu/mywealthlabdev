@@ -44,9 +44,6 @@
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
-    <Reference Include="TreeMaps">
-      <HintPath>..\TreeMaps\bin\Debug\TreeMaps.dll</HintPath>
-    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\Visualizers\Extensions\HeatMapVisualizerContainer.cs">
@@ -63,6 +60,10 @@
     <EmbeddedResource Include="WealthLab.Visualizers.Extensions.Properties.Resources.resources" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TreeMaps\TreeMaps.csproj">
+      <Project>{0485FEAF-6EB3-4FEF-93C5-7A323915E35D}</Project>
+      <Name>TreeMaps</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WealthLab.Extensions.Attribute\WealthLab.Extensions.Attribute.csproj">
       <Project>{DFE1C3EE-7DF9-4774-9AE8-CE078001E2CD}</Project>
       <Name>WealthLab.Extensions.Attribute</Name>

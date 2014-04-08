@@ -31,9 +31,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="WealthLab">
-      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
@@ -89,6 +86,10 @@
     <ProjectReference Include="..\WealthLab.Indicators\WealthLab.Indicators.csproj">
       <Project>{779CDAD0-90C6-4757-889E-62369148F934}</Project>
       <Name>WealthLab.Indicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

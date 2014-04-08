@@ -32,9 +32,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="QWhale.Syntax">
-      <HintPath>..\QWhale.Syntax\bin\Debug\QWhale.Syntax.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
     <Reference Include="System" />
@@ -131,6 +128,10 @@
     <ProjectReference Include="..\QWhale.Common\QWhale.Common.csproj">
       <Project>{00F8046C-A484-4170-8273-E80F22903A40}</Project>
       <Name>QWhale.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QWhale.Syntax\QWhale.Syntax.csproj">
+      <Project>{92D3D425-DCB3-4253-8295-08509BCE00B7}</Project>
+      <Name>QWhale.Syntax</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -32,6 +32,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="mscorlib" />
     <Reference Include="log4net, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ExternalLib\log4net.dll</HintPath>
@@ -315,5 +316,8 @@
       <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
       <Name>Fidelity.Components</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

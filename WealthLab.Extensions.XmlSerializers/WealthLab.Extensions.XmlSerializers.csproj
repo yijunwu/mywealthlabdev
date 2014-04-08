@@ -73,11 +73,12 @@
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer30.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer31.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializerContract.cs" />
-    <Reference Include="WealthLab.Extensions">
-      <HintPath>..\WealthLab.Extensions\bin\Debug\WealthLab.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WealthLab.Extensions\WealthLab.Extensions.csproj">
+      <Project>{598A152E-C4EC-4926-8342-409191182002}</Project>
+      <Name>WealthLab.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WealthLab\WealthLab.csproj">
       <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
       <Name>WealthLab</Name>

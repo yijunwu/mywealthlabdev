@@ -34,9 +34,6 @@
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="ControlLibrary">
-      <HintPath>..\ControlLibrary\bin\Debug\ControlLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
@@ -52,6 +49,10 @@
     <EmbeddedResource Include="WealthLab.Commissions.PerShareCommissionSettings.resources" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ControlLibrary\ControlLibrary.csproj">
+      <Project>{AB461C43-796D-4FC8-87B0-86A8E5E6DC54}</Project>
+      <Name>ControlLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
       <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
       <Name>Fidelity.Components</Name>

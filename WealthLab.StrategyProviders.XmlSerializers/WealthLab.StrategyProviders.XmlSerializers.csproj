@@ -35,9 +35,6 @@
     <Reference Include="System" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
-    <Reference Include="WealthLab.StrategyProviders">
-      <HintPath>..\WealthLab.StrategyProviders\bin\Debug\WealthLab.StrategyProviders.dll</HintPath>
-    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializationWriterStrategyWebservice.cs" />
@@ -52,5 +49,11 @@
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer6.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer7.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializerContract.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthLab.StrategyProviders\WealthLab.StrategyProviders.csproj">
+      <Project>{B13CE35C-1081-40A9-84C9-FC0A5336B981}</Project>
+      <Name>WealthLab.StrategyProviders</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

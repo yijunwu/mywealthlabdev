@@ -31,21 +31,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="WealthLab">
-      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
-    <Reference Include="WealthLab.Indicators">
-      <HintPath>..\WealthLab.Indicators\bin\Debug\WealthLab.Indicators.dll</HintPath>
-    </Reference>
-    <Reference Include="Fidelity.Components">
-      <HintPath>..\Fidelity.Components\bin\Debug\Fidelity.Components.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="WealthLab.ChartControl">
-      <HintPath>..\WealthLab.ChartControl\bin\Debug\WealthLab.ChartControl.dll</HintPath>
-    </Reference>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="WealthLab\IndexDefinitions\RSIGeneral.cs" />
@@ -75,5 +63,23 @@
     <Compile Include="WealthLab\IndexDefinitions\AboveSMA.cs" />
     <EmbeddedResource Include="WealthLab.IndexDefinitions.AggregateIndicatorIndexParameter.resources" />
     <EmbeddedResource Include="WealthLab.IndexDefinitions.NumericParameter.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
+      <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
+      <Name>Fidelity.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.ChartControl\WealthLab.ChartControl.csproj">
+      <Project>{6822E234-082C-4756-89B7-D44634D8C013}</Project>
+      <Name>WealthLab.ChartControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.Indicators\WealthLab.Indicators.csproj">
+      <Project>{779CDAD0-90C6-4757-889E-62369148F934}</Project>
+      <Name>WealthLab.Indicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

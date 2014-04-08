@@ -96,6 +96,9 @@
       <Name>WealthLab</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\bin\Debug\WealthLab.Visualizers.dll" "C:\Program Files\Wealth-Lab Developer 6"</PostBuildEvent>
   </PropertyGroup>

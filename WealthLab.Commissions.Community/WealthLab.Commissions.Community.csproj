@@ -33,13 +33,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="WealthLab">
-      <HintPath>..\WealthLab\bin\Debug\WealthLab.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="WealthLab.Extensions.Attribute">
-      <HintPath>..\WealthLab.Extensions.Attribute\bin\Debug\WealthLab.Extensions.Attribute.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
@@ -63,6 +57,14 @@
     <ProjectReference Include="..\Fidelity.Components\Fidelity.Components.csproj">
       <Project>{3DF927E5-F2A3-4270-A6A5-497F98B9F3BC}</Project>
       <Name>Fidelity.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab.Extensions.Attribute\WealthLab.Extensions.Attribute.csproj">
+      <Project>{DFE1C3EE-7DF9-4774-9AE8-CE078001E2CD}</Project>
+      <Name>WealthLab.Extensions.Attribute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WealthLab\WealthLab.csproj">
+      <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
+      <Name>WealthLab</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

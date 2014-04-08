@@ -33,9 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="WealthLab.International">
-      <HintPath>..\WealthLab.International\bin\Debug\WealthLab.International.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Services" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
@@ -63,5 +60,11 @@
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer18.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\ArrayOfObjectSerializer19.cs" />
     <Compile Include="Microsoft\Xml\Serialization\GeneratedAssembly\XmlSerializerContract.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthLab.International\WealthLab.International.csproj">
+      <Project>{E52B6DC2-A05C-4A2F-8382-392B5B8483AF}</Project>
+      <Name>WealthLab.International</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
