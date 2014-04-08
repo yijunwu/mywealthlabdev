@@ -261,7 +261,7 @@
             this.lblDescription = new Label();
             this.txtPrefix = new TextBox();
             this.groupBox2 = new GroupBox();
-            this.lvDataSets = new DataSourceListView();
+            this.lvDataSets = null; /// new DataSourceListView(); ///WYJ fix, work around for the Code Metrics problem
             this.pageIndexBuildParameters = new TabPage();
             this.pnlParameters = new Panel();
             this.btnBuildPrev2 = new Button();

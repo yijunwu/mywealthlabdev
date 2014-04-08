@@ -3784,7 +3784,7 @@
             base.Width = bounds.Width - 40;
             base.Height = bounds.Height - 80;
             this.drawingObjectManager_0.RootPath = MainModule.Instance.DataPath;
-            this.treeDataSources.PopulateWithFilter(MainModule.Instance.DataSources);
+            ///this.treeDataSources.PopulateWithFilter(MainModule.Instance.DataSources); ///WYJ fix, work around for the Code Metrics problem
             if (MainModule.Instance.Settings.Get("ExpandFirstDataSet", true) && (this.treeDataSources.Nodes.Count > 0))
             {
                 this.treeDataSources.Nodes[0].Expand();
