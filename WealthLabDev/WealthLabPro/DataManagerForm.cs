@@ -72,7 +72,7 @@
         private LinkLabel linkProvider;
         private List<HistoricalProvider> list_0 = new List<HistoricalProvider>();
         private List<string> list_1 = new List<string>();
-        private DataSourceListView lvDataSets = null; ///new DataSourceListView();  ///WYJ fix, work around for Code Metrics problem
+        private DataSourceListView lvDataSets = new DataSourceListView();  ///WYJ fix, work around for Code Metrics problem
         private ListView lvProviders;
         private SortableListView lvSymbolDetails;
         private ToolStripMenuItem mniAddSymbols;
@@ -612,7 +612,7 @@
             this.lblProviderDesc = new Label();
             this.lblProviderName = new Label();
             this.lblProvider = new Label();
-            this.lvDataSets = null; /// new DataSourceListView(true, true); ///WYJ fix, work around for Code Metrics problem
+            this.lvDataSets = new DataSourceListView(true, true); ///WYJ fix, work around for Code Metrics problem
             this.grpSymbolDetails = new GroupBox();
             this.btnCancelSymbolDetails = new Button();
             this.progSymbolDetails = new ProgressBar();
