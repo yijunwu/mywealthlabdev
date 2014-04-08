@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Class3" Collapsed="true">
+    <Position X="42.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class3.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.BitmapHelper" Collapsed="true">
+    <Position X="2" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\BitmapHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.BitmapSettings" Collapsed="true">
+    <Position X="3" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAQEAAACEAABAAAAAAEJACAADAAAAEQAAWAABAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\BitmapSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CalloutHelper" Collapsed="true">
+    <Position X="11" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CalloutHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CalloutSettings" Collapsed="true">
+    <Position X="7.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAgACEAgBAIgAAAAJACAADAAABAACAQCAABAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CalloutSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOBitmap" Collapsed="true">
+    <Position X="0.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgBAAMACAQBAAAAAwAAAAIAgAgDAEAABABAQAAMAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOBitmap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOCallout" Collapsed="true">
+    <Position X="2.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BwBAAIECAQhAACAIwIABAAAgAgDAEABABBAACAMRAIA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOCallout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDODiamond" Collapsed="true">
+    <Position X="13" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADIEIAAAQAAAAAAgAAAAQAgAAYAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDODiamond.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOEllipse" Collapsed="true">
+    <Position X="8.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAIAAAQAAAAAAgAAAAgAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOEllipse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOFibArcs" Collapsed="true">
+    <Position X="10" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAACBQAAAAAAQAAAAAAgAgAAEAAAABAAAAMAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOFibArcs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOFibFanLines" Collapsed="true">
+    <Position X="16.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAACBQAAAAAAQAAAAAAgAgAAEAAAABAAAAMAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOFibFanLines.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOFibRetrace" Collapsed="true">
+    <Position X="1" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAACBQAAAAAAQAAAAAAgAgAAEAAAABAAAAMAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOFibRetrace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOFibTimeZones" Collapsed="true">
+    <Position X="5.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAIACAQAAAAAAwAAAAAAAAgAAAAAAABgAAAAAAIA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOFibTimeZones.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOGannFan" Collapsed="true">
+    <Position X="7.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAACAYAAAAAAQAAAEAEgQgQCECAAADAAAAMAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOGannFan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOHorizontalLine" Collapsed="true">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAIACAQAAAAAAwAAAAAAAAgAAAAAAABgAAAAAAIA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOHorizontalLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDORectangle" Collapsed="true">
+    <Position X="8.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAIAAAQAAAAAAgAAAAAAAAAAAAAAAABAAAAAQAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDORectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDORegressionChannel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAACAQAAAAAAQAAAAQAAAgBAAAAAABAAAAAIAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDORegressionChannel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOSpeedResistance" Collapsed="true">
+    <Position X="3.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAACAQAAAAAAQAAAAAAAAgAAAAAAABgAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOSpeedResistance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOTextNote" Collapsed="true">
+    <Position X="5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhBAAIECAQAAAAAIwIAAAAAgAhAAAAAAABAACIMAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOTextNote.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOTradableTrendline" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="40.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAAiAAABACAASAABGBEkAgAAEAAAADAAAAEAESA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOTradableTrendline.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOTriangle" Collapsed="true">
+    <Position X="10.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABIEIAAAQAAAAAAgAAAAAAgAAYAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOTriangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.CDOVerticalLine" Collapsed="true">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAIACAQAAAAAAwAAAAAAAAgAAAAAAABgAAAAAAIA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\CDOVerticalLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.DiamondHelper" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\DiamondHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.EllipseHelper" Collapsed="true">
+    <Position X="13.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\EllipseHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.FibArcsHelper" Collapsed="true">
+    <Position X="20" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\FibArcsHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.FibFanLinesHelper" Collapsed="true">
+    <Position X="26.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\FibFanLinesHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.FibRetraceHelper" Collapsed="true">
+    <Position X="31.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\FibRetraceHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.FibSettings" Collapsed="true">
+    <Position X="12" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAgAAMCEgEABAgAEAEAACACBKAAAABAYAgIgAEAQ=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\FibSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.FibTimeZonesHelper" Collapsed="true">
+    <Position X="35.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\FibTimeZonesHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.GannFanHelper" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\GannFanHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.GannFanSettings" Collapsed="true">
+    <Position X="0.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAESEgABJQgAAAEAECAARKgCAABCQAiJAEAVY=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\GannFanSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.HorizontalLineHelper" Collapsed="true">
+    <Position X="15.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\HorizontalLineHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.LineSettings" Collapsed="true">
+    <Position X="5.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAECEgAABAgAAAEAACAABKAAAABAQAgIAAAAQ=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\LineSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.RectangleHelper" Collapsed="true">
+    <Position X="22.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\RectangleHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.RegressionChannelHelper" Collapsed="true">
+    <Position X="29" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\RegressionChannelHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.RegressionChannelSettings" Collapsed="true">
+    <Position X="14.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCAAACAACEgAABAoAAAAAACAAAKDAAAAAAAgIgAAAQ=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\RegressionChannelSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.RoundedRectangle" Collapsed="true">
+    <Position X="40.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIBAAAAAABAQCIAAAAgAAAAQBAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\RoundedRectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.SpeedResistanceHelper" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\SpeedResistanceHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.TextNoteHelper" Collapsed="true">
+    <Position X="17.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\TextNoteHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.TextNoteSettings" Collapsed="true">
+    <Position X="9.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAACEAABAIAAAAAIACAABAAABAAAAQCAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\TextNoteSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.TradableTrendlineHelper" Collapsed="true">
+    <Position X="24.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\TradableTrendlineHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.TradableTrendlineSettings" Collapsed="true">
+    <Position X="42.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACUAAAAAAACgABAAAgAAAAAAAAABAAAAgQE=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\TradableTrendlineSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.TriangleHelper" Collapsed="true">
+    <Position X="33.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\TriangleHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.VerticalLineHelper" Collapsed="true">
+    <Position X="38" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\VerticalLineHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartDrawingObjects.Properties.Resources" Collapsed="true">
+    <Position X="44" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAQAAAAADABk0EAAAAQAgAgA0QAIAAiAAAEA=</HashCode>
+      <FileName>WealthLab\ChartDrawingObjects\Properties\Resources.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.UserControl" Collapsed="true">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="WealthLab.ChartControl.DrawingObjectHelper" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="WealthLab.ChartControl.CDOLineBased" Collapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.ChartControl.CDOPolygonBased" Collapsed="true">
+    <Position X="10.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.ChartControl.CDOPointBased" Collapsed="true">
+    <Position X="2.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

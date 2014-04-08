@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WealthLab.PosSizers.AvgDownPctEquityLimit" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAAAACAAAAAAAAQAAAAAAAigAAAAAAAAgQAAAAABA=</HashCode>
+      <FileName>WealthLab\PosSizers\AvgDownPctEquityLimit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.PosSizers.AvgDownPctEquityLimitSettings" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEAABAAAAAAAAAAAAAAQAgAAAABAAAAAAA=</HashCode>
+      <FileName>WealthLab\PosSizers\AvgDownPctEquityLimitSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.PosSizers.BasicPosSizer" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEQAAAgAAAAEAgAAAAgAAAwCABAAQAEIAAAAAAABA=</HashCode>
+      <FileName>WealthLab\PosSizers\BasicPosSizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.PosSizers.CompareByFriendlyName" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>WealthLab\PosSizers\CompareByFriendlyName.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.PosSizers.DoubleDown" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAACgAAAAAAAQAAAAAAAAgAAAAAAAAgQAAAAAAA=</HashCode>
+      <FileName>WealthLab\PosSizers\DoubleDown.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.PosSizers.DoubleDownSettings" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>WealthLab\PosSizers\DoubleDownSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.PosSizers.MaxEntriesPerDay" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAACAABAAAAAQAAAAAAAggAAAAAAAAgQAAAAABg=</HashCode>
+      <FileName>WealthLab\PosSizers\MaxEntriesPerDay.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.PosSizers.MaxEntriesPerDaySettings" Collapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEAABAAAAAAAAAAAAgAAAAABAABAAAAAAA=</HashCode>
+      <FileName>WealthLab\PosSizers\MaxEntriesPerDaySettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.PosSizers.OneTradePerSymbol" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAACAAAAAAAAQAAAAAAAAggAAAAAAAgQAAAAAAA=</HashCode>
+      <FileName>WealthLab\PosSizers\OneTradePerSymbol.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.PosSizers.PctWinnersPosSizing" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAACAAAAAAAAQAAAAAAAwgARAAAAAIgQAAAAABA=</HashCode>
+      <FileName>WealthLab\PosSizers\PctWinnersPosSizing.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.PosSizers.PctWinnersPosSizingSettings" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADABAAAAGkAAAAACAAAAAACAAAAAAABAgAAAAAACEA=</HashCode>
+      <FileName>WealthLab\PosSizers\PctWinnersPosSizingSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.PosSizers.PosSizerSettingsBase" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEQAAAgCEAACCoAAAAgCACAAAAAAABABBAACQCAAA=</HashCode>
+      <FileName>WealthLab\PosSizers\PosSizerSettingsBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

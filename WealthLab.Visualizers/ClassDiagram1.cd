@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WealthLab.Visualizers.BasicScorecard" Collapsed="true">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAgAAACAAAAAQABAAAAACAAAEAAIQAAoAAAA=</HashCode>
+      <FileName>WealthLab\Visualizers\BasicScorecard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.Visualizers.ExtendedScorecard" Collapsed="true">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAgAAACAAAAAQABAAAAACAAAEAAIQAAoAAAA=</HashCode>
+      <FileName>WealthLab\Visualizers\ExtendedScorecard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVByPeriod" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BE6BEidAASv4DDwUAgwbBBgigCBAkgI1QCCqQEOeJdA=</HashCode>
+      <FileName>WealthLab\Visualizers\PVByPeriod.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVByStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAICACEqAAAEAISJBAACACBAAgEQIACKAACMJAA=</HashCode>
+      <FileName>WealthLab\Visualizers\PVByStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVBySymbol" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAgcAACEgAQIEAKQJBBACACVAAgEQAACKAAAOJII=</HashCode>
+      <FileName>WealthLab\Visualizers\PVBySymbol.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVDrawdown" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAiUAgCEqBYgkAEUDABACADBABRAAAgCKAAEGIIA=</HashCode>
+      <FileName>WealthLab\Visualizers\PVDrawdown.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVEquityCurve" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAgWAQCEoFQwEEUQAARACAKNAAAAQAQCKAQAGKJA=</HashCode>
+      <FileName>WealthLab\Visualizers\PVEquityCurve.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVMaeMfe" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgAg8ACCk6BQgEgQQQBBACAKREEgAAAACKAhAHIIA=</HashCode>
+      <FileName>WealthLab\Visualizers\PVMaeMfe.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVProfitDist" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgUAgCk4BQIMAAQAABACACVABAAAAACKAAAGIIA=</HashCode>
+      <FileName>WealthLab\Visualizers\PVProfitDist.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVReport" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAIo8AACFoASMGAAQJIBACACVQgoIQAYGqAgAHJoA=</HashCode>
+      <FileName>WealthLab\Visualizers\PVReport.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.PVTradeList" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgcAACEiAQIEKISLBBACACVAAgEQCASqAACOJIA=</HashCode>
+      <FileName>WealthLab\Visualizers\PVTradeList.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLab.Visualizers.Properties.Resources" Collapsed="true">
+    <Position X="21" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAAAAAAAAEAAAAQAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>WealthLab\Visualizers\Properties\Resources.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.UserControl" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

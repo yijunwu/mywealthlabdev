@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WealthLab.ChartControl.BarNumberEventArgs" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABQAAgAAAAAAAAAQAAAAAIAAAAgAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\BarNumberEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.BarsDescriptorString" Collapsed="true">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgACAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\BarsDescriptorString.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.CDOLineBased" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAIBCEABAAAAA4IAIAFAgBgAAGAAAhJAAgAEAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\CDOLineBased.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.ChartControl.CDOPointBased" Collapsed="true">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAIQCAAAAAAAAwAAIAAAgAgEAAAAAABAAAAEAYAA=</HashCode>
+      <FileName>WealthLab\ChartControl\CDOPointBased.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.ChartControl.CDOPolygonBased" Collapsed="true">
+    <Position X="5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAIBCEABAACAAwIAIAFAgAgAAEACAhJAAgAEAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\CDOPolygonBased.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="WealthLab.ChartControl.CDOTrendline" Collapsed="true">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBBAAACAQAAACAAQAABEAChAgQAEAAAABAAAAEAEAA=</HashCode>
+      <FileName>WealthLab\ChartControl\CDOTrendline.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.Chart" Collapsed="true">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>Q4GFBUEYAOVWIDyBQUAgD3KCAJIEMAyCMgKNAgRCnQk=</HashCode>
+      <FileName>WealthLab\ChartControl\Chart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.ChartDrawingObject" Collapsed="true">
+    <Position X="2.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFIBIEAAAAVACgAjKBjGAShAAQGFDAEABCAABEAEAM=</HashCode>
+      <FileName>WealthLab\ChartControl\ChartDrawingObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.ChartDrawingObjectHandle" Collapsed="true">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAQECAEAhQACAAAAAJABAAQIBDMAApQAAgAAAAYgA=</HashCode>
+      <FileName>WealthLab\ChartControl\ChartDrawingObjectHandle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.DraggedFundamentalItem" Collapsed="true">
+    <Position X="24.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAEACAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\DraggedFundamentalItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.DraggedIndicatorHelper" Collapsed="true">
+    <Position X="19.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\DraggedIndicatorHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.DrawingObjectHelper" Collapsed="true">
+    <Position X="10.25" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAgAACAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\DrawingObjectHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.DrawingObjectManager" Collapsed="true">
+    <Position X="21" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CIEAAYIAACEQwCCgiAKpAAAAkIBAQAAkQiAggBBCIhA=</HashCode>
+      <FileName>WealthLab\ChartControl\DrawingObjectManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.DrawingObjectProperties" Collapsed="true">
+    <Position X="10.5" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEAAAEAAIAAAAACAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\DrawingObjectProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.DroppedIndicatorEventArgs" Collapsed="true">
+    <Position X="4.75" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\DroppedIndicatorEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.ExceptionEventArgs" Collapsed="true">
+    <Position X="7.25" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\ExceptionEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.GeneralToolTip" Collapsed="true">
+    <Position X="3.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACFAAAAAAAAAAAACAAAAACgAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\GeneralToolTip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.GlyphToolTip" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACHABCAAAAAAAAACAACAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\GlyphToolTip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.IndicatorDescriptionString" Collapsed="true">
+    <Position X="22.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgACAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\IndicatorDescriptionString.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.IndicatorDescriptor" Collapsed="true">
+    <Position X="24.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAAAAQgiBAACAAAOQDAECiQBBCECAEhoBAgAICYAA=</HashCode>
+      <FileName>WealthLab\ChartControl\IndicatorDescriptor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.IndicatorDragDropManager" Collapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwCBgQIAACFAQigQAAChZBAAgIBEAAwEQGCiARJBMBg=</HashCode>
+      <FileName>WealthLab\ChartControl\IndicatorDragDropManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.IndicatorParametersForm" Collapsed="true">
+    <Position X="8.25" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>CEEIBAAEAyNAAzm4gCARMEAiBHhYkEaBjQRAgJCEoAI=</HashCode>
+      <FileName>WealthLab\ChartControl\IndicatorParametersForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.IndicatorToolTip" Collapsed="true">
+    <Position X="10" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACHABAAAAAAAAgACAAAAECAAIAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\IndicatorToolTip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.LineBasedObjectSettings" Collapsed="true">
+    <Position X="1" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCAAACAECEgAABAoAAAEAACAAAKDAAABAQAgIgAAAQ=</HashCode>
+      <FileName>WealthLab\ChartControl\LineBasedObjectSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.PaneDescriptor" Collapsed="true">
+    <Position X="21" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAABABgACAAAAAAAAAgAAAAEAAAAAAAAAEAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\PaneDescriptor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.PointBasedObjectSettings" Collapsed="true">
+    <Position X="12.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEAAAAAAAAAAAACAABAAAAAAAAAAAgAAIA=</HashCode>
+      <FileName>WealthLab\ChartControl\PointBasedObjectSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.PolygonBasedObjectSettings" Collapsed="true">
+    <Position X="16.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAECEgABBAgAAAEAACAEBKAACABAQAgIAAAAQ=</HashCode>
+      <FileName>WealthLab\ChartControl\PolygonBasedObjectSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.PriceToolTip" Collapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACACgAACHABBCAAAEACAQiEAAAECAAAQiAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\PriceToolTip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.ScaleChangeEventArgs" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\ScaleChangeEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.ScaleSelector" Collapsed="true">
+    <Position X="14.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAQgAACBAAAAIEICBAAADBIBAEAQIRUBEIAAQIgA=</HashCode>
+      <FileName>WealthLab\ChartControl\ScaleSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.TrendlineHelper" Collapsed="true">
+    <Position X="10.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAEgAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\TrendlineHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.TrendlineSettings" Collapsed="true">
+    <Position X="1" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEAAAAAAAAAAAAAAARAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>WealthLab\ChartControl\TrendlineSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.Form" Collapsed="true">
+    <Position X="9.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Windows.Forms.UserControl" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.EventArgs" Collapsed="true">
+    <Position X="3.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="WealthLab.ChartControl.Properties.Resources" Collapsed="true">
+    <Position X="22.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAggAAAAAAAAAAAIABFAAAAQABAAAABAgABCIIAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="WealthLab.ChartControl.ICDOBehavior" Collapsed="true">
+    <Position X="19.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\ICDOBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="WealthLab.ChartControl.ChartDrawingObjectHandleType" Collapsed="true">
+    <Position X="19.25" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLab\ChartControl\ChartDrawingObjectHandleType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="WealthLab.ChartControl.ChartMode" Collapsed="true">
+    <Position X="22" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAABAAIAAAAAAQAAAQIAAAAAAAAAAAEAAg=</HashCode>
+      <FileName>WealthLab\ChartControl\ChartMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AboutBox1" Collapsed="true">
+    <Position X="3.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAACEgAAUAAACBAAACAIBAEIAAQAAgAAAAIAA=</HashCode>
+      <FileName>AboutBox1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Class60" Collapsed="true">
+    <Position X="95.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAACAAAAABAgEAgIBAAAAEQGAgAAAQIBA=</HashCode>
+      <FileName>Class60.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Class61" Collapsed="true">
+    <Position X="97.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Class61.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Class62" Collapsed="true">
+    <Position X="99.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class62.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.ChartControl.DataEditor" Collapsed="true">
+    <Position X="57.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FKEAgAQAASkAgNEIUAAAAEACAIBABAEBBDAagACQKQQ=</HashCode>
+      <FileName>WealthLab\ChartControl\DataEditor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLab.WLPEmail" Collapsed="true">
+    <Position X="99.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gADCgAAAAABAACAAgACAABAAAABAEAxEAAAAAAIAIAA=</HashCode>
+      <FileName>WealthLab\WLPEmail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.AccountsPositionsForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UATboA/kgCZkSOBAYAapBNACwI1BMsN83G2iIzBPbVA=</HashCode>
+      <FileName>WealthLabPro\AccountsPositionsForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.AccountTypeSelector" Collapsed="true">
+    <Position X="94" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAACEAAGAAAAKBAAAAAABAEIAEAAAgAAIAIAA=</HashCode>
+      <FileName>WealthLabPro\AccountTypeSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.AddPriceTriggerForm" Collapsed="true">
+    <Position X="39.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAQQBACQMAAUoAACAAABCCABIMEABAQIAEQAAJAI=</HashCode>
+      <FileName>WealthLabPro\AddPriceTriggerForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.Alerts" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>qEYSwTZEACBYCzIjYACIRAiiAB3AFgkRDBSwJBROJoI=</HashCode>
+      <FileName>WealthLabPro\Alerts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.BarDataRangeSelecter" Collapsed="true">
+    <Position X="11.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAQAAAClIAAAAAAAICAACAAAAEAAACAAAAAgAAAA=</HashCode>
+      <FileName>WealthLabPro\BarDataRangeSelecter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.BarDataRangeSelecterForm" Collapsed="true">
+    <Position X="60" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYgAAAAAACEACgEAwAAAAIIjVAAwEEAgAIAgAEAAAAA=</HashCode>
+      <FileName>WealthLabPro\BarDataRangeSelecterForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.Builder" Collapsed="true">
+    <Position X="18.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASOBoIBoESNAQCIZAGChUBAChcBBkwABSHAgAZJFLBI=</HashCode>
+      <FileName>WealthLabPro\Builder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.ChartForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="84.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>nh/77+XuXr1M97bfT0frve/f+6uaO8X/b/awth7+qZc=</HashCode>
+      <FileName>WealthLabPro\ChartForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.ChartSettingsForm" Collapsed="true">
+    <Position X="6" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAACEAAAEAAAAAAAACAAAAAEAAgAAAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\ChartSettingsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.CombinationStrategyBuilder" Collapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASBIAsmgKtHSDAbAnAtBIGDwKhAkzCSavFggQAdthI=</HashCode>
+      <FileName>WealthLabPro\CombinationStrategyBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.CsParserWealthScript" Collapsed="true">
+    <Position X="94" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAABAACAAAIgBAgAAAABAAAAEAQBgAAAQIAA=</HashCode>
+      <FileName>WealthLabPro\CsParserWealthScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.DataManagerForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="71.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IhZAyUpK3aUF6C1UQEAJAEtDwMx4n8Ed7QMktllANd0=</HashCode>
+      <FileName>WealthLabPro\DataManagerForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.DataWindowForm" Collapsed="true">
+    <Position X="87" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAgAEAACEACAAEAAAJAAACAABEAAAAQAAAAAAAJAE=</HashCode>
+      <FileName>WealthLabPro\DataWindowForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.DebugForm" Collapsed="true">
+    <Position X="8.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAAQCkAAgAAAAAACQACAAAAIgAAQAABAABIAAA=</HashCode>
+      <FileName>WealthLabPro\DebugForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.Description" Collapsed="true">
+    <Position X="16.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FV2BoA4CCCVAQW9WAqAhBAkiQQ1BFMAASBWyEjSGMMI=</HashCode>
+      <FileName>WealthLabPro\Description.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.DynamicMenuItem" Collapsed="true">
+    <Position X="95.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAAAAAAAAAgAACAAAAAAAAACAAIAAAAEAAAACQIAAAA=</HashCode>
+      <FileName>WealthLabPro\DynamicMenuItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.EditAlertForm" Collapsed="true">
+    <Position X="42" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQAAAAAAACAAIg0AAACAAIBCCAAAMEBBAAIEAQAAwAo=</HashCode>
+      <FileName>WealthLabPro\EditAlertForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.EditDescriptionForm" Collapsed="true">
+    <Position X="46.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAASAgAAEAAACAAAACAAAAAEACAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\EditDescriptionForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.Editor" Collapsed="true">
+    <Position X="20.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQIAAAAAiSMIDIEUQAhgRCFDEJBAGpAAAwAABi+IoEA=</HashCode>
+      <FileName>WealthLabPro\Editor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.EditOrderForm" Collapsed="true">
+    <Position X="62.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAIAAAQGFAZgkAAACACIBCAABIIEBBAAIEAQAAwCg=</HashCode>
+      <FileName>WealthLabPro\EditOrderForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.FundamentalsForm" Collapsed="true">
+    <Position X="73.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAKAICCFAAgEAAAACiAECAADAAgBAQAAgABCAAAA=</HashCode>
+      <FileName>WealthLabPro\FundamentalsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.HomeForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="89.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAKYFgBhASVEgPMBiECIAAACRCBAEAAAWAAIBAABIEA=</HashCode>
+      <FileName>WealthLabPro\HomeForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.IndexManagerForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgCCwABgAGEAQDRBAAkJACgCAIFgjwBYQCgAEBcILgA=</HashCode>
+      <FileName>WealthLabPro\IndexManagerForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.IndicatorsForm" Collapsed="true">
+    <Position X="26.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKSAAIAICCFAAgACAAAACAQCAABAAgAAQAAIABAgAAE=</HashCode>
+      <FileName>WealthLabPro\IndicatorsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.MainForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>///Z93/88/fGe//9f/2vvt/b/7/f+/677/399l/Pr+s=</HashCode>
+      <FileName>WealthLabPro\MainForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.MainModule" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hB8SdHAEMiFlESUiQQQDCosihILEGMIExGDghlpNJZU=</HashCode>
+      <FileName>WealthLabPro\MainModule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.NewDataSourceForm" Collapsed="true">
+    <Position X="48.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCAgAEAgSkhAEmAAIEAAQACAABAkQIICAFAAALJAAA=</HashCode>
+      <FileName>WealthLabPro\NewDataSourceForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.Optimization" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BPS20gfTSCW/LalvYY8JFNgqpZhDU8eVXuqmhZHedDU=</HashCode>
+      <FileName>WealthLabPro\Optimization.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.OptimizerSettings" Collapsed="true">
+    <Position X="64.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQCEAAAEAAIAAAAACAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\OptimizerSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.OrdersAlertsForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="75.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>sgSAihtkNDQHTCIwoHCJFgLCgJ3CowWUTeXqoZ5ONDE=</HashCode>
+      <FileName>WealthLabPro\OrdersAlertsForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.PositionSizeSelecter" Collapsed="true">
+    <Position X="14" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAQAAAClAABACAAAACAACAAAAEAAACAEAAAAQAAA=</HashCode>
+      <FileName>WealthLabPro\PositionSizeSelecter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.PositionSizeSelecterForm" Collapsed="true">
+    <Position X="12.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAEgAAAEkmGAgDEeQIKAAKACIEBCFFAEIhNAAwWDIQA=</HashCode>
+      <FileName>WealthLabPro\PositionSizeSelecterForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.PreferencesForm" Collapsed="true">
+    <Position X="21.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>pvqnZyr/oPCuLx1c/ar9b993kP5a/8nfenyt/dguvf0=</HashCode>
+      <FileName>WealthLabPro\PreferencesForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.QuickRefCategory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="97.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQgACQAAAAAAAQAAAAAAAAEAAAAAhAAAAA=</HashCode>
+      <FileName>WealthLabPro\QuickRefCategory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.QuickRefEntry" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="99.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAgACQAAAIAAAQAAAAAAAAEAAAgAAIAAAA=</HashCode>
+      <FileName>WealthLabPro\QuickRefEntry.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.QuickRefForm" Collapsed="true">
+    <Position X="51" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASJAAAAAKFAQiAAAAAgGBAGABBAChoUSACAAmMIAAA=</HashCode>
+      <FileName>WealthLabPro\QuickRefForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.QuickRefManager" Collapsed="true">
+    <Position X="94" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAgACEAAAAAAAAAAAAAAABAEAAAAAAAABAAEAA=</HashCode>
+      <FileName>WealthLabPro\QuickRefManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.QuotesForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="66.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>uLSZxa/mRnXPUyiRYnCrRLAy0LXGP4mVXf77JRbsLtA=</HashCode>
+      <FileName>WealthLabPro\QuotesForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.ReferencesForm" Collapsed="true">
+    <Position X="78" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEAQCEQBAAAAAACAABQoEAAAAQEAAAMAgY=</HashCode>
+      <FileName>WealthLabPro\ReferencesForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.RuleFundamentalsForm" Collapsed="true">
+    <Position X="15" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAEAIAAACEAACEBQAAAAAACAABAAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\RuleFundamentalsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.RuleIndicatorsForm" Collapsed="true">
+    <Position X="28.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAQICMAAiEAAAAAAIACAABAAEEECAAAABAEAAg=</HashCode>
+      <FileName>WealthLabPro\RuleIndicatorsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.SaveStrategyAsForm" Collapsed="true">
+    <Position X="33" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACIAAAABCBAACEAgBCABIACQAAAAECACIAEAAAIAAA=</HashCode>
+      <FileName>WealthLabPro\SaveStrategyAsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.ScaleSelecter" Collapsed="true">
+    <Position X="9.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAQAhACFAAAAAAAAASAACBAEAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\ScaleSelecter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.ScaleSelecterForm" Collapsed="true">
+    <Position X="53.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACBCCEAAAEAAAAAAoICAAAEAEAAAAAAAAAAAAE=</HashCode>
+      <FileName>WealthLabPro\ScaleSelecterForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.StockSplitForm" Collapsed="true">
+    <Position X="69" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABEACEAAAEAABAAAAACgAIQAEABAAACACAAAAA=</HashCode>
+      <FileName>WealthLabPro\StockSplitForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.StrategyAccountForm" Collapsed="true">
+    <Position X="80.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEACCEAAAAAAABCAAgAAEAAAAAAQQAAAAA=</HashCode>
+      <FileName>WealthLabPro\StrategyAccountForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.StrategyCenterExecutionItem" Collapsed="true">
+    <Position X="99.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgBQAIACABAACAEAAAAAAREAQCAAAAAAAAAEBAAAAA=</HashCode>
+      <FileName>WealthLabPro\StrategyCenterExecutionItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.StrategyCenterForm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>sgcxxf93C61Pgj0R6hCpRSkSgZHRlskW7n7iJVAPLXM=</HashCode>
+      <FileName>WealthLabPro\StrategyCenterForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.StrategyCenterItem" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="94" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAyJwABjWAFMYDR2AAKoQpABoLhAEYIXEdVkkl9Iq4A=</HashCode>
+      <FileName>WealthLabPro\StrategyCenterItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.StrategyDownload" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBXAAKAAgiHGBCBAQhCBACASgIDAGAAETOAgAAMQJBI=</HashCode>
+      <FileName>WealthLabPro\StrategyDownload.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.StrategyExplorerForm" Collapsed="true">
+    <Position X="44.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>igSZWouAMCfISGMlkgApIJBGIRFBEkCxfQ2kJ5CEJRY=</HashCode>
+      <FileName>WealthLabPro\StrategyExplorerForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.StrategyRanking" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="55.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>0jIgoB1QAC5EgT9aoICJCOHChIDCk0aH7GDkAhjGLRM=</HashCode>
+      <FileName>WealthLabPro\StrategyRanking.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WealthLabPro.StrategyRankingItem" Collapsed="true">
+    <Position X="95.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAgBIAAIAAAEIAGAFAAABEIAAA=</HashCode>
+      <FileName>WealthLabPro\StrategyRankingItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.StrategyRankingSettings" Collapsed="true">
+    <Position X="97.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAABAAABAACQCAAIICAQAAKAAAAAEAAAAAhpACAA=</HashCode>
+      <FileName>WealthLabPro\StrategyRankingSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.StrategySettingsForm" Collapsed="true">
+    <Position X="82.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EwIIIAABACABAB0QwESRAICGAIhAQMAACDAiExwQKgA=</HashCode>
+      <FileName>WealthLabPro\StrategySettingsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.SymbolManagerForm" Collapsed="true">
+    <Position X="91.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAEEACEIACAIAAABQQACAABYMgggQQQAAEAAIwY=</HashCode>
+      <FileName>WealthLabPro\SymbolManagerForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.WizardCodeForm" Collapsed="true">
+    <Position X="19.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAACEAAAAAAAAgAAAiAAAAAEIAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\WizardCodeForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.WLPException" Collapsed="true">
+    <Position X="37.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACEQIAAAAQEAQAACBEAAAAAAgQAAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\WLPException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.Properties.Resources" Collapsed="true">
+    <Position X="95.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAACBQBQAEgTACAoAAEAAAgwQAAAGAAAAAAAAgBAE=</HashCode>
+      <FileName>WealthLabPro\Properties\Resources.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WealthLabPro.Properties.Settings" Collapsed="true">
+    <Position X="97.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\Properties\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.Form" Collapsed="true">
+    <Position X="47.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Windows.Forms.UserControl" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Enum Name="WealthLabPro.AbortReason" Collapsed="true">
+    <Position X="94" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAABAABA=</HashCode>
+      <FileName>WealthLabPro\AbortReason.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="WealthLabPro.CategoryType" Collapsed="true">
+    <Position X="95.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WealthLabPro\CategoryType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="WealthLabPro.DataWindowType" Collapsed="true">
+    <Position X="97.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAgAAAAAAAAgAAAABAAIAAACAAIA=</HashCode>
+      <FileName>WealthLabPro\DataWindowType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="WealthLabPro.EntryType" Collapsed="true">
+    <Position X="99.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>WealthLabPro\EntryType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="WealthLabPro.StrategyCenterItemDataType" Collapsed="true">
+    <Position X="94" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgEACAA=</HashCode>
+      <FileName>WealthLabPro\StrategyCenterItemDataType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Delegate21" Collapsed="true">
+    <Position X="94" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Delegate21.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
