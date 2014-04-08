@@ -205,131 +205,217 @@
 
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(PrintPreview));
-            this.toolStrip1 = new ToolStrip();
-            this.btnPrint = new ToolStripButton();
-            this.toolStripSeparator4 = new ToolStripSeparator();
-            this.btnSetup = new ToolStripButton();
-            this.toolStripSeparator1 = new ToolStripSeparator();
-            this.lblZoom = new ToolStripLabel();
-            this.cmbZoom = new ToolStripComboBox();
-            this.toolStripSeparator3 = new ToolStripSeparator();
-            this.lblPage = new ToolStripLabel();
-            this.txbxPage = new ToolStripTextBox();
-            this.lblOf = new ToolStripLabel();
-            this.lblPages = new ToolStripLabel();
-            this.btnDown = new ToolStripButton();
-            this.btnUp = new ToolStripButton();
-            this.toolStripSeparator2 = new ToolStripSeparator();
-            this.btnClose = new ToolStripButton();
-            this.printPreviewControl1 = new PrintPreviewControl();
-            this.pageSetupDialog_0 = new PageSetupDialog();
-            this.printDialog_0 = new PrintDialog();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrintPreview));
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnPrint = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSetup = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblZoom = new System.Windows.Forms.ToolStripLabel();
+            this.cmbZoom = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblPage = new System.Windows.Forms.ToolStripLabel();
+            this.txbxPage = new System.Windows.Forms.ToolStripTextBox();
+            this.lblOf = new System.Windows.Forms.ToolStripLabel();
+            this.lblPages = new System.Windows.Forms.ToolStripLabel();
+            this.btnDown = new System.Windows.Forms.ToolStripButton();
+            this.btnUp = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnClose = new System.Windows.Forms.ToolStripButton();
+            this.printPreviewControl1 = new System.Windows.Forms.PrintPreviewControl();
+            this.pageSetupDialog_0 = new System.Windows.Forms.PageSetupDialog();
+            this.printDialog_0 = new System.Windows.Forms.PrintDialog();
             this.toolStrip1.SuspendLayout();
-            base.SuspendLayout();
-            this.toolStrip1.Items.AddRange(new ToolStripItem[] { this.btnPrint, this.toolStripSeparator4, this.btnSetup, this.toolStripSeparator1, this.lblZoom, this.cmbZoom, this.toolStripSeparator3, this.lblPage, this.txbxPage, this.lblOf, this.lblPages, this.btnDown, this.btnUp, this.toolStripSeparator2, this.btnClose });
-            this.toolStrip1.Location = new Point(0, 0);
+            this.SuspendLayout();
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnPrint,
+            this.toolStripSeparator4,
+            this.btnSetup,
+            this.toolStripSeparator1,
+            this.lblZoom,
+            this.cmbZoom,
+            this.toolStripSeparator3,
+            this.lblPage,
+            this.txbxPage,
+            this.lblOf,
+            this.lblPages,
+            this.btnDown,
+            this.btnUp,
+            this.toolStripSeparator2,
+            this.btnClose});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new Size(0x2b9, 0x19);
+            this.toolStrip1.Size = new System.Drawing.Size(697, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            this.btnPrint.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnPrint.Image = (Image) resources.GetObject("btnPrint.Image");
-            this.btnPrint.ImageTransparentColor = Color.Magenta;
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnPrint.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.Image")));
+            this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new Size(0x2d, 0x16);
+            this.btnPrint.Size = new System.Drawing.Size(45, 22);
             this.btnPrint.Text = "&Print...";
             this.btnPrint.ToolTipText = "Print";
-            this.btnPrint.Click += new EventHandler(this.btnPrint_Click);
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+            // 
+            // toolStripSeparator4
+            // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new Size(6, 0x19);
-            this.btnSetup.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnSetup.Image = (Image) resources.GetObject("btnSetup.Image");
-            this.btnSetup.ImageTransparentColor = Color.Magenta;
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnSetup
+            // 
+            this.btnSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSetup.Image = ((System.Drawing.Image)(resources.GetObject("btnSetup.Image")));
+            this.btnSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSetup.Name = "btnSetup";
-            this.btnSetup.Size = new Size(0x27, 0x16);
+            this.btnSetup.Size = new System.Drawing.Size(39, 22);
             this.btnSetup.Text = "&Setup";
             this.btnSetup.ToolTipText = "Page Setup";
-            this.btnSetup.Click += new EventHandler(this.btnSetup_Click);
+            this.btnSetup.Click += new System.EventHandler(this.btnSetup_Click);
+            // 
+            // toolStripSeparator1
+            // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new Size(6, 0x19);
-            this.lblZoom.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // lblZoom
+            // 
+            this.lblZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblZoom.Name = "lblZoom";
-            this.lblZoom.Size = new Size(0x25, 0x16);
+            this.lblZoom.Size = new System.Drawing.Size(37, 22);
             this.lblZoom.Text = "Zoom:";
-            this.lblZoom.TextAlign = ContentAlignment.MiddleRight;
-            this.cmbZoom.Items.AddRange(new object[] { "Auto", "500%", "200%", "150%", "100%", "75%", "50%", "25%", "10%", "Two Pages", "Whole Page", "Page Width", "All Pages" });
+            this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cmbZoom
+            // 
+            this.cmbZoom.Items.AddRange(new object[] {
+            "Auto",
+            "500%",
+            "200%",
+            "150%",
+            "100%",
+            "75%",
+            "50%",
+            "25%",
+            "10%",
+            "Two Pages",
+            "Whole Page",
+            "Page Width",
+            "All Pages"});
             this.cmbZoom.MaxDropDownItems = 10;
             this.cmbZoom.Name = "cmbZoom";
-            this.cmbZoom.Size = new Size(100, 0x19);
+            this.cmbZoom.Size = new System.Drawing.Size(100, 25);
             this.cmbZoom.Text = "Auto";
             this.cmbZoom.ToolTipText = "Zoom";
-            this.cmbZoom.TextChanged += new EventHandler(this.cmbZoom_TextChanged);
+            this.cmbZoom.TextChanged += new System.EventHandler(this.cmbZoom_TextChanged);
+            // 
+            // toolStripSeparator3
+            // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new Size(6, 0x19);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // lblPage
+            // 
             this.lblPage.Name = "lblPage";
-            this.lblPage.Size = new Size(0x1f, 0x16);
+            this.lblPage.Size = new System.Drawing.Size(31, 22);
             this.lblPage.Text = "Pa&ge";
+            // 
+            // txbxPage
+            // 
             this.txbxPage.Name = "txbxPage";
-            this.txbxPage.Size = new Size(0x19, 0x19);
+            this.txbxPage.Size = new System.Drawing.Size(25, 25);
             this.txbxPage.Text = "1";
-            this.txbxPage.TextBoxTextAlign = HorizontalAlignment.Right;
+            this.txbxPage.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txbxPage.ToolTipText = "Go to page";
-            this.txbxPage.TextChanged += new EventHandler(this.txbxPage_TextChanged);
+            this.txbxPage.TextChanged += new System.EventHandler(this.txbxPage_TextChanged);
+            // 
+            // lblOf
+            // 
             this.lblOf.Name = "lblOf";
-            this.lblOf.Size = new Size(0x11, 0x16);
+            this.lblOf.Size = new System.Drawing.Size(17, 22);
             this.lblOf.Text = "of";
+            // 
+            // lblPages
+            // 
             this.lblPages.Name = "lblPages";
-            this.lblPages.Size = new Size(13, 0x16);
+            this.lblPages.Size = new System.Drawing.Size(13, 22);
             this.lblPages.Text = "1";
-            this.btnDown.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            // 
+            // btnDown
+            // 
+            this.btnDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnDown.Enabled = false;
-            this.btnDown.Image = (Image) resources.GetObject("btnDown.Image");
-            this.btnDown.ImageTransparentColor = Color.Magenta;
+            this.btnDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDown.Image")));
+            this.btnDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new Size(0x17, 0x16);
+            this.btnDown.Size = new System.Drawing.Size(23, 22);
             this.btnDown.Text = "toolStripButton1";
             this.btnDown.ToolTipText = "Previous page";
-            this.btnDown.Click += new EventHandler(this.btnDown_Click);
-            this.btnUp.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
+            // 
+            // btnUp
+            // 
+            this.btnUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnUp.Enabled = false;
-            this.btnUp.Image = (Image) resources.GetObject("btnUp.Image");
-            this.btnUp.ImageTransparentColor = Color.Magenta;
+            this.btnUp.Image = ((System.Drawing.Image)(resources.GetObject("btnUp.Image")));
+            this.btnUp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new Size(0x17, 0x16);
+            this.btnUp.Size = new System.Drawing.Size(23, 22);
             this.btnUp.Text = "toolStripButton1";
             this.btnUp.ToolTipText = "Next page";
-            this.btnUp.Click += new EventHandler(this.btnUp_Click);
+            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
+            // 
+            // toolStripSeparator2
+            // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new Size(6, 0x19);
-            this.btnClose.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.btnClose.Image = (Image) resources.GetObject("btnClose.Image");
-            this.btnClose.ImageTransparentColor = Color.Magenta;
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnClose
+            // 
+            this.btnClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
+            this.btnClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new Size(0x25, 0x16);
+            this.btnClose.Size = new System.Drawing.Size(37, 22);
             this.btnClose.Text = "&Close";
             this.btnClose.ToolTipText = "Close preview";
-            this.btnClose.Click += new EventHandler(this.btnClose_Click);
-            this.printPreviewControl1.Cursor = Cursors.Default;
-            this.printPreviewControl1.Dock = DockStyle.Fill;
-            this.printPreviewControl1.Location = new Point(0, 0x19);
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // printPreviewControl1
+            // 
+            this.printPreviewControl1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.printPreviewControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.printPreviewControl1.Location = new System.Drawing.Point(0, 25);
             this.printPreviewControl1.Name = "printPreviewControl1";
-            this.printPreviewControl1.Size = new Size(0x2b9, 0x1ce);
+            this.printPreviewControl1.Size = new System.Drawing.Size(697, 462);
             this.printPreviewControl1.TabIndex = 1;
-            this.printPreviewControl1.StartPageChanged += new EventHandler(this.printPreviewControl1_StartPageChanged);
+            this.printPreviewControl1.StartPageChanged += new System.EventHandler(this.printPreviewControl1_StartPageChanged);
+            // 
+            // printDialog_0
+            // 
             this.printDialog_0.UseEXDialog = true;
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.ClientSize = new Size(0x2b9, 0x1e7);
-            base.Controls.Add(this.printPreviewControl1);
-            base.Controls.Add(this.toolStrip1);
-            base.Name = "PrintPreview";
+            // 
+            // PrintPreview
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(697, 487);
+            this.Controls.Add(this.printPreviewControl1);
+            this.Controls.Add(this.toolStrip1);
+            this.Name = "PrintPreview";
             this.Text = "Print Preview";
-            base.Resize += new EventHandler(this.PrintPreview_Resize);
+            this.Resize += new System.EventHandler(this.PrintPreview_Resize);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         private void PrintPreview_Resize(object sender, EventArgs e)
