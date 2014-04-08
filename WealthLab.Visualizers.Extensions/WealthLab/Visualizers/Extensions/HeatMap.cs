@@ -14,9 +14,8 @@
     using System.Windows.Markup;
     using System.Windows.Media;
     using System.Windows.Shapes;
-    using TreeMaps.Controls;
+    //using ;
     using WealthLab;
-
     [GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
     public class HeatMap : System.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector
     {
@@ -48,7 +47,7 @@
         internal System.Windows.Controls.Label lblSize;
         internal System.Windows.Shapes.Rectangle rectangle1;
         internal System.Windows.Controls.Primitives.StatusBar statusBar1;
-        internal SquarifiedTreeMapsPanel tmpHeatMap;
+        internal TreeMaps.Controls.SquarifiedTreeMapsPanel tmpHeatMap;
         internal TextBlock txtColor;
         internal TextBlock txtQty;
         internal System.Windows.Controls.TextBox txtSearch;
@@ -730,7 +729,7 @@
             this.lbl_strategy.Content = "Strategy: " + printObject.GetData("Strategy");
             this.txtQty.Text = "Number of symbols. Each square represents a single symbol included in the backtest.";
             System.Windows.Shapes.Rectangle r = new System.Windows.Shapes.Rectangle();
-            r.SetValue(TreeMapsPanel.WeightProperty, weight);
+            r.SetValue(TreeMaps.Controls.TreeMapsPanel.WeightProperty, weight);
             r.Tag = symbol;
             r.IsMouseDirectlyOverChanged += new DependencyPropertyChangedEventHandler(this.r_IsMouseDirectlyOverChanged);
             if (this.cmbView.SelectedIndex == 1)
@@ -781,7 +780,7 @@
             this.lbl_symbol.Content = "Symbol: " + symbol + " (" + name + ")";
             this.lbl_strategy.Content = "Strategy: " + printObject.GetData("Strategy");
             this.txtQty.Text = "Number of trades. Each square represents a single trade for the selected symbol.";
-            r.SetValue(TreeMapsPanel.WeightProperty, weight);
+            r.SetValue(TreeMaps.Controls.TreeMapsPanel.WeightProperty, weight);
             r.IsMouseDirectlyOverChanged += new DependencyPropertyChangedEventHandler(this.r_IsMouseDirectlyOverChanged);
             if (this.cmbView.SelectedIndex == 0)
             {
@@ -812,7 +811,7 @@
                     return;
 
                 case 2:
-                    this.tmpHeatMap = (SquarifiedTreeMapsPanel) target;
+                    this.tmpHeatMap = (TreeMaps.Controls.SquarifiedTreeMapsPanel)target;
                     return;
 
                 case 3:
