@@ -31,15 +31,33 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DataSetsForm.resx" />
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DialogFormBase.resx" />
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DuplicateSymbolsDialogForm.resx" />
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\HolidayDateDialogForm.resx" />
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketManagerControl.resx" />
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketMangerForm.resx" />
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketNameDialogForm.resx" />
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\ProvidersForm.resx" />
-    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\SpecialHoursDialogForm.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DataSetsForm.resx">
+      <DependentUpon>DataSetsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DialogFormBase.resx">
+      <DependentUpon>DialogFormBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DuplicateSymbolsDialogForm.resx">
+      <DependentUpon>DuplicateSymbolsDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\HolidayDateDialogForm.resx">
+      <DependentUpon>HolidayDateDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketManagerControl.resx">
+      <DependentUpon>MarketManagerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketMangerForm.resx">
+      <DependentUpon>MarketMangerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketNameDialogForm.resx">
+      <DependentUpon>MarketNameDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\ProvidersForm.resx">
+      <DependentUpon>ProvidersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\SpecialHoursDialogForm.resx">
+      <DependentUpon>SpecialHoursDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
@@ -89,15 +107,6 @@
     </Compile>
     <Compile Include="WealthLab\DataProviders\MarketManagerService\SupportedProviders.cs" />
     <Compile Include="WealthLab\DataProviders\MarketManagerService\DeleteDuplicateOption.cs" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.SpecialHoursDialogForm.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.HolidayDateDialogForm.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.MarketNameDialogForm.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.DataSetsForm.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.ProvidersForm.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.MarketManagerControl.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.DialogFormBase.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.DuplicateSymbolsDialogForm.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.MarketMangerForm.resources" />
     <EmbeddedResource Include="WealthLab.DataProviders.MarketManagerService.Properties.Resources.resources" />
   </ItemGroup>
   <ItemGroup>
