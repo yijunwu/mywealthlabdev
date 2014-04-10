@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WealthLab.DataProviders.AsciiFilesStatic;
+using GroupBox = System.Windows.Forms.GroupBox;
 
 internal class TextFilesWizardPageData : UserControl
 {
@@ -70,7 +71,7 @@ internal class TextFilesWizardPageData : UserControl
         this.lstData.VirtualMode = true;
         this.lstData.RetrieveVirtualItem += new RetrieveVirtualItemEventHandler(this.lstData_RetrieveVirtualItem);
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.Controls.Add(this.grpData);
         base.Name = "TextFilesWizardPageData";
         base.Size = new Size(560, 0x161);

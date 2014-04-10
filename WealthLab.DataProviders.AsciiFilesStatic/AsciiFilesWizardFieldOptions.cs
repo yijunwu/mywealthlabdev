@@ -7,8 +7,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using WealthLab.DataProviders.AsciiFilesStatic;
-using WealthLab.DataProviders.AsciiFilesStatic.Properties;
 using WealthLab.DataProviders.Helper;
+//using global::WealthLab.DataProviders.AsciiFilesStatic.Properties;
+using Button = System.Windows.Forms.Button;
+using Resources = global::Properties.Resources;
+
 
 internal class AsciiFilesWizardFieldOptions : UserControl
 {
@@ -33,7 +36,7 @@ internal class AsciiFilesWizardFieldOptions : UserControl
     private CustomFieldNameControl customFieldNameControl_0 = new CustomFieldNameControl();
     private GroupBox grpFieldOrder;
     private GroupBox grpFormatOptions;
-    private IContainer icontainer_0;
+    private IContainer components;
     private ImageList imageList_0;
     private Label lblDateFormat;
     private Label lblDecimalSeparator;
@@ -240,18 +243,18 @@ internal class AsciiFilesWizardFieldOptions : UserControl
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing && (this.icontainer_0 != null))
+        if (disposing && (this.components != null))
         {
-            this.icontainer_0.Dispose();
+            this.components.Dispose();
         }
         base.Dispose(disposing);
     }
 
     private void InitializeComponent()
     {
-        this.icontainer_0 = new Container();
-        ComponentResourceManager manager = new ComponentResourceManager(typeof(AsciiFilesWizardFieldOptions));
-        this.imageList_0 = new ImageList(this.icontainer_0);
+        this.components = new Container();
+        ComponentResourceManager resources = new ComponentResourceManager(typeof(AsciiFilesWizardFieldOptions));
+        this.imageList_0 = new ImageList(this.components);
         this.grpFieldOrder = new GroupBox();
         this.btnConformity = new Button();
         this.btnItemDelete = new Button();
@@ -280,7 +283,7 @@ internal class AsciiFilesWizardFieldOptions : UserControl
         this.lblFieldSeparator = new Label();
         this.lblTimeFormat = new Label();
         this.lblDateFormat = new Label();
-        this.cmnuAddField = new ContextMenuStrip(this.icontainer_0);
+        this.cmnuAddField = new ContextMenuStrip(this.components);
         this.mnuDate = new ToolStripMenuItem();
         this.mnuTime = new ToolStripMenuItem();
         this.mnuOpen = new ToolStripMenuItem();
@@ -292,7 +295,7 @@ internal class AsciiFilesWizardFieldOptions : UserControl
         this.mnuOpenInterest = new ToolStripMenuItem();
         this.mnuFiller = new ToolStripMenuItem();
         this.mnuCustomField = new ToolStripMenuItem();
-        this.cmnuCommanFormats = new ContextMenuStrip(this.icontainer_0);
+        this.cmnuCommanFormats = new ContextMenuStrip(this.components);
         this.testToolStripMenuItem = new ToolStripMenuItem();
         this.btnViewDataFile = new Button();
         this.grpFieldOrder.SuspendLayout();
@@ -303,7 +306,7 @@ internal class AsciiFilesWizardFieldOptions : UserControl
         this.cmnuAddField.SuspendLayout();
         this.cmnuCommanFormats.SuspendLayout();
         base.SuspendLayout();
-        this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("imlMain.ImageStream");
+        this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("imlMain.ImageStream");
         this.imageList_0.TransparentColor = Color.Transparent;
         this.imageList_0.Images.SetKeyName(0, "add.png");
         this.imageList_0.Images.SetKeyName(1, "delete.png");
@@ -322,7 +325,7 @@ internal class AsciiFilesWizardFieldOptions : UserControl
         this.grpFieldOrder.TabIndex = 1;
         this.grpFieldOrder.TabStop = false;
         this.grpFieldOrder.Text = "Field Order";
-        this.btnConformity.Image = (Image) manager.GetObject("btnConformity.Image");
+        this.btnConformity.Image = (Image) resources.GetObject("btnConformity.Image");
         this.btnConformity.ImageAlign = ContentAlignment.MiddleLeft;
         this.btnConformity.Location = new Point(0xb6, 0xaf);
         this.btnConformity.Name = "btnConformity";
@@ -611,7 +614,7 @@ internal class AsciiFilesWizardFieldOptions : UserControl
         this.btnViewDataFile.UseVisualStyleBackColor = true;
         this.btnViewDataFile.Click += new EventHandler(this.btnViewDataFile_Click);
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.Controls.Add(this.btnViewDataFile);
         base.Controls.Add(this.grpFormatOptions);
         base.Controls.Add(this.grpFieldOrder);

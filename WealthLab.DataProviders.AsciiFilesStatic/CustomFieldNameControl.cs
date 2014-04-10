@@ -2,11 +2,12 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using Button = System.Windows.Forms.Button;
 
 internal class CustomFieldNameControl : UserControl
 {
     private Button btnFieldName;
-    private IContainer icontainer_0;
+    private IContainer components;
     private Label lblFieldName;
     private TextBox txtFieldName;
 
@@ -17,9 +18,9 @@ internal class CustomFieldNameControl : UserControl
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing && (this.icontainer_0 != null))
+        if (disposing && (this.components != null))
         {
-            this.icontainer_0.Dispose();
+            this.components.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -47,7 +48,7 @@ internal class CustomFieldNameControl : UserControl
         this.lblFieldName.TabIndex = 3;
         this.lblFieldName.Text = "Field Name:";
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.BackColor = SystemColors.Menu;
         base.Controls.Add(this.btnFieldName);
         base.Controls.Add(this.txtFieldName);

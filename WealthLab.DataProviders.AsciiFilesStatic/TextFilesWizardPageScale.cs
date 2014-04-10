@@ -2,12 +2,13 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using GroupBox = System.Windows.Forms.GroupBox;
 
 internal class TextFilesWizardPageScale : UserControl
 {
     private ComboBox cmbScale;
     private GroupBox grpScale;
-    private IContainer icontainer_0;
+    private IContainer components;
     private int int_0;
     private int int_1;
     private Label lblInterval;
@@ -38,9 +39,9 @@ internal class TextFilesWizardPageScale : UserControl
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing && (this.icontainer_0 != null))
+        if (disposing && (this.components != null))
         {
-            this.icontainer_0.Dispose();
+            this.components.Dispose();
         }
         base.Dispose(disposing);
     }
@@ -100,7 +101,7 @@ internal class TextFilesWizardPageScale : UserControl
         this.cmbScale.TabIndex = 1;
         this.cmbScale.SelectedIndexChanged += new EventHandler(this.cmbScale_SelectedIndexChanged);
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.Controls.Add(this.grpScale);
         base.Name = "TextFilesWizardPageScale";
         base.Size = new Size(560, 0x161);

@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using WealthLab.DataProviders.AsciiFilesStatic;
-using WealthLab.DataProviders.AsciiFilesStatic.Properties;
+using Resources = global::Properties.Resources;
 
 internal class AsciiFilesWizardFolderPage : UserControl
 {
@@ -14,7 +14,7 @@ internal class AsciiFilesWizardFolderPage : UserControl
     private FolderBrowserDialog folderBrowserDialog_0;
     private GroupBox grpFolder;
     private GroupBox grpSymbols;
-    private IContainer icontainer_0;
+    private IContainer components;
     private Label label1;
     private Label lblFilesExtension;
     private Label lblSelectFolder;
@@ -59,16 +59,16 @@ internal class AsciiFilesWizardFolderPage : UserControl
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing && (this.icontainer_0 != null))
+        if (disposing && (this.components != null))
         {
-            this.icontainer_0.Dispose();
+            this.components.Dispose();
         }
         base.Dispose(disposing);
     }
 
     private void InitializeComponent()
     {
-        this.icontainer_0 = new Container();
+        this.components = new Container();
         this.grpFolder = new GroupBox();
         this.lblSelectFolder = new Label();
         this.btnSelectFolder = new Button();
@@ -79,7 +79,7 @@ internal class AsciiFilesWizardFolderPage : UserControl
         this.lstFiles = new ListBox();
         this.cmbFilesExtension = new ComboBox();
         this.lblFilesExtension = new Label();
-        this.toolTip_0 = new ToolTip(this.icontainer_0);
+        this.toolTip_0 = new ToolTip(this.components);
         this.label1 = new Label();
         this.lblVersion = new Label();
         this.grpFolder.SuspendLayout();
@@ -170,12 +170,12 @@ internal class AsciiFilesWizardFolderPage : UserControl
         this.lblVersion.Font = new Font("Microsoft Sans Serif", 6.5f, FontStyle.Regular, GraphicsUnit.Point, 0xcc);
         this.lblVersion.Location = new Point(0x20b, 0x152);
         this.lblVersion.Name = "lblVersion";
-        this.lblVersion.RightToLeft = RightToLeft.Yes;
+        this.lblVersion.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
         this.lblVersion.Size = new Size(0x22, 12);
         this.lblVersion.TabIndex = 7;
         this.lblVersion.Text = "1.0.2.3";
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.Controls.Add(this.lblVersion);
         base.Controls.Add(this.label1);
         base.Controls.Add(this.grpSymbols);

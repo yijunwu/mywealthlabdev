@@ -6,9 +6,10 @@
     using System.IO;
     using System.Windows.Forms;
     using WealthLab;
-    using WealthLab.DataProviders.AsciiFilesStatic.Properties;
+    //using WealthLab.DataProviders.AsciiFilesStatic.Properties;
     using WealthLab.DataProviders.Helper;
     using WealthLab.DataProviders.MarketManagerService;
+    using Resources = global::Properties.Resources;
 
     public class AsciiFilesStaticProvider : StaticDataProvider
     {

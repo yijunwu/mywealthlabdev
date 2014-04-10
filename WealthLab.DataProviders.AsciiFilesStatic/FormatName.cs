@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using Label = System.Windows.Forms.Label;
 
 internal class FormatName : Form
 {
     private Button btnCancel;
     private Button btnOK;
-    private IContainer icontainer_0;
+    private IContainer components;
     private Label lblFormatName;
     private List<string> list_0;
     private TextBox txtFormatName;
@@ -56,7 +57,7 @@ internal class FormatName : Form
         this.txtFormatName.Name = "txtFormatName";
         this.txtFormatName.Size = new Size(260, 20);
         this.txtFormatName.TabIndex = 0;
-        this.btnCancel.DialogResult = DialogResult.Cancel;
+        this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
         this.btnCancel.Location = new Point(180, 0x36);
         this.btnCancel.Name = "btnCancel";
         this.btnCancel.Size = new Size(0x5f, 0x19);
@@ -71,14 +72,14 @@ internal class FormatName : Form
         this.btnOK.UseVisualStyleBackColor = true;
         this.btnOK.Click += new EventHandler(this.btnOK_Click);
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.CancelButton = this.btnCancel;
         base.ClientSize = new Size(290, 0x59);
         base.Controls.Add(this.btnOK);
         base.Controls.Add(this.btnCancel);
         base.Controls.Add(this.txtFormatName);
         base.Controls.Add(this.lblFormatName);
-        base.FormBorderStyle = FormBorderStyle.FixedDialog;
+        base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
         base.KeyPreview = true;
         base.MaximizeBox = false;
         base.MinimizeBox = false;
@@ -107,9 +108,9 @@ internal class FormatName : Form
     /// <param name="disposing"></param>
     protected override void Dispose(bool disposing)
     {
-        if (disposing && (this.icontainer_0 != null))
+        if (disposing && (this.components != null))
         {
-            this.icontainer_0.Dispose();
+            this.components.Dispose();
         }
         base.Dispose(disposing);
     }

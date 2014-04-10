@@ -32,6 +32,21 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <EmbeddedResource Include="CustomFieldNameControl.resx">
+      <DependentUpon>CustomFieldNameControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormatName.resx">
+      <DependentUpon>FormatName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFilesWizardPageData.resx">
+      <DependentUpon>TextFilesWizardPageData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextFilesWizardPageScale.resx">
+      <DependentUpon>TextFilesWizardPageScale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiCacheControl.resx">
+      <DependentUpon>AsciiCacheControl.cs</DependentUpon>
+    </EmbeddedResource>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
     <Reference Include="System" />
@@ -39,6 +54,11 @@
     <Reference Include="System.Xml" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="WealthLab\DataProviders\Helper\BorderLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -78,16 +98,18 @@
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiFilesDataSet.cs" />
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\AsciiCache.cs" />
     <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\Config.cs" />
-    <Compile Include="WealthLab\DataProviders\AsciiFilesStatic\Properties\Resources.cs" />
-    <EmbeddedResource Include="WealthLab.DataProviders.AsciiFilesStatic.Properties.Resources.resources" />
-    <EmbeddedResource Include="AsciiFilesWizardFieldOptions.resources" />
-    <EmbeddedResource Include="FormatName.resources" />
-    <EmbeddedResource Include="TextFilesWizardPageScale.resources" />
-    <EmbeddedResource Include="AsciiFilesWizardFolderPage.resources" />
-    <EmbeddedResource Include="WealthLab.DataProviders.AsciiFilesStatic.AsciiCacheControl.resources" />
-    <EmbeddedResource Include="TextFilesWizardPageData.resources" />
+    <EmbeddedResource Include="AsciiFilesWizardFieldOptions.resx">
+      <DependentUpon>AsciiFilesWizardFieldOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AsciiFilesWizardFolderPage.resx">
+      <DependentUpon>AsciiFilesWizardFolderPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLab.DataProviders.AsciiFilesStatic.Resources.TextFiles.ico" />
-    <EmbeddedResource Include="CustomFieldNameControl.resources" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WealthLab.DataProviders.MarketManager\WealthLab.DataProviders.MarketManager.csproj">
@@ -102,5 +124,8 @@
       <Project>{4F78B2A0-4107-46CA-99EB-FE8AE19550E9}</Project>
       <Name>WealthLab</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WealthLab\DataProviders\AsciiFilesStatic\Properties\" />
   </ItemGroup>
 </Project>
