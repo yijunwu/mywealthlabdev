@@ -13,11 +13,11 @@
     public class CDOTrendline : CDOLineBased
     {
         private bool bool_5;
-        private bool bool_6;
-        private static DrawingObjectHelper drawingObjectHelper_0 = new TrendlineHelper();
+        private bool displayPercentageChange;
+        private static DrawingObjectHelper drawingObjectHelper = new TrendlineHelper();
         private const int int_1 = 2;
         private int int_2;
-        private TrendlineSettings trendlineSettings_0;
+        private TrendlineSettings trendlineSettings;
 
         public CDOTrendline()
         {
@@ -64,19 +64,19 @@
 
         public override UserControl GetSettingsUI()
         {
-            if (this.trendlineSettings_0 == null)
+            if (this.trendlineSettings == null)
             {
-                this.trendlineSettings_0 = new TrendlineSettings();
+                this.trendlineSettings = new TrendlineSettings();
             }
-            this.trendlineSettings_0.DrawingObjectName = base.Name;
-            this.trendlineSettings_0.Color = base.Color;
-            this.trendlineSettings_0.DrawingObjectWidth = base.Width;
-            this.trendlineSettings_0.Style = base.Style;
-            this.trendlineSettings_0.ExtendLeft = base.ExtendLeft;
-            this.trendlineSettings_0.ExtendRight = base.ExtendRight;
-            this.trendlineSettings_0.SnapToValue = base.SnapToValue;
-            this.trendlineSettings_0.DisplayPercentageChange = this.DisplayPercentageChange;
-            return this.trendlineSettings_0;
+            this.trendlineSettings.DrawingObjectName = base.Name;
+            this.trendlineSettings.Color = base.Color;
+            this.trendlineSettings.DrawingObjectWidth = base.Width;
+            this.trendlineSettings.Style = base.Style;
+            this.trendlineSettings.ExtendLeft = base.ExtendLeft;
+            this.trendlineSettings.ExtendRight = base.ExtendRight;
+            this.trendlineSettings.SnapToValue = base.SnapToValue;
+            this.trendlineSettings.DisplayPercentageChange = this.DisplayPercentageChange;
+            return this.trendlineSettings;
         }
 
         protected internal override void OnEndDrag(ChartDrawingObjectHandle handle)
@@ -187,11 +187,11 @@
         {
             get
             {
-                return this.bool_6;
+                return this.displayPercentageChange;
             }
             set
             {
-                this.bool_6 = value;
+                this.displayPercentageChange = value;
             }
         }
 
@@ -199,7 +199,7 @@
         {
             get
             {
-                return drawingObjectHelper_0;
+                return drawingObjectHelper;
             }
         }
     }

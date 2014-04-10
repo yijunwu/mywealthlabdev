@@ -8,7 +8,7 @@
     [ToolboxItem(false)]
     public class GeneralToolTip : UserControl
     {
-        private IContainer icontainer_0;
+        private IContainer components;
         private Label lblText;
 
         public GeneralToolTip()
@@ -18,9 +18,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }

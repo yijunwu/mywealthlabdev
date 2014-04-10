@@ -9,9 +9,9 @@
     [ToolboxItem(false)]
     public class GlyphToolTip : UserControl
     {
-        private IContainer icontainer_0;
-        private int int_0 = -1;
-        private string string_0;
+        private IContainer components;
+        private int barNum = -1;
+        private string rolloverText;
 
         public GlyphToolTip()
         {
@@ -20,9 +20,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -51,24 +51,24 @@
 
         public bool RepositionRequired(ChartGlyph glyph)
         {
-            if (glyph.Bar == this.int_0)
+            if (glyph.Bar == this.barNum)
             {
-                return (glyph.RolloverText != this.string_0);
+                return (glyph.RolloverText != this.rolloverText);
             }
             return true;
         }
 
         public void Reset()
         {
-            this.int_0 = -1;
+            this.barNum = -1;
         }
 
         public ChartGlyph Glyph
         {
             set
             {
-                this.int_0 = value.Bar;
-                this.string_0 = value.RolloverText;
+                this.barNum = value.Bar;
+                this.rolloverText = value.RolloverText;
                 base.Controls.Clear();
                 string[] strArray = value.RolloverText.Split(new char[] { '\n' });
                 int num = 0;

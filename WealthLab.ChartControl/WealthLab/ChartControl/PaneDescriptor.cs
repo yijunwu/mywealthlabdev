@@ -5,9 +5,9 @@
 
     public class PaneDescriptor
     {
-        private bool bool_0;
-        private int int_0;
-        private string string_0;
+        private bool abovePricePane;
+        private int height;
+        private string description;
 
         public void Read(BinaryReader binaryReader_0)
         {
@@ -27,11 +27,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.abovePricePane;
             }
             set
             {
-                this.bool_0 = value;
+                this.abovePricePane = value;
             }
         }
 
@@ -39,11 +39,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.description;
             }
             set
             {
-                this.string_0 = value;
+                this.description = value;
             }
         }
 
@@ -51,11 +51,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.height;
             }
             set
             {
-                this.int_0 = value;
+                this.height = value;
             }
         }
     }

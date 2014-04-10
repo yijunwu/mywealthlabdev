@@ -8,34 +8,34 @@
 
     public abstract class ChartDrawingObject
     {
-        private bool bool_0;
-        private bool bool_1;
-        private ChartPane chartPane_0;
-        private ChartRenderer chartRenderer_0;
-        private DrawingObjectManager drawingObjectManager_0;
-        private Font font_0;
-        private List<ChartDrawingObjectHandle> list_0;
-        private string string_0;
-        private string string_1;
+        private bool selected;
+        private bool clipToPane;
+        private ChartPane chartPane;
+        private ChartRenderer chartRenderer;
+        private DrawingObjectManager drawingObjectManager;
+        private Font handleFont;
+        private List<ChartDrawingObjectHandle> handles;
+        private string paneDescription;
+        private string name;
 
         public ChartDrawingObject()
         {
-            this.list_0 = new List<ChartDrawingObjectHandle>();
-            this.bool_1 = true;
+            this.handles = new List<ChartDrawingObjectHandle>();
+            this.clipToPane = true;
         }
 
         public ChartDrawingObject(ChartPane pane, DateTime dateTime_0, double value)
         {
-            this.list_0 = new List<ChartDrawingObjectHandle>();
-            this.bool_1 = true;
-            this.chartPane_0 = pane;
-            this.string_0 = pane.Description;
+            this.handles = new List<ChartDrawingObjectHandle>();
+            this.clipToPane = true;
+            this.chartPane = pane;
+            this.paneDescription = pane.Description;
         }
 
         protected virtual void AddDrawingObject(ChartDrawingObject chartDrawingObject_0)
         {
-            this.drawingObjectManager_0.method_2(chartDrawingObject_0);
-            this.drawingObjectManager_0.Chart.DoInvalidate();
+            this.drawingObjectManager.method_2(chartDrawingObject_0);
+            this.drawingObjectManager.Chart.DoInvalidate();
         }
 
         public static double CalculateYIntercept(double double_0, double double_1, double double_2, double double_3, double double_4)
@@ -64,18 +64,18 @@
 
         public int ConvertBarToX(int int_0)
         {
-            return this.chartRenderer_0.ConvertBarToX(int_0);
+            return this.chartRenderer.ConvertBarToX(int_0);
         }
 
         public int ConvertXToBar(int int_0)
         {
-            return this.chartRenderer_0.ConvertXToBar(int_0);
+            return this.chartRenderer.ConvertXToBar(int_0);
         }
 
         protected ChartDrawingObjectHandle CreateHandle()
         {
             ChartDrawingObjectHandle item = new ChartDrawingObjectHandle(this);
-            this.list_0.Add(item);
+            this.handles.Add(item);
             return item;
         }
 
@@ -238,7 +238,7 @@
         {
             get
             {
-                return this.chartRenderer_0.Bars;
+                return this.chartRenderer.Bars;
             }
         }
 
@@ -254,7 +254,7 @@
         {
             get
             {
-                return this.chartRenderer_0.Height;
+                return this.chartRenderer.Height;
             }
         }
 
@@ -262,7 +262,7 @@
         {
             get
             {
-                return this.chartRenderer_0.Width;
+                return this.chartRenderer.Width;
             }
         }
 
@@ -270,11 +270,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.clipToPane;
             }
             set
             {
-                this.bool_1 = value;
+                this.clipToPane = value;
             }
         }
 
@@ -290,11 +290,11 @@
         {
             get
             {
-                return this.font_0;
+                return this.handleFont;
             }
             internal set
             {
-                this.font_0 = value;
+                this.handleFont = value;
             }
         }
 
@@ -302,7 +302,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.handles;
             }
         }
 
@@ -312,11 +312,11 @@
         {
             get
             {
-                return this.drawingObjectManager_0;
+                return this.drawingObjectManager;
             }
             set
             {
-                this.drawingObjectManager_0 = value;
+                this.drawingObjectManager = value;
             }
         }
 
@@ -324,11 +324,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.name;
             }
             set
             {
-                this.string_1 = value;
+                this.name = value;
             }
         }
 
@@ -336,11 +336,11 @@
         {
             get
             {
-                return this.chartPane_0;
+                return this.chartPane;
             }
             set
             {
-                this.chartPane_0 = value;
+                this.chartPane = value;
             }
         }
 
@@ -348,11 +348,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.paneDescription;
             }
             private set
             {
-                this.string_0 = value;
+                this.paneDescription = value;
             }
         }
 
@@ -360,11 +360,11 @@
         {
             get
             {
-                return this.chartRenderer_0;
+                return this.chartRenderer;
             }
             set
             {
-                this.chartRenderer_0 = value;
+                this.chartRenderer = value;
             }
         }
 
@@ -372,11 +372,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.selected;
             }
             set
             {
-                this.bool_0 = value;
+                this.selected = value;
             }
         }
 

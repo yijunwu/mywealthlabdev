@@ -5,22 +5,22 @@
 
     public class BarNumberEventArgs : EventArgs
     {
-        private ChartPane chartPane_0;
-        private double double_0;
-        private int int_0;
+        private ChartPane chartPane;
+        private double doubleValue;
+        private int barNumber;
 
         public BarNumberEventArgs(int barNumber, double value, ChartPane pane)
         {
-            this.int_0 = barNumber;
-            this.double_0 = value;
-            this.chartPane_0 = pane;
+            this.barNumber = barNumber;
+            this.doubleValue = value;
+            this.chartPane = pane;
         }
 
         public int BarNumber
         {
             get
             {
-                return this.int_0;
+                return this.barNumber;
             }
         }
 
@@ -28,7 +28,7 @@
         {
             get
             {
-                return this.chartPane_0;
+                return this.chartPane;
             }
         }
 
@@ -36,7 +36,7 @@
         {
             get
             {
-                return this.double_0;
+                return this.doubleValue;
             }
         }
     }

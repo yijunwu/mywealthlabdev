@@ -12,10 +12,10 @@
 
     public class ScaleSelector : UserControl
     {
-        private BarDataScale barDataScale_0 = new BarDataScale();
-        private bool bool_0;
+        private BarDataScale barDataScale = new BarDataScale();
+        private bool validScale;
         [CompilerGenerated]
-        private bool bool_1;
+        private bool isActive;
         private IContainer components;
         private int int_0;
         private ToolStripLabel lblArrow;
@@ -235,7 +235,7 @@
             EventHandler<ScaleChangeEventArgs> handler = this.eventHandler_0;
             if (handler != null)
             {
-                scaleChangeEventArgs_0.ChartScale = this.barDataScale_0;
+                scaleChangeEventArgs_0.ChartScale = this.barDataScale;
                 handler(this, scaleChangeEventArgs_0);
             }
         }
@@ -291,7 +291,7 @@
         {
             get
             {
-                return this.barDataScale_0;
+                return this.barDataScale;
             }
             set
             {
@@ -356,12 +356,12 @@
             Label_00E4:
                 if (!flag)
                 {
-                    this.barDataScale_0 = value;
-                    this.bool_0 = true;
+                    this.barDataScale = value;
+                    this.validScale = true;
                 }
                 else
                 {
-                    this.bool_0 = false;
+                    this.validScale = false;
                 }
             }
         }
@@ -371,12 +371,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_1;
+                return this.isActive;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_1 = value;
+                this.isActive = value;
             }
         }
 
@@ -384,7 +384,7 @@
         {
             get
             {
-                return this.bool_0;
+                return this.validScale;
             }
         }
     }

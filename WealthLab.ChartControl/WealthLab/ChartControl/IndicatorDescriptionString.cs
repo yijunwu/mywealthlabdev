@@ -4,11 +4,11 @@
 
     public class IndicatorDescriptionString
     {
-        private string string_0;
+        private string descriptionStr;
 
         public IndicatorDescriptionString(string desc)
         {
-            this.string_0 = desc;
+            this.descriptionStr = desc;
         }
 
         public override string ToString()
@@ -20,11 +20,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.descriptionStr;
             }
             internal set
             {
-                this.string_0 = value;
+                this.descriptionStr = value;
             }
         }
     }

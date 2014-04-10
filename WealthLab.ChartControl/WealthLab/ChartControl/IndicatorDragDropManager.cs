@@ -17,9 +17,9 @@
     public class IndicatorDragDropManager : Component
     {
         internal Chart chart_0;
-        private FundamentalsLoader fundamentalsLoader_0;
+        private FundamentalsLoader fundamentalsLoader;
         private IContainer icontainer_0;
-        private static IndicatorHelper indicatorHelper_0;
+        private static IndicatorHelper indicatorHelper;
         private int int_0;
         private int int_1;
         private int int_2;
@@ -32,11 +32,11 @@
         private List<string> list_2;
         private List<string> list_3;
         private List<string> list_4;
-        private List<IndicatorDescriptor> list_5;
+        private List<IndicatorDescriptor> list_DragDroppedIndicators;
         private List<PaneDescriptor> list_6;
         private List<System.Type> list_7;
         private List<IndicatorHelper> list_8;
-        private PlottedIndicator plottedIndicator_0;
+        private PlottedIndicator plottedIndicator;
         private const string string_0 = "<#Using_Statments>\n";
         private const string string_1 = "<#StrategyParameter_Statments>\n";
         private const string string_2 = "<#CTor_Statments>\n";
@@ -88,7 +88,7 @@
             this.list_2 = new List<string>();
             this.list_3 = new List<string>();
             this.list_4 = new List<string>();
-            this.list_5 = new List<IndicatorDescriptor>();
+            this.list_DragDroppedIndicators = new List<IndicatorDescriptor>();
             this.list_6 = new List<PaneDescriptor>();
             this.list_7 = new List<System.Type>();
             this.list_8 = new List<IndicatorHelper>();
@@ -108,7 +108,7 @@
             this.list_2 = new List<string>();
             this.list_3 = new List<string>();
             this.list_4 = new List<string>();
-            this.list_5 = new List<IndicatorDescriptor>();
+            this.list_DragDroppedIndicators = new List<IndicatorDescriptor>();
             this.list_6 = new List<PaneDescriptor>();
             this.list_7 = new List<System.Type>();
             this.list_8 = new List<IndicatorHelper>();
@@ -137,7 +137,7 @@
 
         public void Clear()
         {
-            this.list_5.Clear();
+            this.list_DragDroppedIndicators.Clear();
             this.method_20();
             this.chart_0.Renderer.ClearDragDropIndicators();
         }
@@ -155,7 +155,7 @@
                         new ChartPane(this.chart_0.Renderer, descriptor2.AbovePricePane, resizedRawHeight, descriptor2.Description);
                     }
                 }
-                foreach (IndicatorDescriptor descriptor in this.list_5)
+                foreach (IndicatorDescriptor descriptor in this.list_DragDroppedIndicators)
                 {
                     ChartPane pane = this.chart_0.Renderer.FindPane(descriptor.PaneDescription);
                     if (pane != null)
@@ -220,7 +220,7 @@
                 }
                 return false;
             }
-            int index = this.list_5.IndexOf(item);
+            int index = this.list_DragDroppedIndicators.IndexOf(item);
             IndicatorHelper helper = this.method_15(plottedIndicator_1);
             IndicatorParametersForm form2 = new IndicatorParametersForm();
             form2.Initialize(plottedIndicator_1, item, helper, this.chart_0, this.chart_0.Renderer.FindPane(item.PaneDescription));
@@ -229,17 +229,17 @@
                 return false;
             }
             this.method_17(form2, plottedIndicator_1);
-            this.list_5[index] = form2.GetIndicatorDescriptor();
-            this.list_5[index].LinkDescription = item.PlottedIndicator.Series.Description;
-            foreach (IndicatorDescriptor descriptor3 in this.list_5)
+            this.list_DragDroppedIndicators[index] = form2.GetIndicatorDescriptor();
+            this.list_DragDroppedIndicators[index].LinkDescription = item.PlottedIndicator.Series.Description;
+            foreach (IndicatorDescriptor descriptor3 in this.list_DragDroppedIndicators)
             {
-                if ((descriptor3 != this.list_5[index]) && (descriptor3.PlottedIndicator != null))
+                if ((descriptor3 != this.list_DragDroppedIndicators[index]) && (descriptor3.PlottedIndicator != null))
                 {
                     descriptor3.LinkDescription = descriptor3.PlottedIndicator.Series.Description;
                 }
             }
             this.CreateDragDropIndicators();
-            foreach (IndicatorDescriptor descriptor2 in this.list_5)
+            foreach (IndicatorDescriptor descriptor2 in this.list_DragDroppedIndicators)
             {
                 descriptor2.LinkDescription = "";
             }
@@ -308,7 +308,7 @@
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             Dictionary<string, string> dictionary2 = new Dictionary<string, string>();
             List<string> list = new List<string>();
-            foreach (IndicatorDescriptor descriptor in this.list_5)
+            foreach (IndicatorDescriptor descriptor in this.list_DragDroppedIndicators)
             {
                 string str2;
                 string str4;
@@ -405,7 +405,7 @@
                     objArray[i] = indicator.Series;
                     continue;
                 }
-                using (List<IndicatorDescriptor>.Enumerator enumerator = this.list_5.GetEnumerator())
+                using (List<IndicatorDescriptor>.Enumerator enumerator = this.list_DragDroppedIndicators.GetEnumerator())
                 {
                     IndicatorDescriptor current;
                     while (enumerator.MoveNext())
@@ -467,7 +467,7 @@
         private void method_12(IndicatorDescriptor indicatorDescriptor_0, List<IndicatorDescriptor> list_9)
         {
             DataSeries series = indicatorDescriptor_0.PlottedIndicator.Series;
-            foreach (IndicatorDescriptor descriptor in this.list_5)
+            foreach (IndicatorDescriptor descriptor in this.list_DragDroppedIndicators)
             {
                 foreach (object obj2 in descriptor.Parameters)
                 {
@@ -497,7 +497,7 @@
         private IndicatorDescriptor method_14(PlottedIndicator plottedIndicator_1)
         {
             IndicatorDescriptor descriptor2;
-            using (List<IndicatorDescriptor>.Enumerator enumerator = this.list_5.GetEnumerator())
+            using (List<IndicatorDescriptor>.Enumerator enumerator = this.list_DragDroppedIndicators.GetEnumerator())
             {
                 IndicatorDescriptor current;
                 while (enumerator.MoveNext())
@@ -839,7 +839,7 @@
                                         PlottedIndicator plottedIndicator = this.chart_0.Renderer.FindPlottedIndicator(indicatorDescriptionString.Description);
                                         if (plottedIndicator == null)
                                         {
-                                            foreach (IndicatorDescriptor current in this.list_5)
+                                            foreach (IndicatorDescriptor current in this.list_DragDroppedIndicators)
                                             {
                                                 if (current.LinkDescription == indicatorDescriptionString.Description)
                                                 {
@@ -946,7 +946,7 @@
             {
                 PaneDescriptor descriptor = this.list_6[i];
                 bool flag = true;
-                using (List<IndicatorDescriptor>.Enumerator enumerator = this.list_5.GetEnumerator())
+                using (List<IndicatorDescriptor>.Enumerator enumerator = this.list_DragDroppedIndicators.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
                     {
@@ -1361,7 +1361,7 @@
                 if (indicator != null)
                 {
                     this.method_17(form, indicator);
-                    this.list_5.Add(fundamentalDescriptor);
+                    this.list_DragDroppedIndicators.Add(fundamentalDescriptor);
                     string description = draggedFundamental.Provider.ItemPane(draggedFundamental.ItemName);
                     ChartPane pane = this.chart_0.Renderer.FindPane(description);
                     if (pane == null)
@@ -1400,7 +1400,7 @@
                     if (indicator != null)
                     {
                         this.method_17(form, indicator);
-                        this.list_5.Add(indicatorDescriptor);
+                        this.list_DragDroppedIndicators.Add(indicatorDescriptor);
                         if (indHelper.TargetPane != "")
                         {
                             string targetPane = indHelper.TargetPane;
@@ -1451,7 +1451,7 @@
         public string PushIndicatorsCode(string strategyCode)
         {
             string str;
-            if (this.list_5.Count == 0)
+            if (this.list_DragDroppedIndicators.Count == 0)
             {
                 MessageBox.Show("No drag-drop indicators found on the chart");
                 return strategyCode;
@@ -1529,7 +1529,7 @@
                         }
                     }
                 }
-                this.list_5.Add(descriptor);
+                this.list_DragDroppedIndicators.Add(descriptor);
             }
         }
 
@@ -1540,9 +1540,9 @@
             {
                 foreach (IndicatorDescriptor descriptor2 in this.method_13(descriptor))
                 {
-                    this.list_5.Remove(descriptor2);
+                    this.list_DragDroppedIndicators.Remove(descriptor2);
                 }
-                this.list_5.Remove(descriptor);
+                this.list_DragDroppedIndicators.Remove(descriptor);
                 this.method_20();
                 string description = plottedIndicator_1.Series.Description;
                 if (this.chart_0.Bars.Cache.ContainsKey(description))
@@ -1561,8 +1561,8 @@
             {
                 descriptor2.Write(writer);
             }
-            writer.Write(this.list_5.Count);
-            foreach (IndicatorDescriptor descriptor in this.list_5)
+            writer.Write(this.list_DragDroppedIndicators.Count);
+            foreach (IndicatorDescriptor descriptor in this.list_DragDroppedIndicators)
             {
                 descriptor.method_1(writer);
             }
@@ -1649,7 +1649,7 @@
 
         private static bool smethod_0(IndicatorHelper indicatorHelper_1, Control control_0, ChartPane chartPane_0, string string_8, bool bool_0, float float_0, int int_6)
         {
-            indicatorHelper_0 = indicatorHelper_1;
+            indicatorHelper = indicatorHelper_1;
             IList<string> parameterDescriptions = indicatorHelper_1.ParameterDescriptions;
             IList<object> parameterDefaultValues = indicatorHelper_1.ParameterDefaultValues;
             control_0.Controls.Clear();
@@ -1870,7 +1870,7 @@
             {
                 label.Text = str;
                 int tag = (int) label.Tag;
-                indicatorHelper_0.ParameterDisplayNames[tag] = label.Text;
+                indicatorHelper.ParameterDisplayNames[tag] = label.Text;
             }
         }
 
@@ -1878,11 +1878,11 @@
         {
             get
             {
-                return this.fundamentalsLoader_0;
+                return this.fundamentalsLoader;
             }
             set
             {
-                this.fundamentalsLoader_0 = value;
+                this.fundamentalsLoader = value;
             }
         }
 
@@ -1891,7 +1891,7 @@
         {
             get
             {
-                return (this.list_5.Count > 0);
+                return (this.list_DragDroppedIndicators.Count > 0);
             }
         }
 
@@ -1900,11 +1900,11 @@
         {
             get
             {
-                return this.plottedIndicator_0;
+                return this.plottedIndicator;
             }
             set
             {
-                this.plottedIndicator_0 = value;
+                this.plottedIndicator = value;
             }
         }
 

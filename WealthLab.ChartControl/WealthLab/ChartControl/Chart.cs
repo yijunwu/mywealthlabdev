@@ -13,29 +13,29 @@
     [ToolboxBitmap(typeof(Chart), "Chart")]
     public class Chart : Control
     {
-        private WealthLab.Bars bars_0;
-        private Bitmap bitmap_0;
-        private bool bool_0;
-        private bool bool_1 = true;
-        private bool bool_2 = true;
-        private bool bool_3 = true;
+        private WealthLab.Bars bars;
+        private Bitmap bitmap;
+        private bool scrollBarVisible;
+        private bool priceTooltipVisible = true;
+        private bool indicatorTooltipVisible = true;
+        private bool fundamentalTooltipVisible = true;
         private bool canDropOnIndicator;   ///WYJ fix, original name bool_4
         private static bool displayCrossHair = false;
         [CompilerGenerated]
-        private bool bool_6;
-        private ChartMode chartMode_0;
+        private bool multiSymbolMode;
+        private ChartMode chartMode;
         private ChartPane chartPane_0;
-        private ChartRenderer chartRenderer_0;
-        private WealthLab.ChartStyle chartStyle_0;
+        private ChartRenderer chartRenderer;
+        private WealthLab.ChartStyle chartStyle;
         private Class2 cursorPointData;
-        private DrawingObjectManager drawingObjectManager_0;
-        private Font font_0 = new Font("Vrinda", 8f);
-        private GeneralToolTip generalToolTip_0 = new GeneralToolTip();
-        private GlyphToolTip glyphToolTip_0 = new GlyphToolTip();
-        private HScrollBar hscrollBar_0 = new HScrollBar();
-        private IContainer icontainer_0;
-        private IndicatorDragDropManager indicatorDragDropManager_0;
-        private IndicatorToolTip indicatorToolTip_0 = new IndicatorToolTip();
+        private DrawingObjectManager drawingObjectManager;
+        private Font handleFont = new Font("Vrinda", 8f);
+        private GeneralToolTip generalToolTip = new GeneralToolTip();
+        private GlyphToolTip glyphToolTip = new GlyphToolTip();
+        private HScrollBar hscrollBar = new HScrollBar();
+        private IContainer components;
+        private IndicatorDragDropManager indicatorDragDropManager;
+        private IndicatorToolTip indicatorToolTip = new IndicatorToolTip();
         private int int_0 = -1;
         private int int_1 = -1;
         private int int_2;
@@ -44,9 +44,9 @@
         public static int PixelSensitivity = 3;
         private PlottedIndicator plottedIndicator_0;
         private Position position_0;
-        private PriceToolTip priceToolTip_0 = new PriceToolTip();
-        private ScaleSelector scaleSelector_0 = new ScaleSelector();
-        private static System.Type type_0 = null;
+        private PriceToolTip priceToolTip = new PriceToolTip();
+        private ScaleSelector scaleSelector = new ScaleSelector();
+        private static System.Type typeOfObjectToDraw = null;
 
         private int disableMouseMoveOnce = 0;
 
@@ -209,22 +209,22 @@
             base.SuspendLayout();
             base.ResumeLayout(false);
 
-            this.hscrollBar_0.Left = 0;
-            this.hscrollBar_0.LargeChange = 10;
-            this.hscrollBar_0.Visible = this.bool_0;
-            this.hscrollBar_0.Scroll += new ScrollEventHandler(this.hscrollBar_0_Scroll);
-            base.Controls.Add(this.hscrollBar_0);
-            this.priceToolTip_0.Visible = false;
-            base.Controls.Add(this.priceToolTip_0);
-            this.indicatorToolTip_0.Visible = false;
-            base.Controls.Add(this.indicatorToolTip_0);
-            this.generalToolTip_0.Visible = false;
-            base.Controls.Add(this.generalToolTip_0);
-            this.glyphToolTip_0.Visible = false;
-            base.Controls.Add(this.glyphToolTip_0);
-            this.scaleSelector_0.Visible = true;
-            base.Controls.Add(this.scaleSelector_0);
-            this.scaleSelector_0.ScaleChangeEvent += new EventHandler<ScaleChangeEventArgs>(this.handleScaleChangeEvent);
+            this.hscrollBar.Left = 0;
+            this.hscrollBar.LargeChange = 10;
+            this.hscrollBar.Visible = this.scrollBarVisible;
+            this.hscrollBar.Scroll += new ScrollEventHandler(this.hscrollBar_0_Scroll);
+            base.Controls.Add(this.hscrollBar);
+            this.priceToolTip.Visible = false;
+            base.Controls.Add(this.priceToolTip);
+            this.indicatorToolTip.Visible = false;
+            base.Controls.Add(this.indicatorToolTip);
+            this.generalToolTip.Visible = false;
+            base.Controls.Add(this.generalToolTip);
+            this.glyphToolTip.Visible = false;
+            base.Controls.Add(this.glyphToolTip);
+            this.scaleSelector.Visible = true;
+            base.Controls.Add(this.scaleSelector);
+            this.scaleSelector.ScaleChangeEvent += new EventHandler<ScaleChangeEventArgs>(this.handleScaleChangeEvent);
             this.MultiSymbolMode = false;
 
             //base.KeyDown += new KeyEventHandler(this.MainForm_KeyDown);
@@ -303,7 +303,7 @@
 
         public void CancelScaleChange()
         {
-            this.scaleSelector_0.ChartScale = this.Bars.DataScale;
+            this.scaleSelector.ChartScale = this.Bars.DataScale;
         }
 
         public void CopyToClipboard()
@@ -320,9 +320,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -342,18 +342,18 @@
             using (g)
             {
                 int height = base.Height;
-                if (this.hscrollBar_0.Visible)
+                if (this.hscrollBar.Visible)
                 {
-                    height -= this.hscrollBar_0.Height;
+                    height -= this.hscrollBar.Height;
                 }
                 Bitmap image = new Bitmap(base.Width, height, g);
                 Graphics graphics3 = Graphics.FromImage(image);
                 using (graphics3)
                 {
                     this.Renderer.Render(this.Bars, graphics3, base.Width, height, this.ChartStyle);
-                    if (this.drawingObjectManager_0 != null)
+                    if (this.drawingObjectManager != null)
                     {
-                        this.drawingObjectManager_0.method_3(graphics3);
+                        this.drawingObjectManager.method_3(graphics3);
                     }
                     bitmap2 = image;
                 }
@@ -372,9 +372,9 @@
                 using (graphics3)
                 {
                     this.Renderer.Render(this.Bars, graphics3, width, height, this.ChartStyle);
-                    if (this.drawingObjectManager_0 != null)
+                    if (this.drawingObjectManager != null)
                     {
-                        this.drawingObjectManager_0.method_3(graphics3);
+                        this.drawingObjectManager.method_3(graphics3);
                     }
                 }
             }
@@ -383,21 +383,21 @@
 
         private void hscrollBar_0_Scroll(object sender, ScrollEventArgs e)
         {
-            if (((e.Type == ScrollEventType.EndScroll) && (this.bars_0 != null)) && (e.NewValue > this.bars_0.Count))
+            if (((e.Type == ScrollEventType.EndScroll) && (this.bars != null)) && (e.NewValue > this.bars.Count))
             {
-                e.NewValue = this.bars_0.Count;
+                e.NewValue = this.bars.Count;
             }
             if (e.NewValue != this.int_1)
             {
                 this.int_1 = e.NewValue;
                 if (this.HasValidChart)
                 {
-                    this.chartRenderer_0.ScrollOffset = this.bars_0.Count - e.NewValue;
+                    this.chartRenderer.ScrollOffset = this.bars.Count - e.NewValue;
                     base.Invalidate();
                 }
-                this.priceToolTip_0.Reset();
-                this.glyphToolTip_0.Reset();
-                this.indicatorToolTip_0.Reset();
+                this.priceToolTip.Reset();
+                this.glyphToolTip.Reset();
+                this.indicatorToolTip.Reset();
             }
         }
 
@@ -467,18 +467,18 @@
         ///WYJ fix, original signature: private void method_2()
         private void hideToolTips()
         {
-            this.priceToolTip_0.Visible = false;
-            this.indicatorToolTip_0.Visible = false;
-            this.generalToolTip_0.Visible = false;
-            this.glyphToolTip_0.Visible = false;
+            this.priceToolTip.Visible = false;
+            this.indicatorToolTip.Visible = false;
+            this.generalToolTip.Visible = false;
+            this.glyphToolTip.Visible = false;
         }
 
         ///WYJ fix, original signature: private void method_3()
         private void showScaleSelector()
         {
-            if (!this.scaleSelector_0.ValidScale || this.MultiSymbolMode)
+            if (!this.scaleSelector.ValidScale || this.MultiSymbolMode)
             {
-                this.scaleSelector_0.Visible = false;
+                this.scaleSelector.Visible = false;
                 return;
             }
             int num = this.Renderer.Height - this.Renderer.MarginBottomHeight;
@@ -496,9 +496,9 @@
                     }
                 }
             }
-            this.scaleSelector_0.Top = num - this.scaleSelector_0.Height;
-            this.scaleSelector_0.Left = 5;
-            this.scaleSelector_0.Visible = true;
+            this.scaleSelector.Top = num - this.scaleSelector.Height;
+            this.scaleSelector.Left = 5;
+            this.scaleSelector.Visible = true;
         }
 
         ///WYJ fix, original signature: private void method_4(object sender, ScaleChangeEventArgs e)
@@ -559,7 +559,7 @@
                 {
                     IndicatorHelper helper = data.Helper;
                     Point point = base.PointToClient(new Point(drgevent.X, drgevent.Y));
-                    ChartPane pane = this.chartRenderer_0.PaneFromY(point.Y);
+                    ChartPane pane = this.chartRenderer.PaneFromY(point.Y);
                     this.DragDropManager.ProcessDroppedIndicatorHelper(helper, pane);
                 }
                 else
@@ -624,9 +624,9 @@
 
                             if (this.cursorPointData != null)
                             {
-                                if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar )
+                                if (this.cursorPointData.barNum < this.chartRenderer.LeftEdgeBar )
                                 {
-                                    this.cursorPointData.barNum = this.chartRenderer_0.LeftEdgeBar ;  
+                                    this.cursorPointData.barNum = this.chartRenderer.LeftEdgeBar ;  
                                 }
                                 else
                                 {
@@ -634,12 +634,12 @@
                                     if (this.cursorPointData.barNum < 0)
                                         this.cursorPointData.barNum = 0;
 
-                                    if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
-                                        this.cursorPointData.barNum = this.chartRenderer_0.RightEdgeBar;
+                                    if (this.cursorPointData.barNum > this.chartRenderer.RightEdgeBar)
+                                        this.cursorPointData.barNum = this.chartRenderer.RightEdgeBar;
 
-                                    if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar + 1)
+                                    if (this.cursorPointData.barNum < this.chartRenderer.LeftEdgeBar + 1)
                                     {
-                                        moveBy = this.chartRenderer_0.LeftEdgeBar + 1 - this.cursorPointData.barNum;
+                                        moveBy = this.chartRenderer.LeftEdgeBar + 1 - this.cursorPointData.barNum;
                                         this.ScrollBy(moveBy);
                                     }
                                 }
@@ -657,7 +657,7 @@
                             }
 
                             double doubleValue = this.Bars.Close[this.cursorPointData.barNum];
-                            int y = this.chartRenderer_0.PricePane.ConvertValueToY(doubleValue);
+                            int y = this.chartRenderer.PricePane.ConvertValueToY(doubleValue);
                             this.cursorPointData.doubleValue = doubleValue;
                             this.cursorPointData.y = y;
 
@@ -684,8 +684,8 @@
 
                             if (this.cursorPointData != null)
                             {
-                                if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
-                                    this.cursorPointData.barNum = this.chartRenderer_0.RightEdgeBar;
+                                if (this.cursorPointData.barNum > this.chartRenderer.RightEdgeBar)
+                                    this.cursorPointData.barNum = this.chartRenderer.RightEdgeBar;
 
                                 else
                                 {
@@ -694,12 +694,12 @@
                                     if (this.cursorPointData.barNum >= this.Bars.Count)
                                         this.cursorPointData.barNum = this.Bars.Count - 1;
 
-                                    if (this.cursorPointData.barNum < this.chartRenderer_0.LeftEdgeBar)
-                                        this.cursorPointData.barNum = this.chartRenderer_0.LeftEdgeBar;
+                                    if (this.cursorPointData.barNum < this.chartRenderer.LeftEdgeBar)
+                                        this.cursorPointData.barNum = this.chartRenderer.LeftEdgeBar;
 
-                                    if (this.cursorPointData.barNum > this.chartRenderer_0.RightEdgeBar)
+                                    if (this.cursorPointData.barNum > this.chartRenderer.RightEdgeBar)
                                     {
-                                        moveBy = this.cursorPointData.barNum - this.chartRenderer_0.RightEdgeBar;
+                                        moveBy = this.cursorPointData.barNum - this.chartRenderer.RightEdgeBar;
                                         this.ScrollBy(-1 * moveBy);
                                     }
                                 }
@@ -715,7 +715,7 @@
                             }
 
                             double doubleValue = this.Bars.Close[this.cursorPointData.barNum];
-                            int y = this.chartRenderer_0.PricePane.ConvertValueToY(doubleValue);
+                            int y = this.chartRenderer.PricePane.ConvertValueToY(doubleValue);
                             this.cursorPointData.doubleValue = doubleValue;
                             this.cursorPointData.y = y;
 
@@ -734,7 +734,7 @@
                 }
                 base.OnKeyDown(keyEventArgs_0);
                 ///WYJ fix: call the MouseMoveBarNumber event to update the display of the current day's data, it will trigger the UpdateCurrentDayDataDisplay method of ChartForm
-                if (keyEventArgs_0.KeyCode == Keys.Right || keyEventArgs_0.KeyCode == Keys.Left)
+                if ((keyEventArgs_0.KeyCode == Keys.Right || keyEventArgs_0.KeyCode == Keys.Left) && this.cursorPointData != null)
                 {
                     BarNumberEventArgs e = new BarNumberEventArgs(this.cursorPointData.barNum, 0, null);
                     disableMouseMoveOnce = 5;
@@ -811,12 +811,12 @@
             }
             if (!flag)
             {
-                if ((type_0 != null) && (this.drawingObjectManager_0 != null))
+                if ((typeOfObjectToDraw != null) && (this.drawingObjectManager != null))
                 {
                     int num = this.Renderer.ConvertXToBar(mevent.X);
                     if (num == -1)
                     {
-                        type_0 = null;
+                        typeOfObjectToDraw = null;
                         if (this.eventHandler_1 != null)
                         {
                             this.eventHandler_1(this, EventArgs.Empty);
@@ -827,7 +827,7 @@
                     ChartPane pane = this.Renderer.PaneFromY(mevent.Y);
                     if (pane == null)
                     {
-                        type_0 = null;
+                        typeOfObjectToDraw = null;
                         this.Mode = ChartMode.Normal;
                         if (this.eventHandler_1 != null)
                         {
@@ -837,8 +837,8 @@
                         return;
                     }
                     double num2 = pane.ConvertYToValue(mevent.Y);
-                    ChartDrawingObject obj2 = this.drawingObjectManager_0.CreateDrawingObject(pane, type_0, this.Bars.Date[num], num2);
-                    type_0 = null;
+                    ChartDrawingObject obj2 = this.drawingObjectManager.CreateDrawingObject(pane, typeOfObjectToDraw, this.Bars.Date[num], num2);
+                    typeOfObjectToDraw = null;
                     if (this.eventHandler_1 != null)
                     {
                         this.eventHandler_1(this, EventArgs.Empty);
@@ -847,8 +847,8 @@
                     {
                         if (obj2.Handles.Count > 0)
                         {
-                            this.drawingObjectManager_0.SelectedHandle = obj2.Handles[0];
-                            this.DrawingManager.SelectedHandle.Owner.OnBeginDrag(this.drawingObjectManager_0.SelectedHandle);
+                            this.drawingObjectManager.SelectedHandle = obj2.Handles[0];
+                            this.DrawingManager.SelectedHandle.Owner.OnBeginDrag(this.drawingObjectManager.SelectedHandle);
                             this.Refresh();
                             this.Mode = ChartMode.DraggingHandle;
                         }
@@ -856,7 +856,7 @@
                         {
                             this.Mode = ChartMode.Normal;
                         }
-                        this.drawingObjectManager_0.SaveDrawingObjects(this.Bars);
+                        this.drawingObjectManager.SaveDrawingObjects(this.Bars);
                     }
                 }
                 else if (mevent.Button == MouseButtons.Left)
@@ -893,10 +893,10 @@
 
         protected override void OnMouseLeave(EventArgs eventArgs_0)
         {
-            this.glyphToolTip_0.Visible = false;
-            this.priceToolTip_0.Visible = false;
-            this.indicatorToolTip_0.Visible = false;
-            this.generalToolTip_0.Visible = false;
+            this.glyphToolTip.Visible = false;
+            this.priceToolTip.Visible = false;
+            this.indicatorToolTip.Visible = false;
+            this.generalToolTip.Visible = false;
             base.OnMouseLeave(eventArgs_0);
         }
 
@@ -1264,10 +1264,10 @@
                 {
                     if (this.HasValidChart)
                     {
-                        int bar = this.chartRenderer_0.ConvertXToBar(x);
-                        if (bar > this.chartRenderer_0.RightEdgeBar)
+                        int bar = this.chartRenderer.ConvertXToBar(x);
+                        if (bar > this.chartRenderer.RightEdgeBar)
                         {
-                            bar = this.chartRenderer_0.RightEdgeBar;
+                            bar = this.chartRenderer.RightEdgeBar;
                         }
                         int num = bar;
                         if (this.Mode == ChartMode.DragScrollChart)
@@ -1275,17 +1275,17 @@
                             if (bar != this.int_0)
                             {
                                 int int0 = bar - this.int_0;
-                                int count = this.hscrollBar_0.Value - int0;
+                                int count = this.hscrollBar.Value - int0;
                                 if (count < 0)
                                 {
                                     count = 0;
                                 }
-                                if (count > this.bars_0.Count)
+                                if (count > this.bars.Count)
                                 {
-                                    count = this.bars_0.Count;
+                                    count = this.bars.Count;
                                 }
-                                this.hscrollBar_0.Value = count;
-                                this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.ThumbPosition, this.hscrollBar_0.Value));
+                                this.hscrollBar.Value = count;
+                                this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.ThumbPosition, this.hscrollBar.Value));
                                 base.Invalidate();
                             }
                             this.hideToolTips();
@@ -1295,7 +1295,7 @@
                         else //(this.Mode != ChartMode.DragScrollChart)
                         {
                             ChartPane chartPane = null;
-                            IEnumerator<ChartPane> enumerator = this.chartRenderer_0.Panes.GetEnumerator();
+                            IEnumerator<ChartPane> enumerator = this.chartRenderer.Panes.GetEnumerator();
                             using (enumerator)
                             {
                                 while (enumerator.MoveNext())
@@ -1334,7 +1334,7 @@
                                             if (x > base.Width - this.Renderer.MarginRightWidth)
                                             {
                                                 num = -1;
-                                                bar = this.chartRenderer_0.RightEdgeBar;
+                                                bar = this.chartRenderer.RightEdgeBar;
                                             }
                                             this.eventHandler_0(this, new BarNumberEventArgs(num, current.ConvertYToValue(y), current));
                                         }
@@ -1377,7 +1377,7 @@
                                         //if (this.Mode != ChartMode.SetCrosshairLocation || mevent.Button != MouseButtons.Left)
                                         else if (bar >= 0 && this.Mode == ChartMode.DraggingHandle)
                                         {
-                                            ChartDrawingObjectHandle selectedHandle = this.drawingObjectManager_0.SelectedHandle;
+                                            ChartDrawingObjectHandle selectedHandle = this.drawingObjectManager.SelectedHandle;
                                             selectedHandle.Date = this.Bars.Date[bar];
                                             ChartPane pane = selectedHandle.Owner.Pane;
                                             double value = pane.ConvertYToValue(y);
@@ -1461,8 +1461,8 @@
                                             }
                                             if (current.HideDisplayPaneButton(x, y))
                                             {
-                                                this.setControlPosition(this.generalToolTip_0, x, y);
-                                                this.generalToolTip_0.RenderValue(current.GetHashCode(), current.HideDisplayPaneTooltip);
+                                                this.setControlPosition(this.generalToolTip, x, y);
+                                                this.generalToolTip.RenderValue(current.GetHashCode(), current.HideDisplayPaneTooltip);
                                                 flag6 = true;
                                             }
                                             if (flag6 || current.Hidden)
@@ -1481,10 +1481,10 @@
                                                         int y1 = current.ConvertValueToY(series[bar]);
                                                         if (Math.Abs(y - y1) <= Chart.PixelSensitivity)
                                                         {
-                                                            if (this.indicatorToolTip_0.RepositionRequired(current1, bar))
+                                                            if (this.indicatorToolTip.RepositionRequired(current1, bar))
                                                             {
-                                                                this.setControlPosition(this.indicatorToolTip_0, x, y);
-                                                                this.indicatorToolTip_0.RenderValue(current1, bar);
+                                                                this.setControlPosition(this.indicatorToolTip, x, y);
+                                                                this.indicatorToolTip.RenderValue(current1, bar);
                                                             }
                                                             flag5 = true;
                                                             plottedIndicator1 = current1;
@@ -1500,31 +1500,31 @@
                                                             
                                                 }
                                             }
-                                            if (current == this.chartRenderer_0.PricePane && !flag5)
+                                            if (current == this.chartRenderer.PricePane && !flag5)
                                             {
-                                                int num1 = current.ConvertValueToY(this.bars_0.High[bar]);
-                                                int y2 = current.ConvertValueToY(this.bars_0.Low[bar]);
+                                                int num1 = current.ConvertValueToY(this.bars.High[bar]);
+                                                int y2 = current.ConvertValueToY(this.bars.Low[bar]);
                                                 if (y >= num1 && y <= y2)
                                                 {
-                                                    if (this.priceToolTip_0.RepositionRequired(this.bars_0, bar))
+                                                    if (this.priceToolTip.RepositionRequired(this.bars, bar))
                                                     {
-                                                        this.setControlPosition(this.priceToolTip_0, x, y);
-                                                        this.priceToolTip_0.RenderValues(this.bars_0, bar);
+                                                        this.setControlPosition(this.priceToolTip, x, y);
+                                                        this.priceToolTip.RenderValues(this.bars, bar);
                                                     }
                                                     flag4 = true;
                                                 }
-                                                List<ChartGlyph>.Enumerator enumerator2 = this.chartRenderer_0.Glyphs.GetEnumerator();
+                                                List<ChartGlyph>.Enumerator enumerator2 = this.chartRenderer.Glyphs.GetEnumerator();
                                                 try
                                                 {
                                                     while (enumerator2.MoveNext())
                                                     {
                                                         ChartGlyph chartGlyph = enumerator2.Current;
-                                                        if ((!chartGlyph.IsTrade || this.chartRenderer_0.TradeAnnotationsVisible) && x >= chartGlyph.X && y >= chartGlyph.Y && x <= chartGlyph.X + chartGlyph.Width && y <= chartGlyph.Y + chartGlyph.Height)
+                                                        if ((!chartGlyph.IsTrade || this.chartRenderer.TradeAnnotationsVisible) && x >= chartGlyph.X && y >= chartGlyph.Y && x <= chartGlyph.X + chartGlyph.Width && y <= chartGlyph.Y + chartGlyph.Height)
                                                         {
-                                                            if (this.glyphToolTip_0.RepositionRequired(chartGlyph))
+                                                            if (this.glyphToolTip.RepositionRequired(chartGlyph))
                                                             {
-                                                                this.glyphToolTip_0.Glyph = chartGlyph;
-                                                                this.setControlPosition(this.glyphToolTip_0, x, y);
+                                                                this.glyphToolTip.Glyph = chartGlyph;
+                                                                this.setControlPosition(this.glyphToolTip, x, y);
                                                             }
                                                             flag7 = true;
                                                             position = chartGlyph.Position;
@@ -1549,10 +1549,10 @@
                                                     {
                                                         continue;
                                                     }
-                                                    if (this.priceToolTip_0.RepositionRequired(plottedSymbol.Bars, bar))
+                                                    if (this.priceToolTip.RepositionRequired(plottedSymbol.Bars, bar))
                                                     {
-                                                        this.setControlPosition(this.priceToolTip_0, x, y);
-                                                        this.priceToolTip_0.RenderValues(plottedSymbol.Bars, bar);
+                                                        this.setControlPosition(this.priceToolTip, x, y);
+                                                        this.priceToolTip.RenderValues(plottedSymbol.Bars, bar);
                                                     }
                                                     flag4 = true;
                                                 }
@@ -1562,21 +1562,21 @@
                                     }
                                 }
                             }
-                            if (this.indicatorDragDropManager_0 != null)
+                            if (this.indicatorDragDropManager != null)
                             {
-                                this.indicatorDragDropManager_0.SelectedIndicator = plottedIndicator1;
+                                this.indicatorDragDropManager.SelectedIndicator = plottedIndicator1;
                             }
-                            PriceToolTip priceToolTip0 = this.priceToolTip_0;
-                            flag = (!flag4 || this.Mode != ChartMode.Normal ? false : this.bool_1);
+                            PriceToolTip priceToolTip0 = this.priceToolTip;
+                            flag = (!flag4 || this.Mode != ChartMode.Normal ? false : this.priceTooltipVisible);
                             priceToolTip0.Visible = flag;
-                            IndicatorToolTip indicatorToolTip0 = this.indicatorToolTip_0;
-                            flag1 = (!flag5 || this.Mode != ChartMode.Normal ? false : this.bool_2);
+                            IndicatorToolTip indicatorToolTip0 = this.indicatorToolTip;
+                            flag1 = (!flag5 || this.Mode != ChartMode.Normal ? false : this.indicatorTooltipVisible);
                             indicatorToolTip0.Visible = flag1;
-                            GeneralToolTip generalToolTip0 = this.generalToolTip_0;
+                            GeneralToolTip generalToolTip0 = this.generalToolTip;
                             flag2 = (!flag6 ? false : this.Mode == ChartMode.Normal);
                             generalToolTip0.Visible = flag2;
-                            GlyphToolTip glyphToolTip0 = this.glyphToolTip_0;
-                            flag3 = (!flag7 || this.Mode != ChartMode.Normal ? false : this.bool_3);
+                            GlyphToolTip glyphToolTip0 = this.glyphToolTip;
+                            flag3 = (!flag7 || this.Mode != ChartMode.Normal ? false : this.fundamentalTooltipVisible);
                             glyphToolTip0.Visible = flag3;
                             if (this.position_0 != position)
                             {
@@ -1645,7 +1645,7 @@
                     return;
                 }
                 selectedHandle.Owner.OnEndDrag(selectedHandle);
-                this.drawingObjectManager_0.SaveDrawingObjects(this.Bars);
+                this.drawingObjectManager.SaveDrawingObjects(this.Bars);
                 this.Refresh();
             }
             if (!displayCrossHair)
@@ -1670,16 +1670,16 @@
             if ((!base.DesignMode && (this.Renderer != null)) && ((this.Bars != null) && (this.ChartStyle != null)))
             {
                 int height = base.Height;
-                if (this.hscrollBar_0.Visible)
+                if (this.hscrollBar.Visible)
                 {
-                    height -= this.hscrollBar_0.Height;
+                    height -= this.hscrollBar.Height;
                 }
                 try
                 {
                     this.Renderer.Render(this.Bars, graphics, base.Width, height, this.ChartStyle);
-                    if (this.drawingObjectManager_0 != null)
+                    if (this.drawingObjectManager != null)
                     {
-                        this.drawingObjectManager_0.method_3(graphics);
+                        this.drawingObjectManager.method_3(graphics);
                     }
                     this.showScaleSelector();
                     if (this.position_0 != null)
@@ -1767,22 +1767,22 @@
 
         protected override void OnResize(EventArgs eventArgs_0)
         {
-            this.hscrollBar_0.Top = base.Height - this.hscrollBar_0.Height;
-            this.hscrollBar_0.Width = base.Width;
+            this.hscrollBar.Top = base.Height - this.hscrollBar.Height;
+            this.hscrollBar.Width = base.Width;
             base.OnResize(eventArgs_0);
         }
 
         public void ScrollToBar(int int_4)
         {
-            if (((int_4 < this.Bars.Count) && (int_4 >= 0)) && (this.chartRenderer_0 != null))
+            if (((int_4 < this.Bars.Count) && (int_4 >= 0)) && (this.chartRenderer != null))
             {
-                int num = base.Width / this.chartRenderer_0.BarSpacing;
-                int newValue = (int_4 + (num / 2)) + this.hscrollBar_0.LargeChange;
-                if (newValue > this.hscrollBar_0.Maximum)
+                int num = base.Width / this.chartRenderer.BarSpacing;
+                int newValue = (int_4 + (num / 2)) + this.hscrollBar.LargeChange;
+                if (newValue > this.hscrollBar.Maximum)
                 {
-                    newValue = this.hscrollBar_0.Maximum;
+                    newValue = this.hscrollBar.Maximum;
                 }
-                this.hscrollBar_0.Value = newValue;
+                this.hscrollBar.Value = newValue;
                 this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.EndScroll, newValue));
             }
         }
@@ -1793,18 +1793,18 @@
         /// <param name="int_4"></param>
         public void ScrollBy(int int_4)
         {
-            int count = this.hscrollBar_0.Value - int_4;
+            int count = this.hscrollBar.Value - int_4;
             if (count < 0)
             {
                 count = 0;
             }
-            if (count > this.bars_0.Count)
+            if (count > this.bars.Count)
             {
-                count = this.bars_0.Count;
+                count = this.bars.Count;
             }
             
-            this.hscrollBar_0.Value = count;
-            this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.ThumbPosition, this.hscrollBar_0.Value));
+            this.hscrollBar.Value = count;
+            this.hscrollBar_0_Scroll(this, new ScrollEventArgs(ScrollEventType.ThumbPosition, this.hscrollBar.Value));
 
         }
 
@@ -1813,7 +1813,7 @@
         {
             get
             {
-                return this.bars_0;
+                return this.bars;
             }
             set
             {
@@ -1823,24 +1823,24 @@
                     {
                         this.Mode = ChartMode.Normal;
                     }
-                    this.bars_0 = value;
-                    if (this.bars_0 != null)
+                    this.bars = value;
+                    if (this.bars != null)
                     {
-                        this.hscrollBar_0.Maximum = (this.bars_0.Count + this.hscrollBar_0.LargeChange) - 1;
-                        this.hscrollBar_0.Value = this.bars_0.Count;
-                        if (this.chartRenderer_0 != null)
+                        this.hscrollBar.Maximum = (this.bars.Count + this.hscrollBar.LargeChange) - 1;
+                        this.hscrollBar.Value = this.bars.Count;
+                        if (this.chartRenderer != null)
                         {
-                            this.chartRenderer_0.ScrollOffset = 0;
+                            this.chartRenderer.ScrollOffset = 0;
                         }
                         this.int_1 = -1;
                     }
                     if ((base.Width > 0) && (base.Height > 0))
                     {
-                        if ((this.bitmap_0 == null) || (this.bitmap_0.Size != base.Size))
+                        if ((this.bitmap == null) || (this.bitmap.Size != base.Size))
                         {
-                            this.bitmap_0 = new Bitmap(base.Width, base.Height);
+                            this.bitmap = new Bitmap(base.Width, base.Height);
                         }
-                        Graphics graphics = Graphics.FromImage(this.bitmap_0);
+                        Graphics graphics = Graphics.FromImage(this.bitmap);
                         using (graphics)
                         {
                             PaintEventArgs e = new PaintEventArgs(graphics, base.Bounds);
@@ -1851,7 +1851,7 @@
                     {
                         this.DragDropManager.CreateDragDropIndicators();
                     }
-                    this.scaleSelector_0.ChartScale = this.Bars.DataScale;
+                    this.scaleSelector.ChartScale = this.Bars.DataScale;
                 }
             }
         }
@@ -1861,11 +1861,11 @@
         {
             get
             {
-                return this.chartStyle_0;
+                return this.chartStyle;
             }
             set
             {
-                this.chartStyle_0 = value;
+                this.chartStyle = value;
                 this.Refresh();
             }
         }
@@ -1886,14 +1886,14 @@
         {
             get
             {
-                return this.indicatorDragDropManager_0;
+                return this.indicatorDragDropManager;
             }
             set
             {
-                this.indicatorDragDropManager_0 = value;
-                if (this.indicatorDragDropManager_0 != null)
+                this.indicatorDragDropManager = value;
+                if (this.indicatorDragDropManager != null)
                 {
-                    this.indicatorDragDropManager_0.chart_0 = this;
+                    this.indicatorDragDropManager.chart_0 = this;
                 }
             }
         }
@@ -1902,14 +1902,14 @@
         {
             get
             {
-                return this.drawingObjectManager_0;
+                return this.drawingObjectManager;
             }
             set
             {
-                this.drawingObjectManager_0 = value;
-                if (this.drawingObjectManager_0 != null)
+                this.drawingObjectManager = value;
+                if (this.drawingObjectManager != null)
                 {
-                    this.drawingObjectManager_0.Chart = this;
+                    this.drawingObjectManager.Chart = this;
                 }
             }
         }
@@ -1918,11 +1918,11 @@
         {
             get
             {
-                return this.bool_3;
+                return this.fundamentalTooltipVisible;
             }
             set
             {
-                this.bool_3 = value;
+                this.fundamentalTooltipVisible = value;
             }
         }
 
@@ -1930,11 +1930,11 @@
         {
             get
             {
-                return this.font_0;
+                return this.handleFont;
             }
             set
             {
-                this.font_0 = value;
+                this.handleFont = value;
             }
         }
 
@@ -1943,7 +1943,7 @@
         {
             get
             {
-                return ((((this.chartRenderer_0 != null) && (this.bars_0 != null)) && (this.chartStyle_0 != null)) && (this.bars_0.Count > 0));
+                return ((((this.chartRenderer != null) && (this.bars != null)) && (this.chartStyle != null)) && (this.bars.Count > 0));
             }
         }
 
@@ -1951,11 +1951,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.indicatorTooltipVisible;
             }
             set
             {
-                this.bool_2 = value;
+                this.indicatorTooltipVisible = value;
             }
         }
 
@@ -1964,12 +1964,12 @@
         {
             get
             {
-                return this.chartMode_0;
+                return this.chartMode;
             }
             set
             {
-                this.chartMode_0 = value;
-                switch (this.chartMode_0)
+                this.chartMode = value;
+                switch (this.chartMode)
                 {
                     case ChartMode.DragScrollChart:
                         this.Cursor = Cursors.NoMoveHoriz;
@@ -2000,12 +2000,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_6;
+                return this.multiSymbolMode;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_6 = value;
+                this.multiSymbolMode = value;
             }
         }
 
@@ -2013,11 +2013,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.priceTooltipVisible;
             }
             set
             {
-                this.bool_1 = value;
+                this.priceTooltipVisible = value;
             }
         }
 
@@ -2025,11 +2025,11 @@
         {
             get
             {
-                return this.chartRenderer_0;
+                return this.chartRenderer;
             }
             set
             {
-                this.chartRenderer_0 = value;
+                this.chartRenderer = value;
                 this.Refresh();
             }
         }
@@ -2038,12 +2038,12 @@
         {
             get
             {
-                return this.bool_0;
+                return this.scrollBarVisible;
             }
             set
             {
-                this.hscrollBar_0.Visible = value;
-                this.bool_0 = value;
+                this.hscrollBar.Visible = value;
+                this.scrollBarVisible = value;
                 this.Refresh();
             }
         }
@@ -2053,11 +2053,11 @@
         {
             get
             {
-                return type_0;
+                return typeOfObjectToDraw;
             }
             set
             {
-                type_0 = value;
+                typeOfObjectToDraw = value;
             }
         }
 

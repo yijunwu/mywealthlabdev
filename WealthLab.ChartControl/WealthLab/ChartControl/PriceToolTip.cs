@@ -9,9 +9,9 @@
     [ToolboxItem(false)]
     public class PriceToolTip : UserControl
     {
-        private Bars bars_0;
+        private Bars bars;
         private IContainer icontainer_0;
-        private int int_0 = -1;
+        private int barNum = -1;
         private Label lblChange;
         private Label lblChangePct;
         private Label lblChangePctVal;
@@ -184,8 +184,8 @@
         {
             if (this.RepositionRequired(bars, barNumber))
             {
-                this.bars_0 = bars;
-                this.int_0 = barNumber;
+                this.bars = bars;
+                this.barNum = barNumber;
                 string str = bars.Date[barNumber].ToShortDateString();
                 if (bars.IsIntraday)
                 {
@@ -224,16 +224,16 @@
 
         public bool RepositionRequired(Bars bars, int barNumber)
         {
-            if (bars == this.bars_0)
+            if (bars == this.bars)
             {
-                return (barNumber != this.int_0);
+                return (barNumber != this.barNum);
             }
             return true;
         }
 
         public void Reset()
         {
-            this.int_0 = -1;
+            this.barNum = -1;
         }
     }
 }

@@ -8,29 +8,29 @@
 
     public class IndicatorDescriptor
     {
-        private bool bool_0;
-        private bool bool_1;
-        private bool bool_2;
-        private System.Drawing.Color color_0;
-        private System.Drawing.Color color_1 = System.Drawing.Color.Empty;
-        private System.Drawing.Color color_2 = System.Drawing.Color.Empty;
-        private System.Drawing.Color color_3 = System.Drawing.Color.Empty;
-        private double double_0;
-        private double double_1;
-        private int int_0;
-        private LineStyle lineStyle_0;
-        private object[] object_0;
-        private WealthLab.PlottedIndicator plottedIndicator_0;
-        private WealthLab.PlottedIndicator plottedIndicator_1;
-        private string string_0;
-        private string string_1 = "";
-        private string string_2 = "";
-        private Type type_0;
-        private Type type_1;
+        private bool plotBandPairIndicator;
+        private bool fillBand;
+        private bool plotOscillator;
+        private System.Drawing.Color color;
+        private System.Drawing.Color bandFillColor = System.Drawing.Color.Empty;
+        private System.Drawing.Color overboughtColor = System.Drawing.Color.Empty;
+        private System.Drawing.Color oversoldColor = System.Drawing.Color.Empty;
+        private double overboughtLevel;
+        private double oversoldLevel;
+        private int width;
+        private LineStyle style;
+        private object[] parameters;
+        private WealthLab.PlottedIndicator plottedIndicator;
+        private WealthLab.PlottedIndicator plottedPartner;
+        private string paneDescription;
+        private string linkDescription = "";
+        private string fundamentalItemName = "";
+        private Type indicatorType;
+        private Type bandPairIndicatorType;
 
         public IndicatorDescriptor(int paramCount)
         {
-            this.object_0 = new object[paramCount];
+            this.parameters = new object[paramCount];
         }
 
         internal void method_0(BinaryReader binaryReader_0, List<Type> list_0)
@@ -208,11 +208,11 @@
         {
             get
             {
-                return this.color_1;
+                return this.bandFillColor;
             }
             set
             {
-                this.color_1 = value;
+                this.bandFillColor = value;
             }
         }
 
@@ -220,11 +220,11 @@
         {
             get
             {
-                return this.type_1;
+                return this.bandPairIndicatorType;
             }
             set
             {
-                this.type_1 = value;
+                this.bandPairIndicatorType = value;
             }
         }
 
@@ -232,11 +232,11 @@
         {
             get
             {
-                return this.color_0;
+                return this.color;
             }
             set
             {
-                this.color_0 = value;
+                this.color = value;
             }
         }
 
@@ -244,11 +244,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.fillBand;
             }
             set
             {
-                this.bool_1 = value;
+                this.fillBand = value;
             }
         }
 
@@ -256,11 +256,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.fundamentalItemName;
             }
             set
             {
-                this.string_2 = value;
+                this.fundamentalItemName = value;
             }
         }
 
@@ -268,11 +268,11 @@
         {
             get
             {
-                return this.type_0;
+                return this.indicatorType;
             }
             set
             {
-                this.type_0 = value;
+                this.indicatorType = value;
             }
         }
 
@@ -280,7 +280,7 @@
         {
             get
             {
-                return (this.string_2 != "");
+                return (this.fundamentalItemName != "");
             }
         }
 
@@ -288,11 +288,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.linkDescription;
             }
             set
             {
-                this.string_1 = value;
+                this.linkDescription = value;
             }
         }
 
@@ -300,11 +300,11 @@
         {
             get
             {
-                return this.color_2;
+                return this.overboughtColor;
             }
             set
             {
-                this.color_2 = value;
+                this.overboughtColor = value;
             }
         }
 
@@ -312,11 +312,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.overboughtLevel;
             }
             set
             {
-                this.double_0 = value;
+                this.overboughtLevel = value;
             }
         }
 
@@ -324,11 +324,11 @@
         {
             get
             {
-                return this.color_3;
+                return this.oversoldColor;
             }
             set
             {
-                this.color_3 = value;
+                this.oversoldColor = value;
             }
         }
 
@@ -336,11 +336,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.oversoldLevel;
             }
             set
             {
-                this.double_1 = value;
+                this.oversoldLevel = value;
             }
         }
 
@@ -348,11 +348,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.paneDescription;
             }
             set
             {
-                this.string_0 = value;
+                this.paneDescription = value;
             }
         }
 
@@ -360,11 +360,11 @@
         {
             get
             {
-                return this.object_0;
+                return this.parameters;
             }
             set
             {
-                this.object_0 = value;
+                this.parameters = value;
             }
         }
 
@@ -372,11 +372,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.plotBandPairIndicator;
             }
             set
             {
-                this.bool_0 = value;
+                this.plotBandPairIndicator = value;
             }
         }
 
@@ -384,11 +384,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.plotOscillator;
             }
             set
             {
-                this.bool_2 = value;
+                this.plotOscillator = value;
             }
         }
 
@@ -396,11 +396,11 @@
         {
             get
             {
-                return this.plottedIndicator_0;
+                return this.plottedIndicator;
             }
             set
             {
-                this.plottedIndicator_0 = value;
+                this.plottedIndicator = value;
             }
         }
 
@@ -408,11 +408,11 @@
         {
             get
             {
-                return this.plottedIndicator_1;
+                return this.plottedPartner;
             }
             set
             {
-                this.plottedIndicator_1 = value;
+                this.plottedPartner = value;
             }
         }
 
@@ -420,11 +420,11 @@
         {
             get
             {
-                return this.lineStyle_0;
+                return this.style;
             }
             set
             {
-                this.lineStyle_0 = value;
+                this.style = value;
             }
         }
 
@@ -432,11 +432,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.width;
             }
             set
             {
-                this.int_0 = value;
+                this.width = value;
             }
         }
     }

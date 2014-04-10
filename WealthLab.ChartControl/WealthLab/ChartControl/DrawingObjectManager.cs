@@ -14,18 +14,18 @@
     public class DrawingObjectManager : Component
     {
         private byte byte_0;
-        private WealthLab.ChartControl.Chart chart_0;
-        private ChartDrawingObject chartDrawingObject_0;
-        private ChartDrawingObjectHandle chartDrawingObjectHandle_0;
-        private WealthLab.DataStore dataStore_0;
-        private IContainer icontainer_0;
-        private ISettingsHost isettingsHost_0;
-        private List<ChartDrawingObject> list_0;
-        private List<DrawingObjectHelper> list_1;
+        private WealthLab.ChartControl.Chart chart;
+        private ChartDrawingObject selectedDrawingObject;
+        private ChartDrawingObjectHandle selectedDrawingObjectHandle;
+        private WealthLab.DataStore dataStore;
+        private IContainer components;
+        private ISettingsHost isettingsHost;
+        private List<ChartDrawingObject> drawingObjects;
+        private List<DrawingObjectHelper> drawingObjectHelpers;
         private List<string> list_2;
-        private static SettingsManager settingsManager_0;
-        private string string_0;
-        private string string_1;
+        private static SettingsManager settingsManager;
+        private string rootPath;
+        private string chartBookName;
 
         private EventHandler eventHandler_0;
 
@@ -59,9 +59,9 @@
 
         public DrawingObjectManager()
         {
-            this.list_0 = new List<ChartDrawingObject>();
-            this.string_1 = "Standard";
-            this.list_1 = new List<DrawingObjectHelper>();
+            this.drawingObjects = new List<ChartDrawingObject>();
+            this.chartBookName = "Standard";
+            this.drawingObjectHelpers = new List<DrawingObjectHelper>();
             this.list_2 = new List<string>();
             this.method_0();
             this.method_1();
@@ -69,9 +69,9 @@
 
         public DrawingObjectManager(IContainer container)
         {
-            this.list_0 = new List<ChartDrawingObject>();
-            this.string_1 = "Standard";
-            this.list_1 = new List<DrawingObjectHelper>();
+            this.drawingObjects = new List<ChartDrawingObject>();
+            this.chartBookName = "Standard";
+            this.drawingObjectHelpers = new List<DrawingObjectHelper>();
             this.list_2 = new List<string>();
             container.Add(this);
             this.method_0();
@@ -100,7 +100,7 @@
 
         public void Clear()
         {
-            this.list_0.Clear();
+            this.drawingObjects.Clear();
         }
 
         public ChartDrawingObject CreateDrawingObject(ChartPane pane, System.Type typeOfDrawingObject, DateTime dateTime_0, double value)
@@ -123,9 +123,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -133,7 +133,7 @@
         public ChartDrawingObject FindByName(string name)
         {
             ChartDrawingObject obj3;
-            using (List<ChartDrawingObject>.Enumerator enumerator = this.list_0.GetEnumerator())
+            using (List<ChartDrawingObject>.Enumerator enumerator = this.drawingObjects.GetEnumerator())
             {
                 ChartDrawingObject current;
                 while (enumerator.MoveNext())
@@ -155,9 +155,9 @@
         {
             this.Clear();
             this.method_5();
-            if (this.dataStore_0.ContainsSymbol(bars.Symbol, bars.Scale, bars.BarInterval))
+            if (this.dataStore.ContainsSymbol(bars.Symbol, bars.Scale, bars.BarInterval))
             {
-                Stream input = new FileStream(this.dataStore_0.FileNameForBars(bars), FileMode.Open);
+                Stream input = new FileStream(this.dataStore.FileNameForBars(bars), FileMode.Open);
                 try
                 {
                     BinaryReader reader = new BinaryReader(input);
@@ -183,7 +183,7 @@
                             {
                                 item.Pane = this.Chart.Renderer.FindPane(item.PaneDescription);
                             }
-                            this.list_0.Add(item);
+                            this.drawingObjects.Add(item);
                         }
                     }
                 }
@@ -199,7 +199,7 @@
 
         private void method_0()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
         }
 
         private void method_1()
@@ -213,7 +213,7 @@
                 foreach (System.Type type in loader.Types)
                 {
                     DrawingObjectHelper item = (DrawingObjectHelper) loader.CreateInstance(type);
-                    this.list_1.Add(item);
+                    this.drawingObjectHelpers.Add(item);
                 }
             }
         }
@@ -237,7 +237,7 @@
                 {
                     (chartDrawingObject_1 as ICustomSettings).ReadSettings(this.SettingsHost);
                 }
-                this.list_0.Add(chartDrawingObject_1);
+                this.drawingObjects.Add(chartDrawingObject_1);
                 if (this.eventHandler_0 != null)
                 {
                     this.eventHandler_0(this, null);
@@ -250,7 +250,7 @@
             if (this.Chart.Renderer.PaneCreationCounter != this.byte_0)
             {
                 this.byte_0 = this.Chart.Renderer.PaneCreationCounter;
-                foreach (ChartDrawingObject obj3 in this.list_0)
+                foreach (ChartDrawingObject obj3 in this.drawingObjects)
                 {
                     obj3.Pane = this.Chart.Renderer.FindPane(obj3.PaneDescription);
                 }
@@ -285,7 +285,7 @@
         internal bool method_4(ChartPane chartPane_0, int int_0, int int_1)
         {
             this.SelectedHandle = null;
-            using (List<ChartDrawingObject>.Enumerator enumerator = this.list_0.GetEnumerator())
+            using (List<ChartDrawingObject>.Enumerator enumerator = this.drawingObjects.GetEnumerator())
             {
                 ChartDrawingObject current;
                 while (enumerator.MoveNext())
@@ -308,25 +308,25 @@
                                 }
                             }
                         }
-                        if (current != this.chartDrawingObject_0)
+                        if (current != this.selectedDrawingObject)
                         {
-                            if (this.chartDrawingObject_0 != null)
+                            if (this.selectedDrawingObject != null)
                             {
-                                this.chartDrawingObject_0.Selected = false;
+                                this.selectedDrawingObject.Selected = false;
                             }
                             current.Selected = true;
                             current.OnSelected(int_0, int_1);
-                            this.chartDrawingObject_0 = current;
+                            this.selectedDrawingObject = current;
                             return true;
                         }
                         return false;
                     }
                 }
             }
-            if (this.chartDrawingObject_0 != null)
+            if (this.selectedDrawingObject != null)
             {
-                this.chartDrawingObject_0.Selected = false;
-                this.chartDrawingObject_0 = null;
+                this.selectedDrawingObject.Selected = false;
+                this.selectedDrawingObject = null;
                 return true;
             }
             return false;
@@ -334,20 +334,20 @@
 
         private void method_5()
         {
-            if (this.dataStore_0 == null)
+            if (this.dataStore == null)
             {
-                if (this.string_0 == null)
+                if (this.rootPath == null)
                 {
                     throw new InvalidOperationException("RootPath must be assigned before saving/loading Drawing Objects");
                 }
-                this.dataStore_0 = new WealthLab.DataStore(this.RootPath, "DrawingObjects." + this.ChartBookName, "DRW");
+                this.dataStore = new WealthLab.DataStore(this.RootPath, "DrawingObjects." + this.ChartBookName, "DRW");
             }
         }
 
         private System.Type method_6(string string_2)
         {
             System.Type type2;
-            using (List<DrawingObjectHelper>.Enumerator enumerator = this.list_1.GetEnumerator())
+            using (List<DrawingObjectHelper>.Enumerator enumerator = this.drawingObjectHelpers.GetEnumerator())
             {
                 System.Type drawingObjectType;
                 while (enumerator.MoveNext())
@@ -368,7 +368,7 @@
 
         private DrawingObjectHelper method_7(System.Type type_0)
         {
-            using (List<DrawingObjectHelper>.Enumerator enumerator = this.list_1.GetEnumerator())
+            using (List<DrawingObjectHelper>.Enumerator enumerator = this.drawingObjectHelpers.GetEnumerator())
             {
                 DrawingObjectHelper current;
                 while (enumerator.MoveNext())
@@ -386,7 +386,7 @@
 
         public void RemoveDrawingObject(ChartDrawingObject chartDrawingObject_1)
         {
-            this.list_0.Remove(chartDrawingObject_1);
+            this.drawingObjects.Remove(chartDrawingObject_1);
         }
 
         public void SaveDrawingObjects(Bars bars)
@@ -396,14 +396,14 @@
                 this.method_5();
                 if (this.DrawingObjects.Count == 0)
                 {
-                    if (this.dataStore_0.ContainsSymbol(bars.Symbol, bars.Scale, bars.BarInterval))
+                    if (this.dataStore.ContainsSymbol(bars.Symbol, bars.Scale, bars.BarInterval))
                     {
-                        this.dataStore_0.RemoveFile(bars);
+                        this.dataStore.RemoveFile(bars);
                     }
                 }
                 else
                 {
-                    Stream output = new FileStream(this.dataStore_0.FileNameForBars(bars), FileMode.Create, FileAccess.Write, FileShare.None);
+                    Stream output = new FileStream(this.dataStore.FileNameForBars(bars), FileMode.Create, FileAccess.Write, FileShare.None);
                     try
                     {
                         BinaryWriter writer = new BinaryWriter(output);
@@ -429,16 +429,16 @@
 
         public void SplitAdjustDrawingObjects(string symbol, double splitFactor, DateTime exDate)
         {
-            string path = this.string_0 + @"\DrawingObjectSplitAdjustements.dat";
-            if (settingsManager_0 == null)
+            string path = this.rootPath + @"\DrawingObjectSplitAdjustements.dat";
+            if (settingsManager == null)
             {
-                settingsManager_0 = new SettingsManager();
-                settingsManager_0.RootPath = this.string_0;
-                settingsManager_0.FileName = "SplitAdjustments.txt";
+                settingsManager = new SettingsManager();
+                settingsManager.RootPath = this.rootPath;
+                settingsManager.FileName = "SplitAdjustments.txt";
             }
-            lock (settingsManager_0)
+            lock (settingsManager)
             {
-                if (settingsManager_0.Settings.ContainsKey(symbol) && (settingsManager_0.Settings[symbol] == exDate.ToShortDateString()))
+                if (settingsManager.Settings.ContainsKey(symbol) && (settingsManager.Settings[symbol] == exDate.ToShortDateString()))
                 {
                     return;
                 }
@@ -453,12 +453,12 @@
                     ChartBookName = str2
                 };
                 manager.method_5();
-                IList<BarDataScale> existingBarScales = manager.dataStore_0.GetExistingBarScales();
+                IList<BarDataScale> existingBarScales = manager.dataStore.GetExistingBarScales();
                 for (int i = 0; i < existingBarScales.Count; i++)
                 {
                     BarDataScale scale = existingBarScales[i];
                     BarDataScale scale2 = existingBarScales[i];
-                    if (manager.dataStore_0.ContainsSymbol(symbol, scale.Scale, scale2.BarInterval))
+                    if (manager.dataStore.ContainsSymbol(symbol, scale.Scale, scale2.BarInterval))
                     {
                         BarDataScale scale3 = existingBarScales[i];
                         BarDataScale scale4 = existingBarScales[i];
@@ -478,10 +478,10 @@
             }
             if (flag)
             {
-                lock (settingsManager_0)
+                lock (settingsManager)
                 {
-                    settingsManager_0.Settings[symbol] = exDate.ToShortDateString();
-                    settingsManager_0.SaveSettings();
+                    settingsManager.Settings[symbol] = exDate.ToShortDateString();
+                    settingsManager.SaveSettings();
                     File.Create(path);
                 }
             }
@@ -492,11 +492,11 @@
         {
             get
             {
-                return this.chart_0;
+                return this.chart;
             }
             set
             {
-                this.chart_0 = value;
+                this.chart = value;
             }
         }
 
@@ -504,14 +504,14 @@
         {
             get
             {
-                return this.string_1;
+                return this.chartBookName;
             }
             set
             {
                 if ((value != null) && (value != ""))
                 {
-                    this.string_1 = SymbolFileNameConverter.SymbolToFileName(value);
-                    this.dataStore_0 = null;
+                    this.chartBookName = SymbolFileNameConverter.SymbolToFileName(value);
+                    this.dataStore = null;
                 }
             }
         }
@@ -544,7 +544,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.drawingObjects;
             }
         }
 
@@ -572,12 +572,12 @@
         {
             get
             {
-                return this.string_0;
+                return this.rootPath;
             }
             set
             {
-                this.string_0 = value;
-                this.dataStore_0 = null;
+                this.rootPath = value;
+                this.dataStore = null;
             }
         }
 
@@ -586,7 +586,7 @@
         {
             get
             {
-                return this.chartDrawingObject_0;
+                return this.selectedDrawingObject;
             }
         }
 
@@ -595,16 +595,16 @@
         {
             get
             {
-                return this.chartDrawingObjectHandle_0;
+                return this.selectedDrawingObjectHandle;
             }
             set
             {
-                if (this.chartDrawingObjectHandle_0 != value)
+                if (this.selectedDrawingObjectHandle != value)
                 {
-                    this.chartDrawingObjectHandle_0 = value;
+                    this.selectedDrawingObjectHandle = value;
                     if (this.Chart != null)
                     {
-                        if (this.chartDrawingObjectHandle_0 != null)
+                        if (this.selectedDrawingObjectHandle != null)
                         {
                             this.Chart.Cursor = Cursors.Cross;
                         }
@@ -622,11 +622,11 @@
         {
             get
             {
-                return this.isettingsHost_0;
+                return this.isettingsHost;
             }
             set
             {
-                this.isettingsHost_0 = value;
+                this.isettingsHost = value;
             }
         }
     }

@@ -4,11 +4,11 @@
 
     public class BarsDescriptorString
     {
-        private string string_0;
+        private string descriptorStr;
 
         public BarsDescriptorString(string desc)
         {
-            this.string_0 = desc;
+            this.descriptorStr = desc;
         }
 
         public override string ToString()
@@ -20,7 +20,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.descriptorStr;
             }
         }
     }

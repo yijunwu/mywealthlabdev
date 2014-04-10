@@ -5,18 +5,18 @@
 
     public class DraggedIndicatorHelper
     {
-        private IndicatorHelper indicatorHelper_0;
+        private IndicatorHelper indicatorHelper;
 
         public DraggedIndicatorHelper(IndicatorHelper helper)
         {
-            this.indicatorHelper_0 = helper;
+            this.indicatorHelper = helper;
         }
 
         public IndicatorHelper Helper
         {
             get
             {
-                return this.indicatorHelper_0;
+                return this.indicatorHelper;
             }
         }
     }

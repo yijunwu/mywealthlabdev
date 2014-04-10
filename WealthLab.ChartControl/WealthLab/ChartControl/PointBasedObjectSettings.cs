@@ -8,8 +8,8 @@
     [ToolboxItem(false)]
     public class PointBasedObjectSettings : UserControl
     {
-        private IContainer icontainer_0;
-        private Point point_0;
+        private IContainer components;
+        private Point origin;
 
         public PointBasedObjectSettings()
         {
@@ -18,9 +18,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -48,11 +48,11 @@
         {
             get
             {
-                return this.point_0;
+                return this.origin;
             }
             set
             {
-                this.point_0 = value;
+                this.origin = value;
             }
         }
     }

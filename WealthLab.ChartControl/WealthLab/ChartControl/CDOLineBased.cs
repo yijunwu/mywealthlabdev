@@ -12,24 +12,24 @@
         protected ChartDrawingObjectHandle _endHandle;
         protected ChartDrawingObjectHandle _mover;
         protected ChartDrawingObjectHandle _startHandle;
-        private bool bool_2;
-        private bool bool_3;
-        private bool bool_4;
-        private System.Drawing.Color color_0;
-        private int int_0;
+        private bool extendRight;
+        private bool extendLeft;
+        private bool snapToValue;
+        private System.Drawing.Color color;
+        private int width;
         private LineBasedObjectSettings lineBasedObjectSettings_0;
-        private LineStyle lineStyle_0;
+        private LineStyle style;
 
         public CDOLineBased()
         {
-            this.color_0 = System.Drawing.Color.Black;
-            this.int_0 = 2;
+            this.color = System.Drawing.Color.Black;
+            this.width = 2;
         }
 
         public CDOLineBased(ChartPane pane, DateTime dateTime_0, double value) : base(pane, dateTime_0, value)
         {
-            this.color_0 = System.Drawing.Color.Black;
-            this.int_0 = 2;
+            this.color = System.Drawing.Color.Black;
+            this.width = 2;
             this._startHandle = base.CreateHandle();
             this._startHandle.Date = dateTime_0;
             this._startHandle.Value = value;
@@ -191,11 +191,11 @@
         {
             get
             {
-                return this.color_0;
+                return this.color;
             }
             set
             {
-                this.color_0 = value;
+                this.color = value;
             }
         }
 
@@ -203,11 +203,11 @@
         {
             get
             {
-                return this.bool_3;
+                return this.extendLeft;
             }
             set
             {
-                this.bool_3 = value;
+                this.extendLeft = value;
             }
         }
 
@@ -215,11 +215,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.extendRight;
             }
             set
             {
-                this.bool_2 = value;
+                this.extendRight = value;
             }
         }
 
@@ -251,14 +251,14 @@
         {
             get
             {
-                return this.bool_4;
+                return this.snapToValue;
             }
             set
             {
-                this.bool_4 = value;
+                this.snapToValue = value;
                 foreach (ChartDrawingObjectHandle handle in base.Handles)
                 {
-                    handle.SnapToValue = this.bool_4;
+                    handle.SnapToValue = this.snapToValue;
                 }
             }
         }
@@ -267,11 +267,11 @@
         {
             get
             {
-                return this.lineStyle_0;
+                return this.style;
             }
             set
             {
-                this.lineStyle_0 = value;
+                this.style = value;
             }
         }
 
@@ -279,11 +279,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.width;
             }
             set
             {
-                this.int_0 = value;
+                this.width = value;
             }
         }
     }

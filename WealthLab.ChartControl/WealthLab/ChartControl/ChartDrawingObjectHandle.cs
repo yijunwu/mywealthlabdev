@@ -6,22 +6,22 @@
 
     public class ChartDrawingObjectHandle
     {
-        private bool bool_0;
-        private bool bool_1 = true;
-        private bool bool_2 = true;
+        private bool snapToValue;
+        private bool visible = true;
+        private bool showPriceValue = true;
         private static Brush brush_0 = new SolidBrush(Color.Gainsboro);
         private static Brush brush_1 = new SolidBrush(Color.Red);
-        private ChartDrawingObject chartDrawingObject_0;
-        private ChartDrawingObjectHandleType chartDrawingObjectHandleType_0;
-        private DateTime dateTime_0;
-        private double double_0;
+        private ChartDrawingObject owner;
+        private ChartDrawingObjectHandleType handleType;
+        private DateTime date;
+        private double doubleValue;
         private int int_0;
         private int int_1;
         private static Pen pen_0 = new Pen(Color.Black);
 
         public ChartDrawingObjectHandle(ChartDrawingObject owner)
         {
-            this.chartDrawingObject_0 = owner;
+            this.owner = owner;
         }
 
         internal void method_0(int int_2, ref double double_1)
@@ -92,7 +92,7 @@
                     graphics_0.FillRectangle(brush_0, this.Bounds);
                 }
                 graphics_0.DrawRectangle(pen_0, this.Bounds);
-                if (this.bool_2)
+                if (this.showPriceValue)
                 {
                     string text = this.Pane.FormatChartValue(this.Value);
                     SizeF ef2 = graphics_0.MeasureString(text, this.Owner.HandleFont);
@@ -165,11 +165,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.date;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.date = value;
             }
         }
 
@@ -177,15 +177,15 @@
         {
             get
             {
-                return this.chartDrawingObjectHandleType_0;
+                return this.handleType;
             }
             set
             {
                 if (value == ChartDrawingObjectHandleType.Mover)
                 {
-                    this.bool_2 = false;
+                    this.showPriceValue = false;
                 }
-                this.chartDrawingObjectHandleType_0 = value;
+                this.handleType = value;
             }
         }
 
@@ -193,11 +193,11 @@
         {
             get
             {
-                return this.chartDrawingObject_0;
+                return this.owner;
             }
             set
             {
-                this.chartDrawingObject_0 = value;
+                this.owner = value;
             }
         }
 
@@ -213,11 +213,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.showPriceValue;
             }
             set
             {
-                this.bool_2 = value;
+                this.showPriceValue = value;
             }
         }
 
@@ -225,15 +225,15 @@
         {
             get
             {
-                if (this.chartDrawingObjectHandleType_0 == ChartDrawingObjectHandleType.Mover)
+                if (this.handleType == ChartDrawingObjectHandleType.Mover)
                 {
                     return false;
                 }
-                return this.bool_0;
+                return this.snapToValue;
             }
             set
             {
-                this.bool_0 = value;
+                this.snapToValue = value;
             }
         }
 
@@ -241,11 +241,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.doubleValue;
             }
             set
             {
-                this.double_0 = value;
+                this.doubleValue = value;
             }
         }
 
@@ -253,11 +253,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.visible;
             }
             set
             {
-                this.bool_1 = value;
+                this.visible = value;
             }
         }
 

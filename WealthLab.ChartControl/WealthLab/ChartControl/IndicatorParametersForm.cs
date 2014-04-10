@@ -13,7 +13,7 @@
     {
         private bool bool_0;
         [CompilerGenerated]
-        private bool bool_1;
+        private bool useIndicatorPane;
         private Button btnCancel;
         private Button btnOK;
         private CheckBox cbDrawOscillator;
@@ -29,7 +29,7 @@
         private GroupBox grpOscillator;
         private GroupBox grpParameters;
         private IContainer icontainer_0;
-        private IndicatorHelper indicatorHelper_0;
+        private IndicatorHelper indicatorHelper;
         private int int_0 = 450;
         private Label label1;
         private Label lblColor;
@@ -107,15 +107,15 @@
 
         public IndicatorDescriptor GetIndicatorDescriptor()
         {
-            IndicatorDescriptor descriptor = new IndicatorDescriptor(this.indicatorHelper_0.ParameterDefaultValues.Count) {
+            IndicatorDescriptor descriptor = new IndicatorDescriptor(this.indicatorHelper.ParameterDefaultValues.Count) {
                 Color = this.pnlColor.BackColor,
                 Style = (LineStyle) Enum.Parse(typeof(LineStyle), this.cmbStyle.Text),
                 Width = (int) this.numWidth.Value,
-                IndicatorType = this.indicatorHelper_0.IndicatorType,
-                PlotBandPairIndicator = (this.indicatorHelper_0.PartnerBandIndicatorType != null) && this.cbPlotBands.Checked,
+                IndicatorType = this.indicatorHelper.IndicatorType,
+                PlotBandPairIndicator = (this.indicatorHelper.PartnerBandIndicatorType != null) && this.cbPlotBands.Checked,
                 FillBand = this.cbFillBands.Checked,
                 BandFillColor = this.method_0(this.pnlBandColor.BackColor, this.numTransparency),
-                BandPairIndicatorType = this.indicatorHelper_0.PartnerBandIndicatorType,
+                BandPairIndicatorType = this.indicatorHelper.PartnerBandIndicatorType,
                 PlotOscillator = this.PlotAsOscillator,
                 OverboughtLevel = this.OscillatorOverboughtLevel,
                 OverboughtColor = this.method_0(this.OscillatorOverboughtColor, this.numOscTransparency),
@@ -126,7 +126,7 @@
             for (int i = 0; i < descriptor.Parameters.Length; i++)
             {
                 Control control = this.grpParameters.Controls[(i * 2) + 1];
-                System.Type type = this.indicatorHelper_0.ParameterDefaultValues[i].GetType();
+                System.Type type = this.indicatorHelper.ParameterDefaultValues[i].GetType();
                 if (type == typeof(CoreDataSeries))
                 {
                     ComboBox box3 = control as ComboBox;
@@ -148,10 +148,10 @@
                     BarsDescriptorString str = new BarsDescriptorString(box.Text);
                     descriptor.Parameters[i] = str;
                 }
-                else if (this.indicatorHelper_0.ParameterDefaultValues[i] is Enum)
+                else if (this.indicatorHelper.ParameterDefaultValues[i] is Enum)
                 {
                     ComboBox box4 = control as ComboBox;
-                    descriptor.Parameters[i] = Enum.Parse(this.indicatorHelper_0.ParameterDefaultValues[i].GetType(), box4.Text);
+                    descriptor.Parameters[i] = Enum.Parse(this.indicatorHelper.ParameterDefaultValues[i].GetType(), box4.Text);
                 }
                 else if ((type != typeof(int)) && (type != typeof(RangeBoundInt32)))
                 {
@@ -247,7 +247,7 @@
 
         public bool Initialize(IndicatorHelper indHelper, Chart chart, ChartPane pane)
         {
-            this.indicatorHelper_0 = indHelper;
+            this.indicatorHelper = indHelper;
             this.chartPane_0 = pane;
             System.Type indicatorType = indHelper.IndicatorType;
             this.Text = indicatorType.Name + " Properties";
@@ -938,7 +938,7 @@
         {
             get
             {
-                return (((this.indicatorHelper_0 != null) && this.indicatorHelper_0.IsOscillator) && this.cbDrawOscillator.Checked);
+                return (((this.indicatorHelper != null) && this.indicatorHelper.IsOscillator) && this.cbDrawOscillator.Checked);
             }
             set
             {
@@ -950,11 +950,11 @@
         {
             get
             {
-                if (this.indicatorHelper_0 == null)
+                if (this.indicatorHelper == null)
                 {
                     return false;
                 }
-                return ((this.indicatorHelper_0.PartnerBandIndicatorType != null) && this.cbPlotBands.Checked);
+                return ((this.indicatorHelper.PartnerBandIndicatorType != null) && this.cbPlotBands.Checked);
             }
             set
             {
@@ -967,12 +967,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_1;
+                return this.useIndicatorPane;
             }
             [CompilerGenerated]
             internal set
             {
-                this.bool_1 = value;
+                this.useIndicatorPane = value;
             }
         }
     }

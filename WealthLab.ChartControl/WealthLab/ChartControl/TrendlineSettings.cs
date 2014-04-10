@@ -8,7 +8,7 @@
     public class TrendlineSettings : LineBasedObjectSettings
     {
         private CheckBox cbDisplayPercentageChange;
-        private IContainer icontainer_1;
+        private IContainer components;
 
         public TrendlineSettings()
         {
@@ -35,16 +35,16 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_1 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_1.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private void method_0()
         {
-            this.icontainer_1 = new Container();
+            this.components = new Container();
         }
 
         public bool DisplayPercentageChange

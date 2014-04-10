@@ -12,23 +12,23 @@
         protected ChartDrawingObjectHandle _endHandle;
         protected ChartDrawingObjectHandle _mover;
         protected ChartDrawingObjectHandle _startHandle;
-        private bool bool_2;
-        private System.Drawing.Color color_0;
-        private int int_0;
-        private int int_1;
-        private LineStyle lineStyle_0;
+        private bool snapToValue;
+        private System.Drawing.Color color;
+        private int width;
+        private int fillTransparency;
+        private LineStyle style;
         private PolygonBasedObjectSettings polygonBasedObjectSettings_0;
 
         public CDOPolygonBased()
         {
-            this.color_0 = System.Drawing.Color.Black;
-            this.int_0 = 2;
+            this.color = System.Drawing.Color.Black;
+            this.width = 2;
         }
 
         public CDOPolygonBased(ChartPane pane, DateTime dateTime_0, double value) : base(pane, dateTime_0, value)
         {
-            this.color_0 = System.Drawing.Color.Black;
-            this.int_0 = 2;
+            this.color = System.Drawing.Color.Black;
+            this.width = 2;
             this._startHandle = base.CreateHandle();
             this._startHandle.Date = dateTime_0;
             this._startHandle.Value = value;
@@ -135,11 +135,11 @@
         {
             get
             {
-                return this.color_0;
+                return this.color;
             }
             set
             {
-                this.color_0 = value;
+                this.color = value;
             }
         }
 
@@ -147,11 +147,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.fillTransparency;
             }
             set
             {
-                this.int_1 = value;
+                this.fillTransparency = value;
             }
         }
 
@@ -183,14 +183,14 @@
         {
             get
             {
-                return this.bool_2;
+                return this.snapToValue;
             }
             set
             {
-                this.bool_2 = value;
+                this.snapToValue = value;
                 foreach (ChartDrawingObjectHandle handle in base.Handles)
                 {
-                    handle.SnapToValue = this.bool_2;
+                    handle.SnapToValue = this.snapToValue;
                 }
             }
         }
@@ -199,11 +199,11 @@
         {
             get
             {
-                return this.lineStyle_0;
+                return this.style;
             }
             set
             {
-                this.lineStyle_0 = value;
+                this.style = value;
             }
         }
 
@@ -211,11 +211,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.width;
             }
             set
             {
-                this.int_0 = value;
+                this.width = value;
             }
         }
     }

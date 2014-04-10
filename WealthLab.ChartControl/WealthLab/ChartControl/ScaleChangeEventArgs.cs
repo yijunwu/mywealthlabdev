@@ -7,7 +7,7 @@
     public class ScaleChangeEventArgs : EventArgs
     {
         [CompilerGenerated]
-        private BarDataScale barDataScale_0;
+        private BarDataScale barDataScale;
 
         public ScaleChangeEventArgs(BarDataScale barDataScale_1)
         {
@@ -19,12 +19,12 @@
             [CompilerGenerated]
             get
             {
-                return this.barDataScale_0;
+                return this.barDataScale;
             }
             [CompilerGenerated]
             set
             {
-                this.barDataScale_0 = value;
+                this.barDataScale = value;
             }
         }
     }

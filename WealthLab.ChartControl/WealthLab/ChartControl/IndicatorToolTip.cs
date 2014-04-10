@@ -9,11 +9,11 @@
     [ToolboxItem(false)]
     public class IndicatorToolTip : UserControl
     {
-        private IContainer icontainer_0;
-        private int int_0 = -1;
+        private IContainer components;
+        private int barNum = -1;
         private Label lblDateVal;
         private Label lblValue;
-        private PlottedIndicator plottedIndicator_0;
+        private PlottedIndicator plottedIndicator;
 
         public IndicatorToolTip()
         {
@@ -22,9 +22,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -73,8 +73,8 @@
         {
             if (this.RepositionRequired(plottedIndicator_1, barNumber))
             {
-                this.plottedIndicator_0 = plottedIndicator_1;
-                this.int_0 = barNumber;
+                this.plottedIndicator = plottedIndicator_1;
+                this.barNum = barNumber;
                 DataSeries series = plottedIndicator_1.Series;
                 string str = series.Date[barNumber].ToShortDateString();
                 DateTime time2 = series.Date[barNumber];
@@ -90,16 +90,16 @@
 
         public bool RepositionRequired(PlottedIndicator plottedIndicator_1, int barNumber)
         {
-            if (plottedIndicator_1 == this.plottedIndicator_0)
+            if (plottedIndicator_1 == this.plottedIndicator)
             {
-                return (barNumber != this.int_0);
+                return (barNumber != this.barNum);
             }
             return true;
         }
 
         public void Reset()
         {
-            this.int_0 = -1;
+            this.barNum = -1;
         }
     }
 }

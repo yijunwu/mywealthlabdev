@@ -4,18 +4,18 @@
 
     public class DroppedIndicatorEventArgs : EventArgs
     {
-        private IndicatorDescriptor indicatorDescriptor_0;
+        private IndicatorDescriptor indicatorDescriptor;
 
         public DroppedIndicatorEventArgs(IndicatorDescriptor indDesc)
         {
-            this.indicatorDescriptor_0 = indDesc;
+            this.indicatorDescriptor = indDesc;
         }
 
         public IndicatorDescriptor IndDesc
         {
             get
             {
-                return this.indicatorDescriptor_0;
+                return this.indicatorDescriptor;
             }
         }
     }
