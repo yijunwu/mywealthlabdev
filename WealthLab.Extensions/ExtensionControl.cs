@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using WealthLab.Extensions;
 using WealthLab.Extensions.Attribute;
+using Label = System.Windows.Forms.Label;
 
 internal class ExtensionControl : UserControl
 {
@@ -327,7 +328,7 @@ internal class ExtensionControl : UserControl
         this.lblNotInstalled.TabIndex = 0x10;
         this.lblNotInstalled.Text = "Not Installed";
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.BackColor = Color.White;
         base.Controls.Add(this.lblNotInstalled);
         base.Controls.Add(this.btnUndo);

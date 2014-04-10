@@ -19,7 +19,7 @@ internal class CopyDataForm : Form
     {
         base.SuspendLayout();
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.ClientSize = new Size(0x124, 0x10f);
         base.Name = "CopyDataForm";
         base.ShowInTaskbar = false;

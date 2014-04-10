@@ -100,7 +100,7 @@ internal class ExtensionManagerForm : Form
 
     private void InitializeComponent()
     {
-        ComponentResourceManager manager = new ComponentResourceManager(typeof(ExtensionManagerForm));
+        ComponentResourceManager resources = new ComponentResourceManager(typeof(ExtensionManagerForm));
         this.toolbarExtensions = new ToolStrip();
         this.tsbtnAddins = new ToolStripButton();
         this.tsbtnProviders = new ToolStripButton();
@@ -135,28 +135,28 @@ internal class ExtensionManagerForm : Form
         this.toolbarExtensions.Size = new Size(0x2ff, 0x19);
         this.toolbarExtensions.TabIndex = 0;
         this.toolbarExtensions.Text = "toolbarExtensions";
-        this.tsbtnAddins.Image = (Image) manager.GetObject("tsbtnAddins.Image");
+        this.tsbtnAddins.Image = (Image) resources.GetObject("tsbtnAddins.Image");
         this.tsbtnAddins.ImageTransparentColor = Color.Magenta;
         this.tsbtnAddins.Name = "tsbtnAddins";
         this.tsbtnAddins.Size = new Size(0x3b, 0x16);
         this.tsbtnAddins.Tag = "Addin";
         this.tsbtnAddins.Text = "Addins";
         this.tsbtnAddins.Click += new EventHandler(this.tsbtnInstalls_Click);
-        this.tsbtnProviders.Image = (Image) manager.GetObject("tsbtnProviders.Image");
+        this.tsbtnProviders.Image = (Image) resources.GetObject("tsbtnProviders.Image");
         this.tsbtnProviders.ImageTransparentColor = Color.Magenta;
         this.tsbtnProviders.Name = "tsbtnProviders";
         this.tsbtnProviders.Size = new Size(0x48, 0x16);
         this.tsbtnProviders.Tag = "Provider";
         this.tsbtnProviders.Text = "Providers";
         this.tsbtnProviders.Click += new EventHandler(this.tsbtnInstalls_Click);
-        this.tsbtnStrategies.Image = (Image) manager.GetObject("tsbtnStrategies.Image");
+        this.tsbtnStrategies.Image = (Image) resources.GetObject("tsbtnStrategies.Image");
         this.tsbtnStrategies.ImageTransparentColor = Color.Magenta;
         this.tsbtnStrategies.Name = "tsbtnStrategies";
         this.tsbtnStrategies.Size = new Size(0x4c, 0x16);
         this.tsbtnStrategies.Tag = "Strategy";
         this.tsbtnStrategies.Text = "Strategies";
         this.tsbtnStrategies.Click += new EventHandler(this.tsbtnInstalls_Click);
-        this.tsbtnIndicators.Image = (Image) manager.GetObject("tsbtnIndicators.Image");
+        this.tsbtnIndicators.Image = (Image) resources.GetObject("tsbtnIndicators.Image");
         this.tsbtnIndicators.ImageTransparentColor = Color.Magenta;
         this.tsbtnIndicators.Name = "tsbtnIndicators";
         this.tsbtnIndicators.Size = new Size(0x4b, 0x16);
@@ -166,7 +166,7 @@ internal class ExtensionManagerForm : Form
         this.tsbtnOptions.Alignment = ToolStripItemAlignment.Right;
         this.tsbtnOptions.DisplayStyle = ToolStripItemDisplayStyle.Image;
         this.tsbtnOptions.DropDownItems.AddRange(new ToolStripItem[] { this.mniCheckUpdates });
-        this.tsbtnOptions.Image = (Image) manager.GetObject("tsbtnOptions.Image");
+        this.tsbtnOptions.Image = (Image) resources.GetObject("tsbtnOptions.Image");
         this.tsbtnOptions.ImageTransparentColor = Color.Magenta;
         this.tsbtnOptions.Name = "tsbtnOptions";
         this.tsbtnOptions.Size = new Size(0x1d, 0x16);
@@ -178,7 +178,7 @@ internal class ExtensionManagerForm : Form
         this.mniCheckUpdates.Click += new EventHandler(this.mniCheckUpdates_Click);
         this.tlsbtnRestartWld.Alignment = ToolStripItemAlignment.Right;
         this.tlsbtnRestartWld.DisplayStyle = ToolStripItemDisplayStyle.Image;
-        this.tlsbtnRestartWld.Image = (Image) manager.GetObject("tlsbtnRestartWld.Image");
+        this.tlsbtnRestartWld.Image = (Image) resources.GetObject("tlsbtnRestartWld.Image");
         this.tlsbtnRestartWld.ImageTransparentColor = Color.Magenta;
         this.tlsbtnRestartWld.Name = "tlsbtnRestartWld";
         this.tlsbtnRestartWld.Size = new Size(0x17, 0x16);
@@ -189,7 +189,7 @@ internal class ExtensionManagerForm : Form
         this.toolStripSeparator1.Size = new Size(6, 0x19);
         this.tsbtnUpdates.Alignment = ToolStripItemAlignment.Right;
         this.tsbtnUpdates.DisplayStyle = ToolStripItemDisplayStyle.Text;
-        this.tsbtnUpdates.Image = (Image) manager.GetObject("tsbtnUpdates.Image");
+        this.tsbtnUpdates.Image = (Image) resources.GetObject("tsbtnUpdates.Image");
         this.tsbtnUpdates.ImageTransparentColor = Color.Magenta;
         this.tsbtnUpdates.Name = "tsbtnUpdates";
         this.tsbtnUpdates.Size = new Size(0x33, 0x16);
@@ -199,7 +199,7 @@ internal class ExtensionManagerForm : Form
         this.tsbtnUpdates.Click += new EventHandler(this.tsbtnInstalls_Click);
         this.tsbtnInstalls.Alignment = ToolStripItemAlignment.Right;
         this.tsbtnInstalls.DisplayStyle = ToolStripItemDisplayStyle.Text;
-        this.tsbtnInstalls.Image = (Image) manager.GetObject("tsbtnInstalls.Image");
+        this.tsbtnInstalls.Image = (Image) resources.GetObject("tsbtnInstalls.Image");
         this.tsbtnInstalls.ImageTransparentColor = Color.Magenta;
         this.tsbtnInstalls.Name = "tsbtnInstalls";
         this.tsbtnInstalls.Size = new Size(0x2d, 0x16);
@@ -292,11 +292,11 @@ internal class ExtensionManagerForm : Form
         this.lblInfo.TextAlign = ContentAlignment.MiddleCenter;
         this.AllowDrop = true;
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.ClientSize = new Size(0x2ff, 0x1eb);
         base.Controls.Add(this.pnlMain);
         base.Controls.Add(this.toolbarExtensions);
-        base.Icon = (Icon) manager.GetObject("$this.Icon");
+        base.Icon = (Icon) resources.GetObject("$this.Icon");
         this.MinimumSize = new Size(500, 300);
         base.Name = "ExtensionManagerForm";
         base.StartPosition = FormStartPosition.CenterScreen;

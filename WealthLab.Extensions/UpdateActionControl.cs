@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Text;
 using System.Windows.Forms;
 using WealthLab.Extensions.Properties;
+using Label = System.Windows.Forms.Label;
 
 internal class UpdateActionControl : UserControl
 {
@@ -96,7 +97,7 @@ internal class UpdateActionControl : UserControl
         this.lblResultDesc.TabIndex = 13;
         this.lblResultDesc.Text = "lblResultDesc";
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.BackColor = Color.Transparent;
         base.Controls.Add(this.lblResultDesc);
         base.Controls.Add(this.lblActionDesc);

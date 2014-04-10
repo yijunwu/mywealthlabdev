@@ -83,7 +83,7 @@ internal class UpdateExtensionsForm : Form
     private static extern IntPtr GetSystemMenu(IntPtr intptr_0, bool bool_0);
     private void InitializeComponent()
     {
-        ComponentResourceManager manager = new ComponentResourceManager(typeof(UpdateExtensionsForm));
+        ComponentResourceManager resources = new ComponentResourceManager(typeof(UpdateExtensionsForm));
         this.btnStartWealthLab = new Button();
         this.lnkCopy = new LinkLabel();
         this.brPanel = new Class47();
@@ -126,12 +126,12 @@ internal class UpdateExtensionsForm : Form
         this.lstUpdateActions.Size = new Size(0x269, 0x13b);
         this.lstUpdateActions.TabIndex = 6;
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.ClientSize = new Size(0x278, 0x16a);
         base.Controls.Add(this.lnkCopy);
         base.Controls.Add(this.brPanel);
         base.Controls.Add(this.btnStartWealthLab);
-        base.Icon = (Icon) manager.GetObject("$this.Icon");
+        base.Icon = (Icon) resources.GetObject("$this.Icon");
         base.MaximizeBox = false;
         base.MinimizeBox = false;
         this.MinimumSize = new Size(300, 200);
