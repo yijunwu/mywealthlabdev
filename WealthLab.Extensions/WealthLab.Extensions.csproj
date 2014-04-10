@@ -108,13 +108,21 @@
     <Compile Include="WealthLab\Extensions\Properties\Resources.cs" />
     <Compile Include="WealthLab\Extensions\Properties\Settings.cs" />
     <Compile Include="WealthLab\DataProviders\Helper\TraceEventType.cs" />
-    <EmbeddedResource Include="UpdateExtensionsForm.resources" />
-    <EmbeddedResource Include="ExtensionControl.resources" />
+    <EmbeddedResource Include="ExtensionControl.resx">
+      <DependentUpon>ExtensionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtensionManagerForm.resx">
+      <DependentUpon>ExtensionManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateActionControl.resx">
+      <DependentUpon>UpdateActionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateExtensionsForm.resx">
+      <DependentUpon>UpdateExtensionsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLab.Extensions.Properties.Resources.resources" />
     <EmbeddedResource Include="WealthLab.Extensions.icons.package.ico" />
     <EmbeddedResource Include="CopyDataForm.resources" />
-    <EmbeddedResource Include="ExtensionManagerForm.resources" />
-    <EmbeddedResource Include="UpdateActionControl.resources" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WealthLab.Extensions.Agent\WealthLab.Extensions.Agent.csproj">
