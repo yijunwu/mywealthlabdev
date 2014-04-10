@@ -4,24 +4,24 @@
 
     public class StockSplitEventArgs : EventArgs
     {
-        private DateTime dateTime_0;
-        private double double_0;
-        private StaticDataProvider staticDataProvider_0;
-        private string string_0;
+        private DateTime exDate;
+        private double splitFactor;
+        private StaticDataProvider staticDataProvider;
+        private string symbol;
 
         public StockSplitEventArgs(StaticDataProvider provider, string symbol, double splitFactor, DateTime exDate)
         {
-            this.string_0 = symbol;
-            this.double_0 = splitFactor;
-            this.dateTime_0 = exDate;
-            this.staticDataProvider_0 = provider;
+            this.symbol = symbol;
+            this.splitFactor = splitFactor;
+            this.exDate = exDate;
+            this.staticDataProvider = provider;
         }
 
         public DateTime ExDate
         {
             get
             {
-                return this.dateTime_0;
+                return this.exDate;
             }
         }
 
@@ -29,7 +29,7 @@
         {
             get
             {
-                return this.staticDataProvider_0;
+                return this.staticDataProvider;
             }
         }
 
@@ -37,7 +37,7 @@
         {
             get
             {
-                return this.double_0;
+                return this.splitFactor;
             }
         }
 
@@ -45,7 +45,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
         }
     }

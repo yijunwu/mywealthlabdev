@@ -6,9 +6,9 @@
     public class StrategyParameterEventArgs : EventArgs
     {
         [CompilerGenerated]
-        private string string_0;
+        private string symbol;
         [CompilerGenerated]
-        private WealthLab.WealthScript wealthScript_0;
+        private WealthLab.WealthScript wealthScript;
 
         public StrategyParameterEventArgs(WealthLab.WealthScript wealthScript_1, string symbol)
         {
@@ -21,12 +21,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             [CompilerGenerated]
             internal set
             {
-                this.string_0 = value;
+                this.symbol = value;
             }
         }
 
@@ -35,12 +35,12 @@
             [CompilerGenerated]
             get
             {
-                return this.wealthScript_0;
+                return this.wealthScript;
             }
             [CompilerGenerated]
             internal set
             {
-                this.wealthScript_0 = value;
+                this.wealthScript = value;
             }
         }
     }

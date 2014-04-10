@@ -6,18 +6,18 @@
     [XmlRoot(ElementName="OrderMessage", IsNullable=false)]
     public class OrderMessage
     {
-        private System.DateTime dateTime_0;
-        private string string_0;
+        private System.DateTime dateTime;
+        private string message;
 
         public System.DateTime DateTime
         {
             get
             {
-                return this.dateTime_0;
+                return this.dateTime;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.dateTime = value;
             }
         }
 
@@ -25,11 +25,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.message;
             }
             set
             {
-                this.string_0 = value;
+                this.message = value;
             }
         }
     }

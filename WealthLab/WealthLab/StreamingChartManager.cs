@@ -8,8 +8,8 @@
     [ToolboxBitmap(typeof(StreamingChartManager), "StreamingChartManager")]
     public class StreamingChartManager : Component, IStreamingUpdate
     {
-        private WealthLab.Bars bars_0;
-        private BarScale barScale_0;
+        private WealthLab.Bars bars;
+        private BarScale barScale;
         private BarsLoader barsLoader_0;
         private bool bool_0;
         private DateTime dateTime_0;
@@ -17,12 +17,12 @@
         private DateTime dateTime_2;
         private IConnectionStatus iconnectionStatus_0;
         private IContainer icontainer_0;
-        private int int_0;
+        private int barInterval;
         private MarketHours marketHours_0;
         private Quote quote_0;
         private StaticDataProvider staticDataProvider_0;
         private StreamingDataProvider streamingDataProvider_0;
-        private string string_0;
+        private string symbol;
 
         private EventHandler<EventArgs> eventHandler_0;
 
@@ -87,7 +87,7 @@
 
         public StreamingChartManager()
         {
-            this.string_0 = "";
+            this.symbol = "";
             this.barsLoader_0 = new BarsLoader();
             this.marketHours_0 = new MarketHours();
             this.dateTime_1 = DateTime.MinValue;
@@ -97,7 +97,7 @@
 
         public StreamingChartManager(IContainer container)
         {
-            this.string_0 = "";
+            this.symbol = "";
             this.barsLoader_0 = new BarsLoader();
             this.marketHours_0 = new MarketHours();
             this.dateTime_1 = DateTime.MinValue;
@@ -118,23 +118,23 @@
         public void Heartbeat(DateTime timeStamp)
         {
             this.dateTime_2 = timeStamp;
-            if (((this.dateTime_1 != DateTime.MinValue) && (timeStamp >= this.dateTime_1)) && !this.bars_0.Locked)
+            if (((this.dateTime_1 != DateTime.MinValue) && (timeStamp >= this.dateTime_1)) && !this.bars.Locked)
             {
                 bool flag = false;
-                if (!double.IsNaN(this.bars_0.Open.PartialValue) && (this.dateTime_1.TimeOfDay <= this.marketHours_0.MarketCloseTimeNative.TimeOfDay))
+                if (!double.IsNaN(this.bars.Open.PartialValue) && (this.dateTime_1.TimeOfDay <= this.marketHours_0.MarketCloseTimeNative.TimeOfDay))
                 {
                     flag = false;
                     if (this.method_4(this.dateTime_1))
                     {
-                        this.bars_0.Add(this.dateTime_1, this.bars_0.Open.PartialValue, this.bars_0.High.PartialValue, this.bars_0.Low.PartialValue, this.bars_0.Close.PartialValue, this.bars_0.Volume.PartialValue);
+                        this.bars.Add(this.dateTime_1, this.bars.Open.PartialValue, this.bars.High.PartialValue, this.bars.Low.PartialValue, this.bars.Close.PartialValue, this.bars.Volume.PartialValue);
                         flag = true;
                     }
                 }
-                this.bars_0.Open.PartialValue = double.NaN;
-                this.bars_0.High.PartialValue = double.NaN;
-                this.bars_0.Low.PartialValue = double.NaN;
-                this.bars_0.Close.PartialValue = double.NaN;
-                this.bars_0.Volume.PartialValue = 0.0;
+                this.bars.Open.PartialValue = double.NaN;
+                this.bars.High.PartialValue = double.NaN;
+                this.bars.Low.PartialValue = double.NaN;
+                this.bars.Close.PartialValue = double.NaN;
+                this.bars.Volume.PartialValue = 0.0;
                 this.dateTime_0 = this.dateTime_1;
                 this.dateTime_1 = this.method_2(timeStamp);
                 if (flag && (this.eventHandler_0 != null))
@@ -316,20 +316,20 @@
 
         private void method_3(Quote quote_1)
         {
-            if (this.bars_0 != null)
+            if (this.bars != null)
             {
-                this.bars_0.Open.PartialValue = quote_1.Price;
-                this.bars_0.High.PartialValue = quote_1.Price;
-                this.bars_0.Low.PartialValue = quote_1.Price;
-                this.bars_0.Close.PartialValue = quote_1.Price;
-                this.bars_0.Volume.PartialValue = quote_1.Size;
+                this.bars.Open.PartialValue = quote_1.Price;
+                this.bars.High.PartialValue = quote_1.Price;
+                this.bars.Low.PartialValue = quote_1.Price;
+                this.bars.Close.PartialValue = quote_1.Price;
+                this.bars.Volume.PartialValue = quote_1.Size;
                 this.dateTime_1 = this.method_2(quote_1.TimeStamp);
             }
         }
 
         private bool method_4(DateTime dateTime_3)
         {
-            return ((this.bars_0.Count == 0) || (this.bars_0.Date[this.bars_0.Count - 1] < dateTime_3));
+            return ((this.bars.Count == 0) || (this.bars.Date[this.bars.Count - 1] < dateTime_3));
         }
 
         public WealthLab.Bars StartStreaming(DataSource dataSource_0, string symbol, WealthLab.BarDataScale scale, BarDataRange range)
@@ -339,12 +339,12 @@
                 return null;
             }
             this.marketHours_0.Market = this.streamingDataProvider_0.GetMarketInfo(symbol);
-            this.barScale_0 = scale.Scale;
-            this.int_0 = scale.BarInterval;
+            this.barScale = scale.Scale;
+            this.barInterval = scale.BarInterval;
             this.dateTime_1 = DateTime.MinValue;
-            if (symbol != this.string_0)
+            if (symbol != this.symbol)
             {
-                this.streamingDataProvider_0.UnSubscribe(this.string_0, this);
+                this.streamingDataProvider_0.UnSubscribe(this.symbol, this);
             }
             StreamingChartManager streamingUpdate = null;
             if (!this.streamingDataProvider_0.IsConnected)
@@ -413,12 +413,12 @@
                 data.Volume.PartialValue = double.NaN;
                 this.dateTime_1 = DateTime.MinValue;
             }
-            if (symbol != this.string_0)
+            if (symbol != this.symbol)
             {
                 this.streamingDataProvider_0.Subscribe(symbol, this);
-                this.string_0 = symbol;
+                this.symbol = symbol;
             }
-            this.bars_0 = data;
+            this.bars = data;
             if (streamingUpdate != null)
             {
                 this.streamingDataProvider_0.UnSubscribe(symbol, streamingUpdate);
@@ -428,16 +428,16 @@
 
         public void StopStreaming()
         {
-            if (this.string_0 != "")
+            if (this.symbol != "")
             {
-                this.streamingDataProvider_0.UnSubscribe(this.string_0, this);
-                this.string_0 = "";
+                this.streamingDataProvider_0.UnSubscribe(this.symbol, this);
+                this.symbol = "";
             }
         }
 
         public void UpdateMiniBar(Quote quote_1, double open, double high, double double_0)
         {
-            if (this.bars_0 != null)
+            if (this.bars != null)
             {
                 this.dateTime_2 = quote_1.TimeStamp;
                 if (this.dateTime_1 == DateTime.MinValue)
@@ -448,21 +448,21 @@
                 {
                     if (quote_1.TimeStamp >= this.dateTime_1)
                     {
-                        if (this.bars_0.Locked)
+                        if (this.bars.Locked)
                         {
                             this.eventHandler_1(this, EventArgs.Empty);
                         }
                         bool flag = false;
-                        if (!double.IsNaN(this.bars_0.Open.PartialValue) && this.method_4(this.dateTime_1))
+                        if (!double.IsNaN(this.bars.Open.PartialValue) && this.method_4(this.dateTime_1))
                         {
-                            this.bars_0.Add(this.dateTime_1, this.bars_0.Open.PartialValue, this.bars_0.High.PartialValue, this.bars_0.Low.PartialValue, this.bars_0.Close.PartialValue, this.bars_0.Volume.PartialValue);
+                            this.bars.Add(this.dateTime_1, this.bars.Open.PartialValue, this.bars.High.PartialValue, this.bars.Low.PartialValue, this.bars.Close.PartialValue, this.bars.Volume.PartialValue);
                             flag = true;
                         }
-                        this.bars_0.Open.PartialValue = open;
-                        this.bars_0.High.PartialValue = high;
-                        this.bars_0.Low.PartialValue = double_0;
-                        this.bars_0.Close.PartialValue = quote_1.Price;
-                        this.bars_0.Volume.PartialValue = quote_1.Size;
+                        this.bars.Open.PartialValue = open;
+                        this.bars.High.PartialValue = high;
+                        this.bars.Low.PartialValue = double_0;
+                        this.bars.Close.PartialValue = quote_1.Price;
+                        this.bars.Volume.PartialValue = quote_1.Size;
                         this.dateTime_0 = this.dateTime_1;
                         this.dateTime_1 = this.method_2(quote_1.TimeStamp);
                         if (flag && (this.eventHandler_0 != null))
@@ -470,26 +470,26 @@
                             this.eventHandler_0(this, EventArgs.Empty);
                         }
                     }
-                    else if (double.IsNaN(this.bars_0.Open.PartialValue))
+                    else if (double.IsNaN(this.bars.Open.PartialValue))
                     {
-                        this.bars_0.Open.PartialValue = open;
-                        this.bars_0.High.PartialValue = high;
-                        this.bars_0.Low.PartialValue = double_0;
-                        this.bars_0.Close.PartialValue = quote_1.Price;
-                        this.bars_0.Volume.PartialValue = quote_1.Size;
+                        this.bars.Open.PartialValue = open;
+                        this.bars.High.PartialValue = high;
+                        this.bars.Low.PartialValue = double_0;
+                        this.bars.Close.PartialValue = quote_1.Price;
+                        this.bars.Volume.PartialValue = quote_1.Size;
                     }
                     else
                     {
-                        this.bars_0.Close.PartialValue = quote_1.Price;
-                        if (high > this.bars_0.High.PartialValue)
+                        this.bars.Close.PartialValue = quote_1.Price;
+                        if (high > this.bars.High.PartialValue)
                         {
-                            this.bars_0.High.PartialValue = high;
+                            this.bars.High.PartialValue = high;
                         }
-                        if (double_0 < this.bars_0.Low.PartialValue)
+                        if (double_0 < this.bars.Low.PartialValue)
                         {
-                            this.bars_0.Low.PartialValue = double_0;
+                            this.bars.Low.PartialValue = double_0;
                         }
-                        DataSeries volume = this.bars_0.Volume;
+                        DataSeries volume = this.bars.Volume;
                         volume.PartialValue += quote_1.Size;
                     }
                     this.bool_0 = true;
@@ -511,9 +511,9 @@
             else if (quote_1.TimeStamp >= this.dateTime_1)
             {
                 bool flag = false;
-                if (!double.IsNaN(this.bars_0.Open.PartialValue))
+                if (!double.IsNaN(this.bars.Open.PartialValue))
                 {
-                    if (this.bars_0.Locked)
+                    if (this.bars.Locked)
                     {
                         if (this.dateTime_0 < this.dateTime_1)
                         {
@@ -525,14 +525,14 @@
                     if ((this.dateTime_1.TimeOfDay <= this.marketHours_0.MarketCloseTimeNative.TimeOfDay) && this.method_4(this.dateTime_1))
                     {
                         flag = true;
-                        this.bars_0.Add(this.dateTime_1, this.bars_0.Open.PartialValue, this.bars_0.High.PartialValue, this.bars_0.Low.PartialValue, this.bars_0.Close.PartialValue, this.bars_0.Volume.PartialValue);
+                        this.bars.Add(this.dateTime_1, this.bars.Open.PartialValue, this.bars.High.PartialValue, this.bars.Low.PartialValue, this.bars.Close.PartialValue, this.bars.Volume.PartialValue);
                     }
                 }
-                this.bars_0.Open.PartialValue = quote_1.Price;
-                this.bars_0.High.PartialValue = quote_1.Price;
-                this.bars_0.Low.PartialValue = quote_1.Price;
-                this.bars_0.Close.PartialValue = quote_1.Price;
-                this.bars_0.Volume.PartialValue = quote_1.Size;
+                this.bars.Open.PartialValue = quote_1.Price;
+                this.bars.High.PartialValue = quote_1.Price;
+                this.bars.Low.PartialValue = quote_1.Price;
+                this.bars.Close.PartialValue = quote_1.Price;
+                this.bars.Volume.PartialValue = quote_1.Size;
                 this.dateTime_0 = this.dateTime_1;
                 this.dateTime_1 = this.method_2(quote_1.TimeStamp);
                 if (flag && (this.eventHandler_0 != null))
@@ -542,28 +542,28 @@
             }
             else
             {
-                if (this.bars_0 != null)
+                if (this.bars != null)
                 {
-                    if (double.IsNaN(this.bars_0.Close.PartialValue))
+                    if (double.IsNaN(this.bars.Close.PartialValue))
                     {
-                        this.bars_0.Open.PartialValue = quote_1.Price;
-                        this.bars_0.High.PartialValue = quote_1.Price;
-                        this.bars_0.Low.PartialValue = quote_1.Price;
-                        this.bars_0.Close.PartialValue = quote_1.Price;
-                        this.bars_0.Volume.PartialValue = quote_1.Size;
+                        this.bars.Open.PartialValue = quote_1.Price;
+                        this.bars.High.PartialValue = quote_1.Price;
+                        this.bars.Low.PartialValue = quote_1.Price;
+                        this.bars.Close.PartialValue = quote_1.Price;
+                        this.bars.Volume.PartialValue = quote_1.Size;
                     }
                     else
                     {
-                        this.bars_0.Close.PartialValue = quote_1.Price;
-                        if (quote_1.Price > this.bars_0.High.PartialValue)
+                        this.bars.Close.PartialValue = quote_1.Price;
+                        if (quote_1.Price > this.bars.High.PartialValue)
                         {
-                            this.bars_0.High.PartialValue = quote_1.Price;
+                            this.bars.High.PartialValue = quote_1.Price;
                         }
-                        if (quote_1.Price < this.bars_0.Low.PartialValue)
+                        if (quote_1.Price < this.bars.Low.PartialValue)
                         {
-                            this.bars_0.Low.PartialValue = quote_1.Price;
+                            this.bars.Low.PartialValue = quote_1.Price;
                         }
-                        DataSeries volume = this.bars_0.Volume;
+                        DataSeries volume = this.bars.Volume;
                         volume.PartialValue += quote_1.Size;
                     }
                 }
@@ -587,7 +587,7 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
         }
 
@@ -596,7 +596,7 @@
         {
             get
             {
-                return this.bars_0;
+                return this.bars;
             }
         }
 
@@ -654,7 +654,7 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
         }
 
@@ -662,7 +662,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
         }
     }

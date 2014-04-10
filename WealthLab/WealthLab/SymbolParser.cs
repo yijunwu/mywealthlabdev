@@ -10,19 +10,19 @@
     {
         private char[] char_0;
         private IContainer icontainer_0;
-        private List<string> list_0;
-        private string string_0;
+        private List<string> symbolList;
+        private string text;
 
         public SymbolParser()
         {
-            this.list_0 = new List<string>();
+            this.symbolList = new List<string>();
             this.char_0 = new char[] { ' ', ',', '\n', '\r' };
             this.method_0();
         }
 
         public SymbolParser(IContainer container)
         {
-            this.list_0 = new List<string>();
+            this.symbolList = new List<string>();
             this.char_0 = new char[] { ' ', ',', '\n', '\r' };
             container.Add(this);
             this.method_0();
@@ -46,7 +46,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.symbolList;
             }
         }
 
@@ -54,25 +54,25 @@
         {
             get
             {
-                return this.string_0;
+                return this.text;
             }
             set
             {
                 if (value != null)
                 {
-                    this.string_0 = value.Trim();
-                    if (this.string_0.Contains("\""))
+                    this.text = value.Trim();
+                    if (this.text.Contains("\""))
                     {
-                        this.list_0.Clear();
+                        this.symbolList.Clear();
                         int num3 = 1;
-                        string[] strArray = this.string_0.Split(new char[] { '"' });
+                        string[] strArray = this.text.Split(new char[] { '"' });
                         int index = 1;
                         while (index < strArray.Length)
                         {
                             string item = strArray[index].Trim();
-                            if ((item != "") && !this.list_0.Contains(item))
+                            if ((item != "") && !this.symbolList.Contains(item))
                             {
-                                this.list_0.Add(item);
+                                this.symbolList.Add(item);
                             }
                             index += 2;
                         }
@@ -88,9 +88,9 @@
                         {
                             foreach (string str3 in strArray[index].Split(this.char_0, StringSplitOptions.RemoveEmptyEntries))
                             {
-                                if ((str3.Trim(new char[] { ' ', '\n', '\r' }) != "") && !this.list_0.Contains(str3))
+                                if ((str3.Trim(new char[] { ' ', '\n', '\r' }) != "") && !this.symbolList.Contains(str3))
                                 {
-                                    this.list_0.Add(str3);
+                                    this.symbolList.Add(str3);
                                 }
                             }
                             index += 2;
@@ -98,13 +98,13 @@
                     }
                     else
                     {
-                        string[] strArray5 = this.string_0.Split(this.char_0, StringSplitOptions.RemoveEmptyEntries);
-                        this.list_0.Clear();
+                        string[] strArray5 = this.text.Split(this.char_0, StringSplitOptions.RemoveEmptyEntries);
+                        this.symbolList.Clear();
                         foreach (string str in strArray5)
                         {
-                            if ((str.Trim(new char[] { ' ', '\n', '\r' }) != "") && !this.list_0.Contains(str))
+                            if ((str.Trim(new char[] { ' ', '\n', '\r' }) != "") && !this.symbolList.Contains(str))
                             {
-                                this.list_0.Add(str);
+                                this.symbolList.Add(str);
                             }
                         }
                     }

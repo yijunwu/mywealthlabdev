@@ -13,7 +13,7 @@
         private IContainer icontainer_0;
         private Panel pnlParameters;
         private Panel pnlParamHousing;
-        private WealthLab.WealthScript wealthScript_0;
+        private WealthLab.WealthScript wealthScript;
 
         private EventHandler<EventArgs> eventHandler_0;
 
@@ -165,20 +165,20 @@
         {
             get
             {
-                return this.wealthScript_0;
+                return this.wealthScript;
             }
             set
             {
                 this.pnlParameters.Controls.Clear();
-                this.wealthScript_0 = value;
-                if (this.wealthScript_0 == null)
+                this.wealthScript = value;
+                if (this.wealthScript == null)
                 {
                     this.pnlParameters.Height = 4;
                     return;
                 }
                 else
                 {
-                    foreach (StrategyParameter parameter in this.wealthScript_0.Parameters)
+                    foreach (StrategyParameter parameter in this.wealthScript.Parameters)
                     {
                         ParameterSlider parameterSlider = new ParameterSlider();
                         parameterSlider.Width = this.pnlParameters.Width - 4;

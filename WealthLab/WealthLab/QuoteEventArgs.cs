@@ -4,18 +4,18 @@
 
     public class QuoteEventArgs : EventArgs
     {
-        private WealthLab.Quote quote_0;
+        private WealthLab.Quote quote;
 
         public QuoteEventArgs(WealthLab.Quote quote)
         {
-            this.quote_0 = quote;
+            this.quote = quote;
         }
 
         public WealthLab.Quote Quote
         {
             get
             {
-                return this.quote_0;
+                return this.quote;
             }
         }
     }

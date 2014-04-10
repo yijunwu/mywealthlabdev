@@ -7,30 +7,30 @@
     [XmlRoot(ElementName="StrategyRule", IsNullable=false)]
     public class StrategyRule : Rule
     {
-        private List<Rule> list_2;
-        private List<StrategyRule> list_3;
-        private List<StrategyRule> list_4;
-        private string string_9;
+        private List<Rule> conditions;
+        private List<StrategyRule> listEntriesAppliedTo;
+        private List<StrategyRule> listExitsAppliedTo;
+        private string exitName;
 
         public StrategyRule()
         {
-            this.list_2 = new List<Rule>();
-            this.list_3 = new List<StrategyRule>();
-            this.list_4 = new List<StrategyRule>();
+            this.conditions = new List<Rule>();
+            this.listEntriesAppliedTo = new List<StrategyRule>();
+            this.listExitsAppliedTo = new List<StrategyRule>();
         }
 
         public StrategyRule(Rule baseRule) : base(baseRule)
         {
-            this.list_2 = new List<Rule>();
-            this.list_3 = new List<StrategyRule>();
-            this.list_4 = new List<StrategyRule>();
+            this.conditions = new List<Rule>();
+            this.listEntriesAppliedTo = new List<StrategyRule>();
+            this.listExitsAppliedTo = new List<StrategyRule>();
         }
 
         public StrategyRule(StrategyRule baseSR) : base(baseSR)
         {
-            this.list_2 = new List<Rule>();
-            this.list_3 = new List<StrategyRule>();
-            this.list_4 = new List<StrategyRule>();
+            this.conditions = new List<Rule>();
+            this.listEntriesAppliedTo = new List<StrategyRule>();
+            this.listExitsAppliedTo = new List<StrategyRule>();
             foreach (Rule rule in baseSR.Conditions)
             {
                 this.Conditions.Add(new Rule(rule));
@@ -41,11 +41,11 @@
         {
             get
             {
-                return this.list_2;
+                return this.conditions;
             }
             set
             {
-                this.list_2 = value;
+                this.conditions = value;
             }
         }
 
@@ -54,7 +54,7 @@
         {
             get
             {
-                return this.list_3;
+                return this.listEntriesAppliedTo;
             }
         }
 
@@ -84,11 +84,11 @@
         {
             get
             {
-                return this.string_9;
+                return this.exitName;
             }
             set
             {
-                this.string_9 = value;
+                this.exitName = value;
             }
         }
 
@@ -97,7 +97,7 @@
         {
             get
             {
-                return this.list_4;
+                return this.listExitsAppliedTo;
             }
         }
     }

@@ -7,90 +7,90 @@
 
     public sealed class ChartPane
     {
-        private bool bool_0;
+        private bool visible;
         private bool bool_1;
-        private bool bool_2;
-        private bool bool_3;
-        private bool bool_4;
-        private bool bool_5;
-        private bool bool_6;
-        private ChartRenderer chartRenderer_0;
-        internal Color[] color_0;
-        private double double_0;
-        private double double_1;
+        private bool displayGrid;
+        private bool isPricePane;
+        private bool logScale;
+        private bool hidden;
+        private bool abovePricePane;
+        private ChartRenderer chartRenderer;
+        internal Color[] barBackgroundColors;
+        private double highestValue;
+        private double lowestValue;
         private double double_2;
         private double double_3;
         private double double_4;
-        private double double_5;
-        private double double_6;
-        private int int_0;
-        private int int_1;
-        private int int_2;
-        private int int_3;
-        private int int_4;
+        private double minValue;
+        private double maxValue;
+        private int rawHeight;
+        private int top;
+        private int height;
+        private int decimals;
+        private int labelOffset;
         private int int_5;
         private int int_6;
         private int int_7;
         private int int_8;
-        private int int_9;
-        private List<PlottedIndicator> list_0;
-        private List<PlottedSymbol> list_1;
+        private int heightBeforeHidden;
+        private List<PlottedIndicator> plottedIndicators;
+        private List<PlottedSymbol> plottedSymbols;
         internal List<WSDrawingObject> list_2;
         internal List<WSDrawingObject> list_3;
         internal List<WSDrawingObject> list_4;
-        private string string_0;
+        private string description;
 
         public ChartPane()
         {
-            this.bool_0 = true;
-            this.int_0 = 100;
+            this.visible = true;
+            this.rawHeight = 100;
             this.bool_1 = true;
-            this.int_3 = 2;
-            this.list_0 = new List<PlottedIndicator>();
-            this.bool_2 = true;
-            this.list_1 = new List<PlottedSymbol>();
-            this.double_5 = double.MaxValue;
-            this.double_6 = double.MinValue;
+            this.decimals = 2;
+            this.plottedIndicators = new List<PlottedIndicator>();
+            this.displayGrid = true;
+            this.plottedSymbols = new List<PlottedSymbol>();
+            this.minValue = double.MaxValue;
+            this.maxValue = double.MinValue;
         }
 
         public ChartPane(ChartRenderer renderer, bool addToTop)
         {
-            this.bool_0 = true;
-            this.int_0 = 100;
+            this.visible = true;
+            this.rawHeight = 100;
             this.bool_1 = true;
-            this.int_3 = 2;
-            this.list_0 = new List<PlottedIndicator>();
-            this.bool_2 = true;
-            this.list_1 = new List<PlottedSymbol>();
-            this.double_5 = double.MaxValue;
-            this.double_6 = double.MinValue;
-            this.chartRenderer_0 = renderer;
+            this.decimals = 2;
+            this.plottedIndicators = new List<PlottedIndicator>();
+            this.displayGrid = true;
+            this.plottedSymbols = new List<PlottedSymbol>();
+            this.minValue = double.MaxValue;
+            this.maxValue = double.MinValue;
+            this.chartRenderer = renderer;
             if (addToTop)
             {
                 renderer.Panes.Insert(0, this);
-                this.bool_6 = true;
+                this.abovePricePane = true;
             }
             else
             {
                 renderer.Panes.Add(this);
-                this.bool_6 = false;
+                this.abovePricePane = false;
             }
         }
 
         public ChartPane(ChartRenderer renderer, bool addToTop, int rawHeight, bool fromWealthScript)
         {
             string str;
-            this.bool_0 = true;
-            this.int_0 = 100;
+            this.visible = true;
+            this.rawHeight = 100;
             this.bool_1 = true;
-            this.int_3 = 2;
-            this.list_0 = new List<PlottedIndicator>();
-            this.bool_2 = true;
-            this.list_1 = new List<PlottedSymbol>();
-            this.double_5 = double.MaxValue;
-            this.double_6 = double.MinValue;
-            this.chartRenderer_0 = renderer;
-            this.int_0 = rawHeight;
+            this.decimals = 2;
+            this.plottedIndicators = new List<PlottedIndicator>();
+            this.displayGrid = true;
+            this.plottedSymbols = new List<PlottedSymbol>();
+            this.minValue = double.MaxValue;
+            this.maxValue = double.MinValue;
+            this.chartRenderer = renderer;
+            this.rawHeight = rawHeight;
             if (fromWealthScript)
             {
                 str = "W";
@@ -102,19 +102,19 @@
             int num = 1;
             do
             {
-                this.string_0 = str + num;
+                this.description = str + num;
                 num++;
             }
-            while (this.chartRenderer_0.FindPane(this.string_0) != null);
+            while (this.chartRenderer.FindPane(this.description) != null);
             if (addToTop)
             {
                 renderer.Panes.Insert(0, this);
-                this.bool_6 = true;
+                this.abovePricePane = true;
             }
             else
             {
                 renderer.Panes.Add(this);
-                this.bool_6 = false;
+                this.abovePricePane = false;
             }
             if (renderer.method_5(this.Description))
             {
@@ -125,27 +125,27 @@
 
         public ChartPane(ChartRenderer renderer, bool addToTop, int rawHeight, string description)
         {
-            this.bool_0 = true;
-            this.int_0 = 100;
+            this.visible = true;
+            this.rawHeight = 100;
             this.bool_1 = true;
-            this.int_3 = 2;
-            this.list_0 = new List<PlottedIndicator>();
-            this.bool_2 = true;
-            this.list_1 = new List<PlottedSymbol>();
-            this.double_5 = double.MaxValue;
-            this.double_6 = double.MinValue;
-            this.chartRenderer_0 = renderer;
-            this.int_0 = rawHeight;
-            this.string_0 = description;
+            this.decimals = 2;
+            this.plottedIndicators = new List<PlottedIndicator>();
+            this.displayGrid = true;
+            this.plottedSymbols = new List<PlottedSymbol>();
+            this.minValue = double.MaxValue;
+            this.maxValue = double.MinValue;
+            this.chartRenderer = renderer;
+            this.rawHeight = rawHeight;
+            this.description = description;
             if (addToTop)
             {
                 renderer.Panes.Insert(0, this);
-                this.bool_6 = true;
+                this.abovePricePane = true;
             }
             else
             {
                 renderer.Panes.Add(this);
-                this.bool_6 = false;
+                this.abovePricePane = false;
             }
             if (renderer.method_5(description))
             {
@@ -161,13 +161,13 @@
             {
                 value = Math.Log10(value);
             }
-            return (((int) ((this.double_4 - value) * this.double_2)) + this.int_1);
+            return (((int) ((this.double_4 - value) * this.double_2)) + this.top);
         }
 
         public double ConvertYToValue(int int_10)
         {
             this.method_0();
-            double y = ((((double) (int_10 - this.int_1)) / this.double_2) - this.double_4) * -1.0;
+            double y = ((((double) (int_10 - this.top)) / this.double_2) - this.double_4) * -1.0;
             if (this.LogScale && (this.double_3 != 0.0))
             {
                 y = Math.Pow(10.0, y);
@@ -219,19 +219,19 @@
 
         public Color GetBackgroundColor(int int_10)
         {
-            if (this.color_0 == null)
+            if (this.barBackgroundColors == null)
             {
-                if (this.chartRenderer_0 == null)
+                if (this.chartRenderer == null)
                 {
                     return Color.Empty;
                 }
-                return this.chartRenderer_0.BackgroundColor;
+                return this.chartRenderer.BackgroundColor;
             }
-            if (this.color_0[int_10] == Color.Empty)
+            if (this.barBackgroundColors[int_10] == Color.Empty)
             {
-                return this.chartRenderer_0.BackgroundColor;
+                return this.chartRenderer.BackgroundColor;
             }
-            return this.color_0[int_10];
+            return this.barBackgroundColors[int_10];
         }
 
         public bool HideDisplayPaneButton(int int_10, int int_11)
@@ -356,15 +356,15 @@
         {
             string text = this.FormatChartValue(double_7);
             Color color = ChartRenderer.TextColorForBackground(color_1);
-            SizeF ef = graphics_0.MeasureString(text, this.chartRenderer_0.AxisFont);
-            int num = (this.chartRenderer_0.Width - this.chartRenderer_0.MarginRightWidth) + 2;
+            SizeF ef = graphics_0.MeasureString(text, this.chartRenderer.AxisFont);
+            int num = (this.chartRenderer.Width - this.chartRenderer.MarginRightWidth) + 2;
             int num2 = this.ConvertValueToY(double_7) - ((int) (ef.Height / 2f));
             Brush brush = new SolidBrush(color_1);
             Brush brush2 = new SolidBrush(color);
             try
             {
                 graphics_0.FillRectangle(brush, new RectangleF((float) num, (float) num2, ef.Width, ef.Height));
-                graphics_0.DrawString(text, this.chartRenderer_0.AxisFont, brush2, (float) num, (float) (num2 + 1));
+                graphics_0.DrawString(text, this.chartRenderer.AxisFont, brush2, (float) num, (float) (num2 + 1));
             }
             catch (OverflowException)
             {
@@ -399,16 +399,16 @@
                 {
                     str = string_1;
                 }
-                SizeF ef = graphics_0.MeasureString(str, this.chartRenderer_0.AxisFont);
+                SizeF ef = graphics_0.MeasureString(str, this.chartRenderer.AxisFont);
                 if (!this.IsPricePane && !flag)
                 {
                     this.method_8(graphics_0, color_1, (int) ef.Height, (this.Top + 2) + this.LabelOffset);
                 }
                 Rectangle rect = new Rectangle(6 + this.int_6, (this.Top + 2) + this.LabelOffset, (int) ef.Width, (int) ef.Height);
-                graphics_0.FillRectangle(this.chartRenderer_0.BackgroundBrush, rect);
+                graphics_0.FillRectangle(this.chartRenderer.BackgroundBrush, rect);
                 using (Brush brush = new SolidBrush(color_1))
                 {
-                    graphics_0.DrawString(str, this.chartRenderer_0.AxisFont, brush, (float) rect.Left, (float) rect.Top);
+                    graphics_0.DrawString(str, this.chartRenderer.AxisFont, brush, (float) rect.Left, (float) rect.Top);
                     this.LabelOffset += rect.Height;
                 }
             }
@@ -427,7 +427,7 @@
             this.int_7 = int_11;
             using (Pen pen = new Pen(color_1))
             {
-                graphics_0.FillRectangle(this.chartRenderer_0.BackgroundBrush, x, y, width, width);
+                graphics_0.FillRectangle(this.chartRenderer.BackgroundBrush, x, y, width, width);
                 graphics_0.DrawLine(pen, new Point(x, y), new Point(x, num4));
                 graphics_0.DrawLine(pen, new Point(num5, y), new Point(num5, num4));
                 graphics_0.DrawLine(pen, new Point(x, y), new Point(num5, y));
@@ -457,19 +457,19 @@
             }
         }
 
-        public void SetBackgroundColor(int int_10, Color color)
+        public void SetBackgroundColor(int bar, Color color)
         {
-            if (this.chartRenderer_0 != null)
+            if (this.chartRenderer != null)
             {
-                if (this.color_0 == null)
+                if (this.barBackgroundColors == null)
                 {
-                    this.color_0 = new Color[this.chartRenderer_0.Bars.Count];
-                    for (int i = 0; i < this.chartRenderer_0.Bars.Count; i++)
+                    this.barBackgroundColors = new Color[this.chartRenderer.Bars.Count];
+                    for (int i = 0; i < this.chartRenderer.Bars.Count; i++)
                     {
-                        this.color_0[i] = Color.Empty;
+                        this.barBackgroundColors[i] = Color.Empty;
                     }
                 }
-                this.color_0[int_10] = color;
+                this.barBackgroundColors[bar] = color;
             }
         }
 
@@ -477,7 +477,7 @@
         {
             get
             {
-                return this.bool_6;
+                return this.abovePricePane;
             }
         }
 
@@ -493,11 +493,11 @@
         {
             get
             {
-                return this.int_3;
+                return this.decimals;
             }
             set
             {
-                this.int_3 = value;
+                this.decimals = value;
             }
         }
 
@@ -505,11 +505,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.description;
             }
             internal set
             {
-                this.string_0 = value;
+                this.description = value;
             }
         }
 
@@ -517,11 +517,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.displayGrid;
             }
             internal set
             {
-                this.bool_2 = value;
+                this.displayGrid = value;
             }
         }
 
@@ -529,11 +529,11 @@
         {
             get
             {
-                return this.int_2;
+                return this.height;
             }
             internal set
             {
-                this.int_2 = value;
+                this.height = value;
                 this.bool_1 = true;
             }
         }
@@ -542,7 +542,7 @@
         {
             get
             {
-                return this.int_9;
+                return this.heightBeforeHidden;
             }
         }
 
@@ -550,17 +550,17 @@
         {
             get
             {
-                return this.bool_5;
+                return this.hidden;
             }
             internal set
             {
                 if (!this.IsPricePane)
                 {
-                    this.bool_5 = value;
-                    if (this.bool_5)
+                    this.hidden = value;
+                    if (this.hidden)
                     {
-                        this.int_9 = this.Height;
-                        this.Renderer.method_3(this.Description, this.int_9);
+                        this.heightBeforeHidden = this.Height;
+                        this.Renderer.method_3(this.Description, this.heightBeforeHidden);
                     }
                     else
                     {
@@ -594,11 +594,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.highestValue;
             }
             set
             {
-                this.double_0 = value;
+                this.highestValue = value;
             }
         }
 
@@ -606,11 +606,11 @@
         {
             get
             {
-                return this.bool_3;
+                return this.isPricePane;
             }
             internal set
             {
-                this.bool_3 = value;
+                this.isPricePane = value;
             }
         }
 
@@ -618,11 +618,11 @@
         {
             get
             {
-                return this.int_4;
+                return this.labelOffset;
             }
             set
             {
-                this.int_4 = value;
+                this.labelOffset = value;
             }
         }
 
@@ -630,11 +630,11 @@
         {
             get
             {
-                return this.bool_4;
+                return this.logScale;
             }
             set
             {
-                this.bool_4 = value;
+                this.logScale = value;
                 this.bool_1 = true;
             }
         }
@@ -643,11 +643,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.lowestValue;
             }
             set
             {
-                this.double_1 = value;
+                this.lowestValue = value;
             }
         }
 
@@ -655,11 +655,11 @@
         {
             get
             {
-                return this.double_6;
+                return this.maxValue;
             }
             set
             {
-                this.double_6 = value;
+                this.maxValue = value;
             }
         }
 
@@ -667,11 +667,11 @@
         {
             get
             {
-                return this.double_5;
+                return this.minValue;
             }
             set
             {
-                this.double_5 = value;
+                this.minValue = value;
             }
         }
 
@@ -679,7 +679,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.plottedIndicators;
             }
         }
 
@@ -687,7 +687,7 @@
         {
             get
             {
-                return this.list_1;
+                return this.plottedSymbols;
             }
         }
 
@@ -695,11 +695,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.rawHeight;
             }
             set
             {
-                this.int_0 = value;
+                this.rawHeight = value;
                 this.bool_1 = true;
             }
         }
@@ -708,7 +708,7 @@
         {
             get
             {
-                return this.chartRenderer_0;
+                return this.chartRenderer;
             }
         }
 
@@ -747,11 +747,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.top;
             }
             internal set
             {
-                this.int_1 = value;
+                this.top = value;
                 this.bool_1 = true;
             }
         }
@@ -760,11 +760,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.visible;
             }
             internal set
             {
-                this.bool_0 = value;
+                this.visible = value;
             }
         }
     }

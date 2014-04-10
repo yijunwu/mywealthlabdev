@@ -8,51 +8,51 @@
     [XmlRoot(ElementName="RuleParameter", IsNullable=false)]
     public class RuleParameter
     {
-        private bool bool_0;
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private List<string> list_0;
-        private RuleParamType ruleParamType_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
-        private string string_3;
-        private string string_4;
-        private string string_5;
+        private bool exposeAsSlider;
+        private double start;
+        private double stop;
+        private double step;
+        private List<string> indicatorParameterDisplayNames;
+        private RuleParamType ruleParamType;
+        private string name;
+        private string defaultValue;
+        private string valueStr;
+        private string decoration;
+        private string aliasName;
+        private string replaceValueStr;
         [CompilerGenerated]
-        private string string_6;
+        private string displayName;
 
         public RuleParameter()
         {
-            this.string_3 = "";
-            this.string_4 = "";
-            this.string_5 = "";
-            this.list_0 = new List<string>();
+            this.decoration = "";
+            this.aliasName = "";
+            this.replaceValueStr = "";
+            this.indicatorParameterDisplayNames = new List<string>();
         }
 
         public RuleParameter(RuleParameter baseRP)
         {
-            this.string_3 = "";
-            this.string_4 = "";
-            this.string_5 = "";
-            this.list_0 = new List<string>();
-            this.Name = baseRP.string_0;
-            this.double_0 = baseRP.double_0;
-            this.double_2 = baseRP.double_2;
-            this.double_1 = baseRP.double_1;
-            this.ruleParamType_0 = baseRP.ruleParamType_0;
-            this.string_2 = baseRP.string_2;
-            this.string_1 = baseRP.string_1;
-            this.string_3 = baseRP.string_3;
-            this.bool_0 = baseRP.bool_0;
+            this.decoration = "";
+            this.aliasName = "";
+            this.replaceValueStr = "";
+            this.indicatorParameterDisplayNames = new List<string>();
+            this.Name = baseRP.name;
+            this.start = baseRP.start;
+            this.step = baseRP.step;
+            this.stop = baseRP.stop;
+            this.ruleParamType = baseRP.ruleParamType;
+            this.valueStr = baseRP.valueStr;
+            this.defaultValue = baseRP.defaultValue;
+            this.decoration = baseRP.decoration;
+            this.exposeAsSlider = baseRP.exposeAsSlider;
             this.DisplayName = baseRP.DisplayName;
             this.IndicatorParameterDisplayNames = baseRP.IndicatorParameterDisplayNames;
         }
 
         public override string ToString()
         {
-            return this.string_0;
+            return this.name;
         }
 
         [XmlIgnore]
@@ -60,11 +60,11 @@
         {
             get
             {
-                return this.string_4;
+                return this.aliasName;
             }
             set
             {
-                this.string_4 = value;
+                this.aliasName = value;
             }
         }
 
@@ -72,11 +72,11 @@
         {
             get
             {
-                return this.string_3;
+                return this.decoration;
             }
             set
             {
-                this.string_3 = value;
+                this.decoration = value;
             }
         }
 
@@ -84,11 +84,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.defaultValue;
             }
             set
             {
-                this.string_1 = value;
+                this.defaultValue = value;
             }
         }
 
@@ -97,12 +97,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_6;
+                return this.displayName;
             }
             [CompilerGenerated]
             set
             {
-                this.string_6 = value;
+                this.displayName = value;
             }
         }
 
@@ -110,11 +110,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.exposeAsSlider;
             }
             set
             {
-                this.bool_0 = value;
+                this.exposeAsSlider = value;
             }
         }
 
@@ -122,11 +122,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.indicatorParameterDisplayNames;
             }
             set
             {
-                this.list_0 = value;
+                this.indicatorParameterDisplayNames = value;
             }
         }
 
@@ -134,11 +134,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.name;
             }
             set
             {
-                this.string_0 = value;
+                this.name = value;
                 this.DisplayName = value;
             }
         }
@@ -147,11 +147,11 @@
         {
             get
             {
-                return this.ruleParamType_0;
+                return this.ruleParamType;
             }
             set
             {
-                this.ruleParamType_0 = value;
+                this.ruleParamType = value;
             }
         }
 
@@ -160,15 +160,15 @@
         {
             get
             {
-                if (this.string_5 == "")
+                if (this.replaceValueStr == "")
                 {
                     return this.Value;
                 }
-                return this.string_5;
+                return this.replaceValueStr;
             }
             set
             {
-                this.string_5 = value;
+                this.replaceValueStr = value;
             }
         }
 
@@ -176,11 +176,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.start;
             }
             set
             {
-                this.double_0 = value;
+                this.start = value;
             }
         }
 
@@ -188,11 +188,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.step;
             }
             set
             {
-                this.double_2 = value;
+                this.step = value;
             }
         }
 
@@ -200,11 +200,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.stop;
             }
             set
             {
-                this.double_1 = value;
+                this.stop = value;
             }
         }
 
@@ -212,11 +212,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.valueStr;
             }
             set
             {
-                this.string_2 = value;
+                this.valueStr = value;
             }
         }
     }

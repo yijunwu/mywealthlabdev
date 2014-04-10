@@ -4,21 +4,21 @@
 
     public class TrendLineEventArgs : EventArgs
     {
-        private double double_0;
-        private int int_0;
-        private string string_0;
+        private double doubleValue;
+        private int bar;
+        private string trendlineName;
 
         public TrendLineEventArgs(string trendlineName, int int_1)
         {
-            this.string_0 = trendlineName;
-            this.int_0 = int_1;
+            this.trendlineName = trendlineName;
+            this.bar = int_1;
         }
 
         public int Bar
         {
             get
             {
-                return this.int_0;
+                return this.bar;
             }
         }
 
@@ -26,7 +26,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.trendlineName;
             }
         }
 
@@ -34,11 +34,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.doubleValue;
             }
             set
             {
-                this.double_0 = value;
+                this.doubleValue = value;
             }
         }
     }

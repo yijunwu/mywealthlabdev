@@ -5,24 +5,24 @@
 
     public class AccountPosition
     {
-        private WealthLab.Account account_0;
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private WealthLab.PositionType positionType_0;
-        private string string_0 = "";
-        private string string_1;
+        private WealthLab.Account account;
+        private double quantity;
+        private double entryPrice;
+        private double lastPrice;
+        private WealthLab.PositionType positionType;
+        private string symbol = "";
+        private string acctType;
 
         [XmlIgnore]
         public WealthLab.Account Account
         {
             get
             {
-                return this.account_0;
+                return this.account;
             }
             set
             {
-                this.account_0 = value;
+                this.account = value;
             }
         }
 
@@ -30,11 +30,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.acctType;
             }
             set
             {
-                this.string_1 = value;
+                this.acctType = value;
             }
         }
 
@@ -42,11 +42,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.entryPrice;
             }
             set
             {
-                this.double_1 = value;
+                this.entryPrice = value;
             }
         }
 
@@ -54,11 +54,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.lastPrice;
             }
             set
             {
-                this.double_2 = value;
+                this.lastPrice = value;
             }
         }
 
@@ -67,7 +67,7 @@
         {
             get
             {
-                return (this.double_2 * this.double_0);
+                return (this.lastPrice * this.quantity);
             }
         }
 
@@ -75,11 +75,11 @@
         {
             get
             {
-                return this.positionType_0;
+                return this.positionType;
             }
             set
             {
-                this.positionType_0 = value;
+                this.positionType = value;
             }
         }
 
@@ -89,19 +89,19 @@
             get
             {
                 double num;
-                if (this.double_1 == 0.0)
+                if (this.entryPrice == 0.0)
                 {
                     return 0.0;
                 }
-                if (this.positionType_0 == WealthLab.PositionType.Long)
+                if (this.positionType == WealthLab.PositionType.Long)
                 {
-                    num = this.double_2 - this.double_1;
+                    num = this.lastPrice - this.entryPrice;
                 }
                 else
                 {
-                    num = this.double_1 - this.double_2;
+                    num = this.entryPrice - this.lastPrice;
                 }
-                return (num * this.double_0);
+                return (num * this.quantity);
             }
         }
 
@@ -110,11 +110,11 @@
         {
             get
             {
-                if (this.double_1 == 0.0)
+                if (this.entryPrice == 0.0)
                 {
                     return 0.0;
                 }
-                double num = this.double_1 * this.double_0;
+                double num = this.entryPrice * this.quantity;
                 if (num == 0.0)
                 {
                     return 0.0;
@@ -127,11 +127,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.quantity;
             }
             set
             {
-                this.double_0 = value;
+                this.quantity = value;
             }
         }
 
@@ -139,11 +139,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             set
             {
-                this.string_0 = value;
+                this.symbol = value;
             }
         }
     }

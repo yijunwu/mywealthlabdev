@@ -7,20 +7,20 @@
 
     public class SystemPerformance
     {
-        private WealthLab.Bars bars_0;
-        private BarScale barScale_0;
-        private double double_0;
-        private int int_0;
-        private List<WealthLab.Bars> list_0 = new List<WealthLab.Bars>();
+        private WealthLab.Bars benchmarkSymbolBars;
+        private BarScale barScale;
+        private double cashReturnRate;
+        private int barInterval;
+        private List<WealthLab.Bars> barsList = new List<WealthLab.Bars>();
         private List<PlottedIndicator> list_1 = new List<PlottedIndicator>();
-        private List<Position> list_2;
-        private WealthLab.PositionSize positionSize_0 = new WealthLab.PositionSize();
+        private List<Position> rawTrades;
+        private WealthLab.PositionSize positionSize = new WealthLab.PositionSize();
         [CompilerGenerated]
-        private WealthLab.Strategy strategy_0;
-        private SystemResults systemResults_0;
-        private SystemResults systemResults_1;
-        private SystemResults systemResults_2;
-        private SystemResults systemResults_3;
+        private WealthLab.Strategy strategy;
+        private SystemResults systemResults;
+        private SystemResults systemResultsLong;
+        private SystemResults systemResultsShort;
+        private SystemResults systemResultsBuyHold;
 
         private EventHandler<EventArgs> eventHandler_0;
 
@@ -57,10 +57,10 @@
         public SystemPerformance(WealthLab.Strategy strategy)
         {
             this.Strategy = strategy;
-            this.systemResults_0 = new SystemResults(this);
-            this.systemResults_1 = new SystemResults(this);
-            this.systemResults_2 = new SystemResults(this);
-            this.systemResults_3 = new SystemResults(this);
+            this.systemResults = new SystemResults(this);
+            this.systemResultsLong = new SystemResults(this);
+            this.systemResultsShort = new SystemResults(this);
+            this.systemResultsBuyHold = new SystemResults(this);
         }
 
         public SystemPerformance GenerateChildStrategyPerformance(CombinedStrategyInfo combinedStrategyInfo_0, TradingSystemExecutor tradingSystemExecutor_0)
@@ -89,9 +89,9 @@
                     }
                 }
             }
-            performance.Results.BuildEquityCurve(this.list_0, tradingSystemExecutor_0, false, tradingSystemExecutor_0.PosSizer);
-            performance.ResultsLong.BuildEquityCurve(this.list_0, tradingSystemExecutor_0, false, tradingSystemExecutor_0.PosSizer);
-            performance.ResultsShort.BuildEquityCurve(this.list_0, tradingSystemExecutor_0, false, tradingSystemExecutor_0.PosSizer);
+            performance.Results.BuildEquityCurve(this.barsList, tradingSystemExecutor_0, false, tradingSystemExecutor_0.PosSizer);
+            performance.ResultsLong.BuildEquityCurve(this.barsList, tradingSystemExecutor_0, false, tradingSystemExecutor_0.PosSizer);
+            performance.ResultsShort.BuildEquityCurve(this.barsList, tradingSystemExecutor_0, false, tradingSystemExecutor_0.PosSizer);
             if (this.BenchmarkSymbolbars == null)
             {
                 foreach (Position position in this.ResultsBuyHold.Positions)
@@ -101,7 +101,7 @@
                         performance.ResultsBuyHold.method_4(position);
                     }
                 }
-                performance.ResultsBuyHold.BuildEquityCurve(this.list_0, tradingSystemExecutor_0, false, tradingSystemExecutor_0.PosSizer);
+                performance.ResultsBuyHold.BuildEquityCurve(this.barsList, tradingSystemExecutor_0, false, tradingSystemExecutor_0.PosSizer);
             }
             else
             {
@@ -113,24 +113,24 @@
 
         internal void method_0()
         {
-            this.systemResults_0.method_0();
-            this.systemResults_1.method_0();
-            this.systemResults_2.method_0();
-            this.systemResults_3.method_0();
+            this.systemResults.method_0();
+            this.systemResultsLong.method_0();
+            this.systemResultsShort.method_0();
+            this.systemResultsBuyHold.method_0();
         }
 
         internal void method_1(WealthLab.Bars bars_1)
         {
-            this.list_0.Add(bars_1);
+            this.barsList.Add(bars_1);
         }
 
         internal void method_2()
         {
-            this.systemResults_0.method_6();
-            this.systemResults_1.method_6();
-            this.systemResults_2.method_6();
-            this.systemResults_3.method_6();
-            this.list_0.Clear();
+            this.systemResults.method_6();
+            this.systemResultsLong.method_6();
+            this.systemResultsShort.method_6();
+            this.systemResultsBuyHold.method_6();
+            this.barsList.Clear();
         }
 
         public void SignalEvent(string string_0)
@@ -145,11 +145,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             internal set
             {
-                this.int_0 = value;
+                this.barInterval = value;
             }
         }
 
@@ -157,7 +157,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.barsList;
             }
         }
 
@@ -165,11 +165,11 @@
         {
             get
             {
-                return this.bars_0;
+                return this.benchmarkSymbolBars;
             }
             set
             {
-                this.bars_0 = value;
+                this.benchmarkSymbolBars = value;
             }
         }
 
@@ -177,11 +177,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.cashReturnRate;
             }
             set
             {
-                this.double_0 = value;
+                this.cashReturnRate = value;
             }
         }
 
@@ -201,11 +201,11 @@
         {
             get
             {
-                return this.positionSize_0;
+                return this.positionSize;
             }
             internal set
             {
-                this.positionSize_0 = value;
+                this.positionSize = value;
             }
         }
 
@@ -213,11 +213,11 @@
         {
             get
             {
-                return this.list_2;
+                return this.rawTrades;
             }
             internal set
             {
-                this.list_2 = value;
+                this.rawTrades = value;
             }
         }
 
@@ -225,11 +225,11 @@
         {
             get
             {
-                return this.systemResults_0;
+                return this.systemResults;
             }
             internal set
             {
-                this.systemResults_0 = value;
+                this.systemResults = value;
             }
         }
 
@@ -237,11 +237,11 @@
         {
             get
             {
-                return this.systemResults_3;
+                return this.systemResultsBuyHold;
             }
             internal set
             {
-                this.systemResults_3 = value;
+                this.systemResultsBuyHold = value;
             }
         }
 
@@ -249,11 +249,11 @@
         {
             get
             {
-                return this.systemResults_1;
+                return this.systemResultsLong;
             }
             internal set
             {
-                this.systemResults_1 = value;
+                this.systemResultsLong = value;
             }
         }
 
@@ -261,11 +261,11 @@
         {
             get
             {
-                return this.systemResults_2;
+                return this.systemResultsShort;
             }
             internal set
             {
-                this.systemResults_2 = value;
+                this.systemResultsShort = value;
             }
         }
 
@@ -273,11 +273,11 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             internal set
             {
-                this.barScale_0 = value;
+                this.barScale = value;
             }
         }
 
@@ -286,12 +286,12 @@
             [CompilerGenerated]
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             [CompilerGenerated]
             set
             {
-                this.strategy_0 = value;
+                this.strategy = value;
             }
         }
     }

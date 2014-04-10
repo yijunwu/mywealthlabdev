@@ -14,26 +14,26 @@
     [ToolboxBitmap(typeof(BarsLoader), "BarsLoader")]
     public class BarsLoader : Component, IDataHost
     {
-        private BarScale barScale_0;
-        private bool bool_0;
-        private bool bool_1;
-        private bool bool_2;
-        private bool bool_3;
-        private static bool bool_4 = true;
-        private bool bool_5;
+        private BarScale barScale;
+        private bool includePartialBar;
+        private bool overrideOnDemand;
+        private bool overrideOnDemandValue;
+        private bool autoCreateProvider;
+        private static bool futuresMode = true;
+        private bool autoConvertScale;
         private DataSource dataSource_0;
-        private DateTime dateTime_0;
-        private DateTime dateTime_1;
+        private DateTime startDate;
+        private DateTime endDate;
         private Dictionary<Type, StaticDataProvider> dictionary_0;
         private IContainer icontainer_0;
         private IDataHost idataHost_0;
-        private int int_0;
-        private int int_1;
-        private static List<WealthLab.SymbolInfo> list_0 = new List<WealthLab.SymbolInfo>();
+        private int barInterval;
+        private int maxBars;
+        private static List<WealthLab.SymbolInfo> symbolInfoList = new List<WealthLab.SymbolInfo>();
         private static object object_0 = new object();
         private object object_1;
         private StaticDataProvider staticDataProvider_0;
-        private static string string_0 = "";
+        private static string rootPath = "";
 
         private EventHandler<BarsEventArgs> eventHandler_0;
         private EventHandler<UnhandledExceptionEventArgs> eventHandler_1;
@@ -96,23 +96,23 @@
 
         public BarsLoader()
         {
-            this.dateTime_0 = DateTime.MinValue;
-            this.dateTime_1 = DateTime.MaxValue;
+            this.startDate = DateTime.MinValue;
+            this.endDate = DateTime.MaxValue;
             this.object_1 = new object();
             this.dictionary_0 = new Dictionary<Type, StaticDataProvider>();
-            this.bool_3 = true;
-            this.bool_5 = true;
+            this.autoCreateProvider = true;
+            this.autoConvertScale = true;
             this.method_0();
         }
 
         public BarsLoader(IContainer container)
         {
-            this.dateTime_0 = DateTime.MinValue;
-            this.dateTime_1 = DateTime.MaxValue;
+            this.startDate = DateTime.MinValue;
+            this.endDate = DateTime.MaxValue;
             this.object_1 = new object();
             this.dictionary_0 = new Dictionary<Type, StaticDataProvider>();
-            this.bool_3 = true;
-            this.bool_5 = true;
+            this.autoCreateProvider = true;
+            this.autoConvertScale = true;
             container.Add(this);
             this.method_0();
         }
@@ -829,7 +829,7 @@
         // WealthLab.BarsLoader
         public Bars GetData(DataSource dataSource_1, string symbol)
         {
-            if (BarsLoader.list_0 == null && BarsLoader.string_0 != "")
+            if (BarsLoader.symbolInfoList == null && BarsLoader.rootPath != "")
             {
                 BarsLoader.LoadSymbolInfo();
             }
@@ -1054,9 +1054,9 @@
                     }
                     bars = bars3;
                 }
-                if (BarsLoader.bool_4)
+                if (BarsLoader.futuresMode)
                 {
-                    using (List<SymbolInfo>.Enumerator enumerator3 = BarsLoader.list_0.GetEnumerator())
+                    using (List<SymbolInfo>.Enumerator enumerator3 = BarsLoader.symbolInfoList.GetEnumerator())
                     {
                         while (enumerator3.MoveNext())
                         {
@@ -1079,7 +1079,7 @@
                     result = bars;   ///WYJ fix, replace goto with more friendly statements
                     return result;
                 }
-                foreach (SymbolInfo current4 in BarsLoader.list_0)
+                foreach (SymbolInfo current4 in BarsLoader.symbolInfoList)
                 {
                     if (Regex.IsMatch(symbol, "^" + current4.Symbol + "$"))
                     {
@@ -1131,17 +1131,17 @@
 
         public static void LoadSymbolInfo()
         {
-            if ((string_0 != "") && File.Exists(string_0 + @"\SymbolInfo.xml"))
+            if ((rootPath != "") && File.Exists(rootPath + @"\SymbolInfo.xml"))
             {
                 lock (object_0)
                 {
-                    string path = string_0 + @"\SymbolInfo.xml";
+                    string path = rootPath + @"\SymbolInfo.xml";
                     XmlSerializer serializer = new XmlSerializer(typeof(List<WealthLab.SymbolInfo>));
                     TextReader textReader = new StreamReader(path);
                     try
                     {
-                        list_0 = (List<WealthLab.SymbolInfo>) serializer.Deserialize(textReader);
-                        foreach (WealthLab.SymbolInfo info in list_0)
+                        symbolInfoList = (List<WealthLab.SymbolInfo>) serializer.Deserialize(textReader);
+                        foreach (WealthLab.SymbolInfo info in symbolInfoList)
                         {
                             info.Symbol = info.Symbol;
                         }
@@ -1214,23 +1214,24 @@
             return provider;
         }
 
-        internal Bars method_4(string string_1)
+        ///WYJ fix, original signature: internal Bars method_4(string string_1)
+        internal Bars GetData(string symbol)
         {
-            return this.GetData(this.dataSource_0, string_1);
+            return this.GetData(this.dataSource_0, symbol);
         }
 
         public static void SaveSymbolInfo()
         {
-            if ((string_0 != "") && (list_0 != null))
+            if ((rootPath != "") && (symbolInfoList != null))
             {
                 lock (object_0)
                 {
-                    string path = string_0 + @"\SymbolInfo.xml";
+                    string path = rootPath + @"\SymbolInfo.xml";
                     XmlSerializer serializer = new XmlSerializer(typeof(List<WealthLab.SymbolInfo>));
                     TextWriter textWriter = new StreamWriter(path);
                     try
                     {
-                        serializer.Serialize(textWriter, list_0);
+                        serializer.Serialize(textWriter, symbolInfoList);
                     }
                     finally
                     {
@@ -1252,11 +1253,11 @@
         {
             get
             {
-                return this.bool_5;
+                return this.autoConvertScale;
             }
             set
             {
-                this.bool_5 = value;
+                this.autoConvertScale = value;
             }
         }
 
@@ -1264,11 +1265,11 @@
         {
             get
             {
-                return this.bool_3;
+                return this.autoCreateProvider;
             }
             set
             {
-                this.bool_3 = value;
+                this.autoCreateProvider = value;
             }
         }
 
@@ -1290,11 +1291,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             set
             {
-                this.int_0 = value;
+                this.barInterval = value;
             }
         }
 
@@ -1339,11 +1340,11 @@
         {
             get
             {
-                return this.dateTime_1;
+                return this.endDate;
             }
             set
             {
-                this.dateTime_1 = value;
+                this.endDate = value;
             }
         }
 
@@ -1351,11 +1352,11 @@
         {
             get
             {
-                return bool_4;
+                return futuresMode;
             }
             set
             {
-                bool_4 = value;
+                futuresMode = value;
             }
         }
 
@@ -1363,11 +1364,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.includePartialBar;
             }
             set
             {
-                this.bool_0 = value;
+                this.includePartialBar = value;
             }
         }
 
@@ -1375,11 +1376,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.maxBars;
             }
             set
             {
-                this.int_1 = value;
+                this.maxBars = value;
             }
         }
 
@@ -1387,9 +1388,9 @@
         {
             get
             {
-                if (this.bool_1)
+                if (this.overrideOnDemand)
                 {
-                    return this.bool_2;
+                    return this.overrideOnDemandValue;
                 }
                 return this.idataHost_0.OnDemandUpdateEnabled;
             }
@@ -1399,11 +1400,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.overrideOnDemand;
             }
             set
             {
-                this.bool_1 = value;
+                this.overrideOnDemand = value;
             }
         }
 
@@ -1411,11 +1412,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.overrideOnDemandValue;
             }
             set
             {
-                this.bool_2 = value;
+                this.overrideOnDemandValue = value;
             }
         }
 
@@ -1423,11 +1424,11 @@
         {
             get
             {
-                return string_0;
+                return rootPath;
             }
             set
             {
-                string_0 = value;
+                rootPath = value;
             }
         }
 
@@ -1435,11 +1436,11 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             set
             {
-                this.barScale_0 = value;
+                this.barScale = value;
             }
         }
 
@@ -1455,11 +1456,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.startDate;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.startDate = value;
             }
         }
 
@@ -1467,7 +1468,7 @@
         {
             get
             {
-                return list_0;
+                return symbolInfoList;
             }
         }
 

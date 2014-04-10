@@ -7,24 +7,24 @@
 
     public class CombinedStrategyInfo
     {
-        private BarDataScale barDataScale_0 = new BarDataScale(BarScale.Daily, 0);
-        private bool bool_0 = true;
+        private BarDataScale barDataScale = new BarDataScale(BarScale.Daily, 0);
+        private bool useDefaultDataSet = true;
         [CompilerGenerated]
-        private bool bool_1;
+        private bool usePreferredValues;
         [CompilerGenerated]
-        private Guid guid_0;
-        private int int_0 = 1;
+        private Guid strategyID;
+        private int priority = 1;
         [CompilerGenerated]
-        private List<double> list_0;
+        private List<double> parameterValues;
         [CompilerGenerated]
-        private object object_0;
+        private object tag;
         private WealthLab.PositionSize positionSize_0 = new WealthLab.PositionSize(PosSizeMode.Dollar, 5000.0);
         private WealthLab.PositionSize positionSize_1 = new WealthLab.PositionSize(PosSizeMode.Dollar, 5000.0);
-        private string string_0 = "";
-        private string string_1 = "";
-        private string string_2 = "";
+        private string accountNumber = "";
+        private string dataSetName = "";
+        private string symbol = "";
         [CompilerGenerated]
-        private string string_3;
+        private string name;
 
         public Strategy GetStrategy(StrategyManager strategyManager_0)
         {
@@ -40,11 +40,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.accountNumber;
             }
             set
             {
-                this.string_0 = value;
+                this.accountNumber = value;
             }
         }
 
@@ -64,11 +64,11 @@
         {
             get
             {
-                return this.barDataScale_0;
+                return this.barDataScale;
             }
             set
             {
-                this.barDataScale_0 = value;
+                this.barDataScale = value;
             }
         }
 
@@ -76,11 +76,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.dataSetName;
             }
             set
             {
-                this.string_1 = value;
+                this.dataSetName = value;
             }
         }
 
@@ -89,12 +89,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_3;
+                return this.name;
             }
             [CompilerGenerated]
             set
             {
-                this.string_3 = value;
+                this.name = value;
             }
         }
 
@@ -103,12 +103,12 @@
             [CompilerGenerated]
             get
             {
-                return this.list_0;
+                return this.parameterValues;
             }
             [CompilerGenerated]
             set
             {
-                this.list_0 = value;
+                this.parameterValues = value;
             }
         }
 
@@ -128,11 +128,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.priority;
             }
             set
             {
-                this.int_0 = value;
+                this.priority = value;
             }
         }
 
@@ -141,12 +141,12 @@
             [CompilerGenerated]
             get
             {
-                return this.guid_0;
+                return this.strategyID;
             }
             [CompilerGenerated]
             set
             {
-                this.guid_0 = value;
+                this.strategyID = value;
             }
         }
 
@@ -154,11 +154,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.symbol;
             }
             set
             {
-                this.string_2 = value;
+                this.symbol = value;
             }
         }
 
@@ -168,12 +168,12 @@
             [CompilerGenerated]
             get
             {
-                return this.object_0;
+                return this.tag;
             }
             [CompilerGenerated]
             set
             {
-                this.object_0 = value;
+                this.tag = value;
             }
         }
 
@@ -181,11 +181,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.useDefaultDataSet;
             }
             set
             {
-                this.bool_0 = value;
+                this.useDefaultDataSet = value;
             }
         }
 
@@ -194,12 +194,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_1;
+                return this.usePreferredValues;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_1 = value;
+                this.usePreferredValues = value;
             }
         }
     }

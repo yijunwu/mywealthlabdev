@@ -5,12 +5,12 @@
 
     public class BarDataRange
     {
-        private BarRange barRange_0;
-        private bool bool_0;
-        private DateTime dateTime_0 = DateTime.Now.Date.AddYears(-5);
-        private DateTime dateTime_1 = DateTime.Now.Date;
-        private int int_0 = 500;
-        private int int_1 = 10;
+        private BarRange barRange;
+        private bool isStreaming;
+        private DateTime startDate = DateTime.Now.Date.AddYears(-5);
+        private DateTime endDate = DateTime.Now.Date;
+        private int fixedBars = 500;
+        private int recentValue = 10;
 
         public void ConfigureBarsLoader(BarsLoader loader)
         {
@@ -71,11 +71,11 @@
         {
             get
             {
-                return this.dateTime_1;
+                return this.endDate;
             }
             set
             {
-                this.dateTime_1 = value;
+                this.endDate = value;
             }
         }
 
@@ -83,11 +83,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.fixedBars;
             }
             set
             {
-                this.int_0 = value;
+                this.fixedBars = value;
             }
         }
 
@@ -95,11 +95,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.isStreaming;
             }
             set
             {
-                this.bool_0 = value;
+                this.isStreaming = value;
             }
         }
 
@@ -107,11 +107,11 @@
         {
             get
             {
-                return this.barRange_0;
+                return this.barRange;
             }
             set
             {
-                this.barRange_0 = value;
+                this.barRange = value;
             }
         }
 
@@ -119,11 +119,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.recentValue;
             }
             set
             {
-                this.int_1 = value;
+                this.recentValue = value;
             }
         }
 
@@ -131,11 +131,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.startDate;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.startDate = value;
             }
         }
 

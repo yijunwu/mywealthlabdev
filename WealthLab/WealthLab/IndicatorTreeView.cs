@@ -21,7 +21,7 @@
         private static int int_4 = 4;
         private static int int_5 = 5;
         private static int int_6 = 6;
-        private static int int_7 = 0;
+        private static int indicatorCount = 0;
         private static List<TreeNode> list_1 = null;
         private static List<Bitmap> list_2 = new List<Bitmap>();
 
@@ -121,7 +121,7 @@
                         node.SelectedImageIndex = node.ImageIndex;
                         node.Tag = helper;
                         item.Nodes.Add(node);
-                        int_7++;
+                        indicatorCount++;
                     }
                 }
             }
@@ -209,7 +209,7 @@
         {
             get
             {
-                return int_7;
+                return indicatorCount;
             }
         }
 

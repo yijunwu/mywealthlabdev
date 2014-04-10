@@ -10,16 +10,16 @@
 
     public class FundamentalTreeView : SmartTreeView
     {
-        private bool bool_1;
+        private bool _ignoreDragandDrop;
         private FundamentalsLoader fundamentalsLoader_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private IDataHost idataHost_0;
         private ImageList imageList_0;
         private static int int_0 = 0;
         private static int int_1 = 1;
         private static int int_2 = 2;
         private static int int_3 = 3;
-        private static int int_4 = 0;
+        private static int fundamentalsCount = 0;
         private static List<TreeNode> list_1 = null;
         private static List<Bitmap> list_2 = new List<Bitmap>();
 
@@ -61,9 +61,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -92,7 +92,7 @@
             list_1 = new List<TreeNode>();
             list_2 = new List<Bitmap>();
             int count = this.imageList_0.Images.Count;
-            int_4 = 0;
+            fundamentalsCount = 0;
             foreach (FundamentalDataProvider provider in this.fundamentalsLoader_0.Providers)
             {
                 if (provider.HasDragDropItems || this.ignoreDragandDrop)
@@ -132,7 +132,7 @@
                             }
                             node4.SelectedImageIndex = node4.ImageIndex;
                             node4.Tag = provider;
-                            int_4++;
+                            fundamentalsCount++;
                         }
                     }
                     list = provider.NonSymbolSpecificDragDropItems(this.ignoreDragandDrop);
@@ -154,7 +154,7 @@
                             }
                             node5.SelectedImageIndex = node5.ImageIndex;
                             node5.Tag = provider;
-                            int_4++;
+                            fundamentalsCount++;
                         }
                     }
                 }
@@ -174,10 +174,10 @@
 
         private void method_0()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
             ComponentResourceManager manager = new ComponentResourceManager(typeof(FundamentalTreeView));
-            this.imageList_0 = new ImageList(this.icontainer_0);
-            this.fundamentalsLoader_0 = new FundamentalsLoader(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
+            this.fundamentalsLoader_0 = new FundamentalsLoader(this.components);
             base.SuspendLayout();
             this.imageList_0.ImageStream = (ImageListStreamer) manager.GetObject("imgList.ImageStream");
             this.imageList_0.TransparentColor = Color.Fuchsia;
@@ -216,7 +216,7 @@
         {
             get
             {
-                return int_4;
+                return fundamentalsCount;
             }
         }
 
@@ -225,11 +225,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this._ignoreDragandDrop;
             }
             set
             {
-                this.bool_1 = value;
+                this._ignoreDragandDrop = value;
             }
         }
 

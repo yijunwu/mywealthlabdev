@@ -6,24 +6,24 @@
 
     public class SystemResults : IComparer<Position>
     {
-        private DataSeries dataSeries_0 = new DataSeries("Equity");
-        private DataSeries dataSeries_1 = new DataSeries("Cash");
+        private DataSeries dataSeries_EquityCurve = new DataSeries("Equity");
+        private DataSeries dataSeries_CashCurve = new DataSeries("Cash");
         private DataSeries dataSeries_2 = new DataSeries("DrawDown");
         private DataSeries dataSeries_3 = new DataSeries("DrawDownPct");
         [CompilerGenerated]
-        private DataSeries dataSeries_4;
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private double double_3;
-        private double double_4;
-        private double double_5;
+        private DataSeries dataSeries_OpenPositionCount;
+        private double currentEquity;
+        private double currentCash;
+        private double totalCommission;
+        private double cashReturn;
+        private double marginInterest;
+        private double dividendsPaid;
         private double double_6;
-        private IList<Position> ilist_0;
-        private int int_0;
+        private IList<Position> positions;
+        private int tradesNSF;
         private static int int_1 = -1;
         private List<Position> list_0 = new List<Position>();
-        private List<Alert> list_1 = new List<Alert>();
+        private List<Alert> alerts = new List<Alert>();
         private List<Position> list_2 = new List<Position>();
         private List<Position> list_3 = new List<Position>();
         private List<Position> list_4 = new List<Position>();
@@ -42,9 +42,9 @@
         public void BuildEquityCurve(IList<Bars> barsList, TradingSystemExecutor tradingSystemExecutor_0, bool callbackToSizePositions, PosSizer posSizer)
         {
             this.method_2(tradingSystemExecutor_0);
-            this.double_2 = 0.0;
-            this.dataSeries_0 = new DataSeries("Equity");
-            this.dataSeries_1 = new DataSeries("Cash");
+            this.totalCommission = 0.0;
+            this.dataSeries_EquityCurve = new DataSeries("Equity");
+            this.dataSeries_CashCurve = new DataSeries("Cash");
             this.dataSeries_2 = new DataSeries("DrawDown");
             this.dataSeries_3 = new DataSeries("DrawDownPct");
             this.double_6 = double.MinValue;
@@ -117,11 +117,11 @@
                 }
                 if (posSizer != null)
                 {
-                    posSizer.method_0(tradingSystemExecutor_0, this.list_2, this.list_4, this.list_3, this.dataSeries_0, this.dataSeries_1, this.dataSeries_2, this.dataSeries_3);
+                    posSizer.method_0(tradingSystemExecutor_0, this.list_2, this.list_4, this.list_3, this.dataSeries_EquityCurve, this.dataSeries_CashCurve, this.dataSeries_2, this.dataSeries_3);
                     posSizer.Initialize();
                 }
-                this.double_1 = positionSize.RawProfitMode ? 0.0 : positionSize.StartingCapital;
-                this.double_0 = this.double_1;
+                this.currentCash = positionSize.RawProfitMode ? 0.0 : positionSize.StartingCapital;
+                this.currentEquity = this.currentCash;
                 this.method_1(tradingSystemExecutor_0);
                 while (true)
                 {
@@ -135,10 +135,10 @@
                             list4.Add(item);
                             this.list_3.Add(item);
                             num += item.NetProfit;
-                            this.double_1 += item.Size;
-                            this.double_1 += item.NetProfit;
+                            this.currentCash += item.Size;
+                            this.currentCash += item.NetProfit;
                             num2 += item.NetProfit;
-                            this.double_1 += item.EntryCommission;
+                            this.currentCash += item.EntryCommission;
                         }
                     }
                     if (posSizer != null)
@@ -153,7 +153,7 @@
                         }
                         posSizer.Candidates = list5;
                     }
-                    double thisBarCash = this.double_1;
+                    double thisBarCash = this.currentCash;
                     while (list3.Count > 0)
                     {
                         Position position7 = list3[0];
@@ -179,11 +179,11 @@
                         if (position7.Shares > 0.0)
                         {
                             bool flag;
-                            double num6 = this.double_1;
+                            double num6 = this.currentCash;
                             if (!tradingSystemExecutor_0.PosSize.RawProfitMode)
                             {
-                                double num7 = this.double_0 - this.double_1;
-                                num6 = (this.double_0 * tradingSystemExecutor_0.PosSize.MarginFactor) - num7;
+                                double num7 = this.currentEquity - this.currentCash;
+                                num6 = (this.currentEquity * tradingSystemExecutor_0.PosSize.MarginFactor) - num7;
                             }
                             if (!(flag = !callbackToSizePositions))
                             {
@@ -198,13 +198,13 @@
                             }
                             if (flag)
                             {
-                                this.double_1 -= position7.Size;
-                                this.double_1 -= position7.EntryCommission;
+                                this.currentCash -= position7.Size;
+                                this.currentCash -= position7.EntryCommission;
                                 num6 -= position7.Size;
                                 num6 -= position7.EntryCommission;
                                 this.list_2.Add(position7);
                                 this.list_4.Add(position7);
-                                this.double_2 += position7.EntryCommission + position7.ExitCommission;
+                                this.totalCommission += position7.EntryCommission + position7.ExitCommission;
                             }
                             else
                             {
@@ -221,40 +221,40 @@
                             list4.Add(position8);
                             this.list_3.Add(position8);
                             num += position8.NetProfit;
-                            this.double_1 += position8.Size;
-                            this.double_1 += position8.NetProfit;
+                            this.currentCash += position8.Size;
+                            this.currentCash += position8.NetProfit;
                             num2 += position8.NetProfit;
-                            this.double_1 += position8.EntryCommission;
+                            this.currentCash += position8.EntryCommission;
                         }
                     }
-                    this.double_0 = positionSize.RawProfitMode ? 0.0 : positionSize.StartingCapital;
+                    this.currentEquity = positionSize.RawProfitMode ? 0.0 : positionSize.StartingCapital;
                     foreach (Position position9 in this.list_2)
                     {
                         int num9 = iterator.Bar(position9.Bars);
-                        this.double_0 += position9.NetProfitAsOfBar(num9);
+                        this.currentEquity += position9.NetProfitAsOfBar(num9);
                         this.method_3(position9, num9, ref num);
                     }
                     foreach (Position position10 in list4)
                     {
                         int num10 = iterator.Bar(position10.Bars);
-                        this.double_0 += position10.NetProfitAsOfBar(num10);
+                        this.currentEquity += position10.NetProfitAsOfBar(num10);
                         this.method_3(position10, num10, ref num);
                     }
                     list4.Clear();
-                    this.double_0 += num - num2;
-                    this.dataSeries_0.Add(this.double_0, iterator.Date);
-                    this.dataSeries_1.Add(this.double_1, iterator.Date);
+                    this.currentEquity += num - num2;
+                    this.dataSeries_EquityCurve.Add(this.currentEquity, iterator.Date);
+                    this.dataSeries_CashCurve.Add(this.currentCash, iterator.Date);
                     this.OpenPositionCount.Add((double) this.list_2.Count, iterator.Date);
-                    int num11 = this.dataSeries_1.Count - 1;
-                    if ((tradingSystemExecutor_0.ApplyInterest && !tradingSystemExecutor_0.PosSize.RawProfitMode) && (this.dataSeries_1.Count > 1))
+                    int num11 = this.dataSeries_CashCurve.Count - 1;
+                    if ((tradingSystemExecutor_0.ApplyInterest && !tradingSystemExecutor_0.PosSize.RawProfitMode) && (this.dataSeries_CashCurve.Count > 1))
                     {
-                        DateTime time = this.dataSeries_1.Date[num11];
-                        DateTime time2 = this.dataSeries_1.Date[num11 - 1];
+                        DateTime time = this.dataSeries_CashCurve.Date[num11];
+                        DateTime time2 = this.dataSeries_CashCurve.Date[num11 - 1];
                         if (time.Date != time2.Date)
                         {
-                            TimeSpan span = this.dataSeries_1.Date[num11] - this.dataSeries_1.Date[num11 - 1];
+                            TimeSpan span = this.dataSeries_CashCurve.Date[num11] - this.dataSeries_CashCurve.Date[num11 - 1];
                             double cashAdjustmentFactor = 1.0;
-                            double num13 = this.dataSeries_1[num11];
+                            double num13 = this.dataSeries_CashCurve[num11];
                             if (num13 > 0.0)
                             {
                                 cashAdjustmentFactor = tradingSystemExecutor_0.CashAdjustmentFactor;
@@ -267,7 +267,7 @@
                             {
                                 num13 *= cashAdjustmentFactor;
                             }
-                            cashAdjustmentFactor = num13 - this.dataSeries_1[num11];
+                            cashAdjustmentFactor = num13 - this.dataSeries_CashCurve[num11];
                             if (num13 > 0.0)
                             {
                                 this.CashReturn += cashAdjustmentFactor;
@@ -276,23 +276,23 @@
                             {
                                 this.MarginInterest += cashAdjustmentFactor;
                             }
-                            this.dataSeries_1[num11] = num13;
-                            this.dataSeries_0[num11] += cashAdjustmentFactor;
-                            this.double_1 = this.dataSeries_1[num11];
-                            this.double_0 = this.dataSeries_0[num11];
+                            this.dataSeries_CashCurve[num11] = num13;
+                            this.dataSeries_EquityCurve[num11] += cashAdjustmentFactor;
+                            this.currentCash = this.dataSeries_CashCurve[num11];
+                            this.currentEquity = this.dataSeries_EquityCurve[num11];
                             num += cashAdjustmentFactor;
                         }
                     }
                     if (posSizer != null)
                     {
-                        if (this.double_0 > this.double_6)
+                        if (this.currentEquity > this.double_6)
                         {
-                            this.double_6 = this.double_0;
+                            this.double_6 = this.currentEquity;
                         }
-                        double num15 = this.double_0 - this.double_6;
+                        double num15 = this.currentEquity - this.double_6;
                         double num16 = (num15 * 100.0) / this.double_6;
-                        this.dataSeries_2.Add(num15, this.dataSeries_0.Date[num11]);
-                        this.dataSeries_3.Add(num16, this.dataSeries_0.Date[num11]);
+                        this.dataSeries_2.Add(num15, this.dataSeries_EquityCurve.Date[num11]);
+                        this.dataSeries_3.Add(num16, this.dataSeries_EquityCurve.Date[num11]);
                     }
                     if (!iterator.Next())
                     {
@@ -323,7 +323,7 @@
         {
             if (tradingSystemExecutor_0.TNP < _secureCodeMin)
             {
-                this.double_0 *= tradingSystemExecutor_0.TNPAdjustment;
+                this.currentEquity *= tradingSystemExecutor_0.TNPAdjustment;
             }
         }
 
@@ -481,7 +481,7 @@
                         {
                             num = -num;
                         }
-                        this.double_1 += num;
+                        this.currentCash += num;
                         double_7 += num;
                         this.DividendsPaid += num;
                         if (list.Count == 0)
@@ -502,7 +502,7 @@
                             {
                                 num2 = -num2;
                             }
-                            this.double_1 += num2;
+                            this.currentCash += num2;
                             double_7 += num2;
                             this.DividendsPaid += num2;
                             if (list.Count == 0)
@@ -521,7 +521,7 @@
                             {
                                 num3 = -num3;
                             }
-                            this.double_1 += num3;
+                            this.currentCash += num3;
                             double_7 += num3;
                             this.DividendsPaid += num3;
                             if (list.Count == 0)
@@ -543,21 +543,21 @@
 
         internal void method_5(Alert alert_0)
         {
-            this.list_1.Add(alert_0);
+            this.alerts.Add(alert_0);
         }
 
         internal void method_6()
         {
-            this.int_0 = 0;
-            this.double_3 = 0.0;
-            this.double_4 = 0.0;
-            this.double_5 = 0.0;
+            this.tradesNSF = 0;
+            this.cashReturn = 0.0;
+            this.marginInterest = 0.0;
+            this.dividendsPaid = 0.0;
             this.list_0.Clear();
-            this.list_1.Clear();
-            if (this.dataSeries_0 != null)
+            this.alerts.Clear();
+            if (this.dataSeries_EquityCurve != null)
             {
-                this.dataSeries_0.method_2();
-                this.dataSeries_1.method_2();
+                this.dataSeries_EquityCurve.method_2();
+                this.dataSeries_CashCurve.method_2();
             }
         }
 
@@ -566,8 +566,8 @@
             this.list_0.Clear();
             if (!bool_0)
             {
-                this.dataSeries_0.method_2();
-                this.dataSeries_1.method_2();
+                this.dataSeries_EquityCurve.method_2();
+                this.dataSeries_CashCurve.method_2();
             }
         }
 
@@ -603,7 +603,7 @@
         {
             get
             {
-                return this.list_1;
+                return this.alerts;
             }
         }
 
@@ -630,11 +630,11 @@
         {
             get
             {
-                return this.dataSeries_1;
+                return this.dataSeries_CashCurve;
             }
             internal set
             {
-                this.dataSeries_1 = value;
+                this.dataSeries_CashCurve = value;
             }
         }
 
@@ -642,11 +642,11 @@
         {
             get
             {
-                return this.double_3;
+                return this.cashReturn;
             }
             internal set
             {
-                this.double_3 = value;
+                this.cashReturn = value;
             }
         }
 
@@ -654,11 +654,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.currentCash;
             }
             set
             {
-                this.double_1 = value;
+                this.currentCash = value;
             }
         }
 
@@ -666,11 +666,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.currentEquity;
             }
             set
             {
-                this.double_0 = value;
+                this.currentEquity = value;
             }
         }
 
@@ -678,11 +678,11 @@
         {
             get
             {
-                return this.double_5;
+                return this.dividendsPaid;
             }
             internal set
             {
-                this.double_5 = value;
+                this.dividendsPaid = value;
             }
         }
 
@@ -690,11 +690,11 @@
         {
             get
             {
-                return this.dataSeries_0;
+                return this.dataSeries_EquityCurve;
             }
             internal set
             {
-                this.dataSeries_0 = value;
+                this.dataSeries_EquityCurve = value;
             }
         }
 
@@ -702,11 +702,11 @@
         {
             get
             {
-                return this.double_4;
+                return this.marginInterest;
             }
             internal set
             {
-                this.double_4 = value;
+                this.marginInterest = value;
             }
         }
 
@@ -719,7 +719,7 @@
                 {
                     num += position.NetProfit;
                 }
-                return (((num + this.double_3) + this.double_4) + this.double_5);
+                return (((num + this.cashReturn) + this.marginInterest) + this.dividendsPaid);
             }
         }
 
@@ -728,12 +728,12 @@
             [CompilerGenerated]
             get
             {
-                return this.dataSeries_4;
+                return this.dataSeries_OpenPositionCount;
             }
             [CompilerGenerated]
             set
             {
-                this.dataSeries_4 = value;
+                this.dataSeries_OpenPositionCount = value;
             }
         }
 
@@ -741,11 +741,11 @@
         {
             get
             {
-                if (this.ilist_0 == null)
+                if (this.positions == null)
                 {
-                    this.ilist_0 = this.list_0.AsReadOnly();
+                    this.positions = this.list_0.AsReadOnly();
                 }
-                return this.ilist_0;
+                return this.positions;
             }
         }
 
@@ -760,7 +760,7 @@
                     num2 += position.NetProfit;
                     num += position.BarsHeld;
                 }
-                num2 = ((num2 + this.double_3) + this.double_4) + this.double_5;
+                num2 = ((num2 + this.cashReturn) + this.marginInterest) + this.dividendsPaid;
                 if (num == 0.0)
                 {
                     return 0.0;
@@ -773,7 +773,7 @@
         {
             get
             {
-                return this.double_2;
+                return this.totalCommission;
             }
         }
 
@@ -781,11 +781,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.tradesNSF;
             }
             set
             {
-                this.int_0 = value;
+                this.tradesNSF = value;
             }
         }
     }

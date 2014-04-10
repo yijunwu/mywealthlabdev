@@ -14,33 +14,33 @@
     [ToolboxBitmap(typeof(TradeManager), "TradeManager")]
     public class TradeManager : Component, IBrokerHost
     {
-        private AutoTradingMode autoTradingMode_0;
-        private bool bool_0;
-        private bool bool_1;
-        private bool bool_2;
+        private AutoTradingMode autoTradingMode;
+        private bool alwaysExitAllSharesInPosition;
+        private bool enableCashThreshold;
+        private bool enableBuyingPowerThreshold;
         private bool bool_3;
         private bool bool_4;
-        private bool bool_5;
-        private static bool bool_6 = false;
-        private WealthLab.BrokerProvider brokerProvider_0;
-        private double double_0;
-        private double double_1;
+        private bool sameBarExits;
+        private static bool disablePortfolioSynch = false;
+        private WealthLab.BrokerProvider brokerProvider;
+        private double cashThreshold;
+        private double buyingPowerThreshold;
         private IContainer icontainer_0;
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private int int_0;
-        private int int_1;
+        private int orderCount;
+        private int activeOrderCount;
         private ISettingsHost isettingsHost_0;
-        private List<Order> list_0;
+        private List<Order> orders;
         private List<Alert> list_1;
         private List<Order> list_2;
-        private List<HistoricalTrade> list_3;
+        private List<HistoricalTrade> tradeHistory;
         private List<OrderCancelSubmitGroup> list_4;
         private object object_0;
         public const string PAPER = "PaperAccount";
-        private string string_0;
+        private string rootPath;
         private string string_1;
         private string string_2;
-        private string string_3;
+        private string defaultAccountNumber;
         private string string_4;
         private string string_5;
 
@@ -466,13 +466,13 @@
 
         public TradeManager()
         {
-            this.list_0 = new List<Order>();
+            this.orders = new List<Order>();
             this.string_1 = "";
             this.string_2 = "";
             this.list_1 = new List<Alert>();
             this.list_2 = new List<Order>();
-            this.list_3 = new List<HistoricalTrade>();
-            this.string_3 = "";
+            this.tradeHistory = new List<HistoricalTrade>();
+            this.defaultAccountNumber = "";
             this.list_4 = new List<OrderCancelSubmitGroup>();
             this.string_4 = "";
             this.string_5 = Application.UserAppDataPath + @"\Data\TradeManagerLog.txt";
@@ -482,13 +482,13 @@
 
         public TradeManager(IContainer container)
         {
-            this.list_0 = new List<Order>();
+            this.orders = new List<Order>();
             this.string_1 = "";
             this.string_2 = "";
             this.list_1 = new List<Alert>();
             this.list_2 = new List<Order>();
-            this.list_3 = new List<HistoricalTrade>();
-            this.string_3 = "";
+            this.tradeHistory = new List<HistoricalTrade>();
+            this.defaultAccountNumber = "";
             this.list_4 = new List<OrderCancelSubmitGroup>();
             this.string_4 = "";
             this.string_5 = Application.UserAppDataPath + @"\Data\TradeManagerLog.txt";
@@ -524,7 +524,7 @@
         {
             lock (this)
             {
-                if (this.brokerProvider_0 == null)
+                if (this.brokerProvider == null)
                 {
                     throw new InvalidOperationException("BrokerProvider property must be set in TradeManager");
                 }
@@ -539,11 +539,11 @@
                 {
                     if (alert2.Route == "")
                     {
-                        alert2.Route = this.brokerProvider_0.RouteForStrategyOrders(alert2.DataScale);
+                        alert2.Route = this.brokerProvider.RouteForStrategyOrders(alert2.DataScale);
                     }
                     if (alert2.TIF == "")
                     {
-                        alert2.TIF = this.brokerProvider_0.TifForStrategyOrders(alert2.DataScale);
+                        alert2.TIF = this.brokerProvider.TifForStrategyOrders(alert2.DataScale);
                     }
                 }
                 List<Order> orders = new List<Order>();
@@ -570,7 +570,7 @@
                                 }
                                 if (string.IsNullOrEmpty(order3.AccountTradeType))
                                 {
-                                    IList<string> list4 = this.brokerProvider_0.AccountTradeTypesAllowed(order3.Account, order3.AlertType.ToString());
+                                    IList<string> list4 = this.brokerProvider.AccountTradeTypesAllowed(order3.Account, order3.AlertType.ToString());
                                     if (list4.Count > 0)
                                     {
                                         order3.AccountTradeType = list4[0];
@@ -594,7 +594,7 @@
                                     order3.Messages.Add(item);
                                     order3.Shares = quantity;
                                 }
-                                if (((this.bool_0 && (order3.Strategy != null)) && ((position != null) && (position.Quantity > 0.0))) && (position.Quantity != order3.Shares))
+                                if (((this.alwaysExitAllSharesInPosition && (order3.Strategy != null)) && ((position != null) && (position.Quantity > 0.0))) && (position.Quantity != order3.Shares))
                                 {
                                     OrderMessage message2 = new OrderMessage {
                                         Message = string.Concat(new object[] { "Order Quantity changed from ", order3.Shares, " to ", position.Quantity, " to match Position Quantity (exit entire Position preference in effect)" })
@@ -619,9 +619,9 @@
                                 }
                                 else
                                 {
-                                    lock ((list5 = this.list_0))
+                                    lock ((list5 = this.orders))
                                     {
-                                        this.list_0.Add(order3);
+                                        this.orders.Add(order3);
                                     }
                                     if (this.eventHandler_2 != null)
                                     {
@@ -647,9 +647,9 @@
                             foreach (Order order16 in orders)
                             {
                                 order16.Status = OrderStatus.Submitted;
-                                lock (this.list_0)
+                                lock (this.orders)
                                 {
-                                    this.list_0.Add(order16);
+                                    this.orders.Add(order16);
                                 }
                                 if (this.eventHandler_2 != null)
                                 {
@@ -684,7 +684,7 @@
                             }
                             foreach (Order order8 in list6)
                             {
-                                foreach (Order order7 in this.list_0)
+                                foreach (Order order7 in this.orders)
                                 {
                                     if ((order7.Status != OrderStatus.Active) || !this.method_1(order7, order8))
                                     {
@@ -756,13 +756,13 @@
                                     {
                                         if (((list3[n].AlertType == TradeType.Sell) || (list3[n].AlertType == TradeType.Cover)) && (list3[n].OrderType != OrderType.Market))
                                         {
-                                            this.list_0.Remove(list3[n]);
+                                            this.orders.Remove(list3[n]);
                                             list3.RemoveAt(n);
                                         }
                                     }
                                 }
                                 List<Order> list = new List<Order>();
-                                foreach (Order order in this.list_0)
+                                foreach (Order order in this.orders)
                                 {
                                     if (order.IsActive && order.Matches(order2, true))
                                     {
@@ -788,7 +788,7 @@
                                                     this.eventHandler_1(this, new OrderEventArgs(order13));
                                                 }
                                                 list.Remove(order13);
-                                                this.list_0.Remove(order14);
+                                                this.orders.Remove(order14);
 
                                                 break;
                                             }
@@ -812,9 +812,9 @@
                                                 order19.Status = OrderStatus.Submitted;
                                                 order19.IsCancelReplace = true;
                                                 order20.Status = OrderStatus.CancelPending;
-                                                lock ((list5 = this.list_0))
+                                                lock ((list5 = this.orders))
                                                 {
-                                                    this.list_0.Add(order19);
+                                                    this.orders.Add(order19);
                                                 }
                                                 if (this.eventHandler_2 != null)
                                                 {
@@ -831,7 +831,7 @@
                                         }
                                     }
                                 }
-                                foreach (Order order6 in this.list_0)
+                                foreach (Order order6 in this.orders)
                                 {
                                     if (((list3.Count > 0) && order6.Matches(list3[0], true)) && ((order6.Status == OrderStatus.CancelPending) && !list.Contains(order6)))
                                     {
@@ -856,7 +856,7 @@
                                         {
                                             group.SubmitPending.Add(order5);
                                             order5.IsCancelReplace = true;
-                                            this.list_0.Remove(order5);
+                                            this.orders.Remove(order5);
                                         }
                                         this.list_4.Add(group);
                                         this.BrokerProvider.CancelOrder(list);
@@ -867,9 +867,9 @@
                                     foreach (Order order17 in list3)
                                     {
                                         order17.Status = OrderStatus.Submitted;
-                                        lock ((list5 = this.list_0))
+                                        lock ((list5 = this.orders))
                                         {
-                                            this.list_0.Add(order17);
+                                            this.orders.Add(order17);
                                         }
                                         if (this.eventHandler_2 != null)
                                         {
@@ -889,9 +889,9 @@
 
         public void AddOrder(Order order)
         {
-            lock (this.list_0)
+            lock (this.orders)
             {
-                this.list_0.Add(order);
+                this.orders.Add(order);
             }
             this.bool_4 = true;
             this.UpdateOrders();
@@ -900,9 +900,9 @@
         public void CancelAll()
         {
             List<Order> orders = new List<Order>();
-            lock (this.list_0)
+            lock (this.orders)
             {
-                foreach (Order order in this.list_0)
+                foreach (Order order in this.orders)
                 {
                     if (order.Status == OrderStatus.Submitted)
                     {
@@ -978,9 +978,9 @@
             order.Status = OrderStatus.CancelPending;
             newOrder.Status = OrderStatus.Submitted;
             newOrder.IsCancelReplace = true;
-            lock (this.list_0)
+            lock (this.orders)
             {
-                this.list_0.Add(newOrder);
+                this.orders.Add(newOrder);
             }
             if (this.eventHandler_1 != null)
             {
@@ -1002,9 +1002,9 @@
                 account = this.DefaultAccountNumber;
             }
             List<Order> orders = new List<Order>();
-            lock (this.list_0)
+            lock (this.orders)
             {
-                foreach (Order order in this.list_0)
+                foreach (Order order in this.orders)
                 {
                     if (((order.IsActiveAtBackEnd && (order.Account == account)) && ((order.Strategy == strategy) && (order.Symbol == symbol))) && (order.DataScale == dataScale))
                     {
@@ -1045,11 +1045,11 @@
         public Account FindAccount(string acctNum)
         {
             Account account2;
-            if (this.brokerProvider_0 == null)
+            if (this.brokerProvider == null)
             {
                 return null;
             }
-            using (IEnumerator<Account> enumerator = this.brokerProvider_0.Accounts.GetEnumerator())
+            using (IEnumerator<Account> enumerator = this.brokerProvider.Accounts.GetEnumerator())
             {
                 Account current;
                 while (enumerator.MoveNext())
@@ -1068,9 +1068,9 @@
 
         public HistoricalTrade FindHistoricalTrade(string orderID)
         {
-            lock (this.list_3)
+            lock (this.tradeHistory)
             {
-                foreach (HistoricalTrade trade in this.list_3)
+                foreach (HistoricalTrade trade in this.tradeHistory)
                 {
                     if (trade.OrderID == orderID)
                     {
@@ -1083,13 +1083,13 @@
 
         public AccountPosition FindPosition(Order order)
         {
-            foreach (Account account in this.brokerProvider_0.Accounts)
+            foreach (Account account in this.brokerProvider.Accounts)
             {
                 if (account.AccountNumber == order.Account)
                 {
                     foreach (AccountPosition position in account.Positions)
                     {
-                        if (((position.Symbol == order.Symbol) && (position.PositionType == order.PositionType)) && Alert.AccountTradeTypeMatch(this.brokerProvider_0.GetPositionAccountTradeType(position), order.AccountTradeType))
+                        if (((position.Symbol == order.Symbol) && (position.PositionType == order.PositionType)) && Alert.AccountTradeTypeMatch(this.brokerProvider.GetPositionAccountTradeType(position), order.AccountTradeType))
                         {
                             return position;
                         }
@@ -1101,7 +1101,7 @@
 
         public AccountPosition FindPosition(string account, PositionType posType, string symbol)
         {
-            foreach (Account account2 in this.brokerProvider_0.Accounts)
+            foreach (Account account2 in this.brokerProvider.Accounts)
             {
                 if (account2.AccountNumber == account)
                 {
@@ -1120,9 +1120,9 @@
         public List<Order> GetOrders(Account account)
         {
             List<Order> list = new List<Order>();
-            lock (this.list_0)
+            lock (this.orders)
             {
-                foreach (Order order in this.list_0)
+                foreach (Order order in this.orders)
                 {
                     if (order.Account == account.AccountNumber)
                     {
@@ -1136,9 +1136,9 @@
         public IList<Order> GetOrdersForAccount(string acctNum)
         {
             this.list_2.Clear();
-            lock (this.list_0)
+            lock (this.orders)
             {
-                foreach (Order order in this.list_0)
+                foreach (Order order in this.orders)
                 {
                     if ((order.Account == acctNum) || (acctNum == ""))
                     {
@@ -1151,23 +1151,23 @@
 
         public void LoadOrdersAndHistory()
         {
-            lock (this.list_0)
+            lock (this.orders)
             {
-                this.list_0.Clear();
+                this.orders.Clear();
                 if (File.Exists(this.string_1))
                 {
                     XmlSerializer serializer2 = new XmlSerializer(typeof(List<Order>));
                     TextReader textReader = new StreamReader(this.string_1);
                     try
                     {
-                        this.list_0 = (List<Order>) serializer2.Deserialize(textReader);
+                        this.orders = (List<Order>) serializer2.Deserialize(textReader);
                     }
                     finally
                     {
                         textReader.Close();
                     }
                 }
-                foreach (Order order in this.list_0)
+                foreach (Order order in this.orders)
                 {
                     if (order.IsActive || (order.Status == OrderStatus.CancelPending))
                     {
@@ -1176,14 +1176,14 @@
                 }
             }
             this.UpdateOrders();
-            this.list_3.Clear();
+            this.tradeHistory.Clear();
             if (File.Exists(this.string_2))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(List<HistoricalTrade>));
                 TextReader reader = new StreamReader(this.string_2);
                 try
                 {
-                    this.list_3 = (List<HistoricalTrade>) serializer.Deserialize(reader);
+                    this.tradeHistory = (List<HistoricalTrade>) serializer.Deserialize(reader);
                 }
                 finally
                 {
@@ -1286,7 +1286,7 @@
                     {
                         if (((ilist_0[k].OrderType == orderType_0) && (ilist_0[k].AlertType == tradeType_0)) && (ilist_0[k] != order))
                         {
-                            this.list_0.Remove(ilist_0[k]);
+                            this.orders.Remove(ilist_0[k]);
                             ilist_0.RemoveAt(k);
                         }
                     }
@@ -1374,7 +1374,7 @@
             {
                 return null;
             }
-            using (List<Order>.Enumerator enumerator = this.list_0.GetEnumerator())
+            using (List<Order>.Enumerator enumerator = this.orders.GetEnumerator())
             {
                 Order current;
                 while (enumerator.MoveNext())
@@ -1406,9 +1406,9 @@
                 Order order2;
                 OrderMessage message3;
                 bool flag2 = false;
-                for (int i = this.list_0.Count - 1; i >= 0; i--)
+                for (int i = this.orders.Count - 1; i >= 0; i--)
                 {
-                    order2 = this.list_0[i];
+                    order2 = this.orders[i];
                     if (order2.OrderID == orderID)
                     {
                         ///goto  Label_0106;  ///WYJ fix, simplify the flow
@@ -1426,9 +1426,9 @@
                         }
                         if (status == OrderStatus.ErrorCancelReplace)
                         {
-                            lock (this.list_0)
+                            lock (this.orders)
                             {
-                                this.list_0.Remove(order2);
+                                this.orders.Remove(order2);
                             }
                             if (this.eventHandler_3 != null)
                             {
@@ -1571,9 +1571,9 @@
                             if (trade == null)
                             {
                                 trade = new HistoricalTrade(order2);
-                                lock (this.list_3)
+                                lock (this.tradeHistory)
                                 {
-                                    this.list_3.Add(trade);
+                                    this.tradeHistory.Add(trade);
                                 }
                                 flag3 = true;
                             }
@@ -1608,9 +1608,9 @@
                                         this.list_4.RemoveAt(j);
                                         foreach (Order order3 in group.SubmitPending)
                                         {
-                                            lock (this.list_0)
+                                            lock (this.orders)
                                             {
-                                                this.list_0.Add(order3);
+                                                this.orders.Add(order3);
                                             }
                                             order3.Status = OrderStatus.Submitted;
                                             if (this.eventHandler_2 != null)
@@ -1688,13 +1688,13 @@
 
         public void RemoveCompleted(string acctNum)
         {
-            lock (this.list_0)
+            lock (this.orders)
             {
-                for (int i = this.list_0.Count - 1; i >= 0; i--)
+                for (int i = this.orders.Count - 1; i >= 0; i--)
                 {
-                    if (this.list_0[i].IsCompleted && ((acctNum == "") || (this.list_0[i].Account == acctNum)))
+                    if (this.orders[i].IsCompleted && ((acctNum == "") || (this.orders[i].Account == acctNum)))
                     {
-                        this.list_0.RemoveAt(i);
+                        this.orders.RemoveAt(i);
                     }
                 }
             }
@@ -1704,13 +1704,13 @@
 
         public void RemoveOrders(List<Order> orders)
         {
-            lock (this.list_0)
+            lock (this.orders)
             {
                 foreach (Order order in orders)
                 {
-                    if (this.list_0.Contains(order))
+                    if (this.orders.Contains(order))
                     {
-                        this.list_0.Remove(order);
+                        this.orders.Remove(order);
                     }
                 }
             }
@@ -1720,13 +1720,13 @@
 
         public void SaveOrders()
         {
-            lock (this.list_0)
+            lock (this.orders)
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Order>));
                 TextWriter textWriter = new StreamWriter(this.string_1);
                 try
                 {
-                    serializer.Serialize(textWriter, this.list_0);
+                    serializer.Serialize(textWriter, this.orders);
                 }
                 finally
                 {
@@ -1741,9 +1741,9 @@
             TextWriter textWriter = new StreamWriter(this.string_2);
             try
             {
-                lock (this.list_3)
+                lock (this.tradeHistory)
                 {
-                    serializer.Serialize(textWriter, this.list_3);
+                    serializer.Serialize(textWriter, this.tradeHistory);
                 }
             }
             finally
@@ -1754,15 +1754,15 @@
 
         public void UpdateOrders()
         {
-            lock (this.list_0)
+            lock (this.orders)
             {
-                this.int_0 = this.list_0.Count;
-                this.int_1 = 0;
-                foreach (Order order in this.list_0)
+                this.orderCount = this.orders.Count;
+                this.activeOrderCount = 0;
+                foreach (Order order in this.orders)
                 {
                     if (order.IsActive)
                     {
-                        this.int_1++;
+                        this.activeOrderCount++;
                     }
                 }
             }
@@ -1776,7 +1776,7 @@
         {
             get
             {
-                return this.int_1;
+                return this.activeOrderCount;
             }
         }
 
@@ -1784,11 +1784,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.alwaysExitAllSharesInPosition;
             }
             set
             {
-                this.bool_0 = value;
+                this.alwaysExitAllSharesInPosition = value;
             }
         }
 
@@ -1796,11 +1796,11 @@
         {
             get
             {
-                return this.autoTradingMode_0;
+                return this.autoTradingMode;
             }
             set
             {
-                this.autoTradingMode_0 = value;
+                this.autoTradingMode = value;
             }
         }
 
@@ -1809,11 +1809,11 @@
         {
             get
             {
-                return this.brokerProvider_0;
+                return this.brokerProvider;
             }
             set
             {
-                this.brokerProvider_0 = value;
+                this.brokerProvider = value;
             }
         }
 
@@ -1821,11 +1821,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.buyingPowerThreshold;
             }
             set
             {
-                this.double_1 = value;
+                this.buyingPowerThreshold = value;
             }
         }
 
@@ -1833,11 +1833,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.cashThreshold;
             }
             set
             {
-                this.double_0 = value;
+                this.cashThreshold = value;
             }
         }
 
@@ -1846,11 +1846,11 @@
         {
             get
             {
-                return this.string_3;
+                return this.defaultAccountNumber;
             }
             set
             {
-                this.string_3 = value;
+                this.defaultAccountNumber = value;
             }
         }
 
@@ -1858,11 +1858,11 @@
         {
             get
             {
-                return bool_6;
+                return disablePortfolioSynch;
             }
             set
             {
-                bool_6 = value;
+                disablePortfolioSynch = value;
             }
         }
 
@@ -1878,11 +1878,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.enableBuyingPowerThreshold;
             }
             set
             {
-                this.bool_2 = value;
+                this.enableBuyingPowerThreshold = value;
             }
         }
 
@@ -1890,11 +1890,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.enableCashThreshold;
             }
             set
             {
-                this.bool_1 = value;
+                this.enableCashThreshold = value;
             }
         }
 
@@ -1903,7 +1903,7 @@
         {
             get
             {
-                return this.int_0;
+                return this.orderCount;
             }
         }
 
@@ -1912,7 +1912,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.orders;
             }
         }
 
@@ -1920,19 +1920,19 @@
         {
             get
             {
-                return this.string_0;
+                return this.rootPath;
             }
             set
             {
-                this.string_0 = value;
+                this.rootPath = value;
                 if (value != null)
                 {
-                    if ((this.string_0.Length > 0) && (this.string_0[this.string_0.Length - 1] != '\\'))
+                    if ((this.rootPath.Length > 0) && (this.rootPath[this.rootPath.Length - 1] != '\\'))
                     {
-                        this.string_0 = this.string_0 + @"\";
+                        this.rootPath = this.rootPath + @"\";
                     }
-                    this.string_1 = this.string_0 + "Orders.xml";
-                    this.string_2 = this.string_0 + "TradeHistory.xml";
+                    this.string_1 = this.rootPath + "Orders.xml";
+                    this.string_2 = this.rootPath + "TradeHistory.xml";
                 }
             }
         }
@@ -1941,11 +1941,11 @@
         {
             get
             {
-                return this.bool_5;
+                return this.sameBarExits;
             }
             set
             {
-                this.bool_5 = value;
+                this.sameBarExits = value;
             }
         }
 
@@ -1974,7 +1974,7 @@
         {
             get
             {
-                return this.list_3;
+                return this.tradeHistory;
             }
         }
     }

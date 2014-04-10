@@ -8,8 +8,8 @@
 
     public class PrintPreview : Form
     {
-        private bool bool_0;
-        private bool bool_1;
+        private bool printSomePages;
+        private bool showPrintDialog;
         private ToolStripButton btnClose;
         private ToolStripButton btnDown;
         private ToolStripButton btnPrint;
@@ -17,14 +17,14 @@
         private ToolStripButton btnUp;
         private ToolStripComboBox cmbZoom;
         private IContainer icontainer_0;
-        private int int_0;
-        private int int_1;
+        private int fromPage;
+        private int toPage;
         private ToolStripLabel lblOf;
         private ToolStripLabel lblPage;
         private ToolStripLabel lblPages;
         private ToolStripLabel lblZoom;
         private PageSetupDialog pageSetupDialog_0;
-        private PrintDialog printDialog_0;
+        private PrintDialog printDialog;
         private PrintPreviewControl printPreviewControl1;
         private ToolStrip toolStrip1;
         private ToolStripSeparator toolStripSeparator1;
@@ -56,24 +56,24 @@
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            this.printDialog_0.Document = this.printPreviewControl1.Document;
-            if (this.bool_1)
+            this.printDialog.Document = this.printPreviewControl1.Document;
+            if (this.showPrintDialog)
             {
-                if (this.printDialog_0.ShowDialog() == DialogResult.OK)
+                if (this.printDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (this.printDialog_0.AllowSomePages)
+                    if (this.printDialog.AllowSomePages)
                     {
-                        this.bool_0 = true;
-                        this.int_0 = this.printDialog_0.PrinterSettings.FromPage;
-                        this.int_1 = this.printDialog_0.PrinterSettings.ToPage;
+                        this.printSomePages = true;
+                        this.fromPage = this.printDialog.PrinterSettings.FromPage;
+                        this.toPage = this.printDialog.PrinterSettings.ToPage;
                     }
-                    this.printDialog_0.Document.Print();
+                    this.printDialog.Document.Print();
                     base.Close();
                 }
             }
             else
             {
-                this.printDialog_0.Document.Print();
+                this.printDialog.Document.Print();
                 base.Close();
             }
         }
@@ -224,7 +224,7 @@
             this.btnClose = new System.Windows.Forms.ToolStripButton();
             this.printPreviewControl1 = new System.Windows.Forms.PrintPreviewControl();
             this.pageSetupDialog_0 = new System.Windows.Forms.PageSetupDialog();
-            this.printDialog_0 = new System.Windows.Forms.PrintDialog();
+            this.printDialog = new System.Windows.Forms.PrintDialog();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -399,7 +399,7 @@
             // 
             // printDialog_0
             // 
-            this.printDialog_0.UseEXDialog = true;
+            this.printDialog.UseEXDialog = true;
             // 
             // PrintPreview
             // 
@@ -474,12 +474,12 @@
         {
             get
             {
-                return this.int_0;
+                return this.fromPage;
             }
             set
             {
-                this.int_0 = value;
-                this.txbxPage.Text = this.int_0.ToString();
+                this.fromPage = value;
+                this.txbxPage.Text = this.fromPage.ToString();
             }
         }
 
@@ -487,11 +487,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.printSomePages;
             }
             set
             {
-                this.bool_0 = value;
+                this.printSomePages = value;
             }
         }
 
@@ -499,11 +499,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.showPrintDialog;
             }
             set
             {
-                this.bool_1 = value;
+                this.showPrintDialog = value;
             }
         }
 
@@ -511,12 +511,12 @@
         {
             get
             {
-                return this.int_1;
+                return this.toPage;
             }
             set
             {
-                this.int_1 = value;
-                this.lblPages.Text = this.int_1.ToString();
+                this.toPage = value;
+                this.lblPages.Text = this.toPage.ToString();
                 if (value > 1)
                 {
                     this.btnUp.Enabled = true;

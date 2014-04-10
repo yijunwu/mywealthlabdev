@@ -4,18 +4,18 @@
 
     public class DebugStringEventArgs : EventArgs
     {
-        private string string_0;
+        private string debugMessageStr;
 
         public DebugStringEventArgs(string debugMessage)
         {
-            this.string_0 = debugMessage;
+            this.debugMessageStr = debugMessage;
         }
 
         public string DebugMessage
         {
             get
             {
-                return this.string_0;
+                return this.debugMessageStr;
             }
         }
     }

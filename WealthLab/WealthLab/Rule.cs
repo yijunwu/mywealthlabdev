@@ -7,53 +7,53 @@
     [XmlRoot(ElementName="Rule", IsNullable=false)]
     public class Rule
     {
-        private bool bool_0;
-        private Guid guid_0;
-        private List<RuleParameter> list_0;
-        private List<RuleVariable> list_1;
-        private WealthLab.RuleType ruleType_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
-        private string string_3;
-        private string string_4;
-        private string string_5;
-        private string string_6;
-        private string string_7;
-        private string string_8;
+        private bool validOr;
+        private Guid guid;
+        private List<RuleParameter> parameters;
+        private List<RuleVariable> variables;
+        private WealthLab.RuleType ruleType;
+        private string name;
+        private string description;
+        private string category;
+        private string init;
+        private string body;
+        private string plotting;
+        private string tempInit;
+        private string tempBody;
+        private string usingClause;
 
         public Rule()
         {
-            this.string_0 = "";
-            this.string_1 = "";
-            this.string_2 = "";
-            this.string_3 = "";
-            this.string_4 = "";
-            this.string_5 = "";
-            this.guid_0 = Guid.NewGuid();
-            this.list_0 = new List<RuleParameter>();
-            this.list_1 = new List<RuleVariable>();
+            this.name = "";
+            this.description = "";
+            this.category = "";
+            this.init = "";
+            this.body = "";
+            this.plotting = "";
+            this.guid = Guid.NewGuid();
+            this.parameters = new List<RuleParameter>();
+            this.variables = new List<RuleVariable>();
         }
 
         public Rule(Rule baseRule)
         {
-            this.string_0 = "";
-            this.string_1 = "";
-            this.string_2 = "";
-            this.string_3 = "";
-            this.string_4 = "";
-            this.string_5 = "";
-            this.guid_0 = Guid.NewGuid();
-            this.list_0 = new List<RuleParameter>();
-            this.list_1 = new List<RuleVariable>();
-            this.string_4 = baseRule.string_4;
-            this.string_2 = baseRule.string_2;
-            this.string_1 = baseRule.string_1;
-            this.guid_0 = baseRule.guid_0;
-            this.string_3 = baseRule.string_3;
-            this.string_0 = baseRule.string_0;
-            this.string_5 = baseRule.string_5;
-            this.ruleType_0 = baseRule.ruleType_0;
+            this.name = "";
+            this.description = "";
+            this.category = "";
+            this.init = "";
+            this.body = "";
+            this.plotting = "";
+            this.guid = Guid.NewGuid();
+            this.parameters = new List<RuleParameter>();
+            this.variables = new List<RuleVariable>();
+            this.body = baseRule.body;
+            this.category = baseRule.category;
+            this.description = baseRule.description;
+            this.guid = baseRule.guid;
+            this.init = baseRule.init;
+            this.name = baseRule.name;
+            this.plotting = baseRule.plotting;
+            this.ruleType = baseRule.ruleType;
             foreach (RuleParameter parameter in baseRule.Parameters)
             {
                 this.Parameters.Add(new RuleParameter(parameter));
@@ -62,18 +62,18 @@
             {
                 this.Variables.Add(new RuleVariable(variable));
             }
-            this.string_8 = baseRule.string_8;
+            this.usingClause = baseRule.usingClause;
         }
 
         public string Body
         {
             get
             {
-                return this.string_4;
+                return this.body;
             }
             set
             {
-                this.string_4 = value;
+                this.body = value;
             }
         }
 
@@ -81,11 +81,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.category;
             }
             set
             {
-                this.string_2 = value;
+                this.category = value;
             }
         }
 
@@ -93,11 +93,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.description;
             }
             set
             {
-                this.string_1 = value;
+                this.description = value;
             }
         }
 
@@ -105,11 +105,11 @@
         {
             get
             {
-                return this.guid_0;
+                return this.guid;
             }
             set
             {
-                this.guid_0 = value;
+                this.guid = value;
             }
         }
 
@@ -117,11 +117,11 @@
         {
             get
             {
-                return this.string_3;
+                return this.init;
             }
             set
             {
-                this.string_3 = value;
+                this.init = value;
             }
         }
 
@@ -168,11 +168,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.name;
             }
             set
             {
-                this.string_0 = value;
+                this.name = value;
             }
         }
 
@@ -180,11 +180,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.parameters;
             }
             set
             {
-                this.list_0 = value;
+                this.parameters = value;
             }
         }
 
@@ -192,11 +192,11 @@
         {
             get
             {
-                return this.string_5;
+                return this.plotting;
             }
             set
             {
-                this.string_5 = value;
+                this.plotting = value;
             }
         }
 
@@ -204,11 +204,11 @@
         {
             get
             {
-                return this.ruleType_0;
+                return this.ruleType;
             }
             set
             {
-                this.ruleType_0 = value;
+                this.ruleType = value;
             }
         }
 
@@ -217,11 +217,11 @@
         {
             get
             {
-                return this.string_7;
+                return this.tempBody;
             }
             set
             {
-                this.string_7 = value;
+                this.tempBody = value;
             }
         }
 
@@ -230,11 +230,11 @@
         {
             get
             {
-                return this.string_6;
+                return this.tempInit;
             }
             set
             {
-                this.string_6 = value;
+                this.tempInit = value;
             }
         }
 
@@ -242,11 +242,11 @@
         {
             get
             {
-                return this.string_8;
+                return this.usingClause;
             }
             set
             {
-                this.string_8 = value;
+                this.usingClause = value;
             }
         }
 
@@ -255,11 +255,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.validOr;
             }
             set
             {
-                this.bool_0 = value;
+                this.validOr = value;
             }
         }
 
@@ -267,11 +267,11 @@
         {
             get
             {
-                return this.list_1;
+                return this.variables;
             }
             set
             {
-                this.list_1 = value;
+                this.variables = value;
             }
         }
     }

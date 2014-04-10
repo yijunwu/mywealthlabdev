@@ -9,47 +9,47 @@
     [XmlRoot(ElementName="CustomIndex", IsNullable=false)]
     public class CustomIndex
     {
-        private BarScale barScale_0;
-        private WealthLab.DataSource dataSource_0;
-        private Guid guid_0;
-        private Guid guid_1;
+        private BarScale barScale;
+        private WealthLab.DataSource dataSourceParent;
+        private Guid guid;
+        private Guid indexDefinitionTypeID;
         private IDataHost idataHost_0;
-        private WealthLab.IndexDefinition indexDefinition_0;
-        private IndexInformationControl indexInformationControl_0;
-        private int int_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
-        private string string_3;
+        private WealthLab.IndexDefinition indexDefinition;
+        private IndexInformationControl indexInformationControl;
+        private int barInterval;
+        private string symbol;
+        private string parameters;
+        private string dataSourceName;
+        private string dataSourceParentName;
 
         public CustomIndex()
         {
-            this.guid_0 = Guid.Empty;
-            this.string_0 = "";
-            this.string_1 = "";
-            this.guid_1 = Guid.Empty;
-            this.string_2 = "";
-            this.string_3 = "";
-            this.indexInformationControl_0 = new IndexInformationControl();
+            this.guid = Guid.Empty;
+            this.symbol = "";
+            this.parameters = "";
+            this.indexDefinitionTypeID = Guid.Empty;
+            this.dataSourceName = "";
+            this.dataSourceParentName = "";
+            this.indexInformationControl = new IndexInformationControl();
         }
 
         internal CustomIndex(string string_4, string string_5, Guid guid_2, string string_6, BarScale barScale_1, int int_1, string string_7, WealthLab.DataSource dataSource_1)
         {
-            this.guid_0 = Guid.Empty;
-            this.string_0 = "";
-            this.string_1 = "";
-            this.guid_1 = Guid.Empty;
-            this.string_2 = "";
-            this.string_3 = "";
-            this.indexInformationControl_0 = new IndexInformationControl();
-            this.string_0 = string_4;
-            this.string_1 = string_5;
-            this.guid_1 = guid_2;
-            this.string_2 = string_6;
-            this.barScale_0 = barScale_1;
-            this.int_0 = int_1;
-            this.string_3 = string_7;
-            this.dataSource_0 = dataSource_1;
+            this.guid = Guid.Empty;
+            this.symbol = "";
+            this.parameters = "";
+            this.indexDefinitionTypeID = Guid.Empty;
+            this.dataSourceName = "";
+            this.dataSourceParentName = "";
+            this.indexInformationControl = new IndexInformationControl();
+            this.symbol = string_4;
+            this.parameters = string_5;
+            this.indexDefinitionTypeID = guid_2;
+            this.dataSourceName = string_6;
+            this.barScale = barScale_1;
+            this.barInterval = int_1;
+            this.dataSourceParentName = string_7;
+            this.dataSourceParent = dataSource_1;
         }
 
         public static CustomIndex FromFile(string fileName)
@@ -108,11 +108,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             set
             {
-                this.int_0 = value;
+                this.barInterval = value;
             }
         }
 
@@ -163,11 +163,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.dataSourceName;
             }
             set
             {
-                this.string_2 = value;
+                this.dataSourceName = value;
             }
         }
 
@@ -176,11 +176,11 @@
         {
             get
             {
-                return this.dataSource_0;
+                return this.dataSourceParent;
             }
             set
             {
-                this.dataSource_0 = value;
+                this.dataSourceParent = value;
             }
         }
 
@@ -188,11 +188,11 @@
         {
             get
             {
-                return this.string_3;
+                return this.dataSourceParentName;
             }
             set
             {
-                this.string_3 = value;
+                this.dataSourceParentName = value;
             }
         }
 
@@ -217,15 +217,15 @@
         {
             get
             {
-                if (this.guid_0 == Guid.Empty)
+                if (this.guid == Guid.Empty)
                 {
-                    this.guid_0 = Guid.NewGuid();
+                    this.guid = Guid.NewGuid();
                 }
-                return this.guid_0;
+                return this.guid;
             }
             set
             {
-                this.guid_0 = value;
+                this.guid = value;
             }
         }
 
@@ -234,11 +234,11 @@
         {
             get
             {
-                return this.indexDefinition_0;
+                return this.indexDefinition;
             }
             internal set
             {
-                this.indexDefinition_0 = value;
+                this.indexDefinition = value;
             }
         }
 
@@ -246,11 +246,11 @@
         {
             get
             {
-                return this.guid_1;
+                return this.indexDefinitionTypeID;
             }
             set
             {
-                this.guid_1 = value;
+                this.indexDefinitionTypeID = value;
             }
         }
 
@@ -259,11 +259,11 @@
         {
             get
             {
-                return this.indexInformationControl_0;
+                return this.indexInformationControl;
             }
             set
             {
-                this.indexInformationControl_0 = value;
+                this.indexInformationControl = value;
             }
         }
 
@@ -271,11 +271,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.parameters;
             }
             set
             {
-                this.string_1 = value;
+                this.parameters = value;
             }
         }
 
@@ -283,11 +283,11 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             set
             {
-                this.barScale_0 = value;
+                this.barScale = value;
             }
         }
 
@@ -295,11 +295,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             set
             {
-                this.string_0 = value;
+                this.symbol = value;
             }
         }
     }

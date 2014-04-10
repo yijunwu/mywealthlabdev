@@ -15,7 +15,7 @@
     {
         private CompilerErrorCollection compilerErrorCollection_0;
         private IContainer icontainer_0;
-        private string string_0;
+        private string sourceCode;
 
         public WealthScriptCompiler()
         {
@@ -109,11 +109,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.sourceCode;
             }
             set
             {
-                this.string_0 = value;
+                this.sourceCode = value;
             }
         }
     }

@@ -4,18 +4,18 @@
 
     public class StringEventArgs : EventArgs
     {
-        private string string_0;
+        private string messageStr;
 
         public StringEventArgs(string string_1)
         {
-            this.string_0 = string_1;
+            this.messageStr = string_1;
         }
 
         public string Message
         {
             get
             {
-                return this.string_0;
+                return this.messageStr;
             }
         }
     }

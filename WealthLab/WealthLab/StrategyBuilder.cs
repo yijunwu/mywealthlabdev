@@ -24,24 +24,24 @@
         private int int_2;
         private int int_3;
         private int int_4;
-        private List<Rule> list_0;
+        private List<Rule> rules;
         private List<string> list_1;
         private List<string> list_2;
         private List<string> list_3;
-        private static List<IndicatorHelper> list_4 = new List<IndicatorHelper>();
+        private static List<IndicatorHelper> indicatorHelpers = new List<IndicatorHelper>();
         private static List<string> list_5 = new List<string>();
         private List<string> list_6;
         private List<string> list_7;
         private List<StrategyParameter> list_8;
-        private string string_0;
+        private string rootPath;
 
         public StrategyBuilder()
         {
-            this.list_0 = new List<Rule>();
+            this.rules = new List<Rule>();
             this.list_1 = new List<string>();
             this.list_2 = new List<string>();
             this.list_3 = new List<string>();
-            this.string_0 = "";
+            this.rootPath = "";
             this.list_6 = new List<string>();
             this.list_7 = new List<string>();
             this.dictionary_1 = new Dictionary<string, string>();
@@ -52,11 +52,11 @@
 
         public StrategyBuilder(IContainer container)
         {
-            this.list_0 = new List<Rule>();
+            this.rules = new List<Rule>();
             this.list_1 = new List<string>();
             this.list_2 = new List<string>();
             this.list_3 = new List<string>();
-            this.string_0 = "";
+            this.rootPath = "";
             this.list_6 = new List<string>();
             this.list_7 = new List<string>();
             this.dictionary_1 = new Dictionary<string, string>();
@@ -890,7 +890,7 @@
 
         public void Clear()
         {
-            this.list_0.Clear();
+            this.rules.Clear();
         }
 
         public int Compare(Rule rule_0, Rule rule_1)
@@ -946,12 +946,12 @@
 
         public void LoadAllRules(string path)
         {
-            this.list_0.Clear();
+            this.rules.Clear();
             foreach (string str in Directory.GetFiles(path, "*.xml"))
             {
                 this.LoadRules(str);
             }
-            this.list_0.Sort(this);
+            this.rules.Sort(this);
             foreach (Rule rule in this.Rules)
             {
                 foreach (RuleParameter parameter in rule.Parameters)
@@ -994,7 +994,7 @@
                     }
                     foreach (Rule rule2 in list)
                     {
-                        this.list_0.Add(rule2);
+                        this.rules.Add(rule2);
                     }
                 }
                 finally
@@ -1544,7 +1544,7 @@
             TextWriter textWriter = new StreamWriter(fileName);
             try
             {
-                serializer.Serialize(textWriter, this.list_0);
+                serializer.Serialize(textWriter, this.rules);
             }
             finally
             {
@@ -1557,20 +1557,20 @@
         {
             get
             {
-                if (((list_4.Count == 0) && (this.RootPath != null)) && (this.RootPath != ""))
+                if (((indicatorHelpers.Count == 0) && (this.RootPath != null)) && (this.RootPath != ""))
                 {
                     AssemblyLoader loader2 = new AssemblyLoader {
                         BaseClass = "IndicatorHelper",
-                        Path = this.string_0
+                        Path = this.rootPath
                     };
                     foreach (Type type2 in loader2.Types)
                     {
                         IndicatorHelper item = (IndicatorHelper) loader2.CreateInstance(type2);
-                        list_4.Add(item);
+                        indicatorHelpers.Add(item);
                     }
                     AssemblyLoader loader = new AssemblyLoader {
                         BaseClass = "FundamentalDataProvider",
-                        Path = this.string_0
+                        Path = this.rootPath
                     };
                     foreach (Type type in loader.Types)
                     {
@@ -1606,7 +1606,7 @@
                         }
                     }
                 }
-                return list_4;
+                return indicatorHelpers;
             }
         }
 
@@ -1614,11 +1614,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.rootPath;
             }
             set
             {
-                this.string_0 = value;
+                this.rootPath = value;
             }
         }
 
@@ -1627,11 +1627,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.rules;
             }
             set
             {
-                this.list_0 = value;
+                this.rules = value;
             }
         }
     }

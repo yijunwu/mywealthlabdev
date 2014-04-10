@@ -6,35 +6,35 @@
     [StructLayout(LayoutKind.Sequential)]
     public struct StreamingRequest
     {
-        private string string_0;
-        private IStreamingUpdate istreamingUpdate_0;
-        private WealthLab.MarketInfo marketInfo_0;
+        private string symbol;
+        private IStreamingUpdate istreamingUpdate;
+        private WealthLab.MarketInfo marketInfo;
         public StreamingRequest(string symbol, IStreamingUpdate request, WealthLab.MarketInfo info)
         {
-            this.string_0 = symbol;
-            this.istreamingUpdate_0 = request;
-            this.marketInfo_0 = info;
+            this.symbol = symbol;
+            this.istreamingUpdate = request;
+            this.marketInfo = info;
         }
 
         public string Symbol
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
         }
         public IStreamingUpdate Request
         {
             get
             {
-                return this.istreamingUpdate_0;
+                return this.istreamingUpdate;
             }
         }
         public WealthLab.MarketInfo MarketInfo
         {
             get
             {
-                return this.marketInfo_0;
+                return this.marketInfo;
             }
         }
     }

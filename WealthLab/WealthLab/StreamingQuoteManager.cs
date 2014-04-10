@@ -10,9 +10,9 @@
     {
         private bool bool_0;
         private Dictionary<string, Quote> dictionary_0;
-        private IConnectionStatus iconnectionStatus_0;
+        private IConnectionStatus iconnectionStatus;
         private IContainer icontainer_0;
-        private StreamingDataProvider streamingDataProvider_0;
+        private StreamingDataProvider streamingDataProvider;
 
         public StreamingQuoteManager()
         {
@@ -60,17 +60,17 @@
 
         public void Subscribe(string symbol)
         {
-            if (this.streamingDataProvider_0 != null)
+            if (this.streamingDataProvider != null)
             {
-                this.streamingDataProvider_0.Subscribe(symbol, this);
+                this.streamingDataProvider.Subscribe(symbol, this);
             }
         }
 
         public void Unsubscribe(string symbol)
         {
-            if (this.streamingDataProvider_0 != null)
+            if (this.streamingDataProvider != null)
             {
-                this.streamingDataProvider_0.UnSubscribe(symbol, this);
+                this.streamingDataProvider.UnSubscribe(symbol, this);
             }
         }
 
@@ -109,11 +109,11 @@
         {
             get
             {
-                return this.iconnectionStatus_0;
+                return this.iconnectionStatus;
             }
             set
             {
-                this.iconnectionStatus_0 = value;
+                this.iconnectionStatus = value;
             }
         }
 
@@ -132,7 +132,7 @@
         {
             get
             {
-                return this.streamingDataProvider_0;
+                return this.streamingDataProvider;
             }
             set
             {
@@ -140,10 +140,10 @@
                 {
                     throw new InvalidOperationException("ConnectionStatus must be set before assigning Provider");
                 }
-                this.streamingDataProvider_0 = value;
-                if (this.streamingDataProvider_0 != null)
+                this.streamingDataProvider = value;
+                if (this.streamingDataProvider != null)
                 {
-                    this.streamingDataProvider_0.ConnectStreaming(this.ConnectionStatus);
+                    this.streamingDataProvider.ConnectStreaming(this.ConnectionStatus);
                 }
             }
         }

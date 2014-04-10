@@ -5,13 +5,13 @@
 
     public class Account
     {
-        private bool bool_0;
-        private DateTime dateTime_0 = new DateTime();
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private List<AccountPosition> list_0 = new List<AccountPosition>();
-        private string string_0 = "";
+        private bool isPaperAccount;
+        private DateTime accountValueTimeStamp = new DateTime();
+        private double availableCash;
+        private double buyingPower;
+        private double accountValue;
+        private List<AccountPosition> positions = new List<AccountPosition>();
+        private string accountNumber = "";
 
         public override string ToString()
         {
@@ -22,11 +22,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.accountNumber;
             }
             set
             {
-                this.string_0 = value;
+                this.accountNumber = value;
             }
         }
 
@@ -34,11 +34,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.accountValue;
             }
             set
             {
-                this.double_2 = value;
+                this.accountValue = value;
             }
         }
 
@@ -46,11 +46,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.accountValueTimeStamp;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.accountValueTimeStamp = value;
             }
         }
 
@@ -70,11 +70,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.availableCash;
             }
             set
             {
-                this.double_0 = value;
+                this.availableCash = value;
             }
         }
 
@@ -82,11 +82,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.buyingPower;
             }
             set
             {
-                this.double_1 = value;
+                this.buyingPower = value;
             }
         }
 
@@ -94,11 +94,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.isPaperAccount;
             }
             set
             {
-                this.bool_0 = value;
+                this.isPaperAccount = value;
             }
         }
 
@@ -106,11 +106,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.positions;
             }
             set
             {
-                this.list_0 = value;
+                this.positions = value;
             }
         }
     }

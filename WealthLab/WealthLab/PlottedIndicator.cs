@@ -6,18 +6,18 @@
 
     public class PlottedIndicator
     {
-        private bool bool_0;
-        private bool bool_1;
-        private System.Drawing.Color color_0;
-        private System.Drawing.Color[] color_1;
-        private DataSeries dataSeries_0;
-        private int int_0;
-        private LineStyle lineStyle_0;
-        private string string_0 = "";
+        private bool dragAndDrop;
+        private bool selected;
+        private System.Drawing.Color color;
+        private System.Drawing.Color[] barColors;
+        private DataSeries dataSeries;
+        private int width;
+        private LineStyle lineStyle;
+        private string fundamentalItemName = "";
 
         public PlottedIndicator(ChartRenderer renderer, DataSeries series)
         {
-            this.dataSeries_0 = series;
+            this.dataSeries = series;
             string description = series.Description;
             int num = 1;
             while (true)
@@ -54,39 +54,39 @@
 
         public System.Drawing.Color GetBarColor(int int_1)
         {
-            if (this.color_1 == null)
+            if (this.barColors == null)
             {
                 return this.Color;
             }
-            if (int_1 >= this.color_1.Length)
+            if (int_1 >= this.barColors.Length)
             {
                 return this.Color;
             }
-            return this.color_1[int_1];
+            return this.barColors[int_1];
         }
 
         public void SetBarColor(int int_1, System.Drawing.Color color)
         {
-            if (this.color_1 == null)
+            if (this.barColors == null)
             {
-                this.color_1 = new System.Drawing.Color[this.dataSeries_0.Count];
-                for (int i = 0; i < this.dataSeries_0.Count; i++)
+                this.barColors = new System.Drawing.Color[this.dataSeries.Count];
+                for (int i = 0; i < this.dataSeries.Count; i++)
                 {
-                    this.color_1[i] = this.Color;
+                    this.barColors[i] = this.Color;
                 }
             }
-            this.color_1[int_1] = color;
+            this.barColors[int_1] = color;
         }
 
         public System.Drawing.Color Color
         {
             get
             {
-                return this.color_0;
+                return this.color;
             }
             set
             {
-                this.color_0 = value;
+                this.color = value;
             }
         }
 
@@ -94,11 +94,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.dragAndDrop;
             }
             set
             {
-                this.bool_0 = value;
+                this.dragAndDrop = value;
             }
         }
 
@@ -106,11 +106,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.fundamentalItemName;
             }
             set
             {
-                this.string_0 = value;
+                this.fundamentalItemName = value;
             }
         }
 
@@ -118,7 +118,7 @@
         {
             get
             {
-                return (this.string_0 != "");
+                return (this.fundamentalItemName != "");
             }
         }
 
@@ -126,11 +126,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.selected;
             }
             set
             {
-                this.bool_1 = value;
+                this.selected = value;
             }
         }
 
@@ -138,7 +138,7 @@
         {
             get
             {
-                return this.dataSeries_0;
+                return this.dataSeries;
             }
         }
 
@@ -146,11 +146,11 @@
         {
             get
             {
-                return this.lineStyle_0;
+                return this.lineStyle;
             }
             set
             {
-                this.lineStyle_0 = value;
+                this.lineStyle = value;
             }
         }
 
@@ -158,11 +158,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.width;
             }
             set
             {
-                this.int_0 = value;
+                this.width = value;
             }
         }
     }

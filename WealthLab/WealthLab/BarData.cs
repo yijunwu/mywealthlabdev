@@ -6,29 +6,29 @@
     public class BarData
     {
         [CompilerGenerated]
-        private DateTime dateTime_0;
+        private DateTime timestamp;
         [CompilerGenerated]
-        private double double_0;
+        private double open;
         [CompilerGenerated]
-        private double double_1;
+        private double high;
         [CompilerGenerated]
-        private double double_2;
+        private double low;
         [CompilerGenerated]
-        private double double_3;
+        private double close;
         [CompilerGenerated]
-        private double double_4;
+        private double volume;
 
         public double Close
         {
             [CompilerGenerated]
             get
             {
-                return this.double_3;
+                return this.close;
             }
             [CompilerGenerated]
             set
             {
-                this.double_3 = value;
+                this.close = value;
             }
         }
 
@@ -37,12 +37,12 @@
             [CompilerGenerated]
             get
             {
-                return this.double_1;
+                return this.high;
             }
             [CompilerGenerated]
             set
             {
-                this.double_1 = value;
+                this.high = value;
             }
         }
 
@@ -51,12 +51,12 @@
             [CompilerGenerated]
             get
             {
-                return this.double_2;
+                return this.low;
             }
             [CompilerGenerated]
             set
             {
-                this.double_2 = value;
+                this.low = value;
             }
         }
 
@@ -65,12 +65,12 @@
             [CompilerGenerated]
             get
             {
-                return this.double_0;
+                return this.open;
             }
             [CompilerGenerated]
             set
             {
-                this.double_0 = value;
+                this.open = value;
             }
         }
 
@@ -79,12 +79,12 @@
             [CompilerGenerated]
             get
             {
-                return this.dateTime_0;
+                return this.timestamp;
             }
             [CompilerGenerated]
             set
             {
-                this.dateTime_0 = value;
+                this.timestamp = value;
             }
         }
 
@@ -93,12 +93,12 @@
             [CompilerGenerated]
             get
             {
-                return this.double_4;
+                return this.volume;
             }
             [CompilerGenerated]
             set
             {
-                this.double_4 = value;
+                this.volume = value;
             }
         }
     }

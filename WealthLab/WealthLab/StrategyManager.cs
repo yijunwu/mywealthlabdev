@@ -18,19 +18,19 @@
         private Dictionary<string, Bitmap> dictionary_1;
         private IContainer icontainer_0;
         private static readonly ILog ilog_0 = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private List<string> list_0;
-        private List<string> list_1;
-        private List<Strategy> list_2;
+        private List<string> folderNames;
+        private List<string> libraryNames;
+        private List<Strategy> strategies;
         private SettingsManager settingsManager_0;
-        private string string_0;
+        private string rootPath;
         private WealthScriptCompiler wealthScriptCompiler_0;
 
         public StrategyManager()
         {
             this.dictionary_0 = new Dictionary<string, List<string>>();
-            this.list_0 = new List<string>();
-            this.list_1 = new List<string>();
-            this.list_2 = new List<Strategy>();
+            this.folderNames = new List<string>();
+            this.libraryNames = new List<string>();
+            this.strategies = new List<Strategy>();
             this.dictionary_1 = new Dictionary<string, Bitmap>();
             this.wealthScriptCompiler_0 = new WealthScriptCompiler();
             this.settingsManager_0 = new SettingsManager();
@@ -40,9 +40,9 @@
         public StrategyManager(IContainer container)
         {
             this.dictionary_0 = new Dictionary<string, List<string>>();
-            this.list_0 = new List<string>();
-            this.list_1 = new List<string>();
-            this.list_2 = new List<Strategy>();
+            this.folderNames = new List<string>();
+            this.libraryNames = new List<string>();
+            this.strategies = new List<Strategy>();
             this.dictionary_1 = new Dictionary<string, Bitmap>();
             this.wealthScriptCompiler_0 = new WealthScriptCompiler();
             this.settingsManager_0 = new SettingsManager();
@@ -125,7 +125,7 @@
                 }
                 else
                 {
-                    using (List<Strategy>.Enumerator enumerator = this.list_2.GetEnumerator())
+                    using (List<Strategy>.Enumerator enumerator = this.strategies.GetEnumerator())
                     {
                         Strategy current;
                         while (enumerator.MoveNext())
@@ -183,9 +183,9 @@
                     return false;
                 }
                 string str2 = folderName.ToUpper();
-                for (int i = this.list_2.Count - 1; i >= 0; i--)
+                for (int i = this.strategies.Count - 1; i >= 0; i--)
                 {
-                    Strategy strategy = this.list_2[i];
+                    Strategy strategy = this.strategies[i];
                     if ((this.method_2(strategy).ToUpper() == str2) && (strategy.NetworkDrivePath == networkPath))
                     {
                         this.DeleteStrategy(strategy);
@@ -217,7 +217,7 @@
             {
                 File.Delete(strategy_0.FileName);
             }
-            this.list_2.Remove(strategy_0);
+            this.strategies.Remove(strategy_0);
         }
 
         protected override void Dispose(bool disposing)
@@ -265,9 +265,9 @@
 
         public void LoadStrategies()
         {
-            this.list_2.Clear();
-            this.list_0.Clear();
-            this.list_1.Clear();
+            this.strategies.Clear();
+            this.folderNames.Clear();
+            this.libraryNames.Clear();
             this.settingsManager_0.RootPath = this.RootPath;
             this.settingsManager_0.FileName = "PrecompiledStrategyAcctNumbers.txt";
             this.settingsManager_0.LoadSettings();
@@ -283,7 +283,7 @@
             foreach (Assembly assembly in this.assemblyLoader_0.Assemblies)
             {
                 string assemblyDescription = this.assemblyLoader_0.GetAssemblyDescription(assembly);
-                this.list_1.Add(assemblyDescription);
+                this.libraryNames.Add(assemblyDescription);
                 bool flag = false;
                 foreach (System.Type type in this.assemblyLoader_0.TypesInAssembly(assembly))
                 {
@@ -317,7 +317,7 @@
                     {
                         strategy.AccountNumber = this.settingsManager_0.Get(strategy.Name, "");
                     }
-                    this.list_2.Add(strategy);
+                    this.strategies.Add(strategy);
                 }
             }
         }
@@ -363,7 +363,7 @@
         {
             Strategy strategy2;
             string str = name.ToUpper();
-            using (List<Strategy>.Enumerator enumerator = this.list_2.GetEnumerator())
+            using (List<Strategy>.Enumerator enumerator = this.strategies.GetEnumerator())
             {
                 Strategy current;
                 while (enumerator.MoveNext())
@@ -385,7 +385,7 @@
             Strategy strategy2;
             string str = name.ToUpper();
             string str2 = folder.ToUpper();
-            using (List<Strategy>.Enumerator enumerator = this.list_2.GetEnumerator())
+            using (List<Strategy>.Enumerator enumerator = this.strategies.GetEnumerator())
             {
                 Strategy current;
                 while (enumerator.MoveNext())
@@ -405,7 +405,7 @@
         public Strategy LookupID(string ID)
         {
             Strategy strategy2;
-            using (List<Strategy>.Enumerator enumerator = this.list_2.GetEnumerator())
+            using (List<Strategy>.Enumerator enumerator = this.strategies.GetEnumerator())
             {
                 Strategy current;
                 while (enumerator.MoveNext())
@@ -489,7 +489,7 @@
                 string text4 = text3.Substring(string_1.Length);
                 if (string_2 == "")
                 {
-                    this.list_0.Add(text4);
+                    this.folderNames.Add(text4);
                 }
                 string[] files = Directory.GetFiles(text3, "*.xml");
                 string[] array2 = files;
@@ -502,7 +502,7 @@
                         strategy.FileName = text5;
                         strategy.Folder = text4;
                         strategy.NetworkDrivePath = string_2;
-                        this.list_2.Add(strategy);
+                        this.strategies.Add(strategy);
                     }
                     catch (Exception)
                     {
@@ -552,11 +552,11 @@
         public void RemoveNetworkPath(string networkPath)
         {
             this.dictionary_0.Remove(networkPath);
-            for (int i = this.list_2.Count - 1; i >= 0; i--)
+            for (int i = this.strategies.Count - 1; i >= 0; i--)
             {
-                if (this.list_2[i].NetworkDrivePath == networkPath)
+                if (this.strategies[i].NetworkDrivePath == networkPath)
                 {
-                    this.list_2.RemoveAt(i);
+                    this.strategies.RemoveAt(i);
                 }
             }
         }
@@ -593,7 +593,7 @@
             strategy_0.SaveToFile(strategy_0.FileName);
             if (this.LookupID(strategy_0.ID.ToString()) == null)
             {
-                this.list_2.Add(strategy_0);
+                this.strategies.Add(strategy_0);
             }
         }
 
@@ -606,7 +606,7 @@
         public IList<Strategy> StrategiesInFolder(string folderName, string networkPath)
         {
             List<Strategy> list = new List<Strategy>();
-            foreach (Strategy strategy in this.list_2)
+            foreach (Strategy strategy in this.strategies)
             {
                 if ((this.method_2(strategy) == folderName) && (strategy.NetworkDrivePath == networkPath))
                 {
@@ -622,7 +622,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.folderNames;
             }
         }
 
@@ -631,7 +631,7 @@
         {
             get
             {
-                return this.list_1;
+                return this.libraryNames;
             }
         }
 
@@ -639,12 +639,12 @@
         {
             get
             {
-                return this.string_0;
+                return this.rootPath;
             }
             set
             {
-                this.string_0 = value;
-                if ((this.string_0 != null) && (this.string_0 != ""))
+                this.rootPath = value;
+                if ((this.rootPath != null) && (this.rootPath != ""))
                 {
                     this.LoadStrategies();
                 }
@@ -656,7 +656,7 @@
         {
             get
             {
-                return this.list_2;
+                return this.strategies;
             }
         }
     }

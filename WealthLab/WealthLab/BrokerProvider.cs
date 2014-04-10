@@ -6,9 +6,9 @@
 
     public abstract class BrokerProvider
     {
-        private AuthenticationProvider authenticationProvider_0;
+        private AuthenticationProvider authenticationProvider;
         private IBrokerHost ibrokerHost_0;
-        private List<Account> list_0 = new List<Account>();
+        private List<Account> accounts = new List<Account>();
         private List<string> list_1 = new List<string>();
 
         protected BrokerProvider()
@@ -93,7 +93,7 @@
         public virtual void Initialize(IBrokerHost brokerHost, AuthenticationProvider authProvider)
         {
             this.ibrokerHost_0 = brokerHost;
-            this.authenticationProvider_0 = authProvider;
+            this.authenticationProvider = authProvider;
         }
 
         public abstract void PlaceOrder(IList<Order> orders);
@@ -102,7 +102,7 @@
         public abstract void RequestOrderStatusUpdatesForOrders(IList<Order> orders);
         public void RequestUpdates()
         {
-            this.list_0 = this.GetAccounts();
+            this.accounts = this.GetAccounts();
         }
 
         public abstract string RouteForStrategyOrders(BarDataScale scale);
@@ -119,7 +119,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.accounts;
             }
         }
 
@@ -127,7 +127,7 @@
         {
             get
             {
-                return this.authenticationProvider_0;
+                return this.authenticationProvider;
             }
         }
 

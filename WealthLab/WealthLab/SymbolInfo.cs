@@ -8,11 +8,11 @@
     {
         private double double_0;
         private double double_1;
-        private double double_2;
-        private int int_0;
-        private WealthLab.SecurityType securityType_0;
-        private string string_0;
-        private string string_1;
+        private double tick;
+        private int decimals;
+        private WealthLab.SecurityType securityType;
+        private string symbol;
+        private string marketName;
 
         public SymbolInfo()
         {
@@ -20,34 +20,34 @@
 
         public SymbolInfo(SymbolInfo symbolInfo_0)
         {
-            this.string_0 = symbolInfo_0.Symbol;
-            this.securityType_0 = symbolInfo_0.SecurityType;
+            this.symbol = symbolInfo_0.Symbol;
+            this.securityType = symbolInfo_0.SecurityType;
             this.double_0 = symbolInfo_0.Margin;
             this.double_1 = symbolInfo_0.PointValue;
-            this.double_2 = symbolInfo_0.Tick;
-            this.int_0 = symbolInfo_0.Decimals;
-            this.string_1 = symbolInfo_0.MarketName;
+            this.tick = symbolInfo_0.Tick;
+            this.decimals = symbolInfo_0.Decimals;
+            this.marketName = symbolInfo_0.MarketName;
         }
 
         public SymbolInfo(string symbol, WealthLab.SecurityType securityType, double margin, double pointValue, double tick, int decimals)
         {
-            this.string_0 = symbol;
-            this.securityType_0 = securityType;
+            this.symbol = symbol;
+            this.securityType = securityType;
             this.double_0 = margin;
             this.double_1 = pointValue;
-            this.double_2 = tick;
-            this.int_0 = decimals;
+            this.tick = tick;
+            this.decimals = decimals;
         }
 
         public int Decimals
         {
             get
             {
-                return this.int_0;
+                return this.decimals;
             }
             set
             {
-                this.int_0 = value;
+                this.decimals = value;
             }
         }
 
@@ -74,11 +74,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.marketName;
             }
             set
             {
-                this.string_1 = value;
+                this.marketName = value;
             }
         }
 
@@ -105,11 +105,11 @@
         {
             get
             {
-                return this.securityType_0;
+                return this.securityType;
             }
             set
             {
-                this.securityType_0 = value;
+                this.securityType = value;
             }
         }
 
@@ -117,11 +117,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             set
             {
-                this.string_0 = value;
+                this.symbol = value;
             }
         }
 
@@ -129,11 +129,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.tick;
             }
             set
             {
-                this.double_2 = value;
+                this.tick = value;
             }
         }
     }

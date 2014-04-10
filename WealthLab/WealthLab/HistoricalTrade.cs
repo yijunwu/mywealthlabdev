@@ -7,17 +7,17 @@
     [XmlRoot(ElementName="HistoricalTrade", IsNullable=false)]
     public class HistoricalTrade
     {
-        private BarDataScale barDataScale_0;
-        private DateTime dateTime_0;
-        private double double_0;
-        private double double_1;
-        private string string_0;
-        private string string_1;
-        private string string_2;
-        private string string_3;
+        private BarDataScale barDataScale;
+        private DateTime timeStamp;
+        private double quantity;
+        private double price;
+        private string accountNumber;
+        private string symbol;
+        private string orderID;
+        private string strategyID;
         [CompilerGenerated]
-        private string string_4;
-        private WealthLab.TradeType tradeType_0;
+        private string accountTradeType;
+        private WealthLab.TradeType tradeType;
 
         public HistoricalTrade()
         {
@@ -25,18 +25,18 @@
 
         public HistoricalTrade(Order order)
         {
-            this.string_0 = order.Account;
-            this.tradeType_0 = order.AlertType;
-            this.string_1 = order.Symbol;
-            this.string_2 = order.OrderID;
-            this.barDataScale_0 = order.DataScale;
+            this.accountNumber = order.Account;
+            this.tradeType = order.AlertType;
+            this.symbol = order.Symbol;
+            this.orderID = order.OrderID;
+            this.barDataScale = order.DataScale;
             if (order.Strategy == null)
             {
-                this.string_3 = "";
+                this.strategyID = "";
             }
             else
             {
-                this.string_3 = order.Strategy.ID.ToString();
+                this.strategyID = order.Strategy.ID.ToString();
             }
             this.AccountTradeType = order.AccountTradeType;
         }
@@ -45,11 +45,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.accountNumber;
             }
             set
             {
-                this.string_0 = value;
+                this.accountNumber = value;
             }
         }
 
@@ -58,12 +58,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_4;
+                return this.accountTradeType;
             }
             [CompilerGenerated]
             set
             {
-                this.string_4 = value;
+                this.accountTradeType = value;
             }
         }
 
@@ -71,11 +71,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.orderID;
             }
             set
             {
-                this.string_2 = value;
+                this.orderID = value;
             }
         }
 
@@ -83,11 +83,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.price;
             }
             set
             {
-                this.double_1 = value;
+                this.price = value;
             }
         }
 
@@ -95,11 +95,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.quantity;
             }
             set
             {
-                this.double_0 = value;
+                this.quantity = value;
             }
         }
 
@@ -107,11 +107,11 @@
         {
             get
             {
-                return this.barDataScale_0;
+                return this.barDataScale;
             }
             set
             {
-                this.barDataScale_0 = value;
+                this.barDataScale = value;
             }
         }
 
@@ -119,11 +119,11 @@
         {
             get
             {
-                return this.string_3;
+                return this.strategyID;
             }
             set
             {
-                this.string_3 = value;
+                this.strategyID = value;
             }
         }
 
@@ -131,11 +131,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.symbol;
             }
             set
             {
-                this.string_1 = value;
+                this.symbol = value;
             }
         }
 
@@ -143,11 +143,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.timeStamp;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.timeStamp = value;
             }
         }
 
@@ -155,11 +155,11 @@
         {
             get
             {
-                return this.tradeType_0;
+                return this.tradeType;
             }
             set
             {
-                this.tradeType_0 = value;
+                this.tradeType = value;
             }
         }
     }

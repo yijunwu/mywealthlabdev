@@ -5,33 +5,33 @@
 
     public class ChartGlyph
     {
-        private bool bool_0;
-        private Color color_0;
-        private Image image_0;
-        private int int_0;
-        private int int_1;
-        private int int_2;
-        private WealthLab.Position position_0;
+        private bool aboveBar;
+        private Color fontColor;
+        private Image image;
+        private int x;
+        private int y;
+        private int bar;
+        private WealthLab.Position position;
         private string string_0;
 
         internal ChartGlyph(Image image_1, string string_1, Color color_1, int int_3, bool bool_1)
         {
-            this.image_0 = image_1;
+            this.image = image_1;
             this.string_0 = string_1;
-            this.color_0 = color_1;
-            this.int_2 = int_3;
-            this.bool_0 = bool_1;
+            this.fontColor = color_1;
+            this.bar = int_3;
+            this.aboveBar = bool_1;
         }
 
         public bool AboveBar
         {
             get
             {
-                return this.bool_0;
+                return this.aboveBar;
             }
             internal set
             {
-                this.bool_0 = value;
+                this.aboveBar = value;
             }
         }
 
@@ -39,7 +39,7 @@
         {
             get
             {
-                return this.int_2;
+                return this.bar;
             }
         }
 
@@ -47,7 +47,7 @@
         {
             get
             {
-                return this.color_0;
+                return this.fontColor;
             }
         }
 
@@ -55,7 +55,7 @@
         {
             get
             {
-                return this.image_0;
+                return this.image;
             }
         }
 
@@ -63,7 +63,7 @@
         {
             get
             {
-                return this.image_0.Height;
+                return this.image.Height;
             }
         }
 
@@ -71,7 +71,7 @@
         {
             get
             {
-                return (this.position_0 != null);
+                return (this.position != null);
             }
         }
 
@@ -79,11 +79,11 @@
         {
             get
             {
-                return this.position_0;
+                return this.position;
             }
             internal set
             {
-                this.position_0 = value;
+                this.position = value;
             }
         }
 
@@ -99,7 +99,7 @@
         {
             get
             {
-                return this.image_0.Width;
+                return this.image.Width;
             }
         }
 
@@ -107,11 +107,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.x;
             }
             internal set
             {
-                this.int_0 = value;
+                this.x = value;
             }
         }
 
@@ -119,11 +119,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.y;
             }
             internal set
             {
-                this.int_1 = value;
+                this.y = value;
             }
         }
     }

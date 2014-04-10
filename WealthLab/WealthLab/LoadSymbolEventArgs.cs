@@ -4,23 +4,23 @@
 
     public class LoadSymbolEventArgs : EventArgs
     {
-        private Bars bars_0;
-        private BarScale barScale_0;
-        private int int_0;
-        private string string_0;
+        private Bars symbolData;
+        private BarScale barScale;
+        private int barInterval;
+        private string symbol;
 
         public LoadSymbolEventArgs(string symbol, BarScale scale, int barInterval)
         {
-            this.string_0 = symbol;
-            this.barScale_0 = scale;
-            this.int_0 = barInterval;
+            this.symbol = symbol;
+            this.barScale = scale;
+            this.barInterval = barInterval;
         }
 
         public int BarInterval
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
         }
 
@@ -28,7 +28,7 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
         }
 
@@ -36,7 +36,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
         }
 
@@ -44,11 +44,11 @@
         {
             get
             {
-                return this.bars_0;
+                return this.symbolData;
             }
             set
             {
-                this.bars_0 = value;
+                this.symbolData = value;
             }
         }
     }

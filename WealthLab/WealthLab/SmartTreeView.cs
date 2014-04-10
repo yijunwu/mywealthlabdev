@@ -9,7 +9,7 @@
     {
         private static bool bool_0 = false;
         private static List<string> list_0 = new List<string>();
-        private string string_0 = "";
+        private string standardNodeName = "";
 
         protected override void OnAfterCollapse(TreeViewEventArgs treeViewEventArgs_0)
         {
@@ -75,7 +75,7 @@
                         if (enumerator.MoveNext())
                         {
                             TreeNode current = (TreeNode)enumerator.Current;
-                            if (current.Level == 0 && current.Text == this.string_0)
+                            if (current.Level == 0 && current.Text == this.standardNodeName)
                             {
                                 current.Expand();
                                 break;
@@ -103,11 +103,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.standardNodeName;
             }
             set
             {
-                this.string_0 = value;
+                this.standardNodeName = value;
             }
         }
     }

@@ -5,77 +5,77 @@
 
     public class PositionSize
     {
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private double double_3;
-        private double double_4;
-        private double double_5;
-        private double double_6;
-        private double double_7;
-        private double double_8;
-        private PosSizeMode posSizeMode_0;
-        private string string_0;
-        private string string_1;
+        private double rawProfitDollarSize;
+        private double rawProfitShareSize;
+        private double startingCapital;
+        private double dollarSize;
+        private double shareSize;
+        private double pctSize;
+        private double riskSize;
+        private double overrideShareSize;
+        private double marginFactor;
+        private PosSizeMode posSizeMode;
+        private string simuScriptName;
+        private string posSizerConfig;
 
         public PositionSize()
         {
-            this.double_0 = 5000.0;
-            this.double_1 = 100.0;
-            this.double_2 = 100000.0;
-            this.double_3 = 5000.0;
-            this.double_4 = 100.0;
-            this.double_5 = 10.0;
-            this.double_6 = 3.0;
-            this.string_0 = "";
-            this.double_8 = 1.0;
-            this.string_1 = "";
+            this.rawProfitDollarSize = 5000.0;
+            this.rawProfitShareSize = 100.0;
+            this.startingCapital = 100000.0;
+            this.dollarSize = 5000.0;
+            this.shareSize = 100.0;
+            this.pctSize = 10.0;
+            this.riskSize = 3.0;
+            this.simuScriptName = "";
+            this.marginFactor = 1.0;
+            this.posSizerConfig = "";
         }
 
         public PositionSize(PosSizeMode mode, double amount)
         {
-            this.double_0 = 5000.0;
-            this.double_1 = 100.0;
-            this.double_2 = 100000.0;
-            this.double_3 = 5000.0;
-            this.double_4 = 100.0;
-            this.double_5 = 10.0;
-            this.double_6 = 3.0;
-            this.string_0 = "";
-            this.double_8 = 1.0;
-            this.string_1 = "";
-            this.posSizeMode_0 = mode;
-            switch (this.posSizeMode_0)
+            this.rawProfitDollarSize = 5000.0;
+            this.rawProfitShareSize = 100.0;
+            this.startingCapital = 100000.0;
+            this.dollarSize = 5000.0;
+            this.shareSize = 100.0;
+            this.pctSize = 10.0;
+            this.riskSize = 3.0;
+            this.simuScriptName = "";
+            this.marginFactor = 1.0;
+            this.posSizerConfig = "";
+            this.posSizeMode = mode;
+            switch (this.posSizeMode)
             {
                 case PosSizeMode.RawProfitDollar:
-                    this.double_0 = amount;
+                    this.rawProfitDollarSize = amount;
                     return;
 
                 case PosSizeMode.RawProfitShare:
-                    this.double_1 = amount;
+                    this.rawProfitShareSize = amount;
                     return;
 
                 case PosSizeMode.Dollar:
-                    this.double_3 = amount;
+                    this.dollarSize = amount;
                     return;
 
                 case PosSizeMode.Share:
-                    this.double_4 = amount;
+                    this.shareSize = amount;
                     return;
 
                 case PosSizeMode.PctEquity:
-                    this.double_5 = amount;
+                    this.pctSize = amount;
                     return;
 
                 case PosSizeMode.MaxRisk:
-                    this.double_6 = amount;
+                    this.riskSize = amount;
                     return;
 
                 case PosSizeMode.SimuScript:
                     break;
 
                 case PosSizeMode.ScriptOverride:
-                    this.double_7 = amount;
+                    this.overrideShareSize = amount;
                     break;
 
                 default:
@@ -87,26 +87,26 @@
         {
             PositionSize size = new PositionSize();
             string[] strArray = string_2.Split(new char[] { ';' });
-            size.posSizeMode_0 = (PosSizeMode) Enum.Parse(typeof(PosSizeMode), strArray[0]);
-            size.double_0 = double.Parse(strArray[1]);
-            size.double_1 = double.Parse(strArray[2]);
-            size.double_2 = double.Parse(strArray[3]);
-            size.double_3 = double.Parse(strArray[4]);
-            size.double_4 = double.Parse(strArray[5]);
-            size.double_5 = double.Parse(strArray[6]);
-            size.double_6 = double.Parse(strArray[7]);
-            size.string_0 = strArray[8];
+            size.posSizeMode = (PosSizeMode) Enum.Parse(typeof(PosSizeMode), strArray[0]);
+            size.rawProfitDollarSize = double.Parse(strArray[1]);
+            size.rawProfitShareSize = double.Parse(strArray[2]);
+            size.startingCapital = double.Parse(strArray[3]);
+            size.dollarSize = double.Parse(strArray[4]);
+            size.shareSize = double.Parse(strArray[5]);
+            size.pctSize = double.Parse(strArray[6]);
+            size.riskSize = double.Parse(strArray[7]);
+            size.simuScriptName = strArray[8];
             if (strArray.Length > 9)
             {
-                size.double_8 = double.Parse(strArray[9]);
+                size.marginFactor = double.Parse(strArray[9]);
             }
             if (strArray.Length > 10)
             {
-                size.double_7 = double.Parse(strArray[10]);
+                size.overrideShareSize = double.Parse(strArray[10]);
             }
             if (strArray.Length > 11)
             {
-                size.string_1 = strArray[11];
+                size.posSizerConfig = strArray[11];
             }
             return size;
         }
@@ -114,29 +114,29 @@
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append(this.posSizeMode_0);
+            builder.Append(this.posSizeMode);
             builder.Append(";");
-            builder.Append(this.double_0);
+            builder.Append(this.rawProfitDollarSize);
             builder.Append(";");
-            builder.Append(this.double_1);
+            builder.Append(this.rawProfitShareSize);
             builder.Append(";");
-            builder.Append(this.double_2);
+            builder.Append(this.startingCapital);
             builder.Append(";");
-            builder.Append(this.double_3);
+            builder.Append(this.dollarSize);
             builder.Append(";");
-            builder.Append(this.double_4);
+            builder.Append(this.shareSize);
             builder.Append(";");
-            builder.Append(this.double_5);
+            builder.Append(this.pctSize);
             builder.Append(";");
-            builder.Append(this.double_6);
+            builder.Append(this.riskSize);
             builder.Append(";");
-            builder.Append(this.string_0);
+            builder.Append(this.simuScriptName);
             builder.Append(";");
-            builder.Append(this.double_8);
+            builder.Append(this.marginFactor);
             builder.Append(";");
-            builder.Append(this.double_7);
+            builder.Append(this.overrideShareSize);
             builder.Append(";");
-            builder.Append(this.string_1);
+            builder.Append(this.posSizerConfig);
             return builder.ToString();
         }
 
@@ -144,11 +144,11 @@
         {
             get
             {
-                return this.double_3;
+                return this.dollarSize;
             }
             set
             {
-                this.double_3 = value;
+                this.dollarSize = value;
             }
         }
 
@@ -156,11 +156,11 @@
         {
             get
             {
-                return this.double_8;
+                return this.marginFactor;
             }
             set
             {
-                this.double_8 = value;
+                this.marginFactor = value;
             }
         }
 
@@ -168,11 +168,11 @@
         {
             get
             {
-                return this.posSizeMode_0;
+                return this.posSizeMode;
             }
             set
             {
-                this.posSizeMode_0 = value;
+                this.posSizeMode = value;
             }
         }
 
@@ -180,11 +180,11 @@
         {
             get
             {
-                return this.double_7;
+                return this.overrideShareSize;
             }
             set
             {
-                this.double_7 = value;
+                this.overrideShareSize = value;
             }
         }
 
@@ -192,11 +192,11 @@
         {
             get
             {
-                return this.double_5;
+                return this.pctSize;
             }
             set
             {
-                this.double_5 = value;
+                this.pctSize = value;
             }
         }
 
@@ -204,11 +204,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.posSizerConfig;
             }
             set
             {
-                this.string_1 = value;
+                this.posSizerConfig = value;
             }
         }
 
@@ -232,11 +232,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.rawProfitDollarSize;
             }
             set
             {
-                this.double_0 = value;
+                this.rawProfitDollarSize = value;
             }
         }
 
@@ -256,11 +256,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.rawProfitShareSize;
             }
             set
             {
-                this.double_1 = value;
+                this.rawProfitShareSize = value;
             }
         }
 
@@ -268,11 +268,11 @@
         {
             get
             {
-                return this.double_6;
+                return this.riskSize;
             }
             set
             {
-                this.double_6 = value;
+                this.riskSize = value;
             }
         }
 
@@ -280,11 +280,11 @@
         {
             get
             {
-                return this.double_4;
+                return this.shareSize;
             }
             set
             {
-                this.double_4 = value;
+                this.shareSize = value;
             }
         }
 
@@ -292,11 +292,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.simuScriptName;
             }
             set
             {
-                this.string_0 = value;
+                this.simuScriptName = value;
             }
         }
 
@@ -304,11 +304,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.startingCapital;
             }
             set
             {
-                this.double_2 = value;
+                this.startingCapital = value;
             }
         }
 

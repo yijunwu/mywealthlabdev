@@ -7,21 +7,21 @@
     public class DataStore
     {
         private bool bool_0 = true;
-        private string string_0;
+        private string rootPath;
         private string string_1;
 
         public DataStore(string rootPath, string dataStoreName, string extension)
         {
             this.string_1 = extension;
-            this.string_0 = rootPath;
-            if (!Directory.Exists(this.string_0))
+            this.rootPath = rootPath;
+            if (!Directory.Exists(this.rootPath))
             {
-                Directory.CreateDirectory(this.string_0);
+                Directory.CreateDirectory(this.rootPath);
             }
-            this.string_0 = this.string_0 + @"\" + dataStoreName + @"\";
-            if (!Directory.Exists(this.string_0))
+            this.rootPath = this.rootPath + @"\" + dataStoreName + @"\";
+            if (!Directory.Exists(this.rootPath))
             {
-                Directory.CreateDirectory(this.string_0);
+                Directory.CreateDirectory(this.rootPath);
             }
         }
 
@@ -31,35 +31,35 @@
             switch (scale)
             {
                 case BarScale.Weekly:
-                    str = this.string_0 + "Weekly";
+                    str = this.rootPath + "Weekly";
                     break;
 
                 case BarScale.Monthly:
-                    str = this.string_0 + "Monthly";
+                    str = this.rootPath + "Monthly";
                     break;
 
                 case BarScale.Minute:
-                    str = this.string_0 + barInterval + " minute";
+                    str = this.rootPath + barInterval + " minute";
                     break;
 
                 case BarScale.Second:
-                    str = this.string_0 + barInterval + " second";
+                    str = this.rootPath + barInterval + " second";
                     break;
 
                 case BarScale.Tick:
-                    str = this.string_0 + barInterval + " tick";
+                    str = this.rootPath + barInterval + " tick";
                     break;
 
                 case BarScale.Quarterly:
-                    str = this.string_0 + "Quarterly";
+                    str = this.rootPath + "Quarterly";
                     break;
 
                 case BarScale.Yearly:
-                    str = this.string_0 + "Yearly";
+                    str = this.rootPath + "Yearly";
                     break;
 
                 default:
-                    str = this.string_0 + "Daily";
+                    str = this.rootPath + "Daily";
                     break;
             }
             if (this.bool_0 && !Directory.Exists(str))
@@ -87,7 +87,7 @@
 
         protected string DataPathForSymbol(string symbol)
         {
-            string path = this.string_0;
+            string path = this.rootPath;
             if ((symbol == null) || (symbol == ""))
             {
                 throw new ArgumentException("Symbol must not be blank");
@@ -141,7 +141,7 @@
         public IList<BarDataScale> GetExistingBarScales()
         {
             List<BarDataScale> list = new List<BarDataScale>();
-            foreach (string str2 in Directory.GetDirectories(this.string_0))
+            foreach (string str2 in Directory.GetDirectories(this.rootPath))
             {
                 string[] strArray3 = str2.Split(new char[] { '\\' });
                 string str = strArray3[strArray3.Length - 1];
@@ -176,7 +176,7 @@
         public List<string> GetExistingSymbols()
         {
             List<string> list = new List<string>();
-            this.method_0(this.string_0, list);
+            this.method_0(this.rootPath, list);
             return list;
         }
 
@@ -248,21 +248,21 @@
         {
             get
             {
-                return this.string_0;
+                return this.rootPath;
             }
             set
             {
                 if (value.Substring(value.Length - 1, 1) != @"\")
                 {
-                    this.string_0 = value + @"\";
+                    this.rootPath = value + @"\";
                 }
                 else
                 {
-                    this.string_0 = value;
+                    this.rootPath = value;
                 }
-                if (!Directory.Exists(this.string_0))
+                if (!Directory.Exists(this.rootPath))
                 {
-                    Directory.CreateDirectory(this.string_0);
+                    Directory.CreateDirectory(this.rootPath);
                 }
             }
         }

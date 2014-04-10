@@ -6,21 +6,21 @@
 
     public class OptimizationResult
     {
-        private List<double> list_0;
-        private List<double> list_1;
+        private List<double> parameterValues;
+        private List<double> results;
         [CompilerGenerated]
-        private string string_0;
+        private string symbol;
 
         public OptimizationResult()
         {
-            this.list_0 = new List<double>();
-            this.list_1 = new List<double>();
+            this.parameterValues = new List<double>();
+            this.results = new List<double>();
         }
 
         public OptimizationResult(string symbol)
         {
-            this.list_0 = new List<double>();
-            this.list_1 = new List<double>();
+            this.parameterValues = new List<double>();
+            this.results = new List<double>();
             this.Symbol = symbol;
         }
 
@@ -28,11 +28,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.parameterValues;
             }
             set
             {
-                this.list_0 = value;
+                this.parameterValues = value;
             }
         }
 
@@ -40,11 +40,11 @@
         {
             get
             {
-                return this.list_1;
+                return this.results;
             }
             set
             {
-                this.list_1 = value;
+                this.results = value;
             }
         }
 
@@ -53,12 +53,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             [CompilerGenerated]
             set
             {
-                this.string_0 = value;
+                this.symbol = value;
             }
         }
     }

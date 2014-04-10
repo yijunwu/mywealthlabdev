@@ -10,31 +10,31 @@
         [CompilerGenerated]
         private BarDataScale barDataScale_0;
         private Bars bars_0;
-        private bool bool_0;
+        private bool sumOnCollapse;
         private bool bool_1;
         private DataSeries dataSeries_0;
         private Dictionary<string, DataSeries> dictionary_0;
-        private double double_0;
+        private double partialValue;
         private IList<DateTime> ilist_0;
-        private int int_0;
-        private List<double> list_0;
-        private List<DateTime> list_1;
-        private string string_0;
+        private int firstValidValue;
+        private List<double> dataList;
+        private List<DateTime> dateList;
+        private string description;
 
         public DataSeries(string description)
         {
-            this.list_0 = new List<double>();
-            this.double_0 = double.NaN;
-            this.list_1 = new List<DateTime>();
-            this.ilist_0 = this.list_1.AsReadOnly();
-            this.string_0 = description;
+            this.dataList = new List<double>();
+            this.partialValue = double.NaN;
+            this.dateList = new List<DateTime>();
+            this.ilist_0 = this.dateList.AsReadOnly();
+            this.description = description;
         }
 
         public DataSeries(Bars bars, string description)
         {
-            this.list_0 = new List<double>();
-            this.double_0 = double.NaN;
-            this.string_0 = description;
+            this.dataList = new List<double>();
+            this.partialValue = double.NaN;
+            this.description = description;
             this.bars_0 = bars;
             this.Capacity = bars.Count;
             for (int i = 0; i < bars.Count; i++)
@@ -47,9 +47,9 @@
 
         public DataSeries(DataSeries source, string description)
         {
-            this.list_0 = new List<double>();
-            this.double_0 = double.NaN;
-            this.string_0 = description;
+            this.dataList = new List<double>();
+            this.partialValue = double.NaN;
+            this.description = description;
             this.dataSeries_0 = source;
             this.Capacity = source.Count;
             for (int i = 0; i < source.Count; i++)
@@ -62,10 +62,10 @@
 
         internal DataSeries(Bars bars_1, string string_1, bool bool_2)
         {
-            this.list_0 = new List<double>();
-            this.double_0 = double.NaN;
+            this.dataList = new List<double>();
+            this.partialValue = double.NaN;
             this.Cache = bars_1.Cache;
-            this.string_0 = string_1;
+            this.description = string_1;
             this.bars_0 = bars_1;
             this.Capacity = bars_1.Count;
             if (bool_2)
@@ -81,10 +81,10 @@
 
         internal DataSeries(DataSeries dataSeries_1, string string_1, bool bool_2)
         {
-            this.list_0 = new List<double>();
-            this.double_0 = double.NaN;
+            this.dataList = new List<double>();
+            this.partialValue = double.NaN;
             this.Cache = dataSeries_1.Cache;
-            this.string_0 = string_1;
+            this.description = string_1;
             this.dataSeries_0 = dataSeries_1;
             this.Capacity = dataSeries_1.Count;
             if (bool_2)
@@ -125,7 +125,7 @@
             {
                 throw new InvalidOperationException("Cannot add values to a DataSeries that is based on another DataSeries or a Bars object");
             }
-            this.list_0.Add(value);
+            this.dataList.Add(value);
         }
 
         public void Add(double value, DateTime dateTime_0)
@@ -134,8 +134,8 @@
             {
                 throw new InvalidOperationException("Cannot add values to a DataSeries that is based on another DataSeries or a Bars object");
             }
-            this.list_0.Add(value);
-            this.list_1.Add(dateTime_0);
+            this.dataList.Add(value);
+            this.dateList.Add(dateTime_0);
         }
 
         public virtual void CalculatePartialValue()
@@ -211,22 +211,22 @@
 
         internal void method_0(double double_1)
         {
-            this.list_0.Add(double_1);
+            this.dataList.Add(double_1);
         }
 
         internal void method_1(int int_1, double double_1)
         {
-            this.list_0.Insert(int_1, double_1);
+            this.dataList.Insert(int_1, double_1);
         }
 
         internal void method_2()
         {
-            this.list_0.Clear();
+            this.dataList.Clear();
         }
 
         internal void method_3(int int_1)
         {
-            this.list_0.RemoveAt(int_1);
+            this.dataList.RemoveAt(int_1);
         }
 
         public static DataSeries operator +(double value, DataSeries dataSeries_1)
@@ -481,11 +481,11 @@
         {
             get
             {
-                return this.list_0.Capacity;
+                return this.dataList.Capacity;
             }
             set
             {
-                this.list_0.Capacity = value;
+                this.dataList.Capacity = value;
             }
         }
 
@@ -494,7 +494,7 @@
             get
             {
                 bool flag;
-                using (List<double>.Enumerator enumerator = this.list_0.GetEnumerator())
+                using (List<double>.Enumerator enumerator = this.dataList.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
                     {
@@ -514,7 +514,7 @@
         {
             get
             {
-                return this.list_0.Count;
+                return this.dataList.Count;
             }
         }
 
@@ -555,9 +555,9 @@
         {
             get
             {
-                if (this.list_1 != null)
+                if (this.dateList != null)
                 {
-                    return this.list_1;
+                    return this.dateList;
                 }
                 if (this.bars_0 != null)
                 {
@@ -565,7 +565,7 @@
                 }
                 if (this.dataSeries_0 != null)
                 {
-                    return this.dataSeries_0.list_1;
+                    return this.dataSeries_0.dateList;
                 }
                 return null;
             }
@@ -575,11 +575,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.description;
             }
             set
             {
-                this.string_0 = value;
+                this.description = value;
             }
         }
 
@@ -587,21 +587,21 @@
         {
             get
             {
-                return this.int_0;
+                return this.firstValidValue;
             }
             set
             {
                 if (value < 0)
                 {
-                    this.int_0 = 0;
+                    this.firstValidValue = 0;
                 }
                 else
                 {
-                    this.int_0 = value;
+                    this.firstValidValue = value;
                 }
-                if (this.int_0 >= this.Count)
+                if (this.firstValidValue >= this.Count)
                 {
-                    this.int_0 = this.Count - 1;
+                    this.firstValidValue = this.Count - 1;
                 }
             }
         }
@@ -618,11 +618,11 @@
         {
             get
             {
-                return this.list_0[int_1];
+                return this.dataList[int_1];
             }
             set
             {
-                this.list_0[int_1] = value;
+                this.dataList[int_1] = value;
             }
         }
 
@@ -634,12 +634,12 @@
                 {
                     return 0.0;
                 }
-                double num2 = this.list_0[0];
+                double num2 = this.dataList[0];
                 for (int i = this.FirstValidValue; i < this.Count; i++)
                 {
-                    if (this.list_0[i] > num2)
+                    if (this.dataList[i] > num2)
                     {
-                        num2 = this.list_0[i];
+                        num2 = this.dataList[i];
                     }
                 }
                 return num2;
@@ -654,12 +654,12 @@
                 {
                     return 0.0;
                 }
-                double num2 = this.list_0[0];
+                double num2 = this.dataList[0];
                 for (int i = this.FirstValidValue; i < this.Count; i++)
                 {
-                    if (this.list_0[i] < num2)
+                    if (this.dataList[i] < num2)
                     {
-                        num2 = this.list_0[i];
+                        num2 = this.dataList[i];
                     }
                 }
                 return num2;
@@ -670,11 +670,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.partialValue;
             }
             set
             {
-                this.double_0 = value;
+                this.partialValue = value;
             }
         }
 
@@ -682,11 +682,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.sumOnCollapse;
             }
             set
             {
-                this.bool_0 = value;
+                this.sumOnCollapse = value;
             }
         }
     }

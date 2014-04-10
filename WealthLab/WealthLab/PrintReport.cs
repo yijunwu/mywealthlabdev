@@ -8,17 +8,17 @@
     public class PrintReport
     {
         private Bitmap bitmap_0;
-        private bool bool_0;
-        private bool bool_1;
-        private bool bool_2;
+        private bool _printSomePages;
+        private bool showPrintDialog;
+        private bool showPrintPreview;
         private bool bool_3;
         private bool bool_4;
         private bool bool_5;
         private bool bool_6;
-        private bool bool_7;
-        private bool bool_8;
+        private bool _fPrintListView;
+        private bool _fPrintText;
         private bool bool_9;
-        private DataObject dataObject_0;
+        private DataObject _printObject;
         public static DataFormats.Format fmtBaseTitle = DataFormats.GetFormat("BaseTitle");
         public static DataFormats.Format fmtDetails = DataFormats.GetFormat("Details");
         public static DataFormats.Format fmtDisclosure = DataFormats.GetFormat("Disclosure");
@@ -29,37 +29,37 @@
         public static DataFormats.Format fmtSymbol = DataFormats.GetFormat("Symbol");
         public static DataFormats.Format fmtTitle = DataFormats.GetFormat("Title");
         private Font font_0;
-        private Font font_1;
-        private Font font_2;
-        private Font font_3;
-        private int int_0;
-        private int int_1;
-        private int int_2;
+        private Font _printFontBody;
+        private Font _printFontDetail;
+        private Font _printFontFooter;
+        private int _intPageCounter;
+        private int _startPageCount;
+        private int _endPageCount;
         private int int_3;
-        private int int_4;
+        private int _lvRow;
         private ListView listView_0;
         private PrintPreview printPreview_0;
-        private string string_0;
+        private string basePrintTitle;
         private string string_1;
-        private string string_2;
-        private string string_3;
-        private string string_4;
-        private string string_5;
-        private string string_6;
-        private string string_7;
-        private static string string_8 = "Backtesting provides a hypothetical calculation of how a security or portfolio of securities, subject to a trading strategy, would have performed over a historical time period. You should not assume that backtesting of a trading strategy will provide any indication of how your portfolio of securities, or a new portfolio of securities, might perform over time. You should choose your own trading strategies based on your particular objectives and risk tolerances. Be sure to review your decisions periodically to make sure they are still consistent with your goals. Past performance is no guarantee of future results.";
+        private string _printTitle;
+        private string _printStrategy;
+        private string _printSymbol;
+        private string _printDetails;
+        private string _printText;
+        private string _rptDisclosure;
+        private static string defaultDisclosure = "Backtesting provides a hypothetical calculation of how a security or portfolio of securities, subject to a trading strategy, would have performed over a historical time period. You should not assume that backtesting of a trading strategy will provide any indication of how your portfolio of securities, or a new portfolio of securities, might perform over time. You should choose your own trading strategies based on your particular objectives and risk tolerances. Be sure to review your decisions periodically to make sure they are still consistent with your goals. Past performance is no guarantee of future results.";
 
         public PrintReport()
         {
             this.string_1 = "Wealth-Lab Pro\x00ae";
-            this.string_7 = "";
+            this._rptDisclosure = "";
             this.method_0();
         }
 
         public PrintReport(bool bUseDefaultDisclosure)
         {
             this.string_1 = "Wealth-Lab Pro\x00ae";
-            this.string_7 = "";
+            this._rptDisclosure = "";
             this.method_0();
             this.UseDefaultDisclosure();
         }
@@ -67,17 +67,17 @@
         public PrintReport(DataObject doPrint)
         {
             this.string_1 = "Wealth-Lab Pro\x00ae";
-            this.string_7 = "";
+            this._rptDisclosure = "";
             this.method_0();
-            this.dataObject_0 = doPrint;
+            this._printObject = doPrint;
         }
 
         public PrintReport(DataObject doPrint, bool bUseDefaultDisclosure)
         {
             this.string_1 = "Wealth-Lab Pro\x00ae";
-            this.string_7 = "";
+            this._rptDisclosure = "";
             this.method_0();
-            this.dataObject_0 = doPrint;
+            this._printObject = doPrint;
             this.UseDefaultDisclosure();
         }
 
@@ -109,42 +109,42 @@
         {
             if ((this.printPreview_0 != null) && this.printPreview_0.PrintSomePages)
             {
-                this.int_1 = this.printPreview_0.FromPage;
-                this.int_2 = this.printPreview_0.ToPage;
+                this._startPageCount = this.printPreview_0.FromPage;
+                this._endPageCount = this.printPreview_0.ToPage;
             }
-            this.int_0 = 1;
-            if (this.dataObject_0.GetDataPresent(fmtBaseTitle.Name))
+            this._intPageCounter = 1;
+            if (this._printObject.GetDataPresent(fmtBaseTitle.Name))
             {
-                this.BasePrintTitle = this.dataObject_0.GetData(fmtBaseTitle.Name).ToString();
+                this.BasePrintTitle = this._printObject.GetData(fmtBaseTitle.Name).ToString();
             }
-            if (this.dataObject_0.GetDataPresent(fmtTitle.Name))
+            if (this._printObject.GetDataPresent(fmtTitle.Name))
             {
-                this.printTitle = this.dataObject_0.GetData(fmtTitle.Name).ToString();
+                this.printTitle = this._printObject.GetData(fmtTitle.Name).ToString();
             }
-            if (this.dataObject_0.GetDataPresent(fmtStrategy.Name))
+            if (this._printObject.GetDataPresent(fmtStrategy.Name))
             {
-                this.printStrategy = this.dataObject_0.GetData(fmtStrategy.Name).ToString();
+                this.printStrategy = this._printObject.GetData(fmtStrategy.Name).ToString();
             }
-            if (this.dataObject_0.GetDataPresent(fmtSymbol.Name))
+            if (this._printObject.GetDataPresent(fmtSymbol.Name))
             {
-                this.printSymbol = this.dataObject_0.GetData(fmtSymbol.Name).ToString();
+                this.printSymbol = this._printObject.GetData(fmtSymbol.Name).ToString();
             }
-            if (this.dataObject_0.GetDataPresent(fmtDetails.Name))
+            if (this._printObject.GetDataPresent(fmtDetails.Name))
             {
-                this.printDetails = this.dataObject_0.GetData(fmtDetails.Name).ToString();
+                this.printDetails = this._printObject.GetData(fmtDetails.Name).ToString();
             }
-            if (this.dataObject_0.GetDataPresent(fmtGraphic.Name))
+            if (this._printObject.GetDataPresent(fmtGraphic.Name))
             {
-                this.printGraphic = this.dataObject_0.GetData(fmtGraphic.Name) as Bitmap;
+                this.printGraphic = this._printObject.GetData(fmtGraphic.Name) as Bitmap;
             }
-            if (this.dataObject_0.GetDataPresent(fmtListView.Name))
+            if (this._printObject.GetDataPresent(fmtListView.Name))
             {
-                this.printListView = this.dataObject_0.GetData(fmtListView.Name) as ListView;
-                this.int_4 = 0;
+                this.printListView = this._printObject.GetData(fmtListView.Name) as ListView;
+                this._lvRow = 0;
             }
-            if (this.dataObject_0.GetDataPresent(fmtDisclosure.Name))
+            if (this._printObject.GetDataPresent(fmtDisclosure.Name))
             {
-                this.rptDisclosure = this.dataObject_0.GetData(fmtDisclosure.Name).ToString();
+                this.rptDisclosure = this._printObject.GetData(fmtDisclosure.Name).ToString();
             }
         }
 
@@ -163,7 +163,7 @@
         {
             bool printPage = true;
             Rectangle destRect = new Rectangle(e.MarginBounds.X, e.MarginBounds.Y, e.MarginBounds.Width, e.MarginBounds.Height);
-            this.int_3 = ((int) e.Graphics.MeasureString("Test", this.font_1).Height) + 1;
+            this.int_3 = ((int) e.Graphics.MeasureString("Test", this._printFontBody).Height) + 1;
             if (this.printSomePages && (this.intPageCounter < this.startPageCount))
             {
                 printPage = false;
@@ -195,16 +195,16 @@
         private void method_0()
         {
             this.font_0 = new Font("Arial", 14f, FontStyle.Bold);
-            this.font_1 = new Font("Arial", 10f);
-            this.font_2 = new Font("Arial", 8f);
-            this.font_3 = new Font("Arial", 6f);
-            this.int_0 = 0;
-            this.int_2 = 0;
-            this.bool_0 = false;
-            this.dataObject_0 = new DataObject();
-            this.string_0 = this.string_1;
-            this.bool_1 = true;
-            this.bool_2 = true;
+            this._printFontBody = new Font("Arial", 10f);
+            this._printFontDetail = new Font("Arial", 8f);
+            this._printFontFooter = new Font("Arial", 6f);
+            this._intPageCounter = 0;
+            this._endPageCount = 0;
+            this._printSomePages = false;
+            this._printObject = new DataObject();
+            this.basePrintTitle = this.string_1;
+            this.showPrintDialog = true;
+            this.showPrintPreview = true;
         }
 
         public void PrintFooter(PrintPageEventArgs printPageEventArgs_0, bool printPage, ref Rectangle destRect, SizeF disclosureSizeF)
@@ -262,10 +262,10 @@
             prtdoc.PrintPage += new PrintPageEventHandler(this.graphicReport_PrintPage);
             prtdoc.EndPrint += new PrintEventHandler(this.graphicReport_EndPrint);
             prtdoc.DefaultPageSettings = _pageSettings;
-            if (this.bool_2)
+            if (this.showPrintPreview)
             {
                 this.printPreview_0 = new PrintPreview(prtdoc);
-                this.printPreview_0.ShowPrintDialog = this.bool_1;
+                this.printPreview_0.ShowPrintDialog = this.showPrintDialog;
                 this.printPreview_0.ShowDialog();
                 prtdoc.Dispose();
             }
@@ -274,7 +274,7 @@
                 PrintDialog dialog = new PrintDialog {
                     Document = prtdoc
                 };
-                if (this.bool_1)
+                if (this.showPrintDialog)
                 {
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
@@ -296,28 +296,28 @@
             StringFormat format = new StringFormat {
                 Alignment = StringAlignment.Far
             };
-            printPageEventArgs_0.Graphics.DrawString(s, this.font_2, Brushes.Black, destRect, format);
-            int num = ((int) printPageEventArgs_0.Graphics.MeasureString(s, this.font_1).Height) + 1;
+            printPageEventArgs_0.Graphics.DrawString(s, this._printFontDetail, Brushes.Black, destRect, format);
+            int num = ((int) printPageEventArgs_0.Graphics.MeasureString(s, this._printFontBody).Height) + 1;
             if (this.bool_3)
             {
-                printPageEventArgs_0.Graphics.DrawString("Strategy: " + this.printStrategy, this.font_1, Brushes.Black, destRect);
+                printPageEventArgs_0.Graphics.DrawString("Strategy: " + this.printStrategy, this._printFontBody, Brushes.Black, destRect);
                 this.bool_3 = false;
                 destRect.Y += num;
                 destRect.Height -= num;
             }
             if (this.bool_4)
             {
-                printPageEventArgs_0.Graphics.DrawString("Dataset/Symbol: " + this.printSymbol, this.font_1, Brushes.Black, destRect);
+                printPageEventArgs_0.Graphics.DrawString("Dataset/Symbol: " + this.printSymbol, this._printFontBody, Brushes.Black, destRect);
                 destRect.Y += num;
                 destRect.Height -= num;
                 this.bool_4 = false;
             }
             if (this.bool_5)
             {
-                SizeF ef2 = printPageEventArgs_0.Graphics.MeasureString(this.printDetails, this.font_2, destRect.Width);
+                SizeF ef2 = printPageEventArgs_0.Graphics.MeasureString(this.printDetails, this._printFontDetail, destRect.Width);
                 destRect.Y += num;
                 destRect.Height -= num;
-                printPageEventArgs_0.Graphics.DrawString(this.printDetails, this.font_2, Brushes.Black, destRect);
+                printPageEventArgs_0.Graphics.DrawString(this.printDetails, this._printFontDetail, Brushes.Black, destRect);
                 destRect.Y += ((int) ef2.Height) + 1;
                 destRect.Height -= ((int) ef2.Height) + 1;
                 this.bool_5 = false;
@@ -381,11 +381,11 @@
                 destRect.Y += num3;
                 destRect.Height -= num3;
             }
-            while (this.int_4 < this.printListView.Items.Count)
+            while (this._lvRow < this.printListView.Items.Count)
             {
                 int num5 = this.int_3;
                 layoutRectangle.X = destRect.X;
-                for (int i = 0; i < this.printListView.Items[this.int_4].SubItems.Count; i++)
+                for (int i = 0; i < this.printListView.Items[this._lvRow].SubItems.Count; i++)
                 {
                     if (this.printListView.Columns.Count > i)
                     {
@@ -393,7 +393,7 @@
                         if (header.Width > 3)
                         {
                             layoutRectangle.Width = header.Width * num;
-                            ListViewItem.ListViewSubItem item = this.printListView.Items[this.int_4].SubItems[i];
+                            ListViewItem.ListViewSubItem item = this.printListView.Items[this._lvRow].SubItems[i];
                             if (item.Text.Length > 0)
                             {
                                 StringFormat format = new StringFormat();
@@ -425,12 +425,12 @@
                 destRect.Height -= num5;
                 if (destRect.Height < num5)
                 {
-                    this.int_4++;
+                    this._lvRow++;
                     break;
                 }
-                this.int_4++;
+                this._lvRow++;
             }
-            if (this.int_4 >= this.printListView.Items.Count)
+            if (this._lvRow >= this.printListView.Items.Count)
             {
                 this.fPrintListView = false;
             }
@@ -455,7 +455,7 @@
                 destRect.Height = 0;
             }
             this.printText = this.printText.Substring(charactersFitted);
-            this.bool_8 = this.printText.Length > 0;
+            this._fPrintText = this.printText.Length > 0;
         }
 
         public void PrintTitle(PrintPageEventArgs printPageEventArgs_0, ref Rectangle destRect)
@@ -463,8 +463,8 @@
             StringFormat format = new StringFormat {
                 Alignment = StringAlignment.Center
             };
-            printPageEventArgs_0.Graphics.DrawString(this.string_0 + " " + this.printTitle, this.font_0, Brushes.Black, destRect, format);
-            SizeF ef = printPageEventArgs_0.Graphics.MeasureString(this.string_0 + " " + this.printTitle, this.font_0);
+            printPageEventArgs_0.Graphics.DrawString(this.basePrintTitle + " " + this.printTitle, this.font_0, Brushes.Black, destRect, format);
+            SizeF ef = printPageEventArgs_0.Graphics.MeasureString(this.basePrintTitle + " " + this.printTitle, this.font_0);
             destRect.Y += ((int) ef.Height) + 1;
             destRect.Height -= ((int) ef.Height) + 1;
         }
@@ -478,11 +478,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.basePrintTitle;
             }
             set
             {
-                this.string_0 = value;
+                this.basePrintTitle = value;
             }
         }
 
@@ -490,7 +490,7 @@
         {
             get
             {
-                return string_8;
+                return defaultDisclosure;
             }
         }
 
@@ -498,11 +498,11 @@
         {
             get
             {
-                return this.int_2;
+                return this._endPageCount;
             }
             set
             {
-                this.int_2 = value;
+                this._endPageCount = value;
             }
         }
 
@@ -510,11 +510,11 @@
         {
             get
             {
-                return this.bool_7;
+                return this._fPrintListView;
             }
             set
             {
-                this.bool_7 = value;
+                this._fPrintListView = value;
             }
         }
 
@@ -522,11 +522,11 @@
         {
             get
             {
-                return this.bool_8;
+                return this._fPrintText;
             }
             set
             {
-                this.bool_8 = value;
+                this._fPrintText = value;
             }
         }
 
@@ -534,11 +534,11 @@
         {
             get
             {
-                return this.int_0;
+                return this._intPageCounter;
             }
             set
             {
-                this.int_0 = value;
+                this._intPageCounter = value;
             }
         }
 
@@ -546,11 +546,11 @@
         {
             get
             {
-                return this.int_4;
+                return this._lvRow;
             }
             set
             {
-                this.int_4 = value;
+                this._lvRow = value;
             }
         }
 
@@ -558,11 +558,11 @@
         {
             get
             {
-                return this.string_5;
+                return this._printDetails;
             }
             set
             {
-                this.string_5 = value;
+                this._printDetails = value;
                 this.bool_5 = true;
             }
         }
@@ -571,11 +571,11 @@
         {
             get
             {
-                return this.font_1;
+                return this._printFontBody;
             }
             set
             {
-                this.font_1 = value;
+                this._printFontBody = value;
             }
         }
 
@@ -583,11 +583,11 @@
         {
             get
             {
-                return this.font_2;
+                return this._printFontDetail;
             }
             set
             {
-                this.font_2 = value;
+                this._printFontDetail = value;
             }
         }
 
@@ -595,11 +595,11 @@
         {
             get
             {
-                return this.font_3;
+                return this._printFontFooter;
             }
             set
             {
-                this.font_3 = value;
+                this._printFontFooter = value;
             }
         }
 
@@ -638,7 +638,7 @@
             {
                 this.listView_0 = value;
                 this.fPrintListView = true;
-                this.int_4 = 0;
+                this._lvRow = 0;
             }
         }
 
@@ -646,11 +646,11 @@
         {
             get
             {
-                return this.dataObject_0;
+                return this._printObject;
             }
             set
             {
-                this.dataObject_0 = value;
+                this._printObject = value;
             }
         }
 
@@ -658,11 +658,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this._printSomePages;
             }
             set
             {
-                this.bool_0 = value;
+                this._printSomePages = value;
             }
         }
 
@@ -670,11 +670,11 @@
         {
             get
             {
-                return this.string_3;
+                return this._printStrategy;
             }
             set
             {
-                this.string_3 = value;
+                this._printStrategy = value;
                 this.bool_3 = true;
             }
         }
@@ -683,11 +683,11 @@
         {
             get
             {
-                return this.string_4;
+                return this._printSymbol;
             }
             set
             {
-                this.string_4 = value;
+                this._printSymbol = value;
                 this.bool_4 = true;
             }
         }
@@ -696,11 +696,11 @@
         {
             get
             {
-                return this.string_6;
+                return this._printText;
             }
             set
             {
-                this.string_6 = value;
+                this._printText = value;
                 this.fPrintText = true;
             }
         }
@@ -709,11 +709,11 @@
         {
             get
             {
-                return this.string_2;
+                return this._printTitle;
             }
             set
             {
-                this.string_2 = value;
+                this._printTitle = value;
             }
         }
 
@@ -721,11 +721,11 @@
         {
             get
             {
-                return this.string_7;
+                return this._rptDisclosure;
             }
             set
             {
-                this.string_7 = value;
+                this._rptDisclosure = value;
                 this.bool_9 = true;
             }
         }
@@ -734,11 +734,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.showPrintDialog;
             }
             set
             {
-                this.bool_1 = value;
+                this.showPrintDialog = value;
             }
         }
 
@@ -746,11 +746,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.showPrintPreview;
             }
             set
             {
-                this.bool_2 = value;
+                this.showPrintPreview = value;
             }
         }
 
@@ -758,11 +758,11 @@
         {
             get
             {
-                return this.int_1;
+                return this._startPageCount;
             }
             set
             {
-                this.int_1 = value;
+                this._startPageCount = value;
             }
         }
     }

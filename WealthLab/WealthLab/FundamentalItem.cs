@@ -19,25 +19,25 @@
         public const string attrPeriodWeekly = "weekly";
         public const string attrPeriodYearly = "yearly";
         public const string attrUnits = "units";
-        private static Bitmap bitmap_0 = Properties.Resources.FundamentalItem;
-        private DateTime dateTime_0;
+        private static Bitmap glyph = Properties.Resources.FundamentalItem;
+        private DateTime dateTime;
         private Dictionary<string, string> dictionary_0;
-        private double double_0;
-        private int int_0 = -1;
-        private string string_0;
+        private double doubleValue;
+        private int bar = -1;
+        private string name;
 
         public FundamentalItem(string name)
         {
-            this.string_0 = name;
+            this.name = name;
         }
 
         public virtual string FormatValue()
         {
             if (this.Value < 0.01)
             {
-                return (this.string_0 + ": " + this.Value.ToString());
+                return (this.name + ": " + this.Value.ToString());
             }
-            return (this.string_0 + ": " + this.Value.ToString("N2"));
+            return (this.name + ": " + this.Value.ToString("N2"));
         }
 
         public string GetDetail(string detailName)
@@ -51,8 +51,8 @@
 
         internal void method_0(BinaryWriter binaryWriter_0)
         {
-            binaryWriter_0.Write(this.dateTime_0.Ticks);
-            binaryWriter_0.Write(this.double_0);
+            binaryWriter_0.Write(this.dateTime.Ticks);
+            binaryWriter_0.Write(this.doubleValue);
             if (this.dictionary_0 == null)
             {
                 binaryWriter_0.Write(0);
@@ -70,8 +70,8 @@
 
         internal void method_1(BinaryReader binaryReader_0)
         {
-            this.dateTime_0 = new DateTime(binaryReader_0.ReadInt64());
-            this.double_0 = binaryReader_0.ReadDouble();
+            this.dateTime = new DateTime(binaryReader_0.ReadInt64());
+            this.doubleValue = binaryReader_0.ReadDouble();
             int num = binaryReader_0.ReadInt32();
             if (num == 0)
             {
@@ -102,11 +102,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.bar;
             }
             internal set
             {
-                this.int_0 = value;
+                this.bar = value;
             }
         }
 
@@ -114,11 +114,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.dateTime;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.dateTime = value;
             }
         }
 
@@ -126,7 +126,7 @@
         {
             get
             {
-                return bitmap_0;
+                return glyph;
             }
         }
 
@@ -134,7 +134,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.name;
             }
         }
 
@@ -142,11 +142,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.doubleValue;
             }
             set
             {
-                this.double_0 = value;
+                this.doubleValue = value;
             }
         }
     }

@@ -6,8 +6,8 @@
     [XmlRoot(ElementName="RuleVariable", IsNullable=false)]
     public class RuleVariable
     {
-        private string string_0;
-        private string string_1;
+        private string name;
+        private string aliasName;
 
         public RuleVariable()
         {
@@ -15,24 +15,24 @@
 
         public RuleVariable(RuleVariable baseRV)
         {
-            this.string_1 = baseRV.string_1;
-            this.string_0 = baseRV.string_0;
+            this.aliasName = baseRV.aliasName;
+            this.name = baseRV.name;
         }
 
         public override string ToString()
         {
-            return this.string_0;
+            return this.name;
         }
 
         public string AliasName
         {
             get
             {
-                return this.string_1;
+                return this.aliasName;
             }
             set
             {
-                this.string_1 = value;
+                this.aliasName = value;
             }
         }
 
@@ -40,11 +40,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.name;
             }
             set
             {
-                this.string_0 = value;
+                this.name = value;
             }
         }
     }

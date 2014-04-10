@@ -11,30 +11,30 @@
     {
         bool filtered = false; ///WYJ fix, to support filtering datasource in datasource panel
 
-        private BarScale barScale_0;
-        private int int_0;
-        private List<string> list_0;
-        private StaticDataProvider staticDataProvider_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
+        private BarScale barScale;
+        private int barInterval;
+        private List<string> symbols;
+        private StaticDataProvider staticDataProvider;
+        private string dsString;
+        private string name;
+        private string providerName;
 
         public DataSource()
         {
-            this.string_0 = "";
-            this.string_1 = "";
-            this.string_2 = "";
+            this.dsString = "";
+            this.name = "";
+            this.providerName = "";
         }
 
         public DataSource(StaticDataProvider staticDataProvider_1)
         {
-            this.string_0 = "";
-            this.string_1 = "";
-            this.string_2 = "";
-            this.staticDataProvider_0 = staticDataProvider_1;
+            this.dsString = "";
+            this.name = "";
+            this.providerName = "";
+            this.staticDataProvider = staticDataProvider_1;
             if (staticDataProvider_1 != null)
             {
-                this.string_2 = staticDataProvider_1.GetType().Name;
+                this.providerName = staticDataProvider_1.GetType().Name;
             }
         }
 
@@ -70,7 +70,7 @@
 
         internal void method_0()
         {
-            this.list_0 = null;
+            this.symbols = null;
         }
 
         public void SaveToFile(string fileName)
@@ -109,11 +109,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             set
             {
-                this.int_0 = value;
+                this.barInterval = value;
             }
         }
 
@@ -121,11 +121,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.dsString;
             }
             set
             {
-                this.string_0 = value;
+                this.dsString = value;
             }
         }
 
@@ -153,11 +153,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.name;
             }
             set
             {
-                this.string_1 = value;
+                this.name = value;
             }
         }
 
@@ -166,11 +166,11 @@
         {
             get
             {
-                return this.staticDataProvider_0;
+                return this.staticDataProvider;
             }
             set
             {
-                this.staticDataProvider_0 = value;
+                this.staticDataProvider = value;
             }
         }
 
@@ -178,11 +178,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.providerName;
             }
             set
             {
-                this.string_2 = value;
+                this.providerName = value;
             }
         }
 
@@ -190,11 +190,11 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             set
             {
-                this.barScale_0 = value;
+                this.barScale = value;
             }
         }
 
@@ -203,12 +203,12 @@
         {
             get
             {
-                if (this.list_0 == null)
+                if (this.symbols == null)
                 {
-                    this.list_0 = new List<string>();
-                    this.Provider.PopulateSymbols(this, this.list_0);
+                    this.symbols = new List<string>();
+                    this.Provider.PopulateSymbols(this, this.symbols);
                 }
-                return this.list_0;
+                return this.symbols;
             }
         }
     }

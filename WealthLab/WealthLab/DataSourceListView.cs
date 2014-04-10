@@ -13,7 +13,7 @@
     [ToolboxBitmap(typeof(DataSourceListView), "DataSourceListView")]
     public class DataSourceListView : SortableListView, IItemTracker<WealthLab.DataSource>
     {
-        private WealthLab.DataSource dataSource_0;
+        private WealthLab.DataSource dataSource;
         private DataSourceManager dataSourceManager_0;
         private Dictionary<StaticDataProvider, int> dictionary_0 = new Dictionary<StaticDataProvider, int>();
         private IContainer icontainer_1;
@@ -318,13 +318,13 @@
             ListViewItem item = listViewItemSelectionChangedEventArgs_0.Item;
             if (item != null)
             {
-                this.dataSource_0 = (WealthLab.DataSource) item.Tag;
-                this.mniDelete.Enabled = this.dataSource_0 != null;
-                this.mniRename.Enabled = this.dataSource_0 != null;
-                this.mniAddSymbols.Enabled = (this.dataSource_0 != null) && this.dataSource_0.Provider.CanModifySymbols;
+                this.dataSource = (WealthLab.DataSource) item.Tag;
+                this.mniDelete.Enabled = this.dataSource != null;
+                this.mniRename.Enabled = this.dataSource != null;
+                this.mniAddSymbols.Enabled = (this.dataSource != null) && this.dataSource.Provider.CanModifySymbols;
                 if (this.eventHandler_0 != null)
                 {
-                    this.eventHandler_0(this, new DataSourceEventArgs(this.dataSource_0));
+                    this.eventHandler_0(this, new DataSourceEventArgs(this.dataSource));
                 }
             }
             base.OnItemSelectionChanged(listViewItemSelectionChangedEventArgs_0);
@@ -389,7 +389,7 @@
         {
             get
             {
-                return this.dataSource_0;
+                return this.dataSource;
             }
         }
     }

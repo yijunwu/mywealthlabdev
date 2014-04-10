@@ -10,25 +10,25 @@
 
     public class FundamentalsLoader : Component, IComparer<FundamentalDataProvider>, IComparer<FundamentalItem>
     {
-        private Dictionary<string, FundamentalDataProvider> dictionary_0;
-        private Dictionary<string, FundamentalDataProvider> dictionary_1;
+        private Dictionary<string, FundamentalDataProvider> symbolSpecificItemProviders;
+        private Dictionary<string, FundamentalDataProvider> nonSymbolSpecificItemProviders;
         private IContainer icontainer_0;
         private IDataHost idataHost_0;
-        private List<FundamentalDataProvider> list_0;
+        private List<FundamentalDataProvider> providers;
 
         public FundamentalsLoader()
         {
-            this.list_0 = new List<FundamentalDataProvider>();
-            this.dictionary_0 = new Dictionary<string, FundamentalDataProvider>();
-            this.dictionary_1 = new Dictionary<string, FundamentalDataProvider>();
+            this.providers = new List<FundamentalDataProvider>();
+            this.symbolSpecificItemProviders = new Dictionary<string, FundamentalDataProvider>();
+            this.nonSymbolSpecificItemProviders = new Dictionary<string, FundamentalDataProvider>();
             this.method_12();
         }
 
         public FundamentalsLoader(IContainer container)
         {
-            this.list_0 = new List<FundamentalDataProvider>();
-            this.dictionary_0 = new Dictionary<string, FundamentalDataProvider>();
-            this.dictionary_1 = new Dictionary<string, FundamentalDataProvider>();
+            this.providers = new List<FundamentalDataProvider>();
+            this.symbolSpecificItemProviders = new Dictionary<string, FundamentalDataProvider>();
+            this.nonSymbolSpecificItemProviders = new Dictionary<string, FundamentalDataProvider>();
             container.Add(this);
             this.method_12();
         }
@@ -332,7 +332,7 @@
 
         private void method_1()
         {
-            if (!base.DesignMode && (this.list_0.Count <= 0))
+            if (!base.DesignMode && (this.providers.Count <= 0))
             {
                 AssemblyLoader loader = new AssemblyLoader {
                     BaseClass = "FundamentalDataProvider",
@@ -342,23 +342,23 @@
                 {
                     FundamentalDataProvider item = (FundamentalDataProvider) loader.CreateInstance(type);
                     item.Initialize(this.idataHost_0);
-                    this.list_0.Add(item);
+                    this.providers.Add(item);
                     if (item.SymbolSpecificItemsProvided != null)
                     {
                         foreach (string str2 in item.SymbolSpecificItemsProvided)
                         {
-                            this.dictionary_0[str2] = item;
+                            this.symbolSpecificItemProviders[str2] = item;
                         }
                     }
                     if (item.NonSymbolSpecificItemsProvided != null)
                     {
                         foreach (string str in item.NonSymbolSpecificItemsProvided)
                         {
-                            this.dictionary_1[str] = item;
+                            this.nonSymbolSpecificItemProviders[str] = item;
                         }
                     }
                 }
-                this.list_0.Sort(this);
+                this.providers.Sort(this);
             }
         }
 
@@ -536,7 +536,7 @@
                 return (this.method_8(item) == 12);
             }
             bool flag2 = false;
-            if ((this.dictionary_0.ContainsKey(item.Name) && this.dictionary_0.ContainsKey("earnings per share")) && (item.Name != "earnings per share"))
+            if ((this.symbolSpecificItemProviders.ContainsKey(item.Name) && this.symbolSpecificItemProviders.ContainsKey("earnings per share")) && (item.Name != "earnings per share"))
             {
                 IList<FundamentalItem> list = this.RequestSymbolItems(bars_0, bars_0.Symbol, "earnings per share");
                 int month = 0;
@@ -1235,16 +1235,16 @@
         public IList<FundamentalItem> RequestNonSymbolItems(Bars bars, string itemName)
         {
             this.method_0();
-            if (this.dictionary_1.ContainsKey(itemName))
+            if (this.nonSymbolSpecificItemProviders.ContainsKey(itemName))
             {
-                IList<FundamentalItem> list = this.dictionary_1[itemName].RequestItems(itemName);
+                IList<FundamentalItem> list = this.nonSymbolSpecificItemProviders[itemName].RequestItems(itemName);
                 if (bars != null)
                 {
                     this.method_2(bars, list);
                 }
                 return list;
             }
-            if (this.dictionary_0.ContainsKey(itemName))
+            if (this.symbolSpecificItemProviders.ContainsKey(itemName))
             {
                 return this.RequestSymbolItems(bars, bars.Symbol, itemName);
             }
@@ -1261,11 +1261,11 @@
         public IList<FundamentalItem> RequestSymbolItems(Bars bars, string symbol, string itemName)
         {
             this.method_0();
-            if (!this.dictionary_0.ContainsKey(itemName))
+            if (!this.symbolSpecificItemProviders.ContainsKey(itemName))
             {
                 return null;
             }
-            IList<FundamentalItem> list = this.dictionary_0[itemName].RequestItems(symbol, itemName);
+            IList<FundamentalItem> list = this.symbolSpecificItemProviders[itemName].RequestItems(symbol, itemName);
             if ((bars != null) && (list != null))
             {
                 this.method_2(bars, list);
@@ -1319,7 +1319,7 @@
             get
             {
                 bool flag;
-                using (List<FundamentalDataProvider>.Enumerator enumerator = this.list_0.GetEnumerator())
+                using (List<FundamentalDataProvider>.Enumerator enumerator = this.providers.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
                     {
@@ -1341,11 +1341,11 @@
         {
             get
             {
-                return this.dictionary_1;
+                return this.nonSymbolSpecificItemProviders;
             }
             set
             {
-                this.dictionary_1 = value;
+                this.nonSymbolSpecificItemProviders = value;
             }
         }
 
@@ -1354,7 +1354,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.providers;
             }
         }
 
@@ -1363,11 +1363,11 @@
         {
             get
             {
-                return this.dictionary_0;
+                return this.symbolSpecificItemProviders;
             }
             set
             {
-                this.dictionary_0 = value;
+                this.symbolSpecificItemProviders = value;
             }
         }
     }

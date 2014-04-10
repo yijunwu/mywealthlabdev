@@ -6,53 +6,53 @@
     public class Position
     {
         public static readonly Position AllPositions = new Position(null, WealthLab.PositionType.Long, "");
-        private WealthLab.Bars bars_0;
-        private bool bool_0;
+        private WealthLab.Bars bars;
+        private bool active;
         [CompilerGenerated]
-        private CombinedStrategyInfo combinedStrategyInfo_0;
-        private double double_0;
-        private double double_1;
-        private double double_10;
-        private double double_11;
-        private double double_12;
-        private double double_13;
+        private CombinedStrategyInfo combinedStrategyInfo;
+        private double overrideShareSize;
+        private double shares;
+        private double splitFactor;
+        private double priority;
+        private double riskStopLevel;
+        private double autoProfitLevel;
         private double double_14;
         private double double_15;
         private double double_16;
         private double double_17;
-        private double double_2;
-        private double double_3;
-        private double double_4;
-        private double double_5;
-        private double double_6;
-        private double double_7;
-        private double double_8;
-        private double double_9;
-        private int int_0;
-        private int int_1;
+        private double entryPrice;
+        private double exitPrice;
+        private double basisPrice;
+        private double mfe;
+        private double mae;
+        private double entryCommission;
+        private double exitCommission;
+        private double trailingStop;
+        private int entryBar;
+        private int exitBar;
         private int int_2;
         private int int_3;
         private int int_4;
         private int int_5;
         [CompilerGenerated]
-        private int int_6;
-        private object object_0;
-        private OrderType orderType_0;
-        private OrderType orderType_1;
-        private WealthLab.PositionType positionType_0;
+        private int combinedPriority;
+        private object tag;
+        private OrderType entryOrderType;
+        private OrderType exitOrderType;
+        private WealthLab.PositionType positionType;
         private static Random random_0;
-        private string string_0;
-        private string string_1;
+        private string entrySignal;
+        private string exitSignal;
         [CompilerGenerated]
-        private string string_2;
+        private string strategyID;
 
         public Position(WealthLab.Bars bars, WealthLab.PositionType positionType_1, string strategyID)
         {
-            this.bool_0 = true;
-            this.int_1 = -1;
-            this.double_5 = double.NaN;
-            this.double_6 = double.NaN;
-            this.double_10 = 1.0;
+            this.active = true;
+            this.exitBar = -1;
+            this.mfe = double.NaN;
+            this.mae = double.NaN;
+            this.splitFactor = 1.0;
             this.int_2 = -1;
             this.double_14 = -1.0;
             this.int_3 = -1;
@@ -62,22 +62,22 @@
             this.int_5 = -1;
             this.double_17 = -1.0;
             this.StrategyID = strategyID;
-            this.bars_0 = bars;
-            this.positionType_0 = positionType_1;
+            this.bars = bars;
+            this.positionType = positionType_1;
             if (random_0 == null)
             {
                 random_0 = new Random();
             }
-            this.double_11 = random_0.NextDouble();
+            this.priority = random_0.NextDouble();
         }
 
         public Position(WealthLab.Bars bars, WealthLab.PositionType positionType_1, double basisPrice, int entryBar, double entryPrice, int exitBar, double exitPrice)
         {
-            this.bool_0 = true;
-            this.int_1 = -1;
-            this.double_5 = double.NaN;
-            this.double_6 = double.NaN;
-            this.double_10 = 1.0;
+            this.active = true;
+            this.exitBar = -1;
+            this.mfe = double.NaN;
+            this.mae = double.NaN;
+            this.splitFactor = 1.0;
             this.int_2 = -1;
             this.double_14 = -1.0;
             this.int_3 = -1;
@@ -86,28 +86,28 @@
             this.double_16 = -1.0;
             this.int_5 = -1;
             this.double_17 = -1.0;
-            this.bars_0 = bars;
-            this.positionType_0 = positionType_1;
+            this.bars = bars;
+            this.positionType = positionType_1;
             if (random_0 == null)
             {
                 random_0 = new Random();
             }
-            this.double_11 = random_0.NextDouble();
-            this.int_0 = entryBar;
-            this.double_2 = entryPrice;
-            this.int_1 = exitBar;
-            this.double_3 = exitPrice;
-            this.double_4 = basisPrice;
-            this.bool_0 = exitBar < 0;
+            this.priority = random_0.NextDouble();
+            this.entryBar = entryBar;
+            this.entryPrice = entryPrice;
+            this.exitBar = exitBar;
+            this.exitPrice = exitPrice;
+            this.basisPrice = basisPrice;
+            this.active = exitBar < 0;
         }
 
         public Position(WealthLab.Bars bars, WealthLab.PositionType positionType_1, double basisPrice, int entryBar, double entryPrice, int exitBar, double exitPrice, string strategyID)
         {
-            this.bool_0 = true;
-            this.int_1 = -1;
-            this.double_5 = double.NaN;
-            this.double_6 = double.NaN;
-            this.double_10 = 1.0;
+            this.active = true;
+            this.exitBar = -1;
+            this.mfe = double.NaN;
+            this.mae = double.NaN;
+            this.splitFactor = 1.0;
             this.int_2 = -1;
             this.double_14 = -1.0;
             this.int_3 = -1;
@@ -117,19 +117,19 @@
             this.int_5 = -1;
             this.double_17 = -1.0;
             this.StrategyID = strategyID;
-            this.bars_0 = bars;
-            this.positionType_0 = positionType_1;
+            this.bars = bars;
+            this.positionType = positionType_1;
             if (random_0 == null)
             {
                 random_0 = new Random();
             }
-            this.double_11 = random_0.NextDouble();
-            this.int_0 = entryBar;
-            this.double_2 = entryPrice;
-            this.int_1 = exitBar;
-            this.double_3 = exitPrice;
-            this.double_4 = basisPrice;
-            this.bool_0 = exitBar < 0;
+            this.priority = random_0.NextDouble();
+            this.entryBar = entryBar;
+            this.entryPrice = entryPrice;
+            this.exitBar = exitBar;
+            this.exitPrice = exitPrice;
+            this.basisPrice = basisPrice;
+            this.active = exitBar < 0;
         }
 
         public double HighestHighAsOfBar(int int_7)
@@ -290,7 +290,7 @@
             this.double_15 = maxValue;
             maxValue *= this.Shares;
             maxValue *= this.Bars.SymbolInfo.PointValue;
-            return (maxValue - this.double_7);
+            return (maxValue - this.entryCommission);
         }
 
         public double MAEAsOfBarPercent(int int_7)
@@ -300,7 +300,7 @@
 
         internal void method_0(WealthLab.Bars bars_1)
         {
-            this.bars_0 = bars_1;
+            this.bars = bars_1;
         }
 
         internal void method_1(int int_7, double double_18, OrderType orderType_2)
@@ -313,25 +313,25 @@
             {
                 double_18 = this.Bars.High[int_7];
             }
-            this.int_1 = int_7;
-            this.double_3 = double_18;
-            this.orderType_1 = orderType_2;
-            this.bool_0 = false;
-            this.double_5 = this.MFEAsOfBar(int_7);
-            this.double_6 = this.MAEAsOfBar(int_7);
+            this.exitBar = int_7;
+            this.exitPrice = double_18;
+            this.exitOrderType = orderType_2;
+            this.active = false;
+            this.mfe = this.MFEAsOfBar(int_7);
+            this.mae = this.MAEAsOfBar(int_7);
         }
 
         internal void method_2()
         {
             if (this.Active)
             {
-                this.double_5 = this.MFEAsOfBar(this.Bars.Count - 1);
-                this.double_6 = this.MAEAsOfBar(this.Bars.Count - 1);
+                this.mfe = this.MFEAsOfBar(this.Bars.Count - 1);
+                this.mae = this.MAEAsOfBar(this.Bars.Count - 1);
             }
             else
             {
-                this.double_5 = this.MFEAsOfBar(this.ExitBar);
-                this.double_6 = this.MAEAsOfBar(this.ExitBar);
+                this.mfe = this.MFEAsOfBar(this.ExitBar);
+                this.mae = this.MAEAsOfBar(this.ExitBar);
             }
         }
 
@@ -424,7 +424,7 @@
             this.double_14 = minValue;
             minValue *= this.Shares;
             minValue *= this.Bars.SymbolInfo.PointValue;
-            return (minValue - this.double_7);
+            return (minValue - this.entryCommission);
         }
 
         public double MFEAsOfBarPercent(int int_7)
@@ -443,10 +443,10 @@
             {
                 num = -num;
             }
-            num -= this.double_7;
-            if (!this.Active && (int_7 >= this.int_1))
+            num -= this.entryCommission;
+            if (!this.Active && (int_7 >= this.exitBar))
             {
-                num -= this.double_8;
+                num -= this.exitCommission;
             }
             return num;
         }
@@ -460,7 +460,7 @@
         {
             get
             {
-                return this.bool_0;
+                return this.active;
             }
         }
 
@@ -468,11 +468,11 @@
         {
             get
             {
-                return this.double_13;
+                return this.autoProfitLevel;
             }
             set
             {
-                this.double_13 = value;
+                this.autoProfitLevel = value;
             }
         }
 
@@ -480,7 +480,7 @@
         {
             get
             {
-                return this.bars_0;
+                return this.bars;
             }
         }
 
@@ -491,7 +491,7 @@
                 int num;
                 if (this.Active)
                 {
-                    num = this.bars_0.Count - this.EntryBar;
+                    num = this.bars.Count - this.EntryBar;
                 }
                 else
                 {
@@ -509,11 +509,11 @@
         {
             get
             {
-                return this.double_4;
+                return this.basisPrice;
             }
             internal set
             {
-                this.double_4 = value;
+                this.basisPrice = value;
             }
         }
 
@@ -522,12 +522,12 @@
             [CompilerGenerated]
             get
             {
-                return this.int_6;
+                return this.combinedPriority;
             }
             [CompilerGenerated]
             set
             {
-                this.int_6 = value;
+                this.combinedPriority = value;
             }
         }
 
@@ -536,12 +536,12 @@
             [CompilerGenerated]
             get
             {
-                return this.combinedStrategyInfo_0;
+                return this.combinedStrategyInfo;
             }
             [CompilerGenerated]
             set
             {
-                this.combinedStrategyInfo_0 = value;
+                this.combinedStrategyInfo = value;
             }
         }
 
@@ -549,11 +549,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.entryBar;
             }
             internal set
             {
-                this.int_0 = value;
+                this.entryBar = value;
             }
         }
 
@@ -561,11 +561,11 @@
         {
             get
             {
-                return this.double_7;
+                return this.entryCommission;
             }
             set
             {
-                this.double_7 = value;
+                this.entryCommission = value;
             }
         }
 
@@ -581,11 +581,11 @@
         {
             get
             {
-                return this.orderType_0;
+                return this.entryOrderType;
             }
             internal set
             {
-                this.orderType_0 = value;
+                this.entryOrderType = value;
             }
         }
 
@@ -593,11 +593,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.entryPrice;
             }
             internal set
             {
-                this.double_2 = value;
+                this.entryPrice = value;
             }
         }
 
@@ -605,11 +605,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.entrySignal;
             }
             set
             {
-                this.string_0 = value;
+                this.entrySignal = value;
             }
         }
 
@@ -617,7 +617,7 @@
         {
             get
             {
-                return this.int_1;
+                return this.exitBar;
             }
         }
 
@@ -625,11 +625,11 @@
         {
             get
             {
-                return this.double_8;
+                return this.exitCommission;
             }
             set
             {
-                this.double_8 = value;
+                this.exitCommission = value;
             }
         }
 
@@ -649,7 +649,7 @@
         {
             get
             {
-                return this.orderType_1;
+                return this.exitOrderType;
             }
         }
 
@@ -657,7 +657,7 @@
         {
             get
             {
-                return this.double_3;
+                return this.exitPrice;
             }
         }
 
@@ -665,11 +665,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.exitSignal;
             }
             set
             {
-                this.string_1 = value;
+                this.exitSignal = value;
             }
         }
 
@@ -689,7 +689,7 @@
         {
             get
             {
-                return this.double_6;
+                return this.mae;
             }
         }
 
@@ -705,7 +705,7 @@
         {
             get
             {
-                return this.double_5;
+                return this.mfe;
             }
         }
 
@@ -726,10 +726,10 @@
                 {
                     num = -num;
                 }
-                num -= this.double_7;
+                num -= this.entryCommission;
                 if (!this.Active)
                 {
-                    num -= this.double_8;
+                    num -= this.exitCommission;
                 }
                 return num;
             }
@@ -751,11 +751,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.overrideShareSize;
             }
             set
             {
-                this.double_0 = value;
+                this.overrideShareSize = value;
             }
         }
 
@@ -763,11 +763,11 @@
         {
             get
             {
-                return this.positionType_0;
+                return this.positionType;
             }
             internal set
             {
-                this.positionType_0 = value;
+                this.positionType = value;
             }
         }
 
@@ -775,11 +775,11 @@
         {
             get
             {
-                return this.double_11;
+                return this.priority;
             }
             set
             {
-                this.double_11 = value;
+                this.priority = value;
             }
         }
 
@@ -797,7 +797,7 @@
             {
                 if (this.Active)
                 {
-                    return this.bars_0.Close[this.bars_0.Count - 1];
+                    return this.bars.Close[this.bars.Count - 1];
                 }
                 return this.ExitPrice;
             }
@@ -807,11 +807,11 @@
         {
             get
             {
-                return this.double_12;
+                return this.riskStopLevel;
             }
             set
             {
-                this.double_12 = value;
+                this.riskStopLevel = value;
             }
         }
 
@@ -819,11 +819,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.shares;
             }
             internal set
             {
-                this.double_1 = value;
+                this.shares = value;
             }
         }
 
@@ -843,11 +843,11 @@
         {
             get
             {
-                return this.double_10;
+                return this.splitFactor;
             }
             set
             {
-                this.double_10 = value;
+                this.splitFactor = value;
             }
         }
 
@@ -856,12 +856,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_2;
+                return this.strategyID;
             }
             [CompilerGenerated]
             set
             {
-                this.string_2 = value;
+                this.strategyID = value;
             }
         }
 
@@ -877,11 +877,11 @@
         {
             get
             {
-                return this.object_0;
+                return this.tag;
             }
             set
             {
-                this.object_0 = value;
+                this.tag = value;
             }
         }
 
@@ -889,11 +889,11 @@
         {
             get
             {
-                return this.double_9;
+                return this.trailingStop;
             }
             internal set
             {
-                this.double_9 = value;
+                this.trailingStop = value;
             }
         }
     }

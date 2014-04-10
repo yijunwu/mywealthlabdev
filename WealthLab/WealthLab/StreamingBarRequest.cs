@@ -6,25 +6,25 @@
     public class StreamingBarRequest
     {
         [CompilerGenerated]
-        private BarGenerator barGenerator_0;
+        private BarGenerator barGenerator;
         [CompilerGenerated]
-        private int int_0;
+        private int barInterval;
         [CompilerGenerated]
-        private IStreamingUpdate istreamingUpdate_0;
+        private IStreamingUpdate istreamingUpdate;
         [CompilerGenerated]
-        private string string_0;
+        private string symbol;
 
         public int BarInterval
         {
             [CompilerGenerated]
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             [CompilerGenerated]
             set
             {
-                this.int_0 = value;
+                this.barInterval = value;
             }
         }
 
@@ -41,12 +41,12 @@
             [CompilerGenerated]
             get
             {
-                return this.barGenerator_0;
+                return this.barGenerator;
             }
             [CompilerGenerated]
             set
             {
-                this.barGenerator_0 = value;
+                this.barGenerator = value;
             }
         }
 
@@ -55,12 +55,12 @@
             [CompilerGenerated]
             get
             {
-                return this.istreamingUpdate_0;
+                return this.istreamingUpdate;
             }
             [CompilerGenerated]
             set
             {
-                this.istreamingUpdate_0 = value;
+                this.istreamingUpdate = value;
             }
         }
 
@@ -69,12 +69,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             [CompilerGenerated]
             set
             {
-                this.string_0 = value;
+                this.symbol = value;
             }
         }
     }

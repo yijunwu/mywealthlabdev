@@ -8,7 +8,7 @@
         private BarData barData_0;
         private BarData barData_1;
         [CompilerGenerated]
-        private int int_0;
+        private int interval;
 
         public BarGenerator(int interval)
         {
@@ -88,12 +88,12 @@
             [CompilerGenerated]
             get
             {
-                return this.int_0;
+                return this.interval;
             }
             [CompilerGenerated]
             set
             {
-                this.int_0 = value;
+                this.interval = value;
             }
         }
 

@@ -4,18 +4,18 @@
 
     public class AccountPositionEventArgs : EventArgs
     {
-        private WealthLab.AccountPosition accountPosition_0;
+        private WealthLab.AccountPosition accountPosition;
 
         public AccountPositionEventArgs(WealthLab.AccountPosition accountPosition_1)
         {
-            this.accountPosition_0 = accountPosition_1;
+            this.accountPosition = accountPosition_1;
         }
 
         public WealthLab.AccountPosition AccountPosition
         {
             get
             {
-                return this.accountPosition_0;
+                return this.accountPosition;
             }
         }
     }

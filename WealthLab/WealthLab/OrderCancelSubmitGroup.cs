@@ -5,14 +5,14 @@
 
     public class OrderCancelSubmitGroup
     {
-        private List<Order> list_0 = new List<Order>();
-        private List<Order> list_1 = new List<Order>();
+        private List<Order> listCancelPending = new List<Order>();
+        private List<Order> listSubmitPending = new List<Order>();
 
         public List<Order> CancelPending
         {
             get
             {
-                return this.list_0;
+                return this.listCancelPending;
             }
         }
 
@@ -20,7 +20,7 @@
         {
             get
             {
-                return this.list_1;
+                return this.listSubmitPending;
             }
         }
     }

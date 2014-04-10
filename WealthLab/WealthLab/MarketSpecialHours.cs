@@ -6,19 +6,19 @@
     [XmlRoot(ElementName="MarketSpecialHours", IsNullable=false)]
     public class MarketSpecialHours
     {
-        private DateTime dateTime_0;
-        private DateTime dateTime_1;
-        private DateTime dateTime_2;
+        private DateTime date;
+        private DateTime openTimeNative;
+        private DateTime closeTimeNative;
 
         public DateTime CloseTimeNative
         {
             get
             {
-                return this.dateTime_2;
+                return this.closeTimeNative;
             }
             set
             {
-                this.dateTime_2 = value;
+                this.closeTimeNative = value;
             }
         }
 
@@ -26,11 +26,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.date;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.date = value;
             }
         }
 
@@ -38,11 +38,11 @@
         {
             get
             {
-                return this.dateTime_1;
+                return this.openTimeNative;
             }
             set
             {
-                this.dateTime_1 = value;
+                this.openTimeNative = value;
             }
         }
     }

@@ -11,71 +11,71 @@
     public class TradingSystemExecutor : Component, IComparer<Position>, INotifier
     {
         public List<Position> _activePositions;
-        private Bars bars_0;
-        private WealthLab.BarsLoader barsLoader_0;
+        private Bars barsBeingProcessed;
+        private WealthLab.BarsLoader barsLoader;
         private static bool bool_0 = false;
-        private bool bool_1;
-        private bool bool_10;
-        private bool bool_11;
-        private bool bool_12;
-        private bool bool_13;
-        private bool bool_14;
-        private bool bool_15;
+        private bool buildEquityCurves;  ///WYJ fix, original name: bool_1
+        private bool isStreaming;
+        private bool riskStopLevelNotSet;
+        private bool limitDaySimulation;
+        private bool applyInterest;
+        private bool applyDividends;
+        private bool reduceQtyBasedOnVolume;
         private bool bool_16;
         private static bool bool_17 = false;
         [CompilerGenerated]
-        private bool bool_18;
-        private bool bool_2;
-        private bool bool_3;
-        private bool bool_4;
-        private bool bool_5;
-        private bool bool_6;
-        private bool bool_7;
-        private bool bool_8;
-        private bool bool_9;
-        private ChartRenderer chartRenderer_0;
-        private WealthLab.Commission commission_0;
+        private bool noDecimalRoundingForLimitStopPrice;
+        private bool exceptionEvents;
+        private bool enableSlippage;
+        private bool worstTradeSimulation;
+        private bool benchmarkBuyAndHoldON;
+        private bool limitOrderSlippage;
+        private bool roundLots;
+        private bool roundLots50;
+        private bool applyCommission;
+        private ChartRenderer chartRenderer;
+        private WealthLab.Commission commission;
         private DataSource dataSource_0;
         private Dictionary<string, Bars> dictionary_0;
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private double double_3;
-        private double double_4;
-        private double double_5;
-        private double double_6;
-        private double double_7;
-        private double double_8;
+        private double slippageUnits;
+        private double overrideShareSize;
+        private double riskStopLevel;
+        private double cashRate;
+        private double marginRate;
+        private double cashAdjustmentFactor;
+        private double marginAdjustmentFactor;
+        private double redcuceQtyPct;
+        private double autoProfitLevel;
         private static double double_9 = 1.0;
         private WealthLab.FundamentalsLoader fundamentalsLoader_0;
         private IContainer icontainer_0;
         private IList<Bars> ilist_0;
-        private int int_0;
+        private int slippageTicks;
         private static int int_1 = 0;
         [CompilerGenerated]
-        private int int_2;
-        private List<string> list_0;
+        private int pricingDecimalPlaces;
+        private List<string> debugStrings;
         private List<Bars> list_1;
         private List<Bars> list_2;
-        private List<Position> list_3;
-        private List<Alert> list_4;
-        private List<Position> list_5;
-        private List<Alert> list_6;
+        private List<Position> masterPositions;
+        private List<Alert> masterAlerts;
+        private List<Position> currentPositions;
+        private List<Alert> currentAlerts;
         private List<Bars> list_7;
         [CompilerGenerated]
-        private object object_0;
+        private object tag;
         private Position position_0;
-        private PositionSize positionSize_0;
+        private PositionSize positionSize;
         private static PositionSize positionSize_1 = new PositionSize(PosSizeMode.RawProfitShare, 1.0);
-        private WealthLab.PosSizer posSizer_0;
+        private WealthLab.PosSizer posSizer;
         public static List<WealthLab.PosSizer> PosSizers = null;
         [CompilerGenerated]
-        private WealthLab.Strategy strategy_0;
+        private WealthLab.Strategy strategy;
         public int StrategyWindowID;
-        private string string_0;
-        private string string_1;
-        private SystemPerformance systemPerformance_0;
-        private WealthScript wealthScript_0;
+        private string benchmarkSymbol;  ///WYJ fix, original name: string_0
+        private string strategyName;
+        private SystemPerformance systemPerformance;
+        private WealthScript wealthScriptExecuting;
 
         private EventHandler<StrategyEventArgs> eventHandler_0;
 
@@ -469,47 +469,47 @@
 
         public TradingSystemExecutor()
         {
-            this.bool_1 = true;
-            this.double_0 = 1.0;
-            this.int_0 = 1;
-            this.list_0 = new List<string>();
+            this.buildEquityCurves = true;
+            this.slippageUnits = 1.0;
+            this.slippageTicks = 1;
+            this.debugStrings = new List<string>();
             this._activePositions = new List<Position>();
-            this.string_1 = "";
-            this.double_7 = 10.0;
+            this.strategyName = "";
+            this.redcuceQtyPct = 10.0;
             this.bool_16 = true;
             this.list_1 = new List<Bars>();
             this.list_2 = new List<Bars>();
-            this.positionSize_0 = new PositionSize();
-            this.list_3 = new List<Position>();
-            this.list_4 = new List<Alert>();
-            this.list_5 = new List<Position>();
-            this.list_6 = new List<Alert>();
+            this.positionSize = new PositionSize();
+            this.masterPositions = new List<Position>();
+            this.masterAlerts = new List<Alert>();
+            this.currentPositions = new List<Position>();
+            this.currentAlerts = new List<Alert>();
             this.dictionary_0 = new Dictionary<string, Bars>();
             this.list_7 = new List<Bars>();
-            this.systemPerformance_0 = new SystemPerformance(null);
+            this.systemPerformance = new SystemPerformance(null);
             this.method_21();
         }
 
         public TradingSystemExecutor(IContainer container)
         {
-            this.bool_1 = true;
-            this.double_0 = 1.0;
-            this.int_0 = 1;
-            this.list_0 = new List<string>();
+            this.buildEquityCurves = true;
+            this.slippageUnits = 1.0;
+            this.slippageTicks = 1;
+            this.debugStrings = new List<string>();
             this._activePositions = new List<Position>();
-            this.string_1 = "";
-            this.double_7 = 10.0;
+            this.strategyName = "";
+            this.redcuceQtyPct = 10.0;
             this.bool_16 = true;
             this.list_1 = new List<Bars>();
             this.list_2 = new List<Bars>();
-            this.positionSize_0 = new PositionSize();
-            this.list_3 = new List<Position>();
-            this.list_4 = new List<Alert>();
-            this.list_5 = new List<Position>();
-            this.list_6 = new List<Alert>();
+            this.positionSize = new PositionSize();
+            this.masterPositions = new List<Position>();
+            this.masterAlerts = new List<Alert>();
+            this.currentPositions = new List<Position>();
+            this.currentAlerts = new List<Alert>();
             this.dictionary_0 = new Dictionary<string, Bars>();
             this.list_7 = new List<Bars>();
-            this.systemPerformance_0 = new SystemPerformance(null);
+            this.systemPerformance = new SystemPerformance(null);
             container.Add(this);
             this.method_21();
         }
@@ -563,12 +563,12 @@
             {
                 return;
             }
-            this.systemPerformance_0.RawTrades = this.list_3;
-            this.systemPerformance_0.PositionSize = this.PosSize;
-            SystemResults results = new SystemResults(this.systemPerformance_0);
+            this.systemPerformance.RawTrades = this.masterPositions;
+            this.systemPerformance.PositionSize = this.PosSize;
+            SystemResults results = new SystemResults(this.systemPerformance);
             if (!this.BenchmarkBuyAndHoldON)
             {
-                foreach (Position position4 in this.systemPerformance_0.ResultsBuyHold.Positions)
+                foreach (Position position4 in this.systemPerformance.ResultsBuyHold.Positions)
                 {
                     results.method_4(position4);
                 }
@@ -576,7 +576,7 @@
             int tradesNSF = this.Performance.Results.TradesNSF;
             int num4 = this.Performance.ResultsLong.TradesNSF;
             int num5 = this.Performance.ResultsShort.TradesNSF;
-            this.systemPerformance_0.method_2();
+            this.systemPerformance.method_2();
             if (this.Strategy.StrategyType == StrategyType.CombinedStrategy)
             {
                 this.Performance.Results.TradesNSF = tradesNSF;
@@ -587,19 +587,19 @@
             {
                 foreach (Position position2 in results.Positions)
                 {
-                    this.systemPerformance_0.ResultsBuyHold.method_4(position2);
+                    this.systemPerformance.ResultsBuyHold.method_4(position2);
                 }
             }
             if (this.ApplyInterest)
             {
-                this.systemPerformance_0.CashReturnRate = this.CashRate;
+                this.systemPerformance.CashReturnRate = this.CashRate;
             }
             else
             {
-                this.systemPerformance_0.CashReturnRate = 0.0;
+                this.systemPerformance.CashReturnRate = 0.0;
             }
-            this.bool_11 = false;
-            this.posSizer_0 = null;
+            this.riskStopLevelNotSet = false;
+            this.posSizer = null;
             if (this.PosSize.Mode == PosSizeMode.SimuScript)
             {
                 using (List<WealthLab.PosSizer>.Enumerator enumerator10 = PosSizers.GetEnumerator())
@@ -611,12 +611,12 @@
                         if (current.FriendlyName == this.PosSize.SimuScriptName)
                         {
                             ///goto  Label_036D;  WYJ fix, simplify the flow
-                            this.posSizer_0 = (WealthLab.PosSizer)Activator.CreateInstance(current.GetType());
+                            this.posSizer = (WealthLab.PosSizer)Activator.CreateInstance(current.GetType());
                             if ((this.PosSize.PosSizerConfig != "") && ((this.PosSize.SimuScriptName == this.PosSize.PosSizerThatWasConfigured) || (this.PosSize.PosSizerThatWasConfigured == "")))
                             {
                                 try
                                 {
-                                    this.posSizer_0.ApplyConfigString(WealthLab.PosSizer.ParseConfigString(this.PosSize.PosSizerConfig));
+                                    this.posSizer.ApplyConfigString(WealthLab.PosSizer.ParseConfigString(this.PosSize.PosSizerConfig));
                                 }
                                 catch
                                 {
@@ -631,52 +631,52 @@
         ///Label_0400: ///WYJ fix, simplify the code
             foreach (Bars bars7 in this.ilist_0)
             {
-                this.systemPerformance_0.method_1(bars7);
+                this.systemPerformance.method_1(bars7);
             }
-            this.systemPerformance_0.Results.BuildEquityCurve(this.ilist_0, this, true, this.posSizer_0);
-            this.systemPerformance_0.Results.method_7(true);
-            foreach (Position position in this.list_3)
+            this.systemPerformance.Results.BuildEquityCurve(this.ilist_0, this, true, this.posSizer);
+            this.systemPerformance.Results.method_7(true);
+            foreach (Position position in this.masterPositions)
             {
                 if (position.Shares > 0.0)
                 {
-                    this.systemPerformance_0.Results.method_4(position);
+                    this.systemPerformance.Results.method_4(position);
                     if (position.PositionType == PositionType.Long)
                     {
-                        this.systemPerformance_0.ResultsLong.method_4(position);
+                        this.systemPerformance.ResultsLong.method_4(position);
                     }
                     else
                     {
-                        this.systemPerformance_0.ResultsShort.method_4(position);
+                        this.systemPerformance.ResultsShort.method_4(position);
                     }
                 }
                 else
                 {
-                    SystemResults results1 = this.systemPerformance_0.Results;
+                    SystemResults results1 = this.systemPerformance.Results;
                     results1.TradesNSF++;
                     if (position.PositionType == PositionType.Long)
                     {
-                        SystemResults resultsLong = this.systemPerformance_0.ResultsLong;
+                        SystemResults resultsLong = this.systemPerformance.ResultsLong;
                         resultsLong.TradesNSF++;
                     }
                     else
                     {
-                        SystemResults resultsShort = this.systemPerformance_0.ResultsShort;
+                        SystemResults resultsShort = this.systemPerformance.ResultsShort;
                         resultsShort.TradesNSF++;
                     }
                 }
             }
-            foreach (Alert alert2 in this.list_4)
+            foreach (Alert alert2 in this.masterAlerts)
             {
                 if ((alert2.AlertType != TradeType.Buy) && (alert2.AlertType != TradeType.Short))
                 {
                     if ((alert2.Position != null) && (alert2.Position.Shares > 0.0))
                     {
-                        this.systemPerformance_0.Results.method_5(alert2);
+                        this.systemPerformance.Results.method_5(alert2);
                     }
                 }
                 else
                 {
-                    this.systemPerformance_0.Results.method_5(alert2);
+                    this.systemPerformance.Results.method_5(alert2);
                 }
             }
             bool reduceQtyBasedOnVolume = this.ReduceQtyBasedOnVolume;
@@ -712,7 +712,7 @@
                                 position5.EntryBar = 1;
                                 position5.EntryPrice = bars5.Open[1];
                                 position5.BasisPrice = bars5.Close[0];
-                                this.systemPerformance_0.ResultsBuyHold.method_4(position5);
+                                this.systemPerformance.ResultsBuyHold.method_4(position5);
                                 if ((this.Commission != null) && this.ApplyCommission)
                                 {
                                     position5.EntryCommission = this.Commission.Calculate(TradeType.Buy, OrderType.Market, position5.EntryPrice, position5.Shares, bars5);
@@ -761,7 +761,7 @@
                         position3.EntryBar = num6 + 1;
                         position3.EntryPrice = bars4.Open[num6 + 1];
                         position3.BasisPrice = bars4.Close[num6];
-                        this.systemPerformance_0.ResultsBuyHold.method_4(position3);
+                        this.systemPerformance.ResultsBuyHold.method_4(position3);
                         if ((this.Commission != null) && this.ApplyCommission)
                         {
                             position3.EntryCommission = this.Commission.Calculate(TradeType.Buy, OrderType.Market, position3.EntryPrice, position3.Shares, bars4);
@@ -770,12 +770,12 @@
                 }
             }
             this.ReduceQtyBasedOnVolume = reduceQtyBasedOnVolume;
-            this.systemPerformance_0.ResultsLong.BuildEquityCurve(this.ilist_0, this, false, this.posSizer_0);
-            this.systemPerformance_0.ResultsShort.BuildEquityCurve(this.ilist_0, this, false, this.posSizer_0);
-            this.systemPerformance_0.ResultsBuyHold.method_8();
+            this.systemPerformance.ResultsLong.BuildEquityCurve(this.ilist_0, this, false, this.posSizer);
+            this.systemPerformance.ResultsShort.BuildEquityCurve(this.ilist_0, this, false, this.posSizer);
+            this.systemPerformance.ResultsBuyHold.method_8();
             if (!this.BenchmarkBuyAndHoldON)
             {
-                this.systemPerformance_0.ResultsBuyHold.BuildEquityCurve(this.ilist_0, this, false, null);
+                this.systemPerformance.ResultsBuyHold.BuildEquityCurve(this.ilist_0, this, false, null);
             }
             else
             {
@@ -783,15 +783,15 @@
                 {
                     executor.ilist_0[0] = this.ilist_0[0];
                 }
-                this.systemPerformance_0.ResultsBuyHold.BuildEquityCurve(executor.ilist_0, executor, false, null);
-                this.systemPerformance_0.ResultsBuyHold.EquityCurve = BarScaleConverter.Synchronize(this.systemPerformance_0.ResultsBuyHold.EquityCurve, this.systemPerformance_0.ResultsLong.EquityCurve);
-                this.systemPerformance_0.ResultsBuyHold.CashCurve = BarScaleConverter.Synchronize(this.systemPerformance_0.ResultsBuyHold.CashCurve, this.systemPerformance_0.ResultsLong.CashCurve);
+                this.systemPerformance.ResultsBuyHold.BuildEquityCurve(executor.ilist_0, executor, false, null);
+                this.systemPerformance.ResultsBuyHold.EquityCurve = BarScaleConverter.Synchronize(this.systemPerformance.ResultsBuyHold.EquityCurve, this.systemPerformance.ResultsLong.EquityCurve);
+                this.systemPerformance.ResultsBuyHold.CashCurve = BarScaleConverter.Synchronize(this.systemPerformance.ResultsBuyHold.CashCurve, this.systemPerformance.ResultsLong.CashCurve);
             }
-            if (this.posSizer_0 != null)
+            if (this.posSizer != null)
             {
-                this.systemPerformance_0.Results.method_9(this.posSizer_0);
+                this.systemPerformance.Results.method_9(this.posSizer);
             }
-            foreach (Alert alert in this.systemPerformance_0.Results.Alerts)
+            foreach (Alert alert in this.systemPerformance.Results.Alerts)
             {
                 if ((alert.AlertType != TradeType.Buy) && (alert.AlertType != TradeType.Short))
                 {
@@ -841,7 +841,7 @@
 
         public double CalcPositionSize(Bars bars, int int_3, double basisPrice, PositionType positionType_0, double riskStopLevel)
         {
-            double currentEquity = this.systemPerformance_0.Results.CurrentEquity;
+            double currentEquity = this.systemPerformance.Results.CurrentEquity;
             double overrideShareSize = 0.0;
             if (this.PosSize.Mode == PosSizeMode.ScriptOverride)
             {
@@ -852,7 +852,7 @@
 
         public double CalcPositionSize(Bars bars, int int_3, double basisPrice, PositionType positionType_0, double riskStopLevel, bool comingFromWealthScript)
         {
-            double currentEquity = this.systemPerformance_0.Results.CurrentEquity;
+            double currentEquity = this.systemPerformance.Results.CurrentEquity;
             double overrideShareSize = 0.0;
             if (this.PosSize.Mode == PosSizeMode.ScriptOverride)
             {
@@ -883,7 +883,7 @@
                 return position_1.Shares;
             }
             this.position_0 = position_1;
-            double currentEquity = this.systemPerformance_0.Results.CurrentEquity;
+            double currentEquity = this.systemPerformance.Results.CurrentEquity;
             double num2 = this.CalcPositionSize(bars, int_3, basisPrice, positionType_0, riskStopLevel, currentEquity, overrideShareSize, thisBarCash);
             this.position_0 = null;
             if (bool_17)
@@ -895,9 +895,9 @@
 
         public void Clear()
         {
-            this.list_3.Clear();
-            this.list_4.Clear();
-            this.systemPerformance_0.method_2();
+            this.masterPositions.Clear();
+            this.masterAlerts.Clear();
+            this.systemPerformance.method_2();
             this.list_1.Clear();
             this.list_2.Clear();
         }
@@ -1240,13 +1240,13 @@
                 bars.Add(bar);
             }
             this.Strategy = strategy_1;
-            this.systemPerformance_0.Strategy = strategy_1;
+            this.systemPerformance.Strategy = strategy_1;
             this.list_7.Clear();
             GC.Collect();
-            this.double_2 = 0;
-            this.double_8 = 0;
-            this.list_0.Clear();
-            this.bool_11 = false;
+            this.riskStopLevel = 0;
+            this.autoProfitLevel = 0;
+            this.debugStrings.Clear();
+            this.riskStopLevelNotSet = false;
             if (barsCollection == null || barsCollection.Count == 0)
             {
                 return;
@@ -1262,7 +1262,7 @@
                 this.Performance.Scale = barsCollection[0].Scale;
                 this.Performance.BarInterval = barsCollection[0].BarInterval;
                 this.Performance.PositionSize = this.PosSize;
-                this.wealthScript_0 = wealthScript_1;
+                this.wealthScriptExecuting = wealthScript_1;
                 PositionSize posSize = this.PosSize;
                 this.bool_16 = this.PosSize.RawProfitMode;
                 if (!this.PosSize.RawProfitMode && this.PosSize.Mode != PosSizeMode.ScriptOverride)
@@ -1277,14 +1277,14 @@
                         {
                             if (barsCharted == bar2)
                             {
-                                chartRenderer0 = this.chartRenderer_0;
+                                chartRenderer0 = this.chartRenderer;
                             }
                             else
                             {
                                 chartRenderer0 = null;
                             }
                             ChartRenderer chartRenderer = chartRenderer0;
-                            this.method_2(bar2, wealthScript_1, chartRenderer);
+                            this.executeNonCombinedStrategy(bar2, wealthScript_1, chartRenderer);
                         }
                     }
                     finally
@@ -1449,7 +1449,7 @@
                             tradingSystemExecutor.ExternalSymbolFromDataSetRequested -= this.eventHandler_3;
                             tradingSystemExecutor.WealthScriptException -= new EventHandler<WSExceptionEventArgs>(this.method_1);
                             strs.AddRange(tradingSystemExecutor.DebugStrings);
-                            foreach (Position list3 in tradingSystemExecutor.list_3)
+                            foreach (Position list3 in tradingSystemExecutor.masterPositions)
                             {
                                 list3.CombinedPriority = combinedStrategyChild.Priority;
                                 list3.CSI = combinedStrategyChild;
@@ -1470,13 +1470,13 @@
                                     position.method_0(ilist0);
                                 }
                             }
-                            this.list_3.AddRange(tradingSystemExecutor.Performance.Results.Positions);
-                            this.list_4.AddRange(tradingSystemExecutor.Performance.Results.Alerts);
+                            this.masterPositions.AddRange(tradingSystemExecutor.Performance.Results.Positions);
+                            this.masterAlerts.AddRange(tradingSystemExecutor.Performance.Results.Alerts);
                             if (!this.BenchmarkBuyAndHoldON)
                             {
-                                foreach (Position position1 in tradingSystemExecutor.systemPerformance_0.ResultsBuyHold.Positions)
+                                foreach (Position position1 in tradingSystemExecutor.systemPerformance.ResultsBuyHold.Positions)
                                 {
-                                    this.systemPerformance_0.ResultsBuyHold.method_4(position1);
+                                    this.systemPerformance.ResultsBuyHold.method_4(position1);
                                 }
                             }
                             SystemResults results = this.Performance.Results;
@@ -1488,8 +1488,8 @@
                             tradingSystemExecutor.LookupDataSource -= this.eventHandler_1;
                             tradingSystemExecutor.LookupStrategy -= this.eventHandler_0;
                         }
-                        this.list_0.Clear();
-                        this.list_0.AddRange(strs);
+                        this.debugStrings.Clear();
+                        this.debugStrings.AddRange(strs);
                     }
                     finally
                     {
@@ -1498,7 +1498,7 @@
                         TradingSystemExecutor.bool_0 = false;
                     }
                 }
-                this.list_3.Sort(this);
+                this.masterPositions.Sort(this);
                 if (this.BuildEquityCurves)
                 {
                     this.ApplyPositionSize();
@@ -1510,8 +1510,8 @@
         public void Initialize()
         {
             this.Performance.PositionSize = this.PosSize;
-            this.systemPerformance_0.Results.CurrentCash = this.PosSize.StartingCapital;
-            this.systemPerformance_0.Results.CurrentEquity = this.PosSize.StartingCapital;
+            this.systemPerformance.Results.CurrentCash = this.PosSize.StartingCapital;
+            this.systemPerformance.Results.CurrentEquity = this.PosSize.StartingCapital;
         }
 
         private void method_0(object sender, BarsEventArgs e)
@@ -1529,11 +1529,12 @@
             executor.method_15(e.Exception.Message);
         }
 
-        internal Bars method_10(string string_2, bool bool_19)
+        ///WYJ fix, original signature: internal Bars method_10(string string_2, bool bool_19)
+        internal Bars method_10(string symbol, bool synchronize)
         {
-            Bars bars = this.wealthScript_0.Bars;
+            Bars bars = this.wealthScriptExecuting.Bars;
             Bars item = null;
-            if (string_2 == bars.Symbol)
+            if (symbol == bars.Symbol)
             {
                 return bars;
             }
@@ -1543,7 +1544,7 @@
                 while (enumerator.MoveNext())
                 {
                     current = enumerator.Current;
-                    if (current.Symbol == string_2)
+                    if (current.Symbol == symbol)
                     {
                         ///goto  Label_0051; ///WYJ fix, simplify the flow
                         item = current;
@@ -1564,7 +1565,7 @@
                 this.BarsLoader.Scale = bars.Scale;
                 this.BarsLoader.BarInterval = bars.BarInterval;
                 this.BarsLoader.AutoConvertScale = false;
-                item = this.BarsLoader.method_4(string_2);   ///WYJ note: load the symbol data
+                item = this.BarsLoader.GetData(symbol);   ///WYJ note: load the symbol data
                 if ((item != null) && (item.Count > 0))
                 {
                     this.list_7.Add(item);
@@ -1575,7 +1576,7 @@
             }
             if (((item == null) || (item.Count == 0)) && (this.eventHandler_2 != null))
             {
-                LoadSymbolEventArgs e = new LoadSymbolEventArgs(string_2, bars.Scale, bars.BarInterval);
+                LoadSymbolEventArgs e = new LoadSymbolEventArgs(symbol, bars.Scale, bars.BarInterval);
                 this.eventHandler_2(this, e);
                 item = e.SymbolData;
                 if ((item != null) && (item.Count > 0))
@@ -1586,14 +1587,14 @@
             Bars bars3 = new Bars(item);
             bars3.Append(item);
             item = bars3;
-            if ((bool_19 && (item != null)) && (item.Count > 0))
+            if ((synchronize && (item != null)) && (item.Count > 0))
             {
                 item = BarScaleConverter.Synchronize(item, bars);
             }
             if (item != null)
             {
-                item.method_1();
-                if (bool_19)
+                item.lockBars();
+                if (synchronize)
                 {
                     this.list_1.Add(item);
                     return item;
@@ -1611,12 +1612,13 @@
             return num;
         }
 
-        internal int method_12(string string_2)
+        ///WYJ fix, original signature: internal int method_12(string string_2)
+        internal int method_12(string symbol)   ///WYJ note, remove symbol data
         {
             int num = 0;
             for (int i = this.list_1.Count - 1; i >= 0; i--)
             {
-                if (this.list_1[i].Symbol == string_2)
+                if (this.list_1[i].Symbol == symbol)
                 {
                     this.list_1.RemoveAt(i);
                     num++;
@@ -1624,7 +1626,7 @@
             }
             for (int j = this.list_2.Count - 1; j >= 0; j--)
             {
-                if (this.list_2[j].Symbol == string_2)
+                if (this.list_2[j].Symbol == symbol)
                 {
                     this.list_2.RemoveAt(j);
                     num++;
@@ -1633,10 +1635,11 @@
             return num;
         }
 
-        internal void method_13(Bars bars_1, bool bool_19)
+        ///WYJ fix, original signature: internal void method_13(Bars bars_1, bool bool_19)
+        internal void method_13(Bars bars_1, bool synchronize)
         {
-            bars_1.method_1();
-            if (bool_19)
+            bars_1.lockBars();
+            if (synchronize)
             {
                 this.list_1.Add(bars_1);
             }
@@ -1665,7 +1668,7 @@
 
         internal void method_15(string string_2)
         {
-            this.list_0.Add(string_2);
+            this.debugStrings.Add(string_2);
         }
 
         internal void method_16()
@@ -1678,7 +1681,7 @@
 
         internal void method_17()
         {
-            this.list_0.Clear();
+            this.debugStrings.Clear();
             if (this.eventHandler_8 != null)
             {
                 this.eventHandler_8(this, EventArgs.Empty);
@@ -1696,7 +1699,7 @@
         internal Bitmap method_19(int int_3, int int_4)
         {
             Bitmap image = null;
-            if (this.chartRenderer_0 == null)
+            if (this.chartRenderer == null)
             {
                 return null;
             }
@@ -1712,15 +1715,16 @@
                 Graphics graphics = Graphics.FromImage(image);
                 using (graphics)
                 {
-                    this.chartRenderer_0.Executing = false;
-                    this.chartRenderer_0.Render(this.bars_0, graphics, int_3, int_4, this.chartRenderer_0.ChartStyle);
-                    this.chartRenderer_0.Executing = true;
+                    this.chartRenderer.Executing = false;
+                    this.chartRenderer.Render(this.barsBeingProcessed, graphics, int_3, int_4, this.chartRenderer.ChartStyle);
+                    this.chartRenderer.Executing = true;
                 }
             }
             return image;
         }
 
-        private void method_2(Bars bars_1, WealthScript wealthScript_1, ChartRenderer chartRenderer_1)
+        ///WYJ fix, original signature: private void method_2(Bars bars_1, WealthScript wealthScript_1, ChartRenderer chartRenderer_1)
+        private void executeNonCombinedStrategy(Bars bars, WealthScript wealthScript, ChartRenderer chartRenderer)
         {
             this.CurrentPositions.Clear();
             this.CurrentAlerts.Clear();
@@ -1728,26 +1732,26 @@
             this.method_11();
             try
             {
-                this.bars_0 = bars_1;
-                bars_1.method_1();
+                this.barsBeingProcessed = bars;
+                bars.lockBars();
                 if (!bool_0)
                 {
                     if (this.eventHandler_12 != null)
                     {
-                        this.eventHandler_12(this, new StrategyParameterEventArgs(wealthScript_1, bars_1.Symbol));
+                        this.eventHandler_12(this, new StrategyParameterEventArgs(wealthScript, bars.Symbol));
                     }
                 }
                 else if (this.Strategy.UsePreferredValues)
                 {
-                    this.Strategy.LoadPreferredValues(bars_1.Symbol, wealthScript_1);
+                    this.Strategy.LoadPreferredValues(bars.Symbol, wealthScript);
                 }
-                wealthScript_1.method_4(bars_1, chartRenderer_1, this, this.dataSource_0);
-                wealthScript_1.RestoreScale();
-                bars_1.method_2();
+                wealthScript.prepareAndExecute(bars, chartRenderer, this, this.dataSource_0);
+                wealthScript.RestoreScale();
+                bars.unlockBars();
             }
             catch (Exception exception)
             {
-                bars_1.method_2();
+                bars.unlockBars();
                 if (!this.ExceptionEvents)
                 {
                     throw exception;
@@ -1762,7 +1766,7 @@
             }
             if (this.eventHandler_4 != null)
             {
-                this.eventHandler_4(this, new BarsEventArgs(bars_1));
+                this.eventHandler_4(this, new BarsEventArgs(bars));
             }
         }
 
@@ -1852,7 +1856,7 @@
                         double num7;
                         if (this.RiskStopLevel <= 0.0)
                         {
-                            this.bool_11 = true;
+                            this.riskStopLevelNotSet = true;
                             return 0.0;
                         }
                         double num3 = this.PosSize.RiskSize / 100.0;
@@ -1883,11 +1887,11 @@
                     return 0.0;
 
                 case PosSizeMode.SimuScript:
-                    if (this.posSizer_0 != null)
+                    if (this.posSizer != null)
                     {
                         try
                         {
-                            rawProfitShareSize = this.posSizer_0.SizePosition(this.position_0, bars_1, int_3 - 1, double_10, positionType_0, double_11, double_12, double_14);
+                            rawProfitShareSize = this.posSizer.SizePosition(this.position_0, bars_1, int_3 - 1, double_10, positionType_0, double_11, double_12, double_14);
                             break;
                         }
                         catch
@@ -1956,29 +1960,32 @@
             }
         }
 
-        internal Bars method_7(string string_2, BarScale barScale_0, int int_3, bool bool_19)
+        ///WYJ fix, original signature: internal Bars method_7(string string_2, BarScale barScale_0, int int_3, bool bool_19)
+        internal Bars findBarsData(string symbol, BarScale barScale_0, int barInterval, bool synchronize)
         {
-            if (bool_19)
+            if (synchronize)
             {
-                return this.method_8(string_2, barScale_0, int_3, this.list_1);
+                return this.findBarsData(symbol, barScale_0, barInterval, this.list_1);
             }
-            return this.method_8(string_2, barScale_0, int_3, this.list_2);
+            return this.findBarsData(symbol, barScale_0, barInterval, this.list_2);
         }
 
-        private Bars method_8(string string_2, BarScale barScale_0, int int_3, List<Bars> list_8)
+
+        ///WYJ fix, original signature: private Bars method_8(string string_2, BarScale barScale_0, int int_3, List<Bars> list_8)
+        private Bars findBarsData(string symbol, BarScale barScale_0, int barsInterval, List<Bars> list)
         {
-            Bars bars2;
-            using (List<Bars>.Enumerator enumerator = list_8.GetEnumerator())
+            Bars bars;
+            using (List<Bars>.Enumerator enumerator = list.GetEnumerator())
             {
                 Bars current;
                 while (enumerator.MoveNext())
                 {
                     current = enumerator.Current;
-                    if (((current.Symbol == string_2) && (current.Scale == barScale_0)) && (current.BarInterval == int_3))
+                    if (((current.Symbol == symbol) && (current.Scale == barScale_0)) && (current.BarInterval == barsInterval))
                     {
                         ///goto  Label_0040;  ///WYJ fix, simplify the flow
-                        bars2 = current;
-                        return bars2;
+                        bars = current;
+                        return bars;
                     }
                 }
                 return null;
@@ -1987,7 +1994,7 @@
 
         internal Bars method_9(string string_2, string string_3, bool bool_19)
         {
-            Bars bars = this.wealthScript_0.Bars;
+            Bars bars = this.wealthScriptExecuting.Bars;
             Bars source = null;
             string key = string_2 + "|" + string_3;
             if (this.dictionary_0.ContainsKey(key))
@@ -2031,11 +2038,11 @@
         {
             get
             {
-                return this.bool_9;
+                return this.applyCommission;
             }
             set
             {
-                this.bool_9 = value;
+                this.applyCommission = value;
             }
         }
 
@@ -2043,11 +2050,11 @@
         {
             get
             {
-                return this.bool_14;
+                return this.applyDividends;
             }
             set
             {
-                this.bool_14 = value;
+                this.applyDividends = value;
             }
         }
 
@@ -2055,11 +2062,11 @@
         {
             get
             {
-                return this.bool_13;
+                return this.applyInterest;
             }
             set
             {
-                this.bool_13 = value;
+                this.applyInterest = value;
             }
         }
 
@@ -2067,11 +2074,11 @@
         {
             get
             {
-                return this.double_8;
+                return this.autoProfitLevel;
             }
             set
             {
-                this.double_8 = value;
+                this.autoProfitLevel = value;
             }
         }
 
@@ -2080,7 +2087,7 @@
         {
             get
             {
-                return this.bars_0;
+                return this.barsBeingProcessed;
             }
         }
 
@@ -2088,11 +2095,11 @@
         {
             get
             {
-                return this.barsLoader_0;
+                return this.barsLoader;
             }
             set
             {
-                this.barsLoader_0 = value;
+                this.barsLoader = value;
             }
         }
 
@@ -2100,11 +2107,11 @@
         {
             get
             {
-                return this.bool_5;
+                return this.benchmarkBuyAndHoldON;
             }
             set
             {
-                this.bool_5 = value;
+                this.benchmarkBuyAndHoldON = value;
             }
         }
 
@@ -2112,11 +2119,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.benchmarkSymbol;
             }
             set
             {
-                this.string_0 = value;
+                this.benchmarkSymbol = value;
             }
         }
 
@@ -2124,11 +2131,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.buildEquityCurves;
             }
             set
             {
-                this.bool_1 = value;
+                this.buildEquityCurves = value;
             }
         }
 
@@ -2136,7 +2143,7 @@
         {
             get
             {
-                return this.double_5;
+                return this.cashAdjustmentFactor;
             }
         }
 
@@ -2144,12 +2151,12 @@
         {
             get
             {
-                return this.double_3;
+                return this.cashRate;
             }
             set
             {
-                this.double_3 = value;
-                this.double_5 = Math.Exp(Math.Log(1.0 + (this.double_3 / 100.0)) / 365.25);
+                this.cashRate = value;
+                this.cashAdjustmentFactor = Math.Exp(Math.Log(1.0 + (this.cashRate / 100.0)) / 365.25);
             }
         }
 
@@ -2158,11 +2165,11 @@
         {
             get
             {
-                return this.commission_0;
+                return this.commission;
             }
             set
             {
-                this.commission_0 = value;
+                this.commission = value;
             }
         }
 
@@ -2170,7 +2177,7 @@
         {
             get
             {
-                return this.list_6;
+                return this.currentAlerts;
             }
         }
 
@@ -2178,7 +2185,7 @@
         {
             get
             {
-                return this.list_5;
+                return this.currentPositions;
             }
         }
 
@@ -2199,7 +2206,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.debugStrings;
             }
         }
 
@@ -2207,11 +2214,11 @@
         {
             get
             {
-                return this.bool_3;
+                return this.enableSlippage;
             }
             set
             {
-                this.bool_3 = value;
+                this.enableSlippage = value;
             }
         }
 
@@ -2219,11 +2226,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.exceptionEvents;
             }
             set
             {
-                this.bool_2 = value;
+                this.exceptionEvents = value;
             }
         }
 
@@ -2243,11 +2250,11 @@
         {
             get
             {
-                return this.bool_10;
+                return this.isStreaming;
             }
             set
             {
-                this.bool_10 = value;
+                this.isStreaming = value;
             }
         }
 
@@ -2255,11 +2262,11 @@
         {
             get
             {
-                return this.bool_12;
+                return this.limitDaySimulation;
             }
             set
             {
-                this.bool_12 = value;
+                this.limitDaySimulation = value;
             }
         }
 
@@ -2267,11 +2274,11 @@
         {
             get
             {
-                return this.bool_6;
+                return this.limitOrderSlippage;
             }
             set
             {
-                this.bool_6 = value;
+                this.limitOrderSlippage = value;
             }
         }
 
@@ -2279,7 +2286,7 @@
         {
             get
             {
-                return this.double_6;
+                return this.marginAdjustmentFactor;
             }
         }
 
@@ -2287,12 +2294,12 @@
         {
             get
             {
-                return this.double_4;
+                return this.marginRate;
             }
             set
             {
-                this.double_4 = value;
-                this.double_6 = Math.Exp(Math.Log(1.0 + (this.double_4 / 100.0)) / 365.25);
+                this.marginRate = value;
+                this.marginAdjustmentFactor = Math.Exp(Math.Log(1.0 + (this.marginRate / 100.0)) / 365.25);
             }
         }
 
@@ -2300,7 +2307,7 @@
         {
             get
             {
-                return this.list_4;
+                return this.masterAlerts;
             }
         }
 
@@ -2308,7 +2315,7 @@
         {
             get
             {
-                return this.list_3;
+                return this.masterPositions;
             }
         }
 
@@ -2317,12 +2324,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_18;
+                return this.noDecimalRoundingForLimitStopPrice;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_18 = value;
+                this.noDecimalRoundingForLimitStopPrice = value;
             }
         }
 
@@ -2330,11 +2337,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.overrideShareSize;
             }
             set
             {
-                this.double_1 = value;
+                this.overrideShareSize = value;
                 if (this.PosSize.Mode == PosSizeMode.ScriptOverride)
                 {
                     this.PosSize.OverrideShareSize = value;
@@ -2347,11 +2354,11 @@
         {
             get
             {
-                return this.systemPerformance_0;
+                return this.systemPerformance;
             }
             set
             {
-                this.systemPerformance_0 = value;
+                this.systemPerformance = value;
             }
         }
 
@@ -2359,11 +2366,11 @@
         {
             get
             {
-                return this.positionSize_0;
+                return this.positionSize;
             }
             set
             {
-                this.positionSize_0 = value;
+                this.positionSize = value;
             }
         }
 
@@ -2371,7 +2378,7 @@
         {
             get
             {
-                return this.posSizer_0;
+                return this.posSizer;
             }
         }
 
@@ -2380,12 +2387,12 @@
             [CompilerGenerated]
             get
             {
-                return this.int_2;
+                return this.pricingDecimalPlaces;
             }
             [CompilerGenerated]
             set
             {
-                this.int_2 = value;
+                this.pricingDecimalPlaces = value;
             }
         }
 
@@ -2393,11 +2400,11 @@
         {
             get
             {
-                return this.double_7;
+                return this.redcuceQtyPct;
             }
             set
             {
-                this.double_7 = value;
+                this.redcuceQtyPct = value;
             }
         }
 
@@ -2405,11 +2412,11 @@
         {
             get
             {
-                return this.bool_15;
+                return this.reduceQtyBasedOnVolume;
             }
             set
             {
-                this.bool_15 = value;
+                this.reduceQtyBasedOnVolume = value;
             }
         }
 
@@ -2417,11 +2424,11 @@
         {
             get
             {
-                return this.chartRenderer_0;
+                return this.chartRenderer;
             }
             set
             {
-                this.chartRenderer_0 = value;
+                this.chartRenderer = value;
             }
         }
 
@@ -2429,11 +2436,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.riskStopLevel;
             }
             set
             {
-                this.double_2 = value;
+                this.riskStopLevel = value;
             }
         }
 
@@ -2442,11 +2449,11 @@
         {
             get
             {
-                return this.bool_11;
+                return this.riskStopLevelNotSet;
             }
             set
             {
-                this.bool_11 = value;
+                this.riskStopLevelNotSet = value;
             }
         }
 
@@ -2454,11 +2461,11 @@
         {
             get
             {
-                return this.bool_7;
+                return this.roundLots;
             }
             set
             {
-                this.bool_7 = value;
+                this.roundLots = value;
             }
         }
 
@@ -2466,11 +2473,11 @@
         {
             get
             {
-                return this.bool_8;
+                return this.roundLots50;
             }
             set
             {
-                this.bool_8 = value;
+                this.roundLots50 = value;
             }
         }
 
@@ -2478,11 +2485,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.slippageTicks;
             }
             set
             {
-                this.int_0 = value;
+                this.slippageTicks = value;
             }
         }
 
@@ -2490,11 +2497,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.slippageUnits;
             }
             set
             {
-                this.double_0 = value;
+                this.slippageUnits = value;
             }
         }
 
@@ -2503,12 +2510,12 @@
             [CompilerGenerated]
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             [CompilerGenerated]
             set
             {
-                this.strategy_0 = value;
+                this.strategy = value;
             }
         }
 
@@ -2516,11 +2523,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.strategyName;
             }
             set
             {
-                this.string_1 = value;
+                this.strategyName = value;
             }
         }
 
@@ -2530,12 +2537,12 @@
             [CompilerGenerated]
             get
             {
-                return this.object_0;
+                return this.tag;
             }
             [CompilerGenerated]
             set
             {
-                this.object_0 = value;
+                this.tag = value;
             }
         }
 
@@ -2593,7 +2600,7 @@
         {
             get
             {
-                return this.wealthScript_0;
+                return this.wealthScriptExecuting;
             }
         }
 
@@ -2601,11 +2608,11 @@
         {
             get
             {
-                return this.bool_4;
+                return this.worstTradeSimulation;
             }
             set
             {
-                this.bool_4 = value;
+                this.worstTradeSimulation = value;
             }
         }
     }

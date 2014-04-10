@@ -10,7 +10,7 @@
         private static Dictionary<StreamingRequest, int> dictionary_0 = new Dictionary<StreamingRequest, int>();
         private Dictionary<string, Quote> dictionary_1 = new Dictionary<string, Quote>();
         private Dictionary<string, Quote> dictionary_2 = new Dictionary<string, Quote>();
-        private static double double_0 = 0.2;
+        private static double badTickFilterThreshold = 0.2;
         private static IConnectionStatus iconnectionStatus_0;
         private static IDataHost idataHost_0;
         private const int int_0 = 0x1388;
@@ -26,36 +26,36 @@
             lock (dictionary_0)
             {
                 List<StreamingRequest> list = new List<StreamingRequest>();
-                foreach (StreamingRequest request3 in dictionary_0.Keys)
+                foreach (StreamingRequest request in dictionary_0.Keys)
                 {
-                    if (request3.Request == requestor)
+                    if (request.Request == requestor)
                     {
-                        list.Add(request3);
+                        list.Add(request);
                     }
                 }
-                foreach (StreamingRequest request4 in list)
+                foreach (StreamingRequest request2 in list)
                 {
-                    dictionary_0.Remove(request4);
+                    dictionary_0.Remove(request2);
                 }
-                foreach (StreamingRequest request in list)
+                foreach (StreamingRequest request3 in list)
                 {
-                    bool flag2 = false;
+                    bool symbolFound = false;
                     using (Dictionary<StreamingRequest, int>.KeyCollection.Enumerator enumerator3 = dictionary_0.Keys.GetEnumerator())
                     {
                         while (enumerator3.MoveNext())
                         {
                             StreamingRequest current = enumerator3.Current;
-                            if (current.Symbol == request.Symbol)
+                            if (current.Symbol == request3.Symbol)
                             {
                                 ///goto  Label_00EB;  ///WYJ fix, simplify the flow
-                                flag2 = true;
+                                symbolFound = true;
                                 break;
                             }
                         }
                     }
-                    if (!flag2)
+                    if (!symbolFound)
                     {
-                        this.UnSubscribe(request.Symbol);
+                        this.UnSubscribe(request3.Symbol);
                     }
                 }
             }
@@ -188,7 +188,7 @@
         public static void SetBadTickFilterSettings(bool badTickFilter, double threshold)
         {
             bool_0 = badTickFilter;
-            double_0 = threshold / 100.0;
+            badTickFilterThreshold = threshold / 100.0;
         }
 
         protected abstract void Subscribe(string symbol);
@@ -292,7 +292,7 @@
                 {
                     dictionary_0.Remove(key);
                 }
-                bool flag2 = true;
+                bool symbolNotFound = true;
                 using (Dictionary<StreamingRequest, int>.KeyCollection.Enumerator enumerator = dictionary_0.Keys.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
@@ -301,12 +301,12 @@
                         if (current.Symbol == symbol)
                         {
                             ///goto  Label_0072;  ///WYJ fix, simplify the flow
-                            flag2 = false;
+                            symbolNotFound = false;
                             break;
                         }
                     }
                 }
-                if (flag2)
+                if (symbolNotFound)
                 {
                     this.UnSubscribe(symbol);
                 }
@@ -385,7 +385,7 @@
                     else if (this.dictionary_1.ContainsKey(quote_0.Symbol))
                     {
                         Quote quote = this.dictionary_1[quote_0.Symbol];
-                        if (quote.DistanceFrom(quote_0) < double_0)
+                        if (quote.DistanceFrom(quote_0) < badTickFilterThreshold)
                         {
                             this.method_0(quote);
                             this.method_0(quote_0);
@@ -400,7 +400,7 @@
                     else
                     {
                         Quote quote2 = this.dictionary_2[quote_0.Symbol];
-                        if (quote_0.DistanceFrom(quote2) > double_0)
+                        if (quote_0.DistanceFrom(quote2) > badTickFilterThreshold)
                         {
                             this.dictionary_1[quote_0.Symbol] = quote_0;
                         }

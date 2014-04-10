@@ -4,20 +4,20 @@
 
     public class DataSourceSymbolEventArgs : EventArgs
     {
-        private WealthLab.DataSource dataSource_0;
-        private string string_0;
+        private WealthLab.DataSource dataSource;
+        private string symbol;
 
         public DataSourceSymbolEventArgs(WealthLab.DataSource dataSource, string symbol)
         {
-            this.dataSource_0 = dataSource;
-            this.string_0 = symbol;
+            this.dataSource = dataSource;
+            this.symbol = symbol;
         }
 
         public WealthLab.DataSource DataSource
         {
             get
             {
-                return this.dataSource_0;
+                return this.dataSource;
             }
         }
 
@@ -25,7 +25,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
         }
     }

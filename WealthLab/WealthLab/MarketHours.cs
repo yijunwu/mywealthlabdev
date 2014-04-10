@@ -14,10 +14,10 @@
     {
         private static bool bool_0 = false;
         private DateTime dateTime_0;
-        private IContainer icontainer_0;
-        private static List<MarketInfo> list_0 = new List<MarketInfo>();
-        private MarketInfo marketInfo_0;
-        private static string string_0 = "";
+        private IContainer components;
+        private static List<MarketInfo> markets = new List<MarketInfo>();
+        private MarketInfo marketInfo;
+        private static string rootPath = "";
 
         public MarketHours()
         {
@@ -87,9 +87,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -298,20 +298,20 @@
 
         public static void LoadConfiguration()
         {
-            list_0.Clear();
-            string path = string_0 + @"\Markets.xml";
+            markets.Clear();
+            string path = rootPath + @"\Markets.xml";
             if (File.Exists(path))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(List<MarketInfo>));
                 TextReader textReader = new StreamReader(path);
-                list_0 = (List<MarketInfo>) serializer.Deserialize(textReader);
+                markets = (List<MarketInfo>) serializer.Deserialize(textReader);
                 textReader.Close();
             }
         }
 
         private void method_0()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
         }
 
         private MarketSpecialHours method_1(DateTime dateTime_1)
@@ -336,12 +336,12 @@
 
         public static void SaveConfiguration()
         {
-            if ((string_0 != null) && (string_0 != ""))
+            if ((rootPath != null) && (rootPath != ""))
             {
-                string path = string_0 + @"\Markets.xml";
+                string path = rootPath + @"\Markets.xml";
                 XmlSerializer serializer = new XmlSerializer(typeof(List<MarketInfo>));
                 TextWriter textWriter = new StreamWriter(path);
-                serializer.Serialize(textWriter, list_0);
+                serializer.Serialize(textWriter, markets);
                 textWriter.Close();
             }
         }
@@ -409,7 +409,7 @@
         {
             get
             {
-                if (this.marketInfo_0 == null)
+                if (this.marketInfo == null)
                 {
                     using (IEnumerator<MarketInfo> enumerator = Markets.GetEnumerator())
                     {
@@ -420,13 +420,13 @@
                             if (current.Name == "US Equities")
                             {
                                 ///goto  Label_003B; ///WYJ fix, simplify the flow
-                                this.marketInfo_0 = current;
+                                this.marketInfo = current;
                                 break;
                             }
                         }
                     }
                 }
-                if (this.marketInfo_0 == null)
+                if (this.marketInfo == null)
                 {
                     MarketInfo info = new MarketInfo {
                         Name = "US Equities",
@@ -451,14 +451,14 @@
                             }
                         }
                     }
-                    this.marketInfo_0 = info;
-                    Markets.Add(this.marketInfo_0);
+                    this.marketInfo = info;
+                    Markets.Add(this.marketInfo);
                 }
-                return this.marketInfo_0;
+                return this.marketInfo;
             }
             set
             {
-                this.marketInfo_0 = value;
+                this.marketInfo = value;
             }
         }
 
@@ -496,7 +496,7 @@
                         if (current.Name == value)
                         {
                             ///goto  Label_002D;  ///WYJ fix, simplify the flow
-                            this.marketInfo_0 = current;
+                            this.marketInfo = current;
                             return;
                         }
                     }
@@ -526,7 +526,7 @@
         {
             get
             {
-                if ((list_0.Count == 0) && !bool_0)
+                if ((markets.Count == 0) && !bool_0)
                 {
                     bool_0 = true;
                     if (RootPath == "")
@@ -534,7 +534,7 @@
                         RootPath = Path.GetDirectoryName(Application.ExecutablePath);
                     }
                 }
-                return list_0;
+                return markets;
             }
         }
 
@@ -542,12 +542,12 @@
         {
             get
             {
-                return string_0;
+                return rootPath;
             }
             set
             {
-                string_0 = value;
-                if ((string_0 != null) && (string_0 != ""))
+                rootPath = value;
+                if ((rootPath != null) && (rootPath != ""))
                 {
                     LoadConfiguration();
                 }

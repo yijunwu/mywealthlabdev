@@ -4,25 +4,25 @@
 
     public class LoadSymbolFromDataSetEventArgs : EventArgs
     {
-        private WealthLab.Bars bars_0;
-        private string string_0;
-        private string string_1;
+        private WealthLab.Bars bars;
+        private string dataSetName;
+        private string symbol;
 
         public LoadSymbolFromDataSetEventArgs(string dataSetName, string symbol)
         {
-            this.string_0 = dataSetName;
-            this.string_1 = symbol;
+            this.dataSetName = dataSetName;
+            this.symbol = symbol;
         }
 
         public WealthLab.Bars Bars
         {
             get
             {
-                return this.bars_0;
+                return this.bars;
             }
             set
             {
-                this.bars_0 = value;
+                this.bars = value;
             }
         }
 
@@ -30,7 +30,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.dataSetName;
             }
         }
 
@@ -38,7 +38,7 @@
         {
             get
             {
-                return this.string_1;
+                return this.symbol;
             }
         }
     }

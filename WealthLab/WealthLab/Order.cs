@@ -10,34 +10,34 @@
     [XmlRoot(ElementName="Order", IsNullable=false)]
     public class Order : Alert
     {
-        private bool bool_4;
+        private bool fromAutoTrading;
         [CompilerGenerated]
-        private bool bool_5;
-        private DateTime dateTime_2;
+        private bool isCancelReplace;
+        private DateTime timeStamp;
         [CompilerGenerated]
-        private DateTime dateTime_3;
-        private double double_6;
-        private double double_7;
-        private int int_1;
-        private List<OrderMessage> list_0;
-        private System.Windows.Forms.ListViewItem listViewItem_0;
-        private object object_1;
-        private object object_2;
-        private OrderStatus orderStatus_0;
-        private string string_9;
+        private DateTime originalAlertDate;
+        private double fillPrice;
+        private double fillQty;
+        private int stateIndex;
+        private List<OrderMessage> messages;
+        private System.Windows.Forms.ListViewItem listViewItem;
+        private object tag;
+        private object brokerTag;
+        private OrderStatus orderStatus;
+        private string orderID;
 
         public Order()
         {
-            this.string_9 = Guid.NewGuid().ToString();
-            this.list_0 = new List<OrderMessage>();
-            this.int_1 = -1;
+            this.orderID = Guid.NewGuid().ToString();
+            this.messages = new List<OrderMessage>();
+            this.stateIndex = -1;
         }
 
         public Order(Alert alert)
         {
-            this.string_9 = Guid.NewGuid().ToString();
-            this.list_0 = new List<OrderMessage>();
-            this.int_1 = -1;
+            this.orderID = Guid.NewGuid().ToString();
+            this.messages = new List<OrderMessage>();
+            this.stateIndex = -1;
             base.OrderType = alert.OrderType;
             base.Shares = alert.Shares;
             base.AlertDate = alert.AlertDate;
@@ -70,9 +70,9 @@
 
         public Order(Order order)
         {
-            this.string_9 = Guid.NewGuid().ToString();
-            this.list_0 = new List<OrderMessage>();
-            this.int_1 = -1;
+            this.orderID = Guid.NewGuid().ToString();
+            this.messages = new List<OrderMessage>();
+            this.stateIndex = -1;
             base.OrderType = order.OrderType;
             base.Shares = order.Shares;
             base.AlertDate = order.AlertDate;
@@ -151,11 +151,11 @@
         {
             get
             {
-                return this.object_2;
+                return this.brokerTag;
             }
             set
             {
-                this.object_2 = value;
+                this.brokerTag = value;
             }
         }
 
@@ -163,11 +163,11 @@
         {
             get
             {
-                return this.double_6;
+                return this.fillPrice;
             }
             set
             {
-                this.double_6 = value;
+                this.fillPrice = value;
             }
         }
 
@@ -175,11 +175,11 @@
         {
             get
             {
-                return this.double_7;
+                return this.fillQty;
             }
             set
             {
-                this.double_7 = value;
+                this.fillQty = value;
             }
         }
 
@@ -187,11 +187,11 @@
         {
             get
             {
-                return this.bool_4;
+                return this.fromAutoTrading;
             }
             set
             {
-                this.bool_4 = value;
+                this.fromAutoTrading = value;
             }
         }
 
@@ -200,9 +200,9 @@
         {
             get
             {
-                if ((this.orderStatus_0 != OrderStatus.Submitted) && (this.orderStatus_0 != OrderStatus.Active))
+                if ((this.orderStatus != OrderStatus.Submitted) && (this.orderStatus != OrderStatus.Active))
                 {
-                    return (this.orderStatus_0 == OrderStatus.PartialFilled);
+                    return (this.orderStatus == OrderStatus.PartialFilled);
                 }
                 return true;
             }
@@ -213,9 +213,9 @@
         {
             get
             {
-                if (this.orderStatus_0 != OrderStatus.Active)
+                if (this.orderStatus != OrderStatus.Active)
                 {
-                    return (this.orderStatus_0 == OrderStatus.PartialFilled);
+                    return (this.orderStatus == OrderStatus.PartialFilled);
                 }
                 return true;
             }
@@ -227,12 +227,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_5;
+                return this.isCancelReplace;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_5 = value;
+                this.isCancelReplace = value;
             }
         }
 
@@ -241,9 +241,9 @@
         {
             get
             {
-                if (((this.orderStatus_0 != OrderStatus.Canceled) && (this.orderStatus_0 != OrderStatus.Error)) && (this.orderStatus_0 != OrderStatus.Filled))
+                if (((this.orderStatus != OrderStatus.Canceled) && (this.orderStatus != OrderStatus.Error)) && (this.orderStatus != OrderStatus.Filled))
                 {
-                    return (this.orderStatus_0 == OrderStatus.ErrorCancelReplace);
+                    return (this.orderStatus == OrderStatus.ErrorCancelReplace);
                 }
                 return true;
             }
@@ -254,11 +254,11 @@
         {
             get
             {
-                return this.listViewItem_0;
+                return this.listViewItem;
             }
             set
             {
-                this.listViewItem_0 = value;
+                this.listViewItem = value;
             }
         }
 
@@ -266,11 +266,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.messages;
             }
             set
             {
-                this.list_0 = value;
+                this.messages = value;
             }
         }
 
@@ -278,11 +278,11 @@
         {
             get
             {
-                return this.string_9;
+                return this.orderID;
             }
             set
             {
-                this.string_9 = value;
+                this.orderID = value;
             }
         }
 
@@ -304,12 +304,12 @@
             [CompilerGenerated]
             get
             {
-                return this.dateTime_3;
+                return this.originalAlertDate;
             }
             [CompilerGenerated]
             set
             {
-                this.dateTime_3 = value;
+                this.originalAlertDate = value;
             }
         }
 
@@ -317,11 +317,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.stateIndex;
             }
             set
             {
-                this.int_1 = value;
+                this.stateIndex = value;
             }
         }
 
@@ -329,11 +329,11 @@
         {
             get
             {
-                return this.orderStatus_0;
+                return this.orderStatus;
             }
             set
             {
-                this.orderStatus_0 = value;
+                this.orderStatus = value;
             }
         }
 
@@ -342,11 +342,11 @@
         {
             get
             {
-                return this.object_1;
+                return this.tag;
             }
             set
             {
-                this.object_1 = value;
+                this.tag = value;
             }
         }
 
@@ -354,11 +354,11 @@
         {
             get
             {
-                return this.dateTime_2;
+                return this.timeStamp;
             }
             set
             {
-                this.dateTime_2 = value;
+                this.timeStamp = value;
             }
         }
     }

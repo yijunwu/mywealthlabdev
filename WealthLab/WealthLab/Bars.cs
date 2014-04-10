@@ -9,32 +9,32 @@
 
     public class Bars
     {
-        private BarScale barScale_0;
-        private bool bool_0;
-        private bool bool_1;
+        private BarScale barScale;
+        private bool locked; ///WYJ fix, original name bool_0
+        private bool hasNamedDataSeries;
         [CompilerGenerated]
-        private bool bool_2;
-        private DataSeries dataSeries_0;
-        private DataSeries dataSeries_1;
-        private DataSeries dataSeries_2;
-        private DataSeries dataSeries_3;
-        private DataSeries dataSeries_4;
+        private bool isLastCompressedBarPartial;
+        private DataSeries open;
+        private DataSeries high;
+        private DataSeries low;
+        private DataSeries close;
+        private DataSeries volume;
         private Dictionary<string, DataSeries> dictionary_0;
         private Dictionary<string, DataSeries> dictionary_1;
         private IList<DateTime> ilist_0;
-        private int int_0;
+        private int barInterval;
         private int[] int_1;
-        private int int_2;
-        private List<DateTime> list_0;
+        private int firstActualBar;
+        private List<DateTime> dateList;
         private List<DateTime> list_1;
-        private List<DateTime> list_2;
-        private WealthLab.MarketInfo marketInfo_0;
-        private object object_0;
-        private object object_1;
-        private string string_0;
-        private string string_1;
-        private string string_2;
-        private WealthLab.SymbolInfo symbolInfo_0;
+        private List<DateTime> userEditedDates;
+        private WealthLab.MarketInfo marketInfo;
+        private object divTag;
+        private object tag;
+        private string uniqueDescription;
+        private string symbol;
+        private string securityName;
+        private WealthLab.SymbolInfo symbolInfo;
         private static SymbolLock symbolLock_0 = new SymbolLock();
 
         public Bars(Bars bars_0) : this(bars_0.Symbol, bars_0.Scale, bars_0.BarInterval)
@@ -48,63 +48,63 @@
                 DataSeries series2 = new DataSeries(series.Description);
                 this.dictionary_0[series.Description] = series2;
             }
-            this.bool_1 = bars_0.bool_1;
+            this.hasNamedDataSeries = bars_0.hasNamedDataSeries;
         }
 
         public Bars(string symbol, BarScale scale, int barInterval)
         {
-            this.string_0 = "";
-            this.list_0 = new List<DateTime>();
-            this.string_1 = "";
-            this.string_2 = "";
-            this.int_0 = 5;
+            this.uniqueDescription = "";
+            this.dateList = new List<DateTime>();
+            this.symbol = "";
+            this.securityName = "";
+            this.barInterval = 5;
             this.dictionary_0 = new Dictionary<string, DataSeries>();
             this.dictionary_1 = new Dictionary<string, DataSeries>();
-            this.list_2 = new List<DateTime>();
-            this.string_1 = symbol;
-            this.barScale_0 = scale;
+            this.userEditedDates = new List<DateTime>();
+            this.symbol = symbol;
+            this.barScale = scale;
             if (this.IsIntraday)
             {
-                this.int_0 = barInterval;
+                this.barInterval = barInterval;
             }
             else
             {
-                this.int_0 = 0;
+                this.barInterval = 0;
             }
-            this.dataSeries_0 = new DataSeries(this, "Open");
-            this.dataSeries_0.DataScale = this.DataScale;
-            this.dataSeries_1 = new DataSeries(this, "High");
-            this.dataSeries_1.DataScale = this.DataScale;
-            this.dataSeries_2 = new DataSeries(this, "Low");
-            this.dataSeries_2.DataScale = this.DataScale;
-            this.dataSeries_3 = new DataSeries(this, "Close");
-            this.dataSeries_3.DataScale = this.DataScale;
-            this.dataSeries_4 = new DataSeries(this, "Volume");
-            this.dataSeries_4.DataScale = this.DataScale;
-            this.list_0 = new List<DateTime>();
-            this.ilist_0 = this.list_0.AsReadOnly();
+            this.open = new DataSeries(this, "Open");
+            this.open.DataScale = this.DataScale;
+            this.high = new DataSeries(this, "High");
+            this.high.DataScale = this.DataScale;
+            this.low = new DataSeries(this, "Low");
+            this.low.DataScale = this.DataScale;
+            this.close = new DataSeries(this, "Close");
+            this.close.DataScale = this.DataScale;
+            this.volume = new DataSeries(this, "Volume");
+            this.volume.DataScale = this.DataScale;
+            this.dateList = new List<DateTime>();
+            this.ilist_0 = this.dateList.AsReadOnly();
         }
 
         internal Bars(string string_3, BarScale barScale_1, int int_3, List<DateTime> list_3, DataSeries dataSeries_5, DataSeries dataSeries_6, DataSeries dataSeries_7, DataSeries dataSeries_8, DataSeries dataSeries_9)
         {
-            this.string_0 = "";
-            this.list_0 = new List<DateTime>();
-            this.string_1 = "";
-            this.string_2 = "";
-            this.int_0 = 5;
+            this.uniqueDescription = "";
+            this.dateList = new List<DateTime>();
+            this.symbol = "";
+            this.securityName = "";
+            this.barInterval = 5;
             this.dictionary_0 = new Dictionary<string, DataSeries>();
             this.dictionary_1 = new Dictionary<string, DataSeries>();
-            this.list_2 = new List<DateTime>();
-            this.string_1 = string_3;
-            this.barScale_0 = barScale_1;
-            this.int_0 = int_3;
-            this.list_0 = list_3;
-            this.ilist_0 = this.list_0.AsReadOnly();
-            this.dataSeries_0 = dataSeries_5;
-            this.dataSeries_1 = dataSeries_6;
-            this.dataSeries_2 = dataSeries_7;
-            this.dataSeries_3 = dataSeries_8;
-            this.dataSeries_4 = dataSeries_9;
+            this.userEditedDates = new List<DateTime>();
+            this.symbol = string_3;
+            this.barScale = barScale_1;
+            this.barInterval = int_3;
+            this.dateList = list_3;
+            this.ilist_0 = this.dateList.AsReadOnly();
+            this.open = dataSeries_5;
+            this.high = dataSeries_6;
+            this.low = dataSeries_7;
+            this.close = dataSeries_8;
+            this.volume = dataSeries_9;
         }
 
         public void Add(DateTime dateTime_0, double open, double high, double double_0, double close, double volume)
@@ -114,23 +114,23 @@
 
         public void Add(DateTime dateTime_0, double open, double high, double double_0, double close, double volume, bool eliminateTimeIfNonIntraday)
         {
-            if (this.bool_0)
+            if (this.locked)
             {
                 throw new BarsLockedException();
             }
             if (!this.IsIntraday && eliminateTimeIfNonIntraday)
             {
-                this.list_0.Add(dateTime_0.Date);
+                this.dateList.Add(dateTime_0.Date);
             }
             else
             {
-                this.list_0.Add(dateTime_0);
+                this.dateList.Add(dateTime_0);
             }
-            this.dataSeries_0.method_0(open);
-            this.dataSeries_1.method_0(high);
-            this.dataSeries_2.method_0(double_0);
-            this.dataSeries_3.method_0(close);
-            this.dataSeries_4.method_0(volume);
+            this.open.method_0(open);
+            this.high.method_0(high);
+            this.low.method_0(double_0);
+            this.close.method_0(close);
+            this.volume.method_0(volume);
             foreach (DataSeries series in this.dictionary_0.Values)
             {
                 series.method_0(0.0);
@@ -140,7 +140,7 @@
         public int Append(Bars bars)
         {
             DateTime minValue;
-            if (this.bool_0)
+            if (this.locked)
             {
                 throw new BarsLockedException();
             }
@@ -177,7 +177,7 @@
 
         public int AppendWithCorrections(Bars bars, out int CorrectionsApplied)
         {
-            if (this.bool_0)
+            if (this.locked)
             {
                 throw new BarsLockedException();
             }
@@ -251,7 +251,7 @@
                 }
                 if (dateTime_0 <= this.Date[this.Count - 1])
                 {
-                    int num = this.list_0.BinarySearch(dateTime_0);
+                    int num = this.dateList.BinarySearch(dateTime_0);
                     if (num >= 0)
                     {
                         return num;
@@ -267,16 +267,16 @@
 
         public void Delete(int int_3)
         {
-            if (this.bool_0)
+            if (this.locked)
             {
                 throw new BarsLockedException();
             }
-            this.list_0.RemoveAt(int_3);
-            this.dataSeries_0.method_3(int_3);
-            this.dataSeries_1.method_3(int_3);
-            this.dataSeries_2.method_3(int_3);
-            this.dataSeries_3.method_3(int_3);
-            this.dataSeries_4.method_3(int_3);
+            this.dateList.RemoveAt(int_3);
+            this.open.method_3(int_3);
+            this.high.method_3(int_3);
+            this.low.method_3(int_3);
+            this.close.method_3(int_3);
+            this.volume.method_3(int_3);
             if (this.HasNamedDataSeries)
             {
                 foreach (DataSeries series in this.dictionary_0.Values)
@@ -425,7 +425,7 @@
 
         public void LoadFromFile(string fileName, DateTime startDate, DateTime endDate, int maxBars)
         {
-            if (this.bool_0)
+            if (this.locked)
             {
                 throw new BarsLockedException();
             }
@@ -446,8 +446,8 @@
                 num = reader.ReadDouble();
                 reader.ReadString();
                 this.SecurityName = reader.ReadString();
-                this.barScale_0 = (BarScale) reader.ReadInt32();
-                this.int_0 = reader.ReadInt32();
+                this.barScale = (BarScale) reader.ReadInt32();
+                this.barInterval = reader.ReadInt32();
                 int num2 = reader.ReadInt32();
                 int num3 = reader.ReadInt32();
                 for (int i = 0; i < num3; i++)
@@ -467,7 +467,7 @@
                     while (num6 > 0)
                     {
                         num6--;
-                        this.list_2.Add(new DateTime(reader.ReadInt64()));
+                        this.userEditedDates.Add(new DateTime(reader.ReadInt64()));
                     }
                 }
                 long num7 = 8 + (8 * (5 + num3));
@@ -607,23 +607,25 @@
 
         internal void method_0()
         {
-            this.list_0.Clear();
-            this.dataSeries_0.method_2();
-            this.dataSeries_1.method_2();
-            this.dataSeries_2.method_2();
-            this.dataSeries_3.method_2();
-            this.dataSeries_4.method_2();
+            this.dateList.Clear();
+            this.open.method_2();
+            this.high.method_2();
+            this.low.method_2();
+            this.close.method_2();
+            this.volume.method_2();
             this.dictionary_0.Clear();
         }
 
-        internal void method_1()
+        ///WYJ fix, original signature: internal void method_1()
+        internal void lockBars()
         {
-            this.bool_0 = true;
+            this.locked = true;
         }
 
-        internal void method_2()
+        ///WYJ fix, original signature: internal void method_2()
+        internal void unlockBars()
         {
-            this.bool_0 = false;
+            this.locked = false;
         }
 
         internal void method_3(FundamentalItem fundamentalItem_0)
@@ -631,7 +633,7 @@
             fundamentalItem_0.Bar = -1;
             if (((this.Count != 0) && (fundamentalItem_0.Date >= this.Date[0])) && (fundamentalItem_0.Date <= this.Date[this.Count - 1]))
             {
-                int num = this.list_0.BinarySearch(fundamentalItem_0.Date);
+                int num = this.dateList.BinarySearch(fundamentalItem_0.Date);
                 if (num >= 0)
                 {
                     fundamentalItem_0.Bar = num;
@@ -646,12 +648,12 @@
         internal void method_4(int int_3, DateTime dateTime_0, double double_0, double double_1, double double_2, double double_3, double double_4)
         {
             this.int_1 = null;
-            this.list_0.Insert(int_3, dateTime_0);
-            this.dataSeries_0.method_1(int_3, double_0);
-            this.dataSeries_1.method_1(int_3, double_1);
-            this.dataSeries_2.method_1(int_3, double_2);
-            this.dataSeries_3.method_1(int_3, double_3);
-            this.dataSeries_4.method_1(int_3, double_4);
+            this.dateList.Insert(int_3, dateTime_0);
+            this.open.method_1(int_3, double_0);
+            this.high.method_1(int_3, double_1);
+            this.low.method_1(int_3, double_2);
+            this.close.method_1(int_3, double_3);
+            this.volume.method_1(int_3, double_4);
             foreach (DataSeries series in this.dictionary_0.Values)
             {
                 series.method_1(int_3, 0.0);
@@ -661,12 +663,12 @@
         internal void method_5(int int_3)
         {
             this.int_1 = null;
-            this.list_0.Insert(int_3, this.Date[int_3]);
-            this.dataSeries_0.method_1(int_3, this.Open[int_3]);
-            this.dataSeries_1.method_1(int_3, this.High[int_3]);
-            this.dataSeries_2.method_1(int_3, this.Low[int_3]);
-            this.dataSeries_3.method_1(int_3, this.Close[int_3]);
-            this.dataSeries_4.method_1(int_3, this.Volume[int_3]);
+            this.dateList.Insert(int_3, this.Date[int_3]);
+            this.open.method_1(int_3, this.Open[int_3]);
+            this.high.method_1(int_3, this.High[int_3]);
+            this.low.method_1(int_3, this.Low[int_3]);
+            this.close.method_1(int_3, this.Close[int_3]);
+            this.volume.method_1(int_3, this.Volume[int_3]);
             foreach (DataSeries series in this.dictionary_0.Values)
             {
                 series.method_1(int_3, series[int_3]);
@@ -716,14 +718,14 @@
                     for (int k = 1; k <= (days - 1); k++)
                     {
                         this.method_6(i + k);
-                        this.list_0[i + k] = this.Date[i].AddDays((double) k);
-                        this.dataSeries_4[i + k] = 0.0;
+                        this.dateList[i + k] = this.Date[i].AddDays((double) k);
+                        this.volume[i + k] = 0.0;
                         if (bool_3)
                         {
-                            this.dataSeries_0[i + k] = this.Open[i] + (num6 * k);
-                            this.dataSeries_1[i + k] = this.High[i] + (num7 * k);
-                            this.dataSeries_2[i + k] = this.Low[i] + (num8 * k);
-                            this.dataSeries_3[i + k] = this.Close[i] + (num9 * k);
+                            this.open[i + k] = this.Open[i] + (num6 * k);
+                            this.high[i + k] = this.High[i] + (num7 * k);
+                            this.low[i + k] = this.Low[i] + (num8 * k);
+                            this.close[i + k] = this.Close[i] + (num9 * k);
                         }
                     }
                     i += days - 1;
@@ -734,7 +736,7 @@
 
         public DataSeries RegisterNamedSeries(string seriesName, bool sumOnCollapse)
         {
-            if (this.bool_0)
+            if (this.locked)
             {
                 throw new BarsLockedException();
             }
@@ -749,7 +751,7 @@
             {
                 series.method_0(0.0);
             }
-            this.bool_1 = true;
+            this.hasNamedDataSeries = true;
             return series;
         }
 
@@ -776,8 +778,8 @@
                     writer.Write(pair.Value.SumOnCollapse);
                 }
                 writer.Write((int) this.SymbolInfo.SecurityType);
-                writer.Write(this.list_2.Count);
-                foreach (DateTime time in this.list_2)
+                writer.Write(this.userEditedDates.Count);
+                foreach (DateTime time in this.userEditedDates)
                 {
                     writer.Write(time.Ticks);
                 }
@@ -816,20 +818,20 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             set
             {
-                if (!this.bool_0)
+                if (!this.locked)
                 {
-                    this.int_0 = value;
-                    if (this.dataSeries_0 != null)
+                    this.barInterval = value;
+                    if (this.open != null)
                     {
-                        this.dataSeries_0.DataScale = this.DataScale;
-                        this.dataSeries_1.DataScale = this.DataScale;
-                        this.dataSeries_2.DataScale = this.DataScale;
-                        this.dataSeries_3.DataScale = this.DataScale;
-                        this.dataSeries_4.DataScale = this.DataScale;
+                        this.open.DataScale = this.DataScale;
+                        this.high.DataScale = this.DataScale;
+                        this.low.DataScale = this.DataScale;
+                        this.close.DataScale = this.DataScale;
+                        this.volume.DataScale = this.DataScale;
                     }
                 }
             }
@@ -847,7 +849,7 @@
         {
             get
             {
-                return this.dataSeries_3;
+                return this.close;
             }
         }
 
@@ -855,7 +857,7 @@
         {
             get
             {
-                return this.list_0.Count;
+                return this.dateList.Count;
             }
         }
 
@@ -879,7 +881,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.dateList;
             }
         }
 
@@ -887,11 +889,11 @@
         {
             get
             {
-                return this.object_0;
+                return this.divTag;
             }
             set
             {
-                this.object_0 = value;
+                this.divTag = value;
             }
         }
 
@@ -899,11 +901,11 @@
         {
             get
             {
-                return this.int_2;
+                return this.firstActualBar;
             }
             internal set
             {
-                this.int_2 = value;
+                this.firstActualBar = value;
             }
         }
 
@@ -911,7 +913,7 @@
         {
             get
             {
-                return this.bool_1;
+                return this.hasNamedDataSeries;
             }
         }
 
@@ -919,7 +921,7 @@
         {
             get
             {
-                return this.dataSeries_1;
+                return this.high;
             }
         }
 
@@ -936,12 +938,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_2;
+                return this.isLastCompressedBarPartial;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_2 = value;
+                this.isLastCompressedBarPartial = value;
             }
         }
 
@@ -949,7 +951,7 @@
         {
             get
             {
-                return this.bool_0;
+                return this.locked;
             }
         }
 
@@ -957,7 +959,7 @@
         {
             get
             {
-                return this.dataSeries_2;
+                return this.low;
             }
         }
 
@@ -965,11 +967,11 @@
         {
             get
             {
-                return this.marketInfo_0;
+                return this.marketInfo;
             }
             set
             {
-                this.marketInfo_0 = value;
+                this.marketInfo = value;
             }
         }
 
@@ -985,7 +987,7 @@
         {
             get
             {
-                return this.dataSeries_0;
+                return this.open;
             }
         }
 
@@ -993,20 +995,20 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             set
             {
-                if (!this.bool_0)
+                if (!this.locked)
                 {
-                    this.barScale_0 = value;
-                    if (this.dataSeries_0 != null)
+                    this.barScale = value;
+                    if (this.open != null)
                     {
-                        this.dataSeries_0.DataScale = this.DataScale;
-                        this.dataSeries_1.DataScale = this.DataScale;
-                        this.dataSeries_2.DataScale = this.DataScale;
-                        this.dataSeries_3.DataScale = this.DataScale;
-                        this.dataSeries_4.DataScale = this.DataScale;
+                        this.open.DataScale = this.DataScale;
+                        this.high.DataScale = this.DataScale;
+                        this.low.DataScale = this.DataScale;
+                        this.close.DataScale = this.DataScale;
+                        this.volume.DataScale = this.DataScale;
                     }
                 }
             }
@@ -1016,11 +1018,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.securityName;
             }
             set
             {
-                this.string_2 = value;
+                this.securityName = value;
             }
         }
 
@@ -1028,11 +1030,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.symbol;
             }
             set
             {
-                this.string_1 = value;
+                this.symbol = value;
             }
         }
 
@@ -1040,28 +1042,28 @@
         {
             get
             {
-                if (this.symbolInfo_0 == null)
+                if (this.symbolInfo == null)
                 {
-                    this.symbolInfo_0 = new WealthLab.SymbolInfo();
-                    this.symbolInfo_0.Symbol = this.Symbol;
-                    this.symbolInfo_0.SecurityType = SecurityType.Equity;
-                    this.symbolInfo_0.Margin = 0.0;
-                    this.symbolInfo_0.PointValue = 1.0;
-                    this.symbolInfo_0.Decimals = DecimalsManager.Instance.Pricing;
-                    int decimals = this.symbolInfo_0.Decimals;
-                    this.symbolInfo_0.Tick = 1.0;
+                    this.symbolInfo = new WealthLab.SymbolInfo();
+                    this.symbolInfo.Symbol = this.Symbol;
+                    this.symbolInfo.SecurityType = SecurityType.Equity;
+                    this.symbolInfo.Margin = 0.0;
+                    this.symbolInfo.PointValue = 1.0;
+                    this.symbolInfo.Decimals = DecimalsManager.Instance.Pricing;
+                    int decimals = this.symbolInfo.Decimals;
+                    this.symbolInfo.Tick = 1.0;
                     while (decimals > 0)
                     {
-                        this.symbolInfo_0.Tick /= 10.0;
+                        this.symbolInfo.Tick /= 10.0;
                         decimals--;
                     }
-                    this.symbolInfo_0.MarketName = "US Equities";
+                    this.symbolInfo.MarketName = "US Equities";
                 }
-                return this.symbolInfo_0;
+                return this.symbolInfo;
             }
             set
             {
-                this.symbolInfo_0 = value;
+                this.symbolInfo = value;
             }
         }
 
@@ -1069,11 +1071,11 @@
         {
             get
             {
-                return this.object_1;
+                return this.tag;
             }
             set
             {
-                this.object_1 = value;
+                this.tag = value;
             }
         }
 
@@ -1081,11 +1083,11 @@
         {
             get
             {
-                if (this.string_0 == "")
+                if (this.uniqueDescription == "")
                 {
-                    this.string_0 = this.ToString();
+                    this.uniqueDescription = this.ToString();
                 }
-                return this.string_0;
+                return this.uniqueDescription;
             }
         }
 
@@ -1093,7 +1095,7 @@
         {
             get
             {
-                return this.list_2;
+                return this.userEditedDates;
             }
         }
 
@@ -1101,7 +1103,7 @@
         {
             get
             {
-                return this.dataSeries_4;
+                return this.volume;
             }
         }
     }

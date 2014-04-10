@@ -5,25 +5,25 @@
 
     public class ChartBitmapEventArgs : EventArgs
     {
-        private System.Drawing.Bitmap bitmap_0;
-        private int int_0;
-        private int int_1;
+        private System.Drawing.Bitmap bitmap;
+        private int width;
+        private int height;
 
         public ChartBitmapEventArgs(int width, int height)
         {
-            this.int_0 = width;
-            this.int_1 = height;
+            this.width = width;
+            this.height = height;
         }
 
         public System.Drawing.Bitmap Bitmap
         {
             get
             {
-                return this.bitmap_0;
+                return this.bitmap;
             }
             set
             {
-                this.bitmap_0 = value;
+                this.bitmap = value;
             }
         }
 
@@ -31,7 +31,7 @@
         {
             get
             {
-                return this.int_1;
+                return this.height;
             }
         }
 
@@ -39,7 +39,7 @@
         {
             get
             {
-                return this.int_0;
+                return this.width;
             }
         }
     }

@@ -6,7 +6,7 @@
 
     public abstract class StaticDataProvider : HistoricalProvider, IWizard
     {
-        private bool bool_0;
+        private bool isStreamingRequest;
         private IDataHost idataHost_0;
         private static List<DataBehaviorUserControl> list_0 = new List<DataBehaviorUserControl>();
 
@@ -158,11 +158,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.isStreamingRequest;
             }
             set
             {
-                this.bool_0 = value;
+                this.isStreamingRequest = value;
             }
         }
 

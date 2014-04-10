@@ -4,18 +4,18 @@
 
     public class BarsEventArgs : EventArgs
     {
-        private WealthLab.Bars bars_0;
+        private WealthLab.Bars bars;
 
         public BarsEventArgs(WealthLab.Bars bars)
         {
-            this.bars_0 = bars;
+            this.bars = bars;
         }
 
         public WealthLab.Bars Bars
         {
             get
             {
-                return this.bars_0;
+                return this.bars;
             }
         }
     }

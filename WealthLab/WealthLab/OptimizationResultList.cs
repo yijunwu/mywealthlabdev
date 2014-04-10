@@ -9,32 +9,32 @@
 
     public class OptimizationResultList
     {
-        private List<string> list_0 = new List<string>();
-        private List<string> list_1 = new List<string>();
-        private List<OptimizationResult> list_2 = new List<OptimizationResult>();
+        private List<string> names = new List<string>();
+        private List<string> symbols = new List<string>();
+        private List<OptimizationResult> results = new List<OptimizationResult>();
         private OptimizationResultList optimizationResultList_0;
         [CompilerGenerated]
-        private string string_0;
+        private string strategyID;
         [CompilerGenerated]
-        private string string_1;
+        private string scorecard;
         [CompilerGenerated]
-        private string string_2;
+        private string optimizationMethod;
 
         public void Add(OptimizationResult optimizationResult_0)
         {
-            this.list_2.Add(optimizationResult_0);
-            if (!this.list_1.Contains(optimizationResult_0.Symbol))
+            this.results.Add(optimizationResult_0);
+            if (!this.symbols.Contains(optimizationResult_0.Symbol))
             {
-                this.list_1.Add(optimizationResult_0.Symbol);
+                this.symbols.Add(optimizationResult_0.Symbol);
             }
         }
 
         public void Clear()
         {
-            this.list_2.Clear();
+            this.results.Clear();
             this.Names.Clear();
-            this.list_2.Clear();
-            this.list_1.Clear();
+            this.results.Clear();
+            this.symbols.Clear();
             this.optimizationResultList_0 = null;
         }
 
@@ -47,7 +47,7 @@
             }
             List<double> parameterValues = null;
             double minValue = double.MinValue;
-            foreach (OptimizationResult result in this.list_2)
+            foreach (OptimizationResult result in this.results)
             {
                 if (result.Symbol == symbol)
                 {
@@ -68,7 +68,7 @@
             {
                 return this.AverageResultList.FindMetric("<Average>", metric, values);
             }
-            using (List<OptimizationResult>.Enumerator enumerator = this.list_2.GetEnumerator())
+            using (List<OptimizationResult>.Enumerator enumerator = this.results.GetEnumerator())
             {
                 int num;
                 OptimizationResult current;
@@ -103,7 +103,7 @@
                 return this.AverageResultList.FindMetric("<Average>", metric, wealthScript_0, strategyParameter_0, paramValue);
             }
             int index = wealthScript_0.Parameters.IndexOf(strategyParameter_0);
-            using (List<OptimizationResult>.Enumerator enumerator = this.list_2.GetEnumerator())
+            using (List<OptimizationResult>.Enumerator enumerator = this.results.GetEnumerator())
             {
                 int num2;
                 OptimizationResult current;
@@ -138,7 +138,7 @@
         public OptimizationResult FindResult(string symbol, List<double> values)
         {
             OptimizationResult result2;
-            using (List<OptimizationResult>.Enumerator enumerator = this.list_2.GetEnumerator())
+            using (List<OptimizationResult>.Enumerator enumerator = this.results.GetEnumerator())
             {
                 OptimizationResult current;
                 while (enumerator.MoveNext())
@@ -224,9 +224,9 @@
                         return this.optimizationResultList_0;
                     }
                     string str2 = this.Symbols[0];
-                    for (int i = 0; i < this.list_2.Count; i++)
+                    for (int i = 0; i < this.results.Count; i++)
                     {
-                        OptimizationResult result = this.list_2[i];
+                        OptimizationResult result = this.results[i];
                         if (result.Symbol == str2)
                         {
                             OptimizationResult result2 = new OptimizationResult("<Average>");
@@ -269,11 +269,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.names;
             }
             set
             {
-                this.list_0 = value;
+                this.names = value;
             }
         }
 
@@ -282,12 +282,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_2;
+                return this.optimizationMethod;
             }
             [CompilerGenerated]
             set
             {
-                this.string_2 = value;
+                this.optimizationMethod = value;
             }
         }
 
@@ -295,11 +295,11 @@
         {
             get
             {
-                return this.list_2;
+                return this.results;
             }
             set
             {
-                this.list_2 = value;
+                this.results = value;
             }
         }
 
@@ -308,12 +308,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_1;
+                return this.scorecard;
             }
             [CompilerGenerated]
             set
             {
-                this.string_1 = value;
+                this.scorecard = value;
             }
         }
 
@@ -322,12 +322,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_0;
+                return this.strategyID;
             }
             [CompilerGenerated]
             set
             {
-                this.string_0 = value;
+                this.strategyID = value;
             }
         }
 
@@ -335,11 +335,11 @@
         {
             get
             {
-                return this.list_1;
+                return this.symbols;
             }
             set
             {
-                this.list_1 = value;
+                this.symbols = value;
             }
         }
     }

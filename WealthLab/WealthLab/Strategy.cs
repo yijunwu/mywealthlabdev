@@ -10,41 +10,41 @@
     [XmlRoot(ElementName="Strategy", IsNullable=false)]
     public class Strategy
     {
-        private BarDataRange barDataRange_0 = new BarDataRange();
-        private BarDataScale barDataScale_0 = new BarDataScale(BarScale.Daily, 0);
-        private bool bool_0 = true;
+        private BarDataRange barDataRange = new BarDataRange();
+        private BarDataScale barDataScale = new BarDataScale(BarScale.Daily, 0);
+        private bool singlePosition = true;
         [CompilerGenerated]
-        private bool bool_1;
-        private DateTime dateTime_0 = DateTime.Now;
-        private DateTime dateTime_1 = DateTime.Now;
+        private bool usePreferredValues;
+        private DateTime creationDate = DateTime.Now;
+        private DateTime lastModified = DateTime.Now;
         private Dictionary<string, double> dictionary_0 = new Dictionary<string, double>();
-        private double double_0 = 100000.0;
-        private double double_1 = 1.0;
-        private Guid guid_0 = Guid.NewGuid();
-        private List<double> list_0 = new List<double>();
-        private List<StrategyRule> list_1 = new List<StrategyRule>();
-        private List<CombinedStrategyInfo> list_2 = new List<CombinedStrategyInfo>();
+        private double startingEquity = 100000.0;
+        private double marginFactor = 1.0;
+        private Guid guid = Guid.NewGuid();
+        private List<double> parameterValues = new List<double>();
+        private List<StrategyRule> rules = new List<StrategyRule>();
+        private List<CombinedStrategyInfo> combinedStrategyChildren = new List<CombinedStrategyInfo>();
         [CompilerGenerated]
-        private object object_0;
-        private WealthLab.PositionSize positionSize_0 = new WealthLab.PositionSize();
-        private WealthLab.StrategyType strategyType_0;
-        private string string_0 = "";
-        private string string_1 = "";
-        private string string_10 = "";
-        private string string_11 = "";
-        private string string_12 = "";
-        private string string_13 = "";
+        private object tag;
+        private WealthLab.PositionSize positionSize = new WealthLab.PositionSize();
+        private WealthLab.StrategyType strategyType;
+        private string networkDrivePath = "";
+        private string name = "";
+        private string indicators = "";
+        private string references = "";
+        private string accountNumber = "";
+        private string origin = "";
         [CompilerGenerated]
-        private string string_14;
-        private string string_2 = "";
-        private string string_3 = "";
-        private string string_4 = "Local";
-        private string string_5 = "";
-        private string string_6;
-        private string string_7 = "";
-        private string string_8 = "";
-        private string string_9 = "";
-        private Type type_0;
+        private string panelSize;
+        private string code = "";
+        private string description = "";
+        private string author = "Local";
+        private string fileName = "";
+        private string url;
+        private string folder = "";
+        private string dataSetName = "";
+        private string symbol = "";
+        private Type wealthScriptType;
 
         public static Strategy FromFile(string fileName)
         {
@@ -84,13 +84,13 @@
 
         public bool RestoreSavedParameterValues(WealthScript wealthScript_0)
         {
-            if (this.list_0.Count != wealthScript_0.Parameters.Count)
+            if (this.parameterValues.Count != wealthScript_0.Parameters.Count)
             {
                 return false;
             }
-            for (int i = 0; i < this.list_0.Count; i++)
+            for (int i = 0; i < this.parameterValues.Count; i++)
             {
-                wealthScript_0.Parameters[i].Value = this.list_0[i];
+                wealthScript_0.Parameters[i].Value = this.parameterValues[i];
             }
             return true;
         }
@@ -139,11 +139,11 @@
         {
             get
             {
-                return this.string_12;
+                return this.accountNumber;
             }
             set
             {
-                this.string_12 = value;
+                this.accountNumber = value;
             }
         }
 
@@ -151,11 +151,11 @@
         {
             get
             {
-                return this.string_4;
+                return this.author;
             }
             set
             {
-                this.string_4 = value;
+                this.author = value;
             }
         }
 
@@ -163,11 +163,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.code;
             }
             set
             {
-                this.string_2 = value;
+                this.code = value;
             }
         }
 
@@ -175,11 +175,11 @@
         {
             get
             {
-                return this.list_2;
+                return this.combinedStrategyChildren;
             }
             set
             {
-                this.list_2 = value;
+                this.combinedStrategyChildren = value;
             }
         }
 
@@ -187,11 +187,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.creationDate;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.creationDate = value;
             }
         }
 
@@ -199,11 +199,11 @@
         {
             get
             {
-                return this.barDataRange_0;
+                return this.barDataRange;
             }
             set
             {
-                this.barDataRange_0 = value;
+                this.barDataRange = value;
             }
         }
 
@@ -211,11 +211,11 @@
         {
             get
             {
-                return this.barDataScale_0;
+                return this.barDataScale;
             }
             set
             {
-                this.barDataScale_0 = value;
+                this.barDataScale = value;
             }
         }
 
@@ -223,11 +223,11 @@
         {
             get
             {
-                return this.string_8;
+                return this.dataSetName;
             }
             set
             {
-                this.string_8 = value;
+                this.dataSetName = value;
             }
         }
 
@@ -235,11 +235,11 @@
         {
             get
             {
-                return this.string_3;
+                return this.description;
             }
             set
             {
-                this.string_3 = value;
+                this.description = value;
             }
         }
 
@@ -248,11 +248,11 @@
         {
             get
             {
-                return this.string_5;
+                return this.fileName;
             }
             set
             {
-                this.string_5 = value;
+                this.fileName = value;
             }
         }
 
@@ -261,11 +261,11 @@
         {
             get
             {
-                return this.string_7;
+                return this.folder;
             }
             set
             {
-                this.string_7 = value;
+                this.folder = value;
             }
         }
 
@@ -273,11 +273,11 @@
         {
             get
             {
-                return this.guid_0;
+                return this.guid;
             }
             set
             {
-                this.guid_0 = value;
+                this.guid = value;
             }
         }
 
@@ -285,11 +285,11 @@
         {
             get
             {
-                return this.string_10;
+                return this.indicators;
             }
             set
             {
-                this.string_10 = value;
+                this.indicators = value;
             }
         }
 
@@ -297,11 +297,11 @@
         {
             get
             {
-                return this.dateTime_1;
+                return this.lastModified;
             }
             set
             {
-                this.dateTime_1 = value;
+                this.lastModified = value;
             }
         }
 
@@ -309,11 +309,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.marginFactor;
             }
             set
             {
-                this.double_1 = value;
+                this.marginFactor = value;
             }
         }
 
@@ -321,11 +321,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.name;
             }
             set
             {
-                this.string_1 = value;
+                this.name = value;
             }
         }
 
@@ -333,14 +333,14 @@
         {
             get
             {
-                return this.string_0;
+                return this.networkDrivePath;
             }
             set
             {
-                this.string_0 = value;
-                if (this.string_0 == null)
+                this.networkDrivePath = value;
+                if (this.networkDrivePath == null)
                 {
-                    this.string_0 = "";
+                    this.networkDrivePath = "";
                 }
             }
         }
@@ -349,11 +349,11 @@
         {
             get
             {
-                return this.string_13;
+                return this.origin;
             }
             set
             {
-                this.string_13 = value;
+                this.origin = value;
             }
         }
 
@@ -362,12 +362,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_14;
+                return this.panelSize;
             }
             [CompilerGenerated]
             set
             {
-                this.string_14 = value;
+                this.panelSize = value;
             }
         }
 
@@ -375,11 +375,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.parameterValues;
             }
             set
             {
-                this.list_0 = value;
+                this.parameterValues = value;
             }
         }
 
@@ -387,11 +387,11 @@
         {
             get
             {
-                return this.positionSize_0;
+                return this.positionSize;
             }
             set
             {
-                this.positionSize_0 = value;
+                this.positionSize = value;
             }
         }
 
@@ -451,11 +451,11 @@
         {
             get
             {
-                return this.string_11;
+                return this.references;
             }
             set
             {
-                this.string_11 = value;
+                this.references = value;
             }
         }
 
@@ -463,11 +463,11 @@
         {
             get
             {
-                return this.list_1;
+                return this.rules;
             }
             set
             {
-                this.list_1 = value;
+                this.rules = value;
             }
         }
 
@@ -475,11 +475,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.singlePosition;
             }
             set
             {
-                this.bool_0 = value;
+                this.singlePosition = value;
             }
         }
 
@@ -487,11 +487,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.startingEquity;
             }
             set
             {
-                this.double_0 = value;
+                this.startingEquity = value;
             }
         }
 
@@ -499,11 +499,11 @@
         {
             get
             {
-                return this.strategyType_0;
+                return this.strategyType;
             }
             set
             {
-                this.strategyType_0 = value;
+                this.strategyType = value;
             }
         }
 
@@ -511,11 +511,11 @@
         {
             get
             {
-                return this.string_9;
+                return this.symbol;
             }
             set
             {
-                this.string_9 = value;
+                this.symbol = value;
             }
         }
 
@@ -525,12 +525,12 @@
             [CompilerGenerated]
             get
             {
-                return this.object_0;
+                return this.tag;
             }
             [CompilerGenerated]
             set
             {
-                this.object_0 = value;
+                this.tag = value;
             }
         }
 
@@ -539,11 +539,11 @@
         {
             get
             {
-                return this.string_6;
+                return this.url;
             }
             set
             {
-                this.string_6 = value;
+                this.url = value;
             }
         }
 
@@ -552,12 +552,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_1;
+                return this.usePreferredValues;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_1 = value;
+                this.usePreferredValues = value;
             }
         }
 
@@ -566,11 +566,11 @@
         {
             get
             {
-                return this.type_0;
+                return this.wealthScriptType;
             }
             set
             {
-                this.type_0 = value;
+                this.wealthScriptType = value;
             }
         }
     }

@@ -11,12 +11,12 @@
     public class ParameterSlider : UserControl
     {
         private EventHandler<EventArgs> eventHandler_0;
-        private bool bool_0;
-        private Font font_0;
-        private IContainer icontainer_0;
+        private bool mouseDragging;
+        private Font font;
+        private IContainer components;
         private LinkLabel linkParameter;
         private Panel pnlSlider;
-        private StrategyParameter strategyParameter_0;
+        private StrategyParameter strategyParameter;
 
         public event EventHandler<EventArgs> ValueChanged
         {
@@ -53,9 +53,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -109,34 +109,34 @@
 
         private void method_0(int int_0)
         {
-            if (this.strategyParameter_0 != null)
+            if (this.strategyParameter != null)
             {
                 double num = ((double) int_0) / ((double) this.pnlSlider.Width);
-                double stop = ((this.strategyParameter_0.Stop - this.strategyParameter_0.Start) * num) + this.strategyParameter_0.Start;
-                double start = this.strategyParameter_0.Start;
+                double stop = ((this.strategyParameter.Stop - this.strategyParameter.Start) * num) + this.strategyParameter.Start;
+                double start = this.strategyParameter.Start;
                 while (stop > start)
                 {
-                    start += this.strategyParameter_0.Step;
+                    start += this.strategyParameter.Step;
                 }
-                double num4 = start - this.strategyParameter_0.Step;
-                if (num4 < this.strategyParameter_0.Start)
+                double num4 = start - this.strategyParameter.Step;
+                if (num4 < this.strategyParameter.Start)
                 {
-                    num4 = this.strategyParameter_0.Start;
+                    num4 = this.strategyParameter.Start;
                 }
-                if (start > this.strategyParameter_0.Stop)
+                if (start > this.strategyParameter.Stop)
                 {
-                    start = this.strategyParameter_0.Stop;
+                    start = this.strategyParameter.Stop;
                 }
                 double num5 = Math.Abs((double) (stop - num4));
                 double num6 = Math.Abs((double) (stop - start));
                 stop = (num5 < num6) ? num4 : start;
-                if (stop > this.strategyParameter_0.Stop)
+                if (stop > this.strategyParameter.Stop)
                 {
-                    stop = this.strategyParameter_0.Stop;
+                    stop = this.strategyParameter.Stop;
                 }
-                if (stop < this.strategyParameter_0.Start)
+                if (stop < this.strategyParameter.Start)
                 {
-                    stop = this.strategyParameter_0.Start;
+                    stop = this.strategyParameter.Start;
                 }
                 this.method_1(stop);
             }
@@ -144,9 +144,9 @@
 
         private void method_1(double double_0)
         {
-            if (double_0 != this.strategyParameter_0.Value)
+            if (double_0 != this.strategyParameter.Value)
             {
-                this.strategyParameter_0.Value = double_0;
+                this.strategyParameter.Value = double_0;
                 this.pnlSlider.Invalidate();
                 if (this.eventHandler_0 != null)
                 {
@@ -162,8 +162,8 @@
 
         private void pnlSlider_MouseDown(object sender, MouseEventArgs e)
         {
-            bool flag = this.bool_0;
-            this.bool_0 = true;
+            bool flag = this.mouseDragging;
+            this.mouseDragging = true;
             this.method_0(e.X);
             if (!flag)
             {
@@ -173,7 +173,7 @@
 
         private void pnlSlider_MouseMove(object sender, MouseEventArgs e)
         {
-            if (this.bool_0)
+            if (this.mouseDragging)
             {
                 this.method_0(e.X);
             }
@@ -181,16 +181,16 @@
 
         private void pnlSlider_MouseUp(object sender, MouseEventArgs e)
         {
-            this.bool_0 = false;
+            this.mouseDragging = false;
         }
 
         private void pnlSlider_Paint(object sender, PaintEventArgs e)
         {
-            if (this.strategyParameter_0 != null)
+            if (this.strategyParameter != null)
             {
-                if (this.strategyParameter_0.Start < this.strategyParameter_0.Stop)
+                if (this.strategyParameter.Start < this.strategyParameter.Stop)
                 {
-                    float num3 = (float) ((this.strategyParameter_0.Value - this.strategyParameter_0.Start) / (this.strategyParameter_0.Stop - this.strategyParameter_0.Start));
+                    float num3 = (float) ((this.strategyParameter.Value - this.strategyParameter.Start) / (this.strategyParameter.Stop - this.strategyParameter.Start));
                     float num4 = this.pnlSlider.Width * num3;
                     Pen pen = new Pen(Color.Black) {
                         Width = 3f
@@ -200,27 +200,27 @@
                         e.Graphics.DrawLine(pen, num4, 0f, num4, (float) base.Height);
                     }
                 }
-                if (this.font_0 == null)
+                if (this.font == null)
                 {
-                    this.font_0 = new Font(this.linkParameter.Font, FontStyle.Bold);
+                    this.font = new Font(this.linkParameter.Font, FontStyle.Bold);
                 }
-                string s = this.strategyParameter_0.Value.ToString();
-                double num2 = ((this.strategyParameter_0.Stop - this.strategyParameter_0.Start) / 2.0) + this.strategyParameter_0.Start;
-                if (this.strategyParameter_0.Value > num2)
+                string s = this.strategyParameter.Value.ToString();
+                double num2 = ((this.strategyParameter.Stop - this.strategyParameter.Start) / 2.0) + this.strategyParameter.Start;
+                if (this.strategyParameter.Value > num2)
                 {
-                    e.Graphics.DrawString(s, this.font_0, Brushes.Navy, (float) 4f, (float) 0f);
+                    e.Graphics.DrawString(s, this.font, Brushes.Navy, (float) 4f, (float) 0f);
                 }
                 else
                 {
-                    SizeF ef = e.Graphics.MeasureString(s, this.font_0);
-                    e.Graphics.DrawString(s, this.font_0, Brushes.Navy, (float) ((this.pnlSlider.Width - ef.Width) - 4f), (float) 0f);
+                    SizeF ef = e.Graphics.MeasureString(s, this.font);
+                    e.Graphics.DrawString(s, this.font, Brushes.Navy, (float) ((this.pnlSlider.Width - ef.Width) - 4f), (float) 0f);
                 }
             }
         }
 
         public void StopMouseDrag()
         {
-            this.bool_0 = false;
+            this.mouseDragging = false;
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
@@ -228,14 +228,14 @@
         {
             get
             {
-                return this.strategyParameter_0;
+                return this.strategyParameter;
             }
             set
             {
-                this.strategyParameter_0 = value;
-                if (this.strategyParameter_0 != null)
+                this.strategyParameter = value;
+                if (this.strategyParameter != null)
                 {
-                    this.linkParameter.Text = this.strategyParameter_0.Name + ":";
+                    this.linkParameter.Text = this.strategyParameter.Name + ":";
                 }
                 base.Invalidate();
             }

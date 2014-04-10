@@ -4,26 +4,26 @@
 
     public class RangeBoundDouble
     {
-        private double double_0;
-        private double double_1;
-        private double double_2;
+        private double doubleValue;
+        private double minimumValue;
+        private double maximumValue;
 
         public RangeBoundDouble(double value, double minValue, double maxValue)
         {
-            this.double_0 = value;
-            this.double_1 = minValue;
-            this.double_2 = maxValue;
+            this.doubleValue = value;
+            this.minimumValue = minValue;
+            this.maximumValue = maxValue;
         }
 
         public double MaximumValue
         {
             get
             {
-                return this.double_2;
+                return this.maximumValue;
             }
             set
             {
-                this.double_2 = value;
+                this.maximumValue = value;
             }
         }
 
@@ -31,11 +31,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.minimumValue;
             }
             set
             {
-                this.double_1 = value;
+                this.minimumValue = value;
             }
         }
 
@@ -43,11 +43,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.doubleValue;
             }
             set
             {
-                this.double_0 = value;
+                this.doubleValue = value;
             }
         }
     }

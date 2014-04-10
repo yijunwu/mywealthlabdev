@@ -6,13 +6,13 @@
     public abstract class Optimizer
     {
         [CompilerGenerated]
-        private IOptimizationHost ioptimizationHost_0;
+        private IOptimizationHost ioptimizationHost;
         [CompilerGenerated]
-        private IPrintHost iprintHost_0;
+        private IPrintHost iprintHost;
         [CompilerGenerated]
-        private WealthLab.Strategy strategy_0;
+        private WealthLab.Strategy strategy;
         [CompilerGenerated]
-        private WealthLab.WealthScript wealthScript_0;
+        private WealthLab.WealthScript wealthScript;
 
         protected Optimizer()
         {
@@ -43,12 +43,12 @@
             [CompilerGenerated]
             get
             {
-                return this.ioptimizationHost_0;
+                return this.ioptimizationHost;
             }
             [CompilerGenerated]
             set
             {
-                this.ioptimizationHost_0 = value;
+                this.ioptimizationHost = value;
             }
         }
 
@@ -59,12 +59,12 @@
             [CompilerGenerated]
             get
             {
-                return this.iprintHost_0;
+                return this.iprintHost;
             }
             [CompilerGenerated]
             set
             {
-                this.iprintHost_0 = value;
+                this.iprintHost = value;
             }
         }
 
@@ -73,12 +73,12 @@
             [CompilerGenerated]
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             [CompilerGenerated]
             set
             {
-                this.strategy_0 = value;
+                this.strategy = value;
             }
         }
 
@@ -87,12 +87,12 @@
             [CompilerGenerated]
             get
             {
-                return this.wealthScript_0;
+                return this.wealthScript;
             }
             [CompilerGenerated]
             set
             {
-                this.wealthScript_0 = value;
+                this.wealthScript = value;
             }
         }
     }

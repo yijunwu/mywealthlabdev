@@ -6,24 +6,24 @@
 
     public class StrategyParameter
     {
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private double double_3;
+        private double doubleValue;
+        private double start;
+        private double stop;
+        private double step;
         private double double_4;
-        private double double_5;
+        private double defaultValue;
         [CompilerGenerated]
-        private object object_0;
-        private string string_0;
-        private string string_1;
+        private object optimizerTag;
+        private string name;
+        private string description;
         [CompilerGenerated]
-        private string string_2;
+        private string nameEdited;
         [CompilerGenerated]
-        private string string_3;
+        private string variableName;
 
         public StrategyParameter()
         {
-            this.double_5 = double.NaN;
+            this.defaultValue = double.NaN;
         }
 
         public StrategyParameter(string name, double value, double start, double stop, double step) : this(name, value, start, stop, step, "")
@@ -32,21 +32,21 @@
 
         public StrategyParameter(string name, double value, double start, double stop, double step, string description)
         {
-            this.double_5 = double.NaN;
-            this.string_0 = name;
+            this.defaultValue = double.NaN;
+            this.name = name;
             this.NameEdited = name;
-            this.double_0 = value;
+            this.doubleValue = value;
             this.DefaultValue = value;
-            this.double_1 = start;
-            this.double_2 = stop;
-            this.double_3 = step;
+            this.start = start;
+            this.stop = stop;
+            this.step = step;
             this.double_4 = value;
-            this.string_1 = description;
+            this.description = description;
         }
 
         public void Reset()
         {
-            this.double_0 = this.double_4;
+            this.doubleValue = this.double_4;
         }
 
         public override string ToString()
@@ -58,15 +58,15 @@
         {
             get
             {
-                if (this.double_5 == double.NaN)
+                if (this.defaultValue == double.NaN)
                 {
-                    return this.double_0;
+                    return this.doubleValue;
                 }
-                return this.double_5;
+                return this.defaultValue;
             }
             set
             {
-                this.double_5 = value;
+                this.defaultValue = value;
             }
         }
 
@@ -74,11 +74,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.description;
             }
             set
             {
-                this.string_1 = value;
+                this.description = value;
             }
         }
 
@@ -111,12 +111,12 @@
         {
             get
             {
-                return this.string_0;
+                return this.name;
             }
             set
             {
-                this.string_0 = value;
-                this.NameEdited = this.string_0;
+                this.name = value;
+                this.NameEdited = this.name;
             }
         }
 
@@ -125,12 +125,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_2;
+                return this.nameEdited;
             }
             [CompilerGenerated]
             set
             {
-                this.string_2 = value;
+                this.nameEdited = value;
             }
         }
 
@@ -152,12 +152,12 @@
             [CompilerGenerated]
             get
             {
-                return this.object_0;
+                return this.optimizerTag;
             }
             [CompilerGenerated]
             set
             {
-                this.object_0 = value;
+                this.optimizerTag = value;
             }
         }
 
@@ -165,11 +165,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.start;
             }
             set
             {
-                this.double_1 = value;
+                this.start = value;
             }
         }
 
@@ -177,11 +177,11 @@
         {
             get
             {
-                return this.double_3;
+                return this.step;
             }
             set
             {
-                this.double_3 = value;
+                this.step = value;
             }
         }
 
@@ -189,11 +189,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.stop;
             }
             set
             {
-                this.double_2 = value;
+                this.stop = value;
             }
         }
 
@@ -201,11 +201,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.doubleValue;
             }
             set
             {
-                this.double_0 = value;
+                this.doubleValue = value;
             }
         }
 
@@ -214,11 +214,11 @@
         {
             get
             {
-                return (int) this.double_0;
+                return (int) this.doubleValue;
             }
             set
             {
-                this.double_0 = value;
+                this.doubleValue = value;
             }
         }
 
@@ -227,12 +227,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_3;
+                return this.variableName;
             }
             [CompilerGenerated]
             set
             {
-                this.string_3 = value;
+                this.variableName = value;
             }
         }
     }

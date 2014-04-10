@@ -4,18 +4,18 @@
 
     public class OrderEventArgs : EventArgs
     {
-        private WealthLab.Order order_0;
+        private WealthLab.Order order;
 
         public OrderEventArgs(WealthLab.Order order)
         {
-            this.order_0 = order;
+            this.order = order;
         }
 
         public WealthLab.Order Order
         {
             get
             {
-                return this.order_0;
+                return this.order;
             }
         }
     }

@@ -9,129 +9,129 @@
     {
         private BarDataRange barDataRange_0;
         private WealthLab.Bars bars_0;
-        private BarScale barScale_0;
-        private bool bool_0;
-        private bool bool_1;
-        private bool bool_2;
+        private BarScale barScale;
+        private bool triggered;
+        private bool processedBySM;
+        private bool emailSent;
         [CompilerGenerated]
-        private bool bool_3;
+        private bool isSameBarExit;
         private DataSource dataSource_0;
-        private DateTime dateTime_0;
-        private DateTime dateTime_1;
-        private double double_0;
-        private double double_1;
-        private double double_2;
-        private double double_3;
-        private double double_4;
-        private double double_5;
-        private Guid guid_0;
-        private int int_0;
-        private object object_0;
+        private DateTime alertDate;
+        private DateTime positionEntryDate;
+        private double shares;
+        private double price;
+        private double basisPrice;
+        private double riskStopLevel;
+        private double autoProfitLevel;
+        private double firstTick;
+        private Guid strategyID;
+        private int barInterval;
+        private object chartDrawingObject;
         private WealthLab.OrderType orderType_0;
         private WealthLab.Position position_0;
-        private PositionSize positionSize_0;
-        private WealthLab.Strategy strategy_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
+        private PositionSize positionSize;
+        private WealthLab.Strategy strategy;
+        private string account;
+        private string symbol;
+        private string signalName;
         private string string_3;
-        private string string_4;
-        private string string_5;
-        private string string_6;
-        private string string_7;
+        private string route;
+        private string tif;
+        private string extendedOrderType;
+        private string accountTradeType;
         [CompilerGenerated]
-        private string string_8;
-        private TradeType tradeType_0;
+        private string sameBarParentOrderNumber;
+        private TradeType alertType;
 
         public Alert()
         {
-            this.double_5 = -1.0;
-            this.string_4 = "";
-            this.string_5 = "";
-            this.string_6 = "";
+            this.firstTick = -1.0;
+            this.route = "";
+            this.tif = "";
+            this.extendedOrderType = "";
         }
 
         public Alert(Alert alert)
         {
-            this.double_5 = -1.0;
-            this.string_4 = "";
-            this.string_5 = "";
-            this.string_6 = "";
-            this.string_0 = alert.string_0;
-            this.dateTime_0 = alert.dateTime_0;
-            this.tradeType_0 = alert.tradeType_0;
-            this.int_0 = alert.int_0;
+            this.firstTick = -1.0;
+            this.route = "";
+            this.tif = "";
+            this.extendedOrderType = "";
+            this.account = alert.account;
+            this.alertDate = alert.alertDate;
+            this.alertType = alert.alertType;
+            this.barInterval = alert.barInterval;
             this.bars_0 = alert.bars_0;
-            this.double_2 = alert.double_2;
+            this.basisPrice = alert.basisPrice;
             this.dataSource_0 = alert.dataSource_0;
-            this.object_0 = alert.object_0;
+            this.chartDrawingObject = alert.chartDrawingObject;
             this.orderType_0 = alert.orderType_0;
             this.position_0 = alert.position_0;
-            this.dateTime_1 = alert.dateTime_1;
-            this.positionSize_0 = alert.positionSize_0;
-            this.double_1 = alert.double_1;
+            this.positionEntryDate = alert.positionEntryDate;
+            this.positionSize = alert.positionSize;
+            this.price = alert.price;
             this.barDataRange_0 = alert.barDataRange_0;
-            this.double_3 = alert.double_3;
-            this.double_4 = alert.double_4;
-            this.barScale_0 = alert.barScale_0;
-            this.double_0 = alert.double_0;
-            this.string_2 = alert.string_2;
-            this.strategy_0 = alert.strategy_0;
-            this.guid_0 = alert.guid_0;
-            this.string_1 = alert.string_1;
-            this.bool_0 = alert.bool_0;
-            this.string_4 = alert.string_4;
-            this.string_5 = alert.string_5;
-            this.string_6 = alert.string_6;
-            this.string_7 = alert.string_7;
+            this.riskStopLevel = alert.riskStopLevel;
+            this.autoProfitLevel = alert.autoProfitLevel;
+            this.barScale = alert.barScale;
+            this.shares = alert.shares;
+            this.signalName = alert.signalName;
+            this.strategy = alert.strategy;
+            this.strategyID = alert.strategyID;
+            this.symbol = alert.symbol;
+            this.triggered = alert.triggered;
+            this.route = alert.route;
+            this.tif = alert.tif;
+            this.extendedOrderType = alert.extendedOrderType;
+            this.accountTradeType = alert.accountTradeType;
             this.IsSameBarExit = alert.IsSameBarExit;
             this.SameBarParentOrderNumber = alert.SameBarParentOrderNumber;
         }
 
         public Alert(WealthLab.Strategy strategy_1, WealthLab.Bars bars_1, DateTime dateTime_2, TradeType alertType, WealthLab.OrderType ordType, double shares, string signalName)
         {
-            this.double_5 = -1.0;
-            this.string_4 = "";
-            this.string_5 = "";
-            this.string_6 = "";
-            this.dateTime_0 = dateTime_2;
-            this.tradeType_0 = alertType;
+            this.firstTick = -1.0;
+            this.route = "";
+            this.tif = "";
+            this.extendedOrderType = "";
+            this.alertDate = dateTime_2;
+            this.alertType = alertType;
             this.orderType_0 = ordType;
-            this.double_0 = shares;
-            this.barScale_0 = bars_1.Scale;
-            this.int_0 = bars_1.BarInterval;
+            this.shares = shares;
+            this.barScale = bars_1.Scale;
+            this.barInterval = bars_1.BarInterval;
             this.bars_0 = bars_1;
-            this.string_2 = signalName;
-            this.string_1 = bars_1.Symbol;
-            this.strategy_0 = strategy_1;
+            this.signalName = signalName;
+            this.symbol = bars_1.Symbol;
+            this.strategy = strategy_1;
             if (strategy_1 != null)
             {
-                this.guid_0 = strategy_1.ID;
+                this.strategyID = strategy_1.ID;
             }
         }
 
         public Alert(WealthLab.Strategy strategy_1, WealthLab.Bars bars_1, DateTime dateTime_2, TradeType alertType, WealthLab.OrderType ordType, double shares, string signalName, double basisPrice, double riskStopLevel, double autoProfitLevel)
         {
-            this.double_5 = -1.0;
-            this.string_4 = "";
-            this.string_5 = "";
-            this.string_6 = "";
-            this.dateTime_0 = dateTime_2;
-            this.tradeType_0 = alertType;
+            this.firstTick = -1.0;
+            this.route = "";
+            this.tif = "";
+            this.extendedOrderType = "";
+            this.alertDate = dateTime_2;
+            this.alertType = alertType;
             this.orderType_0 = ordType;
-            this.double_0 = shares;
-            this.barScale_0 = bars_1.Scale;
-            this.int_0 = bars_1.BarInterval;
+            this.shares = shares;
+            this.barScale = bars_1.Scale;
+            this.barInterval = bars_1.BarInterval;
             this.bars_0 = bars_1;
-            this.double_2 = basisPrice;
-            this.double_3 = riskStopLevel;
-            this.double_4 = autoProfitLevel;
-            this.string_2 = signalName;
-            this.string_1 = bars_1.Symbol;
-            this.strategy_0 = strategy_1;
+            this.basisPrice = basisPrice;
+            this.riskStopLevel = riskStopLevel;
+            this.autoProfitLevel = autoProfitLevel;
+            this.signalName = signalName;
+            this.symbol = bars_1.Symbol;
+            this.strategy = strategy_1;
             if (strategy_1 != null)
             {
-                this.guid_0 = strategy_1.ID;
+                this.strategyID = strategy_1.ID;
             }
         }
 
@@ -153,11 +153,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.account;
             }
             set
             {
-                this.string_0 = value;
+                this.account = value;
             }
         }
 
@@ -165,11 +165,11 @@
         {
             get
             {
-                return this.string_7;
+                return this.accountTradeType;
             }
             set
             {
-                this.string_7 = value;
+                this.accountTradeType = value;
             }
         }
 
@@ -177,11 +177,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.alertDate;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.alertDate = value;
             }
         }
 
@@ -189,11 +189,11 @@
         {
             get
             {
-                return this.tradeType_0;
+                return this.alertType;
             }
             set
             {
-                this.tradeType_0 = value;
+                this.alertType = value;
             }
         }
 
@@ -201,11 +201,11 @@
         {
             get
             {
-                return this.double_4;
+                return this.autoProfitLevel;
             }
             set
             {
-                this.double_4 = value;
+                this.autoProfitLevel = value;
             }
         }
 
@@ -213,11 +213,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             set
             {
-                this.int_0 = value;
+                this.barInterval = value;
             }
         }
 
@@ -238,11 +238,11 @@
         {
             get
             {
-                return this.double_2;
+                return this.basisPrice;
             }
             set
             {
-                this.double_2 = value;
+                this.basisPrice = value;
             }
         }
 
@@ -251,11 +251,11 @@
         {
             get
             {
-                return this.object_0;
+                return this.chartDrawingObject;
             }
             set
             {
-                this.object_0 = value;
+                this.chartDrawingObject = value;
             }
         }
 
@@ -302,11 +302,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.emailSent;
             }
             set
             {
-                this.bool_2 = value;
+                this.emailSent = value;
             }
         }
 
@@ -314,11 +314,11 @@
         {
             get
             {
-                return this.string_6;
+                return this.extendedOrderType;
             }
             set
             {
-                this.string_6 = value;
+                this.extendedOrderType = value;
             }
         }
 
@@ -327,11 +327,11 @@
         {
             get
             {
-                return this.double_5;
+                return this.firstTick;
             }
             set
             {
-                this.double_5 = value;
+                this.firstTick = value;
             }
         }
 
@@ -340,12 +340,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_3;
+                return this.isSameBarExit;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_3 = value;
+                this.isSameBarExit = value;
             }
         }
 
@@ -373,7 +373,7 @@
                 this.position_0 = value;
                 if (value != null)
                 {
-                    this.dateTime_1 = value.EntryDate;
+                    this.positionEntryDate = value.EntryDate;
                 }
             }
         }
@@ -382,11 +382,11 @@
         {
             get
             {
-                return this.dateTime_1;
+                return this.positionEntryDate;
             }
             set
             {
-                this.dateTime_1 = value;
+                this.positionEntryDate = value;
             }
         }
 
@@ -394,7 +394,7 @@
         {
             get
             {
-                if ((this.tradeType_0 != TradeType.Buy) && (this.tradeType_0 != TradeType.Sell))
+                if ((this.alertType != TradeType.Buy) && (this.alertType != TradeType.Sell))
                 {
                     return WealthLab.PositionType.Short;
                 }
@@ -406,11 +406,11 @@
         {
             get
             {
-                return this.positionSize_0;
+                return this.positionSize;
             }
             set
             {
-                this.positionSize_0 = value;
+                this.positionSize = value;
             }
         }
 
@@ -418,11 +418,11 @@
         {
             get
             {
-                return this.double_1;
+                return this.price;
             }
             set
             {
-                this.double_1 = value;
+                this.price = value;
             }
         }
 
@@ -431,11 +431,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.processedBySM;
             }
             set
             {
-                this.bool_1 = value;
+                this.processedBySM = value;
             }
         }
 
@@ -443,11 +443,11 @@
         {
             get
             {
-                return this.double_3;
+                return this.riskStopLevel;
             }
             set
             {
-                this.double_3 = value;
+                this.riskStopLevel = value;
             }
         }
 
@@ -455,11 +455,11 @@
         {
             get
             {
-                return this.string_4;
+                return this.route;
             }
             set
             {
-                this.string_4 = value;
+                this.route = value;
             }
         }
 
@@ -469,12 +469,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_8;
+                return this.sameBarParentOrderNumber;
             }
             [CompilerGenerated]
             set
             {
-                this.string_8 = value;
+                this.sameBarParentOrderNumber = value;
             }
         }
 
@@ -482,11 +482,11 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             set
             {
-                this.barScale_0 = value;
+                this.barScale = value;
             }
         }
 
@@ -517,11 +517,11 @@
         {
             get
             {
-                return this.double_0;
+                return this.shares;
             }
             set
             {
-                this.double_0 = value;
+                this.shares = value;
             }
         }
 
@@ -529,11 +529,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.signalName;
             }
             set
             {
-                this.string_2 = value;
+                this.signalName = value;
             }
         }
 
@@ -542,14 +542,14 @@
         {
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             set
             {
-                this.strategy_0 = value;
-                if (this.strategy_0 != null)
+                this.strategy = value;
+                if (this.strategy != null)
                 {
-                    this.guid_0 = this.strategy_0.ID;
+                    this.strategyID = this.strategy.ID;
                 }
             }
         }
@@ -558,11 +558,11 @@
         {
             get
             {
-                return this.guid_0;
+                return this.strategyID;
             }
             set
             {
-                this.guid_0 = value;
+                this.strategyID = value;
             }
         }
 
@@ -570,11 +570,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.symbol;
             }
             set
             {
-                this.string_1 = value;
+                this.symbol = value;
             }
         }
 
@@ -582,11 +582,11 @@
         {
             get
             {
-                return this.string_5;
+                return this.tif;
             }
             set
             {
-                this.string_5 = value;
+                this.tif = value;
             }
         }
 
@@ -594,11 +594,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.triggered;
             }
             set
             {
-                this.bool_0 = value;
+                this.triggered = value;
             }
         }
     }

@@ -5,22 +5,22 @@
 
     public class PlottedSymbol
     {
-        private WealthLab.Bars bars_0;
-        private Color color_0;
-        private Color color_1;
+        private WealthLab.Bars bars;
+        private Color upColor;
+        private Color downColor;
 
         public PlottedSymbol(WealthLab.Bars bars, Color upColor, Color downColor)
         {
-            this.bars_0 = bars;
-            this.color_0 = upColor;
-            this.color_1 = downColor;
+            this.bars = bars;
+            this.upColor = upColor;
+            this.downColor = downColor;
         }
 
         public WealthLab.Bars Bars
         {
             get
             {
-                return this.bars_0;
+                return this.bars;
             }
         }
 
@@ -28,7 +28,7 @@
         {
             get
             {
-                return this.color_1;
+                return this.downColor;
             }
         }
 
@@ -36,7 +36,7 @@
         {
             get
             {
-                return this.color_0;
+                return this.upColor;
             }
         }
     }

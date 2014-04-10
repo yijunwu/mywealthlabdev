@@ -13,7 +13,7 @@
         private Button btnCancel;
         private Button btnOK;
         private double double_0;
-        private double double_1;
+        private double newValue;
         private double double_2;
         private double double_3;
         private GroupBox grpGuideline;
@@ -40,7 +40,7 @@
             this.tbMax.Text = double_5.ToString();
             this.tbIncrement.Text = double_6.ToString();
             this.double_0 = value;
-            this.double_1 = value;
+            this.newValue = value;
             this.bool_0 = false;
             this.double_2 = double_4;
             this.double_3 = double_5;
@@ -48,7 +48,7 @@
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.double_1 = this.double_0;
+            this.newValue = this.double_0;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -250,12 +250,12 @@
                     if (!double.TryParse(this.tbValue.Text, out num))
                     {
                         this.bool_0 = true;
-                        this.tbValue.Text = this.double_1.ToString();
+                        this.tbValue.Text = this.newValue.ToString();
                         this.bool_0 = false;
                     }
                     else
                     {
-                        this.double_1 = num;
+                        this.newValue = num;
                     }
                     if (this.bool_1)
                     {
@@ -277,7 +277,7 @@
         {
             get
             {
-                return this.double_1;
+                return this.newValue;
             }
         }
     }

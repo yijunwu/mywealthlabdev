@@ -4,26 +4,26 @@
 
     public class RangeBoundInt32
     {
-        private int int_0;
-        private int int_1;
-        private int int_2;
+        private int intValue;
+        private int minimumValue;
+        private int maximumValue;
 
         public RangeBoundInt32(int value, int minValue, int maxValue)
         {
-            this.int_0 = value;
-            this.int_1 = minValue;
-            this.int_2 = maxValue;
+            this.intValue = value;
+            this.minimumValue = minValue;
+            this.maximumValue = maxValue;
         }
 
         public int MaximumValue
         {
             get
             {
-                return this.int_2;
+                return this.maximumValue;
             }
             set
             {
-                this.int_2 = value;
+                this.maximumValue = value;
             }
         }
 
@@ -31,11 +31,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.minimumValue;
             }
             set
             {
-                this.int_1 = value;
+                this.minimumValue = value;
             }
         }
 
@@ -43,11 +43,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.intValue;
             }
             set
             {
-                this.int_0 = value;
+                this.intValue = value;
             }
         }
     }

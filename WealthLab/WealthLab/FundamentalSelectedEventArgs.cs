@@ -4,20 +4,20 @@
 
     public class FundamentalSelectedEventArgs : EventArgs
     {
-        private FundamentalDataProvider fundamentalDataProvider_0;
-        private string string_0;
+        private FundamentalDataProvider fundamentalDataProvider;
+        private string itemName;
 
         public FundamentalSelectedEventArgs(FundamentalDataProvider provider, string itemName)
         {
-            this.fundamentalDataProvider_0 = provider;
-            this.string_0 = itemName;
+            this.fundamentalDataProvider = provider;
+            this.itemName = itemName;
         }
 
         public string ItemName
         {
             get
             {
-                return this.string_0;
+                return this.itemName;
             }
         }
 
@@ -25,7 +25,7 @@
         {
             get
             {
-                return this.fundamentalDataProvider_0;
+                return this.fundamentalDataProvider;
             }
         }
     }

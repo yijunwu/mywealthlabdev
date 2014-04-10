@@ -12,16 +12,16 @@
     [ToolboxBitmap(typeof(DataSourceManager), "DataSourceManager")]
     public class DataSourceManager : Component, IComparer<DataSource>, IDataHost
     {
-        private AssemblyLoader assemblyLoader_0;
-        private AuthenticationProvider authenticationProvider_0;
-        private bool bool_0;
+        private AssemblyLoader assemblyLoader;
+        private AuthenticationProvider authProvider;
+        private bool onDemandUpdatesEnabled;
         private Dictionary<string, StaticDataProvider> dictionary_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ISettingsHost isettingsHost_0;
-        private List<DataSource> list_0;
-        private List<IItemTracker<DataSource>> list_1;
-        private MarketHours marketHours_0;
-        private string string_0;
+        private List<DataSource> dataSources;
+        private List<IItemTracker<DataSource>> observers;
+        private MarketHours marketHours;
+        private string rootPath;
 
         private EventHandler<StockSplitEventArgs> eventHandler_0;
 
@@ -55,32 +55,32 @@
 
         public DataSourceManager()
         {
-            this.assemblyLoader_0 = new AssemblyLoader();
-            this.list_0 = new List<DataSource>();
+            this.assemblyLoader = new AssemblyLoader();
+            this.dataSources = new List<DataSource>();
             this.dictionary_0 = new Dictionary<string, StaticDataProvider>();
-            this.bool_0 = true;
-            this.list_1 = new List<IItemTracker<DataSource>>();
-            this.marketHours_0 = new MarketHours();
+            this.onDemandUpdatesEnabled = true;
+            this.observers = new List<IItemTracker<DataSource>>();
+            this.marketHours = new MarketHours();
             this.method_0();
         }
 
         public DataSourceManager(IContainer container)
         {
-            this.assemblyLoader_0 = new AssemblyLoader();
-            this.list_0 = new List<DataSource>();
+            this.assemblyLoader = new AssemblyLoader();
+            this.dataSources = new List<DataSource>();
             this.dictionary_0 = new Dictionary<string, StaticDataProvider>();
-            this.bool_0 = true;
-            this.list_1 = new List<IItemTracker<DataSource>>();
-            this.marketHours_0 = new MarketHours();
+            this.onDemandUpdatesEnabled = true;
+            this.observers = new List<IItemTracker<DataSource>>();
+            this.marketHours = new MarketHours();
             container.Add(this);
             this.method_0();
         }
 
         public void Add(DataSource dataSource_0)
         {
-            this.list_0.Add(dataSource_0);
+            this.dataSources.Add(dataSource_0);
             this.SaveDataSources();
-            foreach (IItemTracker<DataSource> tracker in this.list_1)
+            foreach (IItemTracker<DataSource> tracker in this.observers)
             {
                 tracker.ItemAdded(dataSource_0);
             }
@@ -131,12 +131,12 @@
             {
                 dataSource_0.Provider.ModifySymbols(dataSource_0, new List<string>());
             }
-            if (this.list_0.Contains(dataSource_0))
+            if (this.dataSources.Contains(dataSource_0))
             {
-                this.list_0.Remove(dataSource_0);
+                this.dataSources.Remove(dataSource_0);
             }
             this.DeleteDataSourceFile(dataSource_0);
-            foreach (IItemTracker<DataSource> tracker in this.list_1)
+            foreach (IItemTracker<DataSource> tracker in this.observers)
             {
                 tracker.ItemRemoved(dataSource_0);
             }
@@ -191,9 +191,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -202,7 +202,7 @@
         {
             DataSource source2;
             string str = name.ToUpper();
-            using (List<DataSource>.Enumerator enumerator = this.list_0.GetEnumerator())
+            using (List<DataSource>.Enumerator enumerator = this.dataSources.GetEnumerator())
             {
                 DataSource current;
                 while (enumerator.MoveNext())
@@ -241,14 +241,14 @@
 
         public StaticDataProvider GetProviderInstance(System.Type type_0)
         {
-            StaticDataProvider provider = (StaticDataProvider) this.assemblyLoader_0.CreateInstance(type_0);
+            StaticDataProvider provider = (StaticDataProvider) this.assemblyLoader.CreateInstance(type_0);
             provider.Initialize(this);
             return provider;
         }
 
         public void LoadDataSources()
         {
-            this.list_0.Clear();
+            this.dataSources.Clear();
             string path = this.RootPath + @"\DataSets\";
             if (Directory.Exists(path))
             {
@@ -271,7 +271,7 @@
                         try
                         {
                             int count = item.Symbols.Count;
-                            this.list_0.Add(item);
+                            this.dataSources.Add(item);
                         }
                         catch
                         {
@@ -279,13 +279,13 @@
                     }
                     index++;
                 }
-                this.list_0.Sort(this);
+                this.dataSources.Sort(this);
             }
         }
 
         private void method_0()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
         }
 
         private void method_1()
@@ -293,13 +293,13 @@
             if (!base.DesignMode)
             {
                 this.dictionary_0.Clear();
-                this.assemblyLoader_0.BaseClass = "StaticDataProvider";
-                this.assemblyLoader_0.Path = Path.GetDirectoryName(Application.ExecutablePath);
-                foreach (System.Type type in this.assemblyLoader_0.Types)
+                this.assemblyLoader.BaseClass = "StaticDataProvider";
+                this.assemblyLoader.Path = Path.GetDirectoryName(Application.ExecutablePath);
+                foreach (System.Type type in this.assemblyLoader.Types)
                 {
                     try
                     {
-                        StaticDataProvider provider = (StaticDataProvider) this.assemblyLoader_0.CreateInstance(type);
+                        StaticDataProvider provider = (StaticDataProvider) this.assemblyLoader.CreateInstance(type);
                         provider.Initialize(this);
                         this.dictionary_0.Add(provider.GetType().Name, provider);
                     }
@@ -325,7 +325,7 @@
             dataSource_0.DSString = str;
             this.SaveDataSource(dataSource_0);
             dataSource_0.method_0();
-            foreach (IItemTracker<DataSource> tracker in this.list_1)
+            foreach (IItemTracker<DataSource> tracker in this.observers)
             {
                 tracker.ItemChanged(dataSource_0);
             }
@@ -372,7 +372,7 @@
 
         public void RegisterObserver(IItemTracker<DataSource> observer)
         {
-            this.list_1.Add(observer);
+            this.observers.Add(observer);
         }
 
         public void RemoveSymbol(DataSource dataSource_0, string symbol)
@@ -430,7 +430,7 @@
                 this.DeleteDataSourceFile(dataSource_0);
                 dataSource_0.Name = name;
                 this.SaveDataSource(dataSource_0);
-                foreach (IItemTracker<DataSource> tracker in this.list_1)
+                foreach (IItemTracker<DataSource> tracker in this.observers)
                 {
                     tracker.ItemChanged(dataSource_0);
                 }
@@ -451,7 +451,7 @@
 
         public void SaveDataSources()
         {
-            foreach (DataSource source in this.list_0)
+            foreach (DataSource source in this.dataSources)
             {
                 this.SaveDataSource(source);
             }
@@ -459,7 +459,7 @@
 
         public void UnregisterObserver(IItemTracker<DataSource> observer)
         {
-            this.list_1.Remove(observer);
+            this.observers.Remove(observer);
         }
 
         void IDataHost.AdjustForStockSplit(StaticDataProvider staticDataProvider_0, string symbol, double splitFactor, DateTime exDate)
@@ -475,11 +475,11 @@
         {
             get
             {
-                return this.authenticationProvider_0;
+                return this.authProvider;
             }
             set
             {
-                this.authenticationProvider_0 = value;
+                this.authProvider = value;
             }
         }
 
@@ -488,7 +488,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.dataSources;
             }
         }
 
@@ -496,11 +496,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.onDemandUpdatesEnabled;
             }
             set
             {
-                this.bool_0 = value;
+                this.onDemandUpdatesEnabled = value;
             }
         }
 
@@ -517,15 +517,15 @@
         {
             get
             {
-                return this.string_0;
+                return this.rootPath;
             }
             set
             {
                 if ((value != null) && !Directory.Exists(value))
                 {
-                    throw new ArgumentException("Directory does not exist: " + this.string_0);
+                    throw new ArgumentException("Directory does not exist: " + this.rootPath);
                 }
-                this.string_0 = value;
+                this.rootPath = value;
                 if (value != null)
                 {
                     this.method_1();
@@ -551,7 +551,7 @@
         {
             get
             {
-                return this.authenticationProvider_0;
+                return this.authProvider;
             }
         }
 
@@ -559,7 +559,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.rootPath;
             }
         }
 
@@ -567,7 +567,7 @@
         {
             get
             {
-                return this.marketHours_0.Market;
+                return this.marketHours.Market;
             }
         }
 

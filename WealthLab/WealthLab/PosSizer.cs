@@ -5,15 +5,15 @@
 
     public abstract class PosSizer
     {
-        private DataSeries dataSeries_0;
-        private DataSeries dataSeries_1;
-        private DataSeries dataSeries_2;
-        private DataSeries dataSeries_3;
-        private List<Position> list_0;
-        private List<Position> list_1;
-        private List<Position> list_2;
-        private List<Position> list_3;
-        private TradingSystemExecutor tradingSystemExecutor_0;
+        private DataSeries dataSeries_EquityCurve;
+        private DataSeries dataSeries_CashCurve;
+        private DataSeries dataSeries_DrawDownCurve;
+        private DataSeries dataSeries_DrawDownPctCurve;
+        private List<Position> activePositions;
+        private List<Position> positions;
+        private List<Position> closedPositions;
+        private List<Position> candidates;
+        private TradingSystemExecutor tradingSystemExecutor;
 
         protected PosSizer()
         {
@@ -31,10 +31,10 @@
                 case PosSizeMode.PctEquity:
                 case PosSizeMode.MaxRisk:
                 {
-                    PositionSize posSize = this.tradingSystemExecutor_0.PosSize;
-                    this.tradingSystemExecutor_0.PosSize = new PositionSize(mode, posSizeValue);
-                    double num = this.tradingSystemExecutor_0.CalcPositionSize(bars, int_0 + 1, costBasis, positionType_0, riskStopLevel, equity);
-                    this.tradingSystemExecutor_0.PosSize = posSize;
+                    PositionSize posSize = this.tradingSystemExecutor.PosSize;
+                    this.tradingSystemExecutor.PosSize = new PositionSize(mode, posSizeValue);
+                    double num = this.tradingSystemExecutor.CalcPositionSize(bars, int_0 + 1, costBasis, positionType_0, riskStopLevel, equity);
+                    this.tradingSystemExecutor.PosSize = posSize;
                     return num;
                 }
             }
@@ -68,27 +68,27 @@
 
         internal void method_0(TradingSystemExecutor tradingSystemExecutor_1, List<Position> list_4, List<Position> list_5, List<Position> list_6, DataSeries dataSeries_4, DataSeries dataSeries_5, DataSeries dataSeries_6, DataSeries dataSeries_7)
         {
-            this.list_0 = list_4;
-            this.list_1 = list_5;
-            this.list_2 = list_6;
-            this.tradingSystemExecutor_0 = tradingSystemExecutor_1;
-            this.dataSeries_0 = dataSeries_4;
-            this.dataSeries_1 = dataSeries_5;
-            this.dataSeries_2 = dataSeries_6;
-            this.dataSeries_3 = dataSeries_7;
+            this.activePositions = list_4;
+            this.positions = list_5;
+            this.closedPositions = list_6;
+            this.tradingSystemExecutor = tradingSystemExecutor_1;
+            this.dataSeries_EquityCurve = dataSeries_4;
+            this.dataSeries_CashCurve = dataSeries_5;
+            this.dataSeries_DrawDownCurve = dataSeries_6;
+            this.dataSeries_DrawDownPctCurve = dataSeries_7;
         }
 
-        public static string ParseConfigString(string string_0)
+        public static string ParseConfigString(string configStr)
         {
-            if (string_0.Length < 1)
+            if (configStr.Length < 1)
             {
-                return string_0;
+                return configStr;
             }
-            if (string_0[0] != '*')
+            if (configStr[0] != '*')
             {
-                return string_0;
+                return configStr;
             }
-            return string_0.Split(new char[] { '^' })[1];
+            return configStr.Split(new char[] { '^' })[1];
         }
 
         public abstract double SizePosition(Position currentPos, Bars bars, int int_0, double basisPrice, PositionType positionType_0, double riskStopLevel, double equity, double cash);
@@ -101,11 +101,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.activePositions;
             }
             internal set
             {
-                this.list_0 = value;
+                this.activePositions = value;
             }
         }
 
@@ -113,11 +113,11 @@
         {
             get
             {
-                return this.list_3;
+                return this.candidates;
             }
             internal set
             {
-                this.list_3 = value;
+                this.candidates = value;
             }
         }
 
@@ -125,11 +125,11 @@
         {
             get
             {
-                return this.dataSeries_1;
+                return this.dataSeries_CashCurve;
             }
             internal set
             {
-                this.dataSeries_1 = value;
+                this.dataSeries_CashCurve = value;
             }
         }
 
@@ -137,11 +137,11 @@
         {
             get
             {
-                return this.list_2;
+                return this.closedPositions;
             }
             internal set
             {
-                this.list_2 = value;
+                this.closedPositions = value;
             }
         }
 
@@ -149,11 +149,11 @@
         {
             get
             {
-                return this.dataSeries_2;
+                return this.dataSeries_DrawDownCurve;
             }
             internal set
             {
-                this.dataSeries_2 = value;
+                this.dataSeries_DrawDownCurve = value;
             }
         }
 
@@ -161,11 +161,11 @@
         {
             get
             {
-                return this.dataSeries_3;
+                return this.dataSeries_DrawDownPctCurve;
             }
             internal set
             {
-                this.dataSeries_3 = value;
+                this.dataSeries_DrawDownPctCurve = value;
             }
         }
 
@@ -173,11 +173,11 @@
         {
             get
             {
-                return this.dataSeries_0;
+                return this.dataSeries_EquityCurve;
             }
             internal set
             {
-                this.dataSeries_0 = value;
+                this.dataSeries_EquityCurve = value;
             }
         }
 
@@ -187,11 +187,11 @@
         {
             get
             {
-                return this.list_1;
+                return this.positions;
             }
             internal set
             {
-                this.list_1 = value;
+                this.positions = value;
             }
         }
     }
