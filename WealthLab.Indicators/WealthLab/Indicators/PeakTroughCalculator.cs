@@ -17,12 +17,12 @@
         internal static double double_7;
         internal static int int_0;
         internal static int int_1;
-        private WealthLab.Indicators.Peak peak_0;
-        private WealthLab.Indicators.PeakBar peakBar_0;
+        private WealthLab.Indicators.Peak peak;
+        private WealthLab.Indicators.PeakBar peakBar;
         private PeakTroughMode peakTroughMode_0;
         internal static PeakTroughMode peakTroughMode_1;
-        private WealthLab.Indicators.Trough trough_0;
-        private WealthLab.Indicators.TroughBar troughBar_0;
+        private WealthLab.Indicators.Trough trough;
+        private WealthLab.Indicators.TroughBar troughBar;
 
         public PeakTroughCalculator(DataSeries source, double reversalAmount, PeakTroughMode mode)
         {
@@ -32,21 +32,21 @@
             string str4 = string.Concat(new object[] { "TroughBar(", source.Description, ",", reversalAmount, ",", mode, ")" });
             if (source.Cache.ContainsKey(key))
             {
-                this.peak_0 = (WealthLab.Indicators.Peak) source.Cache[key];
-                this.trough_0 = (WealthLab.Indicators.Trough) source.Cache[str2];
-                this.peakBar_0 = (WealthLab.Indicators.PeakBar) source.Cache[str3];
-                this.troughBar_0 = (WealthLab.Indicators.TroughBar) source.Cache[str4];
+                this.peak = (WealthLab.Indicators.Peak) source.Cache[key];
+                this.trough = (WealthLab.Indicators.Trough) source.Cache[str2];
+                this.peakBar = (WealthLab.Indicators.PeakBar) source.Cache[str3];
+                this.troughBar = (WealthLab.Indicators.TroughBar) source.Cache[str4];
             }
             else
             {
-                this.peak_0 = new WealthLab.Indicators.Peak(source, key);
-                source.Cache.Add(key, this.peak_0);
-                this.trough_0 = new WealthLab.Indicators.Trough(source, str2);
-                source.Cache.Add(str2, this.trough_0);
-                this.peakBar_0 = new WealthLab.Indicators.PeakBar(source, str3);
-                source.Cache.Add(str3, this.peakBar_0);
-                this.troughBar_0 = new WealthLab.Indicators.TroughBar(source, str4);
-                source.Cache.Add(str4, this.troughBar_0);
+                this.peak = new WealthLab.Indicators.Peak(source, key);
+                source.Cache.Add(key, this.peak);
+                this.trough = new WealthLab.Indicators.Trough(source, str2);
+                source.Cache.Add(str2, this.trough);
+                this.peakBar = new WealthLab.Indicators.PeakBar(source, str3);
+                source.Cache.Add(str3, this.peakBar);
+                this.troughBar = new WealthLab.Indicators.TroughBar(source, str4);
+                source.Cache.Add(str4, this.troughBar);
                 if (source.Count != 0)
                 {
                     this.peakTroughMode_0 = mode;
@@ -98,10 +98,10 @@
                                 num5 = i;
                             }
                         }
-                        this.peak_0[i] = num;
-                        this.peakBar_0[i] = num3;
-                        this.trough_0[i] = num2;
-                        this.troughBar_0[i] = num4;
+                        this.peak[i] = num;
+                        this.peakBar[i] = num3;
+                        this.trough[i] = num2;
+                        this.troughBar[i] = num4;
                     }
                 }
             }
@@ -242,7 +242,7 @@
         {
             get
             {
-                return this.peak_0;
+                return this.peak;
             }
         }
 
@@ -250,7 +250,7 @@
         {
             get
             {
-                return this.peakBar_0;
+                return this.peakBar;
             }
         }
 
@@ -258,7 +258,7 @@
         {
             get
             {
-                return this.trough_0;
+                return this.trough;
             }
         }
 
@@ -266,7 +266,7 @@
         {
             get
             {
-                return this.troughBar_0;
+                return this.troughBar;
             }
         }
     }
