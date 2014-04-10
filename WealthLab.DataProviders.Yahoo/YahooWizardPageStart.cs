@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using GroupBox = System.Windows.Forms.GroupBox;
 
 internal class YahooWizardPageStart : UserControl
 {
@@ -58,7 +59,7 @@ internal class YahooWizardPageStart : UserControl
         this.grpOptions.Controls.Add(this.lblOptions);
         this.grpOptions.Location = new Point(7, 7);
         this.grpOptions.Name = "grpOptions";
-        this.grpOptions.RightToLeft = RightToLeft.No;
+        this.grpOptions.RightToLeft = System.Windows.Forms.RightToLeft.No;
         this.grpOptions.Size = new Size(550, 0x14c);
         this.grpOptions.TabIndex = 0;
         this.grpOptions.TabStop = false;
@@ -117,16 +118,16 @@ internal class YahooWizardPageStart : UserControl
         this.lblVersion.Font = new Font("Microsoft Sans Serif", 6.5f, FontStyle.Regular, GraphicsUnit.Point, 0xcc);
         this.lblVersion.Location = new Point(0x20d, 0x156);
         this.lblVersion.Name = "lblVersion";
-        this.lblVersion.RightToLeft = RightToLeft.Yes;
+        this.lblVersion.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
         this.lblVersion.Size = new Size(0x22, 12);
         this.lblVersion.TabIndex = 9;
         this.lblVersion.Text = "1.0.2.3";
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.Controls.Add(this.lblVersion);
         base.Controls.Add(this.grpOptions);
         base.Name = "YahooWizardPageStart";
-        this.RightToLeft = RightToLeft.Yes;
+        this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
         base.Size = new Size(560, 0x161);
         this.grpOptions.ResumeLayout(false);
         this.grpOptions.PerformLayout();

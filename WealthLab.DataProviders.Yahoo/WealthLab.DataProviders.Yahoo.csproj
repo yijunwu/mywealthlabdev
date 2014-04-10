@@ -31,6 +31,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <EmbeddedResource Include="YahooWizardPageSymbols.resx">
+      <DependentUpon>YahooWizardPageSymbols.cs</DependentUpon>
+    </EmbeddedResource>
     <Reference Include="System" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
@@ -94,13 +97,20 @@
     <Compile Include="WealthLab\DataProviders\Yahoo\FundamentalItemYahooDividend.cs" />
     <Compile Include="WealthLab\DataProviders\Yahoo\FundamentalItemYahooSplit.cs" />
     <Compile Include="WealthLab\DataProviders\Yahoo\GStream0.cs" />
-    <EmbeddedResource Include="YahooWizardPageSymbols.resources" />
-    <EmbeddedResource Include="YahooWizardPageStart.resources" />
-    <EmbeddedResource Include="YahooWizardPageClassification.resources" />
-    <EmbeddedResource Include="ProviderSettingsControl.resources" />
+    <EmbeddedResource Include="ProviderSettingsControl.resx">
+      <DependentUpon>ProviderSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProviderSettingsForm.resx">
+      <DependentUpon>ProviderSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="YahooWizardPageClassification.resx">
+      <DependentUpon>YahooWizardPageClassification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="YahooWizardPageStart.resx">
+      <DependentUpon>YahooWizardPageStart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WealthLab.DataProviders.Yahoo.Resources.Yahoo.bmp" />
     <EmbeddedResource Include="WealthLab.DataProviders.Yahoo.Properties.Resources.resources" />
-    <EmbeddedResource Include="ProviderSettingsForm.resources" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WealthLab.Extensions.Attribute\WealthLab.Extensions.Attribute.csproj">

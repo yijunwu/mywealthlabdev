@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using GroupBox = System.Windows.Forms.GroupBox;
 
 internal class YahooWizardPageSymbols : UserControl
 {
@@ -78,7 +79,7 @@ internal class YahooWizardPageSymbols : UserControl
         this.grpSymbols.Controls.Add(this.txtSymbols);
         this.grpSymbols.Location = new Point(7, 7);
         this.grpSymbols.Name = "grpSymbols";
-        this.grpSymbols.RightToLeft = RightToLeft.No;
+        this.grpSymbols.RightToLeft = System.Windows.Forms.RightToLeft.No;
         this.grpSymbols.Size = new Size(550, 0x157);
         this.grpSymbols.TabIndex = 5;
         this.grpSymbols.TabStop = false;
@@ -113,10 +114,10 @@ internal class YahooWizardPageSymbols : UserControl
         this.txtSymbols.Size = new Size(0x219, 0x10b);
         this.txtSymbols.TabIndex = 0;
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.Controls.Add(this.grpSymbols);
         base.Name = "YahooWizardPageSymbols";
-        this.RightToLeft = RightToLeft.Yes;
+        this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
         base.Size = new Size(560, 0x161);
         this.grpSymbols.ResumeLayout(false);
         this.grpSymbols.PerformLayout();

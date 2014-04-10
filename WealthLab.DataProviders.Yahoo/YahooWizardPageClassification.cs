@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using WealthLab.DataProviders.Helper;
 using WealthLab.DataProviders.Yahoo;
+using GroupBox = System.Windows.Forms.GroupBox;
 
 internal class YahooWizardPageClassification : UserControl
 {
@@ -84,7 +85,7 @@ internal class YahooWizardPageClassification : UserControl
         this.grpClassification.Controls.Add(this.treeClassification);
         this.grpClassification.Location = new Point(7, 7);
         this.grpClassification.Name = "grpClassification";
-        this.grpClassification.RightToLeft = RightToLeft.No;
+        this.grpClassification.RightToLeft = System.Windows.Forms.RightToLeft.No;
         this.grpClassification.Size = new Size(550, 0x157);
         this.grpClassification.TabIndex = 0;
         this.grpClassification.TabStop = false;
@@ -159,10 +160,10 @@ internal class YahooWizardPageClassification : UserControl
         this.treeClassification.DoubleClick += new EventHandler(this.treeClassification_DoubleClick);
         this.treeClassification.AfterSelect += new TreeViewEventHandler(this.treeClassification_AfterSelect);
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.Controls.Add(this.grpClassification);
         base.Name = "YahooWizardPageClassification";
-        this.RightToLeft = RightToLeft.Yes;
+        this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
         base.Size = new Size(560, 0x161);
         base.Load += new EventHandler(this.YahooWizardPageClassification_Load);
         this.grpClassification.ResumeLayout(false);

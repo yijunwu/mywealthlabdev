@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using WealthLab.DataProviders.Helper;
 using WealthLab.DataProviders.Yahoo;
+using Button = System.Windows.Forms.Button;
 
 internal class ProviderSettingsForm : Form
 {
@@ -103,7 +104,7 @@ internal class ProviderSettingsForm : Form
         this.grpPremium.SuspendLayout();
         base.SuspendLayout();
         this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-        this.btnCancel.DialogResult = DialogResult.Cancel;
+        this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
         this.btnCancel.Location = new Point(0x1bb, 0x191);
         this.btnCancel.Name = "btnCancel";
         this.btnCancel.Size = new Size(80, 0x18);
@@ -111,7 +112,7 @@ internal class ProviderSettingsForm : Form
         this.btnCancel.Text = "Cancel";
         this.btnCancel.UseVisualStyleBackColor = true;
         this.btnOk.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-        this.btnOk.DialogResult = DialogResult.OK;
+        this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
         this.btnOk.Location = new Point(0x165, 0x191);
         this.btnOk.Name = "btnOk";
         this.btnOk.Size = new Size(80, 0x18);
@@ -273,7 +274,7 @@ internal class ProviderSettingsForm : Form
         this.cbNeverPerformOnDemand.Text = "Never perform On Demand data updates.";
         this.cbNeverPerformOnDemand.UseVisualStyleBackColor = true;
         base.AutoScaleDimensions = new SizeF(6f, 13f);
-        base.AutoScaleMode = AutoScaleMode.Font;
+        base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         base.ClientSize = new Size(0x217, 430);
         base.Controls.Add(this.cbNeverPerformOnDemand);
         base.Controls.Add(this.lblDataRange);
@@ -290,7 +291,7 @@ internal class ProviderSettingsForm : Form
         base.Controls.Add(this.pnlInfo);
         base.Controls.Add(this.btnOk);
         base.Controls.Add(this.btnCancel);
-        base.FormBorderStyle = FormBorderStyle.FixedSingle;
+        base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         base.MaximizeBox = false;
         base.MinimizeBox = false;
         base.Name = "ProviderSettingsForm";
