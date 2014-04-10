@@ -1,6 +1,5 @@
 ﻿namespace WealthLab.DataProviders.AsciiFilesStatic
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
@@ -8,10 +7,10 @@
 
     public class Config
     {
-        private bool bool_0;
-        private List<AsciiCache> list_0 = new List<AsciiCache>();
-        private static string string_0 = string.Empty;
-        private static string string_1 = string.Empty;
+        private bool enableCache;
+        private List<AsciiCache> asciiCacheList = new List<AsciiCache>();
+        private static string configFilePath = string.Empty;
+        private static string cachePath = string.Empty;
 
         static Config()
         {
@@ -21,7 +20,7 @@
         public static Config Desereailize()
         {
             Config config;
-            if (!File.Exists(string_0))
+            if (!File.Exists(configFilePath))
             {
                 return new Config();
             }
@@ -29,7 +28,7 @@
             object obj2 = null;
             try
             {
-                using (FileStream stream = new FileStream(string_0, FileMode.Open))
+                using (FileStream stream = new FileStream(configFilePath, FileMode.Open))
                 {
                     obj2 = serializer.Deserialize(stream);
                 }
@@ -45,11 +44,11 @@
         public void Serialize()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Config));
-            if (!Directory.Exists(Path.GetDirectoryName(string_0)))
+            if (!Directory.Exists(Path.GetDirectoryName(configFilePath)))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(string_0));
+                Directory.CreateDirectory(Path.GetDirectoryName(configFilePath));
             }
-            using (FileStream stream = new FileStream(string_0, FileMode.Create))
+            using (FileStream stream = new FileStream(configFilePath, FileMode.Create))
             {
                 serializer.Serialize((Stream) stream, this);
             }
@@ -57,24 +56,24 @@
 
         private static void smethod_0()
         {
-            string_0 = string_1 = Path.Combine(Application.UserAppDataPath, "Data");
-            if (!Directory.Exists(string_0))
+            configFilePath = cachePath = Path.Combine(Application.UserAppDataPath, "Data");
+            if (!Directory.Exists(configFilePath))
             {
-                Directory.CreateDirectory(string_0);
+                Directory.CreateDirectory(configFilePath);
             }
-            string_0 = Path.Combine(string_0, "AsciiConfig.xml");
-            string_1 = Path.Combine(string_1, "AsciiCache");
+            configFilePath = Path.Combine(configFilePath, "AsciiConfig.xml");
+            cachePath = Path.Combine(cachePath, "AsciiCache");
         }
 
         public List<AsciiCache> AsciiCacheList
         {
             get
             {
-                return this.list_0;
+                return this.asciiCacheList;
             }
             set
             {
-                this.list_0 = value;
+                this.asciiCacheList = value;
             }
         }
 
@@ -82,7 +81,7 @@
         {
             get
             {
-                return string_1;
+                return cachePath;
             }
         }
 
@@ -90,11 +89,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.enableCache;
             }
             set
             {
-                this.bool_0 = value;
+                this.enableCache = value;
             }
         }
     }
