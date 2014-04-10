@@ -12,7 +12,7 @@
         public Button btnOk;
         protected Button button1;
         public ErrorProvider errProvider;
-        private IContainer icontainer_0;
+        private IContainer components;
 
         public DialogFormBase()
         {
@@ -33,9 +33,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -47,11 +47,11 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
-            ComponentResourceManager manager = new ComponentResourceManager(typeof(DialogFormBase));
+            this.components = new Container();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(DialogFormBase));
             this.btnOk = new Button();
             this.button1 = new Button();
-            this.errProvider = new ErrorProvider(this.icontainer_0);
+            this.errProvider = new ErrorProvider(this.components);
             ((ISupportInitialize) this.errProvider).BeginInit();
             base.SuspendLayout();
             this.btnOk.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
@@ -62,7 +62,7 @@
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.button1.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.button1.DialogResult = DialogResult.Cancel;
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button1.Location = new Point(0xef, 0x2d);
             this.button1.Name = "button1";
             this.button1.Size = new Size(0x48, 0x18);
@@ -71,14 +71,14 @@
             this.button1.UseVisualStyleBackColor = true;
             this.errProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             this.errProvider.ContainerControl = this;
-            this.errProvider.Icon = (Icon) manager.GetObject("errProvider.Icon");
+            this.errProvider.Icon = (Icon) resources.GetObject("errProvider.Icon");
             this.errProvider.RightToLeft = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x143, 0x51);
             base.Controls.Add(this.button1);
             base.Controls.Add(this.btnOk);
-            base.FormBorderStyle = FormBorderStyle.FixedDialog;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             base.KeyPreview = true;
             base.MaximizeBox = false;
             base.MinimizeBox = false;

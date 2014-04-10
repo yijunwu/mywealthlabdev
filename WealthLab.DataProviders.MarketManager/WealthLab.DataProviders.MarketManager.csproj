@@ -31,6 +31,15 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DataSetsForm.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DialogFormBase.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\DuplicateSymbolsDialogForm.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\HolidayDateDialogForm.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketManagerControl.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketMangerForm.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\MarketNameDialogForm.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\ProvidersForm.resx" />
+    <EmbeddedResource Include="WealthLab\DataProviders\MarketManagerService\SpecialHoursDialogForm.resx" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />

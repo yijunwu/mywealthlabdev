@@ -12,7 +12,7 @@
         private Button btnCancel;
         private Button btnOk;
         private DataSourceManager dataSourceManager_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private ImageList imageList_0;
         private ListView lvSymbols;
 
@@ -35,9 +35,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -52,9 +52,9 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
             this.lvSymbols = new ListView();
-            this.imageList_0 = new ImageList(this.icontainer_0);
+            this.imageList_0 = new ImageList(this.components);
             this.btnCancel = new Button();
             this.btnOk = new Button();
             base.SuspendLayout();
@@ -75,7 +75,7 @@
             this.imageList_0.ImageSize = new Size(0x10, 0x10);
             this.imageList_0.TransparentColor = Color.Magenta;
             this.btnCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new Point(0x105, 0x12a);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new Size(0x4b, 0x17);
@@ -83,7 +83,7 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnOk.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            this.btnOk.DialogResult = DialogResult.OK;
+            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Location = new Point(180, 0x12a);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new Size(0x4b, 0x17);
@@ -91,12 +91,12 @@
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = AutoScaleMode.Font;
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.ClientSize = new Size(0x15c, 0x147);
             base.Controls.Add(this.btnOk);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.lvSymbols);
-            base.FormBorderStyle = FormBorderStyle.FixedSingle;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             base.KeyPreview = true;
             base.MaximizeBox = false;
             base.MinimizeBox = false;
