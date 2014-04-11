@@ -9,40 +9,40 @@
 
     public class StrategyRankingItem
     {
-        private bool bool_0;
+        private bool parametersNeedSave;
         [CompilerGenerated]
-        private bool bool_1;
-        private List<double> list_0;
-        private ListViewItem listViewItem_0;
-        private WealthLab.Strategy strategy_0;
-        private string string_0;
-        private string string_1;
-        private WealthLab.WealthScript wealthScript_0;
+        private bool usePreferredValues;
+        private List<double> parameterValues;
+        private ListViewItem listViewItem;
+        private WealthLab.Strategy strategy;
+        private string strategyID;
+        private string strategyName;
+        private WealthLab.WealthScript wealthScript;
 
         public StrategyRankingItem()
         {
-            this.list_0 = new List<double>();
+            this.parameterValues = new List<double>();
         }
 
         public StrategyRankingItem(StrategyRankingItem _sri)
         {
-            this.list_0 = new List<double>();
-            this.strategy_0 = _sri.Strategy;
-            this.wealthScript_0 = _sri.WealthScript;
-            this.listViewItem_0 = _sri.LvItem;
-            this.string_0 = _sri.StrategyID;
-            this.string_1 = _sri.StrategyName;
+            this.parameterValues = new List<double>();
+            this.strategy = _sri.Strategy;
+            this.wealthScript = _sri.WealthScript;
+            this.listViewItem = _sri.LvItem;
+            this.strategyID = _sri.StrategyID;
+            this.strategyName = _sri.StrategyName;
             foreach (double num in _sri.ParameterValues)
             {
-                this.list_0.Add(num);
+                this.parameterValues.Add(num);
             }
         }
 
         public StrategyRankingItem(WealthLab.Strategy strategy_1, WealthLab.WealthScript wealthScript_1)
         {
-            this.list_0 = new List<double>();
-            this.strategy_0 = strategy_1;
-            this.wealthScript_0 = wealthScript_1;
+            this.parameterValues = new List<double>();
+            this.strategy = strategy_1;
+            this.wealthScript = wealthScript_1;
         }
 
         [XmlIgnore]
@@ -50,11 +50,11 @@
         {
             get
             {
-                return this.listViewItem_0;
+                return this.listViewItem;
             }
             set
             {
-                this.listViewItem_0 = value;
+                this.listViewItem = value;
             }
         }
 
@@ -62,11 +62,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.parametersNeedSave;
             }
             set
             {
-                this.bool_0 = value;
+                this.parametersNeedSave = value;
             }
         }
 
@@ -74,11 +74,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.parameterValues;
             }
             set
             {
-                this.list_0 = value;
+                this.parameterValues = value;
             }
         }
 
@@ -87,11 +87,11 @@
         {
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             set
             {
-                this.strategy_0 = value;
+                this.strategy = value;
             }
         }
 
@@ -99,11 +99,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.strategyID;
             }
             set
             {
-                this.string_0 = value;
+                this.strategyID = value;
             }
         }
 
@@ -111,11 +111,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.strategyName;
             }
             set
             {
-                this.string_1 = value;
+                this.strategyName = value;
             }
         }
 
@@ -124,12 +124,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_1;
+                return this.usePreferredValues;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_1 = value;
+                this.usePreferredValues = value;
             }
         }
 
@@ -138,11 +138,11 @@
         {
             get
             {
-                return this.wealthScript_0;
+                return this.wealthScript;
             }
             set
             {
-                this.wealthScript_0 = value;
+                this.wealthScript = value;
             }
         }
     }

@@ -56,7 +56,7 @@
         private Label lblSearchName;
         private ToolStripStatusLabel lblStrategies;
         private LinkLabel linkMoreInfo;
-        private List<Strategy> list_0 = new List<Strategy>();
+        private List<Strategy> strategiesSelected = new List<Strategy>();
         private SortableListView lvStrategies;
         private OpenFileDialog openFileDialog_0;
         private Panel pnlBottom;
@@ -1210,16 +1210,16 @@
         {
             get
             {
-                this.list_0.Clear();
+                this.strategiesSelected.Clear();
                 foreach (ListViewItem item in this.lvStrategies.Items)
                 {
                     if (item.Selected)
                     {
                         Strategy tag = (Strategy) item.Tag;
-                        this.list_0.Add(tag);
+                        this.strategiesSelected.Add(tag);
                     }
                 }
-                return this.list_0.AsReadOnly();
+                return this.strategiesSelected.AsReadOnly();
             }
         }
 

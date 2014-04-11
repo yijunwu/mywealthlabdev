@@ -15,13 +15,13 @@
 
     public class PositionSizeSelecterForm : Form
     {
-        private bool bool_0;
+        private bool combinationStrategyChildMode;
         private Button btnCancel;
         private Button btnConfigure;
         private Button btnOK;
         private ComboBox cmbPosSizers;
-        private decimal decimal_0;
-        private decimal decimal_1;
+        private decimal maxEquityMarginFactor;
+        private decimal equityMarginFactor;
         private IContainer icontainer_0;
         private Label lblMarginFactor;
         private Label lblMarginTo1;
@@ -526,11 +526,11 @@
         {
             try
             {
-                this.decimal_0 = decimal.Parse(ConfigurationManager.AppSettings["MaxEquityMarginFactor"]);
+                this.maxEquityMarginFactor = decimal.Parse(ConfigurationManager.AppSettings["MaxEquityMarginFactor"]);
             }
             catch (Exception)
             {
-                this.decimal_0 = 10M;
+                this.maxEquityMarginFactor = 10M;
             }
         }
 
@@ -656,11 +656,11 @@
         {
             get
             {
-                return this.bool_0;
+                return this.combinationStrategyChildMode;
             }
             set
             {
-                this.bool_0 = value;
+                this.combinationStrategyChildMode = value;
                 if (value)
                 {
                     this.pnlPortSim.Top = 3;
@@ -677,11 +677,11 @@
         {
             get
             {
-                return this.decimal_1;
+                return this.equityMarginFactor;
             }
             set
             {
-                this.decimal_1 = value;
+                this.equityMarginFactor = value;
             }
         }
 
@@ -689,7 +689,7 @@
         {
             get
             {
-                return this.decimal_0;
+                return this.maxEquityMarginFactor;
             }
         }
 

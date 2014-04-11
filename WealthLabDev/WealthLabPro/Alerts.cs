@@ -12,7 +12,7 @@
     [ToolboxItem(false)]
     public class Alerts : UserControl
     {
-        private bool bool_0;
+        private bool isStreaming;
         private bool bool_1;
         private ToolStripButton btnAutoStage;
         private ToolStripButton btnEmailAlerts;
@@ -21,7 +21,7 @@
         private ToolStripButton btnQuote;
         private ToolStripButton btnSelectAll;
         private ToolStripButton btnStageOrders;
-        private ChartForm chartForm_0;
+        private ChartForm myChartForm;
         private ColumnHeader columnHeader_0;
         private ColumnHeader columnHeader_1;
         private ColumnHeader columnHeader_10;
@@ -56,7 +56,7 @@
         private StatusStrip status;
         private ToolStripStatusLabel statusAlerts;
         private string string_0;
-        private TabPage tabPage_0;
+        private TabPage tabPage;
         private ToolStrip toolbar;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripSeparator toolStripSeparator4;
@@ -77,7 +77,7 @@
             this.int_0 = 9;
             this.string_0 = "";
             this.InitializeComponent();
-            this.chartForm_0 = chartForm_1;
+            this.myChartForm = chartForm_1;
             this.EnableTradeButtons();
         }
 
@@ -787,9 +787,9 @@
             {
                 this.statusAlerts.Text = this.lvAlerts.Items.Count + " Alerts";
             }
-            if (this.tabPage_0 != null)
+            if (this.tabPage != null)
             {
-                this.tabPage_0.Text = this.statusAlerts.Text;
+                this.tabPage.Text = this.statusAlerts.Text;
             }
         }
 
@@ -821,12 +821,12 @@
         {
             get
             {
-                return this.bool_0;
+                return this.isStreaming;
             }
             set
             {
-                this.bool_0 = value;
-                if (!this.bool_0)
+                this.isStreaming = value;
+                if (!this.isStreaming)
                 {
                     this.btnEmailAlerts.Checked = false;
                 }
@@ -838,7 +838,7 @@
         {
             get
             {
-                return this.chartForm_0;
+                return this.myChartForm;
             }
         }
 
@@ -846,11 +846,11 @@
         {
             get
             {
-                return this.tabPage_0;
+                return this.tabPage;
             }
             set
             {
-                this.tabPage_0 = value;
+                this.tabPage = value;
             }
         }
     }

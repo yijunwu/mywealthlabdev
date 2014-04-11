@@ -46,7 +46,7 @@
         private RadioButton rbSingle;
         private ToolStripSeparator sepConvert;
         private SplitContainer splitContainer1;
-        private WealthLab.Strategy strategy_0;
+        private WealthLab.Strategy strategy;
         private StrategyBuilder strategyBuilder_0;
         private TabControl tabBuilder;
         private ToolStrip toolbar;
@@ -1373,12 +1373,12 @@
         {
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             set
             {
-                this.strategy_0 = value;
-                if (this.strategy_0 != null)
+                this.strategy = value;
+                if (this.strategy != null)
                 {
                     this.method_4();
                 }

@@ -26,7 +26,7 @@
         private static bool bool_0 = true;
         private static bool bool_1 = false;
         private bool bool_2;
-        private bool bool_3;
+        private bool isFirstMainForm;
         private bool bool_4;
         private bool bool_5;
         private bool bool_6;
@@ -3830,7 +3830,7 @@
             {
                 MainModule.Instance.Settings.Get(this, "MainForm");
                 bool_0 = false;
-                this.bool_3 = true;
+                this.isFirstMainForm = true;
                 string path = MainModule.Instance.DataPath + @"\Workspaces\Default.ws";
                 if (System.IO.File.Exists(path))
                 {
@@ -6565,7 +6565,7 @@
         {
             get
             {
-                return this.bool_3;
+                return this.isFirstMainForm;
             }
         }
 

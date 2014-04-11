@@ -13,9 +13,9 @@
     {
         private bool bool_0;
         [CompilerGenerated]
-        private bool bool_1;
+        private bool ignoreCalls;
         private Dictionary<string, string> dictionary_0;
-        private IContainer icontainer_0;
+        private IContainer components;
         private string string_0;
         private string string_1;
         private string string_2;
@@ -43,9 +43,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -133,7 +133,7 @@
 
         private void method_3()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
         }
 
         public bool SelectAccountTradeType(string accountTradeType, bool force)
@@ -166,12 +166,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_1;
+                return this.ignoreCalls;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_1 = value;
+                this.ignoreCalls = value;
             }
         }
     }

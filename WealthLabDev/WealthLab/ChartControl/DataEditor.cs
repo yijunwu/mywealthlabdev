@@ -26,7 +26,7 @@
         private Label _volumeLabel;
         private Button cancelBtn;
         private GroupBox groupBox1;
-        private IContainer icontainer_0;
+        private IContainer components;
         private Label label1;
         private Label label2;
         private Label label3;
@@ -36,7 +36,7 @@
         private Label label7;
         private Label label9;
         private Button okBtn;
-        private Operation operation_0 = Operation.Cancel;
+        private Operation operation = Operation.Cancel;
         private Button removeBtn;
 
         public DataEditor(DateTime dateAndTime, double open, double high, double double_0, double close, double volume, bool bIntraday)
@@ -88,60 +88,60 @@
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            this.operation_0 = Operation.Cancel;
+            this.operation = Operation.Cancel;
         }
 
         private void DataEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                this.operation_0 = Operation.Cancel;
+                this.operation = Operation.Cancel;
             }
-            if (this.operation_0 == Operation.Ok)
+            if (this.operation == Operation.Ok)
             {
                 if (this._open.Text.Length == 0)
                 {
                     MessageBox.Show("You must supply a value for open.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     this._open.Focus();
                     e.Cancel = true;
-                    this.operation_0 = Operation.Cancel;
+                    this.operation = Operation.Cancel;
                 }
                 else if (this._high.Text.Length == 0)
                 {
                     MessageBox.Show("You must supply a value for High.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     this._high.Focus();
                     e.Cancel = true;
-                    this.operation_0 = Operation.Cancel;
+                    this.operation = Operation.Cancel;
                 }
                 else if (this._low.Text.Length == 0)
                 {
                     MessageBox.Show("You must supply a value for Low.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     this._low.Focus();
                     e.Cancel = true;
-                    this.operation_0 = Operation.Cancel;
+                    this.operation = Operation.Cancel;
                 }
                 else if (this._close.Text.Length == 0)
                 {
                     MessageBox.Show("You must supply a value for Close.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     this._close.Focus();
                     e.Cancel = true;
-                    this.operation_0 = Operation.Cancel;
+                    this.operation = Operation.Cancel;
                 }
                 else if (this._volume.Text.Length == 0)
                 {
                     MessageBox.Show("You must supply a value for Volume.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                     this._volume.Focus();
                     e.Cancel = true;
-                    this.operation_0 = Operation.Cancel;
+                    this.operation = Operation.Cancel;
                 }
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -412,19 +412,19 @@
 
         private void okBtn_Click(object sender, EventArgs e)
         {
-            this.operation_0 = Operation.Ok;
+            this.operation = Operation.Ok;
         }
 
         private void removeBtn_Click(object sender, EventArgs e)
         {
-            this.operation_0 = Operation.Remove;
+            this.operation = Operation.Remove;
         }
 
         public Operation Action
         {
             get
             {
-                return this.operation_0;
+                return this.operation;
             }
         }
 

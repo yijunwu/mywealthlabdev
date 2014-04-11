@@ -12,12 +12,12 @@
     public class PositionSizeSelecter : UserControl
     {
         [CompilerGenerated]
-        private bool bool_0;
+        private bool combinationStrategyChildMode;
         private Button btnSelect;
         private IContainer components;
         private ImageList imageList_0;
         private Label lblCaption;
-        private WealthLab.PositionSize positionSize_0 = new WealthLab.PositionSize();
+        private WealthLab.PositionSize positionSize = new WealthLab.PositionSize();
 
         private EventHandler<EventArgs> eventHandler_0;
 
@@ -130,7 +130,7 @@
 
         public void UpdateText()
         {
-            if (this.positionSize_0.RawProfitMode)
+            if (this.positionSize.RawProfitMode)
             {
                 this.BackColor = Color.Linen;
             }
@@ -138,7 +138,7 @@
             {
                 this.BackColor = Color.Honeydew;
             }
-            this.lblCaption.Text = this.positionSize_0.Text;
+            this.lblCaption.Text = this.positionSize.Text;
         }
 
         public bool CombinationStrategyChildMode
@@ -146,12 +146,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_0;
+                return this.combinationStrategyChildMode;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_0 = value;
+                this.combinationStrategyChildMode = value;
             }
         }
 
@@ -160,11 +160,11 @@
         {
             get
             {
-                return this.positionSize_0;
+                return this.positionSize;
             }
             set
             {
-                this.positionSize_0 = value;
+                this.positionSize = value;
                 this.UpdateText();
             }
         }

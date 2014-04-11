@@ -7,34 +7,34 @@
     public class DynamicMenuItem
     {
         private ClickMenuItem clickMenuItem_0;
-        private Image image_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
+        private Image itemImage;
+        private string text;
+        private string mainMenuItemText;
+        private string subMenuItemText;
 
         public DynamicMenuItem(string text, string mainMenu, string subMenu, ClickMenuItem onClick)
         {
-            this.string_0 = text;
-            this.string_1 = mainMenu;
-            this.string_2 = subMenu;
+            this.text = text;
+            this.mainMenuItemText = mainMenu;
+            this.subMenuItemText = subMenu;
             this.clickMenuItem_0 = onClick;
-            this.image_0 = null;
+            this.itemImage = null;
         }
 
         public DynamicMenuItem(string text, string mainMenu, string subMenu, ClickMenuItem onClick, Image itemImage)
         {
-            this.string_0 = text;
-            this.string_1 = mainMenu;
-            this.string_2 = subMenu;
+            this.text = text;
+            this.mainMenuItemText = mainMenu;
+            this.subMenuItemText = subMenu;
             this.clickMenuItem_0 = onClick;
-            this.image_0 = itemImage;
+            this.itemImage = itemImage;
         }
 
         public Image ItemImage
         {
             get
             {
-                return this.image_0;
+                return this.itemImage;
             }
         }
 
@@ -42,7 +42,7 @@
         {
             get
             {
-                return this.string_1;
+                return this.mainMenuItemText;
             }
         }
 
@@ -58,7 +58,7 @@
         {
             get
             {
-                return this.string_2;
+                return this.subMenuItemText;
             }
         }
 
@@ -66,7 +66,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.text;
             }
         }
     }

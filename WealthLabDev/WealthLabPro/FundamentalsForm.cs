@@ -11,7 +11,7 @@
     public class FundamentalsForm : Form
     {
         private ToolStripButton btnTop;
-        private IContainer icontainer_0;
+        private IContainer components;
         public static FundamentalsForm Instance;
         private ToolStripLabel lblDrag;
         private SplitContainer splitIndicators;
@@ -35,9 +35,9 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (this.icontainer_0 != null))
+            if (disposing && (this.components != null))
             {
-                this.icontainer_0.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -59,7 +59,7 @@
 
         private void InitializeComponent()
         {
-            this.icontainer_0 = new Container();
+            this.components = new Container();
             ComponentResourceManager resources = new ComponentResourceManager(typeof(FundamentalsForm));
             this.splitIndicators = new SplitContainer();
             this.treeItems = new FundamentalTreeView();

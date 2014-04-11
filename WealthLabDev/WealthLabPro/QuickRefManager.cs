@@ -14,17 +14,17 @@
     {
         private IContainer icontainer_0;
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private List<QuickRefCategory> list_0;
+        private List<QuickRefCategory> categories;
 
         public QuickRefManager()
         {
-            this.list_0 = new List<QuickRefCategory>();
+            this.categories = new List<QuickRefCategory>();
             this.method_0();
         }
 
         public QuickRefManager(IContainer container)
         {
-            this.list_0 = new List<QuickRefCategory>();
+            this.categories = new List<QuickRefCategory>();
             container.Add(this);
             this.method_0();
         }
@@ -44,13 +44,13 @@
             try
             {
                 stream = File.OpenRead(fileName);
-                XmlSerializer serializer = new XmlSerializer(this.list_0.GetType());
-                this.list_0 = (List<QuickRefCategory>) serializer.Deserialize(stream);
-                foreach (QuickRefCategory category in this.list_0)
+                XmlSerializer serializer = new XmlSerializer(this.categories.GetType());
+                this.categories = (List<QuickRefCategory>) serializer.Deserialize(stream);
+                foreach (QuickRefCategory category in this.categories)
                 {
                     category.Entries.Sort();
                 }
-                this.list_0.Sort();
+                this.categories.Sort();
             }
             catch (Exception exception)
             {
@@ -77,7 +77,7 @@
             {
                 FileNameValidator.ValidateFileName(fileName);
                 stream = File.Create(fileName);
-                new XmlSerializer(this.list_0.GetType()).Serialize((Stream) stream, this.list_0);
+                new XmlSerializer(this.categories.GetType()).Serialize((Stream) stream, this.categories);
             }
             catch (Exception exception)
             {
@@ -96,7 +96,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.categories;
             }
         }
     }

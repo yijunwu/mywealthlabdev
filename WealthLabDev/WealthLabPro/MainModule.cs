@@ -28,61 +28,61 @@
         private AssemblyLoader assemblyLoader_2;
         internal AssemblyLoader assemblyLoader_3;
         private AssemblyLoader assemblyLoader_4;
-        private AuthenticationProvider authenticationProvider_0;
+        private AuthenticationProvider authenticationProvider;
         private BarDataRangeSelecter barRange;
         private bool bool_0;
-        private bool bool_1;
-        private bool bool_2;
+        private bool isAuthenticated;
+        private bool streamingWasClicked;
         private bool bool_3;
         private bool bool_4;
-        private WealthLab.BrokerProvider brokerProvider_0;
-        private ChartRenderer chartRenderer_0;
-        private DataSourceManager dataSourceManager_0;
+        private WealthLab.BrokerProvider brokerProvider;
+        private ChartRenderer chartRenderer;
+        private DataSourceManager dataSourceManager;
         private DateTime dateTime_0;
         private DrawingObjectManager drawingObjectManager_0;
-        private System.Windows.Forms.HelpProvider helpProvider_0;
+        private System.Windows.Forms.HelpProvider helpProvider;
         private IContainer components;
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public static MainModule Instance = new MainModule();
         private int int_0;
-        private int int_1;
-        private List<string> list_0;
-        private List<IPerformanceVisualizer> list_1;
-        private List<IPerformanceVisualizer> list_2;
+        private int nicAdressesCount;
+        private List<string> strategyNetworkPaths;
+        private List<IPerformanceVisualizer> visualizers;
+        private List<IPerformanceVisualizer> visualizersChecked;
         private List<Strategy> list_3;
         private List<Account> list_4;
         private List<string> list_5;
-        private List<DynamicMenuItem> list_6;
-        private List<string> list_7;
-        private List<Optimizer> list_8;
+        private List<DynamicMenuItem> dynamicMenuitems;
+        private List<string> workspaceMenuItems;
+        private List<Optimizer> optimizers;
         private List<PosSizer> list_9;
-        private SettingsManager settingsManager_0;
+        private SettingsManager settingsManager;
         private StrategyManager strategyManager_0;
         private StrategyManager strategyManager_1;
-        private StreamingDataProvider streamingDataProvider_0;
+        private StreamingDataProvider streamingDataProvider;
         private string string_0;
         private string string_1;
         private System.Windows.Forms.Timer timer_0;
-        private WealthLab.TradeManager tradeManager_0;
-        private TradingSystemExecutor tradingSystemExecutor_0;
+        private WealthLab.TradeManager tradeManager;
+        private TradingSystemExecutor tradingSystemExecutor;
 
         public MainModule()
         {
             bool flag4;
             List<System.Type>.Enumerator enumerator;
             List<IPerformanceVisualizer>.Enumerator enumerator2;
-            this.list_0 = new List<string>();
-            this.list_1 = new List<IPerformanceVisualizer>();
-            this.list_2 = new List<IPerformanceVisualizer>();
+            this.strategyNetworkPaths = new List<string>();
+            this.visualizers = new List<IPerformanceVisualizer>();
+            this.visualizersChecked = new List<IPerformanceVisualizer>();
             this.string_0 = "";
             this.list_3 = new List<Strategy>();
             this.list_4 = new List<Account>();
             this.string_1 = "";
             this.list_5 = new List<string>();
-            this.list_6 = new List<DynamicMenuItem>();
-            this.list_7 = new List<string>();
+            this.dynamicMenuitems = new List<DynamicMenuItem>();
+            this.workspaceMenuItems = new List<string>();
             this.bool_4 = true;
-            this.list_8 = new List<Optimizer>();
+            this.optimizers = new List<Optimizer>();
             this.list_9 = new List<PosSizer>();
             this.dateTime_0 = DateTime.MinValue;
             AssemblyLoader.LogFileName = this.DataPath + @"\Assemblies.wll";
@@ -113,15 +113,15 @@
                     MessageBox.Show("Could not find an Authentication Provider, terminating");
                     Environment.Exit(2);
                 }
-                this.authenticationProvider_0 = (AuthenticationProvider) loader.CreateInstance(loader.Types[0]);
-                this.authenticationProvider_0.PreInitialize();
+                this.authenticationProvider = (AuthenticationProvider) loader.CreateInstance(loader.Types[0]);
+                this.authenticationProvider.PreInitialize();
             }
             this.string_1 = this.DataPath + @"\Accounts.txt";
             this.InitializeComponent();
-            CustomIndexManager.Initialize(this.DataPath, this.dataSourceManager_0);
+            CustomIndexManager.Initialize(this.DataPath, this.dataSourceManager);
             if (Application.ProductName == "WealthLabPro")
             {
-                this.chartRenderer_0.FundamentalGlyphs = "split;dividend;earnings per share;";
+                this.chartRenderer.FundamentalGlyphs = "split;dividend;earnings per share;";
             }
             if (base.DesignMode)
             {
@@ -153,7 +153,7 @@
                     this.method_7(str3, path);
                 }
             }
-            this.authenticationProvider_0.Initialize(this.DataSources, this);
+            this.authenticationProvider.Initialize(this.DataSources, this);
             AssemblyLoader loader2 = new AssemblyLoader {
                 BaseClass = "MenuItemHook",
                 Path = this.AppPath
@@ -162,23 +162,23 @@
             {
                 ((MenuItemHook) loader2.CreateInstance(type)).AddMenuItems(this);
             }
-            this.dataSourceManager_0.AuthProvider = this.authenticationProvider_0;
-            this.dataSourceManager_0.RootPath = this.DataPath;
+            this.dataSourceManager.AuthProvider = this.authenticationProvider;
+            this.dataSourceManager.RootPath = this.DataPath;
             this.drawingObjectManager_0.RootPath = this.DataPath;
-            this.settingsManager_0.RootPath = this.DataPath;
+            this.settingsManager.RootPath = this.DataPath;
             this.strategyManager_0.RootPath = this.DataPath;
             BarsLoader.RootPath = this.DataPath;
             BarsLoader.LoadSymbolInfo();
-            int num = this.settingsManager_0.Get("StrategyNetworkPathCount", 0);
+            int num = this.settingsManager.Get("StrategyNetworkPathCount", 0);
             for (int i = 0; i < num; i++)
             {
-                string item = this.settingsManager_0.Get("StrategyNetworkPath" + i, "");
+                string item = this.settingsManager.Get("StrategyNetworkPath" + i, "");
                 this.StrategyNetworkPaths.Add(item);
                 this.strategyManager_0.LoadStrategiesFromNetworkPath(item);
             }
             MarketHours.RootPath = this.AppPath + @"\Data";
-            this.dataSourceManager_0.SettingsHost = this.settingsManager_0;
-            this.tradeManager_0.SettingsHost = this.settingsManager_0;
+            this.dataSourceManager.SettingsHost = this.settingsManager;
+            this.tradeManager.SettingsHost = this.settingsManager;
             AssemblyLoader loader3 = new AssemblyLoader {
                 BaseClass = "BrokerProvider",
                 Path = this.AppPath
@@ -199,13 +199,13 @@
                     }
                     if (flag)
                     {
-                        this.brokerProvider_0 = (WealthLab.BrokerProvider) loader3.CreateInstance(type2);
-                        this.brokerProvider_0.Initialize(this.TradeManager, this.authenticationProvider_0);
-                        if (this.brokerProvider_0 is ICustomSettings)
+                        this.brokerProvider = (WealthLab.BrokerProvider) loader3.CreateInstance(type2);
+                        this.brokerProvider.Initialize(this.TradeManager, this.authenticationProvider);
+                        if (this.brokerProvider is ICustomSettings)
                         {
-                            (this.brokerProvider_0 as ICustomSettings).ReadSettings(this.Settings);
+                            (this.brokerProvider as ICustomSettings).ReadSettings(this.Settings);
                         }
-                        this.TradeManager.BrokerProvider = this.brokerProvider_0;
+                        this.TradeManager.BrokerProvider = this.brokerProvider;
                     }
                 }
             }
@@ -240,22 +240,22 @@
                 if (!this.Authenticate() && false ) //&& flag2) ///WYJ fix
                 {
                     MessageBox.Show("Log in required, terminating");
-                    this.authenticationProvider_0.Close();
+                    this.authenticationProvider.Close();
                     Environment.Exit(1);
                 }
             }
-            if (this.dataSourceManager_0.DataSources.Count == 0)
+            if (this.dataSourceManager.DataSources.Count == 0)
             {
-                StaticDataProvider provider = this.dataSourceManager_0.FindProvider("FidelityStaticProvider");
+                StaticDataProvider provider = this.dataSourceManager.FindProvider("FidelityStaticProvider");
                 if (provider != null)
                 {
-                    provider.Initialize(this.dataSourceManager_0);
+                    provider.Initialize(this.dataSourceManager);
                     DataSource source = new DataSource(provider) {
                         DSString = "AA,AIG,AXP,BA,C,CAT,DD,DIS,GE,GM,HD,HON,HPQ,IBM,INTC,JNJ,JPM,KO,MCD,MMM,MO,MRK,MSFT,PFE,PG,T,UTX,VZ,WMT,XOM",
                         Name = "Dow 30",
                         Scale = BarScale.Daily
                     };
-                    this.dataSourceManager_0.Add(source);
+                    this.dataSourceManager.Add(source);
                 }
             }
             this.assemblyLoader_0.Path = this.AppPath;
@@ -278,7 +278,7 @@
                     }
                 }
             }
-            foreach (string str8 in this.settingsManager_0.Get("PVOrder", "Performance|By Symbol|Trades|Equity Curve|Drawdown|Profit Distribution|By Period|MAE/MFE").Split(new char[] { '|' }))
+            foreach (string str8 in this.settingsManager.Get("PVOrder", "Performance|By Symbol|Trades|Equity Curve|Drawdown|Profit Distribution|By Period|MAE/MFE").Split(new char[] { '|' }))
             {
                 using (enumerator2 = list.GetEnumerator())
                 {
@@ -289,7 +289,7 @@
                         if (current.TabText == str8)
                         {
                             ///goto  Label_0850;  ///WYJ fix, simplify the flow
-                            this.list_1.Add(current);
+                            this.visualizers.Add(current);
                             list.Remove(current);
                             break;
                         }
@@ -298,11 +298,11 @@
             }
             foreach (IPerformanceVisualizer visualizer3 in list)
             {
-                this.list_1.Add(visualizer3);
+                this.visualizers.Add(visualizer3);
             }
-            foreach (string str10 in this.settingsManager_0.Get("PVChecked", "Performance|By Symbol|Trades|Equity Curve|Drawdown|Profit Distribution|By Period").Split(new char[] { '|' }))
+            foreach (string str10 in this.settingsManager.Get("PVChecked", "Performance|By Symbol|Trades|Equity Curve|Drawdown|Profit Distribution|By Period").Split(new char[] { '|' }))
             {
-                using (enumerator2 = this.list_1.GetEnumerator())
+                using (enumerator2 = this.visualizers.GetEnumerator())
                 {
                     IPerformanceVisualizer visualizer4;
                     while (enumerator2.MoveNext())
@@ -311,32 +311,32 @@
                         if (visualizer4.TabText == str10)
                         {
                             ///goto  Label_0934;  ///WYJ fix, simplify the flow
-                            this.list_2.Add(visualizer4);
+                            this.visualizersChecked.Add(visualizer4);
                             break;
                         }
                     }
                 }
             }
-            this.chartRenderer_0.BarSpacing = this.settingsManager_0.Get("BarSpacing", 6);
-            this.chartRenderer_0.BackgroundColor = this.settingsManager_0.Get("ChartBackgroundColor", Color.White);
-            this.chartRenderer_0.UpBarColor = this.settingsManager_0.Get("ChartUpBarColor", Color.Green);
-            this.chartRenderer_0.DownBarColor = this.settingsManager_0.Get("ChartDownBarColor", Color.Red);
-            this.chartRenderer_0.UpBarVolumeColor = this.settingsManager_0.Get("ChartUpVolumeColor", Color.Green);
-            this.chartRenderer_0.DownBarVolumeColor = this.settingsManager_0.Get("ChartDownVolumeColor", Color.Red);
-            this.chartRenderer_0.GridlineColor = this.settingsManager_0.Get("ChartGridlineColor", Color.Gainsboro);
-            this.chartRenderer_0.MarginRightColor = this.settingsManager_0.Get("ChartRightMarginColor", Color.Gainsboro);
-            this.chartRenderer_0.MarginBottomColor = this.settingsManager_0.Get("ChartBottomMarginColor", Color.Navy);
-            this.chartRenderer_0.PaneSeparatorColor = this.settingsManager_0.Get("ChartPaneSeparatorColor", Color.Black);
-            this.chartRenderer_0.AxisFont = this.settingsManager_0.Get("ChartFont", this.chartRenderer_0.AxisFont);
-            this.chartRenderer_0.FundamentalGlyphs = this.settingsManager_0.Get("FundamentalsCharted", this.chartRenderer_0.FundamentalGlyphs);
-            this.chartRenderer_0.LogScale = this.settingsManager_0.Get("LogScale", false);
-            this.chartRenderer_0.TitleFont = this.settingsManager_0.Get("TitleFont", this.chartRenderer_0.TitleFont);
-            this.chartRenderer_0.HorizontalGridines = this.settingsManager_0.Get("HorizontalGridlines", true);
-            this.chartRenderer_0.VerticalGridlines = this.settingsManager_0.Get("VerticalGridlines", true);
-            this.chartRenderer_0.PaneSeparatorVisible = this.settingsManager_0.Get("PaneSeparators", true);
+            this.chartRenderer.BarSpacing = this.settingsManager.Get("BarSpacing", 6);
+            this.chartRenderer.BackgroundColor = this.settingsManager.Get("ChartBackgroundColor", Color.White);
+            this.chartRenderer.UpBarColor = this.settingsManager.Get("ChartUpBarColor", Color.Green);
+            this.chartRenderer.DownBarColor = this.settingsManager.Get("ChartDownBarColor", Color.Red);
+            this.chartRenderer.UpBarVolumeColor = this.settingsManager.Get("ChartUpVolumeColor", Color.Green);
+            this.chartRenderer.DownBarVolumeColor = this.settingsManager.Get("ChartDownVolumeColor", Color.Red);
+            this.chartRenderer.GridlineColor = this.settingsManager.Get("ChartGridlineColor", Color.Gainsboro);
+            this.chartRenderer.MarginRightColor = this.settingsManager.Get("ChartRightMarginColor", Color.Gainsboro);
+            this.chartRenderer.MarginBottomColor = this.settingsManager.Get("ChartBottomMarginColor", Color.Navy);
+            this.chartRenderer.PaneSeparatorColor = this.settingsManager.Get("ChartPaneSeparatorColor", Color.Black);
+            this.chartRenderer.AxisFont = this.settingsManager.Get("ChartFont", this.chartRenderer.AxisFont);
+            this.chartRenderer.FundamentalGlyphs = this.settingsManager.Get("FundamentalsCharted", this.chartRenderer.FundamentalGlyphs);
+            this.chartRenderer.LogScale = this.settingsManager.Get("LogScale", false);
+            this.chartRenderer.TitleFont = this.settingsManager.Get("TitleFont", this.chartRenderer.TitleFont);
+            this.chartRenderer.HorizontalGridines = this.settingsManager.Get("HorizontalGridlines", true);
+            this.chartRenderer.VerticalGridlines = this.settingsManager.Get("VerticalGridlines", true);
+            this.chartRenderer.PaneSeparatorVisible = this.settingsManager.Get("PaneSeparators", true);
             this.assemblyLoader_1.Path = this.AppPath;
-            this.tradingSystemExecutor_0.ApplyCommission = this.settingsManager_0.Get("ApplyCommissions", true);
-            string str11 = this.settingsManager_0.Get("Commission", "FidelityFlatRate");
+            this.tradingSystemExecutor.ApplyCommission = this.settingsManager.Get("ApplyCommissions", true);
+            string str11 = this.settingsManager.Get("Commission", "FidelityFlatRate");
             System.Type type4 = this.method_3();
             using (enumerator = this.assemblyLoader_1.Types.GetEnumerator())
             {
@@ -352,10 +352,10 @@
                     }
                 }
             }
-            this.tradingSystemExecutor_0.Commission = (Commission) this.assemblyLoader_1.CreateInstance(type4);
-            if (this.tradingSystemExecutor_0.Commission is ICustomSettings)
+            this.tradingSystemExecutor.Commission = (Commission) this.assemblyLoader_1.CreateInstance(type4);
+            if (this.tradingSystemExecutor.Commission is ICustomSettings)
             {
-                (this.tradingSystemExecutor_0.Commission as ICustomSettings).ReadSettings(this.Settings);
+                (this.tradingSystemExecutor.Commission as ICustomSettings).ReadSettings(this.Settings);
             }
             this.assemblyLoader_4.Path = this.AppPath;
             foreach (System.Type type6 in this.assemblyLoader_4.Types)
@@ -373,37 +373,37 @@
             foreach (System.Type type7 in this.assemblyLoader_3.Types)
             {
                 Optimizer optimizer = (Optimizer) this.assemblyLoader_3.CreateInstance(type7);
-                this.list_8.Add(optimizer);
+                this.optimizers.Add(optimizer);
             }
-            string str12 = this.settingsManager_0.Get("PositionSize", "");
+            string str12 = this.settingsManager.Get("PositionSize", "");
             if (str12 != "")
             {
-                this.tradingSystemExecutor_0.PosSize = PositionSize.Parse(str12);
+                this.tradingSystemExecutor.PosSize = PositionSize.Parse(str12);
             }
-            string str13 = this.settingsManager_0.Get("DataRange", "");
+            string str13 = this.settingsManager.Get("DataRange", "");
             if (str13 != "")
             {
                 this.barRange.DataRange = BarDataRange.Parse(str13);
             }
-            this.tradingSystemExecutor_0.EnableSlippage = this.settingsManager_0.Get("EnableSlippage", false);
-            this.tradingSystemExecutor_0.LimitOrderSlippage = this.settingsManager_0.Get("LimitOrderSlippage", false);
-            this.tradingSystemExecutor_0.SlippageUnits = this.settingsManager_0.Get("SlippageUnits", (double) 0.1);
-            this.tradingSystemExecutor_0.SlippageTicks = this.settingsManager_0.Get("SlippageTicks", 1);
-            this.tradingSystemExecutor_0.RoundLots = this.settingsManager_0.Get("RoundLots", false);
-            this.tradingSystemExecutor_0.RoundLots50 = this.settingsManager_0.Get("RoundLots50", false);
-            this.tradingSystemExecutor_0.LimitDaySimulation = this.settingsManager_0.Get("LimitDaySimulation", false);
-            this.tradingSystemExecutor_0.ApplyInterest = this.settingsManager_0.Get("ApplyInterest", false);
-            this.tradingSystemExecutor_0.CashRate = this.settingsManager_0.Get("CashRate", (double) 1.0);
-            this.tradingSystemExecutor_0.MarginRate = this.settingsManager_0.Get("MarginRate", (double) 7.0);
-            this.tradingSystemExecutor_0.ApplyDividends = this.settingsManager_0.Get("ApplyDividends", false);
-            this.tradingSystemExecutor_0.ReduceQtyBasedOnVolume = this.settingsManager_0.Get("ReduceQtyBasedOnVolume", false);
-            this.tradingSystemExecutor_0.RedcuceQtyPct = this.settingsManager_0.Get("ReduceQtyPct", (double) 10.0);
-            this.tradingSystemExecutor_0.WorstTradeSimulation = this.settingsManager_0.Get("WorstTradeSimulation", false);
-            this.tradingSystemExecutor_0.BenchmarkSymbol = this.settingsManager_0.Get("BenchmarkSymbol", string.Empty);
-            this.tradingSystemExecutor_0.BenchmarkBuyAndHoldON = this.settingsManager_0.Get("BenchmarkBuyAndHoldON", false);
-            this.tradingSystemExecutor_0.PricingDecimalPlaces = this.settingsManager_0.Get(DecimalsManager.Instance.PricingKey, 2);
-            this.tradingSystemExecutor_0.NoDecimalRoundingForLimitStopPrice = this.settingsManager_0.Get("NoDecimalRoundingForLimitStopPrice", false);
-            string str14 = this.settingsManager_0.Get("StreamingProvider", "FidelityACTIVStreamingProvider");
+            this.tradingSystemExecutor.EnableSlippage = this.settingsManager.Get("EnableSlippage", false);
+            this.tradingSystemExecutor.LimitOrderSlippage = this.settingsManager.Get("LimitOrderSlippage", false);
+            this.tradingSystemExecutor.SlippageUnits = this.settingsManager.Get("SlippageUnits", (double) 0.1);
+            this.tradingSystemExecutor.SlippageTicks = this.settingsManager.Get("SlippageTicks", 1);
+            this.tradingSystemExecutor.RoundLots = this.settingsManager.Get("RoundLots", false);
+            this.tradingSystemExecutor.RoundLots50 = this.settingsManager.Get("RoundLots50", false);
+            this.tradingSystemExecutor.LimitDaySimulation = this.settingsManager.Get("LimitDaySimulation", false);
+            this.tradingSystemExecutor.ApplyInterest = this.settingsManager.Get("ApplyInterest", false);
+            this.tradingSystemExecutor.CashRate = this.settingsManager.Get("CashRate", (double) 1.0);
+            this.tradingSystemExecutor.MarginRate = this.settingsManager.Get("MarginRate", (double) 7.0);
+            this.tradingSystemExecutor.ApplyDividends = this.settingsManager.Get("ApplyDividends", false);
+            this.tradingSystemExecutor.ReduceQtyBasedOnVolume = this.settingsManager.Get("ReduceQtyBasedOnVolume", false);
+            this.tradingSystemExecutor.RedcuceQtyPct = this.settingsManager.Get("ReduceQtyPct", (double) 10.0);
+            this.tradingSystemExecutor.WorstTradeSimulation = this.settingsManager.Get("WorstTradeSimulation", false);
+            this.tradingSystemExecutor.BenchmarkSymbol = this.settingsManager.Get("BenchmarkSymbol", string.Empty);
+            this.tradingSystemExecutor.BenchmarkBuyAndHoldON = this.settingsManager.Get("BenchmarkBuyAndHoldON", false);
+            this.tradingSystemExecutor.PricingDecimalPlaces = this.settingsManager.Get(DecimalsManager.Instance.PricingKey, 2);
+            this.tradingSystemExecutor.NoDecimalRoundingForLimitStopPrice = this.settingsManager.Get("NoDecimalRoundingForLimitStopPrice", false);
+            string str14 = this.settingsManager.Get("StreamingProvider", "FidelityACTIVStreamingProvider");
             if (str14.CompareTo("FidelityStreamingProvider") == 0)
             {
                 str14 = "FidelityACTIVStreamingProvider";
@@ -423,8 +423,8 @@
                     }
                 }
             }
-            flag4 = this.settingsManager_0.Get("BadTickFilter", false);
-            double threshold = this.settingsManager_0.Get("BadTickThreshold", (double) 20.0);
+            flag4 = this.settingsManager.Get("BadTickFilter", false);
+            double threshold = this.settingsManager.Get("BadTickThreshold", (double) 20.0);
             StreamingDataProvider.SetBadTickFilterSettings(flag4, threshold);
             this.strategyManager_1.RootPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\Data";
             this.strategyManager_1.LoadStrategies();
@@ -448,38 +448,38 @@
                     }
                 }
             }
-            this.tradeManager_0.RootPath = this.DataPath;
-            this.tradeManager_0.DefaultAccountNumber = this.DefaultAccountNumber;
+            this.tradeManager.RootPath = this.DataPath;
+            this.tradeManager.DefaultAccountNumber = this.DefaultAccountNumber;
             try
             {
-                this.tradeManager_0.LoadOrdersAndHistory();
+                this.tradeManager.LoadOrdersAndHistory();
             }
             catch
             {
             }
-            foreach (Order order in this.tradeManager_0.Orders)
+            foreach (Order order in this.tradeManager.Orders)
             {
                 Guid strategyID = order.StrategyID;
                 order.Strategy = this.strategyManager_0.LookupID(order.StrategyID.ToString());
             }
-            WealthLab.TradeManager.DisablePortfolioSynch = this.settingsManager_0.Get(WealthLab.TradeManager.DisablePortfolioSynchKey, false);
-            BarsLoader.FuturesMode = this.settingsManager_0.Get("FuturesMode", true);
-            this.tradeManager_0.AlwaysExitAllSharesInPosition = this.settingsManager_0.Get("ExitFullPosition", false) && !WealthLab.TradeManager.DisablePortfolioSynch;
-            this.tradeManager_0.SameBarExits = this.settingsManager_0.Get("SameBarExits", false);
-            this.tradeManager_0.EnableCashThreshold = this.settingsManager_0.Get("EnableCashThreshold", false);
-            this.tradeManager_0.CashThreshold = this.settingsManager_0.Get("CashThreshold", 0);
-            this.tradeManager_0.EnableBuyingPowerThreshold = this.settingsManager_0.Get("EnableBuyingPowerThreshold", false);
-            this.tradeManager_0.BuyingPowerThreshold = this.settingsManager_0.Get("BuyingPowerThreshold", 0);
-            if (this.settingsManager_0.Get("ScheduledUpdateTime_Local", "") == "")
+            WealthLab.TradeManager.DisablePortfolioSynch = this.settingsManager.Get(WealthLab.TradeManager.DisablePortfolioSynchKey, false);
+            BarsLoader.FuturesMode = this.settingsManager.Get("FuturesMode", true);
+            this.tradeManager.AlwaysExitAllSharesInPosition = this.settingsManager.Get("ExitFullPosition", false) && !WealthLab.TradeManager.DisablePortfolioSynch;
+            this.tradeManager.SameBarExits = this.settingsManager.Get("SameBarExits", false);
+            this.tradeManager.EnableCashThreshold = this.settingsManager.Get("EnableCashThreshold", false);
+            this.tradeManager.CashThreshold = this.settingsManager.Get("CashThreshold", 0);
+            this.tradeManager.EnableBuyingPowerThreshold = this.settingsManager.Get("EnableBuyingPowerThreshold", false);
+            this.tradeManager.BuyingPowerThreshold = this.settingsManager.Get("BuyingPowerThreshold", 0);
+            if (this.settingsManager.Get("ScheduledUpdateTime_Local", "") == "")
             {
-                string str17 = this.settingsManager_0.Get("ScheduledUpdateTime", "");
+                string str17 = this.settingsManager.Get("ScheduledUpdateTime", "");
                 if (str17 != "")
                 {
                     int hour = int.Parse(str17.Substring(0, 2));
                     DateTime local = new DateTime(0x7db, 1, 1, hour, 0, 0);
                     string str18 = TimeZoneInformation.ToLocalTime(TimeZoneInformation.ToUniversalTime("Eastern Standard Time", local), TimeZoneInformation.CurrentTimeZone.Name).Hour.ToString("D2") + ":00";
-                    this.settingsManager_0.Set("ScheduledUpdateTime_Local", str18);
-                    this.settingsManager_0.SaveSettings();
+                    this.settingsManager.Set("ScheduledUpdateTime_Local", str18);
+                    this.settingsManager.SaveSettings();
                 }
             }
             this.timer_0.Enabled = true;
@@ -512,7 +512,7 @@
                     strategy3.AccountNumber = "";
                 }
             }
-            DecimalsManager.Instance.SetValues(this.settingsManager_0);
+            DecimalsManager.Instance.SetValues(this.settingsManager);
         }
 
         public List<string> AccountTradeTypes(string acct)
@@ -542,7 +542,7 @@
         public void AddMenuItem(string text, string mainMenuItemText, string subMenuItemText, ClickMenuItem callback, Image itemImage)
         {
             DynamicMenuItem item = new DynamicMenuItem(text, mainMenuItemText, subMenuItemText, callback, itemImage);
-            this.list_6.Add(item);
+            this.dynamicMenuitems.Add(item);
             foreach (Form form in Application.OpenForms)
             {
                 if (form is MainForm)
@@ -583,7 +583,7 @@
 
         public void AddWorkspaceMenuItem(string workspace)
         {
-            this.list_7.Add(workspace);
+            this.workspaceMenuItems.Add(workspace);
             foreach (Form form in Application.OpenForms)
             {
                 if (form is MainForm)
@@ -601,7 +601,7 @@
             }
             int daysBeforeNextAuthRequired = 0;
             string str = "";
-            if (this.authenticationProvider_0.Authenticate(ref daysBeforeNextAuthRequired, ref str))
+            if (this.authenticationProvider.Authenticate(ref daysBeforeNextAuthRequired, ref str))
             {
                 this.IsAuthenticated = true;
                 DateTime getCurrentDateTime = this.AuthProvider.GetCurrentDateTime;
@@ -693,7 +693,7 @@
         public void CreateNewDataSource()
         {
             NewDataSourceForm form = new NewDataSourceForm();
-            foreach (StaticDataProvider provider in this.dataSourceManager_0.Providers)
+            foreach (StaticDataProvider provider in this.dataSourceManager.Providers)
             {
                 if (provider.FriendlyName == "Fidelity Investments")
                 {
@@ -701,7 +701,7 @@
                 }
             }
             List<StaticDataProvider> list = new List<StaticDataProvider>();
-            foreach (StaticDataProvider provider3 in this.dataSourceManager_0.Providers)
+            foreach (StaticDataProvider provider3 in this.dataSourceManager.Providers)
             {
                 if ((provider3.FriendlyName != "Fidelity Investments") && !provider3.InternalUseOnly)
                 {
@@ -770,28 +770,28 @@
             this.components = new Container();
             PositionSize size = new PositionSize();
             this.timer_0 = new System.Windows.Forms.Timer(this.components);
-            this.helpProvider_0 = new System.Windows.Forms.HelpProvider();
-            this.settingsManager_0 = new SettingsManager(this.components);
+            this.helpProvider = new System.Windows.Forms.HelpProvider();
+            this.settingsManager = new SettingsManager(this.components);
             this.assemblyLoader_0 = new AssemblyLoader(this.components);
             this.assemblyLoader_1 = new AssemblyLoader(this.components);
             this.assemblyLoader_2 = new AssemblyLoader(this.components);
             this.assemblyLoader_3 = new AssemblyLoader(this.components);
             this.barRange = new BarDataRangeSelecter();
-            this.dataSourceManager_0 = new DataSourceManager(this.components);
-            this.chartRenderer_0 = new ChartRenderer(this.components);
+            this.dataSourceManager = new DataSourceManager(this.components);
+            this.chartRenderer = new ChartRenderer(this.components);
             this.strategyManager_0 = new StrategyManager(this.components);
             this.drawingObjectManager_0 = new DrawingObjectManager(this.components);
-            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.components);
+            this.tradingSystemExecutor = new TradingSystemExecutor(this.components);
             this.strategyManager_1 = new StrategyManager(this.components);
-            this.tradeManager_0 = new WealthLab.TradeManager(this.components);
+            this.tradeManager = new WealthLab.TradeManager(this.components);
             this.assemblyLoader_4 = new AssemblyLoader(this.components);
             base.SuspendLayout();
             this.timer_0.Interval = 0xea60;
             this.timer_0.Tick += new EventHandler(this.timer_0_Tick);
-            this.helpProvider_0.HelpNamespace = "WLNetUserGuide.chm";
-            this.settingsManager_0.FileName = "WealthLabConfig.txt";
-            this.settingsManager_0.IsEncrypted = false;
-            this.settingsManager_0.RootPath = null;
+            this.helpProvider.HelpNamespace = "WLNetUserGuide.chm";
+            this.settingsManager.FileName = "WealthLabConfig.txt";
+            this.settingsManager.IsEncrypted = false;
+            this.settingsManager.RootPath = null;
             this.assemblyLoader_0.BaseClass = "";
             this.assemblyLoader_0.DLLNameFilter = "";
             this.assemblyLoader_0.Interface = "IPerformanceVisualizer";
@@ -818,55 +818,55 @@
             this.barRange.Name = "barRange";
             this.barRange.Size = new Size(0x79, 20);
             this.barRange.TabIndex = 1;
-            this.dataSourceManager_0.OnDemandUpdatesEnabled = true;
-            this.dataSourceManager_0.RootPath = null;
-            this.dataSourceManager_0.StockSplitDataAdjusted += new EventHandler<StockSplitEventArgs>(this.method_5);
-            this.chartRenderer_0.AxisFont = new Font("Tahoma", 7f);
-            this.chartRenderer_0.BackgroundColor = Color.WhiteSmoke;
-            this.chartRenderer_0.BarSpacing = 4;
-            this.chartRenderer_0.DownBarColor = Color.Red;
-            this.chartRenderer_0.DownBarVolumeColor = Color.Red;
-            this.chartRenderer_0.Executor = null;
-            this.chartRenderer_0.Fundamentals = null;
-            this.chartRenderer_0.FundamentalsVisible = true;
-            this.chartRenderer_0.GridlineColor = Color.Gainsboro;
-            this.chartRenderer_0.HorizontalGridines = true;
-            this.chartRenderer_0.IndicatorLabelsVisible = false;
-            this.chartRenderer_0.LogScale = false;
-            this.chartRenderer_0.MarginBottomColor = Color.Navy;
-            this.chartRenderer_0.MarginBottomHeight = 20;
-            this.chartRenderer_0.MarginRightColor = Color.Gainsboro;
-            this.chartRenderer_0.MarginRightWidth = 40;
-            this.chartRenderer_0.PaneSeparatorColor = Color.Black;
-            this.chartRenderer_0.PaneSeparatorVisible = true;
-            this.chartRenderer_0.PlotStops = false;
-            this.chartRenderer_0.RightPaddingBars = 0;
-            this.chartRenderer_0.ScrollOffset = 0;
-            this.chartRenderer_0.TitleFont = new Font("Verdana", 8f);
-            this.chartRenderer_0.TradeAnnotationsVisible = true;
-            this.chartRenderer_0.TradeArrowsVisible = true;
-            this.chartRenderer_0.TradeCirclesVisible = true;
-            this.chartRenderer_0.UpBarColor = Color.Green;
-            this.chartRenderer_0.UpBarVolumeColor = Color.Green;
-            this.chartRenderer_0.VerticalGridlines = true;
-            this.chartRenderer_0.VolumePaneVisible = true;
+            this.dataSourceManager.OnDemandUpdatesEnabled = true;
+            this.dataSourceManager.RootPath = null;
+            this.dataSourceManager.StockSplitDataAdjusted += new EventHandler<StockSplitEventArgs>(this.method_5);
+            this.chartRenderer.AxisFont = new Font("Tahoma", 7f);
+            this.chartRenderer.BackgroundColor = Color.WhiteSmoke;
+            this.chartRenderer.BarSpacing = 4;
+            this.chartRenderer.DownBarColor = Color.Red;
+            this.chartRenderer.DownBarVolumeColor = Color.Red;
+            this.chartRenderer.Executor = null;
+            this.chartRenderer.Fundamentals = null;
+            this.chartRenderer.FundamentalsVisible = true;
+            this.chartRenderer.GridlineColor = Color.Gainsboro;
+            this.chartRenderer.HorizontalGridines = true;
+            this.chartRenderer.IndicatorLabelsVisible = false;
+            this.chartRenderer.LogScale = false;
+            this.chartRenderer.MarginBottomColor = Color.Navy;
+            this.chartRenderer.MarginBottomHeight = 20;
+            this.chartRenderer.MarginRightColor = Color.Gainsboro;
+            this.chartRenderer.MarginRightWidth = 40;
+            this.chartRenderer.PaneSeparatorColor = Color.Black;
+            this.chartRenderer.PaneSeparatorVisible = true;
+            this.chartRenderer.PlotStops = false;
+            this.chartRenderer.RightPaddingBars = 0;
+            this.chartRenderer.ScrollOffset = 0;
+            this.chartRenderer.TitleFont = new Font("Verdana", 8f);
+            this.chartRenderer.TradeAnnotationsVisible = true;
+            this.chartRenderer.TradeArrowsVisible = true;
+            this.chartRenderer.TradeCirclesVisible = true;
+            this.chartRenderer.UpBarColor = Color.Green;
+            this.chartRenderer.UpBarVolumeColor = Color.Green;
+            this.chartRenderer.VerticalGridlines = true;
+            this.chartRenderer.VolumePaneVisible = true;
             this.strategyManager_0.RootPath = null;
             this.drawingObjectManager_0.ChartBookName = "Standard";
             this.drawingObjectManager_0.RootPath = null;
-            this.tradingSystemExecutor_0.ApplyCommission = false;
-            this.tradingSystemExecutor_0.ApplyDividends = false;
-            this.tradingSystemExecutor_0.ApplyInterest = false;
-            this.tradingSystemExecutor_0.BarsLoader = null;
-            this.tradingSystemExecutor_0.BuildEquityCurves = true;
-            this.tradingSystemExecutor_0.CashRate = 0.0;
-            this.tradingSystemExecutor_0.EnableSlippage = false;
-            this.tradingSystemExecutor_0.ExceptionEvents = false;
-            this.tradingSystemExecutor_0.FundamentalsLoader = null;
-            this.tradingSystemExecutor_0.IsStreaming = false;
-            this.tradingSystemExecutor_0.LimitDaySimulation = false;
-            this.tradingSystemExecutor_0.LimitOrderSlippage = false;
-            this.tradingSystemExecutor_0.MarginRate = 0.0;
-            this.tradingSystemExecutor_0.OverrideShareSize = 0.0;
+            this.tradingSystemExecutor.ApplyCommission = false;
+            this.tradingSystemExecutor.ApplyDividends = false;
+            this.tradingSystemExecutor.ApplyInterest = false;
+            this.tradingSystemExecutor.BarsLoader = null;
+            this.tradingSystemExecutor.BuildEquityCurves = true;
+            this.tradingSystemExecutor.CashRate = 0.0;
+            this.tradingSystemExecutor.EnableSlippage = false;
+            this.tradingSystemExecutor.ExceptionEvents = false;
+            this.tradingSystemExecutor.FundamentalsLoader = null;
+            this.tradingSystemExecutor.IsStreaming = false;
+            this.tradingSystemExecutor.LimitDaySimulation = false;
+            this.tradingSystemExecutor.LimitOrderSlippage = false;
+            this.tradingSystemExecutor.MarginRate = 0.0;
+            this.tradingSystemExecutor.OverrideShareSize = 0.0;
             size.DollarSize = 5000.0;
             size.MarginFactor = 1.0;
             size.Mode = PosSizeMode.RawProfitDollar;
@@ -878,40 +878,40 @@
             size.ShareSize = 100.0;
             size.SimuScriptName = "";
             size.StartingCapital = 100000.0;
-            this.tradingSystemExecutor_0.PosSize = size;
-            this.tradingSystemExecutor_0.RedcuceQtyPct = 10.0;
-            this.tradingSystemExecutor_0.ReduceQtyBasedOnVolume = false;
-            this.tradingSystemExecutor_0.Renderer = null;
-            this.tradingSystemExecutor_0.RoundLots = false;
-            this.tradingSystemExecutor_0.RoundLots50 = false;
-            this.tradingSystemExecutor_0.SlippageTicks = 1;
-            this.tradingSystemExecutor_0.SlippageUnits = 1.0;
-            this.tradingSystemExecutor_0.StrategyName = "";
-            this.tradingSystemExecutor_0.WorstTradeSimulation = false;
+            this.tradingSystemExecutor.PosSize = size;
+            this.tradingSystemExecutor.RedcuceQtyPct = 10.0;
+            this.tradingSystemExecutor.ReduceQtyBasedOnVolume = false;
+            this.tradingSystemExecutor.Renderer = null;
+            this.tradingSystemExecutor.RoundLots = false;
+            this.tradingSystemExecutor.RoundLots50 = false;
+            this.tradingSystemExecutor.SlippageTicks = 1;
+            this.tradingSystemExecutor.SlippageUnits = 1.0;
+            this.tradingSystemExecutor.StrategyName = "";
+            this.tradingSystemExecutor.WorstTradeSimulation = false;
             this.strategyManager_1.RootPath = null;
-            this.tradeManager_0.AlwaysExitAllSharesInPosition = false;
-            this.tradeManager_0.AutoTradingEnabled = AutoTradingMode.Off;
-            this.tradeManager_0.BuyingPowerThreshold = 0.0;
-            this.tradeManager_0.CashThreshold = 0.0;
-            this.tradeManager_0.EnableBuyingPowerThreshold = false;
-            this.tradeManager_0.EnableCashThreshold = false;
-            this.tradeManager_0.RootPath = null;
-            this.tradeManager_0.SameBarExits = false;
-            this.tradeManager_0.SettingsHost = null;
-            this.tradeManager_0.HistoryItemAdded += new EventHandler<HistoricalTradeEventArgs>(this.method_16);
-            this.tradeManager_0.PositionRemoved += new EventHandler<AccountPositionEventArgs>(this.method_22);
-            this.tradeManager_0.PositionAdded += new EventHandler<AccountPositionEventArgs>(this.method_20);
-            this.tradeManager_0.PositionsUpdated += new EventHandler<AccountEventArgs>(this.method_19);
-            this.tradeManager_0.HistoryItemUpdated += new EventHandler<HistoricalTradeEventArgs>(this.method_15);
-            this.tradeManager_0.OrderRemoved += new EventHandler<OrderEventArgs>(this.method_18);
-            this.tradeManager_0.OrdersUpdated += new EventHandler<EventArgs>(this.method_8);
-            this.tradeManager_0.StatusBarUpdated += new EventHandler<StringEventArgs>(this.method_24);
-            this.tradeManager_0.OrderAdded += new EventHandler<OrderEventArgs>(this.method_14);
-            this.tradeManager_0.AccountUpdated += new EventHandler<AccountEventArgs>(this.method_17);
-            this.tradeManager_0.QuoteUpdated += new EventHandler<QuoteEventArgs>(this.method_23);
-            this.tradeManager_0.OrderChanged += new EventHandler<OrderEventArgs>(this.method_13);
-            this.tradeManager_0.OrderStatusUpdated += new EventHandler<OrderEventArgs>(this.method_13);
-            this.tradeManager_0.PositionChanged += new EventHandler<AccountPositionEventArgs>(this.method_21);
+            this.tradeManager.AlwaysExitAllSharesInPosition = false;
+            this.tradeManager.AutoTradingEnabled = AutoTradingMode.Off;
+            this.tradeManager.BuyingPowerThreshold = 0.0;
+            this.tradeManager.CashThreshold = 0.0;
+            this.tradeManager.EnableBuyingPowerThreshold = false;
+            this.tradeManager.EnableCashThreshold = false;
+            this.tradeManager.RootPath = null;
+            this.tradeManager.SameBarExits = false;
+            this.tradeManager.SettingsHost = null;
+            this.tradeManager.HistoryItemAdded += new EventHandler<HistoricalTradeEventArgs>(this.method_16);
+            this.tradeManager.PositionRemoved += new EventHandler<AccountPositionEventArgs>(this.method_22);
+            this.tradeManager.PositionAdded += new EventHandler<AccountPositionEventArgs>(this.method_20);
+            this.tradeManager.PositionsUpdated += new EventHandler<AccountEventArgs>(this.method_19);
+            this.tradeManager.HistoryItemUpdated += new EventHandler<HistoricalTradeEventArgs>(this.method_15);
+            this.tradeManager.OrderRemoved += new EventHandler<OrderEventArgs>(this.method_18);
+            this.tradeManager.OrdersUpdated += new EventHandler<EventArgs>(this.method_8);
+            this.tradeManager.StatusBarUpdated += new EventHandler<StringEventArgs>(this.method_24);
+            this.tradeManager.OrderAdded += new EventHandler<OrderEventArgs>(this.method_14);
+            this.tradeManager.AccountUpdated += new EventHandler<AccountEventArgs>(this.method_17);
+            this.tradeManager.QuoteUpdated += new EventHandler<QuoteEventArgs>(this.method_23);
+            this.tradeManager.OrderChanged += new EventHandler<OrderEventArgs>(this.method_13);
+            this.tradeManager.OrderStatusUpdated += new EventHandler<OrderEventArgs>(this.method_13);
+            this.tradeManager.PositionChanged += new EventHandler<AccountPositionEventArgs>(this.method_21);
             this.assemblyLoader_4.BaseClass = "PosSizer";
             this.assemblyLoader_4.DLLNameFilter = "";
             this.assemblyLoader_4.Interface = null;
@@ -920,10 +920,10 @@
             base.AutoScaleDimensions = new SizeF(6f, 13f);
             base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.barRange);
-            this.helpProvider_0.SetHelpKeyword(this, "introduction.htm");
-            this.helpProvider_0.SetHelpNavigator(this, HelpNavigator.Topic);
+            this.helpProvider.SetHelpKeyword(this, "introduction.htm");
+            this.helpProvider.SetHelpNavigator(this, HelpNavigator.Topic);
             base.Name = "MainModule";
-            this.helpProvider_0.SetShowHelp(this, true);
+            this.helpProvider.SetShowHelp(this, true);
             base.Click += new EventHandler(this.MainModule_Click);
             base.ResumeLayout(false);
         }
@@ -931,7 +931,7 @@
         public Bars LoadExternalSymbol(string dataSetName, string symbol)
         {
             Bars bars = null;
-            using (IEnumerator<DataSource> enumerator = this.dataSourceManager_0.DataSources.GetEnumerator())
+            using (IEnumerator<DataSource> enumerator = this.dataSourceManager.DataSources.GetEnumerator())
             {
                 DataSource current;
                 while (enumerator.MoveNext())
@@ -951,7 +951,7 @@
         public Bars LoadExternalSymbol(string symbol, BarScale scale, int barInterval, bool includePartialBar)
         {
             BarDataScale scale3;
-            using (IEnumerator<DataSource> enumerator = this.dataSourceManager_0.DataSources.GetEnumerator())
+            using (IEnumerator<DataSource> enumerator = this.dataSourceManager.DataSources.GetEnumerator())
             {
                 Bars bars3;
                 while (enumerator.MoveNext())
@@ -969,7 +969,7 @@
                     }
                 }
             }
-            using (IEnumerator<StaticDataProvider> enumerator3 = this.dataSourceManager_0.Providers.GetEnumerator())
+            using (IEnumerator<StaticDataProvider> enumerator3 = this.dataSourceManager.Providers.GetEnumerator())
             {
                 Bars bars4;
                 while (enumerator3.MoveNext())
@@ -992,7 +992,7 @@
                 }
             }
             scale3 = new BarDataScale(scale, barInterval);
-            using (IEnumerator<DataSource> enumerator2 = this.dataSourceManager_0.DataSources.GetEnumerator())
+            using (IEnumerator<DataSource> enumerator2 = this.dataSourceManager.DataSources.GetEnumerator())
             {
                 Bars bars;
                 while (enumerator2.MoveNext())
@@ -1020,15 +1020,15 @@
         public void LoginSuccessful()
         {
             this.IsAuthenticated = true;
-            if ((this.streamingDataProvider_0 != null) && this.streamingDataProvider_0.StreamingAtDisconnect)
+            if ((this.streamingDataProvider != null) && this.streamingDataProvider.StreamingAtDisconnect)
             {
-                this.streamingDataProvider_0.ConnectStreaming(this);
+                this.streamingDataProvider.ConnectStreaming(this);
             }
             if (this.BrokerProvider != null)
             {
                 this.BrokerProvider.Accounts.Clear();
                 this.BrokerProvider.RequestUpdates();
-                this.settingsManager_0.Set("LoggedIn", true);
+                this.settingsManager.Set("LoggedIn", true);
                 foreach (Account account in this.BrokerProvider.Accounts)
                 {
                     for (int i = account.Positions.Count - 1; i >= 0; i--)
@@ -1149,7 +1149,7 @@
 
         private void method_14(object sender, OrderEventArgs e)
         {
-            if ((OrdersAlertsForm.Instance == null) && this.settingsManager_0.Get("AutoOpenOrders", true))
+            if ((OrdersAlertsForm.Instance == null) && this.settingsManager.Get("AutoOpenOrders", true))
             {
                 this.FirstMainForm.OpenOrderManager();
             }
@@ -1157,7 +1157,7 @@
             {
                 OrdersAlertsForm.Instance.OrderAdded(e.Order);
             }
-            if ((OrdersAlertsForm.Instance != null) && this.settingsManager_0.Get("SwitchToAccount", true))
+            if ((OrdersAlertsForm.Instance != null) && this.settingsManager.Get("SwitchToAccount", true))
             {
                 OrdersAlertsForm.Instance.SwitchToAccount(e.Order.Account);
             }
@@ -1352,23 +1352,23 @@
 
         private void method_6()
         {
-            this.settingsManager_0.Set("BarSpacing", this.chartRenderer_0.BarSpacing);
-            this.settingsManager_0.Set("ChartBackgroundColor", this.chartRenderer_0.BackgroundColor);
-            this.settingsManager_0.Set("ChartUpBarColor", this.chartRenderer_0.UpBarColor);
-            this.settingsManager_0.Set("ChartDownBarColor", this.chartRenderer_0.DownBarColor);
-            this.settingsManager_0.Set("ChartUpVolumeColor", this.chartRenderer_0.UpBarVolumeColor);
-            this.settingsManager_0.Set("ChartDownVolumeColor", this.chartRenderer_0.DownBarVolumeColor);
-            this.settingsManager_0.Set("ChartGridlineColor", this.chartRenderer_0.GridlineColor);
-            this.settingsManager_0.Set("ChartRightMarginColor", this.chartRenderer_0.MarginRightColor);
-            this.settingsManager_0.Set("ChartBottomMarginColor", this.chartRenderer_0.MarginBottomColor);
-            this.settingsManager_0.Set("ChartPaneSeparatorColor", this.chartRenderer_0.PaneSeparatorColor);
-            this.settingsManager_0.Set("HorizontalGridlines", this.chartRenderer_0.HorizontalGridines);
-            this.settingsManager_0.Set("VerticalGridlines", this.chartRenderer_0.VerticalGridlines);
-            this.settingsManager_0.Set("PaneSeparators", this.chartRenderer_0.PaneSeparatorVisible);
-            this.settingsManager_0.Set("ChartFont", this.chartRenderer_0.AxisFont);
-            this.settingsManager_0.Set("FundamentalsCharted", this.chartRenderer_0.FundamentalGlyphs);
-            this.settingsManager_0.Set("LogScale", this.chartRenderer_0.LogScale);
-            this.settingsManager_0.Set("TitleFont", this.chartRenderer_0.TitleFont);
+            this.settingsManager.Set("BarSpacing", this.chartRenderer.BarSpacing);
+            this.settingsManager.Set("ChartBackgroundColor", this.chartRenderer.BackgroundColor);
+            this.settingsManager.Set("ChartUpBarColor", this.chartRenderer.UpBarColor);
+            this.settingsManager.Set("ChartDownBarColor", this.chartRenderer.DownBarColor);
+            this.settingsManager.Set("ChartUpVolumeColor", this.chartRenderer.UpBarVolumeColor);
+            this.settingsManager.Set("ChartDownVolumeColor", this.chartRenderer.DownBarVolumeColor);
+            this.settingsManager.Set("ChartGridlineColor", this.chartRenderer.GridlineColor);
+            this.settingsManager.Set("ChartRightMarginColor", this.chartRenderer.MarginRightColor);
+            this.settingsManager.Set("ChartBottomMarginColor", this.chartRenderer.MarginBottomColor);
+            this.settingsManager.Set("ChartPaneSeparatorColor", this.chartRenderer.PaneSeparatorColor);
+            this.settingsManager.Set("HorizontalGridlines", this.chartRenderer.HorizontalGridines);
+            this.settingsManager.Set("VerticalGridlines", this.chartRenderer.VerticalGridlines);
+            this.settingsManager.Set("PaneSeparators", this.chartRenderer.PaneSeparatorVisible);
+            this.settingsManager.Set("ChartFont", this.chartRenderer.AxisFont);
+            this.settingsManager.Set("FundamentalsCharted", this.chartRenderer.FundamentalGlyphs);
+            this.settingsManager.Set("LogScale", this.chartRenderer.LogScale);
+            this.settingsManager.Set("TitleFont", this.chartRenderer.TitleFont);
         }
 
         private void method_7(string string_2, string string_3)
@@ -1495,48 +1495,48 @@
                     flag2 = false;
                 }
                 this.method_6();
-                this.settingsManager_0.Set("PositionSize", this.tradingSystemExecutor_0.PosSize.ToString());
-                this.settingsManager_0.Set("DataRange", this.barRange.DataRange.ToString());
+                this.settingsManager.Set("PositionSize", this.tradingSystemExecutor.PosSize.ToString());
+                this.settingsManager.Set("DataRange", this.barRange.DataRange.ToString());
                 if (flag2)
                 {
-                    this.settingsManager_0.Set("EnableSlippage", this.tradingSystemExecutor_0.EnableSlippage);
-                    this.settingsManager_0.Set("LimitOrderSlippage", this.tradingSystemExecutor_0.LimitOrderSlippage);
-                    this.settingsManager_0.Set("SlippageUnits", this.tradingSystemExecutor_0.SlippageUnits);
-                    this.settingsManager_0.Set("SlippageTicks", this.tradingSystemExecutor_0.SlippageTicks);
+                    this.settingsManager.Set("EnableSlippage", this.tradingSystemExecutor.EnableSlippage);
+                    this.settingsManager.Set("LimitOrderSlippage", this.tradingSystemExecutor.LimitOrderSlippage);
+                    this.settingsManager.Set("SlippageUnits", this.tradingSystemExecutor.SlippageUnits);
+                    this.settingsManager.Set("SlippageTicks", this.tradingSystemExecutor.SlippageTicks);
                 }
-                this.settingsManager_0.Set("RoundLots", this.tradingSystemExecutor_0.RoundLots);
-                this.settingsManager_0.Set("RoundLots50", this.tradingSystemExecutor_0.RoundLots50);
-                this.settingsManager_0.Set("ApplyCommissions", this.tradingSystemExecutor_0.ApplyCommission);
-                this.settingsManager_0.Set("LimitDaySimulation", this.tradingSystemExecutor_0.LimitDaySimulation);
-                this.settingsManager_0.Set("ApplyInterest", this.tradingSystemExecutor_0.ApplyInterest);
-                this.settingsManager_0.Set("CashRate", this.tradingSystemExecutor_0.CashRate);
-                this.settingsManager_0.Set("MarginRate", this.tradingSystemExecutor_0.MarginRate);
-                this.settingsManager_0.Set("ApplyDividends", this.tradingSystemExecutor_0.ApplyDividends);
-                if (this.streamingDataProvider_0 != null)
+                this.settingsManager.Set("RoundLots", this.tradingSystemExecutor.RoundLots);
+                this.settingsManager.Set("RoundLots50", this.tradingSystemExecutor.RoundLots50);
+                this.settingsManager.Set("ApplyCommissions", this.tradingSystemExecutor.ApplyCommission);
+                this.settingsManager.Set("LimitDaySimulation", this.tradingSystemExecutor.LimitDaySimulation);
+                this.settingsManager.Set("ApplyInterest", this.tradingSystemExecutor.ApplyInterest);
+                this.settingsManager.Set("CashRate", this.tradingSystemExecutor.CashRate);
+                this.settingsManager.Set("MarginRate", this.tradingSystemExecutor.MarginRate);
+                this.settingsManager.Set("ApplyDividends", this.tradingSystemExecutor.ApplyDividends);
+                if (this.streamingDataProvider != null)
                 {
-                    this.settingsManager_0.Set("StreamingProvider", this.streamingDataProvider_0.GetType().Name);
+                    this.settingsManager.Set("StreamingProvider", this.streamingDataProvider.GetType().Name);
                 }
-                this.settingsManager_0.Set("FuturesMode", BarsLoader.FuturesMode);
-                this.settingsManager_0.Set("ReduceQtyBasedOnVolume", this.tradingSystemExecutor_0.ReduceQtyBasedOnVolume);
-                this.settingsManager_0.Set("ReduceQtyPct", this.tradingSystemExecutor_0.RedcuceQtyPct);
-                this.settingsManager_0.Set("WorstTradeSimulation", this.tradingSystemExecutor_0.WorstTradeSimulation);
-                this.settingsManager_0.Set("BenchmarkSymbol", this.tradingSystemExecutor_0.BenchmarkSymbol);
-                this.settingsManager_0.Set("BenchmarkBuyAndHoldON", this.tradingSystemExecutor_0.BenchmarkBuyAndHoldON);
-                this.settingsManager_0.Set(DecimalsManager.Instance.PricingKey, this.tradingSystemExecutor_0.PricingDecimalPlaces);
-                this.settingsManager_0.Set("NoDecimalRoundingForLimitStopPrice", this.tradingSystemExecutor_0.NoDecimalRoundingForLimitStopPrice);
-                this.settingsManager_0.Set("SameBarExits", this.tradeManager_0.SameBarExits);
-                this.settingsManager_0.Set("EnableCashThreshold", this.tradeManager_0.EnableCashThreshold);
-                this.settingsManager_0.Set("CashThreshold", this.tradeManager_0.CashThreshold);
-                this.settingsManager_0.Set("EnableBuyingPowerThreshold", this.tradeManager_0.EnableBuyingPowerThreshold);
-                this.settingsManager_0.Set("BuyingPowerThreshold", this.tradeManager_0.BuyingPowerThreshold);
-                this.settingsManager_0.SaveSettings();
-                bool badTickFilter = this.settingsManager_0.Get("BadTickFilter", false);
-                double threshold = this.settingsManager_0.Get("BadTickThreshold", (double) 20.0);
+                this.settingsManager.Set("FuturesMode", BarsLoader.FuturesMode);
+                this.settingsManager.Set("ReduceQtyBasedOnVolume", this.tradingSystemExecutor.ReduceQtyBasedOnVolume);
+                this.settingsManager.Set("ReduceQtyPct", this.tradingSystemExecutor.RedcuceQtyPct);
+                this.settingsManager.Set("WorstTradeSimulation", this.tradingSystemExecutor.WorstTradeSimulation);
+                this.settingsManager.Set("BenchmarkSymbol", this.tradingSystemExecutor.BenchmarkSymbol);
+                this.settingsManager.Set("BenchmarkBuyAndHoldON", this.tradingSystemExecutor.BenchmarkBuyAndHoldON);
+                this.settingsManager.Set(DecimalsManager.Instance.PricingKey, this.tradingSystemExecutor.PricingDecimalPlaces);
+                this.settingsManager.Set("NoDecimalRoundingForLimitStopPrice", this.tradingSystemExecutor.NoDecimalRoundingForLimitStopPrice);
+                this.settingsManager.Set("SameBarExits", this.tradeManager.SameBarExits);
+                this.settingsManager.Set("EnableCashThreshold", this.tradeManager.EnableCashThreshold);
+                this.settingsManager.Set("CashThreshold", this.tradeManager.CashThreshold);
+                this.settingsManager.Set("EnableBuyingPowerThreshold", this.tradeManager.EnableBuyingPowerThreshold);
+                this.settingsManager.Set("BuyingPowerThreshold", this.tradeManager.BuyingPowerThreshold);
+                this.settingsManager.SaveSettings();
+                bool badTickFilter = this.settingsManager.Get("BadTickFilter", false);
+                double threshold = this.settingsManager.Get("BadTickThreshold", (double) 20.0);
                 StreamingDataProvider.SetBadTickFilterSettings(badTickFilter, threshold);
-                this.settingsManager_0.Set("StrategyNetworkPathCount", this.StrategyNetworkPaths.Count);
+                this.settingsManager.Set("StrategyNetworkPathCount", this.StrategyNetworkPaths.Count);
                 for (int i = 0; i < this.StrategyNetworkPaths.Count; i++)
                 {
-                    this.settingsManager_0.Set("StrategyNetworkPath" + i, this.StrategyNetworkPaths[i]);
+                    this.settingsManager.Set("StrategyNetworkPath" + i, this.StrategyNetworkPaths[i]);
                 }
             }
         }
@@ -1559,7 +1559,7 @@
 
         public void SetOnDemand(bool onDemandOn)
         {
-            this.dataSourceManager_0.OnDemandUpdatesEnabled = onDemandOn;
+            this.dataSourceManager.OnDemandUpdatesEnabled = onDemandOn;
             foreach (Form form in Application.OpenForms)
             {
                 if (form is MainForm)
@@ -1571,7 +1571,7 @@
             {
                 DataManagerForm.Instance.SetOnDemand(onDemandOn);
             }
-            this.settingsManager_0.Set("OnDemandDataEnabled", onDemandOn);
+            this.settingsManager.Set("OnDemandDataEnabled", onDemandOn);
         }
 
         public bool ShouldOrderBePlaced(string accountNumber)
@@ -1610,7 +1610,7 @@
 
         public void StreamingSymbolsUpdated(string symbolString)
         {
-            this.settingsManager_0.Set("StreamingSymbols", symbolString);
+            this.settingsManager.Set("StreamingSymbols", symbolString);
             string[] symbols = symbolString.Split(new char[] { ',' });
             this.FirstMainForm.UpdateStreamingSymbols(symbols);
         }
@@ -1627,11 +1627,11 @@
                 {
                     int hour = int.Parse(this.Settings.Get("ScheduledUpdateTime_Local", "07:00").Split(new char[] { ':' })[0]);
                     DateTime now = DateTime.Now;
-                    int num2 = this.settingsManager_0.Get("RandomMinute", -1);
+                    int num2 = this.settingsManager.Get("RandomMinute", -1);
                     if (num2 == -1)
                     {
                         num2 = new Random().Next(60);
-                        this.settingsManager_0.Set("RandomMinute", num2);
+                        this.settingsManager.Set("RandomMinute", num2);
                     }
                     DateTime time4 = DateTime.Now;
                     DateTime time5 = new DateTime(now.Year, now.Month, now.Day, hour, num2, 0);
@@ -1661,7 +1661,7 @@
                 if (this.IsAuthenticated)
                 {
                     this.IsAuthenticated = false;
-                    this.authenticationProvider_0.UnAuthenticate();
+                    this.authenticationProvider.UnAuthenticate();
                 }
                 return true;
             }
@@ -1767,7 +1767,7 @@
         {
             get
             {
-                return this.authenticationProvider_0;
+                return this.authenticationProvider;
             }
         }
 
@@ -1794,7 +1794,7 @@
         {
             get
             {
-                return this.brokerProvider_0;
+                return this.brokerProvider;
             }
         }
 
@@ -1803,9 +1803,9 @@
             get
             {
                 string path = Application.UserAppDataPath + @"\Data";
-                if (this.authenticationProvider_0 != null)
+                if (this.authenticationProvider != null)
                 {
-                    path = path.Replace("WealthLabPro", this.authenticationProvider_0.UserDataPathToken);
+                    path = path.Replace("WealthLabPro", this.authenticationProvider.UserDataPathToken);
                 }
                 if (!Directory.Exists(path))
                 {
@@ -1831,7 +1831,7 @@
         {
             get
             {
-                return this.dataSourceManager_0;
+                return this.dataSourceManager;
             }
         }
 
@@ -1874,7 +1874,7 @@
         {
             get
             {
-                return this.list_6;
+                return this.dynamicMenuitems;
             }
         }
 
@@ -1890,7 +1890,7 @@
         {
             get
             {
-                return this.tradingSystemExecutor_0;
+                return this.tradingSystemExecutor;
             }
         }
 
@@ -1928,7 +1928,7 @@
         {
             get
             {
-                return this.helpProvider_0;
+                return this.helpProvider;
             }
         }
 
@@ -1936,7 +1936,7 @@
         {
             get
             {
-                return this.settingsManager_0.Get("LoggedIn", false);
+                return this.settingsManager.Get("LoggedIn", false);
             }
         }
 
@@ -1944,11 +1944,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.isAuthenticated;
             }
             internal set
             {
-                this.bool_1 = value;
+                this.isAuthenticated = value;
             }
         }
 
@@ -1979,7 +1979,7 @@
                             {
                                 Application.Exit();
                             }
-                            this.dateTime_0 = now + new TimeSpan(this.authenticationProvider_0.GracePeriod, 0, 0, 0);
+                            this.dateTime_0 = now + new TimeSpan(this.authenticationProvider.GracePeriod, 0, 0, 0);
                         }
                     }
                     else
@@ -2105,11 +2105,11 @@
         {
             get
             {
-                if (this.int_1 == 0)
+                if (this.nicAdressesCount == 0)
                 {
-                    this.int_1 = NetworkInterface.GetAllNetworkInterfaces().Length;
+                    this.nicAdressesCount = NetworkInterface.GetAllNetworkInterfaces().Length;
                 }
-                return this.int_1;
+                return this.nicAdressesCount;
             }
         }
 
@@ -2117,7 +2117,7 @@
         {
             get
             {
-                return this.list_8;
+                return this.optimizers;
             }
         }
 
@@ -2133,7 +2133,7 @@
         {
             get
             {
-                return this.chartRenderer_0;
+                return this.chartRenderer;
             }
         }
 
@@ -2141,7 +2141,7 @@
         {
             get
             {
-                return this.settingsManager_0;
+                return this.settingsManager;
             }
         }
 
@@ -2165,7 +2165,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.strategyNetworkPaths;
             }
         }
 
@@ -2202,20 +2202,20 @@
         {
             get
             {
-                return this.streamingDataProvider_0;
+                return this.streamingDataProvider;
             }
             internal set
             {
-                if (((this.streamingDataProvider_0 == null) || (value == null)) || (this.streamingDataProvider_0.FriendlyName != value.FriendlyName))
+                if (((this.streamingDataProvider == null) || (value == null)) || (this.streamingDataProvider.FriendlyName != value.FriendlyName))
                 {
-                    if (this.streamingDataProvider_0 != null)
+                    if (this.streamingDataProvider != null)
                     {
-                        this.streamingDataProvider_0.DisconnectStreaming();
+                        this.streamingDataProvider.DisconnectStreaming();
                     }
-                    this.streamingDataProvider_0 = value;
-                    if (this.streamingDataProvider_0 != null)
+                    this.streamingDataProvider = value;
+                    if (this.streamingDataProvider != null)
                     {
-                        this.streamingDataProvider_0.Initialize(this.DataSources);
+                        this.streamingDataProvider.Initialize(this.DataSources);
                     }
                 }
             }
@@ -2225,11 +2225,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.streamingWasClicked;
             }
             set
             {
-                this.bool_2 = value;
+                this.streamingWasClicked = value;
             }
         }
 
@@ -2237,7 +2237,7 @@
         {
             get
             {
-                return this.tradeManager_0;
+                return this.tradeManager;
             }
         }
 
@@ -2245,7 +2245,7 @@
         {
             get
             {
-                return this.list_1;
+                return this.visualizers;
             }
         }
 
@@ -2253,7 +2253,7 @@
         {
             get
             {
-                return this.list_2;
+                return this.visualizersChecked;
             }
         }
 
@@ -2261,7 +2261,7 @@
         {
             get
             {
-                return this.list_7;
+                return this.workspaceMenuItems;
             }
         }
     }

@@ -63,7 +63,7 @@
         private ToolStripLabel lblOrders;
         private ToolStripStatusLabel lblStatusBar;
         private List<Order> list_0 = new List<Order>();
-        private List<Order> list_1 = new List<Order>();
+        private List<Order> selectedOrders = new List<Order>();
         private SortableListView lvMessages;
         private SortableListView lvOrders;
         private ToolStripMenuItem mniCancel;
@@ -793,7 +793,7 @@
                     this.btnEdit.Enabled = ((count != 1) || (this.SelectedOrder.Status != OrderStatus.Staged)) ? (this.SelectedOrder.Status == OrderStatus.Error) : true;
                 }
                 bool flag2 = false;
-                using (List<Order>.Enumerator enumerator = this.list_1.GetEnumerator())
+                using (List<Order>.Enumerator enumerator = this.selectedOrders.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
                     {
@@ -808,7 +808,7 @@
                 }
                 this.btnRemove.Enabled = flag2;
                 bool flag3 = false;
-                using (List<Order>.Enumerator enumerator2 = this.list_1.GetEnumerator())
+                using (List<Order>.Enumerator enumerator2 = this.selectedOrders.GetEnumerator())
                 {
                     while (enumerator2.MoveNext())
                     {
@@ -825,7 +825,7 @@
                 bool flag4 = ((MainModule.Instance.BrokerProvider != null) && (this.SelectedOrder != null)) && MainModule.Instance.BrokerProvider.AllowCancelReplace(this.SelectedOrder, null);
                 this.btnCancelReplace.Enabled = ((flag && (count == 1)) && this.SelectedOrder.IsActiveAtBackEnd) && flag4;
                 bool flag5 = false;
-                using (List<Order>.Enumerator enumerator3 = this.list_1.GetEnumerator())
+                using (List<Order>.Enumerator enumerator3 = this.selectedOrders.GetEnumerator())
                 {
                     while (enumerator3.MoveNext())
                     {
@@ -1385,12 +1385,12 @@
         {
             get
             {
-                this.list_1.Clear();
+                this.selectedOrders.Clear();
                 foreach (ListViewItem item in this.lvOrders.SelectedItems)
                 {
-                    this.list_1.Add((Order) item.Tag);
+                    this.selectedOrders.Add((Order) item.Tag);
                 }
-                return this.list_1;
+                return this.selectedOrders;
             }
         }
 

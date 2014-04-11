@@ -17,10 +17,10 @@
     public class StrategyDownload : Form, IStrategyHost
     {
         private AssemblyLoader assemblyLoader_0;
-        private bool bool_0;
+        private bool strategiesAdded;
         private bool bool_1;
         [CompilerGenerated]
-        private bool bool_2;
+        private bool cancelDownload;
         private Button btnClose;
         private Button btnDownload;
         private CheckBox cbGetPrivate;
@@ -44,7 +44,7 @@
         private StatusStrip status;
         private ToolStripStatusLabel statuslbl;
         private StrategyProvider strategyProvider_0;
-        private string string_0 = (MainModule.Instance.Strategies.RootPath + @"\Strategies\");
+        private string folderPath = (MainModule.Instance.Strategies.RootPath + @"\Strategies\");
         private string string_1 = "";
         private Thread thread_0;
         private TreeView treeDownloadedStrategies;
@@ -358,7 +358,7 @@
             if (MainModule.Instance.Strategies.AddStrategy(strategy_0, string_2, false, ref reason))
             {
                 flag = true;
-                this.bool_0 = true;
+                this.strategiesAdded = true;
                 this.int_0++;
             }
             int num = 0;
@@ -597,12 +597,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_2;
+                return this.cancelDownload;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_2 = value;
+                this.cancelDownload = value;
             }
         }
 
@@ -610,7 +610,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.folderPath;
             }
         }
 
@@ -618,7 +618,7 @@
         {
             get
             {
-                return this.bool_0;
+                return this.strategiesAdded;
             }
         }
 

@@ -29,8 +29,8 @@
         private ColumnHeader columnHeader_4;
         private ColumnHeader columnHeader_5;
         private ColumnHeader columnHeader_6;
-        private double double_0 = 100000.0;
-        private double double_1 = 1.0;
+        private double startingEquity = 100000.0;
+        private double marginFactor = 1.0;
         private GroupBox grpAllocations;
         private GroupBox grpDataSet;
         private GroupBox grpDollars;
@@ -63,7 +63,7 @@
         private RadioButton rbPctEquity;
         private ScaleSelecter scale;
         [CompilerGenerated]
-        private Strategy strategy_0;
+        private Strategy combinationStrategy;
         private TreeView strategyTree;
         private ToolStrip toolStrip1;
         private ToolStrip toolStrip2;
@@ -296,7 +296,7 @@
             MainModule.Instance.HelpProvider.SetHelpNavigator(this, HelpNavigator.Topic);
             MainModule.Instance.HelpProvider.SetHelpKeyword(this, "combination_strategy.htm");
             int[] bits = new int[4];
-            bits[0] = 100 * ((int) this.double_1);
+            bits[0] = 100 * ((int) this.marginFactor);
             this.numPctEquity.Maximum = new decimal(bits);
         }
 
@@ -1210,13 +1210,13 @@
         {
             try
             {
-                this.double_1 = int.Parse(this.txtMargin.Text);
-                if (this.double_1 <= 0.0)
+                this.marginFactor = int.Parse(this.txtMargin.Text);
+                if (this.marginFactor <= 0.0)
                 {
-                    this.double_1 = 1.0;
+                    this.marginFactor = 1.0;
                     this.txtMargin.Text = "1";
                 }
-                this.chartForm_0.Strategy.MarginFactor = this.double_1;
+                this.chartForm_0.Strategy.MarginFactor = this.marginFactor;
                 this.chartForm_0.NeedSave = true;
             }
             catch
@@ -1227,7 +1227,7 @@
                 }
             }
             int[] bits = new int[4];
-            bits[0] = 100 * ((int) this.double_1);
+            bits[0] = 100 * ((int) this.marginFactor);
             this.numPctEquity.Maximum = new decimal(bits);
         }
 
@@ -1235,13 +1235,13 @@
         {
             try
             {
-                this.double_0 = int.Parse(this.txtStartingEquity.Text);
-                if (this.double_0 < 0.0)
+                this.startingEquity = int.Parse(this.txtStartingEquity.Text);
+                if (this.startingEquity < 0.0)
                 {
-                    this.double_0 = 100000.0;
+                    this.startingEquity = 100000.0;
                     this.txtStartingEquity.Text = "100000.00";
                 }
-                this.chartForm_0.Strategy.StartingEquity = this.double_0;
+                this.chartForm_0.Strategy.StartingEquity = this.startingEquity;
                 this.chartForm_0.NeedSave = true;
                 this.lvStrategies_SelectedIndexChanged(this, EventArgs.Empty);
             }
@@ -1264,12 +1264,12 @@
             [CompilerGenerated]
             get
             {
-                return this.strategy_0;
+                return this.combinationStrategy;
             }
             [CompilerGenerated]
             set
             {
-                this.strategy_0 = value;
+                this.combinationStrategy = value;
             }
         }
 
@@ -1277,7 +1277,7 @@
         {
             get
             {
-                return this.double_1;
+                return this.marginFactor;
             }
         }
 
@@ -1298,7 +1298,7 @@
         {
             get
             {
-                return this.double_0;
+                return this.startingEquity;
             }
         }
     }

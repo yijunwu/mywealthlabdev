@@ -6,10 +6,10 @@
     [XmlRoot(ElementName="QuickRefEntry", IsNullable=false)]
     public class QuickRefEntry : IComparable
     {
-        private WealthLabPro.EntryType entryType_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
+        private WealthLabPro.EntryType entryType;
+        private string name;
+        private string description;
+        private string example;
 
         public int CompareTo(object target)
         {
@@ -21,11 +21,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.description;
             }
             set
             {
-                this.string_1 = value;
+                this.description = value;
             }
         }
 
@@ -33,11 +33,11 @@
         {
             get
             {
-                return this.entryType_0;
+                return this.entryType;
             }
             set
             {
-                this.entryType_0 = value;
+                this.entryType = value;
             }
         }
 
@@ -45,11 +45,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.example;
             }
             set
             {
-                this.string_2 = value;
+                this.example = value;
             }
         }
 
@@ -57,11 +57,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.name;
             }
             set
             {
-                this.string_0 = value;
+                this.name = value;
             }
         }
     }

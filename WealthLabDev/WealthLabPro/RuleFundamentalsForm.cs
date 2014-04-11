@@ -12,7 +12,7 @@
         private Button btnOK;
         private IContainer icontainer_0;
         private static string string_0 = "";
-        private string string_1;
+        private string itemName;
         private FundamentalTreeView treeFundamentals;
         private TextBox txtDescription;
 
@@ -24,7 +24,7 @@
         public RuleFundamentalsForm(string itemName)
         {
             this.InitializeComponent();
-            this.string_1 = itemName;
+            this.itemName = itemName;
         }
 
         protected override void Dispose(bool disposing)
@@ -98,7 +98,7 @@
 
         private void method_0(object sender, FundamentalSelectedEventArgs e)
         {
-            this.string_1 = e.ItemName;
+            this.itemName = e.ItemName;
         }
 
         private void RuleFundamentalsForm_Load(object sender, EventArgs e)
@@ -106,7 +106,7 @@
             this.treeFundamentals.DataHost = MainModule.Instance.DataSources;
             this.treeFundamentals.ignoreDragandDrop = true;
             this.treeFundamentals.LoadNodes();
-            this.treeFundamentals.SelectedNode = this.treeFundamentals.FindItem(this.string_1);
+            this.treeFundamentals.SelectedNode = this.treeFundamentals.FindItem(this.itemName);
             if (this.treeFundamentals.SelectedNode == null)
             {
                 this.treeFundamentals.SelectedNode = this.treeFundamentals.FindItem(string_0);
@@ -138,7 +138,7 @@
         {
             get
             {
-                return this.string_1;
+                return this.itemName;
             }
         }
     }

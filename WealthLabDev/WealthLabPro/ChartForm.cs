@@ -26,23 +26,23 @@
         private WealthLab.Bars bars_0;
         private WealthLab.Bars bars_1;
         internal BarsLoader barsLoader_0;
-        private bool bool_0;
-        private bool bool_1;
-        private bool multiSymbol;  ///WYJ fix, original name: bool_10
+        private bool needSave;
+        private bool parametersNeedSave;
+        private bool multiSymbolMode;  ///WYJ fix, original name: bool_10
         private bool cancel;  ///WYJ fix, original name: bool_11
         private bool bool_12;
         private bool bool_13;
-        private bool bool_14;
+        private bool disconnectedWhileStreaming;
         private bool bool_15;
         [CompilerGenerated]
-        private bool bool_16;
+        private bool sliderValueChanging;
         [CompilerGenerated]
-        private bool bool_17;
+        private bool isOptimizing;
         private bool bool_2;
         private bool bool_3;
         private bool bool_4;
         private bool bool_5;
-        private bool bool_6;
+        private bool abortedRequest;
         private bool bool_7;
         private bool bool_8;
         private bool bool_9;
@@ -54,12 +54,12 @@
         private Builder builder_0;
         private Chart chart;
         private ChartDrawingObject chartDrawingObject_0;
-        private ChartRenderer chartRenderer_0;
+        private ChartRenderer chartRenderer;
         private CombinationStrategyBuilder combinationStrategyBuilder_0;
         private WealthLab.DataSource dataSource_0;
         private WealthLab.DataSource dataSource_1;
         [CompilerGenerated]
-        private WealthLab.DataSource dataSource_2;
+        private WealthLab.DataSource csDataSource;
         private Description description_0;
         private DialogResult dialogResult_0;
         private Dictionary<WealthLab.DataSource, WealthLab.BarDataScale> dictionary_0 = new Dictionary<WealthLab.DataSource, WealthLab.BarDataScale>();
@@ -67,7 +67,7 @@
         private DrawingObjectManager drawingObjectManager_0;
         private DrawingObjectManager drawingObjectManager_1;
         private ToolStripMenuItem editBarToolStripMenuItem;
-        private Editor editor_0;
+        private Editor editor;
         private ToolStripMenuItem enableDisableStreamingHiddenMenuItem;
         internal FundamentalsLoader fundamentalsLoader_0;
         private GroupBox grpMultiSymbol;
@@ -81,7 +81,7 @@
         private int int_3 = -1;
         private int int_4 = -1;
         [CompilerGenerated]
-        private int int_5;
+        private int childScrollBar;
         private Label lblProgress;
         private Label lblRunAllStatus;
         private Label lblStatus;
@@ -111,7 +111,7 @@
         private ToolStripMenuItem mniPushCode;
         private ToolStripMenuItem mniReload;
         private ToolStripMenuItem mniStockSplit;
-        private WealthLabPro.Optimization optimization_0;
+        private WealthLabPro.Optimization optimization;
         private TabPage pageChart;  ///WYJ note: the tab page for chart
         private ToolStripMenuItem plotAFundamentalDataItemOnTheChartToolStripMenuItem;
         private Panel pnlMultiSymbol;
@@ -144,11 +144,11 @@
         private ToolStripStatusLabel stlblPerBar;
         private ToolStripStatusLabel stlblProfit;
         private ToolStripStatusLabel stlblVolume;
-        private WealthLab.Strategy strategy_0;
+        private WealthLab.Strategy strategy;
         private StreamingChartManager streamingChartManager_0;
-        private string string_0 = "";
+        private string symbol = "";
         [CompilerGenerated]
-        private string string_1;
+        private string csSymbol;
         private TabControl tabChart;
         private TabPage tabPage_0;
         private Thread thread_0;
@@ -157,7 +157,7 @@
         private TradingSystemExecutor tradingSystemExecutor_0;
         private TradingSystemExecutor tradingSystemExecutor_1;
         private TextBox txtSymbol;
-        private WealthLab.WealthScript wealthScript_0;
+        private WealthLab.WealthScript wealthScript;
 
         public ChartForm()
         {
@@ -166,7 +166,7 @@
             this.InitializeComponent();
             if (Application.ProductName == "WealthLabPro")
             {
-                this.chartRenderer_0.FundamentalGlyphs = "Split;Dividend;";
+                this.chartRenderer.FundamentalGlyphs = "Split;Dividend;";
             }
             this.chart.DataScaleChange += new EventHandler<ScaleChangeEventArgs>(this.scaleChangeEventHandler);
         }
@@ -297,7 +297,7 @@
                 {
                     this.WealthScript.RestoreParameterDefaults();
                 }
-                if (((this.Symbol != null) && (this.Symbol != "")) && !this.multiSymbol)
+                if (((this.Symbol != null) && (this.Symbol != "")) && !this.multiSymbolMode)
                 {
                     this.GoButtonPressed(this.Symbol, true);
                 }
@@ -312,7 +312,7 @@
         private void btnRunAllCancel_Click(object sender, EventArgs e)
         {
             this.cancel = true;
-            this.multiSymbol = false;
+            this.multiSymbolMode = false;
         }
 
         private void btnStreaming_CheckedChanged(object sender, EventArgs e)
@@ -421,9 +421,9 @@
             {
                 this.chart.Focus();
             }
-            else if (((this.tabChart.SelectedTab != null) && (this.tabChart.SelectedTab.Text == "Editor")) && (this.editor_0 != null))
+            else if (((this.tabChart.SelectedTab != null) && (this.tabChart.SelectedTab.Text == "Editor")) && (this.editor != null))
             {
-                this.editor_0.FocusEditor();
+                this.editor.FocusEditor();
             }
             this.MyMainForm.EnableEditAndPrintMenu();
         }
@@ -446,9 +446,9 @@
             {
                 this.streamingChartManager_0.Provider.UnSubscribe(this.Symbol, this.streamingChartManager_0);
             }
-            if (this.optimization_0 != null)
+            if (this.optimization != null)
             {
-                this.optimization_0.Close();
+                this.optimization.Close();
             }
             this.MyMainForm.EnableControls(true);
         }
@@ -500,7 +500,7 @@
             this.barsLoader_0.StartDate = DateTime.MinValue;
             this.barsLoader_0.EndDate = DateTime.MaxValue;
             this.UpdateChartColorsAndStyle(false);
-            this.chart.Renderer = this.chartRenderer_0;
+            this.chart.Renderer = this.chartRenderer;
             this.indicatorDragDropManager_0.Fundamentals = this.fundamentalsLoader_0;
             this.drawingObjectManager_0.RootPath = MainModule.Instance.DataPath;
             this.drawingObjectManager_1.RootPath = MainModule.Instance.DataPath;
@@ -550,17 +550,17 @@
 
         public void CompileSource()
         {
-            if (this.editor_0 != null)
+            if (this.editor != null)
             {
-                this.editor_0.Compile();
+                this.editor.Compile();
             }
         }
 
         public void CompileStrategyCode()
         {
-            if (this.editor_0 != null)
+            if (this.editor != null)
             {
-                this.editor_0.Compile();
+                this.editor.Compile();
             }
         }
 
@@ -570,10 +570,10 @@
 
         public void Connect(bool reconnect)
         {
-            if (reconnect && this.bool_14)
+            if (reconnect && this.disconnectedWhileStreaming)
             {
                 this.IsStreaming = true;
-                this.bool_14 = false;
+                this.disconnectedWhileStreaming = false;
             }
             this.bool_15 = false;
         }
@@ -618,11 +618,11 @@
 
         public void DecreaseBarSpacing()
         {
-            if (this.chartRenderer_0.BarSpacing > 1)
+            if (this.chartRenderer.BarSpacing > 1)
             {
-                this.chartRenderer_0.BarSpacing--;
+                this.chartRenderer.BarSpacing--;
                 this.chart.DoInvalidate();
-                MainModule.Instance.Renderer.BarSpacing = this.chartRenderer_0.BarSpacing;
+                MainModule.Instance.Renderer.BarSpacing = this.chartRenderer.BarSpacing;
             }
         }
 
@@ -630,7 +630,7 @@
         {
             if (!this.bool_15)
             {
-                this.bool_14 = this.IsStreaming;
+                this.disconnectedWhileStreaming = this.IsStreaming;
             }
             this.bool_15 = true;
         }
@@ -671,9 +671,9 @@
                 {
                     this.alerts_0.CopyToClipboard();
                 }
-                if ((this.editor_0 != null) && (this.tabChart.SelectedTab.Text == "Editor"))
+                if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
                 {
-                    this.editor_0.EditCopy();
+                    this.editor.EditCopy();
                 }
                 IPerformanceVisualizer selectedVisualizer = this.SelectedVisualizer;
                 if ((selectedVisualizer != null) && selectedVisualizer.SupportClipboardCopy)
@@ -685,49 +685,49 @@
 
         public void EditCut()
         {
-            if ((this.editor_0 != null) && (this.tabChart.SelectedTab.Text == "Editor"))
+            if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
             {
-                this.editor_0.EditCut();
+                this.editor.EditCut();
             }
         }
 
         public void EditDelete()
         {
-            if ((this.editor_0 != null) && (this.tabChart.SelectedTab.Text == "Editor"))
+            if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
             {
-                this.editor_0.EditDelete();
+                this.editor.EditDelete();
             }
         }
 
         public void EditFind()
         {
-            if ((this.editor_0 != null) && (this.tabChart.SelectedTab.Text == "Editor"))
+            if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
             {
-                this.editor_0.EditFind();
+                this.editor.EditFind();
             }
         }
 
         public void EditFindReplace()
         {
-            if ((this.editor_0 != null) && (this.tabChart.SelectedTab.Text == "Editor"))
+            if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
             {
-                this.editor_0.EditFindReplace();
+                this.editor.EditFindReplace();
             }
         }
 
         public void EditPaste()
         {
-            if ((this.editor_0 != null) && (this.tabChart.SelectedTab.Text == "Editor"))
+            if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
             {
-                this.editor_0.EditPaste();
+                this.editor.EditPaste();
             }
         }
 
         public void EditUndo()
         {
-            if ((this.editor_0 != null) && (this.tabChart.SelectedTab.Text == "Editor"))
+            if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
             {
-                this.editor_0.EditUndo();
+                this.editor.EditUndo();
             }
         }
 
@@ -770,7 +770,7 @@
 
         public void GoButtonPressed(string symbol, bool force)
         {
-            if (!this.multiSymbol || force)
+            if (!this.multiSymbolMode || force)
             {
                 if ((symbol == "") && !this.bool_3)
                 {
@@ -779,7 +779,7 @@
                 else if (symbol != "")
                 {
                     this.Symbol = symbol;
-                    this.multiSymbol = false;
+                    this.multiSymbolMode = false;
                     this.ShowMultiSymbolControls(false);
                     this.runStrategy();
                 }
@@ -788,9 +788,9 @@
 
         public void IncreaseBarSpacing()
         {
-            this.chartRenderer_0.BarSpacing++;
+            this.chartRenderer.BarSpacing++;
             this.chart.DoInvalidate();
-            MainModule.Instance.Renderer.BarSpacing = this.chartRenderer_0.BarSpacing;
+            MainModule.Instance.Renderer.BarSpacing = this.chartRenderer.BarSpacing;
         }
 
         private void InitializeComponent()
@@ -874,7 +874,7 @@
             this.indicatorDragDropManager_0 = new IndicatorDragDropManager(this.components);
             this.drawingObjectManager_0 = new DrawingObjectManager(this.components);
             this.timer_0 = new System.Windows.Forms.Timer(this.components);
-            this.chartRenderer_0 = new ChartRenderer(this.components);
+            this.chartRenderer = new ChartRenderer(this.components);
             this.tradingSystemExecutor_1 = new TradingSystemExecutor(this.components);
             this.barsLoader_0 = new BarsLoader(this.components);
             this.fundamentalsLoader_0 = new FundamentalsLoader(this.components);
@@ -1387,36 +1387,36 @@
             this.drawingObjectManager_0.RootPath = null;
             this.timer_0.Interval = 0x14d;
             this.timer_0.Tick += new EventHandler(this.timer_0_Tick);
-            this.chartRenderer_0.AxisFont = new Font("Tahoma", 7f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.chartRenderer_0.BackgroundColor = Color.White;
-            this.chartRenderer_0.BarSpacing = 6;
-            this.chartRenderer_0.DownBarColor = Color.Red;
-            this.chartRenderer_0.DownBarVolumeColor = Color.Teal;
-            this.chartRenderer_0.Executor = this.tradingSystemExecutor_1;
-            this.chartRenderer_0.FundamentalGlyphs = "";
-            this.chartRenderer_0.Fundamentals = this.fundamentalsLoader_0;
-            this.chartRenderer_0.FundamentalsVisible = true;
-            this.chartRenderer_0.GridlineColor = Color.Gainsboro;
-            this.chartRenderer_0.HorizontalGridines = true;
-            this.chartRenderer_0.IndicatorLabelsVisible = true;
-            this.chartRenderer_0.LogScale = false;
-            this.chartRenderer_0.MarginBottomColor = Color.Navy;
-            this.chartRenderer_0.MarginBottomHeight = 20;
-            this.chartRenderer_0.MarginRightColor = Color.Gainsboro;
-            this.chartRenderer_0.MarginRightWidth = 50;
-            this.chartRenderer_0.PaneSeparatorColor = Color.Black;
-            this.chartRenderer_0.PaneSeparatorVisible = true;
-            this.chartRenderer_0.PlotStops = false;
-            this.chartRenderer_0.RightPaddingBars = 0;
-            this.chartRenderer_0.ScrollOffset = 0;
-            this.chartRenderer_0.TitleFont = new Font("Verdana", 8f);
-            this.chartRenderer_0.TradeAnnotationsVisible = true;
-            this.chartRenderer_0.TradeArrowsVisible = true;
-            this.chartRenderer_0.TradeCirclesVisible = true;
-            this.chartRenderer_0.UpBarColor = Color.Navy;
-            this.chartRenderer_0.UpBarVolumeColor = Color.Teal;
-            this.chartRenderer_0.VerticalGridlines = true;
-            this.chartRenderer_0.VolumePaneVisible = true;
+            this.chartRenderer.AxisFont = new Font("Tahoma", 7f, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.chartRenderer.BackgroundColor = Color.White;
+            this.chartRenderer.BarSpacing = 6;
+            this.chartRenderer.DownBarColor = Color.Red;
+            this.chartRenderer.DownBarVolumeColor = Color.Teal;
+            this.chartRenderer.Executor = this.tradingSystemExecutor_1;
+            this.chartRenderer.FundamentalGlyphs = "";
+            this.chartRenderer.Fundamentals = this.fundamentalsLoader_0;
+            this.chartRenderer.FundamentalsVisible = true;
+            this.chartRenderer.GridlineColor = Color.Gainsboro;
+            this.chartRenderer.HorizontalGridines = true;
+            this.chartRenderer.IndicatorLabelsVisible = true;
+            this.chartRenderer.LogScale = false;
+            this.chartRenderer.MarginBottomColor = Color.Navy;
+            this.chartRenderer.MarginBottomHeight = 20;
+            this.chartRenderer.MarginRightColor = Color.Gainsboro;
+            this.chartRenderer.MarginRightWidth = 50;
+            this.chartRenderer.PaneSeparatorColor = Color.Black;
+            this.chartRenderer.PaneSeparatorVisible = true;
+            this.chartRenderer.PlotStops = false;
+            this.chartRenderer.RightPaddingBars = 0;
+            this.chartRenderer.ScrollOffset = 0;
+            this.chartRenderer.TitleFont = new Font("Verdana", 8f);
+            this.chartRenderer.TradeAnnotationsVisible = true;
+            this.chartRenderer.TradeArrowsVisible = true;
+            this.chartRenderer.TradeCirclesVisible = true;
+            this.chartRenderer.UpBarColor = Color.Navy;
+            this.chartRenderer.UpBarVolumeColor = Color.Teal;
+            this.chartRenderer.VerticalGridlines = true;
+            this.chartRenderer.VolumePaneVisible = true;
             this.tradingSystemExecutor_1.ApplyCommission = false;
             this.tradingSystemExecutor_1.ApplyDividends = false;
             this.tradingSystemExecutor_1.ApplyInterest = false;
@@ -1450,7 +1450,7 @@
             this.tradingSystemExecutor_1.PricingDecimalPlaces = 0;
             this.tradingSystemExecutor_1.RedcuceQtyPct = 10.0;
             this.tradingSystemExecutor_1.ReduceQtyBasedOnVolume = false;
-            this.tradingSystemExecutor_1.Renderer = this.chartRenderer_0;
+            this.tradingSystemExecutor_1.Renderer = this.chartRenderer;
             this.tradingSystemExecutor_1.RoundLots = false;
             this.tradingSystemExecutor_1.RoundLots50 = false;
             this.tradingSystemExecutor_1.SlippageTicks = 1;
@@ -1514,7 +1514,7 @@
             this.tradingSystemExecutor_0.PricingDecimalPlaces = 0;
             this.tradingSystemExecutor_0.RedcuceQtyPct = 10.0;
             this.tradingSystemExecutor_0.ReduceQtyBasedOnVolume = false;
-            this.tradingSystemExecutor_0.Renderer = this.chartRenderer_0;
+            this.tradingSystemExecutor_0.Renderer = this.chartRenderer;
             this.tradingSystemExecutor_0.RoundLots = false;
             this.tradingSystemExecutor_0.RoundLots50 = false;
             this.tradingSystemExecutor_0.SlippageTicks = 1;
@@ -1602,8 +1602,8 @@
             this.PositionSize = WealthLab.PositionSize.Parse(items[4]);
             this.tradingSystemExecutor_1.PosSize = this.PositionSize;
             this.StatusPanelsVisible = bool.Parse(items[5]);
-            this.chartRenderer_0.IndicatorLabelsVisible = bool.Parse(items[6]);
-            this.chartRenderer_0.FundamentalsVisible = bool.Parse(items[7]);
+            this.chartRenderer.IndicatorLabelsVisible = bool.Parse(items[6]);
+            this.chartRenderer.FundamentalsVisible = bool.Parse(items[7]);
             this.btnLink.Checked = bool.Parse(items[8]);
             this.btnStreaming.Checked = bool.Parse(items[9]);
             if (items[5] != "")
@@ -1612,7 +1612,7 @@
             }
             if (version >= 2)
             {
-                this.chartRenderer_0.LogScale = bool.Parse(items[11]);
+                this.chartRenderer.LogScale = bool.Parse(items[11]);
             }
             if ((version >= 3) && (flag2 = bool.Parse(items[12])))
             {
@@ -1676,7 +1676,7 @@
             }
             if ((version >= 6) && (num < items.Count))
             {
-                this.chartRenderer_0.RestoreResizedPanes(items[num++]);
+                this.chartRenderer.RestoreResizedPanes(items[num++]);
             }
             if (((version >= 7) && (num < items.Count)) && (flag = bool.Parse(items[num++])))
             {
@@ -1688,7 +1688,7 @@
             }
             if ((version >= 8) && (num < items.Count))
             {
-                this.chartRenderer_0.RestoreHiddenPaneOrigHeights(items[num++]);
+                this.chartRenderer.RestoreHiddenPaneOrigHeights(items[num++]);
             }
         }
 
@@ -1808,9 +1808,9 @@
             {
                 this.MyMainForm.EnableControls(bool_18);
             }
-            if (this.editor_0 != null)
+            if (this.editor != null)
             {
-                this.editor_0.EnableControls(bool_18);
+                this.editor.EnableControls(bool_18);
             }
             if (bool_18)
             {
@@ -1823,9 +1823,9 @@
                 this.chart.Mode = ChartMode.Wait;
             }
             this.posSize.Enabled = bool_18;
-            if (this.editor_0 != null)
+            if (this.editor != null)
             {
-                this.editor_0.EnableControls(bool_18);
+                this.editor.EnableControls(bool_18);
             }
             foreach (TabPage page in this.tabChart.TabPages)
             {
@@ -1882,7 +1882,7 @@
             
             this.CSDataSource = this.DataSource;
             this.CSSymbol = this.Symbol;
-            this.chartRenderer_0.PaneSeparatorVisible = MainModule.Instance.Renderer.PaneSeparatorVisible;
+            this.chartRenderer.PaneSeparatorVisible = MainModule.Instance.Renderer.PaneSeparatorVisible;
             try
             {
                 this.bool_4 = false;
@@ -1899,9 +1899,9 @@
                     tradingSystemExecutor_2.Execute(this.Strategy, this.WealthScript, bars_2);
                 }
                 TimeSpan span = (TimeSpan) (DateTime.Now - now);
-                if (this.editor_0 != null)
+                if (this.editor != null)
                 {
-                    this.editor_0.ExecutionTime = span;
+                    this.editor.ExecutionTime = span;
                 }
             }
             catch (ThreadAbortException exception)
@@ -1969,7 +1969,7 @@
             {
                 str = "Chart";
             }
-            if (this.multiSymbol)
+            if (this.multiSymbolMode)
             {
                 object obj2 = str;
                 str = string.Concat(new object[] { obj2, " - ", this.DataSource.Name, " (", this.DataSource.Symbols.Count, " Symbols) " }) + this.barsLoader_0.BarDataScale.ToString();
@@ -1985,7 +1985,7 @@
         ///WYJ fix, original signature: private void method_16()
         private void runStrategy()
         {
-            this.bool_6 = false;
+            this.abortedRequest = false;
             if (!this.IsBusy && ((this.builder_0 == null) || this.builder_0.CompileIfNeeded()))
             {
                 this.mniAddSymbolToDataSet.Enabled = false;
@@ -2007,7 +2007,7 @@
                 {
                     this.dataSource_0 = this.DataSource;
                     this.list_0.Clear();
-                    if (this.multiSymbol && !this.bool_3)
+                    if (this.multiSymbolMode && !this.bool_3)
                     {
                         this.dataSource_1 = this.DataSource;
                         if (this.DataSource.Symbols.Count == 0)
@@ -2040,11 +2040,11 @@
                         this.tradingSystemExecutor_1.PosSize.MarginFactor = this.combinationStrategyBuilder_0.MarginFactor;
                     }
                     this.method_19().ConfigureBarsLoader(this.barsLoader_0);
-                    this.chartRenderer_0.UpBarColor = MainModule.Instance.Renderer.UpBarColor;
-                    this.chartRenderer_0.DownBarColor = MainModule.Instance.Renderer.DownBarColor;
-                    if (this.editor_0 != null)
+                    this.chartRenderer.UpBarColor = MainModule.Instance.Renderer.UpBarColor;
+                    this.chartRenderer.DownBarColor = MainModule.Instance.Renderer.DownBarColor;
+                    if (this.editor != null)
                     {
-                        this.editor_0.ClearErrors();
+                        this.editor.ClearErrors();
                     }
                     if ((this.thread_0 != null) && this.thread_0.IsAlive)
                     {
@@ -2099,7 +2099,7 @@
                         this.BarDataScale = new WealthLab.BarDataScale(this.Bars.Scale, this.Bars.BarInterval);
                         this.Symbol = this.Bars.Symbol;
                     }
-                    this.bool_6 = true;
+                    this.abortedRequest = true;
                     this.MyMainForm.ActivateMdiChild();
                     return true;
                 }
@@ -2120,7 +2120,7 @@
 
         private void method_2()
         {
-            this.statusOptimize.Visible = ((!this.IsStreaming && (this.optimization_0 == null)) && (this.Strategy != null)) && (this.Strategy.StrategyType != StrategyType.CombinedStrategy);
+            this.statusOptimize.Visible = ((!this.IsStreaming && (this.optimization == null)) && (this.Strategy != null)) && (this.Strategy.StrategyType != StrategyType.CombinedStrategy);
         }
 
         private void method_20()
@@ -2146,7 +2146,7 @@
                     this.list_0.Add(this.bars_1);
                     this.method_23();
                 }
-                else if (this.multiSymbol)
+                else if (this.multiSymbolMode)
                 {
                     foreach (string str in this.dataSource_0.Symbols)
                     {
@@ -2174,7 +2174,7 @@
                 {
                     if (!this.bool_9)
                     {
-                        this.executeStrategy(this.tradingSystemExecutor_1, this.bars_0, this.multiSymbol);
+                        this.executeStrategy(this.tradingSystemExecutor_1, this.bars_0, this.multiSymbolMode);
                     }
                     else
                     {
@@ -2210,7 +2210,7 @@
             bool flag1;
             bool flag2;
             this.btnRunAllCancel.Enabled = false;
-            if (!this.multiSymbol)
+            if (!this.multiSymbolMode)
             {
                 this.lblRunAllStatus.Text = "";
             }
@@ -2229,16 +2229,16 @@
                 this.indicatorDragDropManager_0.CreateDragDropIndicators();
                 this.drawingObjectManager_0.LoadDrawingObjects(this.chart.Bars);
             }
-            if (this.chartRenderer_0.PricePane != null && this.chartRenderer_0.PricePane.LogScale != this.chartRenderer_0.LogScale)
+            if (this.chartRenderer.PricePane != null && this.chartRenderer.PricePane.LogScale != this.chartRenderer.LogScale)
             {
-                this.chartRenderer_0.LogScale = this.chartRenderer_0.PricePane.LogScale;
-                this.MyMainForm.SetLogScaleButtonState(this.chartRenderer_0.LogScale);
+                this.chartRenderer.LogScale = this.chartRenderer.PricePane.LogScale;
+                this.MyMainForm.SetLogScaleButtonState(this.chartRenderer.LogScale);
             }
-            this.chart.MultiSymbolMode = this.multiSymbol;
+            this.chart.MultiSymbolMode = this.multiSymbolMode;
             this.chart.DoInvalidate();
-            if (this.editor_0 != null)
+            if (this.editor != null)
             {
-                this.editor_0.UpdateExecutionTime();
+                this.editor.UpdateExecutionTime();
             }
             this.method_39();
             if (this.tradingSystemExecutor_1.RiskStopLevelNotSet && this.Strategy != null)
@@ -2283,7 +2283,7 @@
                 {
                     UserControl item = list1.Controls[0] as UserControl;
                     IPerformanceVisualizer performanceVisualizer = item as IPerformanceVisualizer;
-                    flag = (!this.multiSymbol ? (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) > 0 : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) > 0);
+                    flag = (!this.multiSymbolMode ? (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) > 0 : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) > 0);
                     if (!this.posSize.PositionSize.RawProfitMode)
                     {
                         flag1 = (!flag ? false : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) > 0);
@@ -2327,7 +2327,7 @@
                 num = (this.Strategy == null || this.Strategy.StrategyType != StrategyType.Compiled ? 4 : 3);
                 bool flag3 = false;
                 int num2 = 0;
-                if (this.optimization_0 != null)
+                if (this.optimization != null)
                 {
                     num2 = 1;
                     IEnumerator enumerator = this.tabChart.TabPages.GetEnumerator();
@@ -2402,11 +2402,11 @@
                     {
                         this.tabChart.TabPages.Add(list2);
                     }
-                    if (this.optimization_0 != null)
+                    if (this.optimization != null)
                     {
                         this.tabChart.TabPages.Add("Optimization");
                         TabPage tabPage = this.tabChart.TabPages[this.tabChart.TabPages.Count - 1];
-                        tabPage.Controls.Add(this.optimization_0);
+                        tabPage.Controls.Add(this.optimization);
                     }
                     if (selectedTab == null || !this.tabChart.TabPages.Contains(selectedTab))
                     {
@@ -2578,11 +2578,11 @@
                 this.alerts_0.UpdateStatus();
             }
             this.method_12(true);
-            if (this.multiSymbol && this.tabChart.SelectedIndex == 0)
+            if (this.multiSymbolMode && this.tabChart.SelectedIndex == 0)
             {
                 this.SelectTab("Performance");
             }
-            if (this.bool_12 && this.multiSymbol && DebugForm.Instance != null)
+            if (this.bool_12 && this.multiSymbolMode && DebugForm.Instance != null)
             {
                 DebugForm.Instance.BringToFront();
             }
@@ -2617,10 +2617,10 @@
             if (exception_0 != null)
             {
                 this.btnRunAllCancel.Enabled = false;
-                if (this.editor_0 != null)
+                if (this.editor != null)
                 {
                     this.SelectTab("Editor");
-                    this.editor_0.DisplayRuntimeError(exception_0);
+                    this.editor.DisplayRuntimeError(exception_0);
                 }
                 else if ((this.Strategy != null) && (this.Strategy.StrategyType == StrategyType.CombinedStrategy))
                 {
@@ -2642,10 +2642,10 @@
             if (this.tabChart.SelectedTab != null)
             {
                 this.tabChart.SelectedTab.Cursor = Cursors.Default;
-                if ((this.tabChart.SelectedTab.Text == "Editor") && (this.editor_0 != null))
+                if ((this.tabChart.SelectedTab.Text == "Editor") && (this.editor != null))
                 {
-                    this.editor_0.FocusEditor();
-                    this.editor_0.Cursor = Cursors.Default;
+                    this.editor.FocusEditor();
+                    this.editor.Cursor = Cursors.Default;
                 }
             }
             foreach (TabPage page in this.tabChart.TabPages)
@@ -2681,7 +2681,7 @@
             if (progressValue == -100)
             {
                 Exception exception = (Exception) object_0;
-                if (this.multiSymbol)
+                if (this.multiSymbolMode)
                 {
                     if (DebugForm.Instance == null)
                     {
@@ -2692,16 +2692,16 @@
                     this.bool_12 = true;
                     this.thread_0 = null;
                 }
-                else if (this.editor_0 != null)
+                else if (this.editor != null)
                 {
                     if (exception.Message.ToUpper().Contains("ABORTED") && this.IsStreaming)
                     {
-                        this.editor_0.DisplayRuntimeError(exception);
+                        this.editor.DisplayRuntimeError(exception);
                     }
                     else
                     {
                         this.SelectTab("Editor");
-                        this.editor_0.DisplayRuntimeError(exception);
+                        this.editor.DisplayRuntimeError(exception);
                     }
                     this.thread_0 = null;
                 }
@@ -2766,7 +2766,7 @@
 
         private void method_30(object sender, BarsEventArgs e)
         {
-            if (this.multiSymbol && (e.Bars.Symbol == this.DataSource.Symbols[this.DataSource.Symbols.Count - 1]))
+            if (this.multiSymbolMode && (e.Bars.Symbol == this.DataSource.Symbols[this.DataSource.Symbols.Count - 1]))
             {
                 this.method_23();
             }
@@ -2848,9 +2848,9 @@
 
         private void method_38(object sender, ChartBitmapEventArgs e)
         {
-            this.chartRenderer_0.Executing = false;
+            this.chartRenderer.Executing = false;
             e.Bitmap = this.chart.GetChartBitmap(e.Width, e.Height);
-            this.chartRenderer_0.Executing = true;
+            this.chartRenderer.Executing = true;
         }
 
         private void method_39()
@@ -2858,7 +2858,7 @@
             if (this.description_0 != null)
             {
                 string symbol = this.Symbol;
-                if (this.multiSymbol)
+                if (this.multiSymbolMode)
                 {
                     symbol = "";
                 }
@@ -2889,16 +2889,16 @@
             if (this.tabChart.SelectedTab != null)
             {
                 this.tabChart.SelectedTab.Cursor = Cursors.WaitCursor;
-                if ((this.tabChart.SelectedTab.Text == "Editor") && (this.editor_0 != null))
+                if ((this.tabChart.SelectedTab.Text == "Editor") && (this.editor != null))
                 {
-                    this.editor_0.Cursor = Cursors.WaitCursor;
+                    this.editor.Cursor = Cursors.WaitCursor;
                 }
             }
             if (this.Bars != null)
             {
                 this.Bars.Cache.Clear();
             }
-            this.chartRenderer_0.ClearBarsObject();
+            this.chartRenderer.ClearBarsObject();
             this.GoButtonPressed(this.Symbol, false);
             if (((this.tradingSystemExecutor_1.Performance.Results.Alerts.Count == 0) || !MainModule.Instance.Settings.Get("SoundsStrategyWindow", false)) && MainModule.Instance.Settings.Get("SoundsRealTime", true))
             {
@@ -2977,7 +2977,7 @@
                         if (current is CDOTrendline)
                         {
                             CDOTrendline trendline = current as CDOTrendline;
-                            trendline.Renderer = this.chartRenderer_0;
+                            trendline.Renderer = this.chartRenderer;
                             e.Value = this.tradingSystemExecutor_1.WealthScriptExecuting.LineExtendY((double)trendline.LeftHandle.Bar, trendline.LeftHandle.Value, (double)trendline.RightHandle.Bar, trendline.RightHandle.Value, (double)e.Bar);
                         }
                         return;
@@ -2990,7 +2990,7 @@
         ///WYJ fix, original signature: private void method_47()
         private void savePanelSize()
         {
-            this.Strategy.PanelSize = this.chartRenderer_0.SavePaneSizes();
+            this.Strategy.PanelSize = this.chartRenderer.SavePaneSizes();
         }
 
         private void method_48()
@@ -3448,7 +3448,7 @@
                 }
                 if (this.Strategy != null)
                 {
-                    if (this.editor_0 == null)
+                    if (this.editor == null)
                     {
                         if (this.builder_0 != null)
                         {
@@ -3476,15 +3476,15 @@
                     Strategy strategyTemplateCode = new Strategy();
                     strategyTemplateCode.StrategyType = StrategyType.Script;
                     strategyTemplateCode.Code = MainModule.Instance.StrategyTemplateCode;
-                    this.strategy_0 = strategyTemplateCode;
+                    this.strategy = strategyTemplateCode;
                     this.method_48();
                     this.Strategy = strategyTemplateCode;
                 }
-                string str = this.indicatorDragDropManager_0.PushIndicatorsCode(this.editor_0.Code);
-                if (string.Compare(str, this.editor_0.Code) != 0)
+                string str = this.indicatorDragDropManager_0.PushIndicatorsCode(this.editor.Code);
+                if (string.Compare(str, this.editor.Code) != 0)
                 {
                     this.indicatorDragDropManager_0.Clear();
-                    this.editor_0.Code = str;
+                    this.editor.Code = str;
                     this.CompileSource();
                     this.GoButtonPressed(this.Symbol, true);
                     this.SelectTab("Editor");
@@ -4027,9 +4027,9 @@
 
         internal void method_68()
         {
-            if (this.editor_0 != null)
+            if (this.editor != null)
             {
-                this.editor_0.method_1(this.WealthScript);
+                this.editor.method_1(this.WealthScript);
             }
         }
 
@@ -4065,7 +4065,7 @@
 
         internal void method_71(DraggedFundamentalItem draggedFundamentalItem_0)
         {
-            if ((this.Bars != null) && (this.chartRenderer_0.PricePane != null))
+            if ((this.Bars != null) && (this.chartRenderer.PricePane != null))
             {
                 this.indicatorDragDropManager_0.ProcessDroppedFundamentalItem(draggedFundamentalItem_0);
                 this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
@@ -4289,7 +4289,7 @@
                 {
                     chartStyle.ChangeSettings(settingsUI);
                     chartStyle.WriteSettings(MainModule.Instance.Settings);
-                    this.chartRenderer_0.BarSpacing = this.chartRenderer_0.BarSpacing;
+                    this.chartRenderer.BarSpacing = this.chartRenderer.BarSpacing;
                     this.ChartStyle.Initialize();
                     this.chart.DoInvalidate();
                 }
@@ -4312,7 +4312,7 @@
                     str = str + "Time\t";
                 }
                 str = str + "Open\tHigh\tLow\tClose\tVolume\t";
-                foreach (ChartPane pane2 in this.chartRenderer_0.Panes)
+                foreach (ChartPane pane2 in this.chartRenderer.Panes)
                 {
                     foreach (PlottedIndicator indicator2 in pane2.PlottedIndicators)
                     {
@@ -4331,7 +4331,7 @@
                         str2 = str2 + this.Bars.Date[i].ToShortTimeString() + "\t";
                     }
                     str2 = ((((str2 + this.Bars.Open[i] + "\t") + this.Bars.High[i] + "\t") + this.Bars.Low[i] + "\t") + this.Bars.Close[i] + "\t") + this.Bars.Volume[i] + "\t";
-                    foreach (ChartPane pane in this.chartRenderer_0.Panes)
+                    foreach (ChartPane pane in this.chartRenderer.Panes)
                     {
                         foreach (PlottedIndicator indicator in pane.PlottedIndicators)
                         {
@@ -4473,9 +4473,9 @@
 
         public void PlotIndicator(IndicatorHelper helper)
         {
-            if ((this.Bars != null) && (this.chartRenderer_0.PricePane != null))
+            if ((this.Bars != null) && (this.chartRenderer.PricePane != null))
             {
-                this.indicatorDragDropManager_0.ProcessDroppedIndicatorHelper(helper, this.chartRenderer_0.PricePane);
+                this.indicatorDragDropManager_0.ProcessDroppedIndicatorHelper(helper, this.chartRenderer.PricePane);
                 this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
                 this.NeedSave = true;
             }
@@ -4498,7 +4498,7 @@
         {
             if (this.DataSource != null)
             {
-                if (this.multiSymbol)
+                if (this.multiSymbolMode)
                 {
                     if (this.list_0 != null)
                     {
@@ -4530,7 +4530,7 @@
         public void PreferredValuesChanged()
         {
             this.SaveStrategy();
-            if ((this.btnPV.Checked && !this.multiSymbol) && ((this.Symbol != null) && (this.Symbol != "")))
+            if ((this.btnPV.Checked && !this.multiSymbolMode) && ((this.Symbol != null) && (this.Symbol != "")))
             {
                 this.GoButtonPressed(this.Symbol, true);
             }
@@ -4601,7 +4601,7 @@
                             this.alerts_0.Print();
                         }
                     }
-                    else if (this.strategy_0 != null)
+                    else if (this.strategy != null)
                     {
                         UserControl control = page.Controls[0] as UserControl;
                         if (control is IPerformanceVisualizer)
@@ -4624,9 +4624,9 @@
 
         public void RefreshOptimizerViews()
         {
-            if (this.optimization_0 != null)
+            if (this.optimization != null)
             {
-                this.optimization_0.RefreshViews();
+                this.optimization.RefreshViews();
             }
         }
 
@@ -4671,9 +4671,9 @@
 
         public void ReloadOptimizationParameters()
         {
-            if (this.optimization_0 != null)
+            if (this.optimization != null)
             {
-                this.optimization_0.LoadParameterList();
+                this.optimization.LoadParameterList();
             }
         }
 
@@ -4707,9 +4707,9 @@
 
         public void RestoreBarSpacing()
         {
-            this.chartRenderer_0.BarSpacing = 6;
+            this.chartRenderer.BarSpacing = 6;
             this.chart.DoInvalidate();
-            MainModule.Instance.Renderer.BarSpacing = this.chartRenderer_0.BarSpacing;
+            MainModule.Instance.Renderer.BarSpacing = this.chartRenderer.BarSpacing;
         }
 
         public void RunOnAllSymbols()
@@ -4734,7 +4734,7 @@
                     }
                 }
                 this.BarDataScale = this.MyMainForm.BarDataScale;
-                this.multiSymbol = true;
+                this.multiSymbolMode = true;
                 this.bool_12 = false;
                 this.cancel = false;
                 this.progRunAll.Enabled = true;
@@ -4751,11 +4751,11 @@
                 {
                     return this.SaveStrategyAs();
                 }
-                if (((this.editor_0 != null) || (this.builder_0 != null)) || (this.combinationStrategyBuilder_0 != null))
+                if (((this.editor != null) || (this.builder_0 != null)) || (this.combinationStrategyBuilder_0 != null))
                 {
-                    if (this.editor_0 != null)
+                    if (this.editor != null)
                     {
-                        this.Strategy.Code = this.editor_0.Code;
+                        this.Strategy.Code = this.editor.Code;
                     }
                     if (this.builder_0 != null)
                     {
@@ -4808,24 +4808,24 @@
                         strategy3.LoadPreferredValues(this.Symbol, this.WealthScript);
                         MainModule.Instance.Strategies.Strategies.Add(strategy3);
                     }
-                    this.strategy_0 = item;
+                    this.strategy = item;
                     this.method_48();
                     this.savePanelSize();
                     this.Strategy = item;
                     flag = true;
                 }
                 WealthLab.Strategy strategy = new WealthLab.Strategy {
-                    StrategyType = this.strategy_0.StrategyType,
-                    CombinedStrategyChildren = this.strategy_0.CombinedStrategyChildren,
+                    StrategyType = this.strategy.StrategyType,
+                    CombinedStrategyChildren = this.strategy.CombinedStrategyChildren,
                     Name = form.StrategyName
                 };
-                if (this.editor_0 != null)
+                if (this.editor != null)
                 {
-                    strategy.Code = this.editor_0.Code;
+                    strategy.Code = this.editor.Code;
                 }
                 else
                 {
-                    strategy.Code = this.strategy_0.Code;
+                    strategy.Code = this.strategy.Code;
                 }
                 if (this.builder_0 != null)
                 {
@@ -4858,16 +4858,16 @@
                 strategy.SinglePosition = this.Strategy.SinglePosition;
                 this.method_4();
                 this.method_2();
-                this.strategy_0 = strategy;
-                this.description_0.Strategy = this.strategy_0;
+                this.strategy = strategy;
+                this.description_0.Strategy = this.strategy;
                 MainModule.Instance.AddStrategyToMRU(this.Strategy);
                 this.RememberStrategySettings();
                 this.method_48();
                 this.savePanelSize();
-                MainModule.Instance.Strategies.SaveStrategy(this.strategy_0, form.FolderName, form.NetworkPath);
+                MainModule.Instance.Strategies.SaveStrategy(this.strategy, form.FolderName, form.NetworkPath);
                 if (this.ParametersNeedSave && MainModule.Instance.Settings.Get("RememberParameterSliders", false))
                 {
-                    MainModule.Instance.Strategies.SaveParameterValues(this.strategy_0, this.WealthScript);
+                    MainModule.Instance.Strategies.SaveParameterValues(this.strategy, this.WealthScript);
                     this.ParametersNeedSave = false;
                 }
                 this.NeedSave = false;
@@ -4897,8 +4897,8 @@
             items.Add(this.DataRange.ToString());
             items.Add(this.PositionSize.ToString());
             items.Add(this.StatusPanelsVisible.ToString());
-            items.Add(this.chartRenderer_0.IndicatorLabelsVisible.ToString());
-            items.Add(this.chartRenderer_0.FundamentalsVisible.ToString());
+            items.Add(this.chartRenderer.IndicatorLabelsVisible.ToString());
+            items.Add(this.chartRenderer.FundamentalsVisible.ToString());
             items.Add(this.btnLink.Checked.ToString());
             items.Add(this.btnStreaming.Checked.ToString());
             if (this.Strategy == null)
@@ -4909,7 +4909,7 @@
             {
                 items.Add(this.Strategy.ID.ToString());
             }
-            items.Add(this.chartRenderer_0.LogScale.ToString());
+            items.Add(this.chartRenderer.LogScale.ToString());
             items.Add(this.AutoStage.ToString());
             items.Add(this.list_2.Count.ToString());
             foreach (TabPage page in this.list_2)
@@ -4927,17 +4927,17 @@
             }
             this.method_49(out str);
             items.Add(str);
-            items.Add(this.chartRenderer_0.SavePaneSizes());
+            items.Add(this.chartRenderer.SavePaneSizes());
             items.Add(this.EmailAlerts.ToString());
-            items.Add(this.chartRenderer_0.SaveHiddenPaneOrigHeights());
+            items.Add(this.chartRenderer.SaveHiddenPaneOrigHeights());
             return 8;
         }
 
         public void SelectAll()
         {
-            if ((this.editor_0 != null) && (this.tabChart.SelectedTab.Text == "Editor"))
+            if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
             {
-                this.editor_0.SelectAll();
+                this.editor.SelectAll();
             }
         }
 
@@ -5175,10 +5175,10 @@
             bool flag2;
             if ((flag2 = (this.Strategy != null) && (this.Strategy.StrategyType == StrategyType.CombinedStrategy)) || (this.WealthScript != null))
             {
-                bool flag = (show || this.multiSymbol) ? (this.WealthScript != null) : false;
+                bool flag = (show || this.multiSymbolMode) ? (this.WealthScript != null) : false;
                 if (flag2)
                 {
-                    flag = show || this.multiSymbol;
+                    flag = show || this.multiSymbolMode;
                 }
                 this.pnlMultiSymbol.Visible = show;
                 if (show)
@@ -5232,12 +5232,12 @@
 
         private void statusOptimize_Click(object sender, EventArgs e)
         {
-            this.optimization_0 = new WealthLabPro.Optimization();
-            this.optimization_0.Dock = DockStyle.Fill;
+            this.optimization = new WealthLabPro.Optimization();
+            this.optimization.Dock = DockStyle.Fill;
             this.tabChart.TabPages.Add("Optimization");
             TabPage page = this.tabChart.TabPages[this.tabChart.TabPages.Count - 1];
-            page.Controls.Add(this.optimization_0);
-            this.optimization_0.Initialize(this);
+            page.Controls.Add(this.optimization);
+            this.optimization.Initialize(this);
             this.statusOptimize.Visible = false;
             this.tabChart.SelectedTab = page;
             if (base.Height < 510)
@@ -5262,11 +5262,11 @@
             this.Symbol = symbol;
             if (this.dataSource_1 != this.DataSource)
             {
-                this.multiSymbol = false;
+                this.multiSymbolMode = false;
                 this.ShowMultiSymbolControls(false);
             }
-            this.chart.MultiSymbolMode = this.multiSymbol;
-            if (this.multiSymbol)
+            this.chart.MultiSymbolMode = this.multiSymbolMode;
+            if (this.multiSymbolMode)
             {
                 using (List<WealthLab.Bars>.Enumerator enumerator = this.list_0.GetEnumerator())
                 {
@@ -5280,7 +5280,7 @@
                             this.Bars = current;
                             if (this.WealthScript != null)
                             {
-                                this.WealthScript.Renderer = this.chartRenderer_0;
+                                this.WealthScript.Renderer = this.chartRenderer;
                             }
                             this.executeStrategy(this.tradingSystemExecutor_0, current, false);
                             this.tradingSystemExecutor_0.Clear();
@@ -5295,7 +5295,7 @@
             }
             if ((this.Strategy == null) || (this.Strategy.StrategyType != StrategyType.CombinedStrategy))
             {
-                this.multiSymbol = false;
+                this.multiSymbolMode = false;
                 this.ShowMultiSymbolControls(false);
                 this.runStrategy();
             }
@@ -5328,7 +5328,7 @@
 
         public void UpdateChartColorsAndStyle(bool refresh)
         {
-            this.chartRenderer_0.AssignProperties(MainModule.Instance.Renderer);
+            this.chartRenderer.AssignProperties(MainModule.Instance.Renderer);
             SettingsManager settings = MainModule.Instance.Settings;
             this.chart.PriceTooltipVisible = settings.Get("PriceTooltip", true);
             this.chart.IndicatorTooltipVisible = settings.Get("IndicatorTooltip", true);
@@ -5343,7 +5343,7 @@
         {
             get
             {
-                return this.bool_6;
+                return this.abortedRequest;
             }
         }
 
@@ -5468,12 +5468,12 @@
             [CompilerGenerated]
             get
             {
-                return this.int_5;
+                return this.childScrollBar;
             }
             [CompilerGenerated]
             set
             {
-                this.int_5 = value;
+                this.childScrollBar = value;
             }
         }
 
@@ -5482,12 +5482,12 @@
             [CompilerGenerated]
             get
             {
-                return this.dataSource_2;
+                return this.csDataSource;
             }
             [CompilerGenerated]
             set
             {
-                this.dataSource_2 = value;
+                this.csDataSource = value;
             }
         }
 
@@ -5496,12 +5496,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_1;
+                return this.csSymbol;
             }
             [CompilerGenerated]
             set
             {
-                this.string_1 = value;
+                this.csSymbol = value;
             }
         }
 
@@ -5554,7 +5554,7 @@
         {
             get
             {
-                return this.bool_14;
+                return this.disconnectedWhileStreaming;
             }
         }
 
@@ -5562,17 +5562,17 @@
         {
             get
             {
-                if (this.editor_0 != null)
+                if (this.editor != null)
                 {
-                    return this.editor_0.Code;
+                    return this.editor.Code;
                 }
                 return "";
             }
             set
             {
-                if (this.editor_0 != null)
+                if (this.editor != null)
                 {
-                    this.editor_0.Code = value;
+                    this.editor.Code = value;
                 }
             }
         }
@@ -5600,7 +5600,7 @@
         {
             get
             {
-                return (this.editor_0 != null);
+                return (this.editor != null);
             }
         }
 
@@ -5617,12 +5617,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_17;
+                return this.isOptimizing;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_17 = value;
+                this.isOptimizing = value;
             }
         }
 
@@ -5653,7 +5653,7 @@
         {
             get
             {
-                return this.multiSymbol;
+                return this.multiSymbolMode;
             }
         }
 
@@ -5669,22 +5669,22 @@
         {
             get
             {
-                return this.bool_0;
+                return this.needSave;
             }
             set
             {
-                if (this.bool_0 != value)
+                if (this.needSave != value)
                 {
-                    this.bool_0 = value;
-                    if (this.bool_0)
+                    this.needSave = value;
+                    if (this.needSave)
                     {
-                        this.bool_1 = false;
+                        this.parametersNeedSave = false;
                     }
                     this.method_15();
-                    this.btnPV.Visible = ((this.strategy_0 != null) && (this.strategy_0.PreferredValues != null)) && (this.strategy_0.PreferredValues != "");
-                    if (!value && (this.optimization_0 != null))
+                    this.btnPV.Visible = ((this.strategy != null) && (this.strategy.PreferredValues != null)) && (this.strategy.PreferredValues != "");
+                    if (!value && (this.optimization != null))
                     {
-                        this.optimization_0.DisableRollback();
+                        this.optimization.DisableRollback();
                     }
                 }
             }
@@ -5694,7 +5694,7 @@
         {
             get
             {
-                return this.optimization_0;
+                return this.optimization;
             }
         }
 
@@ -5702,11 +5702,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.parametersNeedSave;
             }
             set
             {
-                this.bool_1 = value;
+                this.parametersNeedSave = value;
             }
         }
 
@@ -5728,7 +5728,7 @@
         {
             get
             {
-                return this.chartRenderer_0;
+                return this.chartRenderer;
             }
         }
 
@@ -5750,12 +5750,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_16;
+                return this.sliderValueChanging;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_16 = value;
+                this.sliderValueChanging = value;
             }
         }
 
@@ -5784,19 +5784,19 @@
         {
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             set
             {
-                this.strategy_0 = value;
-                if (this.strategy_0 == null)
+                this.strategy = value;
+                if (this.strategy == null)
                 {
                     this.btnPV.Visible = false;
                     this.btnPV.Checked = false;
                 }
                 else
                 {
-                    this.btnPV.Visible = (this.strategy_0.PreferredValues != null) && (this.strategy_0.PreferredValues != "");
+                    this.btnPV.Visible = (this.strategy.PreferredValues != null) && (this.strategy.PreferredValues != "");
                     this.statusAddStrategy.Visible = false;
                     this.method_2();
                     this.method_4();
@@ -5813,18 +5813,18 @@
                         this.description_0.Dock = DockStyle.Fill;
                         TabPage page4 = this.tabChart.TabPages[this.tabChart.TabCount - 1];
                         page4.Controls.Add(this.description_0);
-                        if (this.strategy_0.StrategyType == StrategyType.Script)
+                        if (this.strategy.StrategyType == StrategyType.Script)
                         {
-                            if (this.editor_0 == null)
+                            if (this.editor == null)
                             {
-                                this.editor_0 = new Editor(this);
-                                this.editor_0.Dock = DockStyle.Fill;
+                                this.editor = new Editor(this);
+                                this.editor.Dock = DockStyle.Fill;
                                 this.tabChart.TabPages.Add("Editor");
                                 TabPage page2 = this.tabChart.TabPages[this.tabChart.TabCount - 1];
-                                page2.Controls.Add(this.editor_0);
+                                page2.Controls.Add(this.editor);
                             }
                         }
-                        else if (this.strategy_0.StrategyType == StrategyType.Rules)
+                        else if (this.strategy.StrategyType == StrategyType.Rules)
                         {
                             if (this.builder_0 == null)
                             {
@@ -5838,7 +5838,7 @@
                                 this.builder_0.CompileRules();
                             }
                         }
-                        else if (this.strategy_0.StrategyType == StrategyType.CombinedStrategy)
+                        else if (this.strategy.StrategyType == StrategyType.CombinedStrategy)
                         {
                             if (this.combinationStrategyBuilder_0 == null)
                             {
@@ -5858,23 +5858,23 @@
                         }
                         else
                         {
-                            this.WealthScript = MainModule.Instance.Strategies.GetWealthScriptObject(this.strategy_0);
+                            this.WealthScript = MainModule.Instance.Strategies.GetWealthScriptObject(this.strategy);
                         }
                     }
                     this.method_15();
-                    if (this.editor_0 != null)
+                    if (this.editor != null)
                     {
-                        this.editor_0.Code = this.strategy_0.Code;
-                        this.editor_0.Compile();
+                        this.editor.Code = this.strategy.Code;
+                        this.editor.Compile();
                     }
                     if (this.builder_0 != null)
                     {
                         this.builder_0.Strategy = this.Strategy;
                     }
-                    this.description_0.Strategy = this.strategy_0;
+                    this.description_0.Strategy = this.strategy;
                     this.method_39();
-                    this.LoadDragDropIndicators(this.strategy_0.Indicators);
-                    this.restoreResizedPanes(this.strategy_0.PanelSize);
+                    this.LoadDragDropIndicators(this.strategy.Indicators);
+                    this.restoreResizedPanes(this.strategy.PanelSize);
                     this.bool_7 = true;
                     this.btnPV.Checked = this.Strategy.UsePreferredValues;
                     this.bool_7 = false;
@@ -5895,14 +5895,14 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             set
             {
-                this.string_0 = value;
-                if ((this.IsStreaming && (this.string_0 != null)) && this.string_0.Trim().StartsWith("%"))
+                this.symbol = value;
+                if ((this.IsStreaming && (this.symbol != null)) && this.symbol.Trim().StartsWith("%"))
                 {
-                    MessageBox.Show("Unable to stream the Index-Lab symbol \"" + this.string_0 + "\". Data streaming will be disconnected.");
+                    MessageBox.Show("Unable to stream the Index-Lab symbol \"" + this.symbol + "\". Data streaming will be disconnected.");
                     this.IsStreaming = false;
                 }
             }
@@ -5912,11 +5912,11 @@
         {
             get
             {
-                return this.wealthScript_0;
+                return this.wealthScript;
             }
             set
             {
-                this.wealthScript_0 = value;
+                this.wealthScript = value;
             }
         }
 

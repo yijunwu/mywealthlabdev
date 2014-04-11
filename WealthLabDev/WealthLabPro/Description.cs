@@ -72,7 +72,7 @@
         private PrintPreview printPreview_0;
         private PrintReport printReport_0 = new PrintReport();
         private RichTextBox richTextBox1;
-        private WealthLab.Strategy strategy_0;
+        private WealthLab.Strategy strategy;
 
         public Description()
         {
@@ -658,11 +658,11 @@
         private void linkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             EditDescriptionForm form = new EditDescriptionForm {
-                Description = this.strategy_0.Description
+                Description = this.strategy.Description
             };
             if (form.ShowDialog() == DialogResult.OK)
             {
-                this.strategy_0.Description = form.Description;
+                this.strategy.Description = form.Description;
                 this.method_1();
             }
         }
@@ -692,10 +692,10 @@
 
         private void method_1()
         {
-            File.WriteAllText(MainModule.Instance.DataPath + @"\temp.html", this.strategy_0.Description);
+            File.WriteAllText(MainModule.Instance.DataPath + @"\temp.html", this.strategy.Description);
             this.browserDesc.Navigate(MainModule.Instance.DataPath + @"\temp.html");
             this.linkGoBack.Visible = false;
-            this.linkMoreInfo.Visible = (this.strategy_0.URL != null) && (this.strategy_0.URL != "");
+            this.linkMoreInfo.Visible = (this.strategy.URL != null) && (this.strategy.URL != "");
         }
 
         private bool method_2()
@@ -1000,18 +1000,18 @@
         {
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             set
             {
-                this.strategy_0 = value;
-                if (this.strategy_0 != null)
+                this.strategy = value;
+                if (this.strategy != null)
                 {
-                    this.lblStrategyName.Text = this.strategy_0.Name;
+                    this.lblStrategyName.Text = this.strategy.Name;
                     this.method_1();
-                    this.lblAuthorValue.Text = this.strategy_0.Author;
-                    this.lblCreatedValue.Text = this.strategy_0.CreationDate.ToShortDateString();
-                    this.lblModifiedValue.Text = this.strategy_0.LastModified.ToShortDateString();
+                    this.lblAuthorValue.Text = this.strategy.Author;
+                    this.lblCreatedValue.Text = this.strategy.CreationDate.ToShortDateString();
+                    this.lblModifiedValue.Text = this.strategy.LastModified.ToShortDateString();
                 }
             }
         }

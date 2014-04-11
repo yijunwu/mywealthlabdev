@@ -18,7 +18,7 @@
     public class QuotesForm : Form, IWorkspace, IConnectionStatus
     {
         [CompilerGenerated]
-        private WealthLab.AutoTradingMode autoTradingMode_0;
+        private WealthLab.AutoTradingMode autoTradingMode;
         private bool bool_0;
         private bool bool_1;
         private bool bool_2;
@@ -2162,12 +2162,12 @@
             [CompilerGenerated]
             get
             {
-                return this.autoTradingMode_0;
+                return this.autoTradingMode;
             }
             [CompilerGenerated]
             set
             {
-                this.autoTradingMode_0 = value;
+                this.autoTradingMode = value;
             }
         }
 

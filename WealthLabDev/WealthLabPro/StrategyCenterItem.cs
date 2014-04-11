@@ -13,96 +13,96 @@
     [XmlRoot(ElementName="StrategyCenterItem", IsNullable=false)]
     public class StrategyCenterItem : IDataUpdateMessage, IUpdateRequestCompleted, IStreamingUpdate
     {
-        private BarDataRange barDataRange_0;
-        private BarScale barScale_0;
+        private BarDataRange barDataRange;
+        private BarScale barScale;
         private bool bool_0;
-        private bool bool_1;
+        private bool activated;
         [CompilerGenerated]
-        private bool bool_10;
+        private bool logging;
         [CompilerGenerated]
-        private bool bool_11;
-        private bool bool_2;
-        private bool bool_3;
-        private bool bool_4;
-        private bool bool_5;
-        private bool bool_6;
-        private bool bool_7;
+        private bool usingStreamingFilters;
+        private bool autoStage;
+        private bool emailAlerts;
+        private bool addedToExecutionList;
+        private bool isPopulating;
+        private bool runOnce;
+        private bool wasActivated;
         [CompilerGenerated]
-        private bool bool_8;
+        private bool usePreferredValues;
         [CompilerGenerated]
-        private bool bool_9;
+        private bool hasRun;
         private DataSource dataSource_0;
-        private DateTime dateTime_0;
-        private DateTime dateTime_1;
+        private DateTime lastRun;
+        private DateTime nextRun;
         private Dictionary<string, DateTime> dictionary_0;
-        private int int_0;
-        private int int_1;
-        private int int_2;
-        private int int_3;
-        private int int_4;
-        private int int_5;
-        private List<double> list_0;
-        private List<Alert> list_1;
-        private List<Bars> list_2;
-        private List<string> list_3;
-        private System.Windows.Forms.ListViewItem listViewItem_0;
+        private int barInterval;
+        private int trades;
+        private int newTradeCount;
+        private int badSymbolCount;
+        private int executeHours;
+        private int executeMin;
+        private List<double> parameterValues;
+        private List<Alert> alertsList;
+        private List<Bars> barsList;
+        private List<string> list_ItemLog;
+        private System.Windows.Forms.ListViewItem listViewItem;
         private MarketHours marketHours_0;
         [CompilerGenerated]
-        private WealthLab.MarketInfo marketInfo_0;
-        private WealthLab.PositionSize positionSize_0;
-        private WealthLab.Strategy strategy_0;
-        private StrategyCenterExecutionItem strategyCenterExecutionItem_0;
+        private WealthLab.MarketInfo marketInfo;
+        private WealthLab.PositionSize positionSize;
+        private WealthLab.Strategy strategy;
+        private StrategyCenterExecutionItem strategyCenterExecutionItem;
         private StrategyCenterForm strategyCenterForm_0;
-        private StrategyCenterItemDataType strategyCenterItemDataType_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
-        private string string_3;
-        private string string_4;
+        private StrategyCenterItemDataType targetDataType;
+        private string symbol;
+        private string strategyID;
+        private string dataSourceName;
+        private string accountNumber;
+        private string accountTradeType;
         private Thread thread_0;
         private Thread thread_1;
-        private WealthLab.WealthScript wealthScript_0;
+        private WealthLab.WealthScript wealthScript;
 
         public StrategyCenterItem()
         {
-            this.barDataRange_0 = new BarDataRange();
-            this.string_1 = "";
-            this.string_2 = "";
-            this.dateTime_0 = DateTime.MinValue;
-            this.dateTime_1 = DateTime.MaxValue;
-            this.list_0 = new List<double>();
-            this.list_1 = new List<Alert>();
-            this.list_2 = new List<Bars>();
-            this.string_3 = "";
-            this.string_4 = "";
+            this.barDataRange = new BarDataRange();
+            this.strategyID = "";
+            this.dataSourceName = "";
+            this.lastRun = DateTime.MinValue;
+            this.nextRun = DateTime.MaxValue;
+            this.parameterValues = new List<double>();
+            this.alertsList = new List<Alert>();
+            this.barsList = new List<Bars>();
+            this.accountNumber = "";
+            this.accountTradeType = "";
             this.dictionary_0 = new Dictionary<string, DateTime>();
             this.marketHours_0 = new MarketHours();
-            this.list_3 = new List<string>();
-            this.int_4 = 0x10;
-            this.int_5 = 30;
+            this.list_ItemLog = new List<string>();
+            this.executeHours = 0x10;
+            this.executeMin = 30;
         }
 
         public StrategyCenterItem(System.Windows.Forms.ListViewItem listViewItem_1, StrategyCenterForm strategyCenterForm_1)
         {
-            this.barDataRange_0 = new BarDataRange();
-            this.string_1 = "";
-            this.string_2 = "";
-            this.dateTime_0 = DateTime.MinValue;
-            this.dateTime_1 = DateTime.MaxValue;
-            this.list_0 = new List<double>();
-            this.list_1 = new List<Alert>();
-            this.list_2 = new List<Bars>();
-            this.string_3 = "";
-            this.string_4 = "";
+            this.barDataRange = new BarDataRange();
+            this.strategyID = "";
+            this.dataSourceName = "";
+            this.lastRun = DateTime.MinValue;
+            this.nextRun = DateTime.MaxValue;
+            this.parameterValues = new List<double>();
+            this.alertsList = new List<Alert>();
+            this.barsList = new List<Bars>();
+            this.accountNumber = "";
+            this.accountTradeType = "";
             this.dictionary_0 = new Dictionary<string, DateTime>();
             this.marketHours_0 = new MarketHours();
-            this.list_3 = new List<string>();
-            this.int_4 = 0x10;
-            this.int_5 = 30;
+            this.list_ItemLog = new List<string>();
+            this.executeHours = 0x10;
+            this.executeMin = 30;
             this.strategyCenterForm_0 = strategyCenterForm_1;
-            this.listViewItem_0 = listViewItem_1;
-            this.barDataRange_0.Range = BarRange.FixedBars;
-            this.barDataRange_0.FixedBars = 0x3e8;
+            this.listViewItem = listViewItem_1;
+            this.barDataRange.Range = BarRange.FixedBars;
+            this.barDataRange.FixedBars = 0x3e8;
         }
 
         public void CalculateNextRun(bool forceToFuture)
@@ -199,9 +199,9 @@
         {
             if (this.Logging)
             {
-                lock (this.list_3)
+                lock (this.list_ItemLog)
                 {
-                    this.list_3.Add(DateTime.Now.ToString() + ": " + string_5);
+                    this.list_ItemLog.Add(DateTime.Now.ToString() + ": " + string_5);
                 }
             }
         }
@@ -338,18 +338,18 @@
 
         public void ReplaceAlerts(string symbol, List<Alert> newAlerts)
         {
-            lock (this.list_1)
+            lock (this.alertsList)
             {
-                for (int i = this.list_1.Count - 1; i >= 0; i--)
+                for (int i = this.alertsList.Count - 1; i >= 0; i--)
                 {
-                    if (this.list_1[i].Symbol == symbol)
+                    if (this.alertsList[i].Symbol == symbol)
                     {
-                        this.list_1.RemoveAt(i);
+                        this.alertsList.RemoveAt(i);
                     }
                 }
                 foreach (Alert alert in newAlerts)
                 {
-                    this.list_1.Add(alert);
+                    this.alertsList.Add(alert);
                 }
             }
         }
@@ -476,11 +476,11 @@
         {
             get
             {
-                return this.string_3;
+                return this.accountNumber;
             }
             set
             {
-                this.string_3 = value;
+                this.accountNumber = value;
             }
         }
 
@@ -488,11 +488,11 @@
         {
             get
             {
-                return this.string_4;
+                return this.accountTradeType;
             }
             set
             {
-                this.string_4 = value;
+                this.accountTradeType = value;
             }
         }
 
@@ -500,11 +500,11 @@
         {
             get
             {
-                return this.bool_1;
+                return this.activated;
             }
             set
             {
-                this.bool_1 = value;
+                this.activated = value;
             }
         }
 
@@ -513,11 +513,11 @@
         {
             get
             {
-                return this.bool_4;
+                return this.addedToExecutionList;
             }
             set
             {
-                this.bool_4 = value;
+                this.addedToExecutionList = value;
             }
         }
 
@@ -525,11 +525,11 @@
         {
             get
             {
-                return this.list_1;
+                return this.alertsList;
             }
             set
             {
-                this.list_1 = value;
+                this.alertsList = value;
             }
         }
 
@@ -537,11 +537,11 @@
         {
             get
             {
-                return this.bool_2;
+                return this.autoStage;
             }
             set
             {
-                this.bool_2 = value;
+                this.autoStage = value;
             }
         }
 
@@ -550,11 +550,11 @@
         {
             get
             {
-                return this.int_3;
+                return this.badSymbolCount;
             }
             set
             {
-                this.int_3 = value;
+                this.badSymbolCount = value;
             }
         }
 
@@ -562,11 +562,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             set
             {
-                this.int_0 = value;
+                this.barInterval = value;
             }
         }
 
@@ -575,7 +575,7 @@
         {
             get
             {
-                return this.list_2;
+                return this.barsList;
             }
         }
 
@@ -583,12 +583,12 @@
         {
             get
             {
-                return this.barDataRange_0;
+                return this.barDataRange;
             }
             set
             {
                 string str = value.ToString();
-                this.barDataRange_0 = BarDataRange.Parse(str);
+                this.barDataRange = BarDataRange.Parse(str);
             }
         }
 
@@ -617,11 +617,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.dataSourceName;
             }
             set
             {
-                this.string_2 = value;
+                this.dataSourceName = value;
             }
         }
 
@@ -629,11 +629,11 @@
         {
             get
             {
-                return this.bool_3;
+                return this.emailAlerts;
             }
             set
             {
-                this.bool_3 = value;
+                this.emailAlerts = value;
             }
         }
 
@@ -641,11 +641,11 @@
         {
             get
             {
-                return this.int_4;
+                return this.executeHours;
             }
             set
             {
-                this.int_4 = value;
+                this.executeHours = value;
             }
         }
 
@@ -653,11 +653,11 @@
         {
             get
             {
-                return this.int_5;
+                return this.executeMin;
             }
             set
             {
-                this.int_5 = value;
+                this.executeMin = value;
             }
         }
 
@@ -667,12 +667,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_9;
+                return this.hasRun;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_9 = value;
+                this.hasRun = value;
             }
         }
 
@@ -681,11 +681,11 @@
         {
             get
             {
-                return this.bool_5;
+                return this.isPopulating;
             }
             set
             {
-                this.bool_5 = value;
+                this.isPopulating = value;
             }
         }
 
@@ -694,7 +694,7 @@
         {
             get
             {
-                return this.list_3;
+                return this.list_ItemLog;
             }
         }
 
@@ -702,11 +702,11 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.lastRun;
             }
             set
             {
-                this.dateTime_0 = value;
+                this.lastRun = value;
             }
         }
 
@@ -715,11 +715,11 @@
         {
             get
             {
-                return this.listViewItem_0;
+                return this.listViewItem;
             }
             set
             {
-                this.listViewItem_0 = value;
+                this.listViewItem = value;
             }
         }
 
@@ -728,12 +728,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_10;
+                return this.logging;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_10 = value;
+                this.logging = value;
             }
         }
 
@@ -743,12 +743,12 @@
             [CompilerGenerated]
             get
             {
-                return this.marketInfo_0;
+                return this.marketInfo;
             }
             [CompilerGenerated]
             set
             {
-                this.marketInfo_0 = value;
+                this.marketInfo = value;
             }
         }
 
@@ -757,11 +757,11 @@
         {
             get
             {
-                return this.int_2;
+                return this.newTradeCount;
             }
             set
             {
-                this.int_2 = value;
+                this.newTradeCount = value;
             }
         }
 
@@ -769,12 +769,12 @@
         {
             get
             {
-                return this.dateTime_1;
+                return this.nextRun;
             }
             set
             {
-                this.dateTime_1 = value;
-                this.bool_4 = false;
+                this.nextRun = value;
+                this.addedToExecutionList = false;
             }
         }
 
@@ -782,11 +782,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.parameterValues;
             }
             set
             {
-                this.list_0 = value;
+                this.parameterValues = value;
             }
         }
 
@@ -807,12 +807,12 @@
         {
             get
             {
-                return this.positionSize_0;
+                return this.positionSize;
             }
             set
             {
                 string str = value.ToString();
-                this.positionSize_0 = WealthLab.PositionSize.Parse(str);
+                this.positionSize = WealthLab.PositionSize.Parse(str);
             }
         }
 
@@ -821,11 +821,11 @@
         {
             get
             {
-                return this.bool_6;
+                return this.runOnce;
             }
             set
             {
-                this.bool_6 = value;
+                this.runOnce = value;
             }
         }
 
@@ -833,11 +833,11 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             set
             {
-                this.barScale_0 = value;
+                this.barScale = value;
             }
         }
 
@@ -846,11 +846,11 @@
         {
             get
             {
-                return this.strategyCenterExecutionItem_0;
+                return this.strategyCenterExecutionItem;
             }
             set
             {
-                this.strategyCenterExecutionItem_0 = value;
+                this.strategyCenterExecutionItem = value;
             }
         }
 
@@ -867,11 +867,11 @@
         {
             get
             {
-                return this.strategy_0;
+                return this.strategy;
             }
             set
             {
-                this.strategy_0 = value;
+                this.strategy = value;
             }
         }
 
@@ -879,11 +879,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.strategyID;
             }
             set
             {
-                this.string_1 = value;
+                this.strategyID = value;
             }
         }
 
@@ -891,11 +891,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.symbol;
             }
             set
             {
-                this.string_0 = value;
+                this.symbol = value;
             }
         }
 
@@ -922,11 +922,11 @@
         {
             get
             {
-                return this.strategyCenterItemDataType_0;
+                return this.targetDataType;
             }
             set
             {
-                this.strategyCenterItemDataType_0 = value;
+                this.targetDataType = value;
             }
         }
 
@@ -960,11 +960,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.trades;
             }
             set
             {
-                this.int_1 = value;
+                this.trades = value;
             }
         }
 
@@ -973,12 +973,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_8;
+                return this.usePreferredValues;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_8 = value;
+                this.usePreferredValues = value;
             }
         }
 
@@ -988,12 +988,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_11;
+                return this.usingStreamingFilters;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_11 = value;
+                this.usingStreamingFilters = value;
             }
         }
 
@@ -1002,11 +1002,11 @@
         {
             get
             {
-                return this.bool_7;
+                return this.wasActivated;
             }
             set
             {
-                this.bool_7 = value;
+                this.wasActivated = value;
             }
         }
 
@@ -1015,11 +1015,11 @@
         {
             get
             {
-                return this.wealthScript_0;
+                return this.wealthScript;
             }
             set
             {
-                this.wealthScript_0 = value;
+                this.wealthScript = value;
             }
         }
     }

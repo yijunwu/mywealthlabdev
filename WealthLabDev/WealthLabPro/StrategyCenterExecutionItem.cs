@@ -6,29 +6,29 @@
 
     public class StrategyCenterExecutionItem
     {
-        private DateTime dateTime_0;
+        private DateTime nextRun;
         private static int int_0;
-        private int int_1;
+        private int updateCount;
         [CompilerGenerated]
-        private int int_2;
-        private List<string> list_0 = new List<string>();
-        private List<WealthLab.Bars> list_1 = new List<WealthLab.Bars>();
+        private int counter;
+        private List<string> symbolsProcessing = new List<string>();
+        private List<WealthLab.Bars> barsList = new List<WealthLab.Bars>();
         private StrategyCenterItem strategyCenterItem_0;
 
         public StrategyCenterExecutionItem(StrategyCenterItem item, DateTime nextRun)
         {
             this.Counter = int_0++;
             this.strategyCenterItem_0 = item;
-            this.dateTime_0 = nextRun;
+            this.nextRun = nextRun;
             if ((item.Symbol != "") && (item.Symbol != null))
             {
-                this.list_0.Add(item.Symbol);
+                this.symbolsProcessing.Add(item.Symbol);
             }
             else
             {
                 foreach (string str in item.DataSet.Symbols)
                 {
-                    this.list_0.Add(str);
+                    this.symbolsProcessing.Add(str);
                 }
             }
         }
@@ -42,7 +42,7 @@
         {
             get
             {
-                return this.list_1;
+                return this.barsList;
             }
         }
 
@@ -51,12 +51,12 @@
             [CompilerGenerated]
             get
             {
-                return this.int_2;
+                return this.counter;
             }
             [CompilerGenerated]
             set
             {
-                this.int_2 = value;
+                this.counter = value;
             }
         }
 
@@ -72,7 +72,7 @@
         {
             get
             {
-                return this.dateTime_0;
+                return this.nextRun;
             }
         }
 
@@ -93,7 +93,7 @@
         {
             get
             {
-                return this.list_0;
+                return this.symbolsProcessing;
             }
         }
 
@@ -101,10 +101,10 @@
         {
             get
             {
-                lock (this.list_0)
+                lock (this.symbolsProcessing)
                 {
                     List<string> list2 = new List<string>();
-                    foreach (string str in this.list_0)
+                    foreach (string str in this.symbolsProcessing)
                     {
                         list2.Add(str);
                     }
@@ -117,11 +117,11 @@
         {
             get
             {
-                return this.int_1;
+                return this.updateCount;
             }
             set
             {
-                this.int_1 = value;
+                this.updateCount = value;
             }
         }
     }

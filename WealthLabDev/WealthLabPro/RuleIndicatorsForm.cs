@@ -15,10 +15,10 @@
         private Button btnOK;
         private GroupBox grpParameters;
         private IContainer icontainer_0;
-        private WealthLab.IndicatorHelper indicatorHelper_0;
+        private WealthLab.IndicatorHelper indicatorHelper;
         private IndicatorTreeView indicators;
         [CompilerGenerated]
-        private List<WealthLab.IndicatorHelper> list_0;
+        private List<WealthLab.IndicatorHelper> indicatorHelpers;
         private Panel pnlParams;
         private static string string_0 = "";
         private string string_1;
@@ -140,8 +140,8 @@
                     }
                 }
             }
-            this.indicatorHelper_0 = e.Helper;
-            IndicatorDragDropManager.CreateIndicatorParameterUI(this.indicatorHelper_0, this.pnlParams, null, "Bars", true);
+            this.indicatorHelper = e.Helper;
+            IndicatorDragDropManager.CreateIndicatorParameterUI(this.indicatorHelper, this.pnlParams, null, "Bars", true);
         }
 
         private void RuleIndicatorsForm_Load(object sender, EventArgs e)
@@ -176,7 +176,7 @@
         {
             get
             {
-                return this.indicatorHelper_0;
+                return this.indicatorHelper;
             }
         }
 
@@ -185,12 +185,12 @@
             [CompilerGenerated]
             get
             {
-                return this.list_0;
+                return this.indicatorHelpers;
             }
             [CompilerGenerated]
             set
             {
-                this.list_0 = value;
+                this.indicatorHelpers = value;
             }
         }
 

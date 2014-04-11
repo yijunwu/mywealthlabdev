@@ -16,13 +16,13 @@
         private int int_0;
         private static Stack<WLPEmail> stack_0 = new Stack<WLPEmail>();
         private string string_0;
-        private string string_1;
-        private string string_2;
-        private string string_3;
-        private string string_4;
-        private string string_5;
+        private string credUser;
+        private string credPass;
+        private string address;
+        private string subject;
+        private string message;
         [CompilerGenerated]
-        private string string_6;
+        private string product;
         private static Thread thread_0 = new Thread(new ThreadStart(WLPEmail.smethod_0));
 
         static WLPEmail()
@@ -36,11 +36,11 @@
             this.string_0 = Host;
             this.int_0 = Port;
             this.bool_0 = SSL;
-            this.string_1 = CredUser;
-            this.string_2 = CredPass;
-            this.string_3 = Address;
-            this.string_4 = Subject;
-            this.string_5 = Message;
+            this.credUser = CredUser;
+            this.credPass = CredPass;
+            this.address = Address;
+            this.subject = Subject;
+            this.message = Message;
         }
 
         public void Enqueue(string product)
@@ -60,24 +60,24 @@
             {
                 client = new SmtpClient(this.string_0, this.int_0) {
                     EnableSsl = this.bool_0,
-                    Credentials = new NetworkCredential(this.string_1, this.string_2)
+                    Credentials = new NetworkCredential(this.credUser, this.credPass)
                 };
                 string[] strArray = this.string_0.Split(new char[] { '.' });
                 string str = string.Empty;
-                if (!this.string_1.Contains("@"))
+                if (!this.credUser.Contains("@"))
                 {
                     if (strArray.Length > 1)
                     {
-                        str = this.string_1 + "@" + strArray[strArray.Length - 2] + "." + strArray[strArray.Length - 1];
+                        str = this.credUser + "@" + strArray[strArray.Length - 2] + "." + strArray[strArray.Length - 1];
                     }
                     else
                     {
-                        str = this.string_1 + "@" + this.string_0;
+                        str = this.credUser + "@" + this.string_0;
                     }
                 }
                 else
                 {
-                    str = this.string_1;
+                    str = this.credUser;
                 }
                 string displayName = string.Empty;
                 if (this.Product == "WealthLabPro")
@@ -90,9 +90,9 @@
                 }
                 MailAddress address = new MailAddress(str, displayName);
                 message.From = address;
-                message.To.Add(this.method_1(this.string_3));
-                message.Subject = this.string_4;
-                message.Body = this.string_5;
+                message.To.Add(this.method_1(this.address));
+                message.Subject = this.subject;
+                message.Body = this.message;
             }
             catch (Exception exception2)
             {
@@ -141,11 +141,11 @@
                     WLPEmail userState = (WLPEmail) e.UserState;
                     if (e.Error == null)
                     {
-                        ilog_0.Info("Sent Mail" + ((userState != null) ? (" - Message text: " + userState.string_5 + " to " + userState.string_3) : ""));
+                        ilog_0.Info("Sent Mail" + ((userState != null) ? (" - Message text: " + userState.message + " to " + userState.address) : ""));
                     }
                     else
                     {
-                        ilog_0.Error("Unable to send Mail" + ((userState != null) ? (" - Message text: " + userState.string_5 + " to " + userState.string_3) : ""));
+                        ilog_0.Error("Unable to send Mail" + ((userState != null) ? (" - Message text: " + userState.message + " to " + userState.address) : ""));
                         if (e.Error.InnerException != null)
                         {
                             ilog_0.Error(e.Error.InnerException.Message);
@@ -190,12 +190,12 @@
             [CompilerGenerated]
             get
             {
-                return this.string_6;
+                return this.product;
             }
             [CompilerGenerated]
             set
             {
-                this.string_6 = value;
+                this.product = value;
             }
         }
     }

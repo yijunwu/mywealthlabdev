@@ -11,7 +11,7 @@
     public class BarDataRangeSelecter : UserControl
     {
         private BarDataRange barDataRange_0 = new BarDataRange();
-        private bool bool_0;
+        private bool isStreaming;
         private Button btnSelect;
         private IContainer components;
         private ImageList imageList_0;
@@ -54,7 +54,7 @@
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            BarDataRangeSelecterForm form = new BarDataRangeSelecterForm(this.bool_0);
+            BarDataRangeSelecterForm form = new BarDataRangeSelecterForm(this.isStreaming);
             Point point = base.PointToScreen(base.Location);
             form.Top = ((point.Y - base.Top) + base.Height) - 2;
             form.Left = point.X - base.Left;
@@ -150,12 +150,12 @@
         {
             get
             {
-                return this.bool_0;
+                return this.isStreaming;
             }
             set
             {
                 this.barDataRange_0.IsStreaming = value;
-                this.bool_0 = value;
+                this.isStreaming = value;
             }
         }
 

@@ -13,7 +13,7 @@
         private ComboBox cmbAccount;
         private IContainer icontainer_0;
         private Label lblAccount;
-        private string string_0 = "";
+        private string accountNumber = "";
 
         public StrategyAccountForm()
         {
@@ -22,7 +22,7 @@
 
         private void cmbAccount_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.string_0 = this.cmbAccount.Text;
+            this.accountNumber = this.cmbAccount.Text;
             this.btnOK.Enabled = this.cmbAccount.SelectedIndex >= 0;
         }
 
@@ -95,7 +95,7 @@
             {
                 this.cmbAccount.Items.Add(str);
             }
-            this.cmbAccount.SelectedIndex = this.cmbAccount.Items.IndexOf(this.string_0);
+            this.cmbAccount.SelectedIndex = this.cmbAccount.Items.IndexOf(this.accountNumber);
             if (this.cmbAccount.SelectedIndex == -1)
             {
                 this.cmbAccount.SelectedIndex = this.cmbAccount.Items.IndexOf(MainModule.Instance.DefaultAccountNumber);
@@ -110,11 +110,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.accountNumber;
             }
             set
             {
-                this.string_0 = value;
+                this.accountNumber = value;
             }
         }
     }

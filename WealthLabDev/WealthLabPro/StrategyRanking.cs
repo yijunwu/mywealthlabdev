@@ -15,8 +15,8 @@
 
     public class StrategyRanking : Form, IWorkspace, IWealthScriptProvider
     {
-        private BarDataRange barDataRange_0;
-        private WealthLab.BarScale barScale_0;
+        private BarDataRange barDataRange;
+        private WealthLab.BarScale barScale;
         private bool bool_0;
         private bool bool_1;
         private bool bool_2;
@@ -35,7 +35,7 @@
         private IContainer components;
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
-        private int int_0;
+        private int barInterval;
         private ToolStripLabel lblScorecard;
         private ToolStripLabel lblStrategy;
         private List<StrategyScorecard> list_0 = new List<StrategyScorecard>();
@@ -64,7 +64,7 @@
         private StrategyRankingSettings strategyRankingSettings_0 = new StrategyRankingSettings();
         private StrategyScorecard strategyScorecard_0;
         private string string_0;
-        private string string_1 = "";
+        private string symbol = "";
         private TabControl tabControl1;
         private TabPage tabErrors;
         private TabPage tabResults;
@@ -635,7 +635,7 @@
             }
             this.DataRange = MainModule.Instance.DataRange;
             this.dataSource_0 = this.MyMainForm.DataSource;
-            this.string_1 = this.MyMainForm.Symbol;
+            this.symbol = this.MyMainForm.Symbol;
         }
 
         private void method_10()
@@ -667,17 +667,17 @@
 
         private void method_14()
         {
-            if ((this.string_1 == "") && (this.dataSource_0 != null))
+            if ((this.symbol == "") && (this.dataSource_0 != null))
             {
                 this.statusDataSet.Text = this.dataSource_0.Name;
             }
             else
             {
-                this.statusDataSet.Text = this.string_1;
+                this.statusDataSet.Text = this.symbol;
             }
             this.statusPositionSize.Text = this.positionSize_0.Text;
-            this.statusRange.Text = this.barDataRange_0.Text;
-            this.statusScale.Text = this.barScale_0.ToString();
+            this.statusRange.Text = this.barDataRange.Text;
+            this.statusScale.Text = this.barScale.ToString();
         }
 
         private void method_15(StrategyScorecard strategyScorecard_1)
@@ -767,7 +767,7 @@
             this.PositionSize = this.strategyRankingSettings_0.PosSize;
             this.BarDataScale = this.strategyRankingSettings_0.BarDataScale;
             this.dataSource_0 = MainModule.Instance.DataSources.FindDataSource(this.strategyRankingSettings_0.DataSourceName);
-            this.string_1 = this.strategyRankingSettings_0.Symbol;
+            this.symbol = this.strategyRankingSettings_0.Symbol;
             for (int i = 0; i < this.cmbScorecard.Items.Count; i++)
             {
                 if (this.strategyRankingSettings_0.ScorecardName == ((string) this.cmbScorecard.Items[i]))
@@ -832,7 +832,7 @@
             try
             {
                 List<StrategyRankingItem> list = (List<StrategyRankingItem>) object_2;
-                this.method_29("Updating data for: " + (this.MultiSymbolMode ? this.dataSource_0.Name : this.string_1));
+                this.method_29("Updating data for: " + (this.MultiSymbolMode ? this.dataSource_0.Name : this.symbol));
                 BarsLoader loader = new BarsLoader();
                 if (this.method_38(ref loader))
                 {
@@ -1027,7 +1027,7 @@
             this.DataRange = this.strategyRankingSettings_0.DataRange;
             this.PositionSize = this.strategyRankingSettings_0.PosSize;
             this.dataSource_0 = MainModule.Instance.DataSources.FindDataSource(this.strategyRankingSettings_0.DataSourceName);
-            this.string_1 = this.strategyRankingSettings_0.Symbol;
+            this.symbol = this.strategyRankingSettings_0.Symbol;
             this.MyMainForm.ActivateMdiChild();
         }
 
@@ -1038,12 +1038,12 @@
                 this.strategyRankingSettings_0 = new StrategyRankingSettings();
             }
             this.strategyRankingSettings_0.BarDataScale = this.BarDataScale;
-            this.strategyRankingSettings_0.DataRange = this.barDataRange_0;
+            this.strategyRankingSettings_0.DataRange = this.barDataRange;
             this.strategyRankingSettings_0.DataSourceName = (this.dataSource_0 != null) ? this.dataSource_0.Name : "";
             this.strategyRankingSettings_0.DataSet = this.dataSource_0;
             this.strategyRankingSettings_0.PosSize = this.positionSize_0;
             this.strategyRankingSettings_0.ScorecardName = (this.strategyScorecard_0 != null) ? this.strategyScorecard_0.FriendlyName : "";
-            this.strategyRankingSettings_0.Symbol = this.string_1;
+            this.strategyRankingSettings_0.Symbol = this.symbol;
             this.strategyRankingSettings_0.Strategies.Clear();
             List<StrategyRankingItem> list = new List<StrategyRankingItem>();
             foreach (ListViewItem item2 in this.lvStrategies.Items)
@@ -1081,7 +1081,7 @@
         {
             barsLoader_0.DataHost = this.dataSourceManager_0;
             barsLoader_0.BarDataScale = this.BarDataScale;
-            this.barDataRange_0.ConfigureBarsLoader(barsLoader_0);
+            this.barDataRange.ConfigureBarsLoader(barsLoader_0);
             this.list_1.Clear();
             if (this.MultiSymbolMode)
             {
@@ -1096,7 +1096,7 @@
                 bool flag;
                 try
                 {
-                    Bars item = barsLoader_0.GetData(this.dataSource_0, this.string_1);
+                    Bars item = barsLoader_0.GetData(this.dataSource_0, this.symbol);
                     this.list_1.Add(item);
                     ///goto  Label_00C0;  ///WYJ fix, simplify the flow
                     return true;
@@ -1247,8 +1247,8 @@
                 form.BringToFront();
                 form.WindowState = FormWindowState.Normal;
                 form.DataSource = this.dataSource_0;
-                form.Symbol = this.string_1;
-                form.DataRange = this.barDataRange_0;
+                form.Symbol = this.symbol;
+                form.DataRange = this.barDataRange;
                 form.PositionSize = this.positionSize_0;
                 form.BarDataScale = this.BarDataScale;
                 form.SetBarDataScaleForDataSource(this.dataSource_0, this.BarDataScale);
@@ -1261,9 +1261,9 @@
                     }
                 }
                 this.MyMainForm.ActivateMdiChild();
-                this.MyMainForm.SelectTreeNode(this.dataSource_0, this.string_1);
+                this.MyMainForm.SelectTreeNode(this.dataSource_0, this.symbol);
                 form.ResetStreaming();
-                form.GoButtonPressed(this.string_1, true);
+                form.GoButtonPressed(this.symbol, true);
             }
         }
 
@@ -1320,7 +1320,7 @@
                 }
                 else
                 {
-                    doPrint.SetData(PrintReport.fmtSymbol.Name, this.string_1);
+                    doPrint.SetData(PrintReport.fmtSymbol.Name, this.symbol);
                 }
                 if (this.positionSize_0.RawProfitMode)
                 {
@@ -1331,7 +1331,7 @@
                     data = data + "Portfolio Simulation | Starting Capital: " + this.positionSize_0.StartingCapital.ToString("C") + " | ";
                 }
                 string str2 = data;
-                data = str2 + "Scale: " + this.BarDataScale.ToString() + " | Data Range: " + this.barDataRange_0.Text + " | Position Sizing: " + this.positionSize_0.Text;
+                data = str2 + "Scale: " + this.BarDataScale.ToString() + " | Data Range: " + this.barDataRange.Text + " | Position Sizing: " + this.positionSize_0.Text;
             }
             if (!this.MultiSymbolMode && (this.list_1.Count > 0))
             {
@@ -1427,7 +1427,7 @@
                 {
                     this.dataSource_0 = dataSource_1;
                 }
-                this.string_1 = string_2;
+                this.symbol = string_2;
                 this.BarDataScale = dataSource_1.BarDataScale;
             }
         }
@@ -1452,13 +1452,13 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             set
             {
                 if (!this.IsBusy)
                 {
-                    this.int_0 = value;
+                    this.barInterval = value;
                 }
             }
         }
@@ -1467,13 +1467,13 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             set
             {
                 if (!this.IsBusy)
                 {
-                    this.barScale_0 = value;
+                    this.barScale = value;
                 }
             }
         }
@@ -1490,14 +1490,14 @@
         {
             get
             {
-                return this.barDataRange_0;
+                return this.barDataRange;
             }
             set
             {
                 if (!this.IsBusy)
                 {
                     string str = value.ToString();
-                    this.barDataRange_0 = BarDataRange.Parse(str);
+                    this.barDataRange = BarDataRange.Parse(str);
                 }
             }
         }
@@ -1533,7 +1533,7 @@
                 {
                     return ((this.strategyRankingSettings_0.Symbol == "") && ((this.strategyRankingSettings_0.DataSourceName != null) && (this.strategyRankingSettings_0.DataSourceName != "")));
                 }
-                if (this.string_1 != "")
+                if (this.symbol != "")
                 {
                     return false;
                 }
@@ -1603,13 +1603,13 @@
         {
             get
             {
-                return this.string_1;
+                return this.symbol;
             }
             set
             {
                 if (!this.IsBusy)
                 {
-                    this.string_1 = value;
+                    this.symbol = value;
                 }
             }
         }
@@ -1618,7 +1618,7 @@
         {
             get
             {
-                return ((this.string_1 != "") || (this.dataSource_0 != null));
+                return ((this.symbol != "") || (this.dataSource_0 != null));
             }
         }
 

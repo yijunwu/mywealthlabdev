@@ -11,7 +11,7 @@
     {
         private Button btnCancel;
         private Button btnOK;
-        private ComboBox cmbScale;
+        private ComboBox availableScales;
         private IContainer icontainer_0;
         private Label lblCustom;
         private ListBox lbScale;
@@ -44,7 +44,7 @@
             this.lbScale = new ListBox();
             this.lblCustom = new Label();
             this.numScale = new NumericUpDown();
-            this.cmbScale = new ComboBox();
+            this.availableScales = new ComboBox();
             this.btnOK = new Button();
             this.btnCancel = new Button();
             this.numScale.BeginInit();
@@ -76,12 +76,12 @@
             int[] numArray3 = new int[4];
             numArray3[0] = 1;
             this.numScale.Value = new decimal(numArray3);
-            this.cmbScale.FormattingEnabled = true;
-            this.cmbScale.Items.AddRange(new object[] { "minute", "second", "tick" });
-            this.cmbScale.Location = new Point(0x35, 0xb8);
-            this.cmbScale.Name = "cmbScale";
-            this.cmbScale.Size = new Size(0x3a, 0x15);
-            this.cmbScale.TabIndex = 3;
+            this.availableScales.FormattingEnabled = true;
+            this.availableScales.Items.AddRange(new object[] { "minute", "second", "tick" });
+            this.availableScales.Location = new Point(0x35, 0xb8);
+            this.availableScales.Name = "cmbScale";
+            this.availableScales.Size = new Size(0x3a, 0x15);
+            this.availableScales.TabIndex = 3;
             this.btnOK.Location = new Point(0x75, 0xb7);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new Size(0x23, 0x18);
@@ -105,7 +105,7 @@
             base.ClientSize = new Size(0xb2, 240);
             base.Controls.Add(this.btnCancel);
             base.Controls.Add(this.btnOK);
-            base.Controls.Add(this.cmbScale);
+            base.Controls.Add(this.availableScales);
             base.Controls.Add(this.numScale);
             base.Controls.Add(this.lblCustom);
             base.Controls.Add(this.lbScale);
@@ -130,18 +130,18 @@
 
         private void ScaleSelecterForm_Load(object sender, EventArgs e)
         {
-            this.cmbScale.SelectedIndex = 0;
+            this.availableScales.SelectedIndex = 0;
         }
 
         public ComboBox AvailableScales
         {
             get
             {
-                return this.cmbScale;
+                return this.availableScales;
             }
             set
             {
-                this.cmbScale = value;
+                this.availableScales = value;
             }
         }
 
@@ -214,7 +214,7 @@
                     }
                     return scale;
                 }
-                switch (this.cmbScale.SelectedIndex)
+                switch (this.availableScales.SelectedIndex)
                 {
                     case 0:
                         scale.Scale = BarScale.Minute;
@@ -297,15 +297,15 @@
                     switch (value.Scale)
                     {
                         case BarScale.Minute:
-                            this.cmbScale.SelectedIndex = 0;
+                            this.availableScales.SelectedIndex = 0;
                             break;
 
                         case BarScale.Second:
-                            this.cmbScale.SelectedIndex = 1;
+                            this.availableScales.SelectedIndex = 1;
                             break;
 
                         case BarScale.Tick:
-                            this.cmbScale.SelectedIndex = 2;
+                            this.availableScales.SelectedIndex = 2;
                             break;
                     }
                     this.numScale.Value = value.BarInterval;

@@ -32,7 +32,7 @@
         private Panel pnlBottom;
         private ToolStripSeparator sepCompile;
         private SyntaxEdit syntaxEdit;
-        private TimeSpan timeSpan_0;
+        private TimeSpan timeSpan_ExecutionTime;
         private ToolStrip toolBar;
         private ToolStripLabel tslblExTimeValue;
         private WealthScriptCompiler wealthScriptCompiler_0;
@@ -584,7 +584,7 @@
 
         public void UpdateExecutionTime()
         {
-            this.tslblExTimeValue.Text = this.timeSpan_0.TotalMilliseconds.ToString("N0") + " ms";
+            this.tslblExTimeValue.Text = this.timeSpan_ExecutionTime.TotalMilliseconds.ToString("N0") + " ms";
         }
 
         public string Code
@@ -603,11 +603,11 @@
         {
             get
             {
-                return this.timeSpan_0;
+                return this.timeSpan_ExecutionTime;
             }
             set
             {
-                this.timeSpan_0 = value;
+                this.timeSpan_ExecutionTime = value;
             }
         }
     }

@@ -8,28 +8,28 @@
     [XmlRoot(ElementName="StrategyRankingSettings", IsNullable=false)]
     public class StrategyRankingSettings
     {
-        private BarDataRange barDataRange_0;
-        private BarScale barScale_0;
+        private BarDataRange barDataRange;
+        private BarScale barScale;
         private DataSource dataSource_0;
-        private int int_0;
-        private List<StrategyRankingItem> list_0;
-        private PositionSize positionSize_0;
-        private string string_0;
-        private string string_1;
-        private string string_2;
+        private int barInterval;
+        private List<StrategyRankingItem> strategies;
+        private PositionSize positionSize;
+        private string scorecardName;
+        private string symbol;
+        private string dataSourceName;
 
         public StrategyRankingSettings()
         {
-            this.string_0 = "";
-            this.string_1 = "";
-            this.list_0 = new List<StrategyRankingItem>();
+            this.scorecardName = "";
+            this.symbol = "";
+            this.strategies = new List<StrategyRankingItem>();
         }
 
         public StrategyRankingSettings(StrategyRankingSettings _srs)
         {
-            this.string_0 = "";
-            this.string_1 = "";
-            this.list_0 = new List<StrategyRankingItem>();
+            this.scorecardName = "";
+            this.symbol = "";
+            this.strategies = new List<StrategyRankingItem>();
             if (_srs != null)
             {
                 this.BarDataScale = _srs.BarDataScale;
@@ -58,8 +58,8 @@
             }
             set
             {
-                this.int_0 = value.BarInterval;
-                this.barScale_0 = value.Scale;
+                this.barInterval = value.BarInterval;
+                this.barScale = value.Scale;
             }
         }
 
@@ -68,11 +68,11 @@
         {
             get
             {
-                return this.int_0;
+                return this.barInterval;
             }
             set
             {
-                this.int_0 = value;
+                this.barInterval = value;
             }
         }
 
@@ -80,12 +80,12 @@
         {
             get
             {
-                return this.barDataRange_0;
+                return this.barDataRange;
             }
             set
             {
                 string str = value.ToString();
-                this.barDataRange_0 = BarDataRange.Parse(str);
+                this.barDataRange = BarDataRange.Parse(str);
             }
         }
 
@@ -106,11 +106,11 @@
         {
             get
             {
-                return this.string_2;
+                return this.dataSourceName;
             }
             set
             {
-                this.string_2 = value;
+                this.dataSourceName = value;
             }
         }
 
@@ -118,12 +118,12 @@
         {
             get
             {
-                return this.positionSize_0;
+                return this.positionSize;
             }
             set
             {
                 string str = value.ToString();
-                this.positionSize_0 = PositionSize.Parse(str);
+                this.positionSize = PositionSize.Parse(str);
             }
         }
 
@@ -132,11 +132,11 @@
         {
             get
             {
-                return this.barScale_0;
+                return this.barScale;
             }
             set
             {
-                this.barScale_0 = value;
+                this.barScale = value;
             }
         }
 
@@ -144,11 +144,11 @@
         {
             get
             {
-                return this.string_0;
+                return this.scorecardName;
             }
             set
             {
-                this.string_0 = value;
+                this.scorecardName = value;
             }
         }
 
@@ -157,11 +157,11 @@
         {
             get
             {
-                return this.list_0;
+                return this.strategies;
             }
             set
             {
-                this.list_0 = value;
+                this.strategies = value;
             }
         }
 
@@ -169,11 +169,11 @@
         {
             get
             {
-                return this.string_1;
+                return this.symbol;
             }
             set
             {
-                this.string_1 = value;
+                this.symbol = value;
             }
         }
     }

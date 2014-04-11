@@ -41,7 +41,7 @@
         private ParameterSlidersContainer paramSliders;
         private PositionSizeSelecter posSize;
         private ScaleSelecter scale;
-        private StrategyCenterItem strategyCenterItem_0;
+        private StrategyCenterItem strategyCenterItem;
         private DataSourceTreeView tree;
 
         public StrategySettingsForm()
@@ -458,7 +458,7 @@
                     if (enumerator.MoveNext())
                     {
                         string current = (string)enumerator.Current;
-                        if (current == this.strategyCenterItem_0.AccountNumber)
+                        if (current == this.strategyCenterItem.AccountNumber)
                         {
                             this.cmbAccounts.SelectedItem = current;
                             break;
@@ -480,7 +480,7 @@
             }
             this.accountTypeSelector1.IgnoreCalls = false;
             this.accountTypeSelector1.InitAccountTradeType(this.cmbAccounts.Text, "");
-            this.accountTypeSelector1.SelectAccountTradeType(this.strategyCenterItem_0.AccountTradeType, true);
+            this.accountTypeSelector1.SelectAccountTradeType(this.strategyCenterItem.AccountTradeType, true);
             DateTime closeTimeNative = this.Item.MarketInfo.CloseTimeNative;
             this.lblMarketClose.Text = string.Concat(closeTimeNative.ToString("HH:mm"), " GMT ", TimeZoneInformation.GetTimeZone(this.Item.MarketInfo.TimeZoneName).StandardOffset);
             this.lblExecute.Text = string.Concat("GMT ", TimeZoneInformation.GetTimeZone(this.Item.MarketInfo.TimeZoneName).StandardOffset);
@@ -581,35 +581,35 @@
         {
             get
             {
-                return this.strategyCenterItem_0;
+                return this.strategyCenterItem;
             }
             set
             {
-                this.strategyCenterItem_0 = value;
+                this.strategyCenterItem = value;
                 if (this.tree.Nodes.Count == 0)
                 {
                     this.tree.Populate(MainModule.Instance.DataSources, false);
                 }
-                this.dataRange.DataRange = this.strategyCenterItem_0.DataRange;
-                this.posSize.PositionSize = this.strategyCenterItem_0.PositionSize;
-                this.scale.DataScale = new BarDataScale(this.strategyCenterItem_0.Scale, this.strategyCenterItem_0.BarInterval);
-                if (this.strategyCenterItem_0.Symbol == "")
+                this.dataRange.DataRange = this.strategyCenterItem.DataRange;
+                this.posSize.PositionSize = this.strategyCenterItem.PositionSize;
+                this.scale.DataScale = new BarDataScale(this.strategyCenterItem.Scale, this.strategyCenterItem.BarInterval);
+                if (this.strategyCenterItem.Symbol == "")
                 {
-                    this.tree.SelectDataSource(this.strategyCenterItem_0.DataSet);
+                    this.tree.SelectDataSource(this.strategyCenterItem.DataSet);
                 }
                 else
                 {
-                    this.tree.SelectSymbol(this.strategyCenterItem_0.DataSet, this.strategyCenterItem_0.Symbol);
+                    this.tree.SelectSymbol(this.strategyCenterItem.DataSet, this.strategyCenterItem.Symbol);
                 }
-                this.cbOrders.Checked = this.strategyCenterItem_0.AutoStage;
-                this.cbPV.Checked = this.strategyCenterItem_0.UsePreferredValues;
-                this.cbEmailOrders.Checked = this.strategyCenterItem_0.EmailAlerts;
-                this.paramSliders.WealthScript = this.strategyCenterItem_0.WealthScript;
+                this.cbOrders.Checked = this.strategyCenterItem.AutoStage;
+                this.cbPV.Checked = this.strategyCenterItem.UsePreferredValues;
+                this.cbEmailOrders.Checked = this.strategyCenterItem.EmailAlerts;
+                this.paramSliders.WealthScript = this.strategyCenterItem.WealthScript;
                 this.method_1();
-                this.accountTypeSelector1.SelectAccountTradeType(this.strategyCenterItem_0.AccountTradeType, true);
+                this.accountTypeSelector1.SelectAccountTradeType(this.strategyCenterItem.AccountTradeType, true);
                 this.groupBox1.Enabled = !this.scale.DataScale.IsIntraday;
-                this.cmbHours.SelectedItem = this.strategyCenterItem_0.ExecuteHours.ToString();
-                this.cmbMin.SelectedItem = this.strategyCenterItem_0.ExecuteMin.ToString();
+                this.cmbHours.SelectedItem = this.strategyCenterItem.ExecuteHours.ToString();
+                this.cmbMin.SelectedItem = this.strategyCenterItem.ExecuteMin.ToString();
                 this.method_3();
             }
         }

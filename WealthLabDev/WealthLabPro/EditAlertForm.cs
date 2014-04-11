@@ -10,7 +10,7 @@
     public class EditAlertForm : Form
     {
         private AccountTypeSelector accountTypeSelector1;
-        private WealthLab.Alert alert_0;
+        private WealthLab.Alert alert;
         private bool bool_0;
         private bool bool_1;
         private Button btnCancel;
@@ -44,13 +44,13 @@
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            this.alert_0.Account = this.cmbAccount.Text;
-            this.alert_0.Symbol = this.txtSymbol.Text;
-            this.alert_0.AlertType = (TradeType) this.cmbAction.SelectedIndex;
-            this.alert_0.Shares = (double) this.numQty.Value;
-            this.alert_0.OrderType = (OrderType) this.cmbOrderType.SelectedIndex;
-            this.alert_0.Price = (double) this.numPrice.Value;
-            this.alert_0.AccountTradeType = (string) this.accountTypeSelector1.SelectedItem;
+            this.alert.Account = this.cmbAccount.Text;
+            this.alert.Symbol = this.txtSymbol.Text;
+            this.alert.AlertType = (TradeType) this.cmbAction.SelectedIndex;
+            this.alert.Shares = (double) this.numQty.Value;
+            this.alert.OrderType = (OrderType) this.cmbOrderType.SelectedIndex;
+            this.alert.Price = (double) this.numPrice.Value;
+            this.alert.AccountTradeType = (string) this.accountTypeSelector1.SelectedItem;
             base.DialogResult = DialogResult.OK;
         }
 
@@ -95,18 +95,18 @@
                     this.cmbOrderType.Items.Add(type.ToString());
                 }
             }
-            if (this.alert_0 != null)
+            if (this.alert != null)
             {
-                this.cmbAccount.Text = this.alert_0.Account;
-                this.txtSymbol.Text = this.alert_0.Symbol;
-                this.cmbAction.Text = this.alert_0.AlertType.ToString();
-                this.numQty.Text = this.alert_0.Shares.ToString();
-                this.cmbOrderType.Text = this.alert_0.OrderType.ToString();
-                this.numPrice.Text = this.alert_0.Price.ToString("N" + DecimalsManager.Instance.GetPricingDecimalForSymbol(this.alert_0.Symbol));
+                this.cmbAccount.Text = this.alert.Account;
+                this.txtSymbol.Text = this.alert.Symbol;
+                this.cmbAction.Text = this.alert.AlertType.ToString();
+                this.numQty.Text = this.alert.Shares.ToString();
+                this.cmbOrderType.Text = this.alert.OrderType.ToString();
+                this.numPrice.Text = this.alert.Price.ToString("N" + DecimalsManager.Instance.GetPricingDecimalForSymbol(this.alert.Symbol));
             }
             this.accountTypeSelector1.IgnoreCalls = false;
             this.accountTypeSelector1.InitAccountTradeType(this.cmbAccount.Text, this.cmbAction.Text);
-            this.accountTypeSelector1.SelectAccountTradeType(this.alert_0.AccountTradeType, true);
+            this.accountTypeSelector1.SelectAccountTradeType(this.alert.AccountTradeType, true);
         }
 
         private void InitializeComponent()
@@ -279,11 +279,11 @@
         {
             get
             {
-                return this.alert_0;
+                return this.alert;
             }
             set
             {
-                this.alert_0 = value;
+                this.alert = value;
             }
         }
     }

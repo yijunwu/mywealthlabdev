@@ -144,7 +144,7 @@
             }
         }
 
-        public bool SM
+        public bool SM  ///WYJ note, simple mode? no second and tick options, see using of bool_0
         {
             get
             {
