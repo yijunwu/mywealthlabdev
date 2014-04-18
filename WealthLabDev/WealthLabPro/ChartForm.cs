@@ -22,7 +22,6 @@
     {
         private Alerts alerts_0;
         private AutoResetEvent autoResetEvent_0 = new AutoResetEvent(false);
-        internal BarDataRangeSelecter barRange;
         private WealthLab.Bars bars_0;
         private WealthLab.Bars bars_1;
         internal BarsLoader barsLoader_0;
@@ -48,8 +47,6 @@
         private bool bool_9;
         private ToolStripButton btnLink;
         internal ToolStripButton btnPV;
-        private Button btnRunAll;
-        private Button btnRunAllCancel;
         private ToolStripButton btnStreaming;
         private Builder builder_0;
         private Chart chart;
@@ -70,7 +67,6 @@
         private Editor editor;
         private ToolStripMenuItem enableDisableStreamingHiddenMenuItem;
         internal FundamentalsLoader fundamentalsLoader_0;
-        private GroupBox grpMultiSymbol;
         private IContainer components;  ///WYJ fix, renamed from icontainer_0 to components, according to: http://blog.stephencleary.com/2009/11/reverse-compiling-windows-forms.html
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
@@ -82,10 +78,6 @@
         private int int_4 = -1;
         [CompilerGenerated]
         private int childScrollBar;
-        private Label lblProgress;
-        private Label lblRunAllStatus;
-        private Label lblStatus;
-        private Label lblSymbol;
         private List<WealthLab.Bars> list_0 = new List<WealthLab.Bars>();
         private List<TabPage> list_1 = new List<TabPage>();
         private List<TabPage> list_2 = new List<TabPage>();
@@ -114,11 +106,7 @@
         private WealthLabPro.Optimization optimization;
         private TabPage pageChart;  ///WYJ note: the tab page for chart
         private ToolStripMenuItem plotAFundamentalDataItemOnTheChartToolStripMenuItem;
-        private Panel pnlMultiSymbol;
-        private Panel pnlSymbol;
         private ContextMenuStrip popupChart;
-        internal PositionSizeSelecter posSize;
-        private ProgressBar progRunAll;
         private ToolStripSeparator sepBuySell;
         private ToolStripSeparator sepCopyChart;
         private ToolStripSeparator sepDrawing;
@@ -156,7 +144,23 @@
         private ToolStripSeparator toolStripSeparator1;
         private TradingSystemExecutor tradingSystemExecutor_0;
         private TradingSystemExecutor tradingSystemExecutor_1;
+        private Panel pnlDataView;
+        private SplitContainer splitContainer1;
+        private Chart chart1;
+        private Chart chart2;
+        private Panel pnlSymbol;
         private TextBox txtSymbol;
+        private Label lblSymbol;
+        private Panel pnlMultiSymbol;
+        internal BarDataRangeSelecter barRange;
+        private GroupBox grpMultiSymbol;
+        private Button btnRunAllCancel;
+        private Label lblRunAllStatus;
+        private Label lblStatus;
+        private ProgressBar progRunAll;
+        private Label lblProgress;
+        private Button btnRunAll;
+        internal PositionSizeSelecter posSize;
         private WealthLab.WealthScript wealthScript;
 
         public ChartForm()
@@ -164,6 +168,8 @@
             int_0++;
             this.int_1 = int_0;
             this.InitializeComponent();
+            this.pnlMultiSymbol.BringToFront();
+
             if (Application.ProductName == "WealthLabPro")
             {
                 this.chartRenderer.FundamentalGlyphs = "Split;Dividend;";
@@ -795,628 +801,934 @@
 
         private void InitializeComponent()
         {
-            this.components = new Container();
-            ///WYJ fix, 'manager' renamed to 'resources', according to http://blog.stephencleary.com/2009/11/reverse-compiling-windows-forms.html
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WealthLabPro.ChartForm));
-            WealthLab.PositionSize size = new WealthLab.PositionSize();
-            WealthLab.PositionSize size2 = new WealthLab.PositionSize();
-            this.status = new StatusStrip();
-            this.btnStreaming = new ToolStripButton();
-            this.btnPV = new ToolStripButton();
-            this.btnLink = new ToolStripButton();
-            this.statusAddStrategy = new ToolStripStatusLabel();
-            this.statusAddToSC = new ToolStripStatusLabel();
-            this.statusOptimize = new ToolStripStatusLabel();
-            this.stlblProfit = new ToolStripStatusLabel();
-            this.stlblBHProfit = new ToolStripStatusLabel();
-            this.stlblPerBar = new ToolStripStatusLabel();
-            this.stlblBHPerBar = new ToolStripStatusLabel();
-            this.stlblLastDate = new ToolStripStatusLabel();
-            this.stlblBars = new ToolStripStatusLabel();
-            this.popupChart = new ContextMenuStrip(this.components);
-            this.mniChartBuy = new ToolStripMenuItem();
-            this.mniChartSell = new ToolStripMenuItem();
-            this.sepBuySell = new ToolStripSeparator();
-            this.mniChartShort = new ToolStripMenuItem();
-            this.mniChartCover = new ToolStripMenuItem();
-            this.sepShortCover = new ToolStripSeparator();
-            this.mniAddStrategy = new ToolStripMenuItem();
-            this.mniAddDifferent = new ToolStripMenuItem();
-            this.mniPlotIndicator = new ToolStripMenuItem();
-            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem = new ToolStripMenuItem();
-            this.mniPushCode = new ToolStripMenuItem();
-            this.sepPlot = new ToolStripSeparator();
-            this.mniCopyChart = new ToolStripMenuItem();
-            this.mniCopyPriceData = new ToolStripMenuItem();
-            this.mniAddSymbolToDataSet = new ToolStripMenuItem();
-            this.mniPrint = new ToolStripMenuItem();
-            this.mniPrintAll = new ToolStripMenuItem();
-            this.sepCopyChart = new ToolStripSeparator();
-            this.mniIndicatorProperties = new ToolStripMenuItem();
-            this.mniDeleteIndicator = new ToolStripMenuItem();
-            this.sepIndicators = new ToolStripSeparator();
-            this.mniDrawingObjectProperties = new ToolStripMenuItem();
-            this.mniDeleteDrawingObject = new ToolStripMenuItem();
-            this.sepDrawing = new ToolStripSeparator();
-            this.mniChartOptions = new ToolStripMenuItem();
-            this.mniChartStyleSettings = new ToolStripMenuItem();
-            this.toolStripSeparator1 = new ToolStripSeparator();
-            this.mniReload = new ToolStripMenuItem();
-            this.mniStockSplit = new ToolStripMenuItem();
-            this.enableDisableStreamingHiddenMenuItem = new ToolStripMenuItem();
-            this.editBarToolStripMenuItem = new ToolStripMenuItem();
-            this.tabChart = new TabControl();
-            this.pageChart = new TabPage();
-            this.pnlSymbol = new Panel();
-            this.txtSymbol = new TextBox();
-            this.lblSymbol = new Label();
-            this.statusChart = new StatusStrip();
-            this.stlblBar = new ToolStripStatusLabel();
-            this.stlblDate = new ToolStripStatusLabel();
-            this.stlblOpen = new ToolStripStatusLabel();
-            this.stlblHigh = new ToolStripStatusLabel();
-            this.stlblLow = new ToolStripStatusLabel();
-            this.stlblClose = new ToolStripStatusLabel();
-            this.stlblVolume = new ToolStripStatusLabel();
-            this.stlblMouse = new ToolStripStatusLabel();
-            this.pnlMultiSymbol = new Panel();
-            this.barRange = new BarDataRangeSelecter();
-            this.grpMultiSymbol = new GroupBox();
-            this.btnRunAllCancel = new Button();
-            this.imageList_0 = new ImageList(this.components);
-            this.lblRunAllStatus = new Label();
-            this.lblStatus = new Label();
-            this.progRunAll = new ProgressBar();
-            this.lblProgress = new Label();
-            this.btnRunAll = new Button();
-            this.posSize = new PositionSizeSelecter();
-            this.chart = new Chart();
-            this.indicatorDragDropManager_0 = new IndicatorDragDropManager(this.components);
-            this.drawingObjectManager_0 = new DrawingObjectManager(this.components);
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChartForm));
+            WealthLab.PositionSize positionSize1 = new WealthLab.PositionSize();
+            WealthLab.PositionSize positionSize2 = new WealthLab.PositionSize();
+            this.status = new System.Windows.Forms.StatusStrip();
+            this.btnStreaming = new System.Windows.Forms.ToolStripButton();
+            this.btnPV = new System.Windows.Forms.ToolStripButton();
+            this.btnLink = new System.Windows.Forms.ToolStripButton();
+            this.statusAddStrategy = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusAddToSC = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusOptimize = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblProfit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblBHProfit = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblPerBar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblBHPerBar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblLastDate = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblBars = new System.Windows.Forms.ToolStripStatusLabel();
+            this.popupChart = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mniChartBuy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniChartSell = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepBuySell = new System.Windows.Forms.ToolStripSeparator();
+            this.mniChartShort = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniChartCover = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepShortCover = new System.Windows.Forms.ToolStripSeparator();
+            this.mniAddStrategy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniAddDifferent = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniPlotIndicator = new System.Windows.Forms.ToolStripMenuItem();
+            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniPushCode = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepPlot = new System.Windows.Forms.ToolStripSeparator();
+            this.mniCopyChart = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniCopyPriceData = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniAddSymbolToDataSet = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniPrintAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepCopyChart = new System.Windows.Forms.ToolStripSeparator();
+            this.mniIndicatorProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniDeleteIndicator = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepIndicators = new System.Windows.Forms.ToolStripSeparator();
+            this.mniDrawingObjectProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniDeleteDrawingObject = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepDrawing = new System.Windows.Forms.ToolStripSeparator();
+            this.mniChartOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniChartStyleSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniReload = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniStockSplit = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableDisableStreamingHiddenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabChart = new System.Windows.Forms.TabControl();
+            this.pageChart = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pnlSymbol = new System.Windows.Forms.Panel();
+            this.txtSymbol = new System.Windows.Forms.TextBox();
+            this.lblSymbol = new System.Windows.Forms.Label();
+            this.statusChart = new System.Windows.Forms.StatusStrip();
+            this.stlblBar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblDate = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblOpen = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblHigh = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblLow = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblClose = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblVolume = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stlblMouse = new System.Windows.Forms.ToolStripStatusLabel();
+            this.chart = new WealthLab.ChartControl.Chart();
+            this.indicatorDragDropManager_0 = new WealthLab.ChartControl.IndicatorDragDropManager(this.components);
+            this.drawingObjectManager_0 = new WealthLab.ChartControl.DrawingObjectManager(this.components);
+            this.chart2 = new WealthLab.ChartControl.Chart();
+            this.pnlMultiSymbol = new System.Windows.Forms.Panel();
+            this.grpMultiSymbol = new System.Windows.Forms.GroupBox();
+            this.btnRunAllCancel = new System.Windows.Forms.Button();
+            this.imageList_0 = new System.Windows.Forms.ImageList(this.components);
+            this.lblRunAllStatus = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.progRunAll = new System.Windows.Forms.ProgressBar();
+            this.lblProgress = new System.Windows.Forms.Label();
+            this.btnRunAll = new System.Windows.Forms.Button();
+            this.pnlDataView = new System.Windows.Forms.Panel();
+            this.chart1 = new WealthLab.ChartControl.Chart();
             this.timer_0 = new System.Windows.Forms.Timer(this.components);
-            this.chartRenderer = new ChartRenderer(this.components);
-            this.tradingSystemExecutor_1 = new TradingSystemExecutor(this.components);
-            this.barsLoader_0 = new BarsLoader(this.components);
-            this.fundamentalsLoader_0 = new FundamentalsLoader(this.components);
-            this.tradingSystemExecutor_0 = new TradingSystemExecutor(this.components);
-            this.streamingChartManager_0 = new StreamingChartManager(this.components);
-            this.marketHours_0 = new MarketHours(this.components);
-            this.drawingObjectManager_1 = new DrawingObjectManager(this.components);
+            this.chartRenderer = new WealthLab.ChartRenderer(this.components);
+            this.tradingSystemExecutor_1 = new WealthLab.TradingSystemExecutor(this.components);
+            this.barsLoader_0 = new WealthLab.BarsLoader(this.components);
+            this.fundamentalsLoader_0 = new WealthLab.FundamentalsLoader(this.components);
+            this.tradingSystemExecutor_0 = new WealthLab.TradingSystemExecutor(this.components);
+            this.streamingChartManager_0 = new WealthLab.StreamingChartManager(this.components);
+            this.marketHours_0 = new WealthLab.MarketHours(this.components);
+            this.drawingObjectManager_1 = new WealthLab.ChartControl.DrawingObjectManager(this.components);
+            this.barRange = new WealthLabPro.BarDataRangeSelecter();
+            this.posSize = new WealthLabPro.PositionSizeSelecter();
             this.status.SuspendLayout();
             this.popupChart.SuspendLayout();
             this.tabChart.SuspendLayout();
             this.pageChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.pnlSymbol.SuspendLayout();
             this.statusChart.SuspendLayout();
             this.pnlMultiSymbol.SuspendLayout();
             this.grpMultiSymbol.SuspendLayout();
-            base.SuspendLayout();
-            this.status.Items.AddRange(new ToolStripItem[] { this.btnStreaming, this.btnPV, this.btnLink, this.statusAddStrategy, this.statusAddToSC, this.statusOptimize, this.stlblProfit, this.stlblBHProfit, this.stlblPerBar, this.stlblBHPerBar, this.stlblLastDate, this.stlblBars });
-            this.status.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.status.Location = new Point(0, 0x1b5);
+            this.SuspendLayout();
+            // 
+            // status
+            // 
+            this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnStreaming,
+            this.btnPV,
+            this.btnLink,
+            this.statusAddStrategy,
+            this.statusAddToSC,
+            this.statusOptimize,
+            this.stlblProfit,
+            this.stlblBHProfit,
+            this.stlblPerBar,
+            this.stlblBHPerBar,
+            this.stlblLastDate,
+            this.stlblBars});
+            this.status.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.status.Location = new System.Drawing.Point(0, 437);
             this.status.Name = "status";
             this.status.ShowItemToolTips = true;
-            this.status.Size = new Size(0x3e3, 0x16);
+            this.status.Size = new System.Drawing.Size(995, 22);
             this.status.TabIndex = 0;
             this.status.Text = "statusStrip1";
-            this.btnStreaming.Alignment = ToolStripItemAlignment.Right;
-            this.btnStreaming.Image = (Image) resources.GetObject("btnStreaming.Image");
-            this.btnStreaming.ImageTransparentColor = Color.Magenta;
+            // 
+            // btnStreaming
+            // 
+            this.btnStreaming.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnStreaming.Image = ((System.Drawing.Image)(resources.GetObject("btnStreaming.Image")));
+            this.btnStreaming.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnStreaming.Name = "btnStreaming";
-            this.btnStreaming.Size = new Size(0x3d, 20);
+            this.btnStreaming.Size = new System.Drawing.Size(61, 20);
             this.btnStreaming.Text = "Stream";
             this.btnStreaming.ToolTipText = "Enable/Disable Streaming";
-            this.btnStreaming.CheckedChanged += new EventHandler(this.btnStreaming_CheckedChanged);
-            this.btnStreaming.Click += new EventHandler(this.enableDisableStreamingHiddenMenuItem_Click);
-            this.btnPV.Alignment = ToolStripItemAlignment.Right;
-            this.btnPV.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnPV.Image = (Image) resources.GetObject("btnPV.Image");
-            this.btnPV.ImageTransparentColor = Color.White;
+            this.btnStreaming.CheckedChanged += new System.EventHandler(this.btnStreaming_CheckedChanged);
+            this.btnStreaming.Click += new System.EventHandler(this.enableDisableStreamingHiddenMenuItem_Click);
+            // 
+            // btnPV
+            // 
+            this.btnPV.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnPV.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPV.Image = ((System.Drawing.Image)(resources.GetObject("btnPV.Image")));
+            this.btnPV.ImageTransparentColor = System.Drawing.Color.White;
             this.btnPV.Name = "btnPV";
-            this.btnPV.Size = new Size(0x17, 20);
+            this.btnPV.Size = new System.Drawing.Size(23, 20);
             this.btnPV.Text = "toolStripButton1";
             this.btnPV.ToolTipText = "Use Preferred Strategy Parameter Values";
             this.btnPV.Visible = false;
-            this.btnPV.Click += new EventHandler(this.btnPV_Click);
-            this.btnLink.Alignment = ToolStripItemAlignment.Right;
-            this.btnLink.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnLink.Image = (Image) resources.GetObject("btnLink.Image");
-            this.btnLink.ImageTransparentColor = Color.Magenta;
+            this.btnPV.Click += new System.EventHandler(this.btnPV_Click);
+            // 
+            // btnLink
+            // 
+            this.btnLink.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnLink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLink.Image = ((System.Drawing.Image)(resources.GetObject("btnLink.Image")));
+            this.btnLink.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLink.Name = "btnLink";
-            this.btnLink.Size = new Size(0x17, 20);
+            this.btnLink.Size = new System.Drawing.Size(23, 20);
             this.btnLink.Text = "toolStripButton1";
             this.btnLink.ToolTipText = "Always update linked charts when Symbol changes";
-            this.btnLink.Click += new EventHandler(this.btnLink_Click);
-            this.statusAddStrategy.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.btnLink.Click += new System.EventHandler(this.btnLink_Click);
+            // 
+            // statusAddStrategy
+            // 
+            this.statusAddStrategy.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.statusAddStrategy.IsLink = true;
             this.statusAddStrategy.Name = "statusAddStrategy";
-            this.statusAddStrategy.Size = new Size(0x61, 0x11);
+            this.statusAddStrategy.Size = new System.Drawing.Size(97, 17);
             this.statusAddStrategy.Text = "Open Strategy ...";
-            this.statusAddStrategy.Click += new EventHandler(this.mniAddDifferent_Click);
-            this.statusAddToSC.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.statusAddStrategy.Click += new System.EventHandler(this.mniAddDifferent_Click);
+            // 
+            // statusAddToSC
+            // 
+            this.statusAddToSC.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.statusAddToSC.IsLink = true;
             this.statusAddToSC.Name = "statusAddToSC";
-            this.statusAddToSC.Size = new Size(0x2f, 0x11);
+            this.statusAddToSC.Size = new System.Drawing.Size(47, 17);
             this.statusAddToSC.Text = "Monitor";
             this.statusAddToSC.Visible = false;
-            this.statusAddToSC.Click += new EventHandler(this.statusAddToSC_Click);
-            this.statusOptimize.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.statusAddToSC.Click += new System.EventHandler(this.statusAddToSC_Click);
+            // 
+            // statusOptimize
+            // 
+            this.statusOptimize.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.statusOptimize.IsLink = true;
             this.statusOptimize.Name = "statusOptimize";
-            this.statusOptimize.Size = new Size(0x34, 0x11);
+            this.statusOptimize.Size = new System.Drawing.Size(52, 17);
             this.statusOptimize.Text = "Optimize";
             this.statusOptimize.Visible = false;
-            this.statusOptimize.Click += new EventHandler(this.statusOptimize_Click);
-            this.stlblProfit.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.statusOptimize.Click += new System.EventHandler(this.statusOptimize_Click);
+            // 
+            // stlblProfit
+            // 
+            this.stlblProfit.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblProfit.Name = "stlblProfit";
-            this.stlblProfit.Size = new Size(0x5c, 0x11);
+            this.stlblProfit.Size = new System.Drawing.Size(92, 17);
             this.stlblProfit.Text = "Net Profit: $0.00";
             this.stlblProfit.ToolTipText = "Net Profit of the Strategy";
             this.stlblProfit.Visible = false;
-            this.stlblBHProfit.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            // 
+            // stlblBHProfit
+            // 
+            this.stlblBHProfit.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblBHProfit.Name = "stlblBHProfit";
-            this.stlblBHProfit.Size = new Size(0x6c, 0x11);
+            this.stlblBHProfit.Size = new System.Drawing.Size(108, 17);
             this.stlblBHProfit.Text = "BH Net Profit: $0.00";
             this.stlblBHProfit.ToolTipText = "Buy and Hold Net Profit";
             this.stlblBHProfit.Visible = false;
-            this.stlblPerBar.BorderSides = ToolStripStatusLabelBorderSides.Right;
-            this.stlblPerBar.Font = new Font("Tahoma", 8.25f, FontStyle.Bold);
+            // 
+            // stlblPerBar
+            // 
+            this.stlblPerBar.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.stlblPerBar.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.stlblPerBar.Name = "stlblPerBar";
-            this.stlblPerBar.Size = new Size(0x7b, 0x11);
+            this.stlblPerBar.Size = new System.Drawing.Size(123, 17);
             this.stlblPerBar.Text = "Profit per Bar: $0.00";
             this.stlblPerBar.ToolTipText = "Efficiency of the Strategy";
             this.stlblPerBar.Visible = false;
-            this.stlblBHPerBar.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            // 
+            // stlblBHPerBar
+            // 
+            this.stlblBHPerBar.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblBHPerBar.Name = "stlblBHPerBar";
-            this.stlblBHPerBar.Size = new Size(0x7e, 0x11);
+            this.stlblBHPerBar.Size = new System.Drawing.Size(126, 17);
             this.stlblBHPerBar.Text = "BH Profit per Bar: $0.00";
             this.stlblBHPerBar.ToolTipText = "Buy and Hold Efficiency";
             this.stlblBHPerBar.Visible = false;
-            this.stlblLastDate.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            // 
+            // stlblLastDate
+            // 
+            this.stlblLastDate.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblLastDate.Name = "stlblLastDate";
-            this.stlblLastDate.Size = new Size(0x6c, 0x11);
+            this.stlblLastDate.Size = new System.Drawing.Size(108, 17);
             this.stlblLastDate.Text = "Last Date: 1/1/2007";
             this.stlblLastDate.ToolTipText = "The most recent Date in the Chart";
+            // 
+            // stlblBars
+            // 
             this.stlblBars.Name = "stlblBars";
-            this.stlblBars.Size = new Size(0x29, 0x11);
+            this.stlblBars.Size = new System.Drawing.Size(41, 17);
             this.stlblBars.Text = "Bars: 0";
             this.stlblBars.ToolTipText = "Number of Bars in the Chart";
-            this.popupChart.Items.AddRange(new ToolStripItem[] { 
-                this.mniChartBuy, this.mniChartSell, this.sepBuySell, this.mniChartShort, this.mniChartCover, this.sepShortCover, this.mniAddStrategy, this.mniAddDifferent, this.mniPlotIndicator, this.plotAFundamentalDataItemOnTheChartToolStripMenuItem, this.mniPushCode, this.sepPlot, this.mniCopyChart, this.mniCopyPriceData, this.mniAddSymbolToDataSet, this.mniPrint, 
-                this.mniPrintAll, this.sepCopyChart, this.mniIndicatorProperties, this.mniDeleteIndicator, this.sepIndicators, this.mniDrawingObjectProperties, this.mniDeleteDrawingObject, this.sepDrawing, this.mniChartOptions, this.mniChartStyleSettings, this.toolStripSeparator1, this.mniReload, this.mniStockSplit, this.enableDisableStreamingHiddenMenuItem, this.editBarToolStripMenuItem
-             });
+            // 
+            // popupChart
+            // 
+            this.popupChart.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniChartBuy,
+            this.mniChartSell,
+            this.sepBuySell,
+            this.mniChartShort,
+            this.mniChartCover,
+            this.sepShortCover,
+            this.mniAddStrategy,
+            this.mniAddDifferent,
+            this.mniPlotIndicator,
+            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem,
+            this.mniPushCode,
+            this.sepPlot,
+            this.mniCopyChart,
+            this.mniCopyPriceData,
+            this.mniAddSymbolToDataSet,
+            this.mniPrint,
+            this.mniPrintAll,
+            this.sepCopyChart,
+            this.mniIndicatorProperties,
+            this.mniDeleteIndicator,
+            this.sepIndicators,
+            this.mniDrawingObjectProperties,
+            this.mniDeleteDrawingObject,
+            this.sepDrawing,
+            this.mniChartOptions,
+            this.mniChartStyleSettings,
+            this.toolStripSeparator1,
+            this.mniReload,
+            this.mniStockSplit,
+            this.enableDisableStreamingHiddenMenuItem,
+            this.editBarToolStripMenuItem});
             this.popupChart.Name = "popupChart";
-            this.popupChart.Size = new Size(0x182, 0x23e);
-            this.popupChart.Opening += new CancelEventHandler(this.popupChart_Opening);
-            this.mniChartBuy.Image = (Image) resources.GetObject("mniChartBuy.Image");
-            this.mniChartBuy.ImageTransparentColor = Color.Silver;
+            this.popupChart.Size = new System.Drawing.Size(375, 574);
+            this.popupChart.Opening += new System.ComponentModel.CancelEventHandler(this.popupChart_Opening);
+            // 
+            // mniChartBuy
+            // 
+            this.mniChartBuy.Image = ((System.Drawing.Image)(resources.GetObject("mniChartBuy.Image")));
+            this.mniChartBuy.ImageTransparentColor = System.Drawing.Color.Silver;
             this.mniChartBuy.Name = "mniChartBuy";
-            this.mniChartBuy.Size = new Size(0x181, 0x16);
+            this.mniChartBuy.Size = new System.Drawing.Size(374, 22);
             this.mniChartBuy.Text = "Buy 100";
-            this.mniChartBuy.Click += new EventHandler(this.mniChartBuy_Click);
-            this.mniChartSell.Image = (Image) resources.GetObject("mniChartSell.Image");
-            this.mniChartSell.ImageTransparentColor = Color.Silver;
+            this.mniChartBuy.Click += new System.EventHandler(this.mniChartBuy_Click);
+            // 
+            // mniChartSell
+            // 
+            this.mniChartSell.Image = ((System.Drawing.Image)(resources.GetObject("mniChartSell.Image")));
+            this.mniChartSell.ImageTransparentColor = System.Drawing.Color.Silver;
             this.mniChartSell.Name = "mniChartSell";
-            this.mniChartSell.Size = new Size(0x181, 0x16);
+            this.mniChartSell.Size = new System.Drawing.Size(374, 22);
             this.mniChartSell.Text = "Sell 100";
-            this.mniChartSell.Click += new EventHandler(this.mniChartSell_Click);
+            this.mniChartSell.Click += new System.EventHandler(this.mniChartSell_Click);
+            // 
+            // sepBuySell
+            // 
             this.sepBuySell.Name = "sepBuySell";
-            this.sepBuySell.Size = new Size(0x17e, 6);
-            this.mniChartShort.Image = (Image) resources.GetObject("mniChartShort.Image");
-            this.mniChartShort.ImageTransparentColor = Color.Silver;
+            this.sepBuySell.Size = new System.Drawing.Size(371, 6);
+            // 
+            // mniChartShort
+            // 
+            this.mniChartShort.Image = ((System.Drawing.Image)(resources.GetObject("mniChartShort.Image")));
+            this.mniChartShort.ImageTransparentColor = System.Drawing.Color.Silver;
             this.mniChartShort.Name = "mniChartShort";
-            this.mniChartShort.Size = new Size(0x181, 0x16);
+            this.mniChartShort.Size = new System.Drawing.Size(374, 22);
             this.mniChartShort.Text = "Short 100";
-            this.mniChartShort.Click += new EventHandler(this.mniChartShort_Click);
-            this.mniChartCover.Image = (Image) resources.GetObject("mniChartCover.Image");
-            this.mniChartCover.ImageTransparentColor = Color.Silver;
+            this.mniChartShort.Click += new System.EventHandler(this.mniChartShort_Click);
+            // 
+            // mniChartCover
+            // 
+            this.mniChartCover.Image = ((System.Drawing.Image)(resources.GetObject("mniChartCover.Image")));
+            this.mniChartCover.ImageTransparentColor = System.Drawing.Color.Silver;
             this.mniChartCover.Name = "mniChartCover";
-            this.mniChartCover.Size = new Size(0x181, 0x16);
+            this.mniChartCover.Size = new System.Drawing.Size(374, 22);
             this.mniChartCover.Text = "Cover 100";
-            this.mniChartCover.Click += new EventHandler(this.mniChartCover_Click);
+            this.mniChartCover.Click += new System.EventHandler(this.mniChartCover_Click);
+            // 
+            // sepShortCover
+            // 
             this.sepShortCover.Name = "sepShortCover";
-            this.sepShortCover.Size = new Size(0x17e, 6);
-            this.mniAddStrategy.Image = (Image) resources.GetObject("mniAddStrategy.Image");
-            this.mniAddStrategy.ImageTransparentColor = Color.Fuchsia;
+            this.sepShortCover.Size = new System.Drawing.Size(371, 6);
+            // 
+            // mniAddStrategy
+            // 
+            this.mniAddStrategy.Image = ((System.Drawing.Image)(resources.GetObject("mniAddStrategy.Image")));
+            this.mniAddStrategy.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniAddStrategy.Name = "mniAddStrategy";
-            this.mniAddStrategy.Size = new Size(0x181, 0x16);
+            this.mniAddStrategy.Size = new System.Drawing.Size(374, 22);
             this.mniAddStrategy.Text = "Open a Strategy ...";
-            this.mniAddStrategy.Click += new EventHandler(this.mniAddDifferent_Click);
-            this.mniAddDifferent.Image = (Image) resources.GetObject("mniAddDifferent.Image");
-            this.mniAddDifferent.ImageTransparentColor = Color.Fuchsia;
+            this.mniAddStrategy.Click += new System.EventHandler(this.mniAddDifferent_Click);
+            // 
+            // mniAddDifferent
+            // 
+            this.mniAddDifferent.Image = ((System.Drawing.Image)(resources.GetObject("mniAddDifferent.Image")));
+            this.mniAddDifferent.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniAddDifferent.Name = "mniAddDifferent";
-            this.mniAddDifferent.Size = new Size(0x181, 0x16);
+            this.mniAddDifferent.Size = new System.Drawing.Size(374, 22);
             this.mniAddDifferent.Text = "Open a different Strategy ...";
             this.mniAddDifferent.Visible = false;
-            this.mniAddDifferent.Click += new EventHandler(this.mniAddDifferent_Click);
-            this.mniPlotIndicator.Image = (Image) resources.GetObject("mniPlotIndicator.Image");
-            this.mniPlotIndicator.ImageTransparentColor = Color.Fuchsia;
+            this.mniAddDifferent.Click += new System.EventHandler(this.mniAddDifferent_Click);
+            // 
+            // mniPlotIndicator
+            // 
+            this.mniPlotIndicator.Image = ((System.Drawing.Image)(resources.GetObject("mniPlotIndicator.Image")));
+            this.mniPlotIndicator.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniPlotIndicator.Name = "mniPlotIndicator";
-            this.mniPlotIndicator.Size = new Size(0x181, 0x16);
+            this.mniPlotIndicator.Size = new System.Drawing.Size(374, 22);
             this.mniPlotIndicator.Text = "Plot an Indicator on the Chart ...";
-            this.mniPlotIndicator.Click += new EventHandler(this.mniPlotIndicator_Click);
-            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Image = (Image) resources.GetObject("plotAFundamentalDataItemOnTheChartToolStripMenuItem.Image");
-            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.ImageTransparentColor = Color.Fuchsia;
+            this.mniPlotIndicator.Click += new System.EventHandler(this.mniPlotIndicator_Click);
+            // 
+            // plotAFundamentalDataItemOnTheChartToolStripMenuItem
+            // 
+            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("plotAFundamentalDataItemOnTheChartToolStripMenuItem.Image")));
+            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Name = "plotAFundamentalDataItemOnTheChartToolStripMenuItem";
-            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Size = new Size(0x181, 0x16);
+            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Size = new System.Drawing.Size(374, 22);
             this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Text = "Plot a Fundamental Data Item on the Chart ...";
-            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Click += new EventHandler(this.plotAFundamentalDataItemOnTheChartToolStripMenuItem_Click);
-            ///this.mniPushCode.Image = WealthLabPro.Properties.Resources.wlp_push;
-            this.mniPushCode.Image = (Image)resources.GetObject("wlp_push");  ///WYJ fix
-            this.mniPushCode.ImageTransparentColor = Color.Fuchsia;
+            this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Click += new System.EventHandler(this.plotAFundamentalDataItemOnTheChartToolStripMenuItem_Click);
+            // 
+            // mniPushCode
+            // 
+            this.mniPushCode.Image = ((System.Drawing.Image)(resources.GetObject("mniPushCode.Image")));
+            this.mniPushCode.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniPushCode.Name = "mniPushCode";
-            this.mniPushCode.Size = new Size(0x181, 0x16);
+            this.mniPushCode.Size = new System.Drawing.Size(374, 22);
             this.mniPushCode.Text = "Push Indicator(s) and Fundamental Item(s) into Strategy Code";
             this.mniPushCode.Visible = false;
-            this.mniPushCode.Click += new EventHandler(this.mniPushCode_Click);
+            this.mniPushCode.Click += new System.EventHandler(this.mniPushCode_Click);
+            // 
+            // sepPlot
+            // 
             this.sepPlot.Name = "sepPlot";
-            this.sepPlot.Size = new Size(0x17e, 6);
-            this.mniCopyChart.Image = (Image) resources.GetObject("mniCopyChart.Image");
-            this.mniCopyChart.ImageTransparentColor = Color.Fuchsia;
+            this.sepPlot.Size = new System.Drawing.Size(371, 6);
+            // 
+            // mniCopyChart
+            // 
+            this.mniCopyChart.Image = ((System.Drawing.Image)(resources.GetObject("mniCopyChart.Image")));
+            this.mniCopyChart.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniCopyChart.Name = "mniCopyChart";
-            this.mniCopyChart.Size = new Size(0x181, 0x16);
+            this.mniCopyChart.Size = new System.Drawing.Size(374, 22);
             this.mniCopyChart.Text = "Copy Chart image to Clipboard";
-            this.mniCopyChart.Click += new EventHandler(this.mniCopyChart_Click);
-            this.mniCopyPriceData.ImageTransparentColor = Color.Fuchsia;
+            this.mniCopyChart.Click += new System.EventHandler(this.mniCopyChart_Click);
+            // 
+            // mniCopyPriceData
+            // 
+            this.mniCopyPriceData.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniCopyPriceData.Name = "mniCopyPriceData";
-            this.mniCopyPriceData.Size = new Size(0x181, 0x16);
+            this.mniCopyPriceData.Size = new System.Drawing.Size(374, 22);
             this.mniCopyPriceData.Text = "Copy Price Data to Clipboard";
-            this.mniCopyPriceData.Click += new EventHandler(this.mniCopyPriceData_Click);
+            this.mniCopyPriceData.Click += new System.EventHandler(this.mniCopyPriceData_Click);
+            // 
+            // mniAddSymbolToDataSet
+            // 
             this.mniAddSymbolToDataSet.Enabled = false;
             this.mniAddSymbolToDataSet.Name = "mniAddSymbolToDataSet";
-            this.mniAddSymbolToDataSet.Size = new Size(0x181, 0x16);
+            this.mniAddSymbolToDataSet.Size = new System.Drawing.Size(374, 22);
             this.mniAddSymbolToDataSet.Text = "Add this Symbol to the selected DataSet";
-            this.mniAddSymbolToDataSet.Click += new EventHandler(this.mniAddSymbolToDataSet_Click);
-            this.mniPrint.Image = (Image) resources.GetObject("mniPrint.Image");
+            this.mniAddSymbolToDataSet.Click += new System.EventHandler(this.mniAddSymbolToDataSet_Click);
+            // 
+            // mniPrint
+            // 
+            this.mniPrint.Image = ((System.Drawing.Image)(resources.GetObject("mniPrint.Image")));
             this.mniPrint.Name = "mniPrint";
-            this.mniPrint.Size = new Size(0x181, 0x16);
+            this.mniPrint.Size = new System.Drawing.Size(374, 22);
             this.mniPrint.Text = "Print";
             this.mniPrint.ToolTipText = "Print the chart image";
-            this.mniPrint.Click += new EventHandler(this.mniPrint_Click);
+            this.mniPrint.Click += new System.EventHandler(this.mniPrint_Click);
+            // 
+            // mniPrintAll
+            // 
             this.mniPrintAll.Name = "mniPrintAll";
-            this.mniPrintAll.Size = new Size(0x181, 0x16);
+            this.mniPrintAll.Size = new System.Drawing.Size(374, 22);
             this.mniPrintAll.Text = "Print All";
             this.mniPrintAll.ToolTipText = "Print content from all tabs";
-            this.mniPrintAll.Click += new EventHandler(this.mniPrintAll_Click);
+            this.mniPrintAll.Click += new System.EventHandler(this.mniPrintAll_Click);
+            // 
+            // sepCopyChart
+            // 
             this.sepCopyChart.Name = "sepCopyChart";
-            this.sepCopyChart.Size = new Size(0x17e, 6);
-            this.mniIndicatorProperties.Image = (Image) resources.GetObject("mniIndicatorProperties.Image");
-            this.mniIndicatorProperties.ImageTransparentColor = Color.Fuchsia;
+            this.sepCopyChart.Size = new System.Drawing.Size(371, 6);
+            // 
+            // mniIndicatorProperties
+            // 
+            this.mniIndicatorProperties.Image = ((System.Drawing.Image)(resources.GetObject("mniIndicatorProperties.Image")));
+            this.mniIndicatorProperties.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniIndicatorProperties.Name = "mniIndicatorProperties";
-            this.mniIndicatorProperties.Size = new Size(0x181, 0x16);
+            this.mniIndicatorProperties.Size = new System.Drawing.Size(374, 22);
             this.mniIndicatorProperties.Text = "Change Indicator Properties";
             this.mniIndicatorProperties.Visible = false;
-            this.mniIndicatorProperties.Click += new EventHandler(this.mniIndicatorProperties_Click);
-            this.mniDeleteIndicator.Image = (Image) resources.GetObject("mniDeleteIndicator.Image");
-            this.mniDeleteIndicator.ImageTransparentColor = Color.Fuchsia;
+            this.mniIndicatorProperties.Click += new System.EventHandler(this.mniIndicatorProperties_Click);
+            // 
+            // mniDeleteIndicator
+            // 
+            this.mniDeleteIndicator.Image = ((System.Drawing.Image)(resources.GetObject("mniDeleteIndicator.Image")));
+            this.mniDeleteIndicator.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniDeleteIndicator.Name = "mniDeleteIndicator";
-            this.mniDeleteIndicator.Size = new Size(0x181, 0x16);
+            this.mniDeleteIndicator.Size = new System.Drawing.Size(374, 22);
             this.mniDeleteIndicator.Text = "Delete Indicator";
             this.mniDeleteIndicator.Visible = false;
-            this.mniDeleteIndicator.Click += new EventHandler(this.mniDeleteIndicator_Click);
+            this.mniDeleteIndicator.Click += new System.EventHandler(this.mniDeleteIndicator_Click);
+            // 
+            // sepIndicators
+            // 
             this.sepIndicators.Name = "sepIndicators";
-            this.sepIndicators.Size = new Size(0x17e, 6);
+            this.sepIndicators.Size = new System.Drawing.Size(371, 6);
             this.sepIndicators.Visible = false;
-            this.mniDrawingObjectProperties.Image = (Image) resources.GetObject("mniDrawingObjectProperties.Image");
-            this.mniDrawingObjectProperties.ImageTransparentColor = Color.Fuchsia;
+            // 
+            // mniDrawingObjectProperties
+            // 
+            this.mniDrawingObjectProperties.Image = ((System.Drawing.Image)(resources.GetObject("mniDrawingObjectProperties.Image")));
+            this.mniDrawingObjectProperties.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniDrawingObjectProperties.Name = "mniDrawingObjectProperties";
-            this.mniDrawingObjectProperties.Size = new Size(0x181, 0x16);
+            this.mniDrawingObjectProperties.Size = new System.Drawing.Size(374, 22);
             this.mniDrawingObjectProperties.Text = "Change Drawing Object Properties";
             this.mniDrawingObjectProperties.Visible = false;
-            this.mniDrawingObjectProperties.Click += new EventHandler(this.mniDrawingObjectProperties_Click);
-            this.mniDeleteDrawingObject.Image = (Image) resources.GetObject("mniDeleteDrawingObject.Image");
-            this.mniDeleteDrawingObject.ImageTransparentColor = Color.Fuchsia;
+            this.mniDrawingObjectProperties.Click += new System.EventHandler(this.mniDrawingObjectProperties_Click);
+            // 
+            // mniDeleteDrawingObject
+            // 
+            this.mniDeleteDrawingObject.Image = ((System.Drawing.Image)(resources.GetObject("mniDeleteDrawingObject.Image")));
+            this.mniDeleteDrawingObject.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniDeleteDrawingObject.Name = "mniDeleteDrawingObject";
-            this.mniDeleteDrawingObject.Size = new Size(0x181, 0x16);
+            this.mniDeleteDrawingObject.Size = new System.Drawing.Size(374, 22);
             this.mniDeleteDrawingObject.Text = "Delete Drawing Object";
             this.mniDeleteDrawingObject.Visible = false;
-            this.mniDeleteDrawingObject.Click += new EventHandler(this.mniDeleteDrawingObject_Click);
+            this.mniDeleteDrawingObject.Click += new System.EventHandler(this.mniDeleteDrawingObject_Click);
+            // 
+            // sepDrawing
+            // 
             this.sepDrawing.Name = "sepDrawing";
-            this.sepDrawing.Size = new Size(0x17e, 6);
+            this.sepDrawing.Size = new System.Drawing.Size(371, 6);
             this.sepDrawing.Visible = false;
-            this.mniChartOptions.Image = (Image) resources.GetObject("mniChartOptions.Image");
-            this.mniChartOptions.ImageTransparentColor = Color.Fuchsia;
+            // 
+            // mniChartOptions
+            // 
+            this.mniChartOptions.Image = ((System.Drawing.Image)(resources.GetObject("mniChartOptions.Image")));
+            this.mniChartOptions.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniChartOptions.Name = "mniChartOptions";
-            this.mniChartOptions.ShortcutKeys = Keys.Control | Keys.F12;
-            this.mniChartOptions.Size = new Size(0x181, 0x16);
+            this.mniChartOptions.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F12)));
+            this.mniChartOptions.Size = new System.Drawing.Size(374, 22);
             this.mniChartOptions.Text = "Chart Colors and Styles ...";
-            this.mniChartOptions.Click += new EventHandler(this.mniChartOptions_Click);
+            this.mniChartOptions.Click += new System.EventHandler(this.mniChartOptions_Click);
+            // 
+            // mniChartStyleSettings
+            // 
             this.mniChartStyleSettings.Enabled = false;
             this.mniChartStyleSettings.Name = "mniChartStyleSettings";
-            this.mniChartStyleSettings.ShortcutKeys = Keys.Control | Keys.Y;
-            this.mniChartStyleSettings.Size = new Size(0x181, 0x16);
+            this.mniChartStyleSettings.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.mniChartStyleSettings.Size = new System.Drawing.Size(374, 22);
             this.mniChartStyleSettings.Text = "Chart Style Settings ...";
-            this.mniChartStyleSettings.Click += new EventHandler(this.mniChartStyleSettings_Click);
+            this.mniChartStyleSettings.Click += new System.EventHandler(this.mniChartStyleSettings_Click);
+            // 
+            // toolStripSeparator1
+            // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new Size(0x17e, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(371, 6);
+            // 
+            // mniReload
+            // 
             this.mniReload.Enabled = false;
             this.mniReload.Name = "mniReload";
-            this.mniReload.Size = new Size(0x181, 0x16);
+            this.mniReload.Size = new System.Drawing.Size(374, 22);
             this.mniReload.Text = "Reload Chart History";
-            this.mniReload.Click += new EventHandler(this.mniReload_Click);
+            this.mniReload.Click += new System.EventHandler(this.mniReload_Click);
+            // 
+            // mniStockSplit
+            // 
             this.mniStockSplit.Enabled = false;
             this.mniStockSplit.Name = "mniStockSplit";
-            this.mniStockSplit.Size = new Size(0x181, 0x16);
+            this.mniStockSplit.Size = new System.Drawing.Size(374, 22);
             this.mniStockSplit.Text = "Process a Stock Split ...";
-            this.mniStockSplit.Click += new EventHandler(this.mniStockSplit_Click);
+            this.mniStockSplit.Click += new System.EventHandler(this.mniStockSplit_Click);
+            // 
+            // enableDisableStreamingHiddenMenuItem
+            // 
             this.enableDisableStreamingHiddenMenuItem.Name = "enableDisableStreamingHiddenMenuItem";
-            this.enableDisableStreamingHiddenMenuItem.ShortcutKeys = Keys.Alt | Keys.Control | Keys.Z;
-            this.enableDisableStreamingHiddenMenuItem.Size = new Size(0x181, 0x16);
+            this.enableDisableStreamingHiddenMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.Z)));
+            this.enableDisableStreamingHiddenMenuItem.Size = new System.Drawing.Size(374, 22);
             this.enableDisableStreamingHiddenMenuItem.Text = "Enable/Disable Streaming";
             this.enableDisableStreamingHiddenMenuItem.Visible = false;
-            this.enableDisableStreamingHiddenMenuItem.Click += new EventHandler(this.enableDisableStreamingHiddenMenuItem_Click);
-            this.editBarToolStripMenuItem.Image = (Image) resources.GetObject("editBarToolStripMenuItem.Image");
+            this.enableDisableStreamingHiddenMenuItem.Click += new System.EventHandler(this.enableDisableStreamingHiddenMenuItem_Click);
+            // 
+            // editBarToolStripMenuItem
+            // 
+            this.editBarToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("editBarToolStripMenuItem.Image")));
             this.editBarToolStripMenuItem.Name = "editBarToolStripMenuItem";
-            this.editBarToolStripMenuItem.Size = new Size(0x181, 0x16);
+            this.editBarToolStripMenuItem.Size = new System.Drawing.Size(374, 22);
             this.editBarToolStripMenuItem.Text = "Edit Bar Data";
-            this.editBarToolStripMenuItem.Click += new EventHandler(this.editBarToolStripMenuItem_Click);
+            this.editBarToolStripMenuItem.Click += new System.EventHandler(this.editBarToolStripMenuItem_Click);
+            // 
+            // tabChart
+            // 
             this.tabChart.Controls.Add(this.pageChart);
-            this.tabChart.Dock = DockStyle.Fill; ///WYJ fix: original: .Fill;
-            this.tabChart.ItemSize = new Size(0x2a, 0x12);
-            this.tabChart.Location = new Point(0, 0);
+            this.tabChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabChart.ItemSize = new System.Drawing.Size(42, 18);
+            this.tabChart.Location = new System.Drawing.Point(0, 0);
             this.tabChart.Name = "tabChart";
             this.tabChart.SelectedIndex = 0;
-            this.tabChart.Size = new Size(0x3e3, 0x1b5);
+            this.tabChart.Size = new System.Drawing.Size(995, 437);
             this.tabChart.TabIndex = 3;
-            this.tabChart.SelectedIndexChanged += new EventHandler(this.ChartForm_Activated);
-            this.pageChart.Controls.Add(this.pnlSymbol);
-            this.pageChart.Controls.Add(this.statusChart);
+            this.tabChart.SelectedIndexChanged += new System.EventHandler(this.ChartForm_Activated);
+            // 
+            // pageChart
+            // 
+            this.pageChart.Controls.Add(this.splitContainer1);
             this.pageChart.Controls.Add(this.pnlMultiSymbol);
-            this.pageChart.Controls.Add(this.chart);
-
-            ///WYJ fix, add data view to chart window
-            Panel pnlDataView = new Panel();
-            pnlDataView.Location = new Point(600, 4);
-            pnlDataView.Name = "dataView";
-            pnlDataView.Size = new Size(600,200);
-            pnlDataView.ForeColor = Color.Blue;
-            pnlDataView.BackColor = Color.Red;
-            //pnlDataView.SizingGrip = false;
-            //pnlDataView.TabIndex = 1;
-            pnlDataView.Text = "Data View";
-            this.pageChart.Controls.Add(pnlDataView);
-
-            this.pageChart.Location = new Point(4, 0x16);
+            this.pageChart.Location = new System.Drawing.Point(4, 22);
             this.pageChart.Name = "pageChart";
-            this.pageChart.Padding = new Padding(3);
-            this.pageChart.Size = new Size(0x3db, 0x19b);
+            this.pageChart.Padding = new System.Windows.Forms.Padding(3);
+            this.pageChart.Size = new System.Drawing.Size(987, 411);
             this.pageChart.TabIndex = 0;
             this.pageChart.Text = "Chart";
             this.pageChart.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.pnlSymbol);
+            this.splitContainer1.Panel1.Controls.Add(this.statusChart);
+            this.splitContainer1.Panel1.Controls.Add(this.chart);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.chart2);
+            this.splitContainer1.Size = new System.Drawing.Size(981, 405);
+            this.splitContainer1.SplitterDistance = 609;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // pnlSymbol
+            // 
             this.pnlSymbol.Controls.Add(this.txtSymbol);
             this.pnlSymbol.Controls.Add(this.lblSymbol);
-            this.pnlSymbol.Location = new Point(9, 7);
+            this.pnlSymbol.Location = new System.Drawing.Point(9, 7);
             this.pnlSymbol.Name = "pnlSymbol";
-            this.pnlSymbol.Size = new Size(0xbd, 0x1c);
+            this.pnlSymbol.Size = new System.Drawing.Size(189, 28);
             this.pnlSymbol.TabIndex = 15;
             this.pnlSymbol.Visible = false;
+            // 
+            // txtSymbol
+            // 
             this.txtSymbol.AcceptsReturn = true;
-            this.txtSymbol.CharacterCasing = CharacterCasing.Upper;
-            this.txtSymbol.Location = new Point(0x53, 4);
+            this.txtSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtSymbol.Location = new System.Drawing.Point(83, 4);
             this.txtSymbol.Multiline = true;
             this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new Size(100, 20);
+            this.txtSymbol.Size = new System.Drawing.Size(100, 20);
             this.txtSymbol.TabIndex = 1;
-            this.txtSymbol.KeyPress += new KeyPressEventHandler(this.txtSymbol_KeyPress);
+            this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
+            // 
+            // lblSymbol
+            // 
             this.lblSymbol.AutoSize = true;
-            this.lblSymbol.Location = new Point(4, 4);
+            this.lblSymbol.Location = new System.Drawing.Point(4, 4);
             this.lblSymbol.Name = "lblSymbol";
-            this.lblSymbol.Size = new Size(0x48, 13);
+            this.lblSymbol.Size = new System.Drawing.Size(72, 13);
             this.lblSymbol.TabIndex = 0;
             this.lblSymbol.Text = "Enter Symbol:";
-            this.statusChart.Items.AddRange(new ToolStripItem[] { this.stlblBar, this.stlblDate, this.stlblOpen, this.stlblHigh, this.stlblLow, this.stlblClose, this.stlblVolume, this.stlblMouse });
-            this.statusChart.Location = new Point(3, 0x182);
+            // 
+            // statusChart
+            // 
+            this.statusChart.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stlblBar,
+            this.stlblDate,
+            this.stlblOpen,
+            this.stlblHigh,
+            this.stlblLow,
+            this.stlblClose,
+            this.stlblVolume,
+            this.stlblMouse});
+            this.statusChart.Location = new System.Drawing.Point(0, 383);
             this.statusChart.Name = "statusChart";
-            this.statusChart.Size = new Size(0x3d5, 0x16);
+            this.statusChart.Size = new System.Drawing.Size(609, 22);
             this.statusChart.SizingGrip = false;
             this.statusChart.TabIndex = 1;
             this.statusChart.Text = "statusStrip1";
+            // 
+            // stlblBar
+            // 
             this.stlblBar.AutoSize = false;
-            this.stlblBar.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.stlblBar.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblBar.Name = "stlblBar";
-            this.stlblBar.Size = new Size(120, 0x11);
+            this.stlblBar.Size = new System.Drawing.Size(74, 17);
             this.stlblBar.Spring = true;
             this.stlblBar.Text = "Bar:";
-            this.stlblBar.TextAlign = ContentAlignment.MiddleLeft;
+            this.stlblBar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblDate
+            // 
             this.stlblDate.AutoSize = false;
-            this.stlblDate.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.stlblDate.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblDate.Name = "stlblDate";
-            this.stlblDate.Size = new Size(120, 0x11);
+            this.stlblDate.Size = new System.Drawing.Size(74, 17);
             this.stlblDate.Spring = true;
-            this.stlblDate.TextAlign = ContentAlignment.MiddleLeft;
+            this.stlblDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblOpen
+            // 
             this.stlblOpen.AutoSize = false;
-            this.stlblOpen.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.stlblOpen.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblOpen.Name = "stlblOpen";
-            this.stlblOpen.Size = new Size(120, 0x11);
+            this.stlblOpen.Size = new System.Drawing.Size(74, 17);
             this.stlblOpen.Spring = true;
             this.stlblOpen.Text = "O:";
-            this.stlblOpen.TextAlign = ContentAlignment.MiddleLeft;
+            this.stlblOpen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblHigh
+            // 
             this.stlblHigh.AutoSize = false;
-            this.stlblHigh.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.stlblHigh.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblHigh.Name = "stlblHigh";
-            this.stlblHigh.Size = new Size(120, 0x11);
+            this.stlblHigh.Size = new System.Drawing.Size(74, 17);
             this.stlblHigh.Spring = true;
             this.stlblHigh.Text = "H:";
-            this.stlblHigh.TextAlign = ContentAlignment.MiddleLeft;
+            this.stlblHigh.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblLow
+            // 
             this.stlblLow.AutoSize = false;
-            this.stlblLow.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.stlblLow.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblLow.Name = "stlblLow";
-            this.stlblLow.Size = new Size(120, 0x11);
+            this.stlblLow.Size = new System.Drawing.Size(74, 17);
             this.stlblLow.Spring = true;
             this.stlblLow.Text = "L:";
-            this.stlblLow.TextAlign = ContentAlignment.MiddleLeft;
+            this.stlblLow.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblClose
+            // 
             this.stlblClose.AutoSize = false;
-            this.stlblClose.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.stlblClose.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblClose.Name = "stlblClose";
-            this.stlblClose.Size = new Size(120, 0x11);
+            this.stlblClose.Size = new System.Drawing.Size(74, 17);
             this.stlblClose.Spring = true;
             this.stlblClose.Text = "C:";
-            this.stlblClose.TextAlign = ContentAlignment.MiddleLeft;
+            this.stlblClose.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblVolume
+            // 
             this.stlblVolume.AutoSize = false;
-            this.stlblVolume.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.stlblVolume.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.stlblVolume.Name = "stlblVolume";
-            this.stlblVolume.Size = new Size(120, 0x11);
+            this.stlblVolume.Size = new System.Drawing.Size(74, 17);
             this.stlblVolume.Spring = true;
             this.stlblVolume.Text = "V:";
-            this.stlblVolume.TextAlign = ContentAlignment.MiddleLeft;
+            this.stlblVolume.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // stlblMouse
+            // 
             this.stlblMouse.AutoSize = false;
             this.stlblMouse.Name = "stlblMouse";
-            this.stlblMouse.Padding = new Padding(2, 0, 2, 0);
-            this.stlblMouse.Size = new Size(120, 0x11);
+            this.stlblMouse.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.stlblMouse.Size = new System.Drawing.Size(74, 17);
             this.stlblMouse.Spring = true;
             this.stlblMouse.Text = "Mouse:";
-            this.stlblMouse.TextAlign = ContentAlignment.MiddleLeft;
-            this.pnlMultiSymbol.BackColor = SystemColors.Control;
+            this.stlblMouse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // chart
+            // 
+            this.chart.AllowDrop = true;
+            this.chart.ContextMenuStrip = this.popupChart;
+            this.chart.Cursor = System.Windows.Forms.Cursors.Default;
+            this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chart.DragDropManager = this.indicatorDragDropManager_0;
+            this.chart.DrawingManager = this.drawingObjectManager_0;
+            this.chart.FundamentalTooltipVisible = true;
+            this.chart.HandleFont = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chart.IndicatorTooltipVisible = true;
+            this.chart.Location = new System.Drawing.Point(0, 0);
+            this.chart.MultiSymbolMode = false;
+            this.chart.Name = "chart";
+            this.chart.PriceTooltipVisible = true;
+            this.chart.Renderer = null;
+            this.chart.ScrollBarVisible = true;
+            this.chart.Size = new System.Drawing.Size(609, 405);
+            this.chart.TabIndex = 0;
+            this.chart.Text = "chart1";
+            this.chart.DrawingObjectOperationCompleted += new System.EventHandler<System.EventArgs>(this.method_29);
+            this.chart.MouseMoveBarNumber += new System.EventHandler<WealthLab.ChartControl.BarNumberEventArgs>(this.UpdateCurrentDayDataDisplay);
+            this.chart.MouseWheelMoved += new System.EventHandler<System.Windows.Forms.MouseEventArgs>(this.mouseWheelHandler);
+            this.chart.OnException += new System.EventHandler<WealthLab.ChartControl.ExceptionEventArgs>(this.method_72);
+            this.chart.Click += new System.EventHandler(this.chart_Click);
+            this.chart.DoubleClick += new System.EventHandler(this.chart_DoubleClick);
+            this.chart.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.chart_KeyPress);
+            this.chart.MouseLeave += new System.EventHandler(this.chart_MouseLeave);
+            // 
+            // indicatorDragDropManager_0
+            // 
+            this.indicatorDragDropManager_0.Fundamentals = null;
+            this.indicatorDragDropManager_0.IndicatorDropped += new System.EventHandler<WealthLab.ChartControl.DroppedIndicatorEventArgs>(this.method_42);
+            // 
+            // drawingObjectManager_0
+            // 
+            this.drawingObjectManager_0.ChartBookName = "Standard";
+            this.drawingObjectManager_0.RootPath = null;
+            // 
+            // chart2
+            // 
+            this.chart2.DragDropManager = null;
+            this.chart2.DrawingManager = null;
+            this.chart2.FundamentalTooltipVisible = true;
+            this.chart2.HandleFont = new System.Drawing.Font("Vrinda", 8F);
+            this.chart2.IndicatorTooltipVisible = true;
+            this.chart2.Location = new System.Drawing.Point(3, 3);
+            this.chart2.MultiSymbolMode = false;
+            this.chart2.Name = "chart2";
+            this.chart2.PriceTooltipVisible = true;
+            this.chart2.Renderer = null;
+            this.chart2.ScrollBarVisible = false;
+            this.chart2.Size = new System.Drawing.Size(659, 399);
+            this.chart2.TabIndex = 0;
+            this.chart2.Text = "chart2";
+            // 
+            // pnlMultiSymbol
+            // 
+            this.pnlMultiSymbol.BackColor = System.Drawing.SystemColors.Control;
             this.pnlMultiSymbol.Controls.Add(this.barRange);
             this.pnlMultiSymbol.Controls.Add(this.grpMultiSymbol);
             this.pnlMultiSymbol.Controls.Add(this.posSize);
-            this.pnlMultiSymbol.Dock = DockStyle.Fill;
-            this.pnlMultiSymbol.Location = new Point(3, 3);
+            this.pnlMultiSymbol.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMultiSymbol.Location = new System.Drawing.Point(3, 3);
             this.pnlMultiSymbol.Name = "pnlMultiSymbol";
-            this.pnlMultiSymbol.Size = new Size(0x3d5, 0x195);
+            this.pnlMultiSymbol.Size = new System.Drawing.Size(981, 405);
             this.pnlMultiSymbol.TabIndex = 14;
             this.pnlMultiSymbol.Visible = false;
-            this.barRange.BackColor = Color.AliceBlue;
-            this.barRange.IsStreaming = false;
-            this.barRange.Location = new Point(5, 0x98);
-            this.barRange.Name = "barRange";
-            this.barRange.Size = new Size(0x5f, 20);
-            this.barRange.TabIndex = 13;
-            this.barRange.Visible = false;
+            // 
+            // grpMultiSymbol
+            // 
             this.grpMultiSymbol.Controls.Add(this.btnRunAllCancel);
             this.grpMultiSymbol.Controls.Add(this.lblRunAllStatus);
             this.grpMultiSymbol.Controls.Add(this.lblStatus);
             this.grpMultiSymbol.Controls.Add(this.progRunAll);
             this.grpMultiSymbol.Controls.Add(this.lblProgress);
             this.grpMultiSymbol.Controls.Add(this.btnRunAll);
-            this.grpMultiSymbol.Location = new Point(5, 3);
+            this.grpMultiSymbol.Location = new System.Drawing.Point(5, 3);
             this.grpMultiSymbol.Name = "grpMultiSymbol";
-            this.grpMultiSymbol.Size = new Size(0x13b, 0x85);
+            this.grpMultiSymbol.Size = new System.Drawing.Size(315, 133);
             this.grpMultiSymbol.TabIndex = 0;
             this.grpMultiSymbol.TabStop = false;
             this.grpMultiSymbol.Text = "Multi Symbol Backtest";
+            // 
+            // btnRunAllCancel
+            // 
             this.btnRunAllCancel.Enabled = false;
-            this.btnRunAllCancel.ImageAlign = ContentAlignment.MiddleLeft;
+            this.btnRunAllCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRunAllCancel.ImageIndex = 1;
             this.btnRunAllCancel.ImageList = this.imageList_0;
-            this.btnRunAllCancel.Location = new Point(0xe7, 0x43);
+            this.btnRunAllCancel.Location = new System.Drawing.Point(231, 67);
             this.btnRunAllCancel.Name = "btnRunAllCancel";
-            this.btnRunAllCancel.Size = new Size(0x4b, 0x17);
+            this.btnRunAllCancel.Size = new System.Drawing.Size(75, 23);
             this.btnRunAllCancel.TabIndex = 5;
             this.btnRunAllCancel.Text = "Cancel";
             this.btnRunAllCancel.UseVisualStyleBackColor = true;
-            this.btnRunAllCancel.Click += new EventHandler(this.btnRunAllCancel_Click);
-            this.imageList_0.ImageStream = (ImageListStreamer) resources.GetObject("images.ImageStream");
-            this.imageList_0.TransparentColor = Color.Fuchsia;
+            this.btnRunAllCancel.Click += new System.EventHandler(this.btnRunAllCancel_Click);
+            // 
+            // imageList_0
+            // 
+            this.imageList_0.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList_0.ImageStream")));
+            this.imageList_0.TransparentColor = System.Drawing.Color.Fuchsia;
             this.imageList_0.Images.SetKeyName(0, "Execute.bmp");
             this.imageList_0.Images.SetKeyName(1, "Delete.bmp");
+            // 
+            // lblRunAllStatus
+            // 
             this.lblRunAllStatus.AutoSize = true;
-            this.lblRunAllStatus.ForeColor = SystemColors.ActiveCaption;
-            this.lblRunAllStatus.Location = new Point(0x39, 0x6b);
+            this.lblRunAllStatus.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblRunAllStatus.Location = new System.Drawing.Point(57, 107);
             this.lblRunAllStatus.Name = "lblRunAllStatus";
-            this.lblRunAllStatus.Size = new Size(0x61, 13);
+            this.lblRunAllStatus.Size = new System.Drawing.Size(97, 13);
             this.lblRunAllStatus.TabIndex = 4;
             this.lblRunAllStatus.Text = "Waiting to Execute";
+            // 
+            // lblStatus
+            // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new Point(11, 0x6b);
+            this.lblStatus.Location = new System.Drawing.Point(11, 107);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new Size(40, 13);
+            this.lblStatus.Size = new System.Drawing.Size(40, 13);
             this.lblStatus.TabIndex = 3;
             this.lblStatus.Text = "Status:";
-            this.progRunAll.Location = new Point(10, 0x43);
+            // 
+            // progRunAll
+            // 
+            this.progRunAll.Location = new System.Drawing.Point(10, 67);
             this.progRunAll.Name = "progRunAll";
-            this.progRunAll.Size = new Size(0xd6, 0x17);
+            this.progRunAll.Size = new System.Drawing.Size(214, 23);
             this.progRunAll.TabIndex = 2;
+            // 
+            // lblProgress
+            // 
             this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new Point(7, 50);
+            this.lblProgress.Location = new System.Drawing.Point(7, 50);
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new Size(0x30, 13);
+            this.lblProgress.Size = new System.Drawing.Size(48, 13);
             this.lblProgress.TabIndex = 1;
             this.lblProgress.Text = "Progress";
-            this.btnRunAll.ImageAlign = ContentAlignment.MiddleLeft;
+            // 
+            // btnRunAll
+            // 
+            this.btnRunAll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRunAll.ImageIndex = 0;
             this.btnRunAll.ImageList = this.imageList_0;
-            this.btnRunAll.Location = new Point(7, 20);
+            this.btnRunAll.Location = new System.Drawing.Point(7, 20);
             this.btnRunAll.Name = "btnRunAll";
-            this.btnRunAll.Size = new Size(0x12b, 0x17);
+            this.btnRunAll.Size = new System.Drawing.Size(299, 23);
             this.btnRunAll.TabIndex = 0;
             this.btnRunAll.Text = "Backtest the Strategy on all Symbols in the DataSet";
             this.btnRunAll.UseVisualStyleBackColor = true;
-            this.btnRunAll.Click += new EventHandler(this.btnRunAll_Click);
-            this.posSize.BackColor = Color.Honeydew;
-            this.posSize.CombinationStrategyChildMode = false;
-            this.posSize.Location = new Point(5, 0xb2);
-            this.posSize.Name = "posSize";
-            this.posSize.Size = new Size(0x5f, 20);
-            this.posSize.TabIndex = 12;
-            this.posSize.Visible = false;
-            this.chart.AllowDrop = true;
-            //this.chart.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
-            this.chart.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top; ///WYJ fix
-            this.chart.ContextMenuStrip = this.popupChart;
-            this.chart.Cursor = Cursors.Default;
-            this.chart.DragDropManager = this.indicatorDragDropManager_0;
-            this.chart.DrawingManager = this.drawingObjectManager_0;
-            this.chart.FundamentalTooltipVisible = true;
-            this.chart.HandleFont = new Font("Tahoma", 7f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.chart.IndicatorTooltipVisible = true;
-            this.chart.Location = new Point(3, 3);
-            this.chart.MultiSymbolMode = false;
-            this.chart.Name = "chart";
-            this.chart.PriceTooltipVisible = true;
-            this.chart.Renderer = null;
-            this.chart.ScrollBarVisible = true;
-            this.chart.Size = new Size(0x3d5, 380);
-            this.chart.TabIndex = 0;
-            this.chart.Text = "chart1";
-            this.chart.DoubleClick += new EventHandler(this.chart_DoubleClick);
-            this.chart.MouseLeave += new EventHandler(this.chart_MouseLeave);
-            this.chart.Click += new EventHandler(this.chart_Click);
-            this.chart.MouseWheelMoved += new EventHandler<MouseEventArgs>(this.mouseWheelHandler);
-            this.chart.DrawingObjectOperationCompleted += new EventHandler<EventArgs>(this.method_29);
-            this.chart.OnException += new EventHandler<ExceptionEventArgs>(this.method_72);
-            this.chart.KeyPress += new KeyPressEventHandler(this.chart_KeyPress);
-            this.chart.MouseMoveBarNumber += new EventHandler<BarNumberEventArgs>(this.UpdateCurrentDayDataDisplay);
-
-            //base.KeyDown += new KeyEventHandler(this.MainForm_KeyDown);
-            //base.PreviewKeyDown += new PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
-
-            this.indicatorDragDropManager_0.Fundamentals = null;
-            this.indicatorDragDropManager_0.IndicatorDropped += new EventHandler<DroppedIndicatorEventArgs>(this.method_42);
-            this.drawingObjectManager_0.ChartBookName = "Standard";
-            this.drawingObjectManager_0.RootPath = null;
-            this.timer_0.Interval = 0x14d;
-            this.timer_0.Tick += new EventHandler(this.timer_0_Tick);
-            this.chartRenderer.AxisFont = new Font("Tahoma", 7f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.chartRenderer.BackgroundColor = Color.White;
+            this.btnRunAll.Click += new System.EventHandler(this.btnRunAll_Click);
+            // 
+            // pnlDataView
+            // 
+            this.pnlDataView.BackColor = System.Drawing.Color.Red;
+            this.pnlDataView.ForeColor = System.Drawing.Color.Blue;
+            this.pnlDataView.Location = new System.Drawing.Point(600, 4);
+            this.pnlDataView.Name = "pnlDataView";
+            this.pnlDataView.Size = new System.Drawing.Size(600, 200);
+            this.pnlDataView.TabIndex = 16;
+            this.pnlDataView.Text = "Data View";
+            // 
+            // chart1
+            // 
+            this.chart1.DragDropManager = null;
+            this.chart1.DrawingManager = null;
+            this.chart1.FundamentalTooltipVisible = true;
+            this.chart1.HandleFont = new System.Drawing.Font("Vrinda", 8F);
+            this.chart1.IndicatorTooltipVisible = true;
+            this.chart1.Location = new System.Drawing.Point(0, 0);
+            this.chart1.MultiSymbolMode = false;
+            this.chart1.Name = "chart1";
+            this.chart1.PriceTooltipVisible = true;
+            this.chart1.Renderer = null;
+            this.chart1.ScrollBarVisible = false;
+            this.chart1.Size = new System.Drawing.Size(307, 402);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
+            // 
+            // timer_0
+            // 
+            this.timer_0.Interval = 333;
+            this.timer_0.Tick += new System.EventHandler(this.timer_0_Tick);
+            // 
+            // chartRenderer
+            // 
+            this.chartRenderer.AxisFont = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chartRenderer.BackgroundColor = System.Drawing.Color.White;
             this.chartRenderer.BarSpacing = 6;
-            this.chartRenderer.DownBarColor = Color.Red;
-            this.chartRenderer.DownBarVolumeColor = Color.Teal;
+            this.chartRenderer.DownBarColor = System.Drawing.Color.Red;
+            this.chartRenderer.DownBarVolumeColor = System.Drawing.Color.Teal;
             this.chartRenderer.Executor = this.tradingSystemExecutor_1;
             this.chartRenderer.FundamentalGlyphs = "";
             this.chartRenderer.Fundamentals = this.fundamentalsLoader_0;
             this.chartRenderer.FundamentalsVisible = true;
-            this.chartRenderer.GridlineColor = Color.Gainsboro;
+            this.chartRenderer.GridlineColor = System.Drawing.Color.Gainsboro;
             this.chartRenderer.HorizontalGridines = true;
             this.chartRenderer.IndicatorLabelsVisible = true;
             this.chartRenderer.LogScale = false;
-            this.chartRenderer.MarginBottomColor = Color.Navy;
+            this.chartRenderer.MarginBottomColor = System.Drawing.Color.Navy;
             this.chartRenderer.MarginBottomHeight = 20;
-            this.chartRenderer.MarginRightColor = Color.Gainsboro;
+            this.chartRenderer.MarginRightColor = System.Drawing.Color.Gainsboro;
             this.chartRenderer.MarginRightWidth = 50;
-            this.chartRenderer.PaneSeparatorColor = Color.Black;
+            this.chartRenderer.PaneSeparatorColor = System.Drawing.Color.Black;
             this.chartRenderer.PaneSeparatorVisible = true;
             this.chartRenderer.PlotStops = false;
             this.chartRenderer.RightPaddingBars = 0;
             this.chartRenderer.ScrollOffset = 0;
-            this.chartRenderer.TitleFont = new Font("Verdana", 8f);
+            this.chartRenderer.TitleFont = new System.Drawing.Font("Verdana", 8F);
             this.chartRenderer.TradeAnnotationsVisible = true;
             this.chartRenderer.TradeArrowsVisible = true;
             this.chartRenderer.TradeCirclesVisible = true;
-            this.chartRenderer.UpBarColor = Color.Navy;
-            this.chartRenderer.UpBarVolumeColor = Color.Teal;
+            this.chartRenderer.UpBarColor = System.Drawing.Color.Navy;
+            this.chartRenderer.UpBarVolumeColor = System.Drawing.Color.Teal;
             this.chartRenderer.VerticalGridlines = true;
             this.chartRenderer.VolumePaneVisible = true;
+            // 
+            // tradingSystemExecutor_1
+            // 
             this.tradingSystemExecutor_1.ApplyCommission = false;
             this.tradingSystemExecutor_1.ApplyDividends = false;
             this.tradingSystemExecutor_1.ApplyInterest = false;
@@ -1424,63 +1736,69 @@
             this.tradingSystemExecutor_1.BenchmarkBuyAndHoldON = false;
             this.tradingSystemExecutor_1.BenchmarkSymbol = null;
             this.tradingSystemExecutor_1.BuildEquityCurves = true;
-            this.tradingSystemExecutor_1.CashRate = 0.0;
+            this.tradingSystemExecutor_1.CashRate = 0D;
             this.tradingSystemExecutor_1.EnableSlippage = false;
             this.tradingSystemExecutor_1.ExceptionEvents = true;
             this.tradingSystemExecutor_1.FundamentalsLoader = this.fundamentalsLoader_0;
             this.tradingSystemExecutor_1.IsStreaming = false;
             this.tradingSystemExecutor_1.LimitDaySimulation = false;
             this.tradingSystemExecutor_1.LimitOrderSlippage = false;
-            this.tradingSystemExecutor_1.MarginRate = 0.0;
+            this.tradingSystemExecutor_1.MarginRate = 0D;
             this.tradingSystemExecutor_1.NoDecimalRoundingForLimitStopPrice = false;
-            this.tradingSystemExecutor_1.OverrideShareSize = 0.0;
-            size.DollarSize = 5000.0;
-            size.MarginFactor = 1.0;
-            size.Mode = PosSizeMode.RawProfitDollar;
-            size.OverrideShareSize = 0.0;
-            size.PctSize = 10.0;
-            size.PosSizerConfig = "";
-            size.RawProfitDollarSize = 5000.0;
-            size.RawProfitShareSize = 100.0;
-            size.RiskSize = 3.0;
-            size.ShareSize = 100.0;
-            size.SimuScriptName = "";
-            size.StartingCapital = 50000.0;
-            this.tradingSystemExecutor_1.PosSize = size;
+            this.tradingSystemExecutor_1.OverrideShareSize = 0D;
+            positionSize1.DollarSize = 5000D;
+            positionSize1.MarginFactor = 1D;
+            positionSize1.Mode = WealthLab.PosSizeMode.RawProfitDollar;
+            positionSize1.OverrideShareSize = 0D;
+            positionSize1.PctSize = 10D;
+            positionSize1.PosSizerConfig = "";
+            positionSize1.RawProfitDollarSize = 5000D;
+            positionSize1.RawProfitShareSize = 100D;
+            positionSize1.RiskSize = 3D;
+            positionSize1.ShareSize = 100D;
+            positionSize1.SimuScriptName = "";
+            positionSize1.StartingCapital = 50000D;
+            this.tradingSystemExecutor_1.PosSize = positionSize1;
             this.tradingSystemExecutor_1.PricingDecimalPlaces = 0;
-            this.tradingSystemExecutor_1.RedcuceQtyPct = 10.0;
+            this.tradingSystemExecutor_1.RedcuceQtyPct = 10D;
             this.tradingSystemExecutor_1.ReduceQtyBasedOnVolume = false;
             this.tradingSystemExecutor_1.Renderer = this.chartRenderer;
             this.tradingSystemExecutor_1.RoundLots = false;
             this.tradingSystemExecutor_1.RoundLots50 = false;
             this.tradingSystemExecutor_1.SlippageTicks = 1;
-            this.tradingSystemExecutor_1.SlippageUnits = 1.0;
+            this.tradingSystemExecutor_1.SlippageUnits = 1D;
             this.tradingSystemExecutor_1.Strategy = null;
             this.tradingSystemExecutor_1.StrategyName = "";
             this.tradingSystemExecutor_1.WorstTradeSimulation = false;
-            this.tradingSystemExecutor_1.ChartBitmapRequested += new EventHandler<ChartBitmapEventArgs>(this.method_38);
-            this.tradingSystemExecutor_1.ExecutionCompletedForSymbol += new EventHandler<BarsEventArgs>(this.method_30);
-            this.tradingSystemExecutor_1.LookupStrategy += new EventHandler<StrategyEventArgs>(this.method_73);
-            this.tradingSystemExecutor_1.TrendlineGetValue += new EventHandler<TrendLineEventArgs>(this.method_46);
-            this.tradingSystemExecutor_1.ClearDebugWindow += new EventHandler<EventArgs>(this.method_52);
-            this.tradingSystemExecutor_1.SetParameterValues += new EventHandler<StrategyParameterEventArgs>(this.method_69);
-            this.tradingSystemExecutor_1.LookupDataSource += new EventHandler<DataSourceLookupEventArgs>(this.method_74);
-            this.tradingSystemExecutor_1.FlushDebugWindow += new EventHandler<EventArgs>(this.method_35);
-            this.tradingSystemExecutor_1.PrintToStatusBar += new EventHandler<DebugStringEventArgs>(this.method_37);
-            this.tradingSystemExecutor_1.WealthScriptException += new EventHandler<WSExceptionEventArgs>(this.method_33);
-            this.tradingSystemExecutor_1.ExternalSymbolRequested += new EventHandler<LoadSymbolEventArgs>(this.method_34);
-            this.tradingSystemExecutor_1.ExternalSymbolFromDataSetRequested += new EventHandler<LoadSymbolFromDataSetEventArgs>(this.method_67);
-            this.tradingSystemExecutor_1.ExecutionCompletedForChildStrategySymbol += new EventHandler<BarsEventArgs>(this.onChildStrategyCompletion);
+            this.tradingSystemExecutor_1.ChartBitmapRequested += new System.EventHandler<WealthLab.ChartBitmapEventArgs>(this.method_38);
+            this.tradingSystemExecutor_1.ClearDebugWindow += new System.EventHandler<System.EventArgs>(this.method_52);
+            this.tradingSystemExecutor_1.ExecutionCompletedForChildStrategySymbol += new System.EventHandler<WealthLab.BarsEventArgs>(this.onChildStrategyCompletion);
+            this.tradingSystemExecutor_1.ExecutionCompletedForSymbol += new System.EventHandler<WealthLab.BarsEventArgs>(this.method_30);
+            this.tradingSystemExecutor_1.ExternalSymbolFromDataSetRequested += new System.EventHandler<WealthLab.LoadSymbolFromDataSetEventArgs>(this.method_67);
+            this.tradingSystemExecutor_1.ExternalSymbolRequested += new System.EventHandler<WealthLab.LoadSymbolEventArgs>(this.method_34);
+            this.tradingSystemExecutor_1.FlushDebugWindow += new System.EventHandler<System.EventArgs>(this.method_35);
+            this.tradingSystemExecutor_1.LookupDataSource += new System.EventHandler<DataSourceLookupEventArgs>(this.method_74);
+            this.tradingSystemExecutor_1.LookupStrategy += new System.EventHandler<StrategyEventArgs>(this.method_73);
+            this.tradingSystemExecutor_1.PrintToStatusBar += new System.EventHandler<WealthLab.DebugStringEventArgs>(this.method_37);
+            this.tradingSystemExecutor_1.SetParameterValues += new System.EventHandler<WealthLab.StrategyParameterEventArgs>(this.method_69);
+            this.tradingSystemExecutor_1.TrendlineGetValue += new System.EventHandler<WealthLab.TrendLineEventArgs>(this.method_46);
+            this.tradingSystemExecutor_1.WealthScriptException += new System.EventHandler<WealthLab.WSExceptionEventArgs>(this.method_33);
+            // 
+            // barsLoader_0
+            // 
             this.barsLoader_0.AutoConvertScale = true;
             this.barsLoader_0.AutoCreateProvider = true;
             this.barsLoader_0.BarInterval = 0;
-            this.barsLoader_0.EndDate = new DateTime(0L);
+            this.barsLoader_0.EndDate = new System.DateTime(((long)(0)));
             this.barsLoader_0.IncludePartialBar = false;
             this.barsLoader_0.MaxBars = 0;
             this.barsLoader_0.OverrideOnDemand = false;
             this.barsLoader_0.OverrideOnDemandValue = false;
-            this.barsLoader_0.Scale = BarScale.Daily;
-            this.barsLoader_0.StartDate = new DateTime(0x7cb, 1, 1, 0, 0, 0, 0);
+            this.barsLoader_0.Scale = WealthLab.BarScale.Daily;
+            this.barsLoader_0.StartDate = new System.DateTime(1995, 1, 1, 0, 0, 0, 0);
+            // 
+            // tradingSystemExecutor_0
+            // 
             this.tradingSystemExecutor_0.ApplyCommission = false;
             this.tradingSystemExecutor_0.ApplyDividends = false;
             this.tradingSystemExecutor_0.ApplyInterest = false;
@@ -1488,71 +1806,104 @@
             this.tradingSystemExecutor_0.BenchmarkBuyAndHoldON = false;
             this.tradingSystemExecutor_0.BenchmarkSymbol = null;
             this.tradingSystemExecutor_0.BuildEquityCurves = false;
-            this.tradingSystemExecutor_0.CashRate = 0.0;
+            this.tradingSystemExecutor_0.CashRate = 0D;
             this.tradingSystemExecutor_0.EnableSlippage = false;
             this.tradingSystemExecutor_0.ExceptionEvents = false;
             this.tradingSystemExecutor_0.FundamentalsLoader = this.fundamentalsLoader_0;
             this.tradingSystemExecutor_0.IsStreaming = false;
             this.tradingSystemExecutor_0.LimitDaySimulation = false;
             this.tradingSystemExecutor_0.LimitOrderSlippage = false;
-            this.tradingSystemExecutor_0.MarginRate = 0.0;
+            this.tradingSystemExecutor_0.MarginRate = 0D;
             this.tradingSystemExecutor_0.NoDecimalRoundingForLimitStopPrice = false;
-            this.tradingSystemExecutor_0.OverrideShareSize = 0.0;
-            size2.DollarSize = 5000.0;
-            size2.MarginFactor = 1.0;
-            size2.Mode = PosSizeMode.RawProfitDollar;
-            size2.OverrideShareSize = 0.0;
-            size2.PctSize = 10.0;
-            size2.PosSizerConfig = "";
-            size2.RawProfitDollarSize = 5000.0;
-            size2.RawProfitShareSize = 100.0;
-            size2.RiskSize = 3.0;
-            size2.ShareSize = 100.0;
-            size2.SimuScriptName = "";
-            size2.StartingCapital = 50000.0;
-            this.tradingSystemExecutor_0.PosSize = size2;
+            this.tradingSystemExecutor_0.OverrideShareSize = 0D;
+            positionSize2.DollarSize = 5000D;
+            positionSize2.MarginFactor = 1D;
+            positionSize2.Mode = WealthLab.PosSizeMode.RawProfitDollar;
+            positionSize2.OverrideShareSize = 0D;
+            positionSize2.PctSize = 10D;
+            positionSize2.PosSizerConfig = "";
+            positionSize2.RawProfitDollarSize = 5000D;
+            positionSize2.RawProfitShareSize = 100D;
+            positionSize2.RiskSize = 3D;
+            positionSize2.ShareSize = 100D;
+            positionSize2.SimuScriptName = "";
+            positionSize2.StartingCapital = 50000D;
+            this.tradingSystemExecutor_0.PosSize = positionSize2;
             this.tradingSystemExecutor_0.PricingDecimalPlaces = 0;
-            this.tradingSystemExecutor_0.RedcuceQtyPct = 10.0;
+            this.tradingSystemExecutor_0.RedcuceQtyPct = 10D;
             this.tradingSystemExecutor_0.ReduceQtyBasedOnVolume = false;
             this.tradingSystemExecutor_0.Renderer = this.chartRenderer;
             this.tradingSystemExecutor_0.RoundLots = false;
             this.tradingSystemExecutor_0.RoundLots50 = false;
             this.tradingSystemExecutor_0.SlippageTicks = 1;
-            this.tradingSystemExecutor_0.SlippageUnits = 1.0;
+            this.tradingSystemExecutor_0.SlippageUnits = 1D;
             this.tradingSystemExecutor_0.Strategy = null;
             this.tradingSystemExecutor_0.StrategyName = "";
             this.tradingSystemExecutor_0.WorstTradeSimulation = false;
-            this.tradingSystemExecutor_0.SetParameterValues += new EventHandler<StrategyParameterEventArgs>(this.method_69);
-            this.tradingSystemExecutor_0.ExternalSymbolRequested += new EventHandler<LoadSymbolEventArgs>(this.method_34);
-            this.tradingSystemExecutor_0.ExternalSymbolFromDataSetRequested += new EventHandler<LoadSymbolFromDataSetEventArgs>(this.method_67);
-            this.streamingChartManager_0.BarsLocked += new EventHandler<EventArgs>(this.method_70);
-            this.streamingChartManager_0.NewBar += new EventHandler<EventArgs>(this.method_40);
+            this.tradingSystemExecutor_0.ExternalSymbolFromDataSetRequested += new System.EventHandler<WealthLab.LoadSymbolFromDataSetEventArgs>(this.method_67);
+            this.tradingSystemExecutor_0.ExternalSymbolRequested += new System.EventHandler<WealthLab.LoadSymbolEventArgs>(this.method_34);
+            this.tradingSystemExecutor_0.SetParameterValues += new System.EventHandler<WealthLab.StrategyParameterEventArgs>(this.method_69);
+            // 
+            // streamingChartManager_0
+            // 
+            this.streamingChartManager_0.BarsLocked += new System.EventHandler<System.EventArgs>(this.method_70);
+            this.streamingChartManager_0.NewBar += new System.EventHandler<System.EventArgs>(this.method_40);
+            // 
+            // drawingObjectManager_1
+            // 
             this.drawingObjectManager_1.ChartBookName = "Standard";
             this.drawingObjectManager_1.RootPath = null;
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.ClientSize = new Size(0x3e3, 0x1cb);
-            base.Controls.Add(this.tabChart);
-            base.Controls.Add(this.status);
-            base.Icon = (Icon) resources.GetObject("$this.Icon");
-            base.KeyPreview = true;
-            base.Name = "ChartForm";
-            base.ShowInTaskbar = false;
-            base.StartPosition = FormStartPosition.WindowsDefaultBounds;
+            // 
+            // barRange
+            // 
+            this.barRange.BackColor = System.Drawing.Color.AliceBlue;
+            this.barRange.IsStreaming = false;
+            this.barRange.Location = new System.Drawing.Point(5, 152);
+            this.barRange.Name = "barRange";
+            this.barRange.Size = new System.Drawing.Size(95, 20);
+            this.barRange.TabIndex = 13;
+            this.barRange.Visible = false;
+            // 
+            // posSize
+            // 
+            this.posSize.BackColor = System.Drawing.Color.Honeydew;
+            this.posSize.CombinationStrategyChildMode = false;
+            this.posSize.Location = new System.Drawing.Point(5, 178);
+            this.posSize.Name = "posSize";
+            this.posSize.Size = new System.Drawing.Size(95, 20);
+            this.posSize.TabIndex = 12;
+            this.posSize.Visible = false;
+            // 
+            // ChartForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(995, 459);
+            this.Controls.Add(this.tabChart);
+            this.Controls.Add(this.status);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
+            this.Name = "ChartForm";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "Chart";
-            base.Load += new EventHandler(this.ChartForm_Load);
-            base.Activated += new EventHandler(this.ChartForm_Activated);
-            base.FormClosed += new FormClosedEventHandler(this.ChartForm_FormClosed);
-            base.FormClosing += new FormClosingEventHandler(this.ChartForm_FormClosing);
-            base.Resize += new EventHandler(this.ChartForm_Resize);
-            base.KeyDown += new KeyEventHandler(this.ChartForm_KeyDown);
-            base.TextChanged += new EventHandler(this.ChartForm_TextChanged);
+            this.Activated += new System.EventHandler(this.ChartForm_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChartForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChartForm_FormClosed);
+            this.Load += new System.EventHandler(this.ChartForm_Load);
+            this.TextChanged += new System.EventHandler(this.ChartForm_TextChanged);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChartForm_KeyDown);
+            this.Resize += new System.EventHandler(this.ChartForm_Resize);
             this.status.ResumeLayout(false);
             this.status.PerformLayout();
             this.popupChart.ResumeLayout(false);
             this.tabChart.ResumeLayout(false);
             this.pageChart.ResumeLayout(false);
-            this.pageChart.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.pnlSymbol.ResumeLayout(false);
             this.pnlSymbol.PerformLayout();
             this.statusChart.ResumeLayout(false);
@@ -1560,8 +1911,9 @@
             this.pnlMultiSymbol.ResumeLayout(false);
             this.grpMultiSymbol.ResumeLayout(false);
             this.grpMultiSymbol.PerformLayout();
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         public void LoadDragDropIndicators(string indicatorString)
@@ -5181,6 +5533,7 @@
                     flag = show || this.multiSymbolMode;
                 }
                 this.pnlMultiSymbol.Visible = show;
+                
                 if (show)
                 {
                     this.pageChart.Text = "DataSet";

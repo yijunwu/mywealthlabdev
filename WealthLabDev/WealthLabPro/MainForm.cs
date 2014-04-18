@@ -103,7 +103,6 @@
         private Label lblAsk;
         private Label lblAsOf;
         private Label lblBid;
-        private ToolStripLabel lblDataSets;
         private Label lblLast;
         private ToolStripLabel lblParameters;
         private Label lblPositions;
@@ -119,10 +118,6 @@
         private Label lblTradeSymbol;
         private Label lblTradeTIF;
         private Label lbTradeDirected;
-        private ToolStripLabel linkNewDataSet;
-        private LinkLabel linkRerun;
-        private LinkLabel linkResetParams;
-        private LinkLabel linkSaveParams;
         private static List<MainForm> list_0 = new List<MainForm>();
         private List<string> list_1 = new List<string>();
         private static MainForm mainForm_0;
@@ -222,7 +217,6 @@
         private PageSetupDialog pageSetupDialog_0;
         internal ParameterSlidersContainer paramSliders;
         private Panel pnlParamBase;
-        private Panel pnlParamBaseLinkParams;
         private Panel pnlTrade;
         private Panel pnlTree;
         private ContextMenuStrip popupPreferredValues;
@@ -277,7 +271,6 @@
         private System.Windows.Forms.Timer timer_1;
         private System.Windows.Forms.Timer timer_2;
         private ToolStrip toolbar;
-        private ToolStrip toolbarDataSets;
         private ToolStrip toolbarDrawing;
         private ToolStrip toolbarNav;
         private ToolStrip toolbarParameters;
@@ -288,10 +281,17 @@
         private ToolStripSeparator toolStripSeparator4;
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripSeparator toolStripSeparator7;
-        private DataSourceTreeView treeDataSources;
         private ToolStripLabel tslblChartStyles;
         private ToolStripLabel tslblOptions;
         private ToolStripDropDownButton tsmMoreChartStyles;
+        private DataSourceTreeView treeDataSources;
+        private ToolStrip toolbarDataSets;
+        private ToolStripLabel lblDataSets;
+        private ToolStripLabel linkNewDataSet;
+        private Panel pnlParamBaseLinkParams;
+        private LinkLabel linkRerun;
+        private LinkLabel linkResetParams;
+        private LinkLabel linkSaveParams;
         private TextBox txtTradeSymbol;
 
         public MainForm()
@@ -1520,1285 +1520,1987 @@
 
         private void InitializeComponent()
         {
-            this.components = new Container();
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
-            this.lblAsk = new Label();
-            this.menuMain = new MenuStrip();
-            this.mniFile = new ToolStripMenuItem();
-            this.mniNew = new ToolStripMenuItem();
-            this.mniNewChart = new ToolStripMenuItem();
-            this.mniNewBuilder = new ToolStripMenuItem();
-            this.mniNewEditor = new ToolStripMenuItem();
-            this.mniNewMultiStrategyBuilder = new ToolStripMenuItem();
-            this.sepNewStrategy = new ToolStripSeparator();
-            this.mniNewWorkspace2 = new ToolStripMenuItem();
-            this.mniNewQuote = new ToolStripMenuItem();
-            this.sepNewQuote = new ToolStripSeparator();
-            this.mniNewDataSet = new ToolStripMenuItem();
-            this.mniOpenStrategy = new ToolStripMenuItem();
-            this.mniOpenWorkspace = new ToolStripMenuItem();
-            this.mniClose = new ToolStripMenuItem();
-            this.mniPrint = new ToolStripMenuItem();
-            this.sepSave = new ToolStripSeparator();
-            this.mniSaveStrategy = new ToolStripMenuItem();
-            this.mniSaveStrategyAs = new ToolStripMenuItem();
-            this.sepChart = new ToolStripSeparator();
-            this.mniPreferences2 = new ToolStripMenuItem();
-            this.sepPreferences = new ToolStripSeparator();
-            this.mniLogin = new ToolStripMenuItem();
-            this.mniOnDemand = new ToolStripMenuItem();
-            this.sepExit = new ToolStripSeparator();
-            this.mniCloseWorkspace = new ToolStripMenuItem();
-            this.mniExit = new ToolStripMenuItem();
-            this.mniEdit = new ToolStripMenuItem();
-            this.mniUndoDelete = new ToolStripMenuItem();
-            this.toolStripSeparator1 = new ToolStripSeparator();
-            this.mniCut = new ToolStripMenuItem();
-            this.mniCopy = new ToolStripMenuItem();
-            this.mniPaste = new ToolStripMenuItem();
-            this.mniDelete = new ToolStripMenuItem();
-            this.toolStripSeparator5 = new ToolStripSeparator();
-            this.mniSelectAll = new ToolStripMenuItem();
-            this.toolStripSeparator4 = new ToolStripSeparator();
-            this.mniFind = new ToolStripMenuItem();
-            this.mniFindReplace = new ToolStripMenuItem();
-            this.sepSelectAll = new ToolStripSeparator();
-            this.mniSetTemplate = new ToolStripMenuItem();
-            this.mniView = new ToolStripMenuItem();
-            this.mniViewTradeTicket = new ToolStripMenuItem();
-            this.mniViewDataPanel = new ToolStripMenuItem();
-            this.mniViewStatusBar = new ToolStripMenuItem();
-            this.sepView = new ToolStripSeparator();
-            this.mniViewNavBar = new ToolStripMenuItem();
-            this.mniNavIcons = new ToolStripMenuItem();
-            this.mniViewToolbar = new ToolStripMenuItem();
-            this.mniViewDrawingBar = new ToolStripMenuItem();
-            this.mniDataWindow = new ToolStripMenuItem();
-            this.mniTools = new ToolStripMenuItem();
-            this.mniHomePage = new ToolStripMenuItem();
-            this.mniAccounts = new ToolStripMenuItem();
-            this.mniOrderManager = new ToolStripMenuItem();
-            this.mniStrategyCenter = new ToolStripMenuItem();
-            this.mniDataManager = new ToolStripMenuItem();
-            this.symbolInfoManagerToolStripMenuItem = new ToolStripMenuItem();
-            this.mniStrategyRanking = new ToolStripMenuItem();
-            this.mniIndexManager = new ToolStripMenuItem();
-            this.sepTools = new ToolStripSeparator();
-            this.mniIndicators = new ToolStripMenuItem();
-            this.mniFundamentals = new ToolStripMenuItem();
-            this.sepIndicators = new ToolStripSeparator();
-            this.mniDebug = new ToolStripMenuItem();
-            this.mniQuickRef = new ToolStripMenuItem();
-            this.sepQuickRef = new ToolStripSeparator();
-            this.mniPreferences = new ToolStripMenuItem();
-            this.executeStrategyHiddenMenuItem = new ToolStripMenuItem();
-            this.mniWorkspaces = new ToolStripMenuItem();
-            this.mniNewWorkspace3 = new ToolStripMenuItem();
-            this.toolStripSeparator3 = new ToolStripSeparator();
-            this.mniLoadWorkSpace = new ToolStripMenuItem();
-            this.mniSaveWorkSpace = new ToolStripMenuItem();
-            this.sepSaveWorkspace = new ToolStripSeparator();
-            this.mniSetDefaultWorkspace = new ToolStripMenuItem();
-            this.toolStripSeparator7 = new ToolStripSeparator();
-            this.mniWindow = new ToolStripMenuItem();
-            this.mniCascade = new ToolStripMenuItem();
-            this.mniTileHorizontally = new ToolStripMenuItem();
-            this.mniTileVertically = new ToolStripMenuItem();
-            this.toolStripSeparator2 = new ToolStripSeparator();
-            this.mniHelp = new ToolStripMenuItem();
-            this.mniUserGuide = new ToolStripMenuItem();
-            this.mniQuickRef2 = new ToolStripMenuItem();
-            this.mniLanguageGuide = new ToolStripMenuItem();
-            this.sepHelp = new ToolStripSeparator();
-            this.mniFidelityCom = new ToolStripMenuItem();
-            this.mniWealthLabCom = new ToolStripMenuItem();
-            this.sepHelp2 = new ToolStripSeparator();
-            this.mniSoftwareUpgrade = new ToolStripMenuItem();
-            this.sepUpgrade = new ToolStripSeparator();
-            this.mniAbout = new ToolStripMenuItem();
-            this.status = new StatusStrip();
-            this.statusMessage = new ToolStripStatusLabel();
-            this.statusOrders = new ToolStripStatusLabel();
-            this.statusActive = new ToolStripStatusLabel();
-            this.statusStreamingProvider = new ToolStripStatusLabel();
-            this.statusStreamingStatus = new ToolStripStatusLabel();
-            this.statusStreamingSymbolsOff = new ToolStripStatusLabel();
-            this.statusStreamingSymbolsOn = new ToolStripStatusLabel();
-            this.statusSofwareDownload = new ToolStripStatusLabel();
-            this.statusDownloadProgressBar = new ToolStripProgressBar();
-            this.stlblHolder = new ToolStripStatusLabel();
-            this.toolbarNav = new ToolStrip();
-            this.btnHome = new ToolStripButton();
-            this.dropdownCharts = new ToolStripDropDownButton();
-            this.mniNewChart2 = new ToolStripMenuItem();
-            this.mniNewRules2 = new ToolStripMenuItem();
-            this.mniNewCode2 = new ToolStripMenuItem();
-            this.mniNewMultiStrategyBuilder2 = new ToolStripMenuItem();
-            this.mniOpenStrategy2 = new ToolStripMenuItem();
-            this.sepChart2 = new ToolStripSeparator();
-            this.mniChartFront = new ToolStripMenuItem();
-            this.sepChartFront = new ToolStripSeparator();
-            this.btnStrategyCenter = new ToolStripButton();
-            this.dropdownQuotes = new ToolStripDropDownButton();
-            this.mniNewQuote2 = new ToolStripMenuItem();
-            this.sepQuote2 = new ToolStripSeparator();
-            this.mniQuoteAll = new ToolStripMenuItem();
-            this.sepQuoteFront = new ToolStripSeparator();
-            this.btnOrdersAlerts = new ToolStripButton();
-            this.btnAcctsPositions = new ToolStripButton();
-            this.btnDataManager = new ToolStripButton();
-            this.sepDataManager = new ToolStripSeparator();
-            this.btnIndicators = new ToolStripButton();
-            this.btnFundamental = new ToolStripButton();
-            this.btnHelp = new ToolStripButton();
-            this.btnPreferences = new ToolStripButton();
-            this.btnTrade = new ToolStripButton();
-            this.toolbar = new ToolStrip();
-            this.toolStripDropDownButton1 = new ToolStripDropDownButton();
-            this.mniNewChartDD = new ToolStripMenuItem();
-            this.mniNewStrategyRulesDD = new ToolStripMenuItem();
-            this.newStrategyFromCodeToolStripMenuItem = new ToolStripMenuItem();
-            this.mniNewCombinationStrategy = new ToolStripMenuItem();
-            this.sepNew = new ToolStripSeparator();
-            this.mniNewWorkspaceTB = new ToolStripMenuItem();
-
-            this.mniCrossHair = new ToolStripMenuItem(); ///WYJ fix
-
-            this.mniNewQuoteDD = new ToolStripMenuItem();
-            this.sepNew2 = new ToolStripSeparator();
-            this.mniNewDataSetTB = new ToolStripMenuItem();
-            this.btnOpenStrategy = new ToolStripButton();
-            this.btnSave = new ToolStripButton();
-            this.btnSaveAs = new ToolStripButton();
-            this.sepChartFile = new ToolStripSeparator();
-            this.btnLogin = new ToolStripButton();
-            this.sepSpacing = new ToolStripSeparator();
-            this.lblSpacing = new ToolStripLabel();
-            this.btnIncreaseSpacing = new ToolStripButton();
-            this.btnRestoreSpacing = new ToolStripButton();
-            this.btnDecreaseSpacing = new ToolStripButton();
-            this.sepBarSpacing = new ToolStripSeparator();
-            this.tslblChartStyles = new ToolStripLabel();
-            this.btnCandleStyle = new ToolStripButton();
-            this.btnBarChart = new ToolStripButton();
-            this.btnLineChart = new ToolStripButton();
-            this.tsmMoreChartStyles = new ToolStripDropDownButton();
-            this.btnLinear = new ToolStripButton();
-            this.btnLog = new ToolStripButton();
-            this.sepChartStyles = new ToolStripSeparator();
-            this.tslblOptions = new ToolStripLabel();
-            this.btnLabelsVisible = new ToolStripButton();
-            this.btnStatusBarVisible = new ToolStripButton();
-            this.btnFundamentalsVisible = new ToolStripButton();
-            this.btnDataWindow = new ToolStripButton();
-            this.btnIndicatorsTB2 = new ToolStripButton();
-            this.btnFundamentalsTB2 = new ToolStripButton();
-            this.btnClearIndicators = new ToolStripButton();
-            this.btnPushCode = new ToolStripButton();
-            this.btnTradeTicket = new ToolStripButton();
-            this.btnPreferencesTB = new ToolStripButton();
-            this.pnlTree = new Panel();
-            this.splitContainerDataPane = new SplitContainer();
-            this.treeDataSources = new DataSourceTreeView();
-            this.toolbarDataSets = new ToolStrip();
-            this.lblDataSets = new ToolStripLabel();
-            this.linkNewDataSet = new ToolStripLabel();
-            this.toolbarParameters = new ToolStrip();
-            this.lblParameters = new ToolStripLabel();
-            this.pnlParamBase = new Panel();
-            this.pnlParamBaseLinkParams = new Panel();
-            this.linkRerun = new LinkLabel();
-            this.linkResetParams = new LinkLabel();
-            this.linkSaveParams = new LinkLabel();
-            this.paramSliders = new ParameterSlidersContainer();
-            this.popupPreferredValues = new ContextMenuStrip(this.components);
-            this.mniStorePreferredValues = new ToolStripMenuItem();
-            this.lblScale = new Label();
-            this.scale = new ScaleSelecter();
-            this.cmbSymbol = new ComboBox();
-            this.btnGo = new Button();
-            this.lblSymbol = new Label();
-            this.lblPositions = new Label();
-            this.lblRange = new Label();
-            this.posSize = new PositionSizeSelecter();
-            this.dataRange = new BarDataRangeSelecter();
-            this.toolbarDrawing = new ToolStrip();
-            this.btnClearDrawingObjects = new ToolStripButton();
-            this.btnCrossHair = new ToolStripButton();
-            this.sepDeleteDrawing = new ToolStripSeparator();
-            this.btnTrendline = new ToolStripButton();
-            this.splitter = new Splitter();
-
-            this.splitter.DoubleClick += new EventHandler(this.mniViewDataPanel_Click); ///WYJ fix
-            this.saveFileDialog_0 = new SaveFileDialog();
-            this.openFileDialog_0 = new OpenFileDialog();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.lblAsk = new System.Windows.Forms.Label();
+            this.menuMain = new System.Windows.Forms.MenuStrip();
+            this.mniFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewChart = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewBuilder = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewMultiStrategyBuilder = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepNewStrategy = new System.Windows.Forms.ToolStripSeparator();
+            this.mniNewWorkspace2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewQuote = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepNewQuote = new System.Windows.Forms.ToolStripSeparator();
+            this.mniNewDataSet = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniOpenStrategy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniOpenWorkspace = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepSave = new System.Windows.Forms.ToolStripSeparator();
+            this.mniSaveStrategy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniSaveStrategyAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepChart = new System.Windows.Forms.ToolStripSeparator();
+            this.mniPreferences2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepPreferences = new System.Windows.Forms.ToolStripSeparator();
+            this.mniLogin = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniOnDemand = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepExit = new System.Windows.Forms.ToolStripSeparator();
+            this.mniCloseWorkspace = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniUndoDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniSelectAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniFind = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniFindReplace = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepSelectAll = new System.Windows.Forms.ToolStripSeparator();
+            this.mniSetTemplate = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniView = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniViewTradeTicket = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniViewDataPanel = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniViewStatusBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepView = new System.Windows.Forms.ToolStripSeparator();
+            this.mniViewNavBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNavIcons = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniViewToolbar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniViewDrawingBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniDataWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniTools = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniHomePage = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniAccounts = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniOrderManager = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniStrategyCenter = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniDataManager = new System.Windows.Forms.ToolStripMenuItem();
+            this.symbolInfoManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniStrategyRanking = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniIndexManager = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepTools = new System.Windows.Forms.ToolStripSeparator();
+            this.mniIndicators = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniFundamentals = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepIndicators = new System.Windows.Forms.ToolStripSeparator();
+            this.mniDebug = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniQuickRef = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepQuickRef = new System.Windows.Forms.ToolStripSeparator();
+            this.mniPreferences = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeStrategyHiddenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniWorkspaces = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewWorkspace3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniLoadWorkSpace = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniSaveWorkSpace = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepSaveWorkspace = new System.Windows.Forms.ToolStripSeparator();
+            this.mniSetDefaultWorkspace = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniCascade = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniTileHorizontally = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniTileVertically = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniUserGuide = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniQuickRef2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniLanguageGuide = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepHelp = new System.Windows.Forms.ToolStripSeparator();
+            this.mniFidelityCom = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniWealthLabCom = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepHelp2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniSoftwareUpgrade = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepUpgrade = new System.Windows.Forms.ToolStripSeparator();
+            this.mniAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.status = new System.Windows.Forms.StatusStrip();
+            this.statusMessage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusOrders = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusActive = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStreamingProvider = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStreamingStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStreamingSymbolsOff = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStreamingSymbolsOn = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusSofwareDownload = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusDownloadProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.stlblHolder = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolbarNav = new System.Windows.Forms.ToolStrip();
+            this.btnHome = new System.Windows.Forms.ToolStripButton();
+            this.dropdownCharts = new System.Windows.Forms.ToolStripDropDownButton();
+            this.mniNewChart2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewRules2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewCode2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewMultiStrategyBuilder2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniOpenStrategy2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepChart2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniChartFront = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepChartFront = new System.Windows.Forms.ToolStripSeparator();
+            this.btnStrategyCenter = new System.Windows.Forms.ToolStripButton();
+            this.dropdownQuotes = new System.Windows.Forms.ToolStripDropDownButton();
+            this.mniNewQuote2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepQuote2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniQuoteAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepQuoteFront = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrdersAlerts = new System.Windows.Forms.ToolStripButton();
+            this.btnAcctsPositions = new System.Windows.Forms.ToolStripButton();
+            this.btnDataManager = new System.Windows.Forms.ToolStripButton();
+            this.sepDataManager = new System.Windows.Forms.ToolStripSeparator();
+            this.btnIndicators = new System.Windows.Forms.ToolStripButton();
+            this.btnFundamental = new System.Windows.Forms.ToolStripButton();
+            this.btnHelp = new System.Windows.Forms.ToolStripButton();
+            this.btnPreferences = new System.Windows.Forms.ToolStripButton();
+            this.btnTrade = new System.Windows.Forms.ToolStripButton();
+            this.toolbar = new System.Windows.Forms.ToolStrip();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.mniNewChartDD = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewStrategyRulesDD = new System.Windows.Forms.ToolStripMenuItem();
+            this.newStrategyFromCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewCombinationStrategy = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepNew = new System.Windows.Forms.ToolStripSeparator();
+            this.mniNewWorkspaceTB = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniNewQuoteDD = new System.Windows.Forms.ToolStripMenuItem();
+            this.sepNew2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mniNewDataSetTB = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOpenStrategy = new System.Windows.Forms.ToolStripButton();
+            this.btnSave = new System.Windows.Forms.ToolStripButton();
+            this.btnSaveAs = new System.Windows.Forms.ToolStripButton();
+            this.sepChartFile = new System.Windows.Forms.ToolStripSeparator();
+            this.btnLogin = new System.Windows.Forms.ToolStripButton();
+            this.sepSpacing = new System.Windows.Forms.ToolStripSeparator();
+            this.lblSpacing = new System.Windows.Forms.ToolStripLabel();
+            this.btnIncreaseSpacing = new System.Windows.Forms.ToolStripButton();
+            this.btnRestoreSpacing = new System.Windows.Forms.ToolStripButton();
+            this.btnDecreaseSpacing = new System.Windows.Forms.ToolStripButton();
+            this.sepBarSpacing = new System.Windows.Forms.ToolStripSeparator();
+            this.tslblChartStyles = new System.Windows.Forms.ToolStripLabel();
+            this.btnCandleStyle = new System.Windows.Forms.ToolStripButton();
+            this.btnBarChart = new System.Windows.Forms.ToolStripButton();
+            this.btnLineChart = new System.Windows.Forms.ToolStripButton();
+            this.tsmMoreChartStyles = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnLinear = new System.Windows.Forms.ToolStripButton();
+            this.btnLog = new System.Windows.Forms.ToolStripButton();
+            this.sepChartStyles = new System.Windows.Forms.ToolStripSeparator();
+            this.tslblOptions = new System.Windows.Forms.ToolStripLabel();
+            this.btnLabelsVisible = new System.Windows.Forms.ToolStripButton();
+            this.btnStatusBarVisible = new System.Windows.Forms.ToolStripButton();
+            this.btnFundamentalsVisible = new System.Windows.Forms.ToolStripButton();
+            this.btnDataWindow = new System.Windows.Forms.ToolStripButton();
+            this.btnIndicatorsTB2 = new System.Windows.Forms.ToolStripButton();
+            this.btnFundamentalsTB2 = new System.Windows.Forms.ToolStripButton();
+            this.btnClearIndicators = new System.Windows.Forms.ToolStripButton();
+            this.btnPushCode = new System.Windows.Forms.ToolStripButton();
+            this.btnTradeTicket = new System.Windows.Forms.ToolStripButton();
+            this.btnPreferencesTB = new System.Windows.Forms.ToolStripButton();
+            this.mniCrossHair = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlTree = new System.Windows.Forms.Panel();
+            this.splitContainerDataPane = new System.Windows.Forms.SplitContainer();
+            this.toolbarParameters = new System.Windows.Forms.ToolStrip();
+            this.lblParameters = new System.Windows.Forms.ToolStripLabel();
+            this.pnlParamBase = new System.Windows.Forms.Panel();
+            this.paramSliders = new WealthLab.ParameterSlidersContainer();
+            this.popupPreferredValues = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mniStorePreferredValues = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblScale = new System.Windows.Forms.Label();
+            this.cmbSymbol = new System.Windows.Forms.ComboBox();
+            this.btnGo = new System.Windows.Forms.Button();
+            this.lblSymbol = new System.Windows.Forms.Label();
+            this.lblPositions = new System.Windows.Forms.Label();
+            this.lblRange = new System.Windows.Forms.Label();
+            this.toolbarDrawing = new System.Windows.Forms.ToolStrip();
+            this.btnClearDrawingObjects = new System.Windows.Forms.ToolStripButton();
+            this.btnCrossHair = new System.Windows.Forms.ToolStripButton();
+            this.sepDeleteDrawing = new System.Windows.Forms.ToolStripSeparator();
+            this.btnTrendline = new System.Windows.Forms.ToolStripButton();
+            this.splitter = new System.Windows.Forms.Splitter();
+            this.saveFileDialog_0 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog_0 = new System.Windows.Forms.OpenFileDialog();
             this.timer_0 = new System.Windows.Forms.Timer(this.components);
             this.timer_1 = new System.Windows.Forms.Timer(this.components);
-            this.pnlTrade = new Panel();
-            this.accountTypeSelector1 = new AccountTypeSelector(this.components);
-            this.lblBid = new Label();
-            this.lblAsOf = new Label();
-            this.lblLast = new Label();
-            this.lblAcctType = new Label();
-            this.btnDockUp = new Button();
-            this.btnCloseTradeTicket = new Button();
-            this.btnDockDown = new Button();
-            this.btnLoginTradeTicket = new Button();
-            this.numTradePrice = new NumEdit();
-            this.numTradeQty = new NumEdit();
-            this.txtTradeSymbol = new TextBox();
-            this.btnStageOrder = new Button();
-            this.btnPlaceOrder = new Button();
-            this.lbTradeDirected = new Label();
-            this.cmbTradeRoute = new ComboBox();
-            this.lblTradeTIF = new Label();
-            this.cmbTradeTIF = new ComboBox();
-            this.lblTradePrice = new Label();
-            this.lblTradeOrder = new Label();
-            this.cmbTradeOrder = new ComboBox();
-            this.lblTradeQty = new Label();
-            this.lblTradeAction = new Label();
-            this.cmbTradeAction = new ComboBox();
-            this.lblTradeSymbol = new Label();
-            this.lblTradeAcct = new Label();
-            this.cmbAccount = new ComboBox();
-            this.printPreviewDialog = new PrintPreviewDialog();
-            this.pageSetupDialog_0 = new PageSetupDialog();
+            this.pnlTrade = new System.Windows.Forms.Panel();
+            this.lblBid = new System.Windows.Forms.Label();
+            this.lblAsOf = new System.Windows.Forms.Label();
+            this.lblLast = new System.Windows.Forms.Label();
+            this.lblAcctType = new System.Windows.Forms.Label();
+            this.btnDockUp = new System.Windows.Forms.Button();
+            this.btnCloseTradeTicket = new System.Windows.Forms.Button();
+            this.btnDockDown = new System.Windows.Forms.Button();
+            this.btnLoginTradeTicket = new System.Windows.Forms.Button();
+            this.numTradePrice = new CtrlLib.NumEdit();
+            this.numTradeQty = new CtrlLib.NumEdit();
+            this.txtTradeSymbol = new System.Windows.Forms.TextBox();
+            this.btnStageOrder = new System.Windows.Forms.Button();
+            this.btnPlaceOrder = new System.Windows.Forms.Button();
+            this.lbTradeDirected = new System.Windows.Forms.Label();
+            this.cmbTradeRoute = new System.Windows.Forms.ComboBox();
+            this.lblTradeTIF = new System.Windows.Forms.Label();
+            this.cmbTradeTIF = new System.Windows.Forms.ComboBox();
+            this.lblTradePrice = new System.Windows.Forms.Label();
+            this.lblTradeOrder = new System.Windows.Forms.Label();
+            this.cmbTradeOrder = new System.Windows.Forms.ComboBox();
+            this.lblTradeQty = new System.Windows.Forms.Label();
+            this.lblTradeAction = new System.Windows.Forms.Label();
+            this.cmbTradeAction = new System.Windows.Forms.ComboBox();
+            this.lblTradeSymbol = new System.Windows.Forms.Label();
+            this.lblTradeAcct = new System.Windows.Forms.Label();
+            this.cmbAccount = new System.Windows.Forms.ComboBox();
+            this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
+            this.pageSetupDialog_0 = new System.Windows.Forms.PageSetupDialog();
             this.timer_2 = new System.Windows.Forms.Timer(this.components);
-            this.assemblyLoader_0 = new AssemblyLoader(this.components);
-            this.drawingObjectManager_0 = new DrawingObjectManager(this.components);
-            this.streamingQuoteManager_0 = new StreamingQuoteManager(this.components);
+            this.assemblyLoader_0 = new Fidelity.Components.AssemblyLoader(this.components);
+            this.drawingObjectManager_0 = new WealthLab.ChartControl.DrawingObjectManager(this.components);
+            this.streamingQuoteManager_0 = new WealthLab.StreamingQuoteManager(this.components);
+            this.lblDataSets = new System.Windows.Forms.ToolStripLabel();
+            this.linkNewDataSet = new System.Windows.Forms.ToolStripLabel();
+            this.toolbarDataSets = new System.Windows.Forms.ToolStrip();
+            this.treeDataSources = new WealthLab.DataSourceTreeView();
+            this.linkSaveParams = new System.Windows.Forms.LinkLabel();
+            this.linkResetParams = new System.Windows.Forms.LinkLabel();
+            this.linkRerun = new System.Windows.Forms.LinkLabel();
+            this.pnlParamBaseLinkParams = new System.Windows.Forms.Panel();
+            this.accountTypeSelector1 = new WealthLabPro.AccountTypeSelector(this.components);
+            this.scale = new WealthLabPro.ScaleSelecter();
+            this.posSize = new WealthLabPro.PositionSizeSelecter();
+            this.dataRange = new WealthLabPro.BarDataRangeSelecter();
             this.menuMain.SuspendLayout();
             this.status.SuspendLayout();
             this.toolbarNav.SuspendLayout();
             this.toolbar.SuspendLayout();
             this.pnlTree.SuspendLayout();
-            this.splitContainerDataPane.BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerDataPane)).BeginInit();
             this.splitContainerDataPane.Panel1.SuspendLayout();
             this.splitContainerDataPane.Panel2.SuspendLayout();
             this.splitContainerDataPane.SuspendLayout();
-            this.toolbarDataSets.SuspendLayout();
             this.toolbarParameters.SuspendLayout();
             this.pnlParamBase.SuspendLayout();
-            this.pnlParamBaseLinkParams.SuspendLayout();
             this.popupPreferredValues.SuspendLayout();
             this.toolbarDrawing.SuspendLayout();
             this.pnlTrade.SuspendLayout();
-            base.SuspendLayout();
-            this.lblAsk.Location = new Point(0x298, 0x19);
+            this.toolbarDataSets.SuspendLayout();
+            this.pnlParamBaseLinkParams.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // lblAsk
+            // 
+            this.lblAsk.Location = new System.Drawing.Point(664, 25);
             this.lblAsk.Name = "lblAsk";
-            this.lblAsk.Size = new Size(0x75, 11);
-            this.lblAsk.TabIndex = 0x2a;
+            this.lblAsk.Size = new System.Drawing.Size(117, 11);
+            this.lblAsk.TabIndex = 42;
             this.lblAsk.Text = "Ask:";
             this.lblAsk.Visible = false;
-            this.menuMain.Items.AddRange(new ToolStripItem[] { this.mniFile, this.mniEdit, this.mniView, this.mniTools, this.mniWorkspaces, this.mniWindow, this.mniHelp });
-            this.menuMain.Location = new Point(0, 0);
+            // 
+            // menuMain
+            // 
+            this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniFile,
+            this.mniEdit,
+            this.mniView,
+            this.mniTools,
+            this.mniWorkspaces,
+            this.mniWindow,
+            this.mniHelp});
+            this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.MdiWindowListItem = this.mniWindow;
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new Size(0x404, 0x18);
+            this.menuMain.Size = new System.Drawing.Size(1028, 24);
             this.menuMain.TabIndex = 0;
             this.menuMain.Text = "menuStrip1";
-            this.mniFile.DropDownItems.AddRange(new ToolStripItem[] { this.mniNew, this.mniOpenStrategy, this.mniOpenWorkspace, this.mniClose, this.mniPrint, this.sepSave, this.mniSaveStrategy, this.mniSaveStrategyAs, this.sepChart, this.mniPreferences2, this.sepPreferences, this.mniLogin, this.mniOnDemand, this.sepExit, this.mniCloseWorkspace, this.mniExit });
+            // 
+            // mniFile
+            // 
+            this.mniFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniNew,
+            this.mniOpenStrategy,
+            this.mniOpenWorkspace,
+            this.mniClose,
+            this.mniPrint,
+            this.sepSave,
+            this.mniSaveStrategy,
+            this.mniSaveStrategyAs,
+            this.sepChart,
+            this.mniPreferences2,
+            this.sepPreferences,
+            this.mniLogin,
+            this.mniOnDemand,
+            this.sepExit,
+            this.mniCloseWorkspace,
+            this.mniExit});
             this.mniFile.Name = "mniFile";
-            this.mniFile.Size = new Size(0x23, 20);
+            this.mniFile.Size = new System.Drawing.Size(35, 20);
             this.mniFile.Text = "&File";
-            this.mniNew.DropDownItems.AddRange(new ToolStripItem[] { this.mniNewChart, this.mniNewBuilder, this.mniNewEditor, this.mniNewMultiStrategyBuilder, this.sepNewStrategy, this.mniNewWorkspace2, this.mniNewQuote, this.sepNewQuote, this.mniNewDataSet });
-            this.mniNew.Image = (Image) resources.GetObject("mniNew.Image");
-            this.mniNew.ImageTransparentColor = Color.Fuchsia;
+            // 
+            // mniNew
+            // 
+            this.mniNew.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniNewChart,
+            this.mniNewBuilder,
+            this.mniNewEditor,
+            this.mniNewMultiStrategyBuilder,
+            this.sepNewStrategy,
+            this.mniNewWorkspace2,
+            this.mniNewQuote,
+            this.sepNewQuote,
+            this.mniNewDataSet});
+            this.mniNew.Image = ((System.Drawing.Image)(resources.GetObject("mniNew.Image")));
+            this.mniNew.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNew.Name = "mniNew";
-            this.mniNew.Size = new Size(0x105, 0x16);
+            this.mniNew.Size = new System.Drawing.Size(250, 22);
             this.mniNew.Text = "&New";
-            this.mniNewChart.Image = (Image) resources.GetObject("mniNewChart.Image");
+            // 
+            // mniNewChart
+            // 
+            this.mniNewChart.Image = ((System.Drawing.Image)(resources.GetObject("mniNewChart.Image")));
             this.mniNewChart.Name = "mniNewChart";
-            this.mniNewChart.ShortcutKeys = Keys.Control | Keys.Shift | Keys.C;
-            this.mniNewChart.Size = new Size(300, 0x16);
+            this.mniNewChart.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.mniNewChart.Size = new System.Drawing.Size(289, 22);
             this.mniNewChart.Text = "New &Chart Window";
-            this.mniNewChart.Click += new EventHandler(this.mniNewChartDD_Click);
-            this.mniNewBuilder.Image = (Image) resources.GetObject("mniNewBuilder.Image");
-            this.mniNewBuilder.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewChart.Click += new System.EventHandler(this.mniNewChartDD_Click);
+            // 
+            // mniNewBuilder
+            // 
+            this.mniNewBuilder.Image = ((System.Drawing.Image)(resources.GetObject("mniNewBuilder.Image")));
+            this.mniNewBuilder.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewBuilder.Name = "mniNewBuilder";
-            this.mniNewBuilder.ShortcutKeys = Keys.Control | Keys.Shift | Keys.R;
-            this.mniNewBuilder.Size = new Size(300, 0x16);
+            this.mniNewBuilder.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.R)));
+            this.mniNewBuilder.Size = new System.Drawing.Size(289, 22);
             this.mniNewBuilder.Text = "New Strategy from &Rules";
-            this.mniNewBuilder.Click += new EventHandler(this.mniNewBuilder_Click);
-            this.mniNewEditor.Image = (Image) resources.GetObject("mniNewEditor.Image");
-            this.mniNewEditor.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewBuilder.Click += new System.EventHandler(this.mniNewBuilder_Click);
+            // 
+            // mniNewEditor
+            // 
+            this.mniNewEditor.Image = ((System.Drawing.Image)(resources.GetObject("mniNewEditor.Image")));
+            this.mniNewEditor.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewEditor.Name = "mniNewEditor";
-            this.mniNewEditor.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
-            this.mniNewEditor.Size = new Size(300, 0x16);
+            this.mniNewEditor.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.S)));
+            this.mniNewEditor.Size = new System.Drawing.Size(289, 22);
             this.mniNewEditor.Text = "New &Strategy from Code";
-            this.mniNewEditor.Click += new EventHandler(this.newStrategyFromCodeToolStripMenuItem_Click);
-            this.mniNewMultiStrategyBuilder.Image = (Image) resources.GetObject("mniNewMultiStrategyBuilder.Image");
+            this.mniNewEditor.Click += new System.EventHandler(this.newStrategyFromCodeToolStripMenuItem_Click);
+            // 
+            // mniNewMultiStrategyBuilder
+            // 
+            this.mniNewMultiStrategyBuilder.Image = ((System.Drawing.Image)(resources.GetObject("mniNewMultiStrategyBuilder.Image")));
             this.mniNewMultiStrategyBuilder.Name = "mniNewMultiStrategyBuilder";
-            this.mniNewMultiStrategyBuilder.ShortcutKeys = Keys.Control | Keys.Shift | Keys.M;
-            this.mniNewMultiStrategyBuilder.Size = new Size(300, 0x16);
+            this.mniNewMultiStrategyBuilder.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.M)));
+            this.mniNewMultiStrategyBuilder.Size = new System.Drawing.Size(289, 22);
             this.mniNewMultiStrategyBuilder.Text = "New Combination Strategy";
-            this.mniNewMultiStrategyBuilder.Click += new EventHandler(this.mniNewCombinationStrategy_Click);
+            this.mniNewMultiStrategyBuilder.Click += new System.EventHandler(this.mniNewCombinationStrategy_Click);
+            // 
+            // sepNewStrategy
+            // 
             this.sepNewStrategy.Name = "sepNewStrategy";
-            this.sepNewStrategy.Size = new Size(0x129, 6);
+            this.sepNewStrategy.Size = new System.Drawing.Size(286, 6);
+            // 
+            // mniNewWorkspace2
+            // 
             this.mniNewWorkspace2.Name = "mniNewWorkspace2";
-            this.mniNewWorkspace2.ShortcutKeys = Keys.Control | Keys.Shift | Keys.W;
-            this.mniNewWorkspace2.Size = new Size(300, 0x16);
+            this.mniNewWorkspace2.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.W)));
+            this.mniNewWorkspace2.Size = new System.Drawing.Size(289, 22);
             this.mniNewWorkspace2.Text = "New Main &Workspace Window";
-            this.mniNewWorkspace2.Click += new EventHandler(this.mniNewWorkspaceTB_Click);
-            this.mniNewQuote.Image = (Image) resources.GetObject("mniNewQuote.Image");
-            this.mniNewQuote.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewWorkspace2.Click += new System.EventHandler(this.mniNewWorkspaceTB_Click);
+            // 
+            // mniNewQuote
+            // 
+            this.mniNewQuote.Image = ((System.Drawing.Image)(resources.GetObject("mniNewQuote.Image")));
+            this.mniNewQuote.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewQuote.Name = "mniNewQuote";
-            this.mniNewQuote.ShortcutKeys = Keys.Control | Keys.Shift | Keys.Q;
-            this.mniNewQuote.Size = new Size(300, 0x16);
+            this.mniNewQuote.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.Q)));
+            this.mniNewQuote.Size = new System.Drawing.Size(289, 22);
             this.mniNewQuote.Text = "New &Quote Window";
-            this.mniNewQuote.Click += new EventHandler(this.mniNewQuoteDD_Click);
+            this.mniNewQuote.Click += new System.EventHandler(this.mniNewQuoteDD_Click);
+            // 
+            // sepNewQuote
+            // 
             this.sepNewQuote.Name = "sepNewQuote";
-            this.sepNewQuote.Size = new Size(0x129, 6);
-            this.mniNewDataSet.Image = (Image) resources.GetObject("mniNewDataSet.Image");
-            this.mniNewDataSet.ImageTransparentColor = Color.Fuchsia;
+            this.sepNewQuote.Size = new System.Drawing.Size(286, 6);
+            // 
+            // mniNewDataSet
+            // 
+            this.mniNewDataSet.Image = ((System.Drawing.Image)(resources.GetObject("mniNewDataSet.Image")));
+            this.mniNewDataSet.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewDataSet.Name = "mniNewDataSet";
-            this.mniNewDataSet.ShortcutKeys = Keys.Control | Keys.Shift | Keys.D;
-            this.mniNewDataSet.Size = new Size(300, 0x16);
+            this.mniNewDataSet.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.D)));
+            this.mniNewDataSet.Size = new System.Drawing.Size(289, 22);
             this.mniNewDataSet.Text = "New &DataSet ...";
-            this.mniNewDataSet.Click += new EventHandler(this.linkNewDataSet_Click);
-            this.mniOpenStrategy.Image = (Image) resources.GetObject("mniOpenStrategy.Image");
-            this.mniOpenStrategy.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewDataSet.Click += new System.EventHandler(this.linkNewDataSet_Click);
+            // 
+            // mniOpenStrategy
+            // 
+            this.mniOpenStrategy.Image = ((System.Drawing.Image)(resources.GetObject("mniOpenStrategy.Image")));
+            this.mniOpenStrategy.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniOpenStrategy.Name = "mniOpenStrategy";
-            this.mniOpenStrategy.ShortcutKeys = Keys.Control | Keys.O;
-            this.mniOpenStrategy.Size = new Size(0x105, 0x16);
+            this.mniOpenStrategy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.mniOpenStrategy.Size = new System.Drawing.Size(250, 22);
             this.mniOpenStrategy.Text = "Open &Strategy ...";
-            this.mniOpenStrategy.Click += new EventHandler(this.btnOpenStrategy_Click);
+            this.mniOpenStrategy.Click += new System.EventHandler(this.btnOpenStrategy_Click);
+            // 
+            // mniOpenWorkspace
+            // 
             this.mniOpenWorkspace.Name = "mniOpenWorkspace";
-            this.mniOpenWorkspace.ShortcutKeys = Keys.Control | Keys.W;
-            this.mniOpenWorkspace.Size = new Size(0x105, 0x16);
+            this.mniOpenWorkspace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.mniOpenWorkspace.Size = new System.Drawing.Size(250, 22);
             this.mniOpenWorkspace.Text = "Open &Workspace ...";
-            this.mniOpenWorkspace.Click += new EventHandler(this.mniLoadWorkSpace_Click);
+            this.mniOpenWorkspace.Click += new System.EventHandler(this.mniLoadWorkSpace_Click);
+            // 
+            // mniClose
+            // 
             this.mniClose.Name = "mniClose";
             this.mniClose.ShortcutKeyDisplayString = "Ctrl + F4";
-            this.mniClose.Size = new Size(0x105, 0x16);
+            this.mniClose.Size = new System.Drawing.Size(250, 22);
             this.mniClose.Text = "&Close";
-            this.mniClose.Click += new EventHandler(this.mniClose_Click);
-            this.mniPrint.Image = (Image) resources.GetObject("mniPrint.Image");
+            this.mniClose.Click += new System.EventHandler(this.mniClose_Click);
+            // 
+            // mniPrint
+            // 
+            this.mniPrint.Image = ((System.Drawing.Image)(resources.GetObject("mniPrint.Image")));
             this.mniPrint.Name = "mniPrint";
-            this.mniPrint.Size = new Size(0x105, 0x16);
+            this.mniPrint.Size = new System.Drawing.Size(250, 22);
             this.mniPrint.Text = "Print";
             this.mniPrint.ToolTipText = "Print content from selected Tab";
-            this.mniPrint.Click += new EventHandler(this.mniPrint_Click);
+            this.mniPrint.Click += new System.EventHandler(this.mniPrint_Click);
+            // 
+            // sepSave
+            // 
             this.sepSave.Name = "sepSave";
-            this.sepSave.Size = new Size(0x102, 6);
-            this.mniSaveStrategy.Image = (Image) resources.GetObject("mniSaveStrategy.Image");
-            this.mniSaveStrategy.ImageTransparentColor = Color.Fuchsia;
+            this.sepSave.Size = new System.Drawing.Size(247, 6);
+            // 
+            // mniSaveStrategy
+            // 
+            this.mniSaveStrategy.Image = ((System.Drawing.Image)(resources.GetObject("mniSaveStrategy.Image")));
+            this.mniSaveStrategy.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniSaveStrategy.Name = "mniSaveStrategy";
             this.mniSaveStrategy.ShortcutKeyDisplayString = "";
-            this.mniSaveStrategy.ShortcutKeys = Keys.Control | Keys.S;
-            this.mniSaveStrategy.Size = new Size(0x105, 0x16);
+            this.mniSaveStrategy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.mniSaveStrategy.Size = new System.Drawing.Size(250, 22);
             this.mniSaveStrategy.Text = "&Save";
             this.mniSaveStrategy.ToolTipText = "Save changes made to the Strategy";
-            this.mniSaveStrategy.Click += new EventHandler(this.btnSave_Click);
-            this.mniSaveStrategyAs.Image = (Image) resources.GetObject("mniSaveStrategyAs.Image");
-            this.mniSaveStrategyAs.ImageTransparentColor = Color.Fuchsia;
+            this.mniSaveStrategy.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // mniSaveStrategyAs
+            // 
+            this.mniSaveStrategyAs.Image = ((System.Drawing.Image)(resources.GetObject("mniSaveStrategyAs.Image")));
+            this.mniSaveStrategyAs.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniSaveStrategyAs.Name = "mniSaveStrategyAs";
             this.mniSaveStrategyAs.ShowShortcutKeys = false;
-            this.mniSaveStrategyAs.Size = new Size(0x105, 0x16);
+            this.mniSaveStrategyAs.Size = new System.Drawing.Size(250, 22);
             this.mniSaveStrategyAs.Text = "Save &As ...";
             this.mniSaveStrategyAs.ToolTipText = "Save the current Strategy with a new Name ...";
-            this.mniSaveStrategyAs.Click += new EventHandler(this.btnSaveAs_Click);
+            this.mniSaveStrategyAs.Click += new System.EventHandler(this.btnSaveAs_Click);
+            // 
+            // sepChart
+            // 
             this.sepChart.Name = "sepChart";
-            this.sepChart.Size = new Size(0x102, 6);
-            this.mniPreferences2.Image = (Image) resources.GetObject("mniPreferences2.Image");
-            this.mniPreferences2.ImageTransparentColor = Color.Fuchsia;
+            this.sepChart.Size = new System.Drawing.Size(247, 6);
+            // 
+            // mniPreferences2
+            // 
+            this.mniPreferences2.Image = ((System.Drawing.Image)(resources.GetObject("mniPreferences2.Image")));
+            this.mniPreferences2.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniPreferences2.Name = "mniPreferences2";
-            this.mniPreferences2.ShortcutKeys = Keys.F12;
-            this.mniPreferences2.Size = new Size(0x105, 0x16);
+            this.mniPreferences2.ShortcutKeys = System.Windows.Forms.Keys.F12;
+            this.mniPreferences2.Size = new System.Drawing.Size(250, 22);
             this.mniPreferences2.Text = "&Preferences";
-            this.mniPreferences2.Click += new EventHandler(this.btnPreferencesTB_Click);
+            this.mniPreferences2.Click += new System.EventHandler(this.btnPreferencesTB_Click);
+            // 
+            // sepPreferences
+            // 
             this.sepPreferences.Name = "sepPreferences";
-            this.sepPreferences.Size = new Size(0x102, 6);
-            this.mniLogin.Image = (Image) resources.GetObject("mniLogin.Image");
-            this.mniLogin.ImageTransparentColor = Color.Fuchsia;
+            this.sepPreferences.Size = new System.Drawing.Size(247, 6);
+            // 
+            // mniLogin
+            // 
+            this.mniLogin.Image = ((System.Drawing.Image)(resources.GetObject("mniLogin.Image")));
+            this.mniLogin.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniLogin.Name = "mniLogin";
-            this.mniLogin.ShortcutKeys = Keys.Control | Keys.L;
-            this.mniLogin.Size = new Size(0x105, 0x16);
+            this.mniLogin.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.mniLogin.Size = new System.Drawing.Size(250, 22);
             this.mniLogin.Text = "Fidelity Account &Log in";
-            this.mniLogin.Click += new EventHandler(this.btnLoginTradeTicket_Click);
+            this.mniLogin.Click += new System.EventHandler(this.btnLoginTradeTicket_Click);
+            // 
+            // mniOnDemand
+            // 
             this.mniOnDemand.Checked = true;
-            this.mniOnDemand.CheckState = CheckState.Checked;
+            this.mniOnDemand.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mniOnDemand.Name = "mniOnDemand";
-            this.mniOnDemand.ShortcutKeys = Keys.Alt | Keys.Control | Keys.L;
-            this.mniOnDemand.Size = new Size(0x105, 0x16);
+            this.mniOnDemand.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.L)));
+            this.mniOnDemand.Size = new System.Drawing.Size(250, 22);
             this.mniOnDemand.Text = "&Update Data on Demand";
-            this.mniOnDemand.Click += new EventHandler(this.mniOnDemand_Click);
+            this.mniOnDemand.Click += new System.EventHandler(this.mniOnDemand_Click);
+            // 
+            // sepExit
+            // 
             this.sepExit.Name = "sepExit";
-            this.sepExit.Size = new Size(0x102, 6);
+            this.sepExit.Size = new System.Drawing.Size(247, 6);
+            // 
+            // mniCloseWorkspace
+            // 
             this.mniCloseWorkspace.Name = "mniCloseWorkspace";
-            this.mniCloseWorkspace.Size = new Size(0x105, 0x16);
+            this.mniCloseWorkspace.Size = new System.Drawing.Size(250, 22);
             this.mniCloseWorkspace.Text = "Clos&e this Workspace Window";
             this.mniCloseWorkspace.Visible = false;
-            this.mniCloseWorkspace.Click += new EventHandler(this.mniCloseWorkspace_Click);
+            this.mniCloseWorkspace.Click += new System.EventHandler(this.mniCloseWorkspace_Click);
+            // 
+            // mniExit
+            // 
             this.mniExit.Name = "mniExit";
-            this.mniExit.ShortcutKeys = Keys.Alt | Keys.F4;
-            this.mniExit.Size = new Size(0x105, 0x16);
+            this.mniExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.mniExit.Size = new System.Drawing.Size(250, 22);
             this.mniExit.Text = "E&xit";
-            this.mniExit.Click += new EventHandler(this.mniExit_Click);
-            this.mniEdit.DropDownItems.AddRange(new ToolStripItem[] { this.mniUndoDelete, this.toolStripSeparator1, this.mniCut, this.mniCopy, this.mniPaste, this.mniDelete, this.toolStripSeparator5, this.mniSelectAll, this.toolStripSeparator4, this.mniFind, this.mniFindReplace, this.sepSelectAll, this.mniSetTemplate });
+            this.mniExit.Click += new System.EventHandler(this.mniExit_Click);
+            // 
+            // mniEdit
+            // 
+            this.mniEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniUndoDelete,
+            this.toolStripSeparator1,
+            this.mniCut,
+            this.mniCopy,
+            this.mniPaste,
+            this.mniDelete,
+            this.toolStripSeparator5,
+            this.mniSelectAll,
+            this.toolStripSeparator4,
+            this.mniFind,
+            this.mniFindReplace,
+            this.sepSelectAll,
+            this.mniSetTemplate});
             this.mniEdit.Enabled = false;
             this.mniEdit.Name = "mniEdit";
-            this.mniEdit.Size = new Size(0x25, 20);
+            this.mniEdit.Size = new System.Drawing.Size(37, 20);
             this.mniEdit.Text = "&Edit";
-            this.mniUndoDelete.Image = (Image) resources.GetObject("mniUndoDelete.Image");
-            this.mniUndoDelete.ImageTransparentColor = Color.Fuchsia;
+            // 
+            // mniUndoDelete
+            // 
+            this.mniUndoDelete.Image = ((System.Drawing.Image)(resources.GetObject("mniUndoDelete.Image")));
+            this.mniUndoDelete.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniUndoDelete.Name = "mniUndoDelete";
             this.mniUndoDelete.ShortcutKeyDisplayString = "Ctrl+Z";
-            this.mniUndoDelete.Size = new Size(0xe4, 0x16);
+            this.mniUndoDelete.Size = new System.Drawing.Size(217, 22);
             this.mniUndoDelete.Text = "&Undo";
-            this.mniUndoDelete.Click += new EventHandler(this.mniUndoDelete_Click);
+            this.mniUndoDelete.Click += new System.EventHandler(this.mniUndoDelete_Click);
+            // 
+            // toolStripSeparator1
+            // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new Size(0xe1, 6);
-            this.mniCut.Image = (Image) resources.GetObject("mniCut.Image");
-            this.mniCut.ImageTransparentColor = Color.Fuchsia;
+            this.toolStripSeparator1.Size = new System.Drawing.Size(214, 6);
+            // 
+            // mniCut
+            // 
+            this.mniCut.Image = ((System.Drawing.Image)(resources.GetObject("mniCut.Image")));
+            this.mniCut.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniCut.Name = "mniCut";
             this.mniCut.ShortcutKeyDisplayString = "Ctrl+X";
-            this.mniCut.Size = new Size(0xe4, 0x16);
+            this.mniCut.Size = new System.Drawing.Size(217, 22);
             this.mniCut.Text = "Cu&t";
-            this.mniCut.Click += new EventHandler(this.mniCut_Click);
-            this.mniCopy.Image = (Image) resources.GetObject("mniCopy.Image");
-            this.mniCopy.ImageTransparentColor = Color.Fuchsia;
+            this.mniCut.Click += new System.EventHandler(this.mniCut_Click);
+            // 
+            // mniCopy
+            // 
+            this.mniCopy.Image = ((System.Drawing.Image)(resources.GetObject("mniCopy.Image")));
+            this.mniCopy.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniCopy.Name = "mniCopy";
             this.mniCopy.ShortcutKeyDisplayString = "Ctrl+c";
-            this.mniCopy.Size = new Size(0xe4, 0x16);
+            this.mniCopy.Size = new System.Drawing.Size(217, 22);
             this.mniCopy.Text = "&Copy";
-            this.mniCopy.Click += new EventHandler(this.mniCopy_Click);
-            this.mniPaste.Image = (Image) resources.GetObject("mniPaste.Image");
-            this.mniPaste.ImageTransparentColor = Color.Fuchsia;
+            this.mniCopy.Click += new System.EventHandler(this.mniCopy_Click);
+            // 
+            // mniPaste
+            // 
+            this.mniPaste.Image = ((System.Drawing.Image)(resources.GetObject("mniPaste.Image")));
+            this.mniPaste.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniPaste.Name = "mniPaste";
             this.mniPaste.ShortcutKeyDisplayString = "Ctrl+V";
-            this.mniPaste.Size = new Size(0xe4, 0x16);
+            this.mniPaste.Size = new System.Drawing.Size(217, 22);
             this.mniPaste.Text = "&Paste";
-            this.mniPaste.Click += new EventHandler(this.mniPaste_Click);
-            this.mniDelete.Image = (Image) resources.GetObject("mniDelete.Image");
-            this.mniDelete.ImageTransparentColor = Color.Fuchsia;
+            this.mniPaste.Click += new System.EventHandler(this.mniPaste_Click);
+            // 
+            // mniDelete
+            // 
+            this.mniDelete.Image = ((System.Drawing.Image)(resources.GetObject("mniDelete.Image")));
+            this.mniDelete.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniDelete.Name = "mniDelete";
-            this.mniDelete.ShortcutKeys = Keys.Control | Keys.Delete;
-            this.mniDelete.Size = new Size(0xe4, 0x16);
+            this.mniDelete.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Delete)));
+            this.mniDelete.Size = new System.Drawing.Size(217, 22);
             this.mniDelete.Text = "&Delete";
-            this.mniDelete.Click += new EventHandler(this.mniDelete_Click);
+            this.mniDelete.Click += new System.EventHandler(this.mniDelete_Click);
+            // 
+            // toolStripSeparator5
+            // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new Size(0xe1, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(214, 6);
+            // 
+            // mniSelectAll
+            // 
             this.mniSelectAll.Name = "mniSelectAll";
-            this.mniSelectAll.ShortcutKeys = Keys.Control | Keys.A;
-            this.mniSelectAll.Size = new Size(0xe4, 0x16);
+            this.mniSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.mniSelectAll.Size = new System.Drawing.Size(217, 22);
             this.mniSelectAll.Text = "Select A&ll";
-            this.mniSelectAll.Click += new EventHandler(this.mniSelectAll_Click);
+            this.mniSelectAll.Click += new System.EventHandler(this.mniSelectAll_Click);
+            // 
+            // toolStripSeparator4
+            // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new Size(0xe1, 6);
-            this.mniFind.ImageTransparentColor = Color.Fuchsia;
+            this.toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
+            // 
+            // mniFind
+            // 
+            this.mniFind.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniFind.Name = "mniFind";
-            this.mniFind.ShortcutKeys = Keys.Control | Keys.F;
-            this.mniFind.Size = new Size(0xe4, 0x16);
+            this.mniFind.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.mniFind.Size = new System.Drawing.Size(217, 22);
             this.mniFind.Text = "&Find";
-            this.mniFind.Click += new EventHandler(this.mniFind_Click);
-            this.mniFindReplace.ImageTransparentColor = Color.Fuchsia;
+            this.mniFind.Click += new System.EventHandler(this.mniFind_Click);
+            // 
+            // mniFindReplace
+            // 
+            this.mniFindReplace.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniFindReplace.Name = "mniFindReplace";
-            this.mniFindReplace.ShortcutKeys = Keys.Control | Keys.H;
-            this.mniFindReplace.Size = new Size(0xe4, 0x16);
+            this.mniFindReplace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.mniFindReplace.Size = new System.Drawing.Size(217, 22);
             this.mniFindReplace.Text = "Find && &Replace";
-            this.mniFindReplace.Click += new EventHandler(this.mniFindReplace_Click);
+            this.mniFindReplace.Click += new System.EventHandler(this.mniFindReplace_Click);
+            // 
+            // sepSelectAll
+            // 
             this.sepSelectAll.Name = "sepSelectAll";
-            this.sepSelectAll.Size = new Size(0xe1, 6);
+            this.sepSelectAll.Size = new System.Drawing.Size(214, 6);
+            // 
+            // mniSetTemplate
+            // 
             this.mniSetTemplate.Name = "mniSetTemplate";
-            this.mniSetTemplate.Size = new Size(0xe4, 0x16);
+            this.mniSetTemplate.Size = new System.Drawing.Size(217, 22);
             this.mniSetTemplate.Text = "&Set as Default Template Code";
-            this.mniSetTemplate.Click += new EventHandler(this.mniSetTemplate_Click);
-            this.mniView.DropDownItems.AddRange(new ToolStripItem[] { this.mniViewTradeTicket, this.mniViewDataPanel, this.mniViewStatusBar, this.sepView, this.mniViewNavBar, this.mniNavIcons, this.mniViewToolbar, this.mniViewDrawingBar, this.mniDataWindow });
+            this.mniSetTemplate.Click += new System.EventHandler(this.mniSetTemplate_Click);
+            // 
+            // mniView
+            // 
+            this.mniView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniViewTradeTicket,
+            this.mniViewDataPanel,
+            this.mniViewStatusBar,
+            this.sepView,
+            this.mniViewNavBar,
+            this.mniNavIcons,
+            this.mniViewToolbar,
+            this.mniViewDrawingBar,
+            this.mniDataWindow});
             this.mniView.Name = "mniView";
-            this.mniView.Size = new Size(0x29, 20);
+            this.mniView.Size = new System.Drawing.Size(41, 20);
             this.mniView.Text = "&View";
+            // 
+            // mniViewTradeTicket
+            // 
             this.mniViewTradeTicket.Name = "mniViewTradeTicket";
-            this.mniViewTradeTicket.ShortcutKeys = Keys.Control | Keys.T;
-            this.mniViewTradeTicket.Size = new Size(0xb8, 0x16);
+            this.mniViewTradeTicket.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.mniViewTradeTicket.Size = new System.Drawing.Size(173, 22);
             this.mniViewTradeTicket.Text = "&Trade Ticket";
-            this.mniViewTradeTicket.Click += new EventHandler(this.btnTradeTicket_Click);
+            this.mniViewTradeTicket.Click += new System.EventHandler(this.btnTradeTicket_Click);
+            // 
+            // mniViewDataPanel
+            // 
             this.mniViewDataPanel.Name = "mniViewDataPanel";
-            this.mniViewDataPanel.ShortcutKeys = Keys.Control | Keys.D;
-            this.mniViewDataPanel.Size = new Size(0xb8, 0x16);
+            this.mniViewDataPanel.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.mniViewDataPanel.Size = new System.Drawing.Size(173, 22);
             this.mniViewDataPanel.Text = "&Data Panel";
-            this.mniViewDataPanel.Click += new EventHandler(this.mniViewDataPanel_Click);
+            this.mniViewDataPanel.Click += new System.EventHandler(this.mniViewDataPanel_Click);
+            // 
+            // mniViewStatusBar
+            // 
             this.mniViewStatusBar.Name = "mniViewStatusBar";
-            this.mniViewStatusBar.Size = new Size(0xb8, 0x16);
+            this.mniViewStatusBar.Size = new System.Drawing.Size(173, 22);
             this.mniViewStatusBar.Text = "&Status Bar";
-            this.mniViewStatusBar.Click += new EventHandler(this.mniViewStatusBar_Click);
+            this.mniViewStatusBar.Click += new System.EventHandler(this.mniViewStatusBar_Click);
+            // 
+            // sepView
+            // 
             this.sepView.Name = "sepView";
-            this.sepView.Size = new Size(0xb5, 6);
+            this.sepView.Size = new System.Drawing.Size(170, 6);
+            // 
+            // mniViewNavBar
+            // 
             this.mniViewNavBar.Name = "mniViewNavBar";
-            this.mniViewNavBar.Size = new Size(0xb8, 0x16);
+            this.mniViewNavBar.Size = new System.Drawing.Size(173, 22);
             this.mniViewNavBar.Text = "Navigation &Bar";
-            this.mniViewNavBar.Click += new EventHandler(this.mniViewNavBar_Click);
+            this.mniViewNavBar.Click += new System.EventHandler(this.mniViewNavBar_Click);
+            // 
+            // mniNavIcons
+            // 
             this.mniNavIcons.Name = "mniNavIcons";
-            this.mniNavIcons.Size = new Size(0xb8, 0x16);
+            this.mniNavIcons.Size = new System.Drawing.Size(173, 22);
             this.mniNavIcons.Text = "Navigation Bar &Icons";
-            this.mniNavIcons.Click += new EventHandler(this.mniNavIcons_Click);
+            this.mniNavIcons.Click += new System.EventHandler(this.mniNavIcons_Click);
+            // 
+            // mniViewToolbar
+            // 
             this.mniViewToolbar.Name = "mniViewToolbar";
-            this.mniViewToolbar.Size = new Size(0xb8, 0x16);
+            this.mniViewToolbar.Size = new System.Drawing.Size(173, 22);
             this.mniViewToolbar.Text = "&Function Toolbar";
-            this.mniViewToolbar.Click += new EventHandler(this.mniViewToolbar_Click);
+            this.mniViewToolbar.Click += new System.EventHandler(this.mniViewToolbar_Click);
+            // 
+            // mniViewDrawingBar
+            // 
             this.mniViewDrawingBar.Name = "mniViewDrawingBar";
-            this.mniViewDrawingBar.Size = new Size(0xb8, 0x16);
+            this.mniViewDrawingBar.Size = new System.Drawing.Size(173, 22);
             this.mniViewDrawingBar.Text = "D&rawing Toolbar";
-            this.mniViewDrawingBar.Click += new EventHandler(this.mniViewDrawingBar_Click);
+            this.mniViewDrawingBar.Click += new System.EventHandler(this.mniViewDrawingBar_Click);
+            // 
+            // mniDataWindow
+            // 
             this.mniDataWindow.Name = "mniDataWindow";
-            this.mniDataWindow.Size = new Size(0xb8, 0x16);
+            this.mniDataWindow.Size = new System.Drawing.Size(173, 22);
             this.mniDataWindow.Tag = "CS";
             this.mniDataWindow.Text = "Data &Window";
             this.mniDataWindow.Visible = false;
-            //this.mniDataWindow.ShortcutKeys = Keys.Control | Keys.W; ///WYJ fix
-            this.mniDataWindow.Click += new EventHandler(this.btnDataWindow_Click);
-            this.mniTools.DropDownItems.AddRange(new ToolStripItem[] { 
-                this.mniHomePage, this.mniAccounts, this.mniOrderManager, this.mniStrategyCenter, this.mniDataManager, this.symbolInfoManagerToolStripMenuItem, this.mniStrategyRanking, this.mniIndexManager, this.sepTools, this.mniIndicators, this.mniFundamentals, this.sepIndicators, this.mniDebug, this.mniQuickRef, this.sepQuickRef, this.mniPreferences, 
-                this.executeStrategyHiddenMenuItem
-             });
+            this.mniDataWindow.Click += new System.EventHandler(this.btnDataWindow_Click);
+            // 
+            // mniTools
+            // 
+            this.mniTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniHomePage,
+            this.mniAccounts,
+            this.mniOrderManager,
+            this.mniStrategyCenter,
+            this.mniDataManager,
+            this.symbolInfoManagerToolStripMenuItem,
+            this.mniStrategyRanking,
+            this.mniIndexManager,
+            this.sepTools,
+            this.mniIndicators,
+            this.mniFundamentals,
+            this.sepIndicators,
+            this.mniDebug,
+            this.mniQuickRef,
+            this.sepQuickRef,
+            this.mniPreferences,
+            this.executeStrategyHiddenMenuItem});
             this.mniTools.Name = "mniTools";
-            this.mniTools.Size = new Size(0x2c, 20);
+            this.mniTools.Size = new System.Drawing.Size(44, 20);
             this.mniTools.Text = "&Tools";
-            this.mniHomePage.Image = (Image) resources.GetObject("mniHomePage.Image");
-            this.mniHomePage.ImageTransparentColor = Color.Fuchsia;
+            // 
+            // mniHomePage
+            // 
+            this.mniHomePage.Image = ((System.Drawing.Image)(resources.GetObject("mniHomePage.Image")));
+            this.mniHomePage.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniHomePage.Name = "mniHomePage";
-            this.mniHomePage.Size = new Size(0x121, 0x16);
+            this.mniHomePage.Size = new System.Drawing.Size(278, 22);
             this.mniHomePage.Text = "&Home Page";
-            this.mniHomePage.Click += new EventHandler(this.btnHome_Click);
-            this.mniAccounts.Image = (Image) resources.GetObject("mniAccounts.Image");
-            this.mniAccounts.ImageTransparentColor = Color.Fuchsia;
+            this.mniHomePage.Click += new System.EventHandler(this.btnHome_Click);
+            // 
+            // mniAccounts
+            // 
+            this.mniAccounts.Image = ((System.Drawing.Image)(resources.GetObject("mniAccounts.Image")));
+            this.mniAccounts.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniAccounts.Name = "mniAccounts";
-            this.mniAccounts.ShortcutKeys = Keys.Alt | Keys.Control | Keys.T;
-            this.mniAccounts.Size = new Size(0x121, 0x16);
+            this.mniAccounts.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.T)));
+            this.mniAccounts.Size = new System.Drawing.Size(278, 22);
             this.mniAccounts.Text = "&Accounts";
-            this.mniAccounts.Click += new EventHandler(this.btnAcctsPositions_Click);
-            this.mniOrderManager.Image = (Image) resources.GetObject("mniOrderManager.Image");
-            this.mniOrderManager.ImageTransparentColor = Color.Fuchsia;
+            this.mniAccounts.Click += new System.EventHandler(this.btnAcctsPositions_Click);
+            // 
+            // mniOrderManager
+            // 
+            this.mniOrderManager.Image = ((System.Drawing.Image)(resources.GetObject("mniOrderManager.Image")));
+            this.mniOrderManager.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniOrderManager.Name = "mniOrderManager";
-            this.mniOrderManager.ShortcutKeys = Keys.Control | Keys.R;
-            this.mniOrderManager.Size = new Size(0x121, 0x16);
+            this.mniOrderManager.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.mniOrderManager.Size = new System.Drawing.Size(278, 22);
             this.mniOrderManager.Text = "&Orders";
-            this.mniOrderManager.Click += new EventHandler(this.btnOrdersAlerts_Click);
-            this.mniStrategyCenter.Image = (Image) resources.GetObject("mniStrategyCenter.Image");
-            this.mniStrategyCenter.ImageTransparentColor = Color.Fuchsia;
+            this.mniOrderManager.Click += new System.EventHandler(this.btnOrdersAlerts_Click);
+            // 
+            // mniStrategyCenter
+            // 
+            this.mniStrategyCenter.Image = ((System.Drawing.Image)(resources.GetObject("mniStrategyCenter.Image")));
+            this.mniStrategyCenter.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniStrategyCenter.Name = "mniStrategyCenter";
-            this.mniStrategyCenter.ShortcutKeys = Keys.F3;
-            this.mniStrategyCenter.Size = new Size(0x121, 0x16);
+            this.mniStrategyCenter.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.mniStrategyCenter.Size = new System.Drawing.Size(278, 22);
             this.mniStrategyCenter.Text = "&Strategy Monitor";
-            this.mniStrategyCenter.Click += new EventHandler(this.btnStrategyCenter_Click);
-            this.mniDataManager.Image = (Image) resources.GetObject("mniDataManager.Image");
-            this.mniDataManager.ImageTransparentColor = Color.Fuchsia;
+            this.mniStrategyCenter.Click += new System.EventHandler(this.btnStrategyCenter_Click);
+            // 
+            // mniDataManager
+            // 
+            this.mniDataManager.Image = ((System.Drawing.Image)(resources.GetObject("mniDataManager.Image")));
+            this.mniDataManager.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniDataManager.Name = "mniDataManager";
-            this.mniDataManager.ShortcutKeys = Keys.Control | Keys.M;
-            this.mniDataManager.Size = new Size(0x121, 0x16);
+            this.mniDataManager.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.mniDataManager.Size = new System.Drawing.Size(278, 22);
             this.mniDataManager.Text = "&Data Manager";
-            this.mniDataManager.Click += new EventHandler(this.btnDataManager_Click);
-            this.symbolInfoManagerToolStripMenuItem.Image = (Image) resources.GetObject("symbolInfoManagerToolStripMenuItem.Image");
-            this.symbolInfoManagerToolStripMenuItem.ImageTransparentColor = Color.Fuchsia;
+            this.mniDataManager.Click += new System.EventHandler(this.btnDataManager_Click);
+            // 
+            // symbolInfoManagerToolStripMenuItem
+            // 
+            this.symbolInfoManagerToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("symbolInfoManagerToolStripMenuItem.Image")));
+            this.symbolInfoManagerToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.symbolInfoManagerToolStripMenuItem.Name = "symbolInfoManagerToolStripMenuItem";
-            this.symbolInfoManagerToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.Control | Keys.F;
-            this.symbolInfoManagerToolStripMenuItem.Size = new Size(0x121, 0x16);
+            this.symbolInfoManagerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.F)));
+            this.symbolInfoManagerToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
             this.symbolInfoManagerToolStripMenuItem.Text = "Symbol &Info Manager";
-            this.symbolInfoManagerToolStripMenuItem.Click += new EventHandler(this.symbolInfoManagerToolStripMenuItem_Click);
-            this.mniStrategyRanking.Image = (Image) resources.GetObject("mniStrategyRanking.Image");
+            this.symbolInfoManagerToolStripMenuItem.Click += new System.EventHandler(this.symbolInfoManagerToolStripMenuItem_Click);
+            // 
+            // mniStrategyRanking
+            // 
+            this.mniStrategyRanking.Image = ((System.Drawing.Image)(resources.GetObject("mniStrategyRanking.Image")));
             this.mniStrategyRanking.Name = "mniStrategyRanking";
-            this.mniStrategyRanking.ShortcutKeys = Keys.Alt | Keys.Control | Keys.R;
-            this.mniStrategyRanking.Size = new Size(0x121, 0x16);
+            this.mniStrategyRanking.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.R)));
+            this.mniStrategyRanking.Size = new System.Drawing.Size(278, 22);
             this.mniStrategyRanking.Text = "Strategy &Ranking";
-            this.mniStrategyRanking.Click += new EventHandler(this.mniStrategyRanking_Click);
-            this.mniIndexManager.Image = (Image) resources.GetObject("mniIndexManager.Image");
+            this.mniStrategyRanking.Click += new System.EventHandler(this.mniStrategyRanking_Click);
+            // 
+            // mniIndexManager
+            // 
+            this.mniIndexManager.Image = ((System.Drawing.Image)(resources.GetObject("mniIndexManager.Image")));
             this.mniIndexManager.Name = "mniIndexManager";
-            this.mniIndexManager.ShortcutKeys = Keys.Alt | Keys.Control | Keys.I;
-            this.mniIndexManager.Size = new Size(0x121, 0x16);
-            this.mniIndexManager.Text = "Index-Lab \x00ae";
-            this.mniIndexManager.Click += new EventHandler(this.mniIndexManager_Click);
+            this.mniIndexManager.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.I)));
+            this.mniIndexManager.Size = new System.Drawing.Size(278, 22);
+            this.mniIndexManager.Text = "Index-Lab ®";
+            this.mniIndexManager.Click += new System.EventHandler(this.mniIndexManager_Click);
+            // 
+            // sepTools
+            // 
             this.sepTools.Name = "sepTools";
-            this.sepTools.Size = new Size(0x11e, 6);
-            this.mniIndicators.Image = (Image) resources.GetObject("mniIndicators.Image");
-            this.mniIndicators.ImageTransparentColor = Color.Fuchsia;
+            this.sepTools.Size = new System.Drawing.Size(275, 6);
+            // 
+            // mniIndicators
+            // 
+            this.mniIndicators.Image = ((System.Drawing.Image)(resources.GetObject("mniIndicators.Image")));
+            this.mniIndicators.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniIndicators.Name = "mniIndicators";
-            this.mniIndicators.ShortcutKeys = Keys.Control | Keys.F11;
-            this.mniIndicators.Size = new Size(0x121, 0x16);
+            this.mniIndicators.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F11)));
+            this.mniIndicators.Size = new System.Drawing.Size(278, 22);
             this.mniIndicators.Text = "&Technical Indicators";
-            this.mniIndicators.Click += new EventHandler(this.btnIndicatorsTB2_Click);
-            this.mniFundamentals.Image = (Image) resources.GetObject("mniFundamentals.Image");
-            this.mniFundamentals.ImageTransparentColor = Color.Fuchsia;
+            this.mniIndicators.Click += new System.EventHandler(this.btnIndicatorsTB2_Click);
+            // 
+            // mniFundamentals
+            // 
+            this.mniFundamentals.Image = ((System.Drawing.Image)(resources.GetObject("mniFundamentals.Image")));
+            this.mniFundamentals.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniFundamentals.Name = "mniFundamentals";
-            this.mniFundamentals.ShortcutKeys = Keys.Control | Keys.U;
-            this.mniFundamentals.Size = new Size(0x121, 0x16);
+            this.mniFundamentals.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
+            this.mniFundamentals.Size = new System.Drawing.Size(278, 22);
             this.mniFundamentals.Text = "&Fundamental Data Items";
-            this.mniFundamentals.Click += new EventHandler(this.btnFundamentalsTB2_Click);
-            this.mniFundamentals.VisibleChanged += new EventHandler(this.mniFundamentals_VisibleChanged);
+            this.mniFundamentals.Click += new System.EventHandler(this.btnFundamentalsTB2_Click);
+            this.mniFundamentals.VisibleChanged += new System.EventHandler(this.mniFundamentals_VisibleChanged);
+            // 
+            // sepIndicators
+            // 
             this.sepIndicators.Name = "sepIndicators";
-            this.sepIndicators.Size = new Size(0x11e, 6);
-            this.mniDebug.Image = (Image) resources.GetObject("mniDebug.Image");
-            this.mniDebug.ImageTransparentColor = Color.Fuchsia;
+            this.sepIndicators.Size = new System.Drawing.Size(275, 6);
+            // 
+            // mniDebug
+            // 
+            this.mniDebug.Image = ((System.Drawing.Image)(resources.GetObject("mniDebug.Image")));
+            this.mniDebug.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniDebug.Name = "mniDebug";
-            this.mniDebug.ShortcutKeys = Keys.Alt | Keys.Control | Keys.D;
-            this.mniDebug.Size = new Size(0x121, 0x16);
+            this.mniDebug.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt)
+                        | System.Windows.Forms.Keys.D)));
+            this.mniDebug.Size = new System.Drawing.Size(278, 22);
             this.mniDebug.Text = "Debug and Error Message &Log";
-            this.mniDebug.Click += new EventHandler(this.mniDebug_Click);
-            this.mniQuickRef.Image = (Image) resources.GetObject("mniQuickRef.Image");
-            this.mniQuickRef.ImageTransparentColor = Color.Fuchsia;
+            this.mniDebug.Click += new System.EventHandler(this.mniDebug_Click);
+            // 
+            // mniQuickRef
+            // 
+            this.mniQuickRef.Image = ((System.Drawing.Image)(resources.GetObject("mniQuickRef.Image")));
+            this.mniQuickRef.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniQuickRef.Name = "mniQuickRef";
-            this.mniQuickRef.ShortcutKeys = Keys.F11;
-            this.mniQuickRef.Size = new Size(0x121, 0x16);
+            this.mniQuickRef.ShortcutKeys = System.Windows.Forms.Keys.F11;
+            this.mniQuickRef.Size = new System.Drawing.Size(278, 22);
             this.mniQuickRef.Text = "WealthScript &QuickRef";
-            this.mniQuickRef.Click += new EventHandler(this.mniQuickRef2_Click);
+            this.mniQuickRef.Click += new System.EventHandler(this.mniQuickRef2_Click);
+            // 
+            // sepQuickRef
+            // 
             this.sepQuickRef.Name = "sepQuickRef";
-            this.sepQuickRef.Size = new Size(0x11e, 6);
-            this.mniPreferences.Image = (Image) resources.GetObject("mniPreferences.Image");
-            this.mniPreferences.ImageTransparentColor = Color.Silver;
+            this.sepQuickRef.Size = new System.Drawing.Size(275, 6);
+            // 
+            // mniPreferences
+            // 
+            this.mniPreferences.Image = ((System.Drawing.Image)(resources.GetObject("mniPreferences.Image")));
+            this.mniPreferences.ImageTransparentColor = System.Drawing.Color.Silver;
             this.mniPreferences.Name = "mniPreferences";
-            this.mniPreferences.ShortcutKeys = Keys.F12;
-            this.mniPreferences.Size = new Size(0x121, 0x16);
+            this.mniPreferences.ShortcutKeys = System.Windows.Forms.Keys.F12;
+            this.mniPreferences.Size = new System.Drawing.Size(278, 22);
             this.mniPreferences.Text = "&Preferences";
-            this.mniPreferences.Click += new EventHandler(this.btnPreferencesTB_Click);
+            this.mniPreferences.Click += new System.EventHandler(this.btnPreferencesTB_Click);
+            // 
+            // executeStrategyHiddenMenuItem
+            // 
             this.executeStrategyHiddenMenuItem.Name = "executeStrategyHiddenMenuItem";
-            this.executeStrategyHiddenMenuItem.ShortcutKeys = Keys.F5;
-            this.executeStrategyHiddenMenuItem.Size = new Size(0x121, 0x16);
+            this.executeStrategyHiddenMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.executeStrategyHiddenMenuItem.Size = new System.Drawing.Size(278, 22);
             this.executeStrategyHiddenMenuItem.Text = "&Execute Strategy";
             this.executeStrategyHiddenMenuItem.Visible = false;
-            this.executeStrategyHiddenMenuItem.Click += new EventHandler(this.btnGo_Click);
-            this.mniWorkspaces.DropDownItems.AddRange(new ToolStripItem[] { this.mniNewWorkspace3, this.toolStripSeparator3, this.mniLoadWorkSpace, this.mniSaveWorkSpace, this.sepSaveWorkspace, this.mniSetDefaultWorkspace, this.toolStripSeparator7 });
+            this.executeStrategyHiddenMenuItem.Click += new System.EventHandler(this.btnGo_Click);
+            // 
+            // mniWorkspaces
+            // 
+            this.mniWorkspaces.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniNewWorkspace3,
+            this.toolStripSeparator3,
+            this.mniLoadWorkSpace,
+            this.mniSaveWorkSpace,
+            this.sepSaveWorkspace,
+            this.mniSetDefaultWorkspace,
+            this.toolStripSeparator7});
             this.mniWorkspaces.Name = "mniWorkspaces";
-            this.mniWorkspaces.Size = new Size(0x4d, 20);
+            this.mniWorkspaces.Size = new System.Drawing.Size(77, 20);
             this.mniWorkspaces.Text = "W&orkspaces";
+            // 
+            // mniNewWorkspace3
+            // 
             this.mniNewWorkspace3.Name = "mniNewWorkspace3";
-            this.mniNewWorkspace3.ShortcutKeys = Keys.Control | Keys.Shift | Keys.W;
-            this.mniNewWorkspace3.Size = new Size(300, 0x16);
+            this.mniNewWorkspace3.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.W)));
+            this.mniNewWorkspace3.Size = new System.Drawing.Size(289, 22);
             this.mniNewWorkspace3.Text = "New Main &Workspace Window";
-            this.mniNewWorkspace3.Click += new EventHandler(this.mniNewWorkspaceTB_Click);
+            this.mniNewWorkspace3.Click += new System.EventHandler(this.mniNewWorkspaceTB_Click);
+            // 
+            // toolStripSeparator3
+            // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new Size(0x129, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(286, 6);
+            // 
+            // mniLoadWorkSpace
+            // 
             this.mniLoadWorkSpace.Name = "mniLoadWorkSpace";
-            this.mniLoadWorkSpace.ShortcutKeys = Keys.Control | Keys.W;
-            this.mniLoadWorkSpace.Size = new Size(300, 0x16);
+            this.mniLoadWorkSpace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.mniLoadWorkSpace.Size = new System.Drawing.Size(289, 22);
             this.mniLoadWorkSpace.Text = "&Open Workspace ...";
-            this.mniLoadWorkSpace.Click += new EventHandler(this.mniLoadWorkSpace_Click);
+            this.mniLoadWorkSpace.Click += new System.EventHandler(this.mniLoadWorkSpace_Click);
+            // 
+            // mniSaveWorkSpace
+            // 
             this.mniSaveWorkSpace.Name = "mniSaveWorkSpace";
-            this.mniSaveWorkSpace.Size = new Size(300, 0x16);
+            this.mniSaveWorkSpace.Size = new System.Drawing.Size(289, 22);
             this.mniSaveWorkSpace.Text = "&Save Workspace ...";
-            this.mniSaveWorkSpace.Click += new EventHandler(this.mniSaveWorkSpace_Click);
+            this.mniSaveWorkSpace.Click += new System.EventHandler(this.mniSaveWorkSpace_Click);
+            // 
+            // sepSaveWorkspace
+            // 
             this.sepSaveWorkspace.Name = "sepSaveWorkspace";
-            this.sepSaveWorkspace.Size = new Size(0x129, 6);
+            this.sepSaveWorkspace.Size = new System.Drawing.Size(286, 6);
+            // 
+            // mniSetDefaultWorkspace
+            // 
             this.mniSetDefaultWorkspace.Name = "mniSetDefaultWorkspace";
-            this.mniSetDefaultWorkspace.Size = new Size(300, 0x16);
+            this.mniSetDefaultWorkspace.Size = new System.Drawing.Size(289, 22);
             this.mniSetDefaultWorkspace.Text = "Set as &Default Workspace";
-            this.mniSetDefaultWorkspace.Click += new EventHandler(this.mniSetDefaultWorkspace_Click);
+            this.mniSetDefaultWorkspace.Click += new System.EventHandler(this.mniSetDefaultWorkspace_Click);
+            // 
+            // toolStripSeparator7
+            // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new Size(0x129, 6);
-            this.mniWindow.DropDownItems.AddRange(new ToolStripItem[] { this.mniCascade, this.mniTileHorizontally, this.mniTileVertically, this.toolStripSeparator2 });
+            this.toolStripSeparator7.Size = new System.Drawing.Size(286, 6);
+            // 
+            // mniWindow
+            // 
+            this.mniWindow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniCascade,
+            this.mniTileHorizontally,
+            this.mniTileVertically,
+            this.toolStripSeparator2});
             this.mniWindow.Name = "mniWindow";
-            this.mniWindow.Size = new Size(0x39, 20);
+            this.mniWindow.Size = new System.Drawing.Size(57, 20);
             this.mniWindow.Text = "&Window";
+            // 
+            // mniCascade
+            // 
             this.mniCascade.Name = "mniCascade";
-            this.mniCascade.Size = new Size(160, 0x16);
+            this.mniCascade.Size = new System.Drawing.Size(149, 22);
             this.mniCascade.Text = "&Cascade";
-            this.mniCascade.Click += new EventHandler(this.mniCascade_Click);
+            this.mniCascade.Click += new System.EventHandler(this.mniCascade_Click);
+            // 
+            // mniTileHorizontally
+            // 
             this.mniTileHorizontally.Name = "mniTileHorizontally";
-            this.mniTileHorizontally.Size = new Size(160, 0x16);
+            this.mniTileHorizontally.Size = new System.Drawing.Size(149, 22);
             this.mniTileHorizontally.Text = "Tile &Horizontally";
-            this.mniTileHorizontally.Click += new EventHandler(this.mniTileHorizontally_Click);
+            this.mniTileHorizontally.Click += new System.EventHandler(this.mniTileHorizontally_Click);
+            // 
+            // mniTileVertically
+            // 
             this.mniTileVertically.Name = "mniTileVertically";
-            this.mniTileVertically.Size = new Size(160, 0x16);
+            this.mniTileVertically.Size = new System.Drawing.Size(149, 22);
             this.mniTileVertically.Text = "Tile &Vertically";
-            this.mniTileVertically.Click += new EventHandler(this.mniTileVertically_Click);
+            this.mniTileVertically.Click += new System.EventHandler(this.mniTileVertically_Click);
+            // 
+            // toolStripSeparator2
+            // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new Size(0x9d, 6);
-            this.mniHelp.DropDownItems.AddRange(new ToolStripItem[] { this.mniUserGuide, this.mniQuickRef2, this.mniLanguageGuide, this.sepHelp, this.mniFidelityCom, this.mniWealthLabCom, this.sepHelp2, this.mniSoftwareUpgrade, this.sepUpgrade, this.mniAbout });
+            this.toolStripSeparator2.Size = new System.Drawing.Size(146, 6);
+            // 
+            // mniHelp
+            // 
+            this.mniHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniUserGuide,
+            this.mniQuickRef2,
+            this.mniLanguageGuide,
+            this.sepHelp,
+            this.mniFidelityCom,
+            this.mniWealthLabCom,
+            this.sepHelp2,
+            this.mniSoftwareUpgrade,
+            this.sepUpgrade,
+            this.mniAbout});
             this.mniHelp.Name = "mniHelp";
-            this.mniHelp.ShortcutKeys = Keys.F1;
-            this.mniHelp.Size = new Size(40, 20);
+            this.mniHelp.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.mniHelp.Size = new System.Drawing.Size(40, 20);
             this.mniHelp.Text = "&Help";
-            this.mniUserGuide.Image = (Image) resources.GetObject("mniUserGuide.Image");
-            this.mniUserGuide.ImageTransparentColor = Color.Fuchsia;
+            // 
+            // mniUserGuide
+            // 
+            this.mniUserGuide.Image = ((System.Drawing.Image)(resources.GetObject("mniUserGuide.Image")));
+            this.mniUserGuide.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniUserGuide.Name = "mniUserGuide";
-            this.mniUserGuide.ShortcutKeys = Keys.F1;
-            this.mniUserGuide.Size = new Size(0xf1, 0x16);
+            this.mniUserGuide.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.mniUserGuide.Size = new System.Drawing.Size(230, 22);
             this.mniUserGuide.Text = "Wealth-Lab &User Guide";
-            this.mniUserGuide.Click += new EventHandler(this.btnHelp_Click);
-            this.mniQuickRef2.Image = (Image) resources.GetObject("mniQuickRef2.Image");
-            this.mniQuickRef2.ImageTransparentColor = Color.Fuchsia;
+            this.mniUserGuide.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // mniQuickRef2
+            // 
+            this.mniQuickRef2.Image = ((System.Drawing.Image)(resources.GetObject("mniQuickRef2.Image")));
+            this.mniQuickRef2.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniQuickRef2.Name = "mniQuickRef2";
-            this.mniQuickRef2.ShortcutKeys = Keys.F11;
-            this.mniQuickRef2.Size = new Size(0xf1, 0x16);
+            this.mniQuickRef2.ShortcutKeys = System.Windows.Forms.Keys.F11;
+            this.mniQuickRef2.Size = new System.Drawing.Size(230, 22);
             this.mniQuickRef2.Text = "WealthScript &QuickRef";
-            this.mniQuickRef2.Click += new EventHandler(this.mniQuickRef2_Click);
+            this.mniQuickRef2.Click += new System.EventHandler(this.mniQuickRef2_Click);
+            // 
+            // mniLanguageGuide
+            // 
             this.mniLanguageGuide.Name = "mniLanguageGuide";
-            this.mniLanguageGuide.Size = new Size(0xf1, 0x16);
+            this.mniLanguageGuide.Size = new System.Drawing.Size(230, 22);
             this.mniLanguageGuide.Text = "WealthScript Programming Guide";
-            this.mniLanguageGuide.Click += new EventHandler(this.mniLanguageGuide_Click);
+            this.mniLanguageGuide.Click += new System.EventHandler(this.mniLanguageGuide_Click);
+            // 
+            // sepHelp
+            // 
             this.sepHelp.Name = "sepHelp";
-            this.sepHelp.Size = new Size(0xee, 6);
+            this.sepHelp.Size = new System.Drawing.Size(227, 6);
+            // 
+            // mniFidelityCom
+            // 
             this.mniFidelityCom.Name = "mniFidelityCom";
-            this.mniFidelityCom.Size = new Size(0xf1, 0x16);
+            this.mniFidelityCom.Size = new System.Drawing.Size(230, 22);
             this.mniFidelityCom.Text = "&Fidelity.com";
-            this.mniFidelityCom.Click += new EventHandler(this.mniFidelityCom_Click);
+            this.mniFidelityCom.Click += new System.EventHandler(this.mniFidelityCom_Click);
+            // 
+            // mniWealthLabCom
+            // 
             this.mniWealthLabCom.Name = "mniWealthLabCom";
-            this.mniWealthLabCom.Size = new Size(0xf1, 0x16);
+            this.mniWealthLabCom.Size = new System.Drawing.Size(230, 22);
             this.mniWealthLabCom.Text = "&Wealth-Lab.com";
-            this.mniWealthLabCom.Click += new EventHandler(this.mniWealthLabCom_Click);
+            this.mniWealthLabCom.Click += new System.EventHandler(this.mniWealthLabCom_Click);
+            // 
+            // sepHelp2
+            // 
             this.sepHelp2.Name = "sepHelp2";
-            this.sepHelp2.Size = new Size(0xee, 6);
+            this.sepHelp2.Size = new System.Drawing.Size(227, 6);
+            // 
+            // mniSoftwareUpgrade
+            // 
             this.mniSoftwareUpgrade.Name = "mniSoftwareUpgrade";
-            this.mniSoftwareUpgrade.Size = new Size(0xf1, 0x16);
+            this.mniSoftwareUpgrade.Size = new System.Drawing.Size(230, 22);
             this.mniSoftwareUpgrade.Text = "Software Upgrade";
-            this.mniSoftwareUpgrade.Click += new EventHandler(this.mniSoftwareUpgrade_Click);
+            this.mniSoftwareUpgrade.Click += new System.EventHandler(this.mniSoftwareUpgrade_Click);
+            // 
+            // sepUpgrade
+            // 
             this.sepUpgrade.Name = "sepUpgrade";
-            this.sepUpgrade.Size = new Size(0xee, 6);
+            this.sepUpgrade.Size = new System.Drawing.Size(227, 6);
+            // 
+            // mniAbout
+            // 
             this.mniAbout.Name = "mniAbout";
-            this.mniAbout.Size = new Size(0xf1, 0x16);
+            this.mniAbout.Size = new System.Drawing.Size(230, 22);
             this.mniAbout.Text = "&About Wealth-Lab Pro ...";
-            this.mniAbout.Click += new EventHandler(this.mniAbout_Click);
-            this.status.Items.AddRange(new ToolStripItem[] { this.statusMessage, this.statusOrders, this.statusActive, this.statusStreamingProvider, this.statusStreamingStatus, this.statusStreamingSymbolsOff, this.statusStreamingSymbolsOn, this.statusSofwareDownload, this.statusDownloadProgressBar });
-            this.status.Location = new Point(0, 0x1ca);
+            this.mniAbout.Click += new System.EventHandler(this.mniAbout_Click);
+            // 
+            // status
+            // 
+            this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusMessage,
+            this.statusOrders,
+            this.statusActive,
+            this.statusStreamingProvider,
+            this.statusStreamingStatus,
+            this.statusStreamingSymbolsOff,
+            this.statusStreamingSymbolsOn,
+            this.statusSofwareDownload,
+            this.statusDownloadProgressBar});
+            this.status.Location = new System.Drawing.Point(0, 458);
             this.status.Name = "status";
             this.status.ShowItemToolTips = true;
-            this.status.Size = new Size(0x404, 0x16);
+            this.status.Size = new System.Drawing.Size(1028, 22);
             this.status.TabIndex = 6;
             this.status.Text = "statusStrip1";
-            this.statusMessage.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            // 
+            // statusMessage
+            // 
+            this.statusMessage.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.statusMessage.Name = "statusMessage";
-            this.statusMessage.Size = new Size(0xc9, 0x11);
+            this.statusMessage.Size = new System.Drawing.Size(201, 17);
             this.statusMessage.Text = "Strategy Status Message (click to clear)";
-            this.statusMessage.Click += new EventHandler(this.statusMessage_Click);
-            this.statusOrders.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.statusMessage.Click += new System.EventHandler(this.statusMessage_Click);
+            // 
+            // statusOrders
+            // 
+            this.statusOrders.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.statusOrders.IsLink = true;
-            this.statusOrders.LinkBehavior = LinkBehavior.HoverUnderline;
+            this.statusOrders.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.statusOrders.Name = "statusOrders";
-            this.statusOrders.Size = new Size(0x39, 0x11);
+            this.statusOrders.Size = new System.Drawing.Size(57, 17);
             this.statusOrders.Text = "Orders: 0";
-            this.statusOrders.TextAlign = ContentAlignment.MiddleLeft;
-            this.statusOrders.Click += new EventHandler(this.statusActive_Click);
-            this.statusActive.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            this.statusOrders.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.statusOrders.Click += new System.EventHandler(this.statusActive_Click);
+            // 
+            // statusActive
+            // 
+            this.statusActive.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.statusActive.IsLink = true;
-            this.statusActive.LinkBehavior = LinkBehavior.HoverUnderline;
+            this.statusActive.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.statusActive.Name = "statusActive";
-            this.statusActive.Size = new Size(0x51, 0x11);
+            this.statusActive.Size = new System.Drawing.Size(81, 17);
             this.statusActive.Text = "Active Orders:";
-            this.statusActive.Click += new EventHandler(this.statusActive_Click);
-            this.statusStreamingProvider.Image = (Image) resources.GetObject("statusStreamingProvider.Image");
-            this.statusStreamingProvider.ImageTransparentColor = Color.Fuchsia;
-            this.statusStreamingProvider.LinkColor = Color.Red;
+            this.statusActive.Click += new System.EventHandler(this.statusActive_Click);
+            // 
+            // statusStreamingProvider
+            // 
+            this.statusStreamingProvider.Image = ((System.Drawing.Image)(resources.GetObject("statusStreamingProvider.Image")));
+            this.statusStreamingProvider.ImageTransparentColor = System.Drawing.Color.Fuchsia;
+            this.statusStreamingProvider.LinkColor = System.Drawing.Color.Red;
             this.statusStreamingProvider.Name = "statusStreamingProvider";
-            this.statusStreamingProvider.Size = new Size(0x76, 0x11);
+            this.statusStreamingProvider.Size = new System.Drawing.Size(118, 17);
             this.statusStreamingProvider.Text = "Streaming Provider:";
             this.statusStreamingProvider.Visible = false;
-            this.statusStreamingProvider.Click += new EventHandler(this.statusStreamingProvider_Click);
-            this.statusStreamingStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
-            this.statusStreamingStatus.ForeColor = Color.Green;
-            this.statusStreamingStatus.LinkColor = Color.Red;
+            this.statusStreamingProvider.Click += new System.EventHandler(this.statusStreamingProvider_Click);
+            // 
+            // statusStreamingStatus
+            // 
+            this.statusStreamingStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.statusStreamingStatus.ForeColor = System.Drawing.Color.Green;
+            this.statusStreamingStatus.LinkColor = System.Drawing.Color.Red;
             this.statusStreamingStatus.Name = "statusStreamingStatus";
-            this.statusStreamingStatus.Size = new Size(0x21, 20);
+            this.statusStreamingStatus.Size = new System.Drawing.Size(33, 20);
             this.statusStreamingStatus.Text = "(OK)";
             this.statusStreamingStatus.Visible = false;
-            this.statusStreamingStatus.Click += new EventHandler(this.statusStreamingStatus_Click);
-            this.statusStreamingSymbolsOff.BorderSides = ToolStripStatusLabelBorderSides.Right;
-            this.statusStreamingSymbolsOff.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            ///this.statusStreamingSymbolsOff.Image = Resources.StreamingSymbolsOn;
-            this.statusStreamingSymbolsOff.Image = (Image)resources.GetObject("StreamingSymbolsOn");
-            
-            this.statusStreamingSymbolsOff.ImageTransparentColor = Color.Fuchsia;
+            this.statusStreamingStatus.Click += new System.EventHandler(this.statusStreamingStatus_Click);
+            // 
+            // statusStreamingSymbolsOff
+            // 
+            this.statusStreamingSymbolsOff.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.statusStreamingSymbolsOff.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.statusStreamingSymbolsOff.Image = ((System.Drawing.Image)(resources.GetObject("statusStreamingSymbolsOff.Image")));
+            this.statusStreamingSymbolsOff.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.statusStreamingSymbolsOff.Name = "statusStreamingSymbolsOff";
-            this.statusStreamingSymbolsOff.Size = new Size(20, 20);
+            this.statusStreamingSymbolsOff.Size = new System.Drawing.Size(20, 20);
             this.statusStreamingSymbolsOff.ToolTipText = "Click to turn off Streaming for Symbols in Status Bar";
             this.statusStreamingSymbolsOff.Visible = false;
-            this.statusStreamingSymbolsOff.Click += new EventHandler(this.statusStreamingSymbolsOff_Click);
-            this.statusStreamingSymbolsOn.BorderSides = ToolStripStatusLabelBorderSides.Right;
-            this.statusStreamingSymbolsOn.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            ///this.statusStreamingSymbolsOn.Image = Resources.StreamingSymbolsOff;
-            this.statusStreamingSymbolsOn.Image = (Image)resources.GetObject("StreamingSymbolsOff");
-
-            this.statusStreamingSymbolsOn.ImageTransparentColor = Color.Fuchsia;
+            this.statusStreamingSymbolsOff.Click += new System.EventHandler(this.statusStreamingSymbolsOff_Click);
+            // 
+            // statusStreamingSymbolsOn
+            // 
+            this.statusStreamingSymbolsOn.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.statusStreamingSymbolsOn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.statusStreamingSymbolsOn.Image = ((System.Drawing.Image)(resources.GetObject("statusStreamingSymbolsOn.Image")));
+            this.statusStreamingSymbolsOn.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.statusStreamingSymbolsOn.Name = "statusStreamingSymbolsOn";
-            this.statusStreamingSymbolsOn.Size = new Size(20, 20);
+            this.statusStreamingSymbolsOn.Size = new System.Drawing.Size(20, 20);
             this.statusStreamingSymbolsOn.ToolTipText = "Click to turn on Streaming for Symbols in Status Bar";
             this.statusStreamingSymbolsOn.Visible = false;
-            this.statusStreamingSymbolsOn.Click += new EventHandler(this.statusStreamingSymbolsOn_Click);
+            this.statusStreamingSymbolsOn.Click += new System.EventHandler(this.statusStreamingSymbolsOn_Click);
+            // 
+            // statusSofwareDownload
+            // 
             this.statusSofwareDownload.Name = "statusSofwareDownload";
-            this.statusSofwareDownload.Size = new Size(0x69, 0x11);
+            this.statusSofwareDownload.Size = new System.Drawing.Size(105, 17);
             this.statusSofwareDownload.Text = "Software Download:";
             this.statusSofwareDownload.Visible = false;
+            // 
+            // statusDownloadProgressBar
+            // 
             this.statusDownloadProgressBar.Name = "statusDownloadProgressBar";
-            this.statusDownloadProgressBar.Size = new Size(100, 0x10);
-            this.statusDownloadProgressBar.Style = ProgressBarStyle.Continuous;
+            this.statusDownloadProgressBar.Size = new System.Drawing.Size(100, 16);
+            this.statusDownloadProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.statusDownloadProgressBar.ToolTipText = "Software Upgrade Progress";
             this.statusDownloadProgressBar.Visible = false;
+            // 
+            // stlblHolder
+            // 
             this.stlblHolder.Name = "stlblHolder";
-            this.stlblHolder.Size = new Size(0x3b, 0x11);
+            this.stlblHolder.Size = new System.Drawing.Size(59, 17);
             this.stlblHolder.Text = "Status: OK";
-            this.toolbarNav.BackColor = Color.FromArgb(0xf8, 0xf8, 0xf8);
-            this.toolbarNav.GripMargin = new Padding(0);
-            this.toolbarNav.GripStyle = ToolStripGripStyle.Hidden;
-            this.toolbarNav.Items.AddRange(new ToolStripItem[] { this.btnHome, this.dropdownCharts, this.btnStrategyCenter, this.dropdownQuotes, this.btnOrdersAlerts, this.btnAcctsPositions, this.btnDataManager, this.sepDataManager, this.btnIndicators, this.btnFundamental, this.btnHelp, this.btnPreferences, this.btnTrade });
-            this.toolbarNav.Location = new Point(0, 0x18);
+            // 
+            // toolbarNav
+            // 
+            this.toolbarNav.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.toolbarNav.GripMargin = new System.Windows.Forms.Padding(0);
+            this.toolbarNav.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolbarNav.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnHome,
+            this.dropdownCharts,
+            this.btnStrategyCenter,
+            this.dropdownQuotes,
+            this.btnOrdersAlerts,
+            this.btnAcctsPositions,
+            this.btnDataManager,
+            this.sepDataManager,
+            this.btnIndicators,
+            this.btnFundamental,
+            this.btnHelp,
+            this.btnPreferences,
+            this.btnTrade});
+            this.toolbarNav.Location = new System.Drawing.Point(0, 24);
             this.toolbarNav.Name = "toolbarNav";
-            this.toolbarNav.Size = new Size(0x404, 0x19);
+            this.toolbarNav.Size = new System.Drawing.Size(1028, 25);
             this.toolbarNav.TabIndex = 2;
             this.toolbarNav.Text = "toolStrip1";
-            this.btnHome.Image = (Image) resources.GetObject("btnHome.Image");
-            this.btnHome.ImageTransparentColor = Color.Magenta;
+            // 
+            // btnHome
+            // 
+            this.btnHome.Image = ((System.Drawing.Image)(resources.GetObject("btnHome.Image")));
+            this.btnHome.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new Size(0x36, 0x16);
+            this.btnHome.Size = new System.Drawing.Size(54, 22);
             this.btnHome.Tag = "P";
             this.btnHome.Text = "Home";
-            this.btnHome.Click += new EventHandler(this.btnHome_Click);
-            this.dropdownCharts.DropDownItems.AddRange(new ToolStripItem[] { this.mniNewChart2, this.mniNewRules2, this.mniNewCode2, this.mniNewMultiStrategyBuilder2, this.mniOpenStrategy2, this.sepChart2, this.mniChartFront, this.sepChartFront });
-            this.dropdownCharts.Image = (Image) resources.GetObject("dropdownCharts.Image");
-            this.dropdownCharts.ImageTransparentColor = Color.Magenta;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
+            // 
+            // dropdownCharts
+            // 
+            this.dropdownCharts.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniNewChart2,
+            this.mniNewRules2,
+            this.mniNewCode2,
+            this.mniNewMultiStrategyBuilder2,
+            this.mniOpenStrategy2,
+            this.sepChart2,
+            this.mniChartFront,
+            this.sepChartFront});
+            this.dropdownCharts.Image = ((System.Drawing.Image)(resources.GetObject("dropdownCharts.Image")));
+            this.dropdownCharts.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dropdownCharts.Name = "dropdownCharts";
-            this.dropdownCharts.Size = new Size(130, 0x16);
+            this.dropdownCharts.Size = new System.Drawing.Size(130, 22);
             this.dropdownCharts.Tag = "P";
             this.dropdownCharts.Text = "Charts && Strategies";
             this.dropdownCharts.ToolTipText = "Charts & Strategies";
-            this.mniNewChart2.Image = (Image) resources.GetObject("mniNewChart2.Image");
+            // 
+            // mniNewChart2
+            // 
+            this.mniNewChart2.Image = ((System.Drawing.Image)(resources.GetObject("mniNewChart2.Image")));
             this.mniNewChart2.Name = "mniNewChart2";
-            this.mniNewChart2.ShortcutKeys = Keys.Control | Keys.Shift | Keys.C;
-            this.mniNewChart2.Size = new Size(0x11b, 0x16);
+            this.mniNewChart2.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.mniNewChart2.Size = new System.Drawing.Size(272, 22);
             this.mniNewChart2.Text = "New Chart";
-            this.mniNewChart2.Click += new EventHandler(this.mniNewChartDD_Click);
-            this.mniNewRules2.Image = (Image) resources.GetObject("mniNewRules2.Image");
-            this.mniNewRules2.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewChart2.Click += new System.EventHandler(this.mniNewChartDD_Click);
+            // 
+            // mniNewRules2
+            // 
+            this.mniNewRules2.Image = ((System.Drawing.Image)(resources.GetObject("mniNewRules2.Image")));
+            this.mniNewRules2.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewRules2.Name = "mniNewRules2";
-            this.mniNewRules2.ShortcutKeys = Keys.Control | Keys.Shift | Keys.R;
-            this.mniNewRules2.Size = new Size(0x11b, 0x16);
+            this.mniNewRules2.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.R)));
+            this.mniNewRules2.Size = new System.Drawing.Size(272, 22);
             this.mniNewRules2.Text = "New Strategy from Rules";
-            this.mniNewRules2.Click += new EventHandler(this.mniNewStrategyRulesDD_Click);
-            this.mniNewCode2.Image = (Image) resources.GetObject("mniNewCode2.Image");
-            this.mniNewCode2.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewRules2.Click += new System.EventHandler(this.mniNewStrategyRulesDD_Click);
+            // 
+            // mniNewCode2
+            // 
+            this.mniNewCode2.Image = ((System.Drawing.Image)(resources.GetObject("mniNewCode2.Image")));
+            this.mniNewCode2.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewCode2.Name = "mniNewCode2";
-            this.mniNewCode2.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
-            this.mniNewCode2.Size = new Size(0x11b, 0x16);
+            this.mniNewCode2.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.S)));
+            this.mniNewCode2.Size = new System.Drawing.Size(272, 22);
             this.mniNewCode2.Text = "New Strategy from Code";
-            this.mniNewCode2.Click += new EventHandler(this.newStrategyFromCodeToolStripMenuItem_Click);
-            this.mniNewMultiStrategyBuilder2.Image = (Image) resources.GetObject("mniNewMultiStrategyBuilder2.Image");
+            this.mniNewCode2.Click += new System.EventHandler(this.newStrategyFromCodeToolStripMenuItem_Click);
+            // 
+            // mniNewMultiStrategyBuilder2
+            // 
+            this.mniNewMultiStrategyBuilder2.Image = ((System.Drawing.Image)(resources.GetObject("mniNewMultiStrategyBuilder2.Image")));
             this.mniNewMultiStrategyBuilder2.Name = "mniNewMultiStrategyBuilder2";
-            this.mniNewMultiStrategyBuilder2.ShortcutKeys = Keys.Control | Keys.Shift | Keys.M;
-            this.mniNewMultiStrategyBuilder2.Size = new Size(0x11b, 0x16);
+            this.mniNewMultiStrategyBuilder2.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.M)));
+            this.mniNewMultiStrategyBuilder2.Size = new System.Drawing.Size(272, 22);
             this.mniNewMultiStrategyBuilder2.Text = "New Combination Strategy";
-            this.mniNewMultiStrategyBuilder2.Click += new EventHandler(this.mniNewCombinationStrategy_Click);
-            this.mniOpenStrategy2.Image = (Image) resources.GetObject("mniOpenStrategy2.Image");
-            this.mniOpenStrategy2.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewMultiStrategyBuilder2.Click += new System.EventHandler(this.mniNewCombinationStrategy_Click);
+            // 
+            // mniOpenStrategy2
+            // 
+            this.mniOpenStrategy2.Image = ((System.Drawing.Image)(resources.GetObject("mniOpenStrategy2.Image")));
+            this.mniOpenStrategy2.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniOpenStrategy2.Name = "mniOpenStrategy2";
-            this.mniOpenStrategy2.ShortcutKeys = Keys.Control | Keys.O;
-            this.mniOpenStrategy2.Size = new Size(0x11b, 0x16);
+            this.mniOpenStrategy2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.mniOpenStrategy2.Size = new System.Drawing.Size(272, 22);
             this.mniOpenStrategy2.Text = "Open Strategy ...";
-            this.mniOpenStrategy2.Click += new EventHandler(this.btnOpenStrategy_Click);
+            this.mniOpenStrategy2.Click += new System.EventHandler(this.btnOpenStrategy_Click);
+            // 
+            // sepChart2
+            // 
             this.sepChart2.Name = "sepChart2";
-            this.sepChart2.Size = new Size(280, 6);
+            this.sepChart2.Size = new System.Drawing.Size(269, 6);
+            // 
+            // mniChartFront
+            // 
             this.mniChartFront.Name = "mniChartFront";
-            this.mniChartFront.Size = new Size(0x11b, 0x16);
+            this.mniChartFront.Size = new System.Drawing.Size(272, 22);
             this.mniChartFront.Text = "Bring all to front";
-            this.mniChartFront.Click += new EventHandler(this.mniChartFront_Click);
+            this.mniChartFront.Click += new System.EventHandler(this.mniChartFront_Click);
+            // 
+            // sepChartFront
+            // 
             this.sepChartFront.Name = "sepChartFront";
-            this.sepChartFront.Size = new Size(280, 6);
-            this.btnStrategyCenter.Image = (Image) resources.GetObject("btnStrategyCenter.Image");
-            this.btnStrategyCenter.ImageTransparentColor = Color.Magenta;
+            this.sepChartFront.Size = new System.Drawing.Size(269, 6);
+            // 
+            // btnStrategyCenter
+            // 
+            this.btnStrategyCenter.Image = ((System.Drawing.Image)(resources.GetObject("btnStrategyCenter.Image")));
+            this.btnStrategyCenter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnStrategyCenter.Name = "btnStrategyCenter";
-            this.btnStrategyCenter.Size = new Size(0x6c, 0x16);
+            this.btnStrategyCenter.Size = new System.Drawing.Size(108, 22);
             this.btnStrategyCenter.Tag = "P";
             this.btnStrategyCenter.Text = "Strategy Monitor";
             this.btnStrategyCenter.ToolTipText = "Allows you to Activate Strategies and automatically produce Alerts and Trades";
-            this.btnStrategyCenter.Click += new EventHandler(this.btnStrategyCenter_Click);
-            this.dropdownQuotes.DropDownItems.AddRange(new ToolStripItem[] { this.mniNewQuote2, this.sepQuote2, this.mniQuoteAll, this.sepQuoteFront });
-            this.dropdownQuotes.Image = (Image) resources.GetObject("dropdownQuotes.Image");
-            this.dropdownQuotes.ImageTransparentColor = Color.Magenta;
+            this.btnStrategyCenter.Click += new System.EventHandler(this.btnStrategyCenter_Click);
+            // 
+            // dropdownQuotes
+            // 
+            this.dropdownQuotes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniNewQuote2,
+            this.sepQuote2,
+            this.mniQuoteAll,
+            this.sepQuoteFront});
+            this.dropdownQuotes.Image = ((System.Drawing.Image)(resources.GetObject("dropdownQuotes.Image")));
+            this.dropdownQuotes.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dropdownQuotes.Name = "dropdownQuotes";
-            this.dropdownQuotes.Size = new Size(0x47, 0x16);
+            this.dropdownQuotes.Size = new System.Drawing.Size(71, 22);
             this.dropdownQuotes.Tag = "P";
             this.dropdownQuotes.Text = "Quotes";
             this.dropdownQuotes.ToolTipText = "Quotes";
-            this.mniNewQuote2.Image = (Image) resources.GetObject("mniNewQuote2.Image");
-            this.mniNewQuote2.ImageTransparentColor = Color.Fuchsia;
+            // 
+            // mniNewQuote2
+            // 
+            this.mniNewQuote2.Image = ((System.Drawing.Image)(resources.GetObject("mniNewQuote2.Image")));
+            this.mniNewQuote2.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewQuote2.Name = "mniNewQuote2";
-            this.mniNewQuote2.ShortcutKeys = Keys.Control | Keys.Shift | Keys.Q;
-            this.mniNewQuote2.Size = new Size(250, 0x16);
+            this.mniNewQuote2.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.Q)));
+            this.mniNewQuote2.Size = new System.Drawing.Size(239, 22);
             this.mniNewQuote2.Text = "New Quote Window";
-            this.mniNewQuote2.Click += new EventHandler(this.mniNewQuoteDD_Click);
+            this.mniNewQuote2.Click += new System.EventHandler(this.mniNewQuoteDD_Click);
+            // 
+            // sepQuote2
+            // 
             this.sepQuote2.Name = "sepQuote2";
-            this.sepQuote2.Size = new Size(0xf7, 6);
+            this.sepQuote2.Size = new System.Drawing.Size(236, 6);
+            // 
+            // mniQuoteAll
+            // 
             this.mniQuoteAll.Name = "mniQuoteAll";
-            this.mniQuoteAll.Size = new Size(250, 0x16);
+            this.mniQuoteAll.Size = new System.Drawing.Size(239, 22);
             this.mniQuoteAll.Text = "Bring all to front";
-            this.mniQuoteAll.Click += new EventHandler(this.mniQuoteAll_Click);
+            this.mniQuoteAll.Click += new System.EventHandler(this.mniQuoteAll_Click);
+            // 
+            // sepQuoteFront
+            // 
             this.sepQuoteFront.Name = "sepQuoteFront";
-            this.sepQuoteFront.Size = new Size(0xf7, 6);
-            this.btnOrdersAlerts.Image = (Image) resources.GetObject("btnOrdersAlerts.Image");
-            this.btnOrdersAlerts.ImageTransparentColor = Color.Magenta;
+            this.sepQuoteFront.Size = new System.Drawing.Size(236, 6);
+            // 
+            // btnOrdersAlerts
+            // 
+            this.btnOrdersAlerts.Image = ((System.Drawing.Image)(resources.GetObject("btnOrdersAlerts.Image")));
+            this.btnOrdersAlerts.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOrdersAlerts.Name = "btnOrdersAlerts";
-            this.btnOrdersAlerts.Size = new Size(60, 0x16);
+            this.btnOrdersAlerts.Size = new System.Drawing.Size(60, 22);
             this.btnOrdersAlerts.Tag = "P";
             this.btnOrdersAlerts.Text = "Orders";
             this.btnOrdersAlerts.ToolTipText = "Open the Order Manager";
-            this.btnOrdersAlerts.Click += new EventHandler(this.btnOrdersAlerts_Click);
-            this.btnAcctsPositions.Image = (Image) resources.GetObject("btnAcctsPositions.Image");
-            this.btnAcctsPositions.ImageTransparentColor = Color.Magenta;
+            this.btnOrdersAlerts.Click += new System.EventHandler(this.btnOrdersAlerts_Click);
+            // 
+            // btnAcctsPositions
+            // 
+            this.btnAcctsPositions.Image = ((System.Drawing.Image)(resources.GetObject("btnAcctsPositions.Image")));
+            this.btnAcctsPositions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAcctsPositions.Name = "btnAcctsPositions";
-            this.btnAcctsPositions.Size = new Size(0x47, 0x16);
+            this.btnAcctsPositions.Size = new System.Drawing.Size(71, 22);
             this.btnAcctsPositions.Tag = "P";
             this.btnAcctsPositions.Text = "Accounts";
             this.btnAcctsPositions.ToolTipText = "Open the Balances and Positions Manager";
-            this.btnAcctsPositions.Click += new EventHandler(this.btnAcctsPositions_Click);
-            this.btnDataManager.Image = (Image) resources.GetObject("btnDataManager.Image");
-            this.btnDataManager.ImageTransparentColor = Color.Magenta;
+            this.btnAcctsPositions.Click += new System.EventHandler(this.btnAcctsPositions_Click);
+            // 
+            // btnDataManager
+            // 
+            this.btnDataManager.Image = ((System.Drawing.Image)(resources.GetObject("btnDataManager.Image")));
+            this.btnDataManager.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDataManager.Name = "btnDataManager";
-            this.btnDataManager.Size = new Size(0x5f, 0x16);
+            this.btnDataManager.Size = new System.Drawing.Size(95, 22);
             this.btnDataManager.Tag = "P";
             this.btnDataManager.Text = "Data Manager";
-            this.btnDataManager.Click += new EventHandler(this.btnDataManager_Click);
+            this.btnDataManager.Click += new System.EventHandler(this.btnDataManager_Click);
+            // 
+            // sepDataManager
+            // 
             this.sepDataManager.Name = "sepDataManager";
-            this.sepDataManager.Size = new Size(6, 0x19);
-            this.btnIndicators.Image = (Image) resources.GetObject("btnIndicators.Image");
-            this.btnIndicators.ImageTransparentColor = Color.Magenta;
+            this.sepDataManager.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnIndicators
+            // 
+            this.btnIndicators.Image = ((System.Drawing.Image)(resources.GetObject("btnIndicators.Image")));
+            this.btnIndicators.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnIndicators.Name = "btnIndicators";
-            this.btnIndicators.Size = new Size(0x4b, 0x16);
+            this.btnIndicators.Size = new System.Drawing.Size(75, 22);
             this.btnIndicators.Tag = "I";
             this.btnIndicators.Text = "Indicators";
             this.btnIndicators.ToolTipText = "Open the Indicators Window";
-            this.btnIndicators.Click += new EventHandler(this.btnIndicatorsTB2_Click);
-            this.btnFundamental.Image = (Image) resources.GetObject("btnFundamental.Image");
-            this.btnFundamental.ImageTransparentColor = Color.Magenta;
+            this.btnIndicators.Click += new System.EventHandler(this.btnIndicatorsTB2_Click);
+            // 
+            // btnFundamental
+            // 
+            this.btnFundamental.Image = ((System.Drawing.Image)(resources.GetObject("btnFundamental.Image")));
+            this.btnFundamental.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFundamental.Name = "btnFundamental";
-            this.btnFundamental.Size = new Size(0x5e, 0x16);
+            this.btnFundamental.Size = new System.Drawing.Size(94, 22);
             this.btnFundamental.Tag = "I";
             this.btnFundamental.Text = "Fundamentals";
             this.btnFundamental.ToolTipText = "Open the Fundamental Items Window";
-            this.btnFundamental.Click += new EventHandler(this.btnFundamentalsTB2_Click);
-            this.btnFundamental.VisibleChanged += new EventHandler(this.btnFundamental_VisibleChanged);
-            this.btnHelp.Alignment = ToolStripItemAlignment.Right;
-            this.btnHelp.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnHelp.Image = (Image) resources.GetObject("btnHelp.Image");
-            this.btnHelp.ImageTransparentColor = Color.Magenta;
+            this.btnFundamental.Click += new System.EventHandler(this.btnFundamentalsTB2_Click);
+            this.btnFundamental.VisibleChanged += new System.EventHandler(this.btnFundamental_VisibleChanged);
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnHelp.Image = ((System.Drawing.Image)(resources.GetObject("btnHelp.Image")));
+            this.btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new Size(0x17, 0x16);
+            this.btnHelp.Size = new System.Drawing.Size(23, 22);
             this.btnHelp.Text = "toolStripButton1";
             this.btnHelp.ToolTipText = "Wealth-Lab Pro Help";
-            this.btnHelp.Click += new EventHandler(this.btnHelp_Click);
-            this.btnPreferences.Alignment = ToolStripItemAlignment.Right;
-            this.btnPreferences.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnPreferences.Image = (Image) resources.GetObject("btnPreferences.Image");
-            this.btnPreferences.ImageTransparentColor = Color.Silver;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            // 
+            // btnPreferences
+            // 
+            this.btnPreferences.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPreferences.Image = ((System.Drawing.Image)(resources.GetObject("btnPreferences.Image")));
+            this.btnPreferences.ImageTransparentColor = System.Drawing.Color.Silver;
             this.btnPreferences.Name = "btnPreferences";
-            this.btnPreferences.Size = new Size(0x17, 0x16);
+            this.btnPreferences.Size = new System.Drawing.Size(23, 22);
             this.btnPreferences.Text = "toolStripButton1";
             this.btnPreferences.ToolTipText = "Preferences";
-            this.btnPreferences.Click += new EventHandler(this.btnPreferencesTB_Click);
-            this.btnTrade.Alignment = ToolStripItemAlignment.Right;
+            this.btnPreferences.Click += new System.EventHandler(this.btnPreferencesTB_Click);
+            // 
+            // btnTrade
+            // 
+            this.btnTrade.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnTrade.Checked = true;
-            this.btnTrade.CheckState = CheckState.Checked;
-            this.btnTrade.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnTrade.Image = (Image) resources.GetObject("btnTrade.Image");
-            this.btnTrade.ImageTransparentColor = Color.Magenta;
+            this.btnTrade.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnTrade.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnTrade.Image = ((System.Drawing.Image)(resources.GetObject("btnTrade.Image")));
+            this.btnTrade.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnTrade.Name = "btnTrade";
-            this.btnTrade.Size = new Size(0x17, 0x16);
+            this.btnTrade.Size = new System.Drawing.Size(23, 22);
             this.btnTrade.Text = "toolStripButton1";
             this.btnTrade.ToolTipText = "Show/Hide the Trade Ticket";
             this.btnTrade.Visible = false;
-            this.btnTrade.Click += new EventHandler(this.btnTradeTicket_Click);
-            this.toolbar.BackColor = Color.FromArgb(0xb8, 0xbf, 0xd3);
-            this.toolbar.GripStyle = ToolStripGripStyle.Visible; //WYJ fix: original: ToolStripGripStyle..Hidden;
-            this.toolbar.Items.AddRange(new ToolStripItem[] { 
-                this.toolStripDropDownButton1, this.btnOpenStrategy, this.btnSave, this.btnSaveAs, this.sepChartFile, this.btnLogin, this.sepSpacing, this.lblSpacing, this.btnIncreaseSpacing, this.btnRestoreSpacing, this.btnDecreaseSpacing, this.sepBarSpacing, this.tslblChartStyles, this.btnCandleStyle, this.btnBarChart, this.btnLineChart, 
-                this.tsmMoreChartStyles, this.btnLinear, this.btnLog, this.sepChartStyles, this.tslblOptions, this.btnLabelsVisible, this.btnStatusBarVisible, this.btnFundamentalsVisible, this.btnDataWindow, this.btnIndicatorsTB2, this.btnFundamentalsTB2, this.btnClearIndicators, this.btnPushCode, this.btnTradeTicket, this.btnPreferencesTB
-             });
-            this.toolbar.Location = new Point(0, 0x31);
+            this.btnTrade.Click += new System.EventHandler(this.btnTradeTicket_Click);
+            // 
+            // toolbar
+            // 
+            this.toolbar.AutoSize = false;
+            this.toolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(184)))), ((int)(((byte)(191)))), ((int)(((byte)(211)))));
+            this.toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripDropDownButton1,
+            this.btnOpenStrategy,
+            this.btnSave,
+            this.btnSaveAs,
+            this.sepChartFile,
+            this.btnLogin,
+            this.sepSpacing,
+            this.lblSpacing,
+            this.btnIncreaseSpacing,
+            this.btnRestoreSpacing,
+            this.btnDecreaseSpacing,
+            this.sepBarSpacing,
+            this.tslblChartStyles,
+            this.btnCandleStyle,
+            this.btnBarChart,
+            this.btnLineChart,
+            this.tsmMoreChartStyles,
+            this.btnLinear,
+            this.btnLog,
+            this.sepChartStyles,
+            this.tslblOptions,
+            this.btnLabelsVisible,
+            this.btnStatusBarVisible,
+            this.btnFundamentalsVisible,
+            this.btnDataWindow,
+            this.btnIndicatorsTB2,
+            this.btnFundamentalsTB2,
+            this.btnClearIndicators,
+            this.btnPushCode,
+            this.btnTradeTicket,
+            this.btnPreferencesTB});
+            this.toolbar.Location = new System.Drawing.Point(0, 49);
             this.toolbar.Name = "toolbar";
-            this.toolbar.Size = new Size(0x404, 0x19);
+            this.toolbar.Size = new System.Drawing.Size(1028, 28);
             this.toolbar.TabIndex = 3;
             this.toolbar.Text = "toolStrip1";
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new ToolStripItem[] { this.mniNewChartDD, this.mniNewStrategyRulesDD, this.newStrategyFromCodeToolStripMenuItem, this.mniNewCombinationStrategy, this.sepNew, this.mniNewWorkspaceTB, this.mniNewQuoteDD, this.sepNew2, this.mniNewDataSetTB });
-            this.toolStripDropDownButton1.Image = (Image) resources.GetObject("toolStripDropDownButton1.Image");
-            this.toolStripDropDownButton1.ImageTransparentColor = Color.Magenta;
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniNewChartDD,
+            this.mniNewStrategyRulesDD,
+            this.newStrategyFromCodeToolStripMenuItem,
+            this.mniNewCombinationStrategy,
+            this.sepNew,
+            this.mniNewWorkspaceTB,
+            this.mniNewQuoteDD,
+            this.sepNew2,
+            this.mniNewDataSetTB});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new Size(0x39, 0x16);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(57, 25);
             this.toolStripDropDownButton1.Tag = "*";
             this.toolStripDropDownButton1.Text = "New";
             this.toolStripDropDownButton1.ToolTipText = "Open a New Chart Window";
-            this.mniNewChartDD.Image = (Image) resources.GetObject("mniNewChartDD.Image");
+            // 
+            // mniNewChartDD
+            // 
+            this.mniNewChartDD.Image = ((System.Drawing.Image)(resources.GetObject("mniNewChartDD.Image")));
             this.mniNewChartDD.Name = "mniNewChartDD";
-            this.mniNewChartDD.ShortcutKeys = Keys.Control | Keys.Shift | Keys.C;
-            this.mniNewChartDD.Size = new Size(300, 0x16);
+            this.mniNewChartDD.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.mniNewChartDD.Size = new System.Drawing.Size(289, 22);
             this.mniNewChartDD.Text = "New Chart Window";
-            this.mniNewChartDD.Click += new EventHandler(this.mniNewChartDD_Click);
-            this.mniNewStrategyRulesDD.Image = (Image) resources.GetObject("mniNewStrategyRulesDD.Image");
-            this.mniNewStrategyRulesDD.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewChartDD.Click += new System.EventHandler(this.mniNewChartDD_Click);
+            // 
+            // mniNewStrategyRulesDD
+            // 
+            this.mniNewStrategyRulesDD.Image = ((System.Drawing.Image)(resources.GetObject("mniNewStrategyRulesDD.Image")));
+            this.mniNewStrategyRulesDD.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewStrategyRulesDD.Name = "mniNewStrategyRulesDD";
-            this.mniNewStrategyRulesDD.ShortcutKeys = Keys.Control | Keys.Shift | Keys.R;
-            this.mniNewStrategyRulesDD.Size = new Size(300, 0x16);
+            this.mniNewStrategyRulesDD.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.R)));
+            this.mniNewStrategyRulesDD.Size = new System.Drawing.Size(289, 22);
             this.mniNewStrategyRulesDD.Text = "New Strategy from Rules";
-            this.mniNewStrategyRulesDD.Click += new EventHandler(this.mniNewStrategyRulesDD_Click);
-            this.newStrategyFromCodeToolStripMenuItem.Image = (Image) resources.GetObject("newStrategyFromCodeToolStripMenuItem.Image");
-            this.newStrategyFromCodeToolStripMenuItem.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewStrategyRulesDD.Click += new System.EventHandler(this.mniNewStrategyRulesDD_Click);
+            // 
+            // newStrategyFromCodeToolStripMenuItem
+            // 
+            this.newStrategyFromCodeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newStrategyFromCodeToolStripMenuItem.Image")));
+            this.newStrategyFromCodeToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.newStrategyFromCodeToolStripMenuItem.Name = "newStrategyFromCodeToolStripMenuItem";
-            this.newStrategyFromCodeToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
-            this.newStrategyFromCodeToolStripMenuItem.Size = new Size(300, 0x16);
+            this.newStrategyFromCodeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.S)));
+            this.newStrategyFromCodeToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
             this.newStrategyFromCodeToolStripMenuItem.Text = "New Strategy from Code";
-            this.newStrategyFromCodeToolStripMenuItem.Click += new EventHandler(this.newStrategyFromCodeToolStripMenuItem_Click);
-            this.mniNewCombinationStrategy.Image = (Image) resources.GetObject("mniNewCombinationStrategy.Image");
+            this.newStrategyFromCodeToolStripMenuItem.Click += new System.EventHandler(this.newStrategyFromCodeToolStripMenuItem_Click);
+            // 
+            // mniNewCombinationStrategy
+            // 
+            this.mniNewCombinationStrategy.Image = ((System.Drawing.Image)(resources.GetObject("mniNewCombinationStrategy.Image")));
             this.mniNewCombinationStrategy.Name = "mniNewCombinationStrategy";
-            this.mniNewCombinationStrategy.ShortcutKeys = Keys.Control | Keys.Shift | Keys.M;
-            this.mniNewCombinationStrategy.Size = new Size(300, 0x16);
+            this.mniNewCombinationStrategy.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.M)));
+            this.mniNewCombinationStrategy.Size = new System.Drawing.Size(289, 22);
             this.mniNewCombinationStrategy.Text = "New Combination Strategy";
-            this.mniNewCombinationStrategy.Click += new EventHandler(this.mniNewCombinationStrategy_Click);
+            this.mniNewCombinationStrategy.Click += new System.EventHandler(this.mniNewCombinationStrategy_Click);
+            // 
+            // sepNew
+            // 
             this.sepNew.Name = "sepNew";
-            this.sepNew.Size = new Size(0x129, 6);
+            this.sepNew.Size = new System.Drawing.Size(286, 6);
+            // 
+            // mniNewWorkspaceTB
+            // 
             this.mniNewWorkspaceTB.Name = "mniNewWorkspaceTB";
-            this.mniNewWorkspaceTB.ShortcutKeys = Keys.Control | Keys.Shift | Keys.W;
-            this.mniNewWorkspaceTB.Size = new Size(300, 0x16);
+            this.mniNewWorkspaceTB.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.W)));
+            this.mniNewWorkspaceTB.Size = new System.Drawing.Size(289, 22);
             this.mniNewWorkspaceTB.Text = "New Main Workspace Window";
-            this.mniNewWorkspaceTB.Click += new EventHandler(this.mniNewWorkspaceTB_Click);
-            this.mniNewQuoteDD.Image = (Image) resources.GetObject("mniNewQuoteDD.Image");
-            this.mniNewQuoteDD.ImageTransparentColor = Color.Fuchsia;
+            this.mniNewWorkspaceTB.Click += new System.EventHandler(this.mniNewWorkspaceTB_Click);
+            // 
+            // mniNewQuoteDD
+            // 
+            this.mniNewQuoteDD.Image = ((System.Drawing.Image)(resources.GetObject("mniNewQuoteDD.Image")));
+            this.mniNewQuoteDD.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewQuoteDD.Name = "mniNewQuoteDD";
-            this.mniNewQuoteDD.ShortcutKeys = Keys.Control | Keys.Shift | Keys.Q;
-            this.mniNewQuoteDD.Size = new Size(300, 0x16);
+            this.mniNewQuoteDD.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.Q)));
+            this.mniNewQuoteDD.Size = new System.Drawing.Size(289, 22);
             this.mniNewQuoteDD.Text = "New Quote Window";
-            this.mniNewQuoteDD.Click += new EventHandler(this.mniNewQuoteDD_Click);
+            this.mniNewQuoteDD.Click += new System.EventHandler(this.mniNewQuoteDD_Click);
+            // 
+            // sepNew2
+            // 
             this.sepNew2.Name = "sepNew2";
-            this.sepNew2.Size = new Size(0x129, 6);
-            this.mniNewDataSetTB.Image = (Image) resources.GetObject("mniNewDataSetTB.Image");
-            this.mniNewDataSetTB.ImageTransparentColor = Color.Fuchsia;
+            this.sepNew2.Size = new System.Drawing.Size(286, 6);
+            // 
+            // mniNewDataSetTB
+            // 
+            this.mniNewDataSetTB.Image = ((System.Drawing.Image)(resources.GetObject("mniNewDataSetTB.Image")));
+            this.mniNewDataSetTB.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniNewDataSetTB.Name = "mniNewDataSetTB";
-            this.mniNewDataSetTB.ShortcutKeys = Keys.Control | Keys.Shift | Keys.D;
-            this.mniNewDataSetTB.Size = new Size(300, 0x16);
+            this.mniNewDataSetTB.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.D)));
+            this.mniNewDataSetTB.Size = new System.Drawing.Size(289, 22);
             this.mniNewDataSetTB.Text = "New DataSet ...";
-            this.mniNewDataSetTB.Click += new EventHandler(this.linkNewDataSet_Click);
-            this.btnOpenStrategy.Image = (Image) resources.GetObject("btnOpenStrategy.Image");
-            this.btnOpenStrategy.ImageTransparentColor = Color.Magenta;
+            this.mniNewDataSetTB.Click += new System.EventHandler(this.linkNewDataSet_Click);
+            // 
+            // btnOpenStrategy
+            // 
+            this.btnOpenStrategy.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenStrategy.Image")));
+            this.btnOpenStrategy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOpenStrategy.Name = "btnOpenStrategy";
-            this.btnOpenStrategy.Size = new Size(0x62, 0x16);
+            this.btnOpenStrategy.Size = new System.Drawing.Size(98, 25);
             this.btnOpenStrategy.Tag = "*";
             this.btnOpenStrategy.Text = "Open Strategy";
             this.btnOpenStrategy.ToolTipText = "Open an existing Strategy";
-            this.btnOpenStrategy.Click += new EventHandler(this.btnOpenStrategy_Click);
-            this.btnSave.Image = (Image) resources.GetObject("btnSave.Image");
-            this.btnSave.ImageTransparentColor = Color.Magenta;
+            this.btnOpenStrategy.Click += new System.EventHandler(this.btnOpenStrategy_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
+            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new Size(0x33, 0x16);
+            this.btnSave.Size = new System.Drawing.Size(51, 25);
             this.btnSave.Tag = "S";
             this.btnSave.Text = "Save";
             this.btnSave.ToolTipText = "Save Strategy";
-            this.btnSave.Click += new EventHandler(this.btnSave_Click);
-            this.btnSaveAs.Image = (Image) resources.GetObject("btnSaveAs.Image");
-            this.btnSaveAs.ImageTransparentColor = Color.Magenta;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnSaveAs
+            // 
+            this.btnSaveAs.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveAs.Image")));
+            this.btnSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveAs.Name = "btnSaveAs";
-            this.btnSaveAs.Size = new Size(0x42, 0x16);
+            this.btnSaveAs.Size = new System.Drawing.Size(66, 25);
             this.btnSaveAs.Tag = "CS";
             this.btnSaveAs.Text = "Save As";
             this.btnSaveAs.ToolTipText = "Save Strategy As";
-            this.btnSaveAs.Click += new EventHandler(this.btnSaveAs_Click);
+            this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
+            // 
+            // sepChartFile
+            // 
             this.sepChartFile.Name = "sepChartFile";
-            this.sepChartFile.Size = new Size(6, 0x19);
+            this.sepChartFile.Size = new System.Drawing.Size(6, 28);
             this.sepChartFile.Tag = "*";
-            this.btnLogin.Image = (Image) resources.GetObject("btnLogin.Image");
-            this.btnLogin.ImageTransparentColor = Color.Magenta;
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.Image = ((System.Drawing.Image)(resources.GetObject("btnLogin.Image")));
+            this.btnLogin.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new Size(0x69, 0x16);
+            this.btnLogin.Size = new System.Drawing.Size(105, 25);
             this.btnLogin.Tag = "*";
             this.btnLogin.Text = "Log in to Fidelity";
             this.btnLogin.Visible = false;
-            this.btnLogin.Click += new EventHandler(this.btnLoginTradeTicket_Click);
+            this.btnLogin.Click += new System.EventHandler(this.btnLoginTradeTicket_Click);
+            // 
+            // sepSpacing
+            // 
             this.sepSpacing.Name = "sepSpacing";
-            this.sepSpacing.Size = new Size(6, 0x19);
+            this.sepSpacing.Size = new System.Drawing.Size(6, 28);
             this.sepSpacing.Tag = "*";
+            // 
+            // lblSpacing
+            // 
             this.lblSpacing.Name = "lblSpacing";
-            this.lblSpacing.Size = new Size(0x30, 0x16);
+            this.lblSpacing.Size = new System.Drawing.Size(48, 25);
             this.lblSpacing.Tag = "CS";
             this.lblSpacing.Text = "Spacing:";
-            this.btnIncreaseSpacing.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnIncreaseSpacing.Image = (Image) resources.GetObject("btnIncreaseSpacing.Image");
-            this.btnIncreaseSpacing.ImageTransparentColor = Color.Silver;
+            // 
+            // btnIncreaseSpacing
+            // 
+            this.btnIncreaseSpacing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnIncreaseSpacing.Image = ((System.Drawing.Image)(resources.GetObject("btnIncreaseSpacing.Image")));
+            this.btnIncreaseSpacing.ImageTransparentColor = System.Drawing.Color.Silver;
             this.btnIncreaseSpacing.Name = "btnIncreaseSpacing";
-            this.btnIncreaseSpacing.Size = new Size(0x17, 0x16);
+            this.btnIncreaseSpacing.Size = new System.Drawing.Size(23, 25);
             this.btnIncreaseSpacing.Tag = "CS";
             this.btnIncreaseSpacing.Text = "Increase Bar Spacing";
-            this.btnIncreaseSpacing.Click += new EventHandler(this.btnIncreaseSpacing_Click);
-            this.btnRestoreSpacing.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnRestoreSpacing.Image = (Image) resources.GetObject("btnRestoreSpacing.Image");
-            this.btnRestoreSpacing.ImageTransparentColor = Color.Silver;
+            this.btnIncreaseSpacing.Click += new System.EventHandler(this.btnIncreaseSpacing_Click);
+            // 
+            // btnRestoreSpacing
+            // 
+            this.btnRestoreSpacing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRestoreSpacing.Image = ((System.Drawing.Image)(resources.GetObject("btnRestoreSpacing.Image")));
+            this.btnRestoreSpacing.ImageTransparentColor = System.Drawing.Color.Silver;
             this.btnRestoreSpacing.Name = "btnRestoreSpacing";
-            this.btnRestoreSpacing.Size = new Size(0x17, 0x16);
+            this.btnRestoreSpacing.Size = new System.Drawing.Size(23, 25);
             this.btnRestoreSpacing.Tag = "CS";
             this.btnRestoreSpacing.Text = "toolStripButton2";
             this.btnRestoreSpacing.ToolTipText = "Restore Bar Spacing";
-            this.btnRestoreSpacing.Click += new EventHandler(this.btnRestoreSpacing_Click);
-            this.btnDecreaseSpacing.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnDecreaseSpacing.Image = (Image) resources.GetObject("btnDecreaseSpacing.Image");
-            this.btnDecreaseSpacing.ImageTransparentColor = Color.Silver;
+            this.btnRestoreSpacing.Click += new System.EventHandler(this.btnRestoreSpacing_Click);
+            // 
+            // btnDecreaseSpacing
+            // 
+            this.btnDecreaseSpacing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDecreaseSpacing.Image = ((System.Drawing.Image)(resources.GetObject("btnDecreaseSpacing.Image")));
+            this.btnDecreaseSpacing.ImageTransparentColor = System.Drawing.Color.Silver;
             this.btnDecreaseSpacing.Name = "btnDecreaseSpacing";
-            this.btnDecreaseSpacing.Size = new Size(0x17, 0x16);
+            this.btnDecreaseSpacing.Size = new System.Drawing.Size(23, 25);
             this.btnDecreaseSpacing.Tag = "CS";
             this.btnDecreaseSpacing.Text = "Decrease Bar Spacing";
-            this.btnDecreaseSpacing.Click += new EventHandler(this.btnDecreaseSpacing_Click);
+            this.btnDecreaseSpacing.Click += new System.EventHandler(this.btnDecreaseSpacing_Click);
+            // 
+            // sepBarSpacing
+            // 
             this.sepBarSpacing.Name = "sepBarSpacing";
-            this.sepBarSpacing.Size = new Size(6, 0x19);
+            this.sepBarSpacing.Size = new System.Drawing.Size(6, 28);
             this.sepBarSpacing.Tag = "CS";
+            // 
+            // tslblChartStyles
+            // 
             this.tslblChartStyles.Name = "tslblChartStyles";
-            this.tslblChartStyles.Size = new Size(0x41, 0x16);
+            this.tslblChartStyles.Size = new System.Drawing.Size(65, 25);
             this.tslblChartStyles.Tag = "CS";
             this.tslblChartStyles.Text = "Chart Style:";
+            // 
+            // btnCandleStyle
+            // 
             this.btnCandleStyle.Checked = true;
-            this.btnCandleStyle.CheckState = CheckState.Checked;
-            this.btnCandleStyle.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnCandleStyle.Image = (Image) resources.GetObject("btnCandleStyle.Image");
-            this.btnCandleStyle.ImageTransparentColor = Color.Silver;
+            this.btnCandleStyle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnCandleStyle.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCandleStyle.Image = ((System.Drawing.Image)(resources.GetObject("btnCandleStyle.Image")));
+            this.btnCandleStyle.ImageTransparentColor = System.Drawing.Color.Silver;
             this.btnCandleStyle.Name = "btnCandleStyle";
-            this.btnCandleStyle.Size = new Size(0x17, 0x16);
+            this.btnCandleStyle.Size = new System.Drawing.Size(23, 25);
             this.btnCandleStyle.Tag = "CS";
             this.btnCandleStyle.Text = "toolStripButton3";
             this.btnCandleStyle.ToolTipText = "Candle Chart Style";
-            this.btnCandleStyle.Click += new EventHandler(this.btnLineChart_Click);
-            this.btnBarChart.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnBarChart.Image = (Image) resources.GetObject("btnBarChart.Image");
-            this.btnBarChart.ImageTransparentColor = Color.Silver;
+            this.btnCandleStyle.Click += new System.EventHandler(this.btnLineChart_Click);
+            // 
+            // btnBarChart
+            // 
+            this.btnBarChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnBarChart.Image = ((System.Drawing.Image)(resources.GetObject("btnBarChart.Image")));
+            this.btnBarChart.ImageTransparentColor = System.Drawing.Color.Silver;
             this.btnBarChart.Name = "btnBarChart";
-            this.btnBarChart.Size = new Size(0x17, 0x16);
+            this.btnBarChart.Size = new System.Drawing.Size(23, 25);
             this.btnBarChart.Tag = "CS";
             this.btnBarChart.Text = "toolStripButton2";
             this.btnBarChart.ToolTipText = "Bar Chart Style";
-            this.btnBarChart.Click += new EventHandler(this.btnLineChart_Click);
-            this.btnLineChart.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnLineChart.Image = (Image) resources.GetObject("btnLineChart.Image");
-            this.btnLineChart.ImageTransparentColor = Color.Silver;
+            this.btnBarChart.Click += new System.EventHandler(this.btnLineChart_Click);
+            // 
+            // btnLineChart
+            // 
+            this.btnLineChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLineChart.Image = ((System.Drawing.Image)(resources.GetObject("btnLineChart.Image")));
+            this.btnLineChart.ImageTransparentColor = System.Drawing.Color.Silver;
             this.btnLineChart.Name = "btnLineChart";
-            this.btnLineChart.Size = new Size(0x17, 0x16);
+            this.btnLineChart.Size = new System.Drawing.Size(23, 25);
             this.btnLineChart.Tag = "CS";
             this.btnLineChart.Text = "toolStripButton1";
             this.btnLineChart.ToolTipText = "Line Chart Style";
-            this.btnLineChart.Click += new EventHandler(this.btnLineChart_Click);
-            this.tsmMoreChartStyles.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.tsmMoreChartStyles.Image = (Image) resources.GetObject("tsmMoreChartStyles.Image");
-            this.tsmMoreChartStyles.ImageTransparentColor = Color.Magenta;
+            this.btnLineChart.Click += new System.EventHandler(this.btnLineChart_Click);
+            // 
+            // tsmMoreChartStyles
+            // 
+            this.tsmMoreChartStyles.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsmMoreChartStyles.Image = ((System.Drawing.Image)(resources.GetObject("tsmMoreChartStyles.Image")));
+            this.tsmMoreChartStyles.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsmMoreChartStyles.Name = "tsmMoreChartStyles";
-            this.tsmMoreChartStyles.Size = new Size(0x2c, 0x16);
+            this.tsmMoreChartStyles.Size = new System.Drawing.Size(44, 25);
             this.tsmMoreChartStyles.Tag = "CS";
             this.tsmMoreChartStyles.Text = "More";
             this.tsmMoreChartStyles.ToolTipText = "More Chart Styles";
-            this.btnLinear.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnLinear.Image = (Image) resources.GetObject("btnLinear.Image");
-            this.btnLinear.ImageTransparentColor = Color.FromArgb(0xe0, 0xe0, 0xe0);
+            // 
+            // btnLinear
+            // 
+            this.btnLinear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinear.Image = ((System.Drawing.Image)(resources.GetObject("btnLinear.Image")));
+            this.btnLinear.ImageTransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnLinear.Name = "btnLinear";
-            this.btnLinear.Size = new Size(0x17, 0x16);
+            this.btnLinear.Size = new System.Drawing.Size(23, 25);
             this.btnLinear.Tag = "CS";
             this.btnLinear.Text = "toolStripButton1";
             this.btnLinear.ToolTipText = "Linear Axis Scale Chart";
-            this.btnLinear.Click += new EventHandler(this.btnLinear_Click);
-            this.btnLog.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnLog.Image = (Image) resources.GetObject("btnLog.Image");
-            this.btnLog.ImageTransparentColor = Color.FromArgb(0xe0, 0xe0, 0xe0);
+            this.btnLinear.Click += new System.EventHandler(this.btnLinear_Click);
+            // 
+            // btnLog
+            // 
+            this.btnLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLog.Image = ((System.Drawing.Image)(resources.GetObject("btnLog.Image")));
+            this.btnLog.ImageTransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnLog.Name = "btnLog";
-            this.btnLog.Size = new Size(0x17, 0x16);
+            this.btnLog.Size = new System.Drawing.Size(23, 25);
             this.btnLog.Tag = "CS";
             this.btnLog.Text = "toolStripButton2";
             this.btnLog.ToolTipText = "Semi-Log Axis Scale Chart";
-            this.btnLog.Click += new EventHandler(this.btnLog_Click);
+            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
+            // 
+            // sepChartStyles
+            // 
             this.sepChartStyles.Name = "sepChartStyles";
-            this.sepChartStyles.Size = new Size(6, 0x19);
+            this.sepChartStyles.Size = new System.Drawing.Size(6, 28);
             this.sepChartStyles.Tag = "CS";
+            // 
+            // tslblOptions
+            // 
             this.tslblOptions.Name = "tslblOptions";
-            this.tslblOptions.Size = new Size(0x25, 0x16);
+            this.tslblOptions.Size = new System.Drawing.Size(37, 25);
             this.tslblOptions.Tag = "CS";
             this.tslblOptions.Text = "Show:";
+            // 
+            // btnLabelsVisible
+            // 
             this.btnLabelsVisible.Checked = true;
-            this.btnLabelsVisible.CheckState = CheckState.Checked;
-            this.btnLabelsVisible.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnLabelsVisible.Image = (Image) resources.GetObject("btnLabelsVisible.Image");
-            this.btnLabelsVisible.ImageTransparentColor = Color.Fuchsia;
+            this.btnLabelsVisible.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnLabelsVisible.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLabelsVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnLabelsVisible.Image")));
+            this.btnLabelsVisible.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.btnLabelsVisible.Name = "btnLabelsVisible";
-            this.btnLabelsVisible.Size = new Size(0x17, 0x16);
+            this.btnLabelsVisible.Size = new System.Drawing.Size(23, 25);
             this.btnLabelsVisible.Tag = "CS";
             this.btnLabelsVisible.Text = "toolStripButton1";
             this.btnLabelsVisible.ToolTipText = "Show Indicator Labels on Chart";
-            this.btnLabelsVisible.Click += new EventHandler(this.btnLabelsVisible_Click);
+            this.btnLabelsVisible.Click += new System.EventHandler(this.btnLabelsVisible_Click);
+            // 
+            // btnStatusBarVisible
+            // 
             this.btnStatusBarVisible.Checked = true;
-            this.btnStatusBarVisible.CheckState = CheckState.Checked;
-            this.btnStatusBarVisible.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnStatusBarVisible.Image = (Image) resources.GetObject("btnStatusBarVisible.Image");
-            this.btnStatusBarVisible.ImageTransparentColor = Color.Magenta;
+            this.btnStatusBarVisible.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnStatusBarVisible.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStatusBarVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnStatusBarVisible.Image")));
+            this.btnStatusBarVisible.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnStatusBarVisible.Name = "btnStatusBarVisible";
-            this.btnStatusBarVisible.Size = new Size(0x17, 0x16);
+            this.btnStatusBarVisible.Size = new System.Drawing.Size(23, 25);
             this.btnStatusBarVisible.Tag = "CS";
             this.btnStatusBarVisible.Text = "toolStripButton1";
             this.btnStatusBarVisible.ToolTipText = "Show Status Bars on Chart";
-            this.btnStatusBarVisible.Click += new EventHandler(this.btnStatusBarVisible_Click);
+            this.btnStatusBarVisible.Click += new System.EventHandler(this.btnStatusBarVisible_Click);
+            // 
+            // btnFundamentalsVisible
+            // 
             this.btnFundamentalsVisible.Checked = true;
-            this.btnFundamentalsVisible.CheckState = CheckState.Checked;
-            this.btnFundamentalsVisible.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnFundamentalsVisible.Image = (Image) resources.GetObject("btnFundamentalsVisible.Image");
-            this.btnFundamentalsVisible.ImageTransparentColor = Color.Magenta;
+            this.btnFundamentalsVisible.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnFundamentalsVisible.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFundamentalsVisible.Image = ((System.Drawing.Image)(resources.GetObject("btnFundamentalsVisible.Image")));
+            this.btnFundamentalsVisible.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFundamentalsVisible.Name = "btnFundamentalsVisible";
-            this.btnFundamentalsVisible.Size = new Size(0x17, 0x16);
+            this.btnFundamentalsVisible.Size = new System.Drawing.Size(23, 25);
             this.btnFundamentalsVisible.Tag = "CS";
             this.btnFundamentalsVisible.Text = "toolStripButton1";
             this.btnFundamentalsVisible.ToolTipText = "Show selected Fundamental Data Items on Chart";
-            this.btnFundamentalsVisible.Click += new EventHandler(this.btnFundamentalsVisible_Click);
+            this.btnFundamentalsVisible.Click += new System.EventHandler(this.btnFundamentalsVisible_Click);
+            // 
+            // btnDataWindow
+            // 
             this.btnDataWindow.CheckOnClick = true;
-            this.btnDataWindow.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnDataWindow.Image = (Image) resources.GetObject("btnDataWindow.Image");
-            this.btnDataWindow.ImageTransparentColor = Color.Magenta;
+            this.btnDataWindow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDataWindow.Image = ((System.Drawing.Image)(resources.GetObject("btnDataWindow.Image")));
+            this.btnDataWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDataWindow.Name = "btnDataWindow";
-            this.btnDataWindow.Size = new Size(0x17, 0x16);
+            this.btnDataWindow.Size = new System.Drawing.Size(23, 25);
             this.btnDataWindow.Tag = "CS";
             this.btnDataWindow.Text = "Data Window";
-            
-            ///WYJ fix: 
-            //this.btnDataWindow.Short= "Data Window";
-            this.btnDataWindow.Click += new EventHandler(this.btnDataWindow_Click);
-            this.btnIndicatorsTB2.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnIndicatorsTB2.Image = (Image) resources.GetObject("btnIndicatorsTB2.Image");
-            this.btnIndicatorsTB2.ImageTransparentColor = Color.Magenta;
+            this.btnDataWindow.Click += new System.EventHandler(this.btnDataWindow_Click);
+            // 
+            // btnIndicatorsTB2
+            // 
+            this.btnIndicatorsTB2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnIndicatorsTB2.Image = ((System.Drawing.Image)(resources.GetObject("btnIndicatorsTB2.Image")));
+            this.btnIndicatorsTB2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnIndicatorsTB2.Name = "btnIndicatorsTB2";
-            this.btnIndicatorsTB2.Size = new Size(0x17, 0x16);
+            this.btnIndicatorsTB2.Size = new System.Drawing.Size(23, 25);
             this.btnIndicatorsTB2.Tag = "CS";
             this.btnIndicatorsTB2.Text = "toolStripButton1";
             this.btnIndicatorsTB2.ToolTipText = "Plot Technical Indicators";
-            this.btnIndicatorsTB2.Click += new EventHandler(this.btnIndicatorsTB2_Click);
-            this.btnFundamentalsTB2.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnFundamentalsTB2.Image = (Image) resources.GetObject("btnFundamentalsTB2.Image");
-            this.btnFundamentalsTB2.ImageTransparentColor = Color.Magenta;
+            this.btnIndicatorsTB2.Click += new System.EventHandler(this.btnIndicatorsTB2_Click);
+            // 
+            // btnFundamentalsTB2
+            // 
+            this.btnFundamentalsTB2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFundamentalsTB2.Image = ((System.Drawing.Image)(resources.GetObject("btnFundamentalsTB2.Image")));
+            this.btnFundamentalsTB2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFundamentalsTB2.Name = "btnFundamentalsTB2";
-            this.btnFundamentalsTB2.Size = new Size(0x17, 0x16);
+            this.btnFundamentalsTB2.Size = new System.Drawing.Size(23, 25);
             this.btnFundamentalsTB2.Tag = "CS";
             this.btnFundamentalsTB2.Text = "toolStripButton2";
             this.btnFundamentalsTB2.ToolTipText = "Plot Fundamental Data Items";
-            this.btnFundamentalsTB2.Click += new EventHandler(this.btnFundamentalsTB2_Click);
-            this.btnFundamentalsTB2.VisibleChanged += new EventHandler(this.btnFundamentalsTB2_VisibleChanged);
-            this.btnClearIndicators.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnClearIndicators.Image = (Image) resources.GetObject("btnClearIndicators.Image");
-            this.btnClearIndicators.ImageTransparentColor = Color.Silver;
+            this.btnFundamentalsTB2.Click += new System.EventHandler(this.btnFundamentalsTB2_Click);
+            this.btnFundamentalsTB2.VisibleChanged += new System.EventHandler(this.btnFundamentalsTB2_VisibleChanged);
+            // 
+            // btnClearIndicators
+            // 
+            this.btnClearIndicators.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnClearIndicators.Image = ((System.Drawing.Image)(resources.GetObject("btnClearIndicators.Image")));
+            this.btnClearIndicators.ImageTransparentColor = System.Drawing.Color.Silver;
             this.btnClearIndicators.Name = "btnClearIndicators";
-            this.btnClearIndicators.Size = new Size(0x17, 0x16);
+            this.btnClearIndicators.Size = new System.Drawing.Size(23, 25);
             this.btnClearIndicators.Tag = "CS";
             this.btnClearIndicators.Text = "toolStripButton2";
             this.btnClearIndicators.ToolTipText = "Clear Drag and Drop Indicators";
-            this.btnClearIndicators.Click += new EventHandler(this.btnClearIndicators_Click);
-            this.btnPushCode.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            ///this.btnPushCode.Image = Resources.wlp_push;
-            this.btnPushCode.Image = (Image)resources.GetObject("wlp_push");
-
-            this.btnPushCode.ImageTransparentColor = Color.Magenta;
+            this.btnClearIndicators.Click += new System.EventHandler(this.btnClearIndicators_Click);
+            // 
+            // btnPushCode
+            // 
+            this.btnPushCode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPushCode.Image = ((System.Drawing.Image)(resources.GetObject("btnPushCode.Image")));
+            this.btnPushCode.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPushCode.Name = "btnPushCode";
-            this.btnPushCode.Size = new Size(0x17, 0x16);
+            this.btnPushCode.Size = new System.Drawing.Size(23, 25);
             this.btnPushCode.Tag = "CS";
             this.btnPushCode.Text = "toolStripButton1";
             this.btnPushCode.ToolTipText = "Push all Indicators and Fundamental Items into the Strategy Code";
-            this.btnPushCode.Click += new EventHandler(this.btnPushCode_Click);
+            this.btnPushCode.Click += new System.EventHandler(this.btnPushCode_Click);
+            // 
+            // btnTradeTicket
+            // 
             this.btnTradeTicket.Checked = true;
-            this.btnTradeTicket.CheckState = CheckState.Checked;
-            this.btnTradeTicket.Image = (Image) resources.GetObject("btnTradeTicket.Image");
-            this.btnTradeTicket.ImageTransparentColor = Color.Magenta;
+            this.btnTradeTicket.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnTradeTicket.Image = ((System.Drawing.Image)(resources.GetObject("btnTradeTicket.Image")));
+            this.btnTradeTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnTradeTicket.Name = "btnTradeTicket";
-            this.btnTradeTicket.Size = new Size(110, 0x16);
+            this.btnTradeTicket.Size = new System.Drawing.Size(110, 25);
             this.btnTradeTicket.Tag = "G";
             this.btnTradeTicket.Text = "Hide Trade Ticket";
             this.btnTradeTicket.ToolTipText = "Show/Hide the Trade Ticket";
             this.btnTradeTicket.Visible = false;
-            this.btnTradeTicket.CheckStateChanged += new EventHandler(this.btnTradeTicket_CheckStateChanged);
-            this.btnTradeTicket.Click += new EventHandler(this.btnTradeTicket_Click);
-            this.btnPreferencesTB.Image = (Image) resources.GetObject("btnPreferencesTB.Image");
-            this.btnPreferencesTB.ImageTransparentColor = Color.Magenta;
+            this.btnTradeTicket.CheckStateChanged += new System.EventHandler(this.btnTradeTicket_CheckStateChanged);
+            this.btnTradeTicket.Click += new System.EventHandler(this.btnTradeTicket_Click);
+            // 
+            // btnPreferencesTB
+            // 
+            this.btnPreferencesTB.Image = ((System.Drawing.Image)(resources.GetObject("btnPreferencesTB.Image")));
+            this.btnPreferencesTB.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPreferencesTB.Name = "btnPreferencesTB";
-            this.btnPreferencesTB.Size = new Size(0x55, 0x16);
+            this.btnPreferencesTB.Size = new System.Drawing.Size(85, 25);
             this.btnPreferencesTB.Tag = "G";
             this.btnPreferencesTB.Text = "Preferences";
-            this.btnPreferencesTB.Click += new EventHandler(this.btnPreferencesTB_Click);
+            this.btnPreferencesTB.Click += new System.EventHandler(this.btnPreferencesTB_Click);
+            // 
+            // mniCrossHair
+            // 
+            this.mniCrossHair.Image = ((System.Drawing.Image)(resources.GetObject("mniCrossHair.Image")));
+            this.mniCrossHair.ImageTransparentColor = System.Drawing.Color.Fuchsia;
+            this.mniCrossHair.Name = "mniCrossHair";
+            this.mniCrossHair.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.mniCrossHair.Size = new System.Drawing.Size(111, 20);
+            this.mniCrossHair.Text = "New DataSet ...";
+            this.mniCrossHair.Visible = false;
+            this.mniCrossHair.Click += new System.EventHandler(this.btnCrossHair_Click);
+            // 
+            // pnlTree
+            // 
             this.pnlTree.Controls.Add(this.splitContainerDataPane);
             this.pnlTree.Controls.Add(this.lblScale);
             this.pnlTree.Controls.Add(this.scale);
@@ -2809,266 +3511,249 @@
             this.pnlTree.Controls.Add(this.lblRange);
             this.pnlTree.Controls.Add(this.posSize);
             this.pnlTree.Controls.Add(this.dataRange);
-            this.pnlTree.Dock = DockStyle.Left;
-            this.pnlTree.Location = new Point(0, 0x4a);
+            this.pnlTree.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlTree.Location = new System.Drawing.Point(0, 77);
             this.pnlTree.Name = "pnlTree";
-            this.pnlTree.Size = new Size(0xac, 0x180);
+            this.pnlTree.Size = new System.Drawing.Size(206, 381);
             this.pnlTree.TabIndex = 4;
-            this.splitContainerDataPane.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
-            this.splitContainerDataPane.BackColor = SystemColors.Control;
-            this.splitContainerDataPane.FixedPanel = FixedPanel.Panel2;
-            this.splitContainerDataPane.Location = new Point(4, 0x66);
+            // 
+            // splitContainerDataPane
+            // 
+            this.splitContainerDataPane.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainerDataPane.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainerDataPane.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainerDataPane.Location = new System.Drawing.Point(4, 102);
+            this.splitContainerDataPane.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.splitContainerDataPane.Name = "splitContainerDataPane";
-            this.splitContainerDataPane.Orientation = Orientation.Horizontal;
+            this.splitContainerDataPane.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerDataPane.Panel1
+            // 
             this.splitContainerDataPane.Panel1.Controls.Add(this.treeDataSources);
             this.splitContainerDataPane.Panel1.Controls.Add(this.toolbarDataSets);
             this.splitContainerDataPane.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainerDataPane.Panel1MinSize = 100;
+            // 
+            // splitContainerDataPane.Panel2
+            // 
             this.splitContainerDataPane.Panel2.Controls.Add(this.toolbarParameters);
             this.splitContainerDataPane.Panel2.Controls.Add(this.pnlParamBase);
             this.splitContainerDataPane.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainerDataPane.Panel2MinSize = 100;
-            this.splitContainerDataPane.Size = new Size(0xa2, 0x11a);
-            this.splitContainerDataPane.SplitterDistance = 0x97;
+            this.splitContainerDataPane.Size = new System.Drawing.Size(199, 279);
+            this.splitContainerDataPane.SplitterDistance = 140;
             this.splitContainerDataPane.TabIndex = 13;
             this.splitContainerDataPane.TabStop = false;
-            //this.splitContainerDataPane.DoubleClick += splitContainerDataPane_DoubleClick; ///WYJ fix
-
-            this.treeDataSources.AllowDrop = true;
-            this.treeDataSources.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
-            this.treeDataSources.HideSelection = false;
-            this.treeDataSources.ImageIndex = 0;
-            this.treeDataSources.Location = new Point(0, 20);
-            this.treeDataSources.Name = "treeDataSources";
-            this.treeDataSources.SelectedImageIndex = 0;
-            this.treeDataSources.Size = new Size(0xa2, 0x83);
-            this.treeDataSources.TabIndex = 8;
-            this.treeDataSources.DataSourceSelected += new EventHandler<DataSourceEventArgs>(this.method_13);
-            this.treeDataSources.SymbolSelected += new EventHandler<DataSourceSymbolEventArgs>(this.method_15);
-            this.treeDataSources.NewDataSourceClicked += new EventHandler<EventArgs>(this.linkNewDataSet_Click);
-            this.treeDataSources.DataManagerClicked += new EventHandler<EventArgs>(this.btnDataManager_Click);
-            this.treeDataSources.IndexManagerClicked += new EventHandler<EventArgs>(this.method_45);
-            this.treeDataSources.DataSourceTreeViewRenameClicked += new EventHandler<EventArgs>(this.method_46);
-            this.treeDataSources.ItemDrag += new ItemDragEventHandler(this.treeDataSources_ItemDrag);
-            this.treeDataSources.DragOver += new DragEventHandler(this.treeDataSources_DragOver);
-            this.treeDataSources.DoubleClick += new EventHandler(this.treeDataSources_DoubleClick);
-            this.treeDataSources.MouseDown += new MouseEventHandler(this.treeDataSources_MouseDown);
-            this.toolbarDataSets.AutoSize = false;
-            this.toolbarDataSets.GripStyle = ToolStripGripStyle.Hidden;
-            this.toolbarDataSets.Items.AddRange(new ToolStripItem[] { this.lblDataSets, this.linkNewDataSet });
-            this.toolbarDataSets.Location = new Point(0, 0);
-            this.toolbarDataSets.Name = "toolbarDataSets";
-            this.toolbarDataSets.Size = new Size(0xa2, 0x13);
-            this.toolbarDataSets.TabIndex = 7;
-            this.toolbarDataSets.Text = "toolStrip1";
-            this.lblDataSets.Font = new Font("Tahoma", 8.25f, FontStyle.Bold);
-            this.lblDataSets.Name = "lblDataSets";
-            this.lblDataSets.Size = new Size(0x3b, 0x10);
-            this.lblDataSets.Text = "DataSets";
-            this.linkNewDataSet.Alignment = ToolStripItemAlignment.Right;
-            this.linkNewDataSet.IsLink = true;
-            this.linkNewDataSet.Name = "linkNewDataSet";
-            this.linkNewDataSet.Size = new Size(0x2b, 0x10);
-            this.linkNewDataSet.Text = "New ...";
-            this.linkNewDataSet.Click += new EventHandler(this.linkNewDataSet_Click);
+            // 
+            // toolbarParameters
+            // 
             this.toolbarParameters.AutoSize = false;
-            this.toolbarParameters.GripStyle = ToolStripGripStyle.Hidden;
-            this.toolbarParameters.Items.AddRange(new ToolStripItem[] { this.lblParameters });
-            this.toolbarParameters.Location = new Point(0, 0);
+            this.toolbarParameters.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolbarParameters.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblParameters});
+            this.toolbarParameters.Location = new System.Drawing.Point(0, 0);
             this.toolbarParameters.Name = "toolbarParameters";
-            this.toolbarParameters.Size = new Size(0xa2, 0x16);
+            this.toolbarParameters.Size = new System.Drawing.Size(199, 22);
             this.toolbarParameters.TabIndex = 9;
             this.toolbarParameters.Text = "Strategy Parameters";
-            this.lblParameters.Font = new Font("Tahoma", 8.25f, FontStyle.Bold);
+            // 
+            // lblParameters
+            // 
+            this.lblParameters.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblParameters.Name = "lblParameters";
-            this.lblParameters.Size = new Size(0x7f, 0x13);
+            this.lblParameters.Size = new System.Drawing.Size(127, 19);
             this.lblParameters.Text = "Strategy Parameters";
-            this.pnlParamBase.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
-            this.pnlParamBase.BackColor = SystemColors.Window;
+            // 
+            // pnlParamBase
+            // 
+            this.pnlParamBase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlParamBase.BackColor = System.Drawing.SystemColors.Window;
             this.pnlParamBase.Controls.Add(this.pnlParamBaseLinkParams);
             this.pnlParamBase.Controls.Add(this.paramSliders);
-            this.pnlParamBase.Location = new Point(0, 0x16);
+            this.pnlParamBase.Location = new System.Drawing.Point(0, 22);
             this.pnlParamBase.Name = "pnlParamBase";
-            this.pnlParamBase.Size = new Size(0xa2, 0x69);
+            this.pnlParamBase.Size = new System.Drawing.Size(199, 113);
             this.pnlParamBase.TabIndex = 10;
-            this.pnlParamBase.Paint += new PaintEventHandler(this.pnlParamBase_Paint);
-            this.pnlParamBaseLinkParams.BackColor = SystemColors.Window;
-            this.pnlParamBaseLinkParams.Controls.Add(this.linkRerun);
-            this.pnlParamBaseLinkParams.Controls.Add(this.linkResetParams);
-            this.pnlParamBaseLinkParams.Controls.Add(this.linkSaveParams);
-            this.pnlParamBaseLinkParams.Dock = DockStyle.Bottom;
-            this.pnlParamBaseLinkParams.Location = new Point(0, 0x56);
-            this.pnlParamBaseLinkParams.Name = "pnlParamBaseLinkParams";
-            this.pnlParamBaseLinkParams.Size = new Size(0xa2, 0x13);
-            this.pnlParamBaseLinkParams.TabIndex = 0x15;
-            this.linkRerun.Font = new Font("Tahoma", 8.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.linkRerun.Location = new Point(3, 0);
-            this.linkRerun.Name = "linkRerun";
-            this.linkRerun.Size = new Size(0x54, 13);
-            this.linkRerun.TabIndex = 3;
-            this.linkRerun.TabStop = true;
-            this.linkRerun.Text = "Re-run Backtest";
-            this.linkRerun.Visible = false;
-            this.linkRerun.LinkClicked += new LinkLabelLinkClickedEventHandler(this.linkRerun_LinkClicked);
-            this.linkResetParams.Font = new Font("Tahoma", 8.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.linkResetParams.Location = new Point(0x5d, 0);
-            this.linkResetParams.Name = "linkResetParams";
-            this.linkResetParams.Size = new Size(0x23, 13);
-            this.linkResetParams.TabIndex = 1;
-            this.linkResetParams.TabStop = true;
-            this.linkResetParams.Text = "Reset";
-            this.linkResetParams.Visible = false;
-            this.linkResetParams.LinkClicked += new LinkLabelLinkClickedEventHandler(this.linkResetParams_LinkClicked);
-            this.linkSaveParams.Font = new Font("Tahoma", 8.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.linkSaveParams.Location = new Point(3, 0);
-            this.linkSaveParams.Name = "linkSaveParams";
-            this.linkSaveParams.Size = new Size(0x59, 13);
-            this.linkSaveParams.TabIndex = 0;
-            this.linkSaveParams.TabStop = true;
-            this.linkSaveParams.Text = "Save Parameters";
-            this.linkSaveParams.Visible = false;
-            this.linkSaveParams.LinkClicked += new LinkLabelLinkClickedEventHandler(this.linkSaveParams_LinkClicked);
-            this.paramSliders.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top;
+            this.pnlParamBase.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlParamBase_Paint);
+            // 
+            // paramSliders
+            // 
+            this.paramSliders.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.paramSliders.ContextMenuStrip = this.popupPreferredValues;
-            this.paramSliders.Location = new Point(0, 3);
+            this.paramSliders.Location = new System.Drawing.Point(3, 1);
             this.paramSliders.Name = "paramSliders";
-            this.paramSliders.Size = new Size(0xa2, 0x52);
+            this.paramSliders.Size = new System.Drawing.Size(193, 87);
             this.paramSliders.TabIndex = 2;
             this.paramSliders.WealthScript = null;
-            this.paramSliders.SliderValueChanged += new EventHandler<EventArgs>(this.method_34);
-            this.paramSliders.SliderMouseDown += new EventHandler<EventArgs>(this.method_43);
-            this.popupPreferredValues.Items.AddRange(new ToolStripItem[] { this.mniStorePreferredValues });
+            this.paramSliders.SliderMouseDown += new System.EventHandler<System.EventArgs>(this.method_43);
+            this.paramSliders.SliderValueChanged += new System.EventHandler<System.EventArgs>(this.method_34);
+            // 
+            // popupPreferredValues
+            // 
+            this.popupPreferredValues.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mniStorePreferredValues});
             this.popupPreferredValues.Name = "popupPreferredValues";
-            this.popupPreferredValues.Size = new Size(0x1af, 0x1a);
+            this.popupPreferredValues.Size = new System.Drawing.Size(420, 26);
+            // 
+            // mniStorePreferredValues
+            // 
             this.mniStorePreferredValues.Name = "mniStorePreferredValues";
-            this.mniStorePreferredValues.Size = new Size(430, 0x16);
+            this.mniStorePreferredValues.Size = new System.Drawing.Size(419, 22);
             this.mniStorePreferredValues.Text = "Store these Parameter Values as the Preferred Values for the Symbol(s)";
-            this.mniStorePreferredValues.Click += new EventHandler(this.mniStorePreferredValues_Click);
+            this.mniStorePreferredValues.Click += new System.EventHandler(this.mniStorePreferredValues_Click);
+            // 
+            // lblScale
+            // 
             this.lblScale.AutoSize = true;
-            this.lblScale.Location = new Point(3, 4);
+            this.lblScale.Location = new System.Drawing.Point(3, 4);
             this.lblScale.Name = "lblScale";
-            this.lblScale.Size = new Size(0x25, 13);
+            this.lblScale.Size = new System.Drawing.Size(37, 13);
             this.lblScale.TabIndex = 12;
             this.lblScale.Text = "Scale:";
-            this.scale.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-            this.scale.BackColor = Color.Cornsilk;
-            this.scale.Location = new Point(0x4f, 4);
-            this.scale.Name = "scale";
-            this.scale.Size = new Size(0x55, 20);
-            this.scale.SM = false;
-            this.scale.TabIndex = 11;
-            this.scale.ScaleChanged += new EventHandler<EventArgs>(this.method_33);
-            this.cmbSymbol.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
+            // 
+            // cmbSymbol
+            // 
+            this.cmbSymbol.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbSymbol.FormattingEnabled = true;
-            this.cmbSymbol.Location = new Point(0x39, 0x4b);
+            this.cmbSymbol.Location = new System.Drawing.Point(57, 75);
             this.cmbSymbol.Name = "cmbSymbol";
-            this.cmbSymbol.Size = new Size(0x49, 0x15);
+            this.cmbSymbol.Size = new System.Drawing.Size(107, 21);
             this.cmbSymbol.Sorted = true;
             this.cmbSymbol.TabIndex = 5;
-            this.cmbSymbol.DropDownClosed += new EventHandler(this.cmbSymbol_DropDownClosed);
-            this.cmbSymbol.KeyPress += new KeyPressEventHandler(this.cmbSymbol_KeyPress);
-            this.btnGo.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            this.cmbSymbol.DropDownClosed += new System.EventHandler(this.cmbSymbol_DropDownClosed);
+            this.cmbSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbSymbol_KeyPress);
+            // 
+            // btnGo
+            // 
+            this.btnGo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGo.Enabled = false;
-            this.btnGo.Location = new Point(0x87, 0x4b);
+            this.btnGo.Location = new System.Drawing.Point(169, 75);
             this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new Size(0x1d, 0x16);
+            this.btnGo.Size = new System.Drawing.Size(34, 22);
             this.btnGo.TabIndex = 6;
             this.btnGo.Text = "Go";
             this.btnGo.UseVisualStyleBackColor = true;
-            this.btnGo.Click += new EventHandler(this.btnGo_Click);
+            this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
+            // 
+            // lblSymbol
+            // 
             this.lblSymbol.AutoSize = true;
-            this.lblSymbol.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lblSymbol.Location = new Point(3, 0x4e);
+            this.lblSymbol.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSymbol.Location = new System.Drawing.Point(3, 78);
             this.lblSymbol.Name = "lblSymbol";
-            this.lblSymbol.Size = new Size(0x33, 13);
+            this.lblSymbol.Size = new System.Drawing.Size(51, 13);
             this.lblSymbol.TabIndex = 4;
             this.lblSymbol.Text = "Symbol:";
+            // 
+            // lblPositions
+            // 
             this.lblPositions.AutoSize = true;
-            this.lblPositions.Font = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.lblPositions.Location = new Point(3, 0x31);
+            this.lblPositions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPositions.Location = new System.Drawing.Point(3, 49);
             this.lblPositions.Name = "lblPositions";
-            this.lblPositions.Size = new Size(70, 13);
+            this.lblPositions.Size = new System.Drawing.Size(70, 13);
             this.lblPositions.TabIndex = 2;
             this.lblPositions.Text = "Position Size:";
+            // 
+            // lblRange
+            // 
             this.lblRange.AutoSize = true;
-            this.lblRange.Location = new Point(3, 0x1a);
+            this.lblRange.Location = new System.Drawing.Point(3, 26);
             this.lblRange.Name = "lblRange";
-            this.lblRange.Size = new Size(0x44, 13);
+            this.lblRange.Size = new System.Drawing.Size(68, 13);
             this.lblRange.TabIndex = 0;
             this.lblRange.Text = "Data Range:";
-            this.posSize.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-            this.posSize.BackColor = Color.Honeydew;
-            this.posSize.CombinationStrategyChildMode = false;
-            this.posSize.Location = new Point(0x4f, 0x30);
-            this.posSize.Name = "posSize";
-            this.posSize.Size = new Size(0x55, 20);
-            this.posSize.TabIndex = 3;
-            this.posSize.PositionSizeChanged += new EventHandler<EventArgs>(this.method_10);
-            this.dataRange.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
-            this.dataRange.BackColor = Color.AliceBlue;
-            this.dataRange.IsStreaming = false;
-            this.dataRange.Location = new Point(0x4f, 0x1a);
-            this.dataRange.Name = "dataRange";
-            this.dataRange.Size = new Size(0x55, 20);
-            this.dataRange.TabIndex = 1;
-            this.dataRange.DataRangeChanged += new EventHandler<EventArgs>(this.method_9);
-            this.toolbarDrawing.Dock = DockStyle.Right; ///WYJ fix
-            this.toolbarDrawing.GripStyle = ToolStripGripStyle.Visible; ///WYJ fix, original code: ToolStripGripStyle.Hidden
-            //this.toolbarDrawing.Items.AddRange(new ToolStripItem[] { this.btnClearDrawingObjects, this.btnCrossHair, this.sepDeleteDrawing, this.btnTrendline });
-
-            this.mniCrossHair.Image = (Image)resources.GetObject("mniNewDataSetTB.Image");
-            this.mniCrossHair.ImageTransparentColor = Color.Fuchsia;
-            this.mniCrossHair.Name = "mniCrossHair";
-            //this.mniCrossHair.ShortcutKeys = Keys.Control | Keys.Shift | Keys.D;
-            this.mniCrossHair.Size = new Size(300, 0x16);
-            this.mniCrossHair.Text = "New DataSet ...";
-            
-            this.mniCrossHair.Click += new EventHandler(this.btnCrossHair_Click);
-            this.mniCrossHair.Visible = false;
-            this.mniCrossHair.ShortcutKeys = Keys.Control | Keys.Q;
-            this.toolbarDrawing.Items.AddRange(new ToolStripItem[] { this.btnClearDrawingObjects, this.btnCrossHair, this.sepDeleteDrawing, this.btnTrendline, this.mniCrossHair });
-            this.toolbarDrawing.Location = new Point(0x3ec, 0x4a);
+            // 
+            // toolbarDrawing
+            // 
+            this.toolbarDrawing.AllowDrop = true;
+            this.toolbarDrawing.Dock = System.Windows.Forms.DockStyle.Right;
+            this.toolbarDrawing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnClearDrawingObjects,
+            this.btnCrossHair,
+            this.sepDeleteDrawing,
+            this.btnTrendline,
+            this.mniCrossHair});
+            this.toolbarDrawing.Location = new System.Drawing.Point(1004, 77);
             this.toolbarDrawing.Name = "toolbarDrawing";
-            this.toolbarDrawing.Size = new Size(0x18, 0x180);
-            this.toolbarDrawing.TabIndex = 0x11;
+            this.toolbarDrawing.Size = new System.Drawing.Size(24, 381);
+            this.toolbarDrawing.TabIndex = 17;
             this.toolbarDrawing.Text = "toolStrip1";
-            this.btnClearDrawingObjects.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnClearDrawingObjects.Image = (Image) resources.GetObject("btnClearDrawingObjects.Image");
-            this.btnClearDrawingObjects.ImageTransparentColor = Color.Magenta;
+            // 
+            // btnClearDrawingObjects
+            // 
+            this.btnClearDrawingObjects.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnClearDrawingObjects.Image = ((System.Drawing.Image)(resources.GetObject("btnClearDrawingObjects.Image")));
+            this.btnClearDrawingObjects.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnClearDrawingObjects.Name = "btnClearDrawingObjects";
-            this.btnClearDrawingObjects.Size = new Size(0x15, 20);
+            this.btnClearDrawingObjects.Size = new System.Drawing.Size(21, 20);
             this.btnClearDrawingObjects.Text = "toolStripButton1";
             this.btnClearDrawingObjects.ToolTipText = "Clear Drawing Objects";
-            this.btnClearDrawingObjects.Click += new EventHandler(this.btnClearDrawingObjects_Click);
-            this.btnCrossHair.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            this.btnCrossHair.Image = (Image) resources.GetObject("btnCrossHair.Image");
-            this.btnCrossHair.ImageTransparentColor = Color.Magenta;
+            this.btnClearDrawingObjects.Click += new System.EventHandler(this.btnClearDrawingObjects_Click);
+            // 
+            // btnCrossHair
+            // 
+            this.btnCrossHair.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCrossHair.Image = ((System.Drawing.Image)(resources.GetObject("btnCrossHair.Image")));
+            this.btnCrossHair.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCrossHair.Name = "btnCrossHair";
-            this.btnCrossHair.Size = new Size(0x15, 20);
+            this.btnCrossHair.Size = new System.Drawing.Size(21, 20);
             this.btnCrossHair.Text = "Cross Hair";
-            this.btnCrossHair.Click += new EventHandler(this.btnCrossHair_Click);
+            this.btnCrossHair.Click += new System.EventHandler(this.btnCrossHair_Click);
+            // 
+            // sepDeleteDrawing
+            // 
             this.sepDeleteDrawing.Name = "sepDeleteDrawing";
-            this.sepDeleteDrawing.Size = new Size(0x15, 6);
+            this.sepDeleteDrawing.Size = new System.Drawing.Size(21, 6);
+            // 
+            // btnTrendline
+            // 
             this.btnTrendline.Name = "btnTrendline";
-            this.btnTrendline.Size = new Size(0x15, 4);
-            this.splitter.BackColor = SystemColors.ControlDark;
-            this.splitter.Location = new Point(0xac, 0x4a);
+            this.btnTrendline.Size = new System.Drawing.Size(21, 4);
+            // 
+            // splitter
+            // 
+            this.splitter.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.splitter.Location = new System.Drawing.Point(206, 77);
             this.splitter.Name = "splitter";
-            this.splitter.Size = new Size(3, 0x180);
+            this.splitter.Size = new System.Drawing.Size(3, 381);
             this.splitter.TabIndex = 5;
             this.splitter.TabStop = false;
+            this.splitter.DoubleClick += new System.EventHandler(this.mniViewDataPanel_Click);
+            // 
+            // saveFileDialog_0
+            // 
             this.saveFileDialog_0.DefaultExt = "ws";
             this.saveFileDialog_0.Filter = "Workspace files|*.ws";
             this.saveFileDialog_0.RestoreDirectory = true;
             this.saveFileDialog_0.Title = "Save Workspace";
+            // 
+            // openFileDialog_0
+            // 
             this.openFileDialog_0.DefaultExt = "ws";
             this.openFileDialog_0.Filter = "Workspace files|*.ws";
             this.openFileDialog_0.RestoreDirectory = true;
             this.openFileDialog_0.Title = "Open Workspace";
-            this.timer_0.Interval = 0x14d;
-            this.timer_0.Tick += new EventHandler(this.timer_0_Tick);
-            this.timer_1.Tick += new EventHandler(this.timer_1_Tick);
-            this.pnlTrade.BackColor = Color.LightSlateGray;
+            // 
+            // timer_0
+            // 
+            this.timer_0.Interval = 333;
+            this.timer_0.Tick += new System.EventHandler(this.timer_0_Tick);
+            // 
+            // timer_1
+            // 
+            this.timer_1.Tick += new System.EventHandler(this.timer_1_Tick);
+            // 
+            // pnlTrade
+            // 
+            this.pnlTrade.BackColor = System.Drawing.Color.LightSlateGray;
             this.pnlTrade.Controls.Add(this.accountTypeSelector1);
             this.pnlTrade.Controls.Add(this.lblBid);
             this.pnlTrade.Controls.Add(this.lblAsk);
@@ -3097,256 +3782,494 @@
             this.pnlTrade.Controls.Add(this.lblTradeSymbol);
             this.pnlTrade.Controls.Add(this.lblTradeAcct);
             this.pnlTrade.Controls.Add(this.cmbAccount);
-            this.pnlTrade.Dock = DockStyle.Top;
-            this.pnlTrade.Location = new Point(0xaf, 0x4a);
+            this.pnlTrade.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTrade.Location = new System.Drawing.Point(209, 77);
             this.pnlTrade.Name = "pnlTrade";
-            this.pnlTrade.Size = new Size(0x33d, 0x35);
-            this.pnlTrade.TabIndex = 0x13;
-            this.accountTypeSelector1.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.accountTypeSelector1.FormattingEnabled = true;
-            this.accountTypeSelector1.IgnoreCalls = false;
-            this.accountTypeSelector1.Location = new Point(0x21e, 11);
-            this.accountTypeSelector1.Name = "accountTypeSelector1";
-            this.accountTypeSelector1.Size = new Size(0x3b, 0x15);
-            this.accountTypeSelector1.TabIndex = 0x2f;
-            this.lblBid.Location = new Point(0x298, 14);
+            this.pnlTrade.Size = new System.Drawing.Size(795, 121);
+            this.pnlTrade.TabIndex = 19;
+            // 
+            // lblBid
+            // 
+            this.lblBid.Location = new System.Drawing.Point(664, 14);
             this.lblBid.Name = "lblBid";
-            this.lblBid.Size = new Size(0x75, 11);
-            this.lblBid.TabIndex = 0x2b;
+            this.lblBid.Size = new System.Drawing.Size(117, 11);
+            this.lblBid.TabIndex = 43;
             this.lblBid.Text = "Bid:";
             this.lblBid.Visible = false;
-            this.lblAsOf.Location = new Point(0x298, 0x24);
+            // 
+            // lblAsOf
+            // 
+            this.lblAsOf.Location = new System.Drawing.Point(664, 36);
             this.lblAsOf.Name = "lblAsOf";
-            this.lblAsOf.Size = new Size(0xa2, 11);
-            this.lblAsOf.TabIndex = 0x2c;
+            this.lblAsOf.Size = new System.Drawing.Size(162, 11);
+            this.lblAsOf.TabIndex = 44;
             this.lblAsOf.Text = "As of ";
             this.lblAsOf.Visible = false;
-            this.lblLast.Location = new Point(0x298, 3);
+            // 
+            // lblLast
+            // 
+            this.lblLast.Location = new System.Drawing.Point(664, 3);
             this.lblLast.Name = "lblLast";
-            this.lblLast.Size = new Size(0x75, 11);
-            this.lblLast.TabIndex = 0x29;
+            this.lblLast.Size = new System.Drawing.Size(117, 11);
+            this.lblLast.TabIndex = 41;
             this.lblLast.Text = "Last:";
             this.lblLast.Visible = false;
+            // 
+            // lblAcctType
+            // 
             this.lblAcctType.AutoSize = true;
-            this.lblAcctType.ForeColor = Color.White;
-            this.lblAcctType.Location = new Point(0x21e, 0x23);
+            this.lblAcctType.ForeColor = System.Drawing.Color.White;
+            this.lblAcctType.Location = new System.Drawing.Point(542, 35);
             this.lblAcctType.Name = "lblAcctType";
-            this.lblAcctType.Size = new Size(0x3e, 13);
-            this.lblAcctType.TabIndex = 0x2e;
+            this.lblAcctType.Size = new System.Drawing.Size(62, 13);
+            this.lblAcctType.TabIndex = 46;
             this.lblAcctType.Text = "Trade Type";
-            this.btnDockUp.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            // 
+            // btnDockUp
+            // 
+            this.btnDockUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDockUp.FlatAppearance.BorderSize = 0;
-            this.btnDockUp.FlatStyle = FlatStyle.Flat;
-            this.btnDockUp.Image = (Image) resources.GetObject("btnDockUp.Image");
-            this.btnDockUp.Location = new Point(0x331, 0x29);
+            this.btnDockUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDockUp.Image = ((System.Drawing.Image)(resources.GetObject("btnDockUp.Image")));
+            this.btnDockUp.Location = new System.Drawing.Point(783, 109);
             this.btnDockUp.Name = "btnDockUp";
-            this.btnDockUp.Size = new Size(12, 12);
+            this.btnDockUp.Size = new System.Drawing.Size(12, 12);
             this.btnDockUp.TabIndex = 40;
             this.btnDockUp.UseVisualStyleBackColor = true;
             this.btnDockUp.Visible = false;
-            this.btnDockUp.Click += new EventHandler(this.btnDockUp_Click);
-            this.btnCloseTradeTicket.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            this.btnDockUp.Click += new System.EventHandler(this.btnDockUp_Click);
+            // 
+            // btnCloseTradeTicket
+            // 
+            this.btnCloseTradeTicket.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCloseTradeTicket.FlatAppearance.BorderSize = 0;
-            this.btnCloseTradeTicket.FlatStyle = FlatStyle.Flat;
-            this.btnCloseTradeTicket.Image = (Image) resources.GetObject("btnCloseTradeTicket.Image");
-            this.btnCloseTradeTicket.Location = new Point(0x330, 0);
+            this.btnCloseTradeTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCloseTradeTicket.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTradeTicket.Image")));
+            this.btnCloseTradeTicket.Location = new System.Drawing.Point(782, 0);
             this.btnCloseTradeTicket.Name = "btnCloseTradeTicket";
-            this.btnCloseTradeTicket.Size = new Size(12, 12);
-            this.btnCloseTradeTicket.TabIndex = 0x25;
+            this.btnCloseTradeTicket.Size = new System.Drawing.Size(12, 12);
+            this.btnCloseTradeTicket.TabIndex = 37;
             this.btnCloseTradeTicket.UseVisualStyleBackColor = true;
-            this.btnCloseTradeTicket.Click += new EventHandler(this.btnCloseTradeTicket_Click);
-            this.btnDockDown.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.btnCloseTradeTicket.Click += new System.EventHandler(this.btnCloseTradeTicket_Click);
+            // 
+            // btnDockDown
+            // 
+            this.btnDockDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDockDown.FlatAppearance.BorderSize = 0;
-            this.btnDockDown.FlatStyle = FlatStyle.Flat;
-            this.btnDockDown.Image = (Image) resources.GetObject("btnDockDown.Image");
-            this.btnDockDown.Location = new Point(0x330, 0x29);
+            this.btnDockDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDockDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDockDown.Image")));
+            this.btnDockDown.Location = new System.Drawing.Point(782, 109);
             this.btnDockDown.Name = "btnDockDown";
-            this.btnDockDown.Size = new Size(12, 12);
-            this.btnDockDown.TabIndex = 0x27;
+            this.btnDockDown.Size = new System.Drawing.Size(12, 12);
+            this.btnDockDown.TabIndex = 39;
             this.btnDockDown.UseVisualStyleBackColor = true;
-            this.btnDockDown.Click += new EventHandler(this.btnDockDown_Click);
-            this.btnLoginTradeTicket.Location = new Point(0x25c, 10);
+            this.btnDockDown.Click += new System.EventHandler(this.btnDockDown_Click);
+            // 
+            // btnLoginTradeTicket
+            // 
+            this.btnLoginTradeTicket.Location = new System.Drawing.Point(604, 10);
             this.btnLoginTradeTicket.Name = "btnLoginTradeTicket";
-            this.btnLoginTradeTicket.Size = new Size(0x62, 0x17);
-            this.btnLoginTradeTicket.TabIndex = 0x26;
+            this.btnLoginTradeTicket.Size = new System.Drawing.Size(98, 23);
+            this.btnLoginTradeTicket.TabIndex = 38;
             this.btnLoginTradeTicket.Text = "Log in";
             this.btnLoginTradeTicket.UseVisualStyleBackColor = true;
-            this.btnLoginTradeTicket.Click += new EventHandler(this.btnLoginTradeTicket_Click);
-            this.numTradePrice.InputType = NumEdit.NumEditType.Double;
-            this.numTradePrice.Location = new Point(0x16d, 11);
+            this.btnLoginTradeTicket.Click += new System.EventHandler(this.btnLoginTradeTicket_Click);
+            // 
+            // numTradePrice
+            // 
+            this.numTradePrice.InputType = CtrlLib.NumEdit.NumEditType.Double;
+            this.numTradePrice.Location = new System.Drawing.Point(365, 11);
             this.numTradePrice.Name = "numTradePrice";
-            this.numTradePrice.Size = new Size(0x40, 20);
+            this.numTradePrice.Size = new System.Drawing.Size(64, 20);
             this.numTradePrice.TabIndex = 5;
-            this.numTradePrice.TextChanged += new EventHandler(this.cmbTradeTIF_SelectedIndexChanged);
-            this.numTradeQty.InputType = NumEdit.NumEditType.Integer;
-            this.numTradeQty.Location = new Point(0xd4, 11);
+            this.numTradePrice.TextChanged += new System.EventHandler(this.cmbTradeTIF_SelectedIndexChanged);
+            // 
+            // numTradeQty
+            // 
+            this.numTradeQty.InputType = CtrlLib.NumEdit.NumEditType.Integer;
+            this.numTradeQty.Location = new System.Drawing.Point(212, 11);
             this.numTradeQty.Name = "numTradeQty";
-            this.numTradeQty.Size = new Size(0x39, 20);
+            this.numTradeQty.Size = new System.Drawing.Size(57, 20);
             this.numTradeQty.TabIndex = 3;
             this.numTradeQty.Text = "100";
-            this.numTradeQty.TextChanged += new EventHandler(this.cmbTradeTIF_SelectedIndexChanged);
-            this.txtTradeSymbol.CharacterCasing = CharacterCasing.Upper;
-            this.txtTradeSymbol.Location = new Point(0x69, 11);
+            this.numTradeQty.TextChanged += new System.EventHandler(this.cmbTradeTIF_SelectedIndexChanged);
+            // 
+            // txtTradeSymbol
+            // 
+            this.txtTradeSymbol.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtTradeSymbol.Location = new System.Drawing.Point(105, 11);
             this.txtTradeSymbol.Name = "txtTradeSymbol";
-            this.txtTradeSymbol.Size = new Size(0x37, 20);
+            this.txtTradeSymbol.Size = new System.Drawing.Size(55, 20);
             this.txtTradeSymbol.TabIndex = 1;
-            this.txtTradeSymbol.TextChanged += new EventHandler(this.cmbTradeTIF_SelectedIndexChanged);
-            this.txtTradeSymbol.Leave += new EventHandler(this.txtTradeSymbol_Leave);
+            this.txtTradeSymbol.TextChanged += new System.EventHandler(this.cmbTradeTIF_SelectedIndexChanged);
+            this.txtTradeSymbol.Leave += new System.EventHandler(this.txtTradeSymbol_Leave);
+            // 
+            // btnStageOrder
+            // 
             this.btnStageOrder.Enabled = false;
-            this.btnStageOrder.Location = new Point(0x25c, 0x1c);
+            this.btnStageOrder.Location = new System.Drawing.Point(604, 28);
             this.btnStageOrder.Name = "btnStageOrder";
-            this.btnStageOrder.Size = new Size(0x38, 0x15);
+            this.btnStageOrder.Size = new System.Drawing.Size(56, 21);
             this.btnStageOrder.TabIndex = 10;
             this.btnStageOrder.Text = "Stage";
             this.btnStageOrder.UseVisualStyleBackColor = true;
             this.btnStageOrder.Visible = false;
-            this.btnStageOrder.Click += new EventHandler(this.btnStageOrder_Click);
+            this.btnStageOrder.Click += new System.EventHandler(this.btnStageOrder_Click);
+            // 
+            // btnPlaceOrder
+            // 
             this.btnPlaceOrder.Enabled = false;
-            this.btnPlaceOrder.Location = new Point(0x25c, 3);
+            this.btnPlaceOrder.Location = new System.Drawing.Point(604, 3);
             this.btnPlaceOrder.Name = "btnPlaceOrder";
-            this.btnPlaceOrder.Size = new Size(0x38, 0x15);
+            this.btnPlaceOrder.Size = new System.Drawing.Size(56, 21);
             this.btnPlaceOrder.TabIndex = 8;
             this.btnPlaceOrder.Text = "Place";
             this.btnPlaceOrder.UseVisualStyleBackColor = true;
             this.btnPlaceOrder.Visible = false;
-            this.btnPlaceOrder.Click += new EventHandler(this.btnPlaceOrder_Click);
+            this.btnPlaceOrder.Click += new System.EventHandler(this.btnPlaceOrder_Click);
+            // 
+            // lbTradeDirected
+            // 
             this.lbTradeDirected.AutoSize = true;
-            this.lbTradeDirected.ForeColor = Color.White;
-            this.lbTradeDirected.Location = new Point(0x1ad, 0x23);
+            this.lbTradeDirected.ForeColor = System.Drawing.Color.White;
+            this.lbTradeDirected.Location = new System.Drawing.Point(429, 35);
             this.lbTradeDirected.Name = "lbTradeDirected";
-            this.lbTradeDirected.Size = new Size(0x24, 13);
-            this.lbTradeDirected.TabIndex = 0x24;
+            this.lbTradeDirected.Size = new System.Drawing.Size(36, 13);
+            this.lbTradeDirected.TabIndex = 36;
             this.lbTradeDirected.Text = "Route";
-            this.cmbTradeRoute.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // cmbTradeRoute
+            // 
+            this.cmbTradeRoute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTradeRoute.FormattingEnabled = true;
-            this.cmbTradeRoute.Location = new Point(0x1ad, 11);
+            this.cmbTradeRoute.Location = new System.Drawing.Point(429, 11);
             this.cmbTradeRoute.Name = "cmbTradeRoute";
-            this.cmbTradeRoute.Size = new Size(0x39, 0x15);
+            this.cmbTradeRoute.Size = new System.Drawing.Size(57, 21);
             this.cmbTradeRoute.TabIndex = 6;
-            this.cmbTradeRoute.SelectedIndexChanged += new EventHandler(this.cmbTradeRoute_SelectedIndexChanged);
+            this.cmbTradeRoute.SelectedIndexChanged += new System.EventHandler(this.cmbTradeRoute_SelectedIndexChanged);
+            // 
+            // lblTradeTIF
+            // 
             this.lblTradeTIF.AutoSize = true;
-            this.lblTradeTIF.ForeColor = Color.White;
-            this.lblTradeTIF.Location = new Point(0x1e6, 0x23);
+            this.lblTradeTIF.ForeColor = System.Drawing.Color.White;
+            this.lblTradeTIF.Location = new System.Drawing.Point(486, 35);
             this.lblTradeTIF.Name = "lblTradeTIF";
-            this.lblTradeTIF.Size = new Size(0x17, 13);
-            this.lblTradeTIF.TabIndex = 0x23;
+            this.lblTradeTIF.Size = new System.Drawing.Size(23, 13);
+            this.lblTradeTIF.TabIndex = 35;
             this.lblTradeTIF.Text = "TIF";
-            this.cmbTradeTIF.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // cmbTradeTIF
+            // 
+            this.cmbTradeTIF.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTradeTIF.FormattingEnabled = true;
-            this.cmbTradeTIF.Location = new Point(0x1e6, 11);
+            this.cmbTradeTIF.Location = new System.Drawing.Point(486, 11);
             this.cmbTradeTIF.Name = "cmbTradeTIF";
-            this.cmbTradeTIF.Size = new Size(0x38, 0x15);
+            this.cmbTradeTIF.Size = new System.Drawing.Size(56, 21);
             this.cmbTradeTIF.TabIndex = 7;
-            this.cmbTradeTIF.SelectedIndexChanged += new EventHandler(this.cmbTradeTIF_SelectedIndexChanged);
+            this.cmbTradeTIF.SelectedIndexChanged += new System.EventHandler(this.cmbTradeTIF_SelectedIndexChanged);
+            // 
+            // lblTradePrice
+            // 
             this.lblTradePrice.AutoSize = true;
-            this.lblTradePrice.ForeColor = Color.White;
-            this.lblTradePrice.Location = new Point(0x16d, 0x23);
+            this.lblTradePrice.ForeColor = System.Drawing.Color.White;
+            this.lblTradePrice.Location = new System.Drawing.Point(365, 35);
             this.lblTradePrice.Name = "lblTradePrice";
-            this.lblTradePrice.Size = new Size(0x2b, 13);
-            this.lblTradePrice.TabIndex = 0x22;
+            this.lblTradePrice.Size = new System.Drawing.Size(43, 13);
+            this.lblTradePrice.TabIndex = 34;
             this.lblTradePrice.Text = "Amount";
+            // 
+            // lblTradeOrder
+            // 
             this.lblTradeOrder.AutoSize = true;
-            this.lblTradeOrder.ForeColor = Color.White;
-            this.lblTradeOrder.Location = new Point(0x10d, 0x23);
+            this.lblTradeOrder.ForeColor = System.Drawing.Color.White;
+            this.lblTradeOrder.Location = new System.Drawing.Point(269, 35);
             this.lblTradeOrder.Name = "lblTradeOrder";
-            this.lblTradeOrder.Size = new Size(60, 13);
-            this.lblTradeOrder.TabIndex = 0x21;
+            this.lblTradeOrder.Size = new System.Drawing.Size(60, 13);
+            this.lblTradeOrder.TabIndex = 33;
             this.lblTradeOrder.Text = "Order Type";
-            this.cmbTradeOrder.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // cmbTradeOrder
+            // 
+            this.cmbTradeOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTradeOrder.FormattingEnabled = true;
-            this.cmbTradeOrder.Location = new Point(0x10d, 11);
+            this.cmbTradeOrder.Location = new System.Drawing.Point(269, 11);
             this.cmbTradeOrder.Name = "cmbTradeOrder";
-            this.cmbTradeOrder.Size = new Size(0x60, 0x15);
+            this.cmbTradeOrder.Size = new System.Drawing.Size(96, 21);
             this.cmbTradeOrder.TabIndex = 4;
-            this.cmbTradeOrder.SelectedIndexChanged += new EventHandler(this.cmbTradeOrder_SelectedIndexChanged);
+            this.cmbTradeOrder.SelectedIndexChanged += new System.EventHandler(this.cmbTradeOrder_SelectedIndexChanged);
+            // 
+            // lblTradeQty
+            // 
             this.lblTradeQty.AutoSize = true;
-            this.lblTradeQty.ForeColor = Color.White;
-            this.lblTradeQty.Location = new Point(0xd4, 0x24);
+            this.lblTradeQty.ForeColor = System.Drawing.Color.White;
+            this.lblTradeQty.Location = new System.Drawing.Point(212, 36);
             this.lblTradeQty.Name = "lblTradeQty";
-            this.lblTradeQty.Size = new Size(0x2e, 13);
-            this.lblTradeQty.TabIndex = 0x20;
+            this.lblTradeQty.Size = new System.Drawing.Size(46, 13);
+            this.lblTradeQty.TabIndex = 32;
             this.lblTradeQty.Text = "Quantity";
+            // 
+            // lblTradeAction
+            // 
             this.lblTradeAction.AutoSize = true;
-            this.lblTradeAction.ForeColor = Color.White;
-            this.lblTradeAction.Location = new Point(160, 0x23);
+            this.lblTradeAction.ForeColor = System.Drawing.Color.White;
+            this.lblTradeAction.Location = new System.Drawing.Point(160, 35);
             this.lblTradeAction.Name = "lblTradeAction";
-            this.lblTradeAction.Size = new Size(0x25, 13);
-            this.lblTradeAction.TabIndex = 0x1f;
+            this.lblTradeAction.Size = new System.Drawing.Size(37, 13);
+            this.lblTradeAction.TabIndex = 31;
             this.lblTradeAction.Text = "Action";
-            this.cmbTradeAction.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // cmbTradeAction
+            // 
+            this.cmbTradeAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTradeAction.FormattingEnabled = true;
-            this.cmbTradeAction.Items.AddRange(new object[] { "Buy", "Sell", "Short", "Cover" });
-            this.cmbTradeAction.Location = new Point(160, 11);
+            this.cmbTradeAction.Items.AddRange(new object[] {
+            "Buy",
+            "Sell",
+            "Short",
+            "Cover"});
+            this.cmbTradeAction.Location = new System.Drawing.Point(160, 11);
             this.cmbTradeAction.Name = "cmbTradeAction";
-            this.cmbTradeAction.Size = new Size(0x34, 0x15);
+            this.cmbTradeAction.Size = new System.Drawing.Size(52, 21);
             this.cmbTradeAction.TabIndex = 2;
-            this.cmbTradeAction.SelectedIndexChanged += new EventHandler(this.cmbTradeAction_SelectedIndexChanged);
+            this.cmbTradeAction.SelectedIndexChanged += new System.EventHandler(this.cmbTradeAction_SelectedIndexChanged);
+            // 
+            // lblTradeSymbol
+            // 
             this.lblTradeSymbol.AutoSize = true;
-            this.lblTradeSymbol.ForeColor = Color.White;
-            this.lblTradeSymbol.Location = new Point(0x69, 0x23);
+            this.lblTradeSymbol.ForeColor = System.Drawing.Color.White;
+            this.lblTradeSymbol.Location = new System.Drawing.Point(105, 35);
             this.lblTradeSymbol.Name = "lblTradeSymbol";
-            this.lblTradeSymbol.Size = new Size(0x29, 13);
+            this.lblTradeSymbol.Size = new System.Drawing.Size(41, 13);
             this.lblTradeSymbol.TabIndex = 30;
             this.lblTradeSymbol.Text = "Symbol";
+            // 
+            // lblTradeAcct
+            // 
             this.lblTradeAcct.AutoSize = true;
-            this.lblTradeAcct.ForeColor = Color.White;
-            this.lblTradeAcct.Location = new Point(6, 0x23);
+            this.lblTradeAcct.ForeColor = System.Drawing.Color.White;
+            this.lblTradeAcct.Location = new System.Drawing.Point(6, 35);
             this.lblTradeAcct.Name = "lblTradeAcct";
-            this.lblTradeAcct.Size = new Size(0x2f, 13);
-            this.lblTradeAcct.TabIndex = 0x1d;
+            this.lblTradeAcct.Size = new System.Drawing.Size(47, 13);
+            this.lblTradeAcct.TabIndex = 29;
             this.lblTradeAcct.Text = "Account";
-            this.cmbAccount.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // cmbAccount
+            // 
+            this.cmbAccount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAccount.FormattingEnabled = true;
-            this.cmbAccount.Location = new Point(6, 11);
+            this.cmbAccount.Location = new System.Drawing.Point(6, 11);
             this.cmbAccount.Name = "cmbAccount";
-            this.cmbAccount.Size = new Size(0x63, 0x15);
+            this.cmbAccount.Size = new System.Drawing.Size(99, 21);
             this.cmbAccount.TabIndex = 0;
-            this.cmbAccount.SelectedIndexChanged += new EventHandler(this.cmbAccount_SelectedIndexChanged);
-            this.printPreviewDialog.AutoScrollMargin = new Size(0, 0);
-            this.printPreviewDialog.AutoScrollMinSize = new Size(0, 0);
-            this.printPreviewDialog.ClientSize = new Size(400, 300);
+            this.cmbAccount.SelectedIndexChanged += new System.EventHandler(this.cmbAccount_SelectedIndexChanged);
+            // 
+            // printPreviewDialog
+            // 
+            this.printPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
             this.printPreviewDialog.Enabled = true;
-            this.printPreviewDialog.Icon = (Icon) resources.GetObject("printPreviewDialog.Icon");
+            this.printPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog.Icon")));
             this.printPreviewDialog.Name = "printPreviewDialog";
             this.printPreviewDialog.Visible = false;
+            // 
+            // timer_2
+            // 
             this.timer_2.Enabled = true;
-            this.timer_2.Tick += new EventHandler(this.timer_2_Tick);
+            this.timer_2.Tick += new System.EventHandler(this.timer_2_Tick);
+            // 
+            // assemblyLoader_0
+            // 
             this.assemblyLoader_0.BaseClass = "ChartStyle";
             this.assemblyLoader_0.DLLNameFilter = "";
             this.assemblyLoader_0.Interface = null;
             this.assemblyLoader_0.Path = null;
             this.assemblyLoader_0.PathMask = "*.dll";
+            // 
+            // drawingObjectManager_0
+            // 
             this.drawingObjectManager_0.ChartBookName = "Standard";
             this.drawingObjectManager_0.RootPath = null;
-            base.AcceptButton = this.btnGo;
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = SystemColors.Control;
-            base.ClientSize = new Size(0x404, 480);
-            base.Controls.Add(this.pnlTrade);
-            base.Controls.Add(this.splitter);
-            base.Controls.Add(this.toolbarDrawing);
-            base.Controls.Add(this.pnlTree);
-            base.Controls.Add(this.toolbar);
-            base.Controls.Add(this.toolbarNav);
-            base.Controls.Add(this.status);
-            base.Controls.Add(this.menuMain);
-            base.Icon = (Icon) resources.GetObject("$this.Icon");
-            base.IsMdiContainer = true;
-            base.KeyPreview = true;
-            base.Location = new Point(20, 20);
-            base.MainMenuStrip = this.menuMain;
-            this.MinimumSize = new Size(320, 180);
-            base.Name = "MainForm";
-            base.StartPosition = FormStartPosition.Manual;
+            // 
+            // lblDataSets
+            // 
+            this.lblDataSets.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblDataSets.Name = "lblDataSets";
+            this.lblDataSets.Size = new System.Drawing.Size(59, 16);
+            this.lblDataSets.Text = "DataSets";
+            // 
+            // linkNewDataSet
+            // 
+            this.linkNewDataSet.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.linkNewDataSet.IsLink = true;
+            this.linkNewDataSet.Name = "linkNewDataSet";
+            this.linkNewDataSet.Size = new System.Drawing.Size(43, 16);
+            this.linkNewDataSet.Text = "New ...";
+            this.linkNewDataSet.Click += new System.EventHandler(this.linkNewDataSet_Click);
+            // 
+            // toolbarDataSets
+            // 
+            this.toolbarDataSets.AutoSize = false;
+            this.toolbarDataSets.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.toolbarDataSets.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolbarDataSets.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblDataSets,
+            this.linkNewDataSet});
+            this.toolbarDataSets.Location = new System.Drawing.Point(0, 0);
+            this.toolbarDataSets.Name = "toolbarDataSets";
+            this.toolbarDataSets.Size = new System.Drawing.Size(199, 19);
+            this.toolbarDataSets.TabIndex = 7;
+            this.toolbarDataSets.Text = "toolStrip1";
+            // 
+            // treeDataSources
+            // 
+            this.treeDataSources.AllowDrop = true;
+            this.treeDataSources.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeDataSources.HideSelection = false;
+            this.treeDataSources.ImageIndex = 0;
+            this.treeDataSources.Location = new System.Drawing.Point(0, 20);
+            this.treeDataSources.Name = "treeDataSources";
+            this.treeDataSources.SelectedImageIndex = 0;
+            this.treeDataSources.Size = new System.Drawing.Size(199, 120);
+            this.treeDataSources.TabIndex = 8;
+            this.treeDataSources.DataManagerClicked += new System.EventHandler<System.EventArgs>(this.btnDataManager_Click);
+            this.treeDataSources.DataSourceSelected += new System.EventHandler<WealthLab.DataSourceEventArgs>(this.method_13);
+            this.treeDataSources.DataSourceTreeViewRenameClicked += new System.EventHandler<System.EventArgs>(this.method_46);
+            this.treeDataSources.IndexManagerClicked += new System.EventHandler<System.EventArgs>(this.method_45);
+            this.treeDataSources.NewDataSourceClicked += new System.EventHandler<System.EventArgs>(this.linkNewDataSet_Click);
+            this.treeDataSources.SymbolSelected += new System.EventHandler<WealthLab.DataSourceSymbolEventArgs>(this.method_15);
+            this.treeDataSources.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeDataSources_ItemDrag);
+            this.treeDataSources.DragOver += new System.Windows.Forms.DragEventHandler(this.treeDataSources_DragOver);
+            this.treeDataSources.DoubleClick += new System.EventHandler(this.treeDataSources_DoubleClick);
+            this.treeDataSources.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeDataSources_MouseDown);
+            // 
+            // linkSaveParams
+            // 
+            this.linkSaveParams.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkSaveParams.Location = new System.Drawing.Point(3, 0);
+            this.linkSaveParams.Name = "linkSaveParams";
+            this.linkSaveParams.Size = new System.Drawing.Size(89, 13);
+            this.linkSaveParams.TabIndex = 0;
+            this.linkSaveParams.TabStop = true;
+            this.linkSaveParams.Text = "Save Parameters";
+            this.linkSaveParams.Visible = false;
+            this.linkSaveParams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSaveParams_LinkClicked);
+            // 
+            // linkResetParams
+            // 
+            this.linkResetParams.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkResetParams.Location = new System.Drawing.Point(93, 0);
+            this.linkResetParams.Name = "linkResetParams";
+            this.linkResetParams.Size = new System.Drawing.Size(35, 13);
+            this.linkResetParams.TabIndex = 1;
+            this.linkResetParams.TabStop = true;
+            this.linkResetParams.Text = "Reset";
+            this.linkResetParams.Visible = false;
+            this.linkResetParams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkResetParams_LinkClicked);
+            // 
+            // linkRerun
+            // 
+            this.linkRerun.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkRerun.Location = new System.Drawing.Point(3, 0);
+            this.linkRerun.Name = "linkRerun";
+            this.linkRerun.Size = new System.Drawing.Size(84, 13);
+            this.linkRerun.TabIndex = 3;
+            this.linkRerun.TabStop = true;
+            this.linkRerun.Text = "Re-run Backtest";
+            this.linkRerun.Visible = false;
+            this.linkRerun.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRerun_LinkClicked);
+            // 
+            // pnlParamBaseLinkParams
+            // 
+            this.pnlParamBaseLinkParams.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlParamBaseLinkParams.BackColor = System.Drawing.SystemColors.Window;
+            this.pnlParamBaseLinkParams.Controls.Add(this.linkRerun);
+            this.pnlParamBaseLinkParams.Controls.Add(this.linkResetParams);
+            this.pnlParamBaseLinkParams.Controls.Add(this.linkSaveParams);
+            this.pnlParamBaseLinkParams.Location = new System.Drawing.Point(3, 91);
+            this.pnlParamBaseLinkParams.Name = "pnlParamBaseLinkParams";
+            this.pnlParamBaseLinkParams.Size = new System.Drawing.Size(193, 22);
+            this.pnlParamBaseLinkParams.TabIndex = 21;
+            // 
+            // accountTypeSelector1
+            // 
+            this.accountTypeSelector1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.accountTypeSelector1.FormattingEnabled = true;
+            this.accountTypeSelector1.IgnoreCalls = false;
+            this.accountTypeSelector1.Location = new System.Drawing.Point(542, 11);
+            this.accountTypeSelector1.Name = "accountTypeSelector1";
+            this.accountTypeSelector1.Size = new System.Drawing.Size(59, 21);
+            this.accountTypeSelector1.TabIndex = 47;
+            // 
+            // scale
+            // 
+            this.scale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.scale.BackColor = System.Drawing.Color.Cornsilk;
+            this.scale.Location = new System.Drawing.Point(79, 4);
+            this.scale.Name = "scale";
+            this.scale.Size = new System.Drawing.Size(124, 20);
+            this.scale.SM = false;
+            this.scale.TabIndex = 11;
+            this.scale.ScaleChanged += new System.EventHandler<System.EventArgs>(this.method_33);
+            // 
+            // posSize
+            // 
+            this.posSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.posSize.BackColor = System.Drawing.Color.Honeydew;
+            this.posSize.CombinationStrategyChildMode = false;
+            this.posSize.Location = new System.Drawing.Point(79, 48);
+            this.posSize.Name = "posSize";
+            this.posSize.Size = new System.Drawing.Size(124, 20);
+            this.posSize.TabIndex = 3;
+            this.posSize.PositionSizeChanged += new System.EventHandler<System.EventArgs>(this.method_10);
+            // 
+            // dataRange
+            // 
+            this.dataRange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataRange.BackColor = System.Drawing.Color.AliceBlue;
+            this.dataRange.IsStreaming = false;
+            this.dataRange.Location = new System.Drawing.Point(79, 26);
+            this.dataRange.Name = "dataRange";
+            this.dataRange.Size = new System.Drawing.Size(124, 20);
+            this.dataRange.TabIndex = 1;
+            this.dataRange.DataRangeChanged += new System.EventHandler<System.EventArgs>(this.method_9);
+            // 
+            // MainForm
+            // 
+            this.AcceptButton = this.btnGo;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(1028, 480);
+            this.Controls.Add(this.pnlTrade);
+            this.Controls.Add(this.splitter);
+            this.Controls.Add(this.toolbarDrawing);
+            this.Controls.Add(this.pnlTree);
+            this.Controls.Add(this.toolbar);
+            this.Controls.Add(this.toolbarNav);
+            this.Controls.Add(this.status);
+            this.Controls.Add(this.menuMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsMdiContainer = true;
+            this.KeyPreview = true;
+            this.Location = new System.Drawing.Point(20, 20);
+            this.MainMenuStrip = this.menuMain;
+            this.MinimumSize = new System.Drawing.Size(320, 180);
+            this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Application Name";
-            base.Activated += new EventHandler(this.MainForm_Activated);
-            base.FormClosing += new FormClosingEventHandler(this.MainForm_FormClosing);
-            base.FormClosed += new FormClosedEventHandler(this.MainForm_FormClosed);
-            base.Load += new EventHandler(this.MainForm_Load);
-            base.MdiChildActivate += new EventHandler(this.MainForm_MdiChildActivate);
-            base.KeyDown += new KeyEventHandler(this.MainForm_KeyDown);
-            base.PreviewKeyDown += new PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
+            this.Activated += new System.EventHandler(this.MainForm_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.MdiChildActivate += new System.EventHandler(this.MainForm_MdiChildActivate);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.status.ResumeLayout(false);
@@ -3359,21 +4282,22 @@
             this.pnlTree.PerformLayout();
             this.splitContainerDataPane.Panel1.ResumeLayout(false);
             this.splitContainerDataPane.Panel2.ResumeLayout(false);
-            this.splitContainerDataPane.EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerDataPane)).EndInit();
             this.splitContainerDataPane.ResumeLayout(false);
-            this.toolbarDataSets.ResumeLayout(false);
-            this.toolbarDataSets.PerformLayout();
             this.toolbarParameters.ResumeLayout(false);
             this.toolbarParameters.PerformLayout();
             this.pnlParamBase.ResumeLayout(false);
-            this.pnlParamBaseLinkParams.ResumeLayout(false);
             this.popupPreferredValues.ResumeLayout(false);
             this.toolbarDrawing.ResumeLayout(false);
             this.toolbarDrawing.PerformLayout();
             this.pnlTrade.ResumeLayout(false);
             this.pnlTrade.PerformLayout();
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            this.toolbarDataSets.ResumeLayout(false);
+            this.toolbarDataSets.PerformLayout();
+            this.pnlParamBaseLinkParams.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         // ///WYJ fix 
