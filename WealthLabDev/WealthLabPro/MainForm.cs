@@ -1697,18 +1697,29 @@
             this.mniCrossHair = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlTree = new System.Windows.Forms.Panel();
             this.splitContainerDataPane = new System.Windows.Forms.SplitContainer();
+            this.treeDataSources = new WealthLab.DataSourceTreeView();
+            this.toolbarDataSets = new System.Windows.Forms.ToolStrip();
+            this.lblDataSets = new System.Windows.Forms.ToolStripLabel();
+            this.linkNewDataSet = new System.Windows.Forms.ToolStripLabel();
             this.toolbarParameters = new System.Windows.Forms.ToolStrip();
             this.lblParameters = new System.Windows.Forms.ToolStripLabel();
             this.pnlParamBase = new System.Windows.Forms.Panel();
+            this.pnlParamBaseLinkParams = new System.Windows.Forms.Panel();
+            this.linkRerun = new System.Windows.Forms.LinkLabel();
+            this.linkResetParams = new System.Windows.Forms.LinkLabel();
+            this.linkSaveParams = new System.Windows.Forms.LinkLabel();
             this.paramSliders = new WealthLab.ParameterSlidersContainer();
             this.popupPreferredValues = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mniStorePreferredValues = new System.Windows.Forms.ToolStripMenuItem();
             this.lblScale = new System.Windows.Forms.Label();
+            this.scale = new WealthLabPro.ScaleSelecter();
             this.cmbSymbol = new System.Windows.Forms.ComboBox();
             this.btnGo = new System.Windows.Forms.Button();
             this.lblSymbol = new System.Windows.Forms.Label();
             this.lblPositions = new System.Windows.Forms.Label();
             this.lblRange = new System.Windows.Forms.Label();
+            this.posSize = new WealthLabPro.PositionSizeSelecter();
+            this.dataRange = new WealthLabPro.BarDataRangeSelecter();
             this.toolbarDrawing = new System.Windows.Forms.ToolStrip();
             this.btnClearDrawingObjects = new System.Windows.Forms.ToolStripButton();
             this.btnCrossHair = new System.Windows.Forms.ToolStripButton();
@@ -1720,6 +1731,7 @@
             this.timer_0 = new System.Windows.Forms.Timer(this.components);
             this.timer_1 = new System.Windows.Forms.Timer(this.components);
             this.pnlTrade = new System.Windows.Forms.Panel();
+            this.accountTypeSelector1 = new WealthLabPro.AccountTypeSelector(this.components);
             this.lblBid = new System.Windows.Forms.Label();
             this.lblAsOf = new System.Windows.Forms.Label();
             this.lblLast = new System.Windows.Forms.Label();
@@ -1752,18 +1764,6 @@
             this.assemblyLoader_0 = new Fidelity.Components.AssemblyLoader(this.components);
             this.drawingObjectManager_0 = new WealthLab.ChartControl.DrawingObjectManager(this.components);
             this.streamingQuoteManager_0 = new WealthLab.StreamingQuoteManager(this.components);
-            this.lblDataSets = new System.Windows.Forms.ToolStripLabel();
-            this.linkNewDataSet = new System.Windows.Forms.ToolStripLabel();
-            this.toolbarDataSets = new System.Windows.Forms.ToolStrip();
-            this.treeDataSources = new WealthLab.DataSourceTreeView();
-            this.linkSaveParams = new System.Windows.Forms.LinkLabel();
-            this.linkResetParams = new System.Windows.Forms.LinkLabel();
-            this.linkRerun = new System.Windows.Forms.LinkLabel();
-            this.pnlParamBaseLinkParams = new System.Windows.Forms.Panel();
-            this.accountTypeSelector1 = new WealthLabPro.AccountTypeSelector(this.components);
-            this.scale = new WealthLabPro.ScaleSelecter();
-            this.posSize = new WealthLabPro.PositionSizeSelecter();
-            this.dataRange = new WealthLabPro.BarDataRangeSelecter();
             this.menuMain.SuspendLayout();
             this.status.SuspendLayout();
             this.toolbarNav.SuspendLayout();
@@ -1773,13 +1773,13 @@
             this.splitContainerDataPane.Panel1.SuspendLayout();
             this.splitContainerDataPane.Panel2.SuspendLayout();
             this.splitContainerDataPane.SuspendLayout();
+            this.toolbarDataSets.SuspendLayout();
             this.toolbarParameters.SuspendLayout();
             this.pnlParamBase.SuspendLayout();
+            this.pnlParamBaseLinkParams.SuspendLayout();
             this.popupPreferredValues.SuspendLayout();
             this.toolbarDrawing.SuspendLayout();
             this.pnlTrade.SuspendLayout();
-            this.toolbarDataSets.SuspendLayout();
-            this.pnlParamBaseLinkParams.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblAsk
@@ -2682,7 +2682,7 @@
             this.statusStreamingProvider.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.statusStreamingProvider.LinkColor = System.Drawing.Color.Red;
             this.statusStreamingProvider.Name = "statusStreamingProvider";
-            this.statusStreamingProvider.Size = new System.Drawing.Size(118, 17);
+            this.statusStreamingProvider.Size = new System.Drawing.Size(118, 20);
             this.statusStreamingProvider.Text = "Streaming Provider:";
             this.statusStreamingProvider.Visible = false;
             this.statusStreamingProvider.Click += new System.EventHandler(this.statusStreamingProvider_Click);
@@ -3494,7 +3494,7 @@
             this.mniCrossHair.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.mniCrossHair.Name = "mniCrossHair";
             this.mniCrossHair.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.mniCrossHair.Size = new System.Drawing.Size(111, 20);
+            this.mniCrossHair.Size = new System.Drawing.Size(113, 25);
             this.mniCrossHair.Text = "New DataSet ...";
             this.mniCrossHair.Visible = false;
             this.mniCrossHair.Click += new System.EventHandler(this.btnCrossHair_Click);
@@ -3547,6 +3547,60 @@
             this.splitContainerDataPane.TabIndex = 13;
             this.splitContainerDataPane.TabStop = false;
             // 
+            // treeDataSources
+            // 
+            this.treeDataSources.AllowDrop = true;
+            this.treeDataSources.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeDataSources.HideSelection = false;
+            this.treeDataSources.ImageIndex = 0;
+            this.treeDataSources.Location = new System.Drawing.Point(0, 20);
+            this.treeDataSources.Name = "treeDataSources";
+            this.treeDataSources.SelectedImageIndex = 0;
+            this.treeDataSources.Size = new System.Drawing.Size(199, 120);
+            this.treeDataSources.TabIndex = 8;
+            this.treeDataSources.DataManagerClicked += new System.EventHandler<System.EventArgs>(this.btnDataManager_Click);
+            this.treeDataSources.DataSourceSelected += new System.EventHandler<WealthLab.DataSourceEventArgs>(this.method_13);
+            this.treeDataSources.DataSourceTreeViewRenameClicked += new System.EventHandler<System.EventArgs>(this.method_46);
+            this.treeDataSources.IndexManagerClicked += new System.EventHandler<System.EventArgs>(this.method_45);
+            this.treeDataSources.NewDataSourceClicked += new System.EventHandler<System.EventArgs>(this.linkNewDataSet_Click);
+            this.treeDataSources.SymbolSelected += new System.EventHandler<WealthLab.DataSourceSymbolEventArgs>(this.method_15);
+            this.treeDataSources.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeDataSources_ItemDrag);
+            this.treeDataSources.DragOver += new System.Windows.Forms.DragEventHandler(this.treeDataSources_DragOver);
+            this.treeDataSources.DoubleClick += new System.EventHandler(this.treeDataSources_DoubleClick);
+            this.treeDataSources.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeDataSources_MouseDown);
+            // 
+            // toolbarDataSets
+            // 
+            this.toolbarDataSets.AutoSize = false;
+            this.toolbarDataSets.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.toolbarDataSets.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolbarDataSets.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblDataSets,
+            this.linkNewDataSet});
+            this.toolbarDataSets.Location = new System.Drawing.Point(0, 0);
+            this.toolbarDataSets.Name = "toolbarDataSets";
+            this.toolbarDataSets.Size = new System.Drawing.Size(199, 19);
+            this.toolbarDataSets.TabIndex = 7;
+            this.toolbarDataSets.Text = "toolStrip1";
+            // 
+            // lblDataSets
+            // 
+            this.lblDataSets.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblDataSets.Name = "lblDataSets";
+            this.lblDataSets.Size = new System.Drawing.Size(59, 16);
+            this.lblDataSets.Text = "DataSets";
+            // 
+            // linkNewDataSet
+            // 
+            this.linkNewDataSet.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.linkNewDataSet.IsLink = true;
+            this.linkNewDataSet.Name = "linkNewDataSet";
+            this.linkNewDataSet.Size = new System.Drawing.Size(43, 16);
+            this.linkNewDataSet.Text = "New ...";
+            this.linkNewDataSet.Click += new System.EventHandler(this.linkNewDataSet_Click);
+            // 
             // toolbarParameters
             // 
             this.toolbarParameters.AutoSize = false;
@@ -3579,6 +3633,54 @@
             this.pnlParamBase.Size = new System.Drawing.Size(199, 113);
             this.pnlParamBase.TabIndex = 10;
             this.pnlParamBase.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlParamBase_Paint);
+            // 
+            // pnlParamBaseLinkParams
+            // 
+            this.pnlParamBaseLinkParams.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlParamBaseLinkParams.BackColor = System.Drawing.SystemColors.Window;
+            this.pnlParamBaseLinkParams.Controls.Add(this.linkRerun);
+            this.pnlParamBaseLinkParams.Controls.Add(this.linkResetParams);
+            this.pnlParamBaseLinkParams.Controls.Add(this.linkSaveParams);
+            this.pnlParamBaseLinkParams.Location = new System.Drawing.Point(3, 91);
+            this.pnlParamBaseLinkParams.Name = "pnlParamBaseLinkParams";
+            this.pnlParamBaseLinkParams.Size = new System.Drawing.Size(193, 22);
+            this.pnlParamBaseLinkParams.TabIndex = 21;
+            // 
+            // linkRerun
+            // 
+            this.linkRerun.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkRerun.Location = new System.Drawing.Point(3, 4);
+            this.linkRerun.Name = "linkRerun";
+            this.linkRerun.Size = new System.Drawing.Size(84, 13);
+            this.linkRerun.TabIndex = 3;
+            this.linkRerun.TabStop = true;
+            this.linkRerun.Text = "Re-run Backtest";
+            this.linkRerun.Visible = false;
+            this.linkRerun.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRerun_LinkClicked);
+            // 
+            // linkResetParams
+            // 
+            this.linkResetParams.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkResetParams.Location = new System.Drawing.Point(93, 4);
+            this.linkResetParams.Name = "linkResetParams";
+            this.linkResetParams.Size = new System.Drawing.Size(35, 13);
+            this.linkResetParams.TabIndex = 1;
+            this.linkResetParams.TabStop = true;
+            this.linkResetParams.Text = "Reset";
+            this.linkResetParams.Visible = false;
+            this.linkResetParams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkResetParams_LinkClicked);
+            // 
+            // linkSaveParams
+            // 
+            this.linkSaveParams.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkSaveParams.Location = new System.Drawing.Point(3, 3);
+            this.linkSaveParams.Name = "linkSaveParams";
+            this.linkSaveParams.Size = new System.Drawing.Size(89, 13);
+            this.linkSaveParams.TabIndex = 0;
+            this.linkSaveParams.TabStop = true;
+            this.linkSaveParams.Text = "Save Parameters";
+            this.linkSaveParams.Visible = false;
+            this.linkSaveParams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSaveParams_LinkClicked);
             // 
             // paramSliders
             // 
@@ -3616,6 +3718,18 @@
             this.lblScale.Size = new System.Drawing.Size(37, 13);
             this.lblScale.TabIndex = 12;
             this.lblScale.Text = "Scale:";
+            // 
+            // scale
+            // 
+            this.scale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.scale.BackColor = System.Drawing.Color.Cornsilk;
+            this.scale.Location = new System.Drawing.Point(79, 4);
+            this.scale.Name = "scale";
+            this.scale.Size = new System.Drawing.Size(124, 20);
+            this.scale.SM = false;
+            this.scale.TabIndex = 11;
+            this.scale.ScaleChanged += new System.EventHandler<System.EventArgs>(this.method_33);
             // 
             // cmbSymbol
             // 
@@ -3671,19 +3785,42 @@
             this.lblRange.TabIndex = 0;
             this.lblRange.Text = "Data Range:";
             // 
+            // posSize
+            // 
+            this.posSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.posSize.BackColor = System.Drawing.Color.Honeydew;
+            this.posSize.CombinationStrategyChildMode = false;
+            this.posSize.Location = new System.Drawing.Point(79, 48);
+            this.posSize.Name = "posSize";
+            this.posSize.Size = new System.Drawing.Size(124, 20);
+            this.posSize.TabIndex = 3;
+            this.posSize.PositionSizeChanged += new System.EventHandler<System.EventArgs>(this.method_10);
+            // 
+            // dataRange
+            // 
+            this.dataRange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataRange.BackColor = System.Drawing.Color.AliceBlue;
+            this.dataRange.IsStreaming = false;
+            this.dataRange.Location = new System.Drawing.Point(79, 26);
+            this.dataRange.Name = "dataRange";
+            this.dataRange.Size = new System.Drawing.Size(124, 20);
+            this.dataRange.TabIndex = 1;
+            this.dataRange.DataRangeChanged += new System.EventHandler<System.EventArgs>(this.method_9);
+            // 
             // toolbarDrawing
             // 
             this.toolbarDrawing.AllowDrop = true;
-            this.toolbarDrawing.Dock = System.Windows.Forms.DockStyle.Right;
             this.toolbarDrawing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnClearDrawingObjects,
             this.btnCrossHair,
             this.sepDeleteDrawing,
             this.btnTrendline,
             this.mniCrossHair});
-            this.toolbarDrawing.Location = new System.Drawing.Point(1004, 77);
+            this.toolbarDrawing.Location = new System.Drawing.Point(206, 77);
             this.toolbarDrawing.Name = "toolbarDrawing";
-            this.toolbarDrawing.Size = new System.Drawing.Size(24, 381);
+            this.toolbarDrawing.Size = new System.Drawing.Size(822, 25);
             this.toolbarDrawing.TabIndex = 17;
             this.toolbarDrawing.Text = "toolStrip1";
             // 
@@ -3693,7 +3830,7 @@
             this.btnClearDrawingObjects.Image = ((System.Drawing.Image)(resources.GetObject("btnClearDrawingObjects.Image")));
             this.btnClearDrawingObjects.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnClearDrawingObjects.Name = "btnClearDrawingObjects";
-            this.btnClearDrawingObjects.Size = new System.Drawing.Size(21, 20);
+            this.btnClearDrawingObjects.Size = new System.Drawing.Size(23, 22);
             this.btnClearDrawingObjects.Text = "toolStripButton1";
             this.btnClearDrawingObjects.ToolTipText = "Clear Drawing Objects";
             this.btnClearDrawingObjects.Click += new System.EventHandler(this.btnClearDrawingObjects_Click);
@@ -3704,26 +3841,26 @@
             this.btnCrossHair.Image = ((System.Drawing.Image)(resources.GetObject("btnCrossHair.Image")));
             this.btnCrossHair.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCrossHair.Name = "btnCrossHair";
-            this.btnCrossHair.Size = new System.Drawing.Size(21, 20);
+            this.btnCrossHair.Size = new System.Drawing.Size(23, 22);
             this.btnCrossHair.Text = "Cross Hair";
             this.btnCrossHair.Click += new System.EventHandler(this.btnCrossHair_Click);
             // 
             // sepDeleteDrawing
             // 
             this.sepDeleteDrawing.Name = "sepDeleteDrawing";
-            this.sepDeleteDrawing.Size = new System.Drawing.Size(21, 6);
+            this.sepDeleteDrawing.Size = new System.Drawing.Size(6, 25);
             // 
             // btnTrendline
             // 
             this.btnTrendline.Name = "btnTrendline";
-            this.btnTrendline.Size = new System.Drawing.Size(21, 4);
+            this.btnTrendline.Size = new System.Drawing.Size(23, 22);
             // 
             // splitter
             // 
             this.splitter.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.splitter.Location = new System.Drawing.Point(206, 77);
+            this.splitter.Location = new System.Drawing.Point(206, 102);
             this.splitter.Name = "splitter";
-            this.splitter.Size = new System.Drawing.Size(3, 381);
+            this.splitter.Size = new System.Drawing.Size(3, 356);
             this.splitter.TabIndex = 5;
             this.splitter.TabStop = false;
             this.splitter.DoubleClick += new System.EventHandler(this.mniViewDataPanel_Click);
@@ -3783,10 +3920,20 @@
             this.pnlTrade.Controls.Add(this.lblTradeAcct);
             this.pnlTrade.Controls.Add(this.cmbAccount);
             this.pnlTrade.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTrade.Location = new System.Drawing.Point(209, 77);
+            this.pnlTrade.Location = new System.Drawing.Point(209, 102);
             this.pnlTrade.Name = "pnlTrade";
-            this.pnlTrade.Size = new System.Drawing.Size(795, 121);
+            this.pnlTrade.Size = new System.Drawing.Size(819, 121);
             this.pnlTrade.TabIndex = 19;
+            // 
+            // accountTypeSelector1
+            // 
+            this.accountTypeSelector1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.accountTypeSelector1.FormattingEnabled = true;
+            this.accountTypeSelector1.IgnoreCalls = false;
+            this.accountTypeSelector1.Location = new System.Drawing.Point(542, 11);
+            this.accountTypeSelector1.Name = "accountTypeSelector1";
+            this.accountTypeSelector1.Size = new System.Drawing.Size(59, 21);
+            this.accountTypeSelector1.TabIndex = 47;
             // 
             // lblBid
             // 
@@ -3831,7 +3978,7 @@
             this.btnDockUp.FlatAppearance.BorderSize = 0;
             this.btnDockUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDockUp.Image = ((System.Drawing.Image)(resources.GetObject("btnDockUp.Image")));
-            this.btnDockUp.Location = new System.Drawing.Point(783, 109);
+            this.btnDockUp.Location = new System.Drawing.Point(807, 109);
             this.btnDockUp.Name = "btnDockUp";
             this.btnDockUp.Size = new System.Drawing.Size(12, 12);
             this.btnDockUp.TabIndex = 40;
@@ -3845,7 +3992,7 @@
             this.btnCloseTradeTicket.FlatAppearance.BorderSize = 0;
             this.btnCloseTradeTicket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseTradeTicket.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseTradeTicket.Image")));
-            this.btnCloseTradeTicket.Location = new System.Drawing.Point(782, 0);
+            this.btnCloseTradeTicket.Location = new System.Drawing.Point(806, 0);
             this.btnCloseTradeTicket.Name = "btnCloseTradeTicket";
             this.btnCloseTradeTicket.Size = new System.Drawing.Size(12, 12);
             this.btnCloseTradeTicket.TabIndex = 37;
@@ -3858,7 +4005,7 @@
             this.btnDockDown.FlatAppearance.BorderSize = 0;
             this.btnDockDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDockDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDockDown.Image")));
-            this.btnDockDown.Location = new System.Drawing.Point(782, 109);
+            this.btnDockDown.Location = new System.Drawing.Point(806, 109);
             this.btnDockDown.Name = "btnDockDown";
             this.btnDockDown.Size = new System.Drawing.Size(12, 12);
             this.btnDockDown.TabIndex = 39;
@@ -4091,154 +4238,6 @@
             this.drawingObjectManager_0.ChartBookName = "Standard";
             this.drawingObjectManager_0.RootPath = null;
             // 
-            // lblDataSets
-            // 
-            this.lblDataSets.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblDataSets.Name = "lblDataSets";
-            this.lblDataSets.Size = new System.Drawing.Size(59, 16);
-            this.lblDataSets.Text = "DataSets";
-            // 
-            // linkNewDataSet
-            // 
-            this.linkNewDataSet.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.linkNewDataSet.IsLink = true;
-            this.linkNewDataSet.Name = "linkNewDataSet";
-            this.linkNewDataSet.Size = new System.Drawing.Size(43, 16);
-            this.linkNewDataSet.Text = "New ...";
-            this.linkNewDataSet.Click += new System.EventHandler(this.linkNewDataSet_Click);
-            // 
-            // toolbarDataSets
-            // 
-            this.toolbarDataSets.AutoSize = false;
-            this.toolbarDataSets.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.toolbarDataSets.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolbarDataSets.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblDataSets,
-            this.linkNewDataSet});
-            this.toolbarDataSets.Location = new System.Drawing.Point(0, 0);
-            this.toolbarDataSets.Name = "toolbarDataSets";
-            this.toolbarDataSets.Size = new System.Drawing.Size(199, 19);
-            this.toolbarDataSets.TabIndex = 7;
-            this.toolbarDataSets.Text = "toolStrip1";
-            // 
-            // treeDataSources
-            // 
-            this.treeDataSources.AllowDrop = true;
-            this.treeDataSources.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeDataSources.HideSelection = false;
-            this.treeDataSources.ImageIndex = 0;
-            this.treeDataSources.Location = new System.Drawing.Point(0, 20);
-            this.treeDataSources.Name = "treeDataSources";
-            this.treeDataSources.SelectedImageIndex = 0;
-            this.treeDataSources.Size = new System.Drawing.Size(199, 120);
-            this.treeDataSources.TabIndex = 8;
-            this.treeDataSources.DataManagerClicked += new System.EventHandler<System.EventArgs>(this.btnDataManager_Click);
-            this.treeDataSources.DataSourceSelected += new System.EventHandler<WealthLab.DataSourceEventArgs>(this.method_13);
-            this.treeDataSources.DataSourceTreeViewRenameClicked += new System.EventHandler<System.EventArgs>(this.method_46);
-            this.treeDataSources.IndexManagerClicked += new System.EventHandler<System.EventArgs>(this.method_45);
-            this.treeDataSources.NewDataSourceClicked += new System.EventHandler<System.EventArgs>(this.linkNewDataSet_Click);
-            this.treeDataSources.SymbolSelected += new System.EventHandler<WealthLab.DataSourceSymbolEventArgs>(this.method_15);
-            this.treeDataSources.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeDataSources_ItemDrag);
-            this.treeDataSources.DragOver += new System.Windows.Forms.DragEventHandler(this.treeDataSources_DragOver);
-            this.treeDataSources.DoubleClick += new System.EventHandler(this.treeDataSources_DoubleClick);
-            this.treeDataSources.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeDataSources_MouseDown);
-            // 
-            // linkSaveParams
-            // 
-            this.linkSaveParams.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkSaveParams.Location = new System.Drawing.Point(3, 0);
-            this.linkSaveParams.Name = "linkSaveParams";
-            this.linkSaveParams.Size = new System.Drawing.Size(89, 13);
-            this.linkSaveParams.TabIndex = 0;
-            this.linkSaveParams.TabStop = true;
-            this.linkSaveParams.Text = "Save Parameters";
-            this.linkSaveParams.Visible = false;
-            this.linkSaveParams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSaveParams_LinkClicked);
-            // 
-            // linkResetParams
-            // 
-            this.linkResetParams.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkResetParams.Location = new System.Drawing.Point(93, 0);
-            this.linkResetParams.Name = "linkResetParams";
-            this.linkResetParams.Size = new System.Drawing.Size(35, 13);
-            this.linkResetParams.TabIndex = 1;
-            this.linkResetParams.TabStop = true;
-            this.linkResetParams.Text = "Reset";
-            this.linkResetParams.Visible = false;
-            this.linkResetParams.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkResetParams_LinkClicked);
-            // 
-            // linkRerun
-            // 
-            this.linkRerun.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkRerun.Location = new System.Drawing.Point(3, 0);
-            this.linkRerun.Name = "linkRerun";
-            this.linkRerun.Size = new System.Drawing.Size(84, 13);
-            this.linkRerun.TabIndex = 3;
-            this.linkRerun.TabStop = true;
-            this.linkRerun.Text = "Re-run Backtest";
-            this.linkRerun.Visible = false;
-            this.linkRerun.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkRerun_LinkClicked);
-            // 
-            // pnlParamBaseLinkParams
-            // 
-            this.pnlParamBaseLinkParams.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlParamBaseLinkParams.BackColor = System.Drawing.SystemColors.Window;
-            this.pnlParamBaseLinkParams.Controls.Add(this.linkRerun);
-            this.pnlParamBaseLinkParams.Controls.Add(this.linkResetParams);
-            this.pnlParamBaseLinkParams.Controls.Add(this.linkSaveParams);
-            this.pnlParamBaseLinkParams.Location = new System.Drawing.Point(3, 91);
-            this.pnlParamBaseLinkParams.Name = "pnlParamBaseLinkParams";
-            this.pnlParamBaseLinkParams.Size = new System.Drawing.Size(193, 22);
-            this.pnlParamBaseLinkParams.TabIndex = 21;
-            // 
-            // accountTypeSelector1
-            // 
-            this.accountTypeSelector1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.accountTypeSelector1.FormattingEnabled = true;
-            this.accountTypeSelector1.IgnoreCalls = false;
-            this.accountTypeSelector1.Location = new System.Drawing.Point(542, 11);
-            this.accountTypeSelector1.Name = "accountTypeSelector1";
-            this.accountTypeSelector1.Size = new System.Drawing.Size(59, 21);
-            this.accountTypeSelector1.TabIndex = 47;
-            // 
-            // scale
-            // 
-            this.scale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.scale.BackColor = System.Drawing.Color.Cornsilk;
-            this.scale.Location = new System.Drawing.Point(79, 4);
-            this.scale.Name = "scale";
-            this.scale.Size = new System.Drawing.Size(124, 20);
-            this.scale.SM = false;
-            this.scale.TabIndex = 11;
-            this.scale.ScaleChanged += new System.EventHandler<System.EventArgs>(this.method_33);
-            // 
-            // posSize
-            // 
-            this.posSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.posSize.BackColor = System.Drawing.Color.Honeydew;
-            this.posSize.CombinationStrategyChildMode = false;
-            this.posSize.Location = new System.Drawing.Point(79, 48);
-            this.posSize.Name = "posSize";
-            this.posSize.Size = new System.Drawing.Size(124, 20);
-            this.posSize.TabIndex = 3;
-            this.posSize.PositionSizeChanged += new System.EventHandler<System.EventArgs>(this.method_10);
-            // 
-            // dataRange
-            // 
-            this.dataRange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataRange.BackColor = System.Drawing.Color.AliceBlue;
-            this.dataRange.IsStreaming = false;
-            this.dataRange.Location = new System.Drawing.Point(79, 26);
-            this.dataRange.Name = "dataRange";
-            this.dataRange.Size = new System.Drawing.Size(124, 20);
-            this.dataRange.TabIndex = 1;
-            this.dataRange.DataRangeChanged += new System.EventHandler<System.EventArgs>(this.method_9);
-            // 
             // MainForm
             // 
             this.AcceptButton = this.btnGo;
@@ -4284,17 +4283,17 @@
             this.splitContainerDataPane.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerDataPane)).EndInit();
             this.splitContainerDataPane.ResumeLayout(false);
+            this.toolbarDataSets.ResumeLayout(false);
+            this.toolbarDataSets.PerformLayout();
             this.toolbarParameters.ResumeLayout(false);
             this.toolbarParameters.PerformLayout();
             this.pnlParamBase.ResumeLayout(false);
+            this.pnlParamBaseLinkParams.ResumeLayout(false);
             this.popupPreferredValues.ResumeLayout(false);
             this.toolbarDrawing.ResumeLayout(false);
             this.toolbarDrawing.PerformLayout();
             this.pnlTrade.ResumeLayout(false);
             this.pnlTrade.PerformLayout();
-            this.toolbarDataSets.ResumeLayout(false);
-            this.toolbarDataSets.PerformLayout();
-            this.pnlParamBaseLinkParams.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
