@@ -72,7 +72,7 @@
         private LinkLabel linkProvider;
         private List<HistoricalProvider> list_0 = new List<HistoricalProvider>();
         private List<string> list_1 = new List<string>();
-        private DataSourceListView lvDataSets = new DataSourceListView();  ///WYJ fix, work around for Code Metrics problem
+        private DataSourceListView lvDataSets = null; ///new DataSourceListView();  ///WYJ fix, work around for Code Metrics problem
         private ListView lvProviders;
         private SortableListView lvSymbolDetails;
         private ToolStripMenuItem mniAddSymbols;

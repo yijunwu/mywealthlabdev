@@ -24,16 +24,16 @@
         private AccountTypeSelector accountTypeSelector1;
         private AssemblyLoader assemblyLoader_0;
         private static bool bool_0 = true;
-        private static bool bool_1 = false;
-        private bool bool_2;
+        private static bool menuTriggeredExit = false;   ///WYJ fix, original name: bool_1
+        private bool isFirstMainForm_2;   ///WYJ fix, original name: bool_2
         private bool isFirstMainForm;
         private bool bool_4;
-        private bool bool_5;
-        private bool bool_6;
-        private bool bool_7;
-        private bool bool_8;
+        private bool dataSourceTreeSelectedNodeLocked;   ///WYJ fix, original signature: bool_5
+        private bool dragDropFundamentalsExist;   ///WYJ fix, original name: bool_6
+        private bool formClosing;   ///WYJ fix, original signature: bool_7
+        private bool disconnected;   ///WYJ fix, original signature: bool_8
         [CompilerGenerated]
-        private bool bool_9;
+        private bool selectingNodeForFormCreation;   ///WYJ fix, original name: bool_9
         private ToolStripButton btnAcctsPositions;
         private ToolStripButton btnBarChart;
         private ToolStripButton btnCandleStyle;
@@ -92,13 +92,13 @@
         private ToolStripDropDownButton dropdownQuotes;
         private ToolStripMenuItem executeStrategyHiddenMenuItem;
         private IContainer components;
-        private static int int_0 = 0;
-        private int int_1;
-        private int int_2;
-        private int int_3;
-        private int int_4;
+        private static int mainFormCount = 0;   ///WYJ fix, original name: int_0
+        private int chartFormCount;   ///WYJ fix, original name: int_1
+        private int quotesFormCount;   ///WYJ fix, original name: int_2
+        private int mouseX;   ///WYJ fix, original signature: int_3
+        private int mouseY;   ///WYJ fix, original signature: int_4
         private static int int_5 = 0;
-        private static int int_6 = 0;
+        private static int randomDelay = 0;   ///WYJ fix, original name: int_6
         private Label lblAcctType;
         private Label lblAsk;
         private Label lblAsOf;
@@ -119,7 +119,7 @@
         private Label lblTradeTIF;
         private Label lbTradeDirected;
         private static List<MainForm> list_0 = new List<MainForm>();
-        private List<string> list_1 = new List<string>();
+        private List<string> streamingSymbols = new List<string>();   ///WYJ fix, original name: list_1
         private static MainForm mainForm_0;
         private MenuStrip menuMain;
         private ToolStripMenuItem mniAbout;
@@ -265,7 +265,7 @@
         private ToolStripStatusLabel statusStreamingSymbolsOn;
         private ToolStripStatusLabel stlblHolder;
         private StreamingQuoteManager streamingQuoteManager_0;
-        private string string_0;
+        private string workspaceDir;   ///WYJ fix, original name: string_0
         private ToolStripMenuItem symbolInfoManagerToolStripMenuItem;
         private System.Windows.Forms.Timer timer_0;
         private System.Windows.Forms.Timer timer_1;
@@ -368,7 +368,7 @@
         public void AddWorkspaceMenuItem(string workspace)
         {
             ToolStripMenuItem item = new ToolStripMenuItem(workspace);
-            item.Click += new EventHandler(this.method_40);
+            item.Click += new EventHandler(this.workspaceMenuItems_Click);
             this.mniWorkspaces.DropDownItems.Add(item);
         }
 
@@ -400,7 +400,7 @@
             ChartForm activeChartWindow = this.ActiveChartWindow;
             if (activeChartWindow != null)
             {
-                activeChartWindow.method_5();
+                activeChartWindow.clearDragDropIndicators();
             }
         }
 
@@ -472,9 +472,9 @@
 
         private void btnFundamental_VisibleChanged(object sender, EventArgs e)
         {
-            if (this.btnFundamental.Visible && !this.bool_6)
+            if (this.btnFundamental.Visible && !this.dragDropFundamentalsExist)
             {
-                this.btnFundamental.Visible = this.bool_6;
+                this.btnFundamental.Visible = this.dragDropFundamentalsExist;
             }
         }
 
@@ -492,9 +492,9 @@
 
         private void btnFundamentalsTB2_VisibleChanged(object sender, EventArgs e)
         {
-            if (this.btnFundamentalsTB2.Visible && !this.bool_6)
+            if (this.btnFundamentalsTB2.Visible && !this.dragDropFundamentalsExist)
             {
-                this.btnFundamentalsTB2.Visible = this.bool_6;
+                this.btnFundamentalsTB2.Visible = this.dragDropFundamentalsExist;
             }
         }
 
@@ -552,7 +552,7 @@
                         activeMdiChild.ExecuteRankings();
                     }
                 }
-                this.method_7();
+                this.informChartFormsForSymbolChange();
                 if (!this.cmbSymbol.Items.Contains(this.cmbSymbol.Text))
                 {
                     this.cmbSymbol.Items.Add(this.cmbSymbol.Text);
@@ -794,7 +794,8 @@
             }
         }
 
-        private void btnLineChart_Click(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void btnLineChart_Click(object sender, EventArgs e)
+        private void chartStyleButtons_Click(object sender, EventArgs e)
         {
             this.btnBarChart.Checked = false;
             this.btnCandleStyle.Checked = false;
@@ -811,7 +812,7 @@
             ChartForm activeChartWindow = this.ActiveChartWindow;
             if (activeChartWindow != null)
             {
-                ChartStyle style = this.method_5();
+                ChartStyle style = this.getSelectedChartStyle();
                 if ((activeChartWindow.Renderer.ChartStyle == null) || (style.FriendlyName != activeChartWindow.Renderer.ChartStyle.FriendlyName))
                 {
                     activeChartWindow.ChartStyle = style;
@@ -863,7 +864,7 @@
 
         private void btnPlaceOrder_Click(object sender, EventArgs e)
         {
-            Alert alert = this.method_25();
+            Alert alert = this.createAlert();
             MainModule.Instance.TradeManager.AddAlert(alert, true, false);
         }
 
@@ -877,7 +878,7 @@
             ChartForm activeChartWindow = this.ActiveChartWindow;
             if (activeChartWindow != null)
             {
-                activeChartWindow.method_6();
+                activeChartWindow.pushCode();
             }
         }
 
@@ -910,7 +911,7 @@
 
         private void btnStageOrder_Click(object sender, EventArgs e)
         {
-            Alert alert = this.method_25();
+            Alert alert = this.createAlert();
             MainModule.Instance.TradeManager.AddAlert(alert, false, false);
         }
 
@@ -1031,7 +1032,12 @@
                 activeMdiChild.BarScale = scale;
                 activeMdiChild.BarDataScale = new WealthLab.BarDataScale(scale, barInterval);
             }
-            this.method_17();
+            ///this.method_17();   ///WYJ fix, inline method_17
+            if (this.treeDataSources.SelectedNode != null)
+            {
+                bool flag = (this.treeDataSources.SelectedNode.Level == 0) && (this.cmbSymbol.Text == string.Empty);
+                this.chartFormShowMultiSymbol(flag);
+            }
         }
 
         public void ClearDrawingObjectSelectedTool()
@@ -1047,7 +1053,7 @@
                     }
                 }
             }
-            this.method_12(Cursors.Default);
+            this.setCursorForChartForms(Cursors.Default);
         }
 
         public void CloseAndReopenStrategy(ChartForm chartForm_1, Strategy strategy_0)
@@ -1208,13 +1214,13 @@
 
         public void Connect()
         {
-            base.Invoke(new Delegate39(this.method_30), new object[] { false });
+            base.Invoke(new Delegate39(this.doConnect), new object[] { false });
         }
 
         public void Connect(bool reconnect)
         {
-            base.Invoke(new Delegate39(this.method_30), new object[] { reconnect });
-            this.bool_8 = false;
+            base.Invoke(new Delegate39(this.doConnect), new object[] { reconnect });
+            this.disconnected = false;
         }
 
         public ChartForm CreateChartWindow(bool selectNode)
@@ -1229,7 +1235,7 @@
             }
             else
             {
-                form.ChartStyle = this.method_5();
+                form.ChartStyle = this.getSelectedChartStyle();
             }
             form.Renderer.LogScale = MainModule.Instance.Renderer.LogScale;
             form.DataSourceSelected(this.DataSource);
@@ -1335,11 +1341,11 @@
 
         public void Disconnect()
         {
-            if (!this.bool_7)
+            if (!this.formClosing)
             {
-                base.Invoke(new Delegate40(this.method_31));
+                base.Invoke(new Delegate40(this.doDisconnect));
             }
-            this.bool_8 = true;
+            this.disconnected = true;
         }
 
         protected override void Dispose(bool disposing)
@@ -1367,27 +1373,27 @@
             else if (base.ActiveMdiChild is AccountsPositionsForm)
             {
                 this.mniPrint.Enabled = true;
-                this.method_2();
+                this.editMenuDefaultEnablement();
             }
             else if (base.ActiveMdiChild is OrdersAlertsForm)
             {
                 this.mniPrint.Enabled = true;
-                this.method_2();
+                this.editMenuDefaultEnablement();
             }
             else if (base.ActiveMdiChild is StrategyCenterForm)
             {
                 this.mniPrint.Enabled = true;
-                this.method_2();
+                this.editMenuDefaultEnablement();
             }
             else if (base.ActiveMdiChild is QuotesForm)
             {
                 this.mniPrint.Enabled = true;
-                this.method_2();
+                this.editMenuDefaultEnablement();
             }
             else if (base.ActiveMdiChild is StrategyRanking)
             {
                 this.mniPrint.Enabled = true;
-                this.method_2();
+                this.editMenuDefaultEnablement();
             }
             else
             {
@@ -1428,12 +1434,12 @@
                 else if (activeChartWindow.CurrentTabName.Contains("Alert"))
                 {
                     this.mniPrint.Enabled = true;
-                    this.method_2();
+                    this.editMenuDefaultEnablement();
                 }
                 else if (activeChartWindow.CurrentTabName.Contains("Strategy Summary"))
                 {
                     this.mniPrint.Enabled = true;
-                    this.method_2();
+                    this.editMenuDefaultEnablement();
                 }
                 else
                 {
@@ -2682,7 +2688,7 @@
             this.statusStreamingProvider.ImageTransparentColor = System.Drawing.Color.Fuchsia;
             this.statusStreamingProvider.LinkColor = System.Drawing.Color.Red;
             this.statusStreamingProvider.Name = "statusStreamingProvider";
-            this.statusStreamingProvider.Size = new System.Drawing.Size(118, 20);
+            this.statusStreamingProvider.Size = new System.Drawing.Size(118, 17);
             this.statusStreamingProvider.Text = "Streaming Provider:";
             this.statusStreamingProvider.Visible = false;
             this.statusStreamingProvider.Click += new System.EventHandler(this.statusStreamingProvider_Click);
@@ -3286,7 +3292,7 @@
             this.btnCandleStyle.Tag = "CS";
             this.btnCandleStyle.Text = "toolStripButton3";
             this.btnCandleStyle.ToolTipText = "Candle Chart Style";
-            this.btnCandleStyle.Click += new System.EventHandler(this.btnLineChart_Click);
+            this.btnCandleStyle.Click += new System.EventHandler(this.chartStyleButtons_Click);
             // 
             // btnBarChart
             // 
@@ -3298,7 +3304,7 @@
             this.btnBarChart.Tag = "CS";
             this.btnBarChart.Text = "toolStripButton2";
             this.btnBarChart.ToolTipText = "Bar Chart Style";
-            this.btnBarChart.Click += new System.EventHandler(this.btnLineChart_Click);
+            this.btnBarChart.Click += new System.EventHandler(this.chartStyleButtons_Click);
             // 
             // btnLineChart
             // 
@@ -3310,7 +3316,7 @@
             this.btnLineChart.Tag = "CS";
             this.btnLineChart.Text = "toolStripButton1";
             this.btnLineChart.ToolTipText = "Line Chart Style";
-            this.btnLineChart.Click += new System.EventHandler(this.btnLineChart_Click);
+            this.btnLineChart.Click += new System.EventHandler(this.chartStyleButtons_Click);
             // 
             // tsmMoreChartStyles
             // 
@@ -4308,26 +4314,26 @@
 
         public void ItemAdded(ChartForm item)
         {
-            this.int_1++;
-            this.dropdownCharts.Text = "Charts && Strategies (" + this.int_1 + ")";
+            this.chartFormCount++;
+            this.dropdownCharts.Text = "Charts && Strategies (" + this.chartFormCount + ")";
             ToolStripMenuItem item2 = new ToolStripMenuItem(item.Text) {
                 Text = "Chart",
                 Tag = item
             };
-            item2.Click += new EventHandler(this.method_28);
+            item2.Click += new EventHandler(this.chartFormMenuItemClickEventHandler);
             item2.Checked = true;
             this.dropdownCharts.DropDownItems.Add(item2);
         }
 
         public void ItemAdded(QuotesForm item)
         {
-            this.int_2++;
-            this.dropdownQuotes.Text = "Quotes (" + this.int_2 + ")";
+            this.quotesFormCount++;
+            this.dropdownQuotes.Text = "Quotes (" + this.quotesFormCount + ")";
             ToolStripMenuItem item2 = new ToolStripMenuItem(item.Text) {
                 Text = "Quote",
                 Tag = item
             };
-            item2.Click += new EventHandler(this.method_29);
+            item2.Click += new EventHandler(this.quotesFormMenuItemClickEventHandler);
             item2.Checked = true;
             this.dropdownQuotes.DropDownItems.Add(item2);
         }
@@ -4427,10 +4433,10 @@
                 }
             }
             MainForm int2 = this;
-            int2.int_2 = int2.int_2 - 1;
-            if (this.int_2 != 0)
+            int2.quotesFormCount = int2.quotesFormCount - 1;
+            if (this.quotesFormCount != 0)
             {
-                this.dropdownQuotes.Text = string.Concat("Quotes (", this.int_2, ")");
+                this.dropdownQuotes.Text = string.Concat("Quotes (", this.quotesFormCount, ")");
                 return;
             }
             else
@@ -4471,10 +4477,10 @@
                 }
             }
             MainForm int1 = this;
-            int1.int_1 = int1.int_1 - 1;
-            if (this.int_1 != 0)
+            int1.chartFormCount = int1.chartFormCount - 1;
+            if (this.chartFormCount != 0)
             {
-                this.dropdownCharts.Text = string.Concat("Charts && Strategies (", this.int_1, ")");
+                this.dropdownCharts.Text = string.Concat("Charts && Strategies (", this.chartFormCount, ")");
                 return;
             }
             else
@@ -4537,25 +4543,26 @@
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (this.bool_2)
+            if (this.isFirstMainForm_2)
             {
                 MainModule.Instance.Settings.Set(this, "MainForm");
             }
             MainModule.Instance.Settings.Set("DataTreeWidth", this.pnlTree.Width);
             MainModule.Instance.DataSources.UnregisterObserver(this.treeDataSources);
-            Interlocked.Decrement(ref int_0);
-            this.method_18();
+            Interlocked.Decrement(ref mainFormCount);
+            this.showOrHideCloseWSMenuItems();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((this.bool_2 && (int_0 > 1)) && !this.method_19())
+            if (this.isFirstMainForm_2 && (mainFormCount > 1)) 
             {
-                e.Cancel = true;
+                if (!this.confirmExit())
+                    e.Cancel = true;
             }
-            else if (this.bool_2)
+            else if (this.isFirstMainForm_2)
             {
-                this.bool_7 = true;
+                this.formClosing = true;
                 StreamingDataProvider streamingProvider = MainModule.Instance.StreamingProvider;
                 if ((streamingProvider != null) && streamingProvider.IsConnected)
                 {
@@ -4569,11 +4576,7 @@
             }
         }
 
-        /// <summary>
-        /// ///WYJ fix
-        /// </summary>
-        /// <param name="keyData"></param>
-        /// <returns></returns>
+        ///WYJ fix
         protected override bool IsInputKey(Keys keyData)
         {
             switch (keyData)
@@ -4639,9 +4642,9 @@
         private void MainForm_Load(object sender, EventArgs e)
         {
             string applicationName;
-            Interlocked.Increment(ref int_0);
-            this.bool_2 = int_0 == 1;
-            this.method_18();
+            Interlocked.Increment(ref mainFormCount);
+            this.isFirstMainForm_2 = mainFormCount == 1;
+            this.showOrHideCloseWSMenuItems();
             mainForm_0 = this;
             this.mniNewQuote.Visible = MainModule.Instance.AuthProvider.AllowStreaming;
             this.mniNewQuoteDD.Visible = MainModule.Instance.AuthProvider.AllowStreaming;
@@ -4666,7 +4669,7 @@
             MainModule.Instance.DataSources.OnDemandUpdatesEnabled = this.mniOnDemand.Checked;
             this.pnlTree.Width = MainModule.Instance.Settings.Get("DataTreeWidth", 0xac);
             this.SetDataPanelState(false, false, false, false, false);
-            if (this.bool_2)
+            if (this.isFirstMainForm_2)
             {
                 this.mniViewTradeTicket.Checked = MainModule.Instance.Settings.Get("ShowTradeTicket", true);
                 AuthenticationProvider authProvider = MainModule.Instance.AuthProvider;
@@ -4679,12 +4682,12 @@
             }
             this.btnLogin.Image = MainModule.Instance.AuthProvider.Glyph;
             this.ShowLoggedInState(MainModule.Instance.IsAuthenticated);
-            bool showTradeTicket = MainModule.Instance.AuthProvider.ShowTradeTicket;
+            bool showTradeTicket = MainModule.Instance.AuthProvider.ShowTradeTicket;  ///WYJ note, false if not overridden
             this.pnlTrade.Visible = this.mniViewTradeTicket.Checked && showTradeTicket;
             this.mniViewTradeTicket.Visible = showTradeTicket;
             this.btnTrade.Visible = showTradeTicket;
             this.btnTradeTicket.Visible = showTradeTicket;
-            this.method_38(MainModule.Instance.Settings.Get("TradeTicketDockBottom", false));
+            this.dockTradePanel(MainModule.Instance.Settings.Get("TradeTicketDockBottom", false));
             this.btnTradeTicket.Checked = this.pnlTrade.Visible;
             this.btnTrade.Checked = this.pnlTrade.Visible;
             this.mniViewNavBar.Checked = MainModule.Instance.Settings.Get("ShowNavBar", true);
@@ -4740,14 +4743,14 @@
                     this.tsmMoreChartStyles.DropDownItems.Add(button);
                     button.ImageTransparentColor = Color.Fuchsia;
                     button.Tag = style;
-                    button.Click += new EventHandler(this.btnLineChart_Click);
+                    button.Click += new EventHandler(this.chartStyleButtons_Click);
                     button.Checked = style.FriendlyName == str2;
                 }
             }
-            this.string_0 = MainModule.Instance.DataPath + @"\Workspaces";
-            if (!Directory.Exists(this.string_0))
+            this.workspaceDir = MainModule.Instance.DataPath + @"\Workspaces";
+            if (!Directory.Exists(this.workspaceDir))
             {
-                Directory.CreateDirectory(this.string_0);
+                Directory.CreateDirectory(this.workspaceDir);
             }
             if (bool_0)
             {
@@ -4760,7 +4763,7 @@
                     this.loadWorkSpace(path);
                     if (base.MdiChildren.Length == 0)
                     {
-                        this.method_23("G");
+                        this.showOrToolStripItemsForMdiChild("G");
                     }
                 }
                 else if (MainModule.Instance.Settings.Get("ShowHomePage", true))
@@ -4769,13 +4772,15 @@
                 }
                 else
                 {
-                    this.method_23("G");
+                    this.showOrToolStripItemsForMdiChild("G");
                 }
             }
             AssemblyLoader loader = new AssemblyLoader {
                 BaseClass = "DrawingObjectHelper",
                 Path = Path.GetDirectoryName(Application.ExecutablePath)
             };
+
+            ///WYJ note, add the drawing object tool strip items, group by group
             for (DrawingObjectHelper.ToolBarGroup group = DrawingObjectHelper.ToolBarGroup.None; group < DrawingObjectHelper.ToolBarGroup.UserDefined; group += 1)
             {
                 int num = 0;
@@ -4785,7 +4790,7 @@
                     helper = (DrawingObjectHelper) loader.CreateInstance(type2);
                     if (helper.Grouping == group)
                     {
-                        ToolStripButton button2 = new ToolStripButton(helper.FriendlyName, helper.Glyph, new EventHandler(this.method_11));
+                        ToolStripButton button2 = new ToolStripButton(helper.FriendlyName, helper.Glyph, new EventHandler(this.drawingObjectToolStripItem_Click));
                         string str4 = string.Format("{0} \nGroup: {1}", helper.Description, helper.Grouping.ToString());
                         button2.ToolTipText = str4;
                         button2.Tag = helper.DrawingObjectType;
@@ -4800,6 +4805,7 @@
                     this.toolbarDrawing.Items.Add(new ToolStripSeparator());
                 }
             }
+
             this.status.Visible = this.IsFirstMainForm && this.mniViewStatusBar.Checked;
             this.mniViewStatusBar.Checked = this.IsFirstMainForm && this.mniViewStatusBar.Checked;
             this.accountTypeSelector1.IgnoreCalls = true;
@@ -4832,16 +4838,16 @@
             {
                 this.AddDynamicMenuItem(item);
             }
-            foreach (string str7 in MainModule.Instance.WorkspaceMenuItems)
+            foreach (string str7 in MainModule.Instance.WorkspaceMenuItems)   ///WYJ note, MainModule.Instance.WorkspaceMenuItems is always empty
             {
                 this.AddWorkspaceMenuItem(str7);
             }
             FundamentalsLoader loader2 = new FundamentalsLoader {
                 DataHost = MainModule.Instance.DataSources
             };
-            this.bool_6 = loader2.HasDragDropFundamentals;
-            this.btnFundamental.Visible = this.bool_6;
-            this.mniFundamentals.Visible = this.bool_6;
+            this.dragDropFundamentalsExist = loader2.HasDragDropFundamentals;
+            this.btnFundamental.Visible = this.dragDropFundamentalsExist;
+            this.mniFundamentals.Visible = this.dragDropFundamentalsExist;
             loader2.Dispose();
         }
 
@@ -4857,54 +4863,54 @@
             this.BuildParameterSliders();
             if (base.ActiveMdiChild == null)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.SetDataPanelState(false, false, false, false, false);
             }
             else if (base.ActiveMdiChild is HomeForm)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.btnHome.BackColor = this.color_0;
                 this.SetDataPanelState(false, false, false, false, false);
             }
             else if (base.ActiveMdiChild is SymbolManagerForm)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.SetDataPanelState(false, false, false, false, false);
             }
             else if (base.ActiveMdiChild is AccountsPositionsForm)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.btnAcctsPositions.BackColor = this.color_0;
                 this.SetDataPanelState(false, false, false, false, false);
             }
             else if (base.ActiveMdiChild is OrdersAlertsForm)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.btnOrdersAlerts.BackColor = this.color_0;
                 this.SetDataPanelState(false, false, false, false, false);
             }
             else if (base.ActiveMdiChild is StrategyCenterForm)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.btnStrategyCenter.BackColor = this.color_0;
                 this.SetDataPanelState(false, false, false, false, false);
             }
             else if (base.ActiveMdiChild is DataManagerForm)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.btnDataManager.BackColor = this.color_0;
                 this.SetDataPanelState(false, false, false, false, false);
             }
             else if (base.ActiveMdiChild is QuotesForm)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.dropdownQuotes.BackColor = this.color_0;
                 foreach (ToolStripItem item3 in this.dropdownQuotes.DropDownItems)
@@ -4919,7 +4925,7 @@
             }
             else if (base.ActiveMdiChild is StrategyRanking)
             {
-                this.method_23("G");
+                this.showOrToolStripItemsForMdiChild("G");
                 this.EnableControls(true);
                 this.SetDataPanelState(true, true, true, true, false);
                 StrategyRanking activeMdiChild = base.ActiveMdiChild as StrategyRanking;
@@ -4933,7 +4939,7 @@
                 {
                     this.treeDataSources.SelectDataSource(activeMdiChild.DataSet);
                 }
-                this.method_8();
+                this.copyScaleFromActiveChartForm();
                 if (activeMdiChild.DataRange != null)
                 {
                     this.dataRange.DataRange = activeMdiChild.DataRange;
@@ -4965,13 +4971,13 @@
                 }
                 if (activeChartWindow.Strategy != null)
                 {
-                    this.method_23("S");
+                    this.showOrToolStripItemsForMdiChild("S");
                     StrategyType strategyType = activeChartWindow.Strategy.StrategyType;
                     this.SetDataPanelState(true, true, true, true, activeChartWindow.Strategy.StrategyType == StrategyType.CombinedStrategy);
                 }
                 else
                 {
-                    this.method_23("C");
+                    this.showOrToolStripItemsForMdiChild("C");
                     this.SetDataPanelState(true, true, false, false, false);
                 }
                 if ((activeChartWindow.DataSource != null) && (activeChartWindow.Symbol != ""))
@@ -4979,7 +4985,7 @@
                     this.treeDataSources.SelectSymbol(activeChartWindow.DataSource, activeChartWindow.Symbol);
                     this.cmbSymbol.Text = activeChartWindow.Symbol;
                 }
-                this.method_8();
+                this.copyScaleFromActiveChartForm();
                 System.Type type = activeChartWindow.ChartStyle.GetType();
                 this.btnBarChart.Checked = ((ChartStyle) this.btnBarChart.Tag).GetType() == type;
                 this.btnCandleStyle.Checked = ((ChartStyle) this.btnCandleStyle.Tag).GetType() == type;
@@ -5007,7 +5013,8 @@
             this.EnableEditAndPrintMenu();
         }
 
-        private void method_0()
+        ///WYJ fix, original signature: private void method_0()
+        private void doOpenOrderManager()
         {
             if (OrdersAlertsForm.Instance != null)
             {
@@ -5021,7 +5028,8 @@
             }
         }
 
-        private void method_1()
+        ///WYJ fix, original signature: private void method_1()
+        private void doOpenStrategyRanking()
         {
             new StrategyRanking { MdiParent = this }.Show();
         }
@@ -5045,20 +5053,22 @@
             }
         }
 
-        private void method_11(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_11(object sender, EventArgs e)
+        private void drawingObjectToolStripItem_Click(object sender, EventArgs e)
         {
             this.ClearDrawingObjectSelectedTool();
             ToolStripButton button = sender as ToolStripButton;
             button.Checked = true;
             Chart.TypeOfObjectToDraw = (System.Type) button.Tag;
-            this.method_12(Cursors.Cross);
+            this.setCursorForChartForms(Cursors.Cross);
             if (Chart.DisplayCrossHair)
             {
                 this.btnCrossHair_Click(sender, e);
             }
         }
 
-        private void method_12(Cursor cursor_0)
+        ///WYJ fix, original signature: private void method_12(Cursor cursor_0)
+        private void setCursorForChartForms(Cursor cursor_0)
         {
             foreach (Form form in base.MdiChildren)
             {
@@ -5076,13 +5086,13 @@
             if (base.ActiveMdiChild is StrategyRanking)
             {
                 (base.ActiveMdiChild as StrategyRanking).UpdateDataSource(e.DataSource, "");
-                this.method_8();
+                this.copyScaleFromActiveChartForm();
             }
             ChartForm activeChartWindow = this.ActiveChartWindow;
             if ((activeChartWindow != null) && !activeChartWindow.IsBusy)
             {
                 activeChartWindow.DataSourceSelected(e.DataSource);
-                this.method_8();
+                this.copyScaleFromActiveChartForm();
                 if ((activeChartWindow.Strategy == null) || (activeChartWindow.Strategy.StrategyType != StrategyType.CombinedStrategy))
                 {
                     activeChartWindow.SelectTab("DataSet");
@@ -5096,17 +5106,18 @@
             {
                 this.BarDataScale = e.DataSource.BarDataScale;
             }
-            this.method_16(true);
+            this.chartFormShowMultiSymbol(true);
         }
 
-        internal void method_14()
+        ///WYJ fix, original signature: internal void method_14()
+        internal void selectFirstDataSourceNode()
         {
             this.treeDataSources.SelectedNode = this.treeDataSources.Nodes[0];
         }
 
         private void method_15(object sender, DataSourceSymbolEventArgs e)
         {
-            if (!this.bool_5)
+            if (!this.dataSourceTreeSelectedNodeLocked)
             {
                 this.btnGo.Enabled = true;
                 this.cmbSymbol.Text = e.Symbol;
@@ -5122,7 +5133,7 @@
                         this.timer_1.Enabled = true;
                         return;
                     }
-                    this.method_8();
+                    this.copyScaleFromActiveChartForm();
                     this.linkRerun.Visible = false;
                     if (activeChartWindow.Optimization != null)
                     {
@@ -5140,14 +5151,15 @@
                     {
                         activeMdiChild.UpdateDataSource(e.DataSource, e.Symbol);
                     }
-                    this.method_8();
+                    this.copyScaleFromActiveChartForm();
                 }
-                this.method_7();
-                this.method_16(false);
+                this.informChartFormsForSymbolChange();
+                this.chartFormShowMultiSymbol(false);
             }
         }
 
-        private void method_16(bool bool_10)
+        ///WYJ fix, original signature: private void method_16(bool bool_10)
+        private void chartFormShowMultiSymbol(bool bool_10)
         {
             ChartForm activeChartWindow = this.ActiveChartWindow;
             if (activeChartWindow != null)
@@ -5156,33 +5168,39 @@
             }
         }
 
+        ///WYJ note, inlined this method, not needed anymore
+        /*
         private void method_17()
         {
             if (this.treeDataSources.SelectedNode != null)
             {
                 bool flag = (this.treeDataSources.SelectedNode.Level == 0) && (this.cmbSymbol.Text == string.Empty);
-                this.method_16(flag);
+                this.chartFormShowMultiSymbol(flag);
             }
-        }
+        }*/
 
-        private void method_18()
+        ///WYJ fix, original signature: private void method_18()
+        ///WYJ note, show the Close WorkSpace menu item only when it's not the first workspace window
+        private void showOrHideCloseWSMenuItems()
         {
             foreach (Form form2 in Application.OpenForms)
             {
                 if (form2 is MainForm)
                 {
                     MainForm form = form2 as MainForm;
-                    form.mniCloseWorkspace.Visible = (int_0 > 1) && !form.bool_2;
+                    form.mniCloseWorkspace.Visible = (mainFormCount > 1) && !form.isFirstMainForm_2;
                 }
             }
         }
 
-        private bool method_19()
+        ///WYJ fix, original signature: private bool method_19()
+        private bool confirmExit()
         {
-            return (bool_1 || ((int_0 == 1) || (MessageBox.Show("Close all Workspaces and shut down Wealth-Lab?", "Exit Wealth-Lab", MessageBoxButtons.YesNo) == DialogResult.Yes)));
+            return (menuTriggeredExit || ((mainFormCount == 1) || (MessageBox.Show("Close all Workspaces and shut down Wealth-Lab?", "Exit Wealth-Lab", MessageBoxButtons.YesNo) == DialogResult.Yes)));
         }
 
-        private void method_2()
+        ///WYJ fix, original signature: private void method_2()
+        private void editMenuDefaultEnablement()
         {
             this.mniEdit.Enabled = true;
             this.mniCopy.Enabled = true;
@@ -5196,7 +5214,8 @@
             this.mniSetTemplate.Enabled = false;
         }
 
-        private bool method_20(string string_1)
+        ///WYJ fix, original signature: private bool method_20(string string_1)
+        private bool saveWorkSpace(string filePath)
         {
             List<string> list = new List<string>();
             List<string> items = new List<string>();
@@ -5243,8 +5262,8 @@
             string[] contents = list.ToArray();
             try
             {
-                FileNameValidator.ValidateFileName(string_1);
-                System.IO.File.WriteAllLines(string_1, contents);
+                FileNameValidator.ValidateFileName(filePath);
+                System.IO.File.WriteAllLines(filePath, contents);
                 return true;
             }
             catch (Exception exception)
@@ -5258,7 +5277,7 @@
         private void loadWorkSpace(string filePath)
         {
             string[] strArray2;
-            this.bool_8 = false;
+            this.disconnected = false;
             try
             {
                 strArray2 = System.IO.File.ReadAllLines(filePath);
@@ -5282,20 +5301,20 @@
             {
                 if (strArray2[index].StartsWith("TradeTicketBottom="))
                 {
-                    this.method_38(strArray2[index].Contains("Yes"));
+                    this.dockTradePanel(strArray2[index].Contains("Yes"));
                     index++;
                     continue;
                 }
                 if (strArray2[index].StartsWith("TradeTicketState="))
                 {
-                    this.method_39(strArray2[index].Contains("Yes"));
+                    this.showOrHideTradePanel(strArray2[index].Contains("Yes"));
                     index++;
                     continue;
                 }
                 if (strArray2[index].StartsWith("DataWindow="))
                 {
                     int num2;
-                    string[] strArray = this.method_22(strArray2[index++]).Split(new char[] { ',' });
+                    string[] strArray = this.getValueString(strArray2[index++]).Split(new char[] { ',' });
                     Rectangle rectangle = new Rectangle();
                     if (int.TryParse(strArray[0], out num2))
                     {
@@ -5320,16 +5339,16 @@
                     }
                     continue;
                 }
-                string str = this.method_22(strArray2[index++]);
-                string str4 = this.method_22(strArray2[index++]);
+                string str = this.getValueString(strArray2[index++]);
+                string str4 = this.getValueString(strArray2[index++]);
                 Rectangle rectangle2 = new Rectangle();
                 string[] strArray3 = str4.Split(new char[] { ',' });
                 rectangle2.X = int.Parse(strArray3[0]);
                 rectangle2.Y = int.Parse(strArray3[1]);
                 rectangle2.Width = int.Parse(strArray3[2]);
                 rectangle2.Height = int.Parse(strArray3[3]);
-                int version = int.Parse(this.method_22(strArray2[index++]));
-                int num4 = int.Parse(this.method_22(strArray2[index++]));
+                int version = int.Parse(this.getValueString(strArray2[index++]));
+                int num4 = int.Parse(this.getValueString(strArray2[index++]));
                 items.Clear();
                 while (num4 > 0)
                 {
@@ -5425,7 +5444,7 @@
                         {
                             form2.ResetStreaming();
                         }
-                        if (this.bool_8)
+                        if (this.disconnected)
                         {
                             items[9] = false.ToString();
                         }
@@ -5445,13 +5464,16 @@
             }
         }
 
-        private string method_22(string string_1)
+        ///WYJ fix, original signature: private string method_22(string string_1)
+        private string getValueString(string string_1)
         {
             int index = string_1.IndexOf('=');
             return string_1.Substring(index + 1);
         }
 
-        internal void method_23(string string_1)
+        ///WYJ fix, original signature: internal void method_23(string string_1)
+        ///WYJ note, "G" for general, like HomeWindow, see MainForm_MdiChildActivate(); "C" for chart; "S" for Strategy
+        internal void showOrToolStripItemsForMdiChild(string string_1)
         {
             foreach (ToolStripItem item in this.toolbar.Items)
             {
@@ -5514,13 +5536,15 @@
             }
         }
 
+        ///WYJ note, never used
         private void method_24(object sender, EventArgs e)
         {
-            Alert alert = this.method_25();
+            Alert alert = this.createAlert();
             MainModule.Instance.TradeManager.AddAlert(alert, false, false);
         }
 
-        private Alert method_25()
+        ///WYJ fix, original signature: private Alert method_25()
+        private Alert createAlert()
         {
             Alert alert = new Alert {
                 Account = this.cmbAccount.Text,
@@ -5555,17 +5579,20 @@
             return alert;
         }
 
+        ///WYJ note, never used
         private void method_26(object sender, EventArgs e)
         {
             MainModule.NotImplemented();
         }
 
+        ///WYJ note, never used
         private void method_27(object sender, EventArgs e)
         {
             this.mniViewTradeTicket.PerformClick();
         }
 
-        private void method_28(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_28(object sender, EventArgs e)
+        private void chartFormMenuItemClickEventHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             ChartForm tag = (ChartForm) item.Tag;
@@ -5573,7 +5600,8 @@
             tag.WindowState = FormWindowState.Normal;
         }
 
-        private void method_29(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_29(object sender, EventArgs e)
+        private void quotesFormMenuItemClickEventHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             QuotesForm tag = (QuotesForm) item.Tag;
@@ -5581,6 +5609,7 @@
             tag.WindowState = FormWindowState.Normal;
         }
 
+        ///WYJ note, never used
         private void method_3(string string_1)
         {
             if (DebugForm.Instance == null)
@@ -5591,7 +5620,8 @@
             DebugForm.Instance.AddLine(string_1);
         }
 
-        private void method_30(bool bool_10)
+        ///WYJ fix, original signature: private void method_30(bool reconnect)
+        private void doConnect(bool reconnect)
         {
             this.statusStreamingProvider.Text = MainModule.Instance.StreamingProvider.FriendlyName;
             this.statusStreamingProvider.Image = Resources.Streaming;
@@ -5618,7 +5648,7 @@
             }
             this.statusStreamingSymbolsOff.Visible = true;
             this.statusStreamingSymbolsOn.Visible = false;
-            if (bool_10)
+            if (reconnect)
             {
                 foreach (Form form2 in base.MdiChildren)
                 {
@@ -5627,7 +5657,7 @@
                         ChartForm form = form2 as ChartForm;
                         if (form.DisconnectedWhileStreaming)
                         {
-                            form.Connect(bool_10);
+                            form.Connect(reconnect);
                         }
                         if (form.IsStreaming)
                         {
@@ -5637,17 +5667,18 @@
                     }
                     if (form2 is QuotesForm)
                     {
-                        (form2 as QuotesForm).Connect(bool_10);
+                        (form2 as QuotesForm).Connect(reconnect);
                     }
                     if (form2 is AccountsPositionsForm)
                     {
-                        (form2 as AccountsPositionsForm).Connect(bool_10);
+                        (form2 as AccountsPositionsForm).Connect(reconnect);
                     }
                 }
             }
         }
 
-        private void method_31()
+        ///WYJ fix, original signature: private void method_31()
+        private void doDisconnect()
         {
             this.bool_4 = false;
             if (this.IsFirstMainForm)
@@ -5662,11 +5693,11 @@
             this.statusStreamingProvider.ForeColor = Color.Red;
             this.statusStreamingProvider.IsLink = true;
             this.statusStreamingProvider.LinkBehavior = LinkBehavior.AlwaysUnderline;
-            foreach (string str in this.list_1)
+            foreach (string str in this.streamingSymbols)
             {
                 this.streamingQuoteManager_0.Unsubscribe(str);
             }
-            this.list_1.Clear();
+            this.streamingSymbols.Clear();
             foreach (Form form in base.MdiChildren)
             {
                 if (form is ChartForm)
@@ -5682,9 +5713,10 @@
             }
         }
 
-        private void method_32(ConnStatus connStatus_0, int int_7, string string_1)
+        ///WYJ fix, original signature: private void method_32(ConnStatus connStatus_0, int int_7, string string_1)
+        private void doStatusUpdate(ConnStatus status, int statusCode, string message)
         {
-            switch (connStatus_0)
+            switch (status)
             {
                 case ConnStatus.OK:
                     this.statusStreamingStatus.ForeColor = Color.Green;
@@ -5698,11 +5730,11 @@
                     this.statusStreamingStatus.ForeColor = Color.Red;
                     break;
             }
-            if (int_7 != 0)
+            if (statusCode != 0)
             {
-                string_1 = int_7 + ": " + string_1;
+                message = statusCode + ": " + message;
             }
-            this.statusStreamingStatus.Text = string_1;
+            this.statusStreamingStatus.Text = message;
         }
 
         private void method_33(object sender, EventArgs e)
@@ -5791,9 +5823,10 @@
             this.statusDownloadProgressBar.ProgressBar.Value = e.ProgressPercentage;
         }
 
-        private void method_38(bool bool_10)
+        ///WYJ fix, original signature: private void method_38(bool bool_10)
+        private void dockTradePanel(bool dockBottom)
         {
-            if (bool_10)
+            if (dockBottom)
             {
                 this.pnlTrade.Dock = DockStyle.Bottom;
             }
@@ -5801,31 +5834,36 @@
             {
                 this.pnlTrade.Dock = DockStyle.Top;
             }
-            this.btnDockDown.Visible = !bool_10;
-            this.btnDockUp.Visible = bool_10;
+            this.btnDockDown.Visible = !dockBottom;
+            this.btnDockUp.Visible = dockBottom;
         }
 
-        private void method_39(bool bool_10)
+        ///WYJ fix, original signature: private void method_39(bool bool_10)
+        private void showOrHideTradePanel(bool viewTradeTicket)
         {
-            this.mniViewTradeTicket.Checked = bool_10;
+            this.mniViewTradeTicket.Checked = viewTradeTicket;
             this.pnlTrade.Visible = this.mniViewTradeTicket.Checked;
             this.btnTradeTicket.Checked = this.pnlTrade.Visible;
             this.btnTrade.Checked = this.pnlTrade.Visible;
         }
 
-        private void method_4(string string_1)
+        ///WYJ fix, original signature: private void method_4(string string_1)
+        private void updateStatusBar(string string_1)
         {
             this.statusMessage.Text = string_1;
             this.status.Refresh();
         }
 
-        private void method_40(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_40(object sender, EventArgs e)
+        ///WYJ note, act as menu item click handler, but it seems that the menu items are never added, hence this method is never called
+        private void workspaceMenuItems_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
-            string str = this.string_0 + @"\" + item.Text.Replace("&", "") + ".ws";
+            string str = this.workspaceDir + @"\" + item.Text.Replace("&", "") + ".ws";
             this.loadWorkSpace(str);
         }
 
+        ///WYJ fix, original signature: private void method_41()
         private void method_41()
         {
             bool loggedIn = false;
@@ -5906,12 +5944,13 @@
             this.txtTradeSymbol_Leave(null, null);
         }
 
-        internal void method_42(DraggedFundamentalItem draggedFundamentalItem_0)
+        ///WYJ fix, original signature: internal void method_42(DraggedFundamentalItem draggedFundamentalItem_0)
+        internal void onFundamentalItemDropped(DraggedFundamentalItem draggedFundamentalItem_0)
         {
             ChartForm activeChartWindow = this.ActiveChartWindow;
             if (activeChartWindow != null)
             {
-                activeChartWindow.method_71(draggedFundamentalItem_0);
+                activeChartWindow.processDroppedFundamentalItem(draggedFundamentalItem_0);
             }
         }
 
@@ -5958,7 +5997,8 @@
             this.mniDataWindow.Checked = DataWindowForm.Instance != null;
         }
 
-        private ChartStyle method_5()
+        ///WYJ fix, original signature: private ChartStyle method_5()
+        private ChartStyle getSelectedChartStyle()
         {
             ChartStyle tag = null;
             if (!this.btnBarChart.Checked)
@@ -6098,13 +6138,14 @@
             }
         }
 
-        private void method_7()
+        ///WYJ fix, original signature: private void method_7()
+        private void informChartFormsForSymbolChange()
         {
-            foreach (Form form2 in base.MdiChildren)
+            foreach (Form mdiChild in base.MdiChildren)
             {
-                if (form2 is ChartForm)
+                if (mdiChild is ChartForm)
                 {
-                    ChartForm form = form2 as ChartForm;
+                    ChartForm form = mdiChild as ChartForm;
                     if ((form != this.ActiveChartWindow) && form.LinkedToSymbol)
                     {
                         form.ResetStreaming();
@@ -6115,7 +6156,9 @@
             }
         }
 
-        private void method_8()
+        ///WYJ fix, original signature: private void method_8()
+        ///WYJ note, it seems that the bar Data scale is copied to MainForm and then assigned back to ChartForm. See ChartForm.RunOnAllSymbols()
+        private void copyScaleFromActiveChartForm()
         {
             if (this.DataSource != null)
             {
@@ -6274,7 +6317,7 @@
 
         private void mniExit_Click(object sender, EventArgs e)
         {
-            bool_1 = true;
+            menuTriggeredExit = true;
             Application.Exit();
         }
 
@@ -6303,9 +6346,9 @@
 
         private void mniFundamentals_VisibleChanged(object sender, EventArgs e)
         {
-            if (this.mniFundamentals.Visible && !this.bool_6)
+            if (this.mniFundamentals.Visible && !this.dragDropFundamentalsExist)
             {
-                this.mniFundamentals.Visible = this.bool_6;
+                this.mniFundamentals.Visible = this.dragDropFundamentalsExist;
             }
         }
 
@@ -6329,7 +6372,7 @@
 
         private void mniLoadWorkSpace_Click(object sender, EventArgs e)
         {
-            this.openFileDialog_0.InitialDirectory = this.string_0;
+            this.openFileDialog_0.InitialDirectory = this.workspaceDir;
             if (this.openFileDialog_0.ShowDialog() != DialogResult.Cancel)
             {
                 string fileName = this.openFileDialog_0.FileName;
@@ -6374,7 +6417,7 @@
         {
             MainForm form = new MainForm();
             form.Show();
-            form.method_23("G");
+            form.showOrToolStripItemsForMdiChild("G");
         }
 
         private void mniOnDemand_Click(object sender, EventArgs e)
@@ -6473,10 +6516,10 @@
 
         private void mniSaveWorkSpace_Click(object sender, EventArgs e)
         {
-            this.saveFileDialog_0.InitialDirectory = this.string_0;
+            this.saveFileDialog_0.InitialDirectory = this.workspaceDir;
             if (this.saveFileDialog_0.ShowDialog() != DialogResult.Cancel)
             {
-                this.method_20(this.saveFileDialog_0.FileName);
+                this.saveWorkSpace(this.saveFileDialog_0.FileName);
             }
         }
 
@@ -6496,7 +6539,7 @@
             {
                 Directory.CreateDirectory(path);
             }
-            if (this.method_20(path + @"\Default.ws"))
+            if (this.saveWorkSpace(path + @"\Default.ws"))
             {
                 MessageBox.Show("Default Workspace saved");
             }
@@ -6626,11 +6669,11 @@
         {
             if (base.InvokeRequired)
             {
-                base.Invoke(new Delegate34(this.method_0));
+                base.Invoke(new Delegate34(this.doOpenOrderManager));
             }
             else
             {
-                this.method_0();
+                this.doOpenOrderManager();
             }
         }
 
@@ -6705,11 +6748,11 @@
         {
             if (base.InvokeRequired)
             {
-                base.Invoke(new Delegate35(this.method_1));
+                base.Invoke(new Delegate35(this.doOpenStrategyRanking));
             }
             else
             {
-                this.method_1();
+                this.doOpenStrategyRanking();
             }
         }
 
@@ -6727,7 +6770,8 @@
         {
             ChartForm form = this.CreateChartWindow(false);
             form.Strategy = strategy_0;
-            this.method_23("S");
+            
+            this.showOrToolStripItemsForMdiChild("S");
             if (strategy_0.StrategyType == StrategyType.CombinedStrategy)
             {
                 form.SelectTab("Combination Strategy");
@@ -6825,9 +6869,10 @@
             }
         }
 
-        public void PrintStatus(string message)
+        ///WYJ fix, original signature: public void PrintStatus(string message)
+        public void UpdateStatus(string message)
         {
-            base.Invoke(new Delegate38(this.method_4), new object[] { message });
+            base.Invoke(new Delegate38(this.updateStatusBar), new object[] { message });
         }
 
         public void SelectNode()
@@ -7039,7 +7084,7 @@
             {
                 int_5 = 1;
             }
-            int_6 = new Random().Next(5);
+            randomDelay = new Random().Next(5);
         }
 
         private void statusActive_Click(object sender, EventArgs e)
@@ -7072,7 +7117,7 @@
 
         private void statusStreamingSymbolsOff_Click(object sender, EventArgs e)
         {
-            foreach (string str in this.list_1)
+            foreach (string str in this.streamingSymbols)
             {
                 this.streamingQuoteManager_0.Unsubscribe(str);
             }
@@ -7084,7 +7129,7 @@
         {
             if ((MainModule.Instance.StreamingProvider == null) || MainModule.Instance.StreamingProvider.IsConnected)
             {
-                foreach (string str in this.list_1)
+                foreach (string str in this.streamingSymbols)
                 {
                     this.streamingQuoteManager_0.Subscribe(str);
                 }
@@ -7095,7 +7140,7 @@
 
         public void StatusUpdate(ConnStatus status, int StatusCode, string Message)
         {
-            base.Invoke(new Delegate41(this.method_32), new object[] { status, StatusCode, Message });
+            base.Invoke(new Delegate41(this.doStatusUpdate), new object[] { status, StatusCode, Message });
         }
 
         private void symbolInfoManagerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -7163,14 +7208,14 @@
         private void timer_1_Tick(object sender, EventArgs e)
         {
             this.timer_1.Enabled = false;
-            this.bool_5 = true;
+            this.dataSourceTreeSelectedNodeLocked = true;
             try
             {
                 this.treeDataSources.SelectedNode = this.treeDataSources.FindNode(this.chartForm_0.DataSource, this.chartForm_0.Symbol);
             }
             finally
             {
-                this.bool_5 = false;
+                this.dataSourceTreeSelectedNodeLocked = false;
             }
         }
 
@@ -7197,7 +7242,7 @@
                         goto  Label_01A2;
 
                     case 3:
-                        if (--int_6 < 0)
+                        if (--randomDelay < 0)
                         {
                             Application.Exit();
                         }
@@ -7235,7 +7280,7 @@
                         notifier.TNP = _tamperCode;
                     }
                 }
-                else if (--int_6 <= 0)
+                else if (--randomDelay <= 0)
                 {
                     this.timer_2.Stop();
                 }
@@ -7278,7 +7323,7 @@
 
         private void treeDataSources_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            TreeNode nodeAt = this.treeDataSources.GetNodeAt(this.int_3, this.int_4);
+            TreeNode nodeAt = this.treeDataSources.GetNodeAt(this.mouseX, this.mouseY);
             if (nodeAt != null)
             {
                 this.treeDataSources.DoDragDrop(nodeAt, DragDropEffects.Copy);
@@ -7287,8 +7332,8 @@
 
         private void treeDataSources_MouseDown(object sender, MouseEventArgs e)
         {
-            this.int_3 = e.X;
-            this.int_4 = e.Y;
+            this.mouseX = e.X;
+            this.mouseY = e.Y;
         }
 
         private void txtTradeSymbol_Leave(object sender, EventArgs e)
@@ -7348,7 +7393,7 @@
         {
             if (this.bool_4)
             {
-                foreach (string str2 in this.list_1)
+                foreach (string str2 in this.streamingSymbols)
                 {
                     if (!symbols.Contains(str2))
                     {
@@ -7374,16 +7419,16 @@
                 this.streamingQuoteManager_0.Provider = MainModule.Instance.StreamingProvider;
                 foreach (string str3 in symbols)
                 {
-                    if (!this.list_1.Contains(str3))
+                    if (!this.streamingSymbols.Contains(str3))
                     {
                         this.streamingQuoteManager_0.Subscribe(str3);
                     }
                 }
             }
-            this.list_1.Clear();
+            this.streamingSymbols.Clear();
             foreach (string str4 in symbols)
             {
-                this.list_1.Add(str4);
+                this.streamingSymbols.Add(str4);
             }
         }
 
@@ -7517,12 +7562,12 @@
             [CompilerGenerated]
             get
             {
-                return this.bool_9;
+                return this.selectingNodeForFormCreation;
             }
             [CompilerGenerated]
             set
             {
-                this.bool_9 = value;
+                this.selectingNodeForFormCreation = value;
             }
         }
 

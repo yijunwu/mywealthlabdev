@@ -553,7 +553,7 @@
             str = this.isettingsHost_0.Get("Optimization.Method", "");
             foreach (Optimizer optimizer in MainModule.Instance.Optimizers)
             {
-                Optimizer optimizer1 = (Optimizer)MainModule.Instance.assemblyLoader_3.CreateInstance(optimizer.GetType());
+                Optimizer optimizer1 = (Optimizer)MainModule.Instance.assemblyLoader_Optimizer.CreateInstance(optimizer.GetType());
                 optimizer1.Host = this;
                 optimizer1.PrintHost = this;
                 this.cmbMethod.Items.Add(optimizer1);
@@ -1184,7 +1184,7 @@
             this.tradingSystemExecutor_0.WorstTradeSimulation = false;
             this.tradingSystemExecutor_0.ExternalSymbolFromDataSetRequested += new EventHandler<LoadSymbolFromDataSetEventArgs>(this.method_20);
             this.tradingSystemExecutor_0.ExternalSymbolRequested += new EventHandler<LoadSymbolEventArgs>(this.method_19);
-            this.tradingSystemExecutor_0.TrendlineGetValue += new EventHandler<TrendLineEventArgs>(this.method_21);
+            this.tradingSystemExecutor_0.TrendlineGetValue += new EventHandler<TrendLineEventArgs>(this.trendLineGetValueEventHandler);
             this.tradingSystemExecutor_0.LookupStrategy += new EventHandler<StrategyEventArgs>(this.method_22);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
             base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1475,9 +1475,10 @@
             this.chartForm_0.method_67(sender, e);
         }
 
-        private void method_21(object sender, TrendLineEventArgs e)
+        ///WYJ fix, original signature: private void method_21(object sender, TrendLineEventArgs e)
+        private void trendLineGetValueEventHandler(object sender, TrendLineEventArgs e)
         {
-            this.chartForm_0.method_46(sender, e);
+            this.chartForm_0.trendLineGetValueEventHandler(sender, e);
         }
 
         private void method_22(object sender, StrategyEventArgs e)

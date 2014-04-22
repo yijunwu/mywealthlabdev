@@ -1488,7 +1488,7 @@
                 }
                 if (this.btnEmailAlerts.Checked)
                 {
-                    MainModule.Instance.method_25(alert_0, MainModule.Instance.ShouldOrderBePlaced(alert_0));
+                    MainModule.Instance.emailAlert(alert_0, MainModule.Instance.ShouldOrderBePlaced(alert_0));
                 }
                 if (this.btnAutoRemove.Checked)
                 {

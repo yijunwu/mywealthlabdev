@@ -23,68 +23,67 @@
     [ToolboxItem(false)]
     public class MainModule : UserControl, IComparer<StaticDataProvider>, IConnectionStatus, IAuthenticationHost, IMenuItemAdder
     {
-        private AssemblyLoader assemblyLoader_0;
-        private AssemblyLoader assemblyLoader_1;
-        private AssemblyLoader assemblyLoader_2;
-        internal AssemblyLoader assemblyLoader_3;
-        private AssemblyLoader assemblyLoader_4;
+        private AssemblyLoader assemblyLoader_PerformanceVisualizer;   ///WYJ fix, original name: assemblyLoader_0
+        private AssemblyLoader assemblyLoader_Commission;   ///WYJ fix, original name: assemblyLoader_1
+        private AssemblyLoader assemblyLoader_StreamingDataProvider;   ///WYJ fix, original name: assemblyLoader_2
+        internal AssemblyLoader assemblyLoader_Optimizer;   ///WYJ fix, original name: assemblyLoader_3
+        private AssemblyLoader assemblyLoader_PosSizer;   ///WYJ fix, original name: assemblyLoader_4
         private AuthenticationProvider authenticationProvider;
         private BarDataRangeSelecter barRange;
-        private bool bool_0;
+        private bool strategyTemplateCodeInited;
         private bool isAuthenticated;
         private bool streamingWasClicked;
-        private bool bool_3;
+        private bool soundPlaying; ///WYJ fix, original signature: bool_3
         private bool bool_4;
         private WealthLab.BrokerProvider brokerProvider;
         private ChartRenderer chartRenderer;
         private DataSourceManager dataSourceManager;
-        private DateTime dateTime_0;
+        private DateTime nextAuthRequired;   ///WYJ fix, original name: dateTime_0
         private DrawingObjectManager drawingObjectManager_0;
         private System.Windows.Forms.HelpProvider helpProvider;
         private IContainer components;
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public static MainModule Instance = new MainModule();
-        private int int_0;
+        private int indexNicAddress;  ///WYJ fix, original name: int_0
         private int nicAdressesCount;
         private List<string> strategyNetworkPaths;
         private List<IPerformanceVisualizer> visualizers;
         private List<IPerformanceVisualizer> visualizersChecked;
-        private List<Strategy> list_3;
-        private List<Account> list_4;
-        private List<string> list_5;
+        private List<Strategy> strategyMRU;   ///WYJ fix, original name: list_3
+        private List<Account> list_4;   ///WYJ note, useless list
+        private List<string> accountNumbers;   ///WYJ fix, original name: list_5
         private List<DynamicMenuItem> dynamicMenuitems;
         private List<string> workspaceMenuItems;
         private List<Optimizer> optimizers;
-        private List<PosSizer> list_9;
+        private List<PosSizer> posSizers;
         private SettingsManager settingsManager;
         private StrategyManager strategyManager_0;
-        private StrategyManager strategyManager_1;
+        private StrategyManager strategyManager_1;   ///WYJ note, only for temp use, in MainModule()
         private StreamingDataProvider streamingDataProvider;
-        private string string_0;
-        private string string_1;
+        private string strategyTemplateCode;
+        private string accountFile;   ///WYJ fix, original name: string_1
         private System.Windows.Forms.Timer timer_0;
         private WealthLab.TradeManager tradeManager;
         private TradingSystemExecutor tradingSystemExecutor;
 
         public MainModule()
         {
-            bool flag4;
             List<System.Type>.Enumerator enumerator;
             List<IPerformanceVisualizer>.Enumerator enumerator2;
             this.strategyNetworkPaths = new List<string>();
             this.visualizers = new List<IPerformanceVisualizer>();
             this.visualizersChecked = new List<IPerformanceVisualizer>();
-            this.string_0 = "";
-            this.list_3 = new List<Strategy>();
+            this.strategyTemplateCode = "";
+            this.strategyMRU = new List<Strategy>();
             this.list_4 = new List<Account>();
-            this.string_1 = "";
-            this.list_5 = new List<string>();
+            this.accountFile = "";
+            this.accountNumbers = new List<string>();
             this.dynamicMenuitems = new List<DynamicMenuItem>();
             this.workspaceMenuItems = new List<string>();
             this.bool_4 = true;
             this.optimizers = new List<Optimizer>();
-            this.list_9 = new List<PosSizer>();
-            this.dateTime_0 = DateTime.MinValue;
+            this.posSizers = new List<PosSizer>();
+            this.nextAuthRequired = DateTime.MinValue;
             AssemblyLoader.LogFileName = this.DataPath + @"\Assemblies.wll";
             if (!base.DesignMode)
             {
@@ -116,7 +115,7 @@
                 this.authenticationProvider = (AuthenticationProvider) loader.CreateInstance(loader.Types[0]);
                 this.authenticationProvider.PreInitialize();
             }
-            this.string_1 = this.DataPath + @"\Accounts.txt";
+            this.accountFile = this.DataPath + @"\Accounts.txt";
             this.InitializeComponent();
             CustomIndexManager.Initialize(this.DataPath, this.dataSourceManager);
             if (Application.ProductName == "WealthLabPro")
@@ -131,7 +130,7 @@
             Application.ApplicationExit += new EventHandler(this.MainModule_Click);
             if (!Directory.Exists(this.DataPath + @"\Strategies"))
             {
-                this.method_7(Path.GetDirectoryName(Application.ExecutablePath) + @"\Data", this.DataPath);
+                this.copyAllFiles(Path.GetDirectoryName(Application.ExecutablePath) + @"\Data", this.DataPath);
             }
             string path = this.DataPath + @"\Workspaces";
             string str3 = Path.GetDirectoryName(Application.ExecutablePath) + @"\Data\Workspaces";
@@ -139,18 +138,18 @@
             {
                 if (Directory.Exists(path))
                 {
-                    foreach (string str4 in Directory.GetFiles(str3))
+                    foreach (string srcFile in Directory.GetFiles(str3))
                     {
-                        string str5 = path + @"\" + Path.GetFileName(str4);
-                        if (!File.Exists(str5))
+                        string destFile = path + @"\" + Path.GetFileName(srcFile);
+                        if (!File.Exists(destFile))
                         {
-                            File.Copy(str4, str5);
+                            File.Copy(srcFile, destFile);
                         }
                     }
                 }
                 else
                 {
-                    this.method_7(str3, path);
+                    this.copyAllFiles(str3, path);
                 }
             }
             this.authenticationProvider.Initialize(this.DataSources, this);
@@ -209,31 +208,31 @@
                     }
                 }
             }
-            bool flag2 = (DateTime.Now > this.NextAuthRequired) || this.AuthProvider.ForceAuthentication;
-            bool flag3 = false;
-            if (!flag2)
+            bool authRequiredNow = (DateTime.Now > this.NextAuthRequired) || this.AuthProvider.ForceAuthentication;
+            bool chooseToAuthNow = false;
+            if (!authRequiredNow)
             {
-                flag3 = (this.NextAuthRequired - DateTime.Now.Date) <= new TimeSpan(5, 0, 0, 0);
+                chooseToAuthNow = (this.NextAuthRequired - DateTime.Now.Date) <= new TimeSpan(5, 0, 0, 0);
                 TimeSpan span = (TimeSpan) (this.NextAuthRequired - DateTime.Now.Date);
                 int days = span.Days;
-                if (flag3)
+                if (chooseToAuthNow)
                 {
                     if (this.AuthProvider.ShowGracePeriodWarning)
                     {
                         if (MessageBox.Show("You must log in within the next " + days.ToString() + " days to continue to use " + Instance.AuthProvider.ApplicationName + ".  Do you want to Log in now?", "Log In", MessageBoxButtons.YesNo) == DialogResult.No)
                         {
-                            flag3 = false;
+                            chooseToAuthNow = false;
                         }
                     }
                     else
                     {
-                        flag3 = false;
+                        chooseToAuthNow = false;
                     }
                 }
             }
-            if (flag2 | flag3)
+            if (authRequiredNow | chooseToAuthNow)
             {
-                if (flag2 && this.AuthProvider.ShowGracePeriodWarning)
+                if (authRequiredNow && this.AuthProvider.ShowGracePeriodWarning)
                 {
                     //MessageBox.Show("You must log in to continue using " + Instance.AuthProvider.ApplicationName + ".", "Log In", MessageBoxButtons.OK); ///WYJ fix
                 }
@@ -258,13 +257,13 @@
                     this.dataSourceManager.Add(source);
                 }
             }
-            this.assemblyLoader_0.Path = this.AppPath;
+            this.assemblyLoader_PerformanceVisualizer.Path = this.AppPath;
             List<IPerformanceVisualizer> list = new List<IPerformanceVisualizer>();
-            foreach (System.Type type3 in this.assemblyLoader_0.Types)
+            foreach (System.Type type3 in this.assemblyLoader_PerformanceVisualizer.Types)
             {
                 try
                 {
-                    Control control = (Control) this.assemblyLoader_0.CreateInstance(type3);
+                    Control control = (Control) this.assemblyLoader_PerformanceVisualizer.CreateInstance(type3);
                     IPerformanceVisualizer visualizer = control as IPerformanceVisualizer;
                     list.Add(visualizer);
                 }
@@ -334,11 +333,11 @@
             this.chartRenderer.HorizontalGridines = this.settingsManager.Get("HorizontalGridlines", true);
             this.chartRenderer.VerticalGridlines = this.settingsManager.Get("VerticalGridlines", true);
             this.chartRenderer.PaneSeparatorVisible = this.settingsManager.Get("PaneSeparators", true);
-            this.assemblyLoader_1.Path = this.AppPath;
+            this.assemblyLoader_Commission.Path = this.AppPath;
             this.tradingSystemExecutor.ApplyCommission = this.settingsManager.Get("ApplyCommissions", true);
             string str11 = this.settingsManager.Get("Commission", "FidelityFlatRate");
-            System.Type type4 = this.method_3();
-            using (enumerator = this.assemblyLoader_1.Types.GetEnumerator())
+            System.Type commissionClass = typeof(FidelityFlatRate); ///this.method_3();  ///WYJ fix, inline the method
+            using (enumerator = this.assemblyLoader_Commission.Types.GetEnumerator())
             {
                 System.Type type5;
                 while (enumerator.MoveNext())
@@ -347,32 +346,32 @@
                     if (type5.Name == str11)
                     {
                         ///goto  Label_0C02;  ///WYJ fix, simplify the flow
-                        type4 = type5;
+                        commissionClass = type5;
                         break;
                     }
                 }
             }
-            this.tradingSystemExecutor.Commission = (Commission) this.assemblyLoader_1.CreateInstance(type4);
+            this.tradingSystemExecutor.Commission = (Commission) this.assemblyLoader_Commission.CreateInstance(commissionClass);
             if (this.tradingSystemExecutor.Commission is ICustomSettings)
             {
                 (this.tradingSystemExecutor.Commission as ICustomSettings).ReadSettings(this.Settings);
             }
-            this.assemblyLoader_4.Path = this.AppPath;
-            foreach (System.Type type6 in this.assemblyLoader_4.Types)
+            this.assemblyLoader_PosSizer.Path = this.AppPath;
+            foreach (System.Type type6 in this.assemblyLoader_PosSizer.Types)
             {
-                PosSizer sizer = (PosSizer) this.assemblyLoader_4.CreateInstance(type6);
-                this.list_9.Add(sizer);
+                PosSizer sizer = (PosSizer) this.assemblyLoader_PosSizer.CreateInstance(type6);
+                this.posSizers.Add(sizer);
                 if (sizer is ICustomSettings)
                 {
                     (sizer as ICustomSettings).ReadSettings(this.Settings);
                 }
             }
-            this.list_9.Sort(new CompareByFriendlyName());
-            TradingSystemExecutor.PosSizers = this.list_9;
-            this.assemblyLoader_3.Path = this.AppPath;
-            foreach (System.Type type7 in this.assemblyLoader_3.Types)
+            this.posSizers.Sort(new CompareByFriendlyName());
+            TradingSystemExecutor.PosSizers = this.posSizers;
+            this.assemblyLoader_Optimizer.Path = this.AppPath;
+            foreach (System.Type type7 in this.assemblyLoader_Optimizer.Types)
             {
-                Optimizer optimizer = (Optimizer) this.assemblyLoader_3.CreateInstance(type7);
+                Optimizer optimizer = (Optimizer) this.assemblyLoader_Optimizer.CreateInstance(type7);
                 this.optimizers.Add(optimizer);
             }
             string str12 = this.settingsManager.Get("PositionSize", "");
@@ -408,8 +407,8 @@
             {
                 str14 = "FidelityACTIVStreamingProvider";
             }
-            this.assemblyLoader_2.Path = this.AppPath;
-            using (enumerator = this.assemblyLoader_2.Types.GetEnumerator())
+            this.assemblyLoader_StreamingDataProvider.Path = this.AppPath;
+            using (enumerator = this.assemblyLoader_StreamingDataProvider.Types.GetEnumerator())
             {
                 System.Type type8;
                 while (enumerator.MoveNext())
@@ -418,14 +417,15 @@
                     if (type8.Name == str14)
                     {
                         ///goto  Label_1075; ///WYJ fix, simplify the flow
-                        this.StreamingProvider = (StreamingDataProvider)this.assemblyLoader_2.CreateInstance(type8);
+                        this.StreamingProvider = (StreamingDataProvider)this.assemblyLoader_StreamingDataProvider.CreateInstance(type8);
                         break; 
                     }
                 }
             }
-            flag4 = this.settingsManager.Get("BadTickFilter", false);
+            bool badTickFilter = this.settingsManager.Get("BadTickFilter", false);
             double threshold = this.settingsManager.Get("BadTickThreshold", (double) 20.0);
-            StreamingDataProvider.SetBadTickFilterSettings(flag4, threshold);
+            StreamingDataProvider.SetBadTickFilterSettings(badTickFilter, threshold);
+
             this.strategyManager_1.RootPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\Data";
             this.strategyManager_1.LoadStrategies();
             foreach (Strategy strategy in this.strategyManager_1.Strategies)
@@ -442,9 +442,9 @@
                 foreach (string str16 in File.ReadAllLines(str15))
                 {
                     Strategy iD = this.Strategies.LookupID(str16);
-                    if ((iD != null) && !this.list_3.Contains(iD))
+                    if ((iD != null) && !this.strategyMRU.Contains(iD))
                     {
-                        this.list_3.Add(iD);
+                        this.strategyMRU.Add(iD);
                     }
                 }
             }
@@ -483,15 +483,15 @@
                 }
             }
             this.timer_0.Enabled = true;
-            if (File.Exists(this.string_1))
+            if (File.Exists(this.accountFile))
             {
-                string[] strArray5 = File.ReadAllLines(this.string_1);
-                this.list_5.Clear();
+                string[] strArray5 = File.ReadAllLines(this.accountFile);
+                this.accountNumbers.Clear();
                 if (strArray5 != null)
                 {
                     foreach (string str19 in strArray5)
                     {
-                        this.list_5.Add(this.method_11(str19));
+                        this.accountNumbers.Add(this.decrypt(str19));
                     }
                 }
             }
@@ -499,9 +499,9 @@
             {
                 foreach (Account account in this.BrokerProvider.Accounts)
                 {
-                    if (!this.list_5.Contains(account.AccountNumber))
+                    if (!this.accountNumbers.Contains(account.AccountNumber))
                     {
-                        this.list_5.Add(account.AccountNumber);
+                        this.accountNumbers.Add(account.AccountNumber);
                     }
                 }
             }
@@ -555,7 +555,7 @@
         public void AddStrategyToMRU(Strategy strategy_0)
         {
             Strategy item = null;
-            using (List<Strategy>.Enumerator enumerator = this.list_3.GetEnumerator())
+            using (List<Strategy>.Enumerator enumerator = this.strategyMRU.GetEnumerator())
             {
                 Strategy current;
                 while (enumerator.MoveNext())
@@ -571,12 +571,12 @@
             }
             if (item != null)
             {
-                this.list_3.Remove(item);
+                this.strategyMRU.Remove(item);
             }
-            this.list_3.Insert(0, strategy_0);
-            while (this.list_3.Count > 10)
+            this.strategyMRU.Insert(0, strategy_0);
+            while (this.strategyMRU.Count > 10)
             {
-                this.list_3.RemoveAt(10);
+                this.strategyMRU.RemoveAt(10);
             }
             this.SaveStrategyMRU();
         }
@@ -733,9 +733,9 @@
 
         public void DeleteStrategyFromMRU(Strategy strategy_0)
         {
-            if (this.list_3.Contains(strategy_0))
+            if (this.strategyMRU.Contains(strategy_0))
             {
-                this.list_3.Remove(strategy_0);
+                this.strategyMRU.Remove(strategy_0);
             }
             this.SaveStrategyMRU();
         }
@@ -772,10 +772,10 @@
             this.timer_0 = new System.Windows.Forms.Timer(this.components);
             this.helpProvider = new System.Windows.Forms.HelpProvider();
             this.settingsManager = new SettingsManager(this.components);
-            this.assemblyLoader_0 = new AssemblyLoader(this.components);
-            this.assemblyLoader_1 = new AssemblyLoader(this.components);
-            this.assemblyLoader_2 = new AssemblyLoader(this.components);
-            this.assemblyLoader_3 = new AssemblyLoader(this.components);
+            this.assemblyLoader_PerformanceVisualizer = new AssemblyLoader(this.components);
+            this.assemblyLoader_Commission = new AssemblyLoader(this.components);
+            this.assemblyLoader_StreamingDataProvider = new AssemblyLoader(this.components);
+            this.assemblyLoader_Optimizer = new AssemblyLoader(this.components);
             this.barRange = new BarDataRangeSelecter();
             this.dataSourceManager = new DataSourceManager(this.components);
             this.chartRenderer = new ChartRenderer(this.components);
@@ -784,7 +784,7 @@
             this.tradingSystemExecutor = new TradingSystemExecutor(this.components);
             this.strategyManager_1 = new StrategyManager(this.components);
             this.tradeManager = new WealthLab.TradeManager(this.components);
-            this.assemblyLoader_4 = new AssemblyLoader(this.components);
+            this.assemblyLoader_PosSizer = new AssemblyLoader(this.components);
             base.SuspendLayout();
             this.timer_0.Interval = 0xea60;
             this.timer_0.Tick += new EventHandler(this.timer_0_Tick);
@@ -792,26 +792,26 @@
             this.settingsManager.FileName = "WealthLabConfig.txt";
             this.settingsManager.IsEncrypted = false;
             this.settingsManager.RootPath = null;
-            this.assemblyLoader_0.BaseClass = "";
-            this.assemblyLoader_0.DLLNameFilter = "";
-            this.assemblyLoader_0.Interface = "IPerformanceVisualizer";
-            this.assemblyLoader_0.Path = null;
-            this.assemblyLoader_0.PathMask = "*.dll";
-            this.assemblyLoader_1.BaseClass = "Commission";
-            this.assemblyLoader_1.DLLNameFilter = "";
-            this.assemblyLoader_1.Interface = null;
-            this.assemblyLoader_1.Path = null;
-            this.assemblyLoader_1.PathMask = "*.dll";
-            this.assemblyLoader_2.BaseClass = "StreamingDataProvider";
-            this.assemblyLoader_2.DLLNameFilter = "";
-            this.assemblyLoader_2.Interface = null;
-            this.assemblyLoader_2.Path = null;
-            this.assemblyLoader_2.PathMask = "*.dll";
-            this.assemblyLoader_3.BaseClass = "Optimizer";
-            this.assemblyLoader_3.DLLNameFilter = "";
-            this.assemblyLoader_3.Interface = null;
-            this.assemblyLoader_3.Path = null;
-            this.assemblyLoader_3.PathMask = "*.dll";
+            this.assemblyLoader_PerformanceVisualizer.BaseClass = "";
+            this.assemblyLoader_PerformanceVisualizer.DLLNameFilter = "";
+            this.assemblyLoader_PerformanceVisualizer.Interface = "IPerformanceVisualizer";
+            this.assemblyLoader_PerformanceVisualizer.Path = null;
+            this.assemblyLoader_PerformanceVisualizer.PathMask = "*.dll";
+            this.assemblyLoader_Commission.BaseClass = "Commission";
+            this.assemblyLoader_Commission.DLLNameFilter = "";
+            this.assemblyLoader_Commission.Interface = null;
+            this.assemblyLoader_Commission.Path = null;
+            this.assemblyLoader_Commission.PathMask = "*.dll";
+            this.assemblyLoader_StreamingDataProvider.BaseClass = "StreamingDataProvider";
+            this.assemblyLoader_StreamingDataProvider.DLLNameFilter = "";
+            this.assemblyLoader_StreamingDataProvider.Interface = null;
+            this.assemblyLoader_StreamingDataProvider.Path = null;
+            this.assemblyLoader_StreamingDataProvider.PathMask = "*.dll";
+            this.assemblyLoader_Optimizer.BaseClass = "Optimizer";
+            this.assemblyLoader_Optimizer.DLLNameFilter = "";
+            this.assemblyLoader_Optimizer.Interface = null;
+            this.assemblyLoader_Optimizer.Path = null;
+            this.assemblyLoader_Optimizer.PathMask = "*.dll";
             this.barRange.BackColor = Color.AliceBlue;
             this.barRange.IsStreaming = false;
             this.barRange.Location = new Point(4, 0x1f);
@@ -898,25 +898,25 @@
             this.tradeManager.RootPath = null;
             this.tradeManager.SameBarExits = false;
             this.tradeManager.SettingsHost = null;
-            this.tradeManager.HistoryItemAdded += new EventHandler<HistoricalTradeEventArgs>(this.method_16);
-            this.tradeManager.PositionRemoved += new EventHandler<AccountPositionEventArgs>(this.method_22);
-            this.tradeManager.PositionAdded += new EventHandler<AccountPositionEventArgs>(this.method_20);
-            this.tradeManager.PositionsUpdated += new EventHandler<AccountEventArgs>(this.method_19);
-            this.tradeManager.HistoryItemUpdated += new EventHandler<HistoricalTradeEventArgs>(this.method_15);
-            this.tradeManager.OrderRemoved += new EventHandler<OrderEventArgs>(this.method_18);
-            this.tradeManager.OrdersUpdated += new EventHandler<EventArgs>(this.method_8);
-            this.tradeManager.StatusBarUpdated += new EventHandler<StringEventArgs>(this.method_24);
-            this.tradeManager.OrderAdded += new EventHandler<OrderEventArgs>(this.method_14);
-            this.tradeManager.AccountUpdated += new EventHandler<AccountEventArgs>(this.method_17);
-            this.tradeManager.QuoteUpdated += new EventHandler<QuoteEventArgs>(this.method_23);
-            this.tradeManager.OrderChanged += new EventHandler<OrderEventArgs>(this.method_13);
-            this.tradeManager.OrderStatusUpdated += new EventHandler<OrderEventArgs>(this.method_13);
-            this.tradeManager.PositionChanged += new EventHandler<AccountPositionEventArgs>(this.method_21);
-            this.assemblyLoader_4.BaseClass = "PosSizer";
-            this.assemblyLoader_4.DLLNameFilter = "";
-            this.assemblyLoader_4.Interface = null;
-            this.assemblyLoader_4.Path = null;
-            this.assemblyLoader_4.PathMask = "*.dll";
+            this.tradeManager.HistoryItemAdded += new EventHandler<HistoricalTradeEventArgs>(this.historyItemAddedEventHandler);
+            this.tradeManager.PositionRemoved += new EventHandler<AccountPositionEventArgs>(this.positionRemovedEventHandler);
+            this.tradeManager.PositionAdded += new EventHandler<AccountPositionEventArgs>(this.positionAddedEventHandler);
+            this.tradeManager.PositionsUpdated += new EventHandler<AccountEventArgs>(this.positionsUpdatedEventHandler);
+            this.tradeManager.HistoryItemUpdated += new EventHandler<HistoricalTradeEventArgs>(this.historyItemUpdatedEventHandler);
+            this.tradeManager.OrderRemoved += new EventHandler<OrderEventArgs>(this.orderRemovedEventHandler);
+            this.tradeManager.OrdersUpdated += new EventHandler<EventArgs>(this.ordersUpdatedEventHandler);
+            this.tradeManager.StatusBarUpdated += new EventHandler<StringEventArgs>(this.statusBarUpdatedEventHandler);
+            this.tradeManager.OrderAdded += new EventHandler<OrderEventArgs>(this.orderAddedEventHandler);
+            this.tradeManager.AccountUpdated += new EventHandler<AccountEventArgs>(this.accountUpdatedEventHandler);
+            this.tradeManager.QuoteUpdated += new EventHandler<QuoteEventArgs>(this.quoteUpdatedEventHandler);
+            this.tradeManager.OrderChanged += new EventHandler<OrderEventArgs>(this.orderStatusUpdatedEventHandler);
+            this.tradeManager.OrderStatusUpdated += new EventHandler<OrderEventArgs>(this.orderStatusUpdatedEventHandler);
+            this.tradeManager.PositionChanged += new EventHandler<AccountPositionEventArgs>(this.positionChangedEventHandler);
+            this.assemblyLoader_PosSizer.BaseClass = "PosSizer";
+            this.assemblyLoader_PosSizer.DLLNameFilter = "";
+            this.assemblyLoader_PosSizer.Interface = null;
+            this.assemblyLoader_PosSizer.Path = null;
+            this.assemblyLoader_PosSizer.PathMask = "*.dll";
             base.AutoScaleDimensions = new SizeF(6f, 13f);
             base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             base.Controls.Add(this.barRange);
@@ -963,7 +963,7 @@
                         if ((bars3 != null) && (bars3.Count > 0))
                         {
                             ///goto  Label_0075;  ///WYJ fix, simplify the flow
-                            this.method_4(bars3);
+                            this.lookUpSymbolInfo(bars3);
                             return bars3;
                         }
                     }
@@ -985,7 +985,7 @@
                         if ((bars4 != null) && (bars4.Count > 0))
                         {
                             ///goto  Label_0103;  ///WYJ fix, simplify the flow
-                            this.method_4(bars4);
+                            this.lookUpSymbolInfo(bars4);
                             return bars4;
                         }
                     }
@@ -1007,7 +1007,7 @@
                             if ((bars != null) && (bars.Count > 0))
                             {
                                 ///goto  Label_01A2;  ///WYJ fix, simplify the flow
-                                this.method_4(bars);
+                                this.lookUpSymbolInfo(bars);
                                 return bars;
                             }
                         }
@@ -1041,17 +1041,17 @@
                 }
                 if (this.BrokerProvider.Accounts.Count > 0)
                 {
-                    this.list_5.Clear();
+                    this.accountNumbers.Clear();
                     string[] contents = new string[this.BrokerProvider.Accounts.Count];
                     int index = 0;
                     foreach (Account account2 in this.BrokerProvider.Accounts)
                     {
-                        this.list_5.Add(account2.AccountNumber);
-                        contents[index] = this.method_9(account2.AccountNumber);
+                        this.accountNumbers.Add(account2.AccountNumber);
+                        contents[index] = this.encrypt(account2.AccountNumber);
                         index++;
                     }
-                    FileNameValidator.ValidateFileName(this.string_1);
-                    File.WriteAllLines(this.string_1, contents);
+                    FileNameValidator.ValidateFileName(this.accountFile);
+                    File.WriteAllLines(this.accountFile, contents);
                 }
                 this.BrokerProvider.RequestOrderStatusUpdates(null);
             }
@@ -1094,9 +1094,10 @@
             this.SaveSettings();
         }
 
-        private void method_0()
+        ///WYJ fix, original signature: private void method_0()
+        private void saveNextAuthRequiredToSettings()
         {
-            string str = this.dateTime_0.Ticks.ToString();
+            string str = this.nextAuthRequired.Ticks.ToString();
             StringBuilder builder = new StringBuilder();
             builder.Append(str.ToString());
             if (this.NicAdressesCount == 0)
@@ -1105,41 +1106,46 @@
             }
             else
             {
-                this.int_0 = 0;
-                while (this.int_0 < this.NicAdressesCount)
+                this.indexNicAddress = 0;   ///WYJ note, after the loop, indexNicAddress points to last NicAddress
+                while (this.indexNicAddress < this.NicAdressesCount)
                 {
                     builder.Append(";" + this.NicAddress);
-                    this.int_0++;
+                    this.indexNicAddress++;
                 }
             }
-            string str2 = this.method_9(builder.ToString());
+            string str2 = this.encrypt(builder.ToString());
             this.Settings.Set(this._newGrace, str2);
         }
 
-        private void method_1()
+        ///WYJ fix, original signature: private void method_1()
+        private void saveNextAuthRequiredToFile()
         {
-            string str = this.dateTime_0.Subtract(new TimeSpan(this.AuthProvider.GracePeriod, 0, 0, 0)).Ticks.ToString();
-            str = this.method_9(str);
+            string str = this.nextAuthRequired.Subtract(new TimeSpan(this.AuthProvider.GracePeriod, 0, 0, 0)).Ticks.ToString();
+            str = this.encrypt(str);
             FileNameValidator.ValidateFileName(this._authFile);
             File.WriteAllText(this._authFile, str);
         }
 
-        internal string method_10(string string_2, string string_3)
+        ///WYJ fix, original signature: internal string method_10(string string_2, string string_3)
+        internal string encryptWith(string string_2, string string_3)
         {
             return Cryptography.Crypt(string_2, string_3, true);
         }
 
-        internal string method_11(string string_2)
+        ///WYJ fix, original signature: internal string method_11(string string_2)
+        internal string decrypt(string string_2)
         {
             return Cryptography.Crypt(string_2, this._password, false);
         }
 
-        internal string method_12(string string_2, string string_3)
+        ///WYJ fix, original signature: internal string method_12(string string_2, string string_3)
+        internal string decryptWith(string string_2, string string_3)
         {
             return Cryptography.Crypt(string_2, string_3, false);
         }
 
-        private void method_13(object sender, OrderEventArgs e)
+        ///WYJ fix, original signature: private void method_13(object sender, OrderEventArgs e)
+        private void orderStatusUpdatedEventHandler(object sender, OrderEventArgs e)
         {
             if (OrdersAlertsForm.Instance != null)
             {
@@ -1147,7 +1153,8 @@
             }
         }
 
-        private void method_14(object sender, OrderEventArgs e)
+        ///WYJ fix, original signature: private void method_14(object sender, OrderEventArgs e)
+        private void orderAddedEventHandler(object sender, OrderEventArgs e)
         {
             if ((OrdersAlertsForm.Instance == null) && this.settingsManager.Get("AutoOpenOrders", true))
             {
@@ -1163,7 +1170,8 @@
             }
         }
 
-        private void method_15(object sender, HistoricalTradeEventArgs e)
+        ///WYJ fix, original signature: private void method_15(object sender, HistoricalTradeEventArgs e)
+        private void historyItemUpdatedEventHandler(object sender, HistoricalTradeEventArgs e)
         {
             if (AccountsPositionsForm.Instance != null)
             {
@@ -1171,7 +1179,8 @@
             }
         }
 
-        private void method_16(object sender, HistoricalTradeEventArgs e)
+        ///WYJ fix, original signature: private void method_16(object sender, HistoricalTradeEventArgs e)
+        private void historyItemAddedEventHandler(object sender, HistoricalTradeEventArgs e)
         {
             if (AccountsPositionsForm.Instance != null)
             {
@@ -1179,7 +1188,8 @@
             }
         }
 
-        private void method_17(object sender, AccountEventArgs e)
+        ///WYJ fix, original signature: private void method_17(object sender, AccountEventArgs e)
+        private void accountUpdatedEventHandler(object sender, AccountEventArgs e)
         {
             if (AccountsPositionsForm.Instance != null)
             {
@@ -1187,7 +1197,8 @@
             }
         }
 
-        private void method_18(object sender, OrderEventArgs e)
+        ///WYJ fix, original signature: private void method_18(object sender, OrderEventArgs e)
+        private void orderRemovedEventHandler(object sender, OrderEventArgs e)
         {
             if (OrdersAlertsForm.Instance != null)
             {
@@ -1195,7 +1206,8 @@
             }
         }
 
-        private void method_19(object sender, AccountEventArgs e)
+        ///WYJ fix, original signature: private void method_19(object sender, AccountEventArgs e)
+        private void positionsUpdatedEventHandler(object sender, AccountEventArgs e)
         {
             if (AccountsPositionsForm.Instance != null)
             {
@@ -1203,13 +1215,15 @@
             }
         }
 
-        private void method_2(object object_0)
+        ///WYJ fix, original signature: private void method_2(object object_0)
+        private void doPlaySound(object player)
         {
-            ((SoundPlayer) object_0).PlaySync();
-            this.bool_3 = false;
+            ((SoundPlayer) player).PlaySync();
+            this.soundPlaying = false;
         }
 
-        private void method_20(object sender, AccountPositionEventArgs e)
+        ///WYJ fix, original signature: private void method_20(object sender, AccountPositionEventArgs e)
+        private void positionAddedEventHandler(object sender, AccountPositionEventArgs e)
         {
             if (AccountsPositionsForm.Instance != null)
             {
@@ -1217,7 +1231,8 @@
             }
         }
 
-        private void method_21(object sender, AccountPositionEventArgs e)
+        ///WYJ fix, original signature: private void method_21(object sender, AccountPositionEventArgs e)
+        private void positionChangedEventHandler(object sender, AccountPositionEventArgs e)
         {
             if (AccountsPositionsForm.Instance != null)
             {
@@ -1225,7 +1240,8 @@
             }
         }
 
-        private void method_22(object sender, AccountPositionEventArgs e)
+        ///WYJ fix, original signature: private void method_22(object sender, AccountPositionEventArgs e)
+        private void positionRemovedEventHandler(object sender, AccountPositionEventArgs e)
         {
             if (AccountsPositionsForm.Instance != null)
             {
@@ -1233,7 +1249,8 @@
             }
         }
 
-        private void method_23(object sender, QuoteEventArgs e)
+        ///WYJ fix, original signature: private void method_23(object sender, QuoteEventArgs e)
+        private void quoteUpdatedEventHandler(object sender, QuoteEventArgs e)
         {
             foreach (Form form in Application.OpenForms)
             {
@@ -1244,18 +1261,20 @@
             }
         }
 
-        private void method_24(object sender, StringEventArgs e)
+        ///WYJ fix, original signature: private void method_24(object sender, StringEventArgs e)
+        private void statusBarUpdatedEventHandler(object sender, StringEventArgs e)
         {
             foreach (Form form in Application.OpenForms)
             {
                 if (form is MainForm)
                 {
-                    (form as MainForm).PrintStatus(e.Message);
+                    (form as MainForm).UpdateStatus(e.Message);
                 }
             }
         }
 
-        internal void method_25(Alert alert_0, bool bool_5)
+        ///WYJ fix, original signature: internal void method_25(Alert alert_0, bool bool_5)
+        internal void emailAlert(Alert alert_0, bool bool_ShouldOrderBePlaced)   ///WYJ note, bool_ShouldOrderBePlaced is not used
         {
             int num6;
             string subject = string.Empty;
@@ -1292,21 +1311,23 @@
             string s = Instance.Settings.Get("EmailSMTPPort", string.Empty);
             string address = Instance.Settings.Get("EmailAddresses", string.Empty).Replace("~!", "\r\n");
             string credUser = Instance.Settings.Get("EmailUserID", "");
-            string credPass = Instance.method_11(Instance.Settings.Get("EmailPassword", string.Empty));
+            string credPass = Instance.decrypt(Instance.Settings.Get("EmailPassword", string.Empty));
             bool sSL = Instance.Settings.Get("EmailSSL", false);
             int.TryParse(s, out num6);
             new WLPEmail(host, num6, sSL, credUser, credPass, address, subject, builder.ToString()).Enqueue(Application.ProductName);
         }
 
-        internal void method_26(List<Alert> list_10)
+        ///WYJ fix, original signature: internal void method_26(List<Alert> list_10)
+        internal void emailAlerts(List<Alert> list_10)
         {
             foreach (Alert alert in list_10)
             {
-                this.method_25(alert, true);
+                this.emailAlert(alert, true);
             }
         }
 
-        internal void method_27(string string_2, int int_2, bool bool_5, string string_3, string string_4, string string_5)
+        ///WYJ fix, original signature: internal void method_27(string string_2, int int_2, bool bool_5, string string_3, string string_4, string string_5)
+        internal void sendTestEmail(string string_2, int int_2, bool bool_5, string string_3, string string_4, string string_5)
         {
             string_5 = string_5.Replace(" ", string.Empty);
             if (Application.ProductName == "WealthLabPro")
@@ -1319,12 +1340,15 @@
             }
         }
 
+        ///WYJ fix, inlined, not needed anymore
+        /*
         private System.Type method_3()
         {
             return typeof(FidelityFlatRate);
-        }
+        } */
 
-        private void method_4(Bars bars_0)
+        ///WYJ fix, original signature: private void method_4(Bars bars_0)
+        private void lookUpSymbolInfo(Bars bars_0)
         {
             using (IEnumerator<SymbolInfo> enumerator = BarsLoader.SymbolInfo.GetEnumerator())
             {
@@ -1350,7 +1374,8 @@
             this.drawingObjectManager_0.SplitAdjustDrawingObjects(e.Symbol, e.SplitFactor, e.ExDate);
         }
 
-        private void method_6()
+        ///WYJ fix, original signature: private void method_6()
+        private void saveChartRendererSettings()
         {
             this.settingsManager.Set("BarSpacing", this.chartRenderer.BarSpacing);
             this.settingsManager.Set("ChartBackgroundColor", this.chartRenderer.BackgroundColor);
@@ -1371,30 +1396,32 @@
             this.settingsManager.Set("TitleFont", this.chartRenderer.TitleFont);
         }
 
-        private void method_7(string string_2, string string_3)
+        ///WYJ fix, original signature: private void method_7(string string_2, string string_3)
+        private void copyAllFiles(string sourceDir, string destDir)
         {
-            if (Directory.Exists(string_2))
+            if (Directory.Exists(sourceDir))
             {
-                if (!Directory.Exists(string_3))
+                if (!Directory.Exists(destDir))
                 {
-                    Directory.CreateDirectory(string_3);
+                    Directory.CreateDirectory(destDir);
                 }
-                foreach (string str in Directory.GetDirectories(string_2))
+                foreach (string str in Directory.GetDirectories(sourceDir))
                 {
                     string[] strArray2 = str.Split(new char[] { '\\' });
                     string str2 = strArray2[strArray2.Length - 1];
-                    string str3 = string_2 + @"\" + str2;
-                    string str4 = string_3 + @"\" + str2;
-                    this.method_7(str3, str4);
+                    string str3 = sourceDir + @"\" + str2;
+                    string str4 = destDir + @"\" + str2;
+                    this.copyAllFiles(str3, str4);
                 }
-                foreach (string str5 in Directory.GetFiles(string_2))
+                foreach (string str5 in Directory.GetFiles(sourceDir))
                 {
-                    File.Copy(str5, string_3 + @"\" + Path.GetFileName(str5));
+                    File.Copy(str5, destDir + @"\" + Path.GetFileName(str5));
                 }
             }
         }
 
-        private void method_8(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_8(object sender, EventArgs e)
+        private void ordersUpdatedEventHandler(object sender, EventArgs e)
         {
             try
             {
@@ -1415,7 +1442,8 @@
             }
         }
 
-        internal string method_9(string string_2)
+        ///WYJ fix, original signature: internal string method_9(string string_2)
+        internal string encrypt(string string_2)
         {
             return Cryptography.Crypt(string_2, this._password, true);
         }
@@ -1459,7 +1487,7 @@
 
         public void PlaySound(string soundFile)
         {
-            if (!this.bool_3 && File.Exists(soundFile))
+            if (!this.soundPlaying && File.Exists(soundFile))
             {
                 StreamReader reader = new StreamReader(soundFile);
                 this.PlaySound(reader.BaseStream, false);
@@ -1468,11 +1496,11 @@
 
         public void PlaySound(Stream stream, bool prioritize)
         {
-            if (!this.bool_3 || prioritize)
+            if (!this.soundPlaying || prioritize)
             {
                 SoundPlayer parameter = new SoundPlayer(stream);
-                this.bool_3 = true;
-                new Thread(new ParameterizedThreadStart(this.method_2)).Start(parameter);
+                this.soundPlaying = true;
+                new Thread(new ParameterizedThreadStart(this.doPlaySound)).Start(parameter);
             }
         }
 
@@ -1494,7 +1522,7 @@
                 {
                     flag2 = false;
                 }
-                this.method_6();
+                this.saveChartRendererSettings();
                 this.settingsManager.Set("PositionSize", this.tradingSystemExecutor.PosSize.ToString());
                 this.settingsManager.Set("DataRange", this.barRange.DataRange.ToString());
                 if (flag2)
@@ -1544,10 +1572,10 @@
         public void SaveStrategyMRU()
         {
             string fileName = this.DataPath + @"\StrategyMRU.txt";
-            string[] contents = new string[this.list_3.Count];
-            for (int i = 0; i < this.list_3.Count; i++)
+            string[] contents = new string[this.strategyMRU.Count];
+            for (int i = 0; i < this.strategyMRU.Count; i++)
             {
-                contents[i] = this.list_3[i].ID.ToString();
+                contents[i] = this.strategyMRU[i].ID.ToString();
             }
             FileNameValidator.ValidateFileName(fileName);
             File.WriteAllLines(fileName, contents);
@@ -1751,7 +1779,7 @@
         {
             get
             {
-                return this.list_5;
+                return this.accountNumbers;
             }
         }
 
@@ -1840,7 +1868,7 @@
             get
             {
                 string str = this.Settings.Get("DefaultAccount", "");
-                str = this.method_11(str);
+                str = this.decrypt(str);
                 if (str == null)
                 {
                     str = "";
@@ -1863,7 +1891,7 @@
             {
                 if (value != "")
                 {
-                    this.Settings.Set("DefaultAccount", this.method_9(value));
+                    this.Settings.Set("DefaultAccount", this.encrypt(value));
                     this.Settings.SaveSettings();
                     this.TradeManager.DefaultAccountNumber = value;
                 }
@@ -1956,17 +1984,17 @@
         {
             get
             {
-                if (this.dateTime_0 == DateTime.MinValue)
+                if (this.nextAuthRequired == DateTime.MinValue)
                 {
                     if (!this.Settings.ContainsKey(this._newGrace))
                     {
                         if (File.Exists(this._authFile))
                         {
                             string str = File.ReadAllText(this._authFile);
-                            str = this.method_11(str);
+                            str = this.decrypt(str);
                             DateTime time2 = new DateTime(long.Parse(str));
-                            this.dateTime_0 = time2 + new TimeSpan(this.AuthProvider.GracePeriod, 0, 0, 0);
-                            this.method_0();
+                            this.nextAuthRequired = time2 + new TimeSpan(this.AuthProvider.GracePeriod, 0, 0, 0);
+                            this.saveNextAuthRequiredToSettings();
                         }
                         else
                         {
@@ -1979,68 +2007,68 @@
                             {
                                 Application.Exit();
                             }
-                            this.dateTime_0 = now + new TimeSpan(this.authenticationProvider.GracePeriod, 0, 0, 0);
+                            this.nextAuthRequired = now + new TimeSpan(this.authenticationProvider.GracePeriod, 0, 0, 0);
                         }
                     }
                     else
                     {
-                        bool flag = false;
+                        bool nextAuthRequiredRetrieved = false;   ///WYJ fix, original name: flag
                         string str2 = this.Settings.Get(this._newGrace, "");
-                        this.int_0 = 0;
-                        while (this.int_0 < this.NicAdressesCount)
+                        this.indexNicAddress = 0;
+                        while (this.indexNicAddress < this.NicAdressesCount)
                         {
                             try
                             {
-                                long ticks = long.Parse(this.method_12(str2, this.NicAddress));
-                                this.dateTime_0 = new DateTime(ticks);
-                                flag = true;
+                                long ticks = long.Parse(this.decryptWith(str2, this.NicAddress));
+                                this.nextAuthRequired = new DateTime(ticks);
+                                nextAuthRequiredRetrieved = true;
                                 break;
                             }
                             catch
                             {
-                                this.int_0++;
+                                this.indexNicAddress++;
                                 continue;
                             }
                         }
-                        if (!flag)
+                        if (!nextAuthRequiredRetrieved)
                         {
                             try
                             {
-                                string str4 = this.method_11(str2);
+                                string str4 = this.decrypt(str2);
                                 if (!string.IsNullOrEmpty(str4))
                                 {
                                     long num2;
-                                    string[] strArray = str4.Split(new char[] { ';' });
-                                    if (long.TryParse(strArray[0], out num2) && (strArray.Length > 1))
+                                    string[] nicAddresses = str4.Split(new char[] { ';' });
+                                    if (long.TryParse(nicAddresses[0], out num2) && (nicAddresses.Length > 1))
                                     {
-                                        if (((strArray.Length == 1) && (strArray[1] == "none")) && (this.NicAdressesCount == 0))
+                                        if (((nicAddresses.Length == 1) && (nicAddresses[1] == "none")) && (this.NicAdressesCount == 0))
                                         {
-                                            flag = true;
+                                            nextAuthRequiredRetrieved = true;
                                         }
                                         else
                                         {
-                                            for (int i = 1; i < strArray.Length; i++)
+                                            for (int i = 1; i < nicAddresses.Length; i++)
                                             {
-                                                this.int_0 = 0;
-                                                while (this.int_0 < this.NicAdressesCount)
+                                                this.indexNicAddress = 0;
+                                                while (this.indexNicAddress < this.NicAdressesCount)
                                                 {
-                                                    if (this.NicAddress == strArray[i])
+                                                    if (this.NicAddress == nicAddresses[i])
                                                     {
                                                         ///goto  Label_0149;  ///WYJ fix, simplify the flow 
-                                                        flag = true;
+                                                        nextAuthRequiredRetrieved = true;
                                                         break;
                                                     }
-                                                    this.int_0++;
+                                                    this.indexNicAddress++;   ///WYJ note, indexNicAddress represents the position of NicAddress in the array
                                                 }
-                                                if (flag)
+                                                if (nextAuthRequiredRetrieved)
                                                 {
                                                     break;
                                                 }
                                             }
                                         }
-                                        if (flag)
+                                        if (nextAuthRequiredRetrieved)
                                         {
-                                            this.dateTime_0 = new DateTime(num2);
+                                            this.nextAuthRequired = new DateTime(num2);
                                         }
                                     }
                                 }
@@ -2050,20 +2078,20 @@
                             }
                         }
                     }
-                    if (this.AuthProvider.NextAuthRequired < this.dateTime_0)
+                    if (this.AuthProvider.NextAuthRequired < this.nextAuthRequired)
                     {
-                        this.dateTime_0 = this.AuthProvider.NextAuthRequired;
-                        this.method_0();
-                        this.method_1();
+                        this.nextAuthRequired = this.AuthProvider.NextAuthRequired;
+                        this.saveNextAuthRequiredToSettings();
+                        this.saveNextAuthRequiredToFile();
                     }
                 }
-                return this.dateTime_0;
+                return this.nextAuthRequired;
             }
             set
             {
-                this.dateTime_0 = value;
-                this.method_0();
-                this.method_1();
+                this.nextAuthRequired = value;
+                this.saveNextAuthRequiredToSettings();
+                this.saveNextAuthRequiredToFile();
             }
         }
 
@@ -2074,15 +2102,15 @@
                 string str;
                 try
                 {
-                    int num = 0;
+                    ///int num = 0;
                     NetworkInterface[] allNetworkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
                     int num1 = 0;
                     while (num1 < (int)allNetworkInterfaces.Length)
                     {
                         NetworkInterface networkInterface = allNetworkInterfaces[num1];
-                        if (num != this.int_0)
+                        if (num1 != this.indexNicAddress)   ///WYJ fix, original: if (num != this.int_0)
                         {
-                            num++;
+                            ///num++;
                             num1++;
                         }
                         else
@@ -2125,7 +2153,7 @@
         {
             get
             {
-                return this.list_9;
+                return this.posSizers;
             }
         }
 
@@ -2157,7 +2185,7 @@
         {
             get
             {
-                return this.list_3;
+                return this.strategyMRU;
             }
         }
 
@@ -2173,28 +2201,28 @@
         {
             get
             {
-                if (!this.bool_0)
+                if (!this.strategyTemplateCodeInited)
                 {
                     string path = this.DataPath + @"\StrategyTemplate.txt";
-                    this.bool_0 = true;
+                    this.strategyTemplateCodeInited = true;
                     if (File.Exists(path))
                     {
-                        this.string_0 = File.ReadAllText(path);
+                        this.strategyTemplateCode = File.ReadAllText(path);
                     }
                     else
                     {
-                        this.string_0 = Resources.StrategyTemplate;
+                        this.strategyTemplateCode = Resources.StrategyTemplate;
                     }
                 }
-                return this.string_0;
+                return this.strategyTemplateCode;
             }
             set
             {
                 string fileName = this.DataPath + @"\StrategyTemplate.txt";
-                this.string_0 = value;
-                this.bool_0 = true;
+                this.strategyTemplateCode = value;
+                this.strategyTemplateCodeInited = true;
                 FileNameValidator.ValidateFileName(fileName);
-                File.WriteAllText(fileName, this.string_0);
+                File.WriteAllText(fileName, this.strategyTemplateCode);
             }
         }
 

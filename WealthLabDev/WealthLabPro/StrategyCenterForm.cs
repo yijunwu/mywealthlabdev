@@ -2398,7 +2398,7 @@
                 }
                 if (list.Count > 0)
                 {
-                    MainModule.Instance.method_26(list);
+                    MainModule.Instance.emailAlerts(list);
                 }
             }
         }

@@ -188,7 +188,7 @@
         {
             if (this.chartForm_0.MyMainForm.DataSource == null)
             {
-                this.chartForm_0.MyMainForm.method_14();
+                this.chartForm_0.MyMainForm.selectFirstDataSourceNode();
             }
             PositionSize positionSize = this.chartForm_0.posSize.PositionSize;
             positionSize.Mode = PosSizeMode.Dollar;

@@ -339,7 +339,7 @@
                 int.TryParse(this.txtSMTPPort.Text, out num);
                 try
                 {
-                    MainModule.Instance.method_27(this.txtSMTPHost.Text, num, this.chkSSL.Checked, this.txtUserID.Text, this.txtPassword.Text, this.txtEmailAddresses.Text.Trim());
+                    MainModule.Instance.sendTestEmail(this.txtSMTPHost.Text, num, this.chkSSL.Checked, this.txtUserID.Text, this.txtPassword.Text, this.txtEmailAddresses.Text.Trim());
                     MessageBox.Show("Message Sent Successfully", Application.ProductName);
                 }
                 catch (Exception exception)
@@ -2794,7 +2794,7 @@
             settings.Set("EmailAddresses", this.txtEmailAddresses.Text.Replace("\r\n", "~!").Replace(" ", string.Empty).Trim());
             settings.Set("EmailUserID", this.txtUserID.Text.Trim());
             settings.Set("EmailAuthenticateWithPassword", this.chkAuthenticateWithPassword.Checked);
-            settings.Set("EmailPassword", MainModule.Instance.method_9(this.txtPassword.Text.Trim()));
+            settings.Set("EmailPassword", MainModule.Instance.encrypt(this.txtPassword.Text.Trim()));
             settings.Set("EmailSSL", this.chkSSL.Checked);
             MainModule.Instance.SaveSettings();
         }
@@ -3355,7 +3355,7 @@
                         this.txtEmailAddresses.Text = str3;
                         this.txtUserID.Text = settings.Get("EmailUserID", "");
                         this.chkAuthenticateWithPassword.Checked = settings.Get("EmailAuthenticateWithPassword", false);
-                        this.txtPassword.Text = MainModule.Instance.method_11(settings.Get("EmailPassword", string.Empty));
+                        this.txtPassword.Text = MainModule.Instance.decrypt(settings.Get("EmailPassword", string.Empty));
                         if (!this.chkAuthenticateWithPassword.Checked)
                         {
                             this.txtPassword.Enabled = false;
@@ -3731,7 +3731,7 @@
             this.txtEmailAddresses.Text = str3;
             this.txtUserID.Text = settings.Get("EmailUserID", "");
             this.chkAuthenticateWithPassword.Checked = settings.Get("EmailAuthenticateWithPassword", false);
-            this.txtPassword.Text = MainModule.Instance.method_11(settings.Get("EmailPassword", string.Empty));
+            this.txtPassword.Text = MainModule.Instance.decrypt(settings.Get("EmailPassword", string.Empty));
             if (!this.chkAuthenticateWithPassword.Checked)
             {
                 this.txtPassword.Enabled = false;

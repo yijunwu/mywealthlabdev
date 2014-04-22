@@ -233,7 +233,7 @@
             if ((selectedNode != null) && (selectedNode.Level != 0))
             {
                 DraggedFundamentalItem item = new DraggedFundamentalItem(selectedNode.Tag as FundamentalDataProvider, selectedNode.Text);
-                MainForm.LastActivated.method_42(item);
+                MainForm.LastActivated.onFundamentalItemDropped(item);
             }
         }
 
