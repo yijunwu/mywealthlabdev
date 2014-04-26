@@ -35,7 +35,7 @@
             int num = this.bars_0.method_7(interpolate);
             if (this.chartRenderer != null)
             {
-                this.chartRenderer.method_10();
+                this.chartRenderer.addVolumeIndicatorsToPane();
                 this.chartRenderer.AdjustBarPositions();
             }
             return num;
@@ -95,14 +95,14 @@
             {
                 return null;
             }
-            this.method_0(int_1, 0, this.bars_0.Count);
+            this.checkBarNumInRange(int_1, 0, this.bars_0.Count);
             double num = this.bars_0.Close[int_1 - 1];
-            this.method_1(num);
+            this.checkPriceNotZero(num);
             double shares = this.tradingSystemExecutor.CalcPositionSize(this.bars_0, int_1, num, PositionType.Long, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
             {
                 Alert alert = new Alert(this.Strategy, this.bars_0, this.bars_0.Date[int_1 - 1], TradeType.Buy, OrderType.AtClose, shares, signalName, num, this.RiskStopLevel, this.AutoProfitLevel);
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return null;
             }
             Position position = new Position(this.bars_0, PositionType.Long, this.tradingSystemExecutor.Strategy.ID.ToString()) {
@@ -113,7 +113,7 @@
             };
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                position.EntryPrice += this.tradingSystemExecutor.method_14(this.bars_0.Close[int_1], false, this.bars_0);
+                position.EntryPrice += this.tradingSystemExecutor.priceSlip(this.bars_0.Close[int_1], false, this.bars_0);
                 position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.AtClose);
                 if (position.EntryPrice > this.bars_0.High[int_1])
                 {
@@ -125,7 +125,7 @@
             position.EntrySignal = signalName;
             position.Shares = shares;
             position.OverrideShareSize = this.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position);
+            this.tradingSystemExecutor.addPosition(position);
             return position;
         }
 
@@ -140,8 +140,8 @@
             {
                 return null;
             }
-            this.method_1(limitPrice);
-            this.method_0(int_1, 0, this.bars_0.Count);
+            this.checkPriceNotZero(limitPrice);
+            this.checkBarNumInRange(int_1, 0, this.bars_0.Count);
             limitPrice = this.roundPriceToTickMultiple(this.bars_0, limitPrice, true, PositionType.Long, OrderType.Limit);
             double shares = this.tradingSystemExecutor.CalcPositionSize(this.bars_0, int_1, limitPrice, PositionType.Long, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
@@ -149,14 +149,14 @@
                 Alert alert = new Alert(this.Strategy, this.bars_0, this.bars_0.Date[int_1 - 1], TradeType.Buy, OrderType.Limit, shares, signalName, limitPrice, this.RiskStopLevel, this.AutoProfitLevel) {
                     Price = limitPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return null;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (this.bars_0 == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, limitPrice, TradeType.Buy);
+                this.chartRenderer.addTradePriceMarker(int_1, limitPrice, TradeType.Buy);
             }
-            if ((limitPrice - this.tradingSystemExecutor.method_14(limitPrice, true, this.bars_0)) < this.bars_0.Low[int_1])
+            if ((limitPrice - this.tradingSystemExecutor.priceSlip(limitPrice, true, this.bars_0)) < this.bars_0.Low[int_1])
             {
                 return null;
             }
@@ -175,7 +175,7 @@
             }
             position.EntryPrice = limitPrice;
             position.OverrideShareSize = this.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position);
+            this.tradingSystemExecutor.addPosition(position);
             return position;
         }
 
@@ -190,14 +190,14 @@
             {
                 return null;
             }
-            this.method_0(int_1, 1, this.bars_0.Count);
+            this.checkBarNumInRange(int_1, 1, this.bars_0.Count);
             double num = this.bars_0.Close[int_1 - 1];
-            this.method_1(num);
+            this.checkPriceNotZero(num);
             double shares = this.tradingSystemExecutor.CalcPositionSize(this.bars_0, int_1, num, PositionType.Long, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
             {
                 Alert alert = new Alert(this.Strategy, this.bars_0, this.bars_0.Date[int_1 - 1], TradeType.Buy, OrderType.Market, shares, signalName, num, this.RiskStopLevel, this.AutoProfitLevel);
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return null;
             }
             Position position = new Position(this.bars_0, PositionType.Long, this.tradingSystemExecutor.Strategy.ID.ToString()) {
@@ -208,7 +208,7 @@
             };
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                position.EntryPrice += this.tradingSystemExecutor.method_14(this.bars_0.Open[int_1], false, this.bars_0);
+                position.EntryPrice += this.tradingSystemExecutor.priceSlip(this.bars_0.Open[int_1], false, this.bars_0);
                 position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.Market);
                 if (position.EntryPrice > this.bars_0.High[int_1])
                 {
@@ -219,7 +219,7 @@
             position.EntrySignal = signalName;
             position.Shares = shares;
             position.OverrideShareSize = this.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position);
+            this.tradingSystemExecutor.addPosition(position);
             return position;
         }
 
@@ -234,8 +234,8 @@
             {
                 return null;
             }
-            this.method_1(stopPrice);
-            this.method_0(int_1, 0, this.bars_0.Count);
+            this.checkPriceNotZero(stopPrice);
+            this.checkBarNumInRange(int_1, 0, this.bars_0.Count);
             stopPrice = this.roundPriceToTickMultiple(this.bars_0, stopPrice, true, PositionType.Long, OrderType.Stop);
             double shares = this.tradingSystemExecutor.CalcPositionSize(this.bars_0, int_1, stopPrice, PositionType.Long, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
@@ -243,12 +243,12 @@
                 Alert alert = new Alert(this.Strategy, this.bars_0, this.bars_0.Date[int_1 - 1], TradeType.Buy, OrderType.Stop, shares, signalName, stopPrice, this.RiskStopLevel, this.AutoProfitLevel) {
                     Price = stopPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return null;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (this.bars_0 == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, stopPrice, TradeType.Buy);
+                this.chartRenderer.addTradePriceMarker(int_1, stopPrice, TradeType.Buy);
             }
             if (stopPrice > this.bars_0.High[int_1])
             {
@@ -270,7 +270,7 @@
             position.EntryPrice = stopPrice;
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                position.EntryPrice += this.tradingSystemExecutor.method_14(stopPrice, false, this.bars_0);
+                position.EntryPrice += this.tradingSystemExecutor.priceSlip(stopPrice, false, this.bars_0);
                 position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Long, OrderType.Stop);
                 if (position.EntryPrice > this.bars_0.High[int_1])
                 {
@@ -278,13 +278,13 @@
                 }
             }
             position.OverrideShareSize = this.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position);
+            this.tradingSystemExecutor.addPosition(position);
             return position;
         }
 
         public void ClearDebug()
         {
-            this.tradingSystemExecutor.method_17();
+            this.tradingSystemExecutor.clearDebugWindow();
         }
 
         public int ClearExternalSeries(string symbol)
@@ -367,7 +367,7 @@
             {
                 return false;
             }
-            this.method_0(int_1, position_0.EntryBar, this.bars_0.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, this.bars_0.Count);
             if (position_0.PositionType != PositionType.Short)
             {
                 return false;
@@ -377,13 +377,13 @@
                 Alert alert = new Alert(this.Strategy, position_0.Bars, position_0.Bars.Date[int_1 - 1], TradeType.Cover, OrderType.AtClose, position_0.Shares, signalName) {
                     Position = position_0
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             double num3 = position_0.Bars.Close[int_1];
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                num3 += this.tradingSystemExecutor.method_14(num3, false, this.bars_0);
+                num3 += this.tradingSystemExecutor.priceSlip(num3, false, this.bars_0);
                 num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Short, OrderType.AtClose);
             }
             position_0.method_1(int_1, num3, OrderType.AtClose);
@@ -430,7 +430,7 @@
             {
                 return false;
             }
-            this.method_0(int_1, position_0.EntryBar, position_0.Bars.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, position_0.Bars.Count);
             if (position_0.PositionType != PositionType.Short)
             {
                 return false;
@@ -441,14 +441,14 @@
                     Position = position_0,
                     Price = limitPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (position_0.Bars == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, limitPrice, TradeType.Cover);
+                this.chartRenderer.addTradePriceMarker(int_1, limitPrice, TradeType.Cover);
             }
-            if ((limitPrice - this.tradingSystemExecutor.method_14(limitPrice, true, position_0.Bars)) < position_0.Bars.Low[int_1])
+            if ((limitPrice - this.tradingSystemExecutor.priceSlip(limitPrice, true, position_0.Bars)) < position_0.Bars.Low[int_1])
             {
                 return false;
             }
@@ -499,7 +499,7 @@
             {
                 return false;
             }
-            this.method_0(int_1, position_0.EntryBar, this.bars_0.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, this.bars_0.Count);
             if (position_0.PositionType != PositionType.Short)
             {
                 return false;
@@ -509,13 +509,13 @@
                 Alert alert = new Alert(this.Strategy, position_0.Bars, position_0.Bars.Date[int_1 - 1], TradeType.Cover, OrderType.Market, position_0.Shares, signalName) {
                     Position = position_0
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             double num3 = position_0.Bars.Open[int_1];
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                num3 += this.tradingSystemExecutor.method_14(num3, false, position_0.Bars);
+                num3 += this.tradingSystemExecutor.priceSlip(num3, false, position_0.Bars);
                 num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Short, OrderType.Market);
             }
             position_0.method_1(int_1, num3, OrderType.Market);
@@ -562,7 +562,7 @@
             {
                 return false;
             }
-            this.method_0(int_1, position_0.EntryBar, position_0.Bars.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, position_0.Bars.Count);
             if (position_0.PositionType != PositionType.Short)
             {
                 return false;
@@ -573,12 +573,12 @@
                     Position = position_0,
                     Price = stopPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (position_0.Bars == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, stopPrice, TradeType.Cover);
+                this.chartRenderer.addTradePriceMarker(int_1, stopPrice, TradeType.Cover);
             }
             if (stopPrice > position_0.Bars.High[int_1])
             {
@@ -591,7 +591,7 @@
             double num3 = stopPrice;
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                num3 += this.tradingSystemExecutor.method_14(num3, false, position_0.Bars);
+                num3 += this.tradingSystemExecutor.priceSlip(num3, false, position_0.Bars);
                 num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Short, OrderType.Stop);
             }
             position_0.method_1(int_1, num3, OrderType.Stop);
@@ -643,7 +643,7 @@
                 position_0.TrailingStop = stopPrice;
             }
             stopPrice = position_0.TrailingStop;
-            this.method_0(int_1, position_0.EntryBar, position_0.Bars.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, position_0.Bars.Count);
             if (position_0.PositionType != PositionType.Short)
             {
                 return false;
@@ -654,12 +654,12 @@
                     Position = position_0,
                     Price = stopPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (position_0.Bars == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, stopPrice, TradeType.Cover);
+                this.chartRenderer.addTradePriceMarker(int_1, stopPrice, TradeType.Cover);
             }
             if (stopPrice > position_0.Bars.High[int_1])
             {
@@ -672,7 +672,7 @@
             double num3 = stopPrice;
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                num3 += this.tradingSystemExecutor.method_14(stopPrice, false, position_0.Bars);
+                num3 += this.tradingSystemExecutor.priceSlip(stopPrice, false, position_0.Bars);
                 num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Short, OrderType.Stop);
             }
             position_0.method_1(int_1, num3, OrderType.Stop);
@@ -699,25 +699,25 @@
 
         public bool CrossOver(int int_1, DataSeries dataSeries_0, double value)
         {
-            this.method_0(int_1, 1, this.bars_0.Count - 1);
+            this.checkBarNumInRange(int_1, 1, this.bars_0.Count - 1);
             return ((dataSeries_0[int_1] > value) && (dataSeries_0[int_1 - 1] <= value));
         }
 
         public bool CrossOver(int int_1, DataSeries dataSeries_0, DataSeries dataSeries_1)
         {
-            this.method_0(int_1, 1, this.bars_0.Count - 1);
+            this.checkBarNumInRange(int_1, 1, this.bars_0.Count - 1);
             return ((dataSeries_0[int_1] > dataSeries_1[int_1]) && (dataSeries_0[int_1 - 1] <= dataSeries_1[int_1 - 1]));
         }
 
         public bool CrossUnder(int int_1, DataSeries dataSeries_0, double value)
         {
-            this.method_0(int_1, 1, this.bars_0.Count - 1);
+            this.checkBarNumInRange(int_1, 1, this.bars_0.Count - 1);
             return ((dataSeries_0[int_1] < value) && (dataSeries_0[int_1 - 1] >= value));
         }
 
         public bool CrossUnder(int int_1, DataSeries dataSeries_0, DataSeries dataSeries_1)
         {
-            this.method_0(int_1, 1, this.bars_0.Count - 1);
+            this.checkBarNumInRange(int_1, 1, this.bars_0.Count - 1);
             return ((dataSeries_0[int_1] < dataSeries_1[int_1]) && (dataSeries_0[int_1 - 1] >= dataSeries_1[int_1 - 1]));
         }
 
@@ -740,7 +740,7 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_10(int_1);
+                this.checkBarNumInBounds(int_1);
                 WSDCircle circle = new WSDCircle(radius, int_1, value, color, fillColor, style, width);
                 this.chartRenderer.PlotWealthScriptObject(pane, circle, false, behindBars);
             }
@@ -750,8 +750,8 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_10(bar1);
-                this.method_10(bar2);
+                this.checkBarNumInBounds(bar1);
+                this.checkBarNumInBounds(bar2);
                 WSDCircle2 circle = new WSDCircle2(bar1, value1, bar2, value2, color, fillColor, style, width);
                 this.chartRenderer.PlotWealthScriptObject(pane, circle, false, behindBars);
             }
@@ -766,8 +766,8 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_10(bar1);
-                this.method_10(bar2);
+                this.checkBarNumInBounds(bar1);
+                this.checkBarNumInBounds(bar2);
                 WSDEllipse ellipse = new WSDEllipse(bar1, value1, bar2, value2, color, fillColor, style, width);
                 this.chartRenderer.PlotWealthScriptObject(pane, ellipse, false, behindBars);
             }
@@ -786,7 +786,7 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_10(int_1);
+                this.checkBarNumInBounds(int_1);
                 WSDImage image2 = new WSDImage(image, int_1, value);
                 this.chartRenderer.PlotWealthScriptObject(pane, image2, false, behindBars);
             }
@@ -810,8 +810,8 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_10(bar1);
-                this.method_10(bar2);
+                this.checkBarNumInBounds(bar1);
+                this.checkBarNumInBounds(bar2);
                 WSDLine line = new WSDLine(bar1, value1, bar2, value2, color, style, width);
                 this.chartRenderer.PlotWealthScriptObject(pane, line, false, false);
             }
@@ -832,7 +832,7 @@
             {
                 for (int i = 0; i < coords.Length; i += 2)
                 {
-                    this.method_10((int) coords[i]);
+                    this.checkBarNumInBounds((int) coords[i]);
                 }
                 WSDPolygon polygon = new WSDPolygon(color, fillColor, style, width, coords);
                 this.chartRenderer.PlotWealthScriptObject(pane, polygon, false, behindBars);
@@ -1035,7 +1035,7 @@
 
         public void FlushDebug()
         {
-            this.tradingSystemExecutor.method_16();
+            this.tradingSystemExecutor.flushDebugWindow();
         }
 
         public IList<FundamentalItem> FundamentalDataItems(string itemName)
@@ -1130,7 +1130,7 @@
 
         public Bitmap GetChartBitmap(int width, int height)
         {
-            return this.tradingSystemExecutor.method_19(width, height);
+            return this.tradingSystemExecutor.getChartBitmap(width, height);
         }
 
         public DataSeries GetExternalSeries(string symbol, DataSeries dataSeries_0)
@@ -1160,16 +1160,16 @@
 
         public WealthLab.Bars GetExternalSymbol(string symbol, bool synchronize)
         {
-            WealthLab.Bars bars = this.bars_0;
+            WealthLab.Bars tempBars = this.bars_0;
             this.SetContext(symbol, synchronize);
-            WealthLab.Bars bars2 = this.bars_0;
-            this.bars_0 = bars;
-            return bars2;
+            WealthLab.Bars returnBars = this.bars_0;
+            this.bars_0 = tempBars;
+            return returnBars;
         }
 
         public WealthLab.Bars GetExternalSymbol(string dataSetName, string symbol, bool synchronize)
         {
-            return this.tradingSystemExecutor.method_9(dataSetName, symbol, synchronize);
+            return this.tradingSystemExecutor.getExternalSymbol(dataSetName, symbol, synchronize);
         }
 
         public FundamentalItem GetFundamentalItem(int int_1, string symbol, string itemName)
@@ -1360,7 +1360,8 @@
             return (double_3 * Math.Pow(10.0, num * (double_4 - double_2)));
         }
 
-        private void method_0(int int_1, int int_2, int int_3)
+        ///WYJ fix, original signature: private void method_0(int int_1, int int_2, int int_3)
+        private void checkBarNumInRange(int int_1, int int_2, int int_3)
         {
             if (int_1 < int_2)
             {
@@ -1372,7 +1373,8 @@
             }
         }
 
-        private void method_1(double double_0)
+        ///WYJ fix, original signature: private void method_1(double double_0)
+        private void checkPriceNotZero(double double_0)
         {
             if (double_0 == 0.0)
             {
@@ -1380,7 +1382,8 @@
             }
         }
 
-        private void method_10(int int_1)
+        ///WYJ fix, original signature: private void method_10(int int_1)
+        private void checkBarNumInBounds(int int_1)
         {
             if ((int_1 < 0) || (int_1 >= this.Bars.Count))
             {
@@ -1388,7 +1391,8 @@
             }
         }
 
-        private void method_2(DataSeries dataSeries_0)
+        ///WYJ fix, original signature: private void method_2(DataSeries dataSeries_0)
+        private void checkDataSeries(DataSeries dataSeries_0)
         {
             if (dataSeries_0.Count < this.bars_1.Count)
             {
@@ -1519,14 +1523,15 @@
             }
         }
 
-        private void method_5(WealthLab.Bars bars_2)
+        ///WYJ fix, original signature: private void method_5(WealthLab.Bars bars_2)
+        private void updateSeriesDescriptionForScale(WealthLab.Bars bars_2)
         {
-            string str = bars_2.DataScale.ToString();
-            bars_2.Close.Description = str + "(Close)";
-            bars_2.Open.Description = str + "(Open)";
-            bars_2.High.Description = str + "(High)";
-            bars_2.Low.Description = str + "(Low)";
-            bars_2.Volume.Description = str + "(Volume)";
+            string scale = bars_2.DataScale.ToString();
+            bars_2.Close.Description = scale + "(Close)";
+            bars_2.Open.Description = scale + "(Open)";
+            bars_2.High.Description = scale + "(High)";
+            bars_2.Low.Description = scale + "(Low)";
+            bars_2.Volume.Description = scale + "(Volume)";
         }
 
         private bool method_6(WealthLab.Bars bars_2, int int_1)
@@ -1630,7 +1635,7 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_2(series);
+                this.checkDataSeries(series);
                 PlottedIndicator item = new PlottedIndicator(this.chartRenderer, series) {
                     Color = color,
                     Width = width,
@@ -1645,7 +1650,7 @@
             series.Description = label;
             if (this.chartRenderer != null)
             {
-                this.method_2(series);
+                this.checkDataSeries(series);
                 PlottedIndicator item = new PlottedIndicator(this.chartRenderer, series) {
                     Color = color,
                     Width = width,
@@ -1659,8 +1664,8 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_2(series1);
-                this.method_2(series2);
+                this.checkDataSeries(series1);
+                this.checkDataSeries(series2);
                 PlottedIndicator item = new PlottedIndicator(this.chartRenderer, series1) {
                     Color = color,
                     Width = width,
@@ -1690,8 +1695,8 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_2(upper);
-                this.method_2(lower);
+                this.checkDataSeries(upper);
+                this.checkDataSeries(lower);
                 PlottedIndicator item = new PlottedIndicator(this.chartRenderer, upper) {
                     Color = color,
                     Width = width,
@@ -1721,7 +1726,7 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_2(source);
+                this.checkDataSeries(source);
                 PlottedIndicator item = new PlottedIndicator(this.chartRenderer, source) {
                     Color = color,
                     Width = width,
@@ -1753,7 +1758,7 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_2(bars.Open);
+                this.checkDataSeries(bars.Open);
                 this.chartRenderer.PlotSymbol(bars, pane, upBarColor, downBarColor);
             }
         }
@@ -1762,7 +1767,7 @@
         {
             if (this.chartRenderer != null)
             {
-                this.method_2(open);
+                this.checkDataSeries(open);
                 WealthLab.Bars bars = new WealthLab.Bars(symbol, this.bars_0.Scale, this.bars_0.BarInterval, this.bars_0.DateList, open, high, dataSeries_0, close, volume);
                 this.chartRenderer.PlotSymbol(bars, pane, upBarColor, downBarColor);
             }
@@ -1770,25 +1775,25 @@
 
         public void PrintDebug(object message)
         {
-            this.tradingSystemExecutor.method_15(message.ToString());
+            this.tradingSystemExecutor.addDebugString(message.ToString());
         }
 
         public void PrintDebug(string message)
         {
-            this.tradingSystemExecutor.method_15(message);
+            this.tradingSystemExecutor.addDebugString(message);
         }
 
         public void PrintDebug(params object[] messages)
         {
             foreach (object obj2 in messages)
             {
-                this.tradingSystemExecutor.method_15(obj2.ToString());
+                this.tradingSystemExecutor.addDebugString(obj2.ToString());
             }
         }
 
         public void PrintStatusBar(string message)
         {
-            this.tradingSystemExecutor.method_18(message);
+            this.tradingSystemExecutor.printToStatusBar(message);
         }
 
         public void RemoveGlobal(object value)
@@ -1918,7 +1923,7 @@
             {
                 return false;
             }
-            this.method_0(int_1, position_0.EntryBar, this.bars_0.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, this.bars_0.Count);
             if (position_0.PositionType != PositionType.Long)
             {
                 return false;
@@ -1928,13 +1933,13 @@
                 Alert alert = new Alert(this.Strategy, position_0.Bars, position_0.Bars.Date[int_1 - 1], TradeType.Sell, OrderType.AtClose, position_0.Shares, signalName) {
                     Position = position_0
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             double num3 = position_0.Bars.Close[int_1];
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                num3 -= this.tradingSystemExecutor.method_14(num3, false, position_0.Bars);
+                num3 -= this.tradingSystemExecutor.priceSlip(num3, false, position_0.Bars);
                 num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Long, OrderType.AtClose);
             }
             position_0.method_1(int_1, num3, OrderType.AtClose);
@@ -1981,7 +1986,7 @@
             {
                 return false;
             }
-            this.method_0(int_1, position_0.EntryBar, position_0.Bars.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, position_0.Bars.Count);
             if (position_0.PositionType != PositionType.Long)
             {
                 return false;
@@ -1992,14 +1997,14 @@
                     Position = position_0,
                     Price = limitPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (position_0.Bars == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, limitPrice, TradeType.Sell);
+                this.chartRenderer.addTradePriceMarker(int_1, limitPrice, TradeType.Sell);
             }
-            if ((limitPrice + this.tradingSystemExecutor.method_14(limitPrice, true, position_0.Bars)) > position_0.Bars.High[int_1])
+            if ((limitPrice + this.tradingSystemExecutor.priceSlip(limitPrice, true, position_0.Bars)) > position_0.Bars.High[int_1])
             {
                 return false;
             }
@@ -2050,7 +2055,7 @@
             {
                 return false;
             }
-            this.method_0(int_1, position_0.EntryBar, this.bars_0.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, this.bars_0.Count);
             if (position_0.PositionType != PositionType.Long)
             {
                 return false;
@@ -2060,13 +2065,13 @@
                 Alert alert = new Alert(this.Strategy, position_0.Bars, position_0.Bars.Date[int_1 - 1], TradeType.Sell, OrderType.Market, position_0.Shares, signalName) {
                     Position = position_0
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             double num3 = position_0.Bars.Open[int_1];
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                num3 -= this.tradingSystemExecutor.method_14(num3, false, position_0.Bars);
+                num3 -= this.tradingSystemExecutor.priceSlip(num3, false, position_0.Bars);
                 num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Long, OrderType.Market);
             }
             position_0.method_1(int_1, num3, OrderType.Market);
@@ -2113,7 +2118,7 @@
             {
                 return false;
             }
-            this.method_0(int_1, position_0.EntryBar, position_0.Bars.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, position_0.Bars.Count);
             if (position_0.PositionType != PositionType.Long)
             {
                 return false;
@@ -2124,12 +2129,12 @@
                     Position = position_0,
                     Price = stopPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (position_0.Bars == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, stopPrice, TradeType.Sell);
+                this.chartRenderer.addTradePriceMarker(int_1, stopPrice, TradeType.Sell);
             }
             if (stopPrice < position_0.Bars.Low[int_1])
             {
@@ -2142,7 +2147,7 @@
             double num3 = stopPrice;
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                num3 -= this.tradingSystemExecutor.method_14(stopPrice, false, position_0.Bars);
+                num3 -= this.tradingSystemExecutor.priceSlip(stopPrice, false, position_0.Bars);
                 num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Long, OrderType.Stop);
             }
             position_0.method_1(int_1, num3, OrderType.Stop);
@@ -2194,7 +2199,7 @@
                 position_0.TrailingStop = stopPrice;
             }
             stopPrice = position_0.TrailingStop;
-            this.method_0(int_1, position_0.EntryBar, position_0.Bars.Count);
+            this.checkBarNumInRange(int_1, position_0.EntryBar, position_0.Bars.Count);
             if (position_0.PositionType != PositionType.Long)
             {
                 return false;
@@ -2205,12 +2210,12 @@
                     Position = position_0,
                     Price = stopPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return false;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (position_0.Bars == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, stopPrice, TradeType.Sell);
+                this.chartRenderer.addTradePriceMarker(int_1, stopPrice, TradeType.Sell);
             }
             if (stopPrice < position_0.Bars.Low[int_1])
             {
@@ -2223,7 +2228,7 @@
             double num3 = stopPrice;
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                num3 -= this.tradingSystemExecutor.method_14(stopPrice, false, position_0.Bars);
+                num3 -= this.tradingSystemExecutor.priceSlip(stopPrice, false, position_0.Bars);
                 num3 = this.roundPriceToTickMultiple(position_0.Bars, num3, false, PositionType.Long, OrderType.Stop);
             }
             position_0.method_1(int_1, num3, OrderType.Stop);
@@ -2267,7 +2272,7 @@
                     bars2 = this.tradingSystemExecutor.findBarsData(symbol, this.bars_1.Scale, this.bars_1.BarInterval, synchronize);
                     if (bars2 == null)
                     {
-                        bars2 = this.tradingSystemExecutor.method_10(symbol, synchronize);
+                        bars2 = this.tradingSystemExecutor.findBarsDataInPool2(symbol, synchronize);
                     }
                     if (bars2 == null)
                     {
@@ -2337,7 +2342,7 @@
             if (bars == null)
             {
                 bars = BarScaleConverter.ToIntradayCompressed(this.bars_0, this.bars_0.Scale, barInterval);
-                this.method_5(bars);
+                this.updateSeriesDescriptionForScale(bars);
                 this.tradingSystemExecutor.method_13(bars, false);
             }
             this.bars_0 = bars;
@@ -2350,7 +2355,7 @@
             if (bars == null)
             {
                 bars = BarScaleConverter.ToDaily(this.bars_0);
-                this.method_5(bars);
+                this.updateSeriesDescriptionForScale(bars);
                 this.tradingSystemExecutor.method_13(bars, false);
             }
             this.bars_0 = bars;
@@ -2363,7 +2368,7 @@
             if (bars == null)
             {
                 bars = BarScaleConverter.ToMonthly(this.bars_0);
-                this.method_5(bars);
+                this.updateSeriesDescriptionForScale(bars);
                 this.tradingSystemExecutor.method_13(bars, false);
             }
             this.bars_0 = bars;
@@ -2376,7 +2381,7 @@
             if (bars == null)
             {
                 bars = BarScaleConverter.ToWeekly(this.bars_0);
-                this.method_5(bars);
+                this.updateSeriesDescriptionForScale(bars);
                 this.tradingSystemExecutor.method_13(bars, false);
             }
             this.bars_0 = bars;
@@ -2411,14 +2416,14 @@
             {
                 return null;
             }
-            this.method_0(int_1, 0, this.bars_0.Count);
+            this.checkBarNumInRange(int_1, 0, this.bars_0.Count);
             double num = this.bars_0.Close[int_1 - 1];
-            this.method_1(num);
+            this.checkPriceNotZero(num);
             double shares = this.tradingSystemExecutor.CalcPositionSize(this.bars_0, int_1, num, PositionType.Short, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
             {
                 Alert alert = new Alert(this.Strategy, this.bars_0, this.bars_0.Date[int_1 - 1], TradeType.Short, OrderType.AtClose, shares, signalName, num, this.RiskStopLevel, this.AutoProfitLevel);
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return null;
             }
             Position position = new Position(this.bars_0, PositionType.Short, this.tradingSystemExecutor.Strategy.ID.ToString()) {
@@ -2429,7 +2434,7 @@
             };
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                position.EntryPrice -= this.tradingSystemExecutor.method_14(this.bars_0.Close[int_1], false, this.bars_0);
+                position.EntryPrice -= this.tradingSystemExecutor.priceSlip(this.bars_0.Close[int_1], false, this.bars_0);
                 position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.AtClose);
                 if (position.EntryPrice < this.bars_0.Low[int_1])
                 {
@@ -2441,7 +2446,7 @@
             position.EntrySignal = signalName;
             position.Shares = shares;
             position.OverrideShareSize = this.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position);
+            this.tradingSystemExecutor.addPosition(position);
             return position;
         }
 
@@ -2456,8 +2461,8 @@
             {
                 return null;
             }
-            this.method_1(limitPrice);
-            this.method_0(int_1, 0, this.bars_0.Count);
+            this.checkPriceNotZero(limitPrice);
+            this.checkBarNumInRange(int_1, 0, this.bars_0.Count);
             limitPrice = this.roundPriceToTickMultiple(this.bars_0, limitPrice, true, PositionType.Short, OrderType.Limit);
             double shares = this.tradingSystemExecutor.CalcPositionSize(this.bars_0, int_1, limitPrice, PositionType.Short, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
@@ -2465,14 +2470,14 @@
                 Alert alert = new Alert(this.Strategy, this.bars_0, this.bars_0.Date[int_1 - 1], TradeType.Short, OrderType.Limit, shares, signalName, limitPrice, this.RiskStopLevel, this.AutoProfitLevel) {
                     Price = limitPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return null;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (this.bars_0 == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, limitPrice, TradeType.Short);
+                this.chartRenderer.addTradePriceMarker(int_1, limitPrice, TradeType.Short);
             }
-            if ((limitPrice + this.tradingSystemExecutor.method_14(limitPrice, true, this.bars_0)) > this.bars_0.High[int_1])
+            if ((limitPrice + this.tradingSystemExecutor.priceSlip(limitPrice, true, this.bars_0)) > this.bars_0.High[int_1])
             {
                 return null;
             }
@@ -2491,7 +2496,7 @@
             }
             position.EntryPrice = limitPrice;
             position.OverrideShareSize = this.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position);
+            this.tradingSystemExecutor.addPosition(position);
             return position;
         }
 
@@ -2506,14 +2511,14 @@
             {
                 return null;
             }
-            this.method_0(int_1, 1, this.bars_0.Count);
+            this.checkBarNumInRange(int_1, 1, this.bars_0.Count);
             double num = this.bars_0.Close[int_1 - 1];
-            this.method_1(num);
+            this.checkPriceNotZero(num);
             double shares = this.tradingSystemExecutor.CalcPositionSize(this.bars_0, int_1, num, PositionType.Short, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
             {
                 Alert alert = new Alert(this.Strategy, this.bars_0, this.bars_0.Date[int_1 - 1], TradeType.Short, OrderType.Market, shares, signalName, num, this.RiskStopLevel, this.AutoProfitLevel);
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return null;
             }
             Position position = new Position(this.bars_0, PositionType.Short, this.tradingSystemExecutor.Strategy.ID.ToString()) {
@@ -2524,7 +2529,7 @@
             };
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                position.EntryPrice -= this.tradingSystemExecutor.method_14(this.bars_0.Open[int_1], false, this.bars_0);
+                position.EntryPrice -= this.tradingSystemExecutor.priceSlip(this.bars_0.Open[int_1], false, this.bars_0);
                 position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.Market);
                 if (position.EntryPrice < this.bars_0.Low[int_1])
                 {
@@ -2535,7 +2540,7 @@
             position.EntrySignal = signalName;
             position.Shares = shares;
             position.OverrideShareSize = this.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position);
+            this.tradingSystemExecutor.addPosition(position);
             return position;
         }
 
@@ -2550,8 +2555,8 @@
             {
                 return null;
             }
-            this.method_1(stopPrice);
-            this.method_0(int_1, 0, this.bars_0.Count);
+            this.checkPriceNotZero(stopPrice);
+            this.checkBarNumInRange(int_1, 0, this.bars_0.Count);
             stopPrice = this.roundPriceToTickMultiple(this.bars_0, stopPrice, true, PositionType.Short, OrderType.Stop);
             double shares = this.tradingSystemExecutor.CalcPositionSize(this.bars_0, int_1, stopPrice, PositionType.Short, this.RiskStopLevel, true);
             if (int_1 == this.bars_0.Count)
@@ -2559,12 +2564,12 @@
                 Alert alert = new Alert(this.Strategy, this.bars_0, this.bars_0.Date[int_1 - 1], TradeType.Short, OrderType.Stop, shares, signalName, stopPrice, this.RiskStopLevel, this.AutoProfitLevel) {
                     Price = stopPrice
                 };
-                this.tradingSystemExecutor.method_6(alert);
+                this.tradingSystemExecutor.addAlert(alert);
                 return null;
             }
             if (((this.chartRenderer != null) && this.chartRenderer.PlotStops) && (this.bars_0 == this.bars_1))
             {
-                this.chartRenderer.method_13(int_1, stopPrice, TradeType.Short);
+                this.chartRenderer.addTradePriceMarker(int_1, stopPrice, TradeType.Short);
             }
             if (stopPrice < this.bars_0.Low[int_1])
             {
@@ -2586,7 +2591,7 @@
             position.EntryPrice = stopPrice;
             if (this.tradingSystemExecutor.EnableSlippage)
             {
-                position.EntryPrice -= this.tradingSystemExecutor.method_14(stopPrice, false, this.bars_0);
+                position.EntryPrice -= this.tradingSystemExecutor.priceSlip(stopPrice, false, this.bars_0);
                 position.EntryPrice = this.roundPriceToTickMultiple(position.Bars, position.EntryPrice, true, PositionType.Short, OrderType.Stop);
                 if (position.EntryPrice < this.bars_0.Low[int_1])
                 {
@@ -2594,7 +2599,7 @@
                 }
             }
             position.OverrideShareSize = this.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position);
+            this.tradingSystemExecutor.addPosition(position);
             return position;
         }
 
@@ -2630,7 +2635,7 @@
             position.SplitFactor *= percentToRetain / 100.0;
             position2.SplitFactor = splitFactor * (1.0 - (percentToRetain / 100.0));
             position2.OverrideShareSize = position.OverrideShareSize;
-            this.tradingSystemExecutor.method_5(position2);
+            this.tradingSystemExecutor.addPosition(position2);
             return position2;
         }
 
@@ -2659,7 +2664,7 @@
 
         public double TrendlineValue(int int_1, string trendLineName)
         {
-            return this.tradingSystemExecutor.method_20(int_1, trendLineName);
+            return this.tradingSystemExecutor.trendlineGetValue(int_1, trendLineName);
         }
 
         public bool TurnDown(int int_1, DataSeries series)

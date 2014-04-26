@@ -55,14 +55,14 @@
         private Dictionary<int, int> dictionary_0;
         private Dictionary<int, int> dictionary_1;
         private Dictionary<string, int> dictionary_2;
-        private Dictionary<string, int> dictionary_3;
+        private Dictionary<string, int> dict_HiddenPanesHeights;   ///WYJ fix, original signature: dictionary_3
         private Font axisFont;
         private Font titleFont;
         private FundamentalsLoader fundamentalsLoader;
         private GridLines gridLines_0;
         private IContainer icontainer_0;
-        private int[] int_0;
-        private int[] int_1;
+        private int[] barWidth;   ///WYJ fix, original name: int_0
+        private int[] barCenterX;   ///WYJ fix, original name: int_1
         private int rightPaddingBars;
         private int int_11;
         private int barSpacing;
@@ -75,7 +75,7 @@
         private int leftEdgeBar;
         private List<ChartPane> panes;
         private List<ChartGlyph> glyphs;
-        private List<Class33> list_2;
+        private List<Class33> tradePriceMarkers;   ///WYJ fix, original name: list_2
         private List<ChartPane> list_3;
         private List<Rectangle> list_4;
         private string fundamentalGlyphs;
@@ -87,8 +87,8 @@
 
         public ChartRenderer()
         {
-            this.int_0 = new int[0];
-            this.int_1 = new int[0];
+            this.barWidth = new int[0];
+            this.barCenterX = new int[0];
             this.barSpacing = 4;
             this.backgroundColor = Color.White;
             this.upBarColor = Color.Navy;
@@ -116,12 +116,12 @@
             this.fundamentalsVisible = true;
             this.dictionary_0 = new Dictionary<int, int>();
             this.dictionary_1 = new Dictionary<int, int>();
-            this.list_2 = new List<Class33>();
+            this.tradePriceMarkers = new List<Class33>();
             this.list_3 = new List<ChartPane>();
             this.string_1 = "";
             this.barScale_0 = BarScale.Yearly;
             this.dictionary_2 = new Dictionary<string, int>();
-            this.dictionary_3 = new Dictionary<string, int>();
+            this.dict_HiddenPanesHeights = new Dictionary<string, int>();
             this.bool_14 = true;
             this.gridLines_0 = new GridLines();
             this.list_4 = new List<Rectangle>();
@@ -130,8 +130,8 @@
 
         public ChartRenderer(IContainer container)
         {
-            this.int_0 = new int[0];
-            this.int_1 = new int[0];
+            this.barWidth = new int[0];
+            this.barCenterX = new int[0];
             this.barSpacing = 4;
             this.backgroundColor = Color.White;
             this.upBarColor = Color.Navy;
@@ -159,12 +159,12 @@
             this.fundamentalsVisible = true;
             this.dictionary_0 = new Dictionary<int, int>();
             this.dictionary_1 = new Dictionary<int, int>();
-            this.list_2 = new List<Class33>();
+            this.tradePriceMarkers = new List<Class33>();
             this.list_3 = new List<ChartPane>();
             this.string_1 = "";
             this.barScale_0 = BarScale.Yearly;
             this.dictionary_2 = new Dictionary<string, int>();
-            this.dictionary_3 = new Dictionary<string, int>();
+            this.dict_HiddenPanesHeights = new Dictionary<string, int>();
             this.bool_14 = true;
             this.gridLines_0 = new GridLines();
             this.list_4 = new List<Rectangle>();
@@ -174,41 +174,41 @@
 
         public void AdjustBarPositions()
         {
-            this.int_1 = new int[this.bars.Count];
-            this.int_0 = new int[this.bars.Count];
+            this.barCenterX = new int[this.bars.Count];
+            this.barWidth = new int[this.bars.Count];
             for (int i = 0; i < this.bars.Count; i++)
             {
-                this.int_0[i] = this.BarSpacing;
-                this.int_1[i] = -1;
+                this.barWidth[i] = this.BarSpacing;
+                this.barCenterX[i] = -1;
             }
-            this.rightEdgeBar = this.method_7();
-            this.leftEdgeBar = this.method_6();
+            this.rightEdgeBar = this.calcRightEdgeBar();
+            this.leftEdgeBar = this.calcLeftEdgeBar();
             int num3 = this.RightPaddingBars - this.scrollOffset;
             if (num3 < 0)
             {
                 num3 = 0;
             }
-            int num4 = ((this.width - this.MarginRightWidth) - (this.int_0[this.rightEdgeBar] / 2)) - (num3 * this.BarSpacing);
+            int num4 = ((this.width - this.MarginRightWidth) - (this.barWidth[this.rightEdgeBar] / 2)) - (num3 * this.BarSpacing);
             for (int j = this.rightEdgeBar; j >= this.leftEdgeBar; j--)
             {
-                this.int_1[j] = num4 - (this.int_0[j] / 2);
-                num4 -= this.int_0[j];
+                this.barCenterX[j] = num4 - (this.barWidth[j] / 2);
+                num4 -= this.barWidth[j];
             }
-            if (this.leftEdgeBar < this.int_1.Length)
+            if (this.leftEdgeBar < this.barCenterX.Length)
             {
-                num4 = this.int_1[this.leftEdgeBar];
+                num4 = this.barCenterX[this.leftEdgeBar];
                 for (int k = this.leftEdgeBar - 1; k >= 0; k--)
                 {
-                    num4 -= this.int_0[k + 1];
-                    this.int_1[k] = num4;
+                    num4 -= this.barWidth[k + 1];
+                    this.barCenterX[k] = num4;
                 }
             }
-            if (this.rightEdgeBar < this.int_1.Length)
+            if (this.rightEdgeBar < this.barCenterX.Length)
             {
-                num4 = this.int_1[this.rightEdgeBar];
+                num4 = this.barCenterX[this.rightEdgeBar];
                 for (int m = this.rightEdgeBar + 1; m < this.bars.Count; m++)
                 {
-                    this.int_1[m] = num4 + this.int_0[m - 1];
+                    this.barCenterX[m] = num4 + this.barWidth[m - 1];
                 }
             }
         }
@@ -265,9 +265,9 @@
                         pane.PlottedIndicators.RemoveAt(i);
                     }
                 }
-                if (pane.list_4 != null)
+                if (pane.wsdObjList_DragDropped != null)
                 {
-                    pane.list_4.Clear();
+                    pane.wsdObjList_DragDropped.Clear();
                 }
             }
         }
@@ -305,7 +305,7 @@
 
         public int ConvertBarToX(int int_12)
         {
-            return this.int_1[int_12];
+            return this.barCenterX[int_12];
         }
 
         public int ConvertXToBar(int int_12)
@@ -315,34 +315,34 @@
             int num6;
             for (int i = this.leftEdgeBar; i <= this.rightEdgeBar; i++)
             {
-                num4 = this.int_0[i] / 2;
-                num5 = this.int_1[i] - num4;
-                num6 = (this.int_1[i] + num4) + 1;
+                num4 = this.barWidth[i] / 2;
+                num5 = this.barCenterX[i] - num4;
+                num6 = (this.barCenterX[i] + num4) + 1;
                 if ((int_12 >= num5) && (int_12 <= num6))
                 {
                     return i;
                 }
             }
-            if (int_12 < this.int_1[this.leftEdgeBar])
+            if (int_12 < this.barCenterX[this.leftEdgeBar])
             {
                 for (int j = this.leftEdgeBar; j >= 0; j--)
                 {
-                    num4 = this.int_0[j] / 2;
-                    num5 = this.int_1[j] - num4;
-                    num6 = (this.int_1[j] + num4) + 1;
+                    num4 = this.barWidth[j] / 2;
+                    num5 = this.barCenterX[j] - num4;
+                    num6 = (this.barCenterX[j] + num4) + 1;
                     if ((int_12 >= num5) && (int_12 <= num6))
                     {
                         return j;
                     }
                 }
             }
-            if (int_12 > this.int_1[this.rightEdgeBar])
+            if (int_12 > this.barCenterX[this.rightEdgeBar])
             {
                 for (int k = this.rightEdgeBar; k < this.Bars.Count; k++)
                 {
-                    num4 = this.int_0[k] / 2;
-                    num5 = this.int_1[k] - num4;
-                    num6 = (this.int_1[k] + num4) + 1;
+                    num4 = this.barWidth[k] / 2;
+                    num5 = this.barCenterX[k] - num4;
+                    num6 = (this.barCenterX[k] + num4) + 1;
                     if ((int_12 >= num5) && (int_12 <= num6))
                     {
                         return k;
@@ -355,7 +355,7 @@
         public void CreateDefaultPanes()
         {
             this.panes.Clear();
-            this.list_2.Clear();
+            this.tradePriceMarkers.Clear();
             this.pricePane = new ChartPane(this, false);
             this.pricePane.Decimals = 2;
             this.pricePane.IsPricePane = true;
@@ -380,14 +380,14 @@
             {
                 this.volumePane.RawHeight = 15;
             }
-            if (this.method_5(this.volumePane.Description))
+            if (this.hiddenPanesHeightsContain(this.volumePane.Description))
             {
-                this.volumePane.Height = this.method_2(this.volumePane.Description);
+                this.volumePane.Height = this.getHiddenPaneHeight(this.volumePane.Description);
                 this.volumePane.Hidden = true;
             }
             if ((this.VolumePane.PlottedIndicators.Count == 0) && (this.bars != null))
             {
-                this.method_10();
+                this.addVolumeIndicatorsToPane();
             }
             this.bool_14 = true;
             this.barBackgroundColors = null;
@@ -512,7 +512,7 @@
 
         public int GetBarWidth(int int_12)
         {
-            return this.int_0[int_12];
+            return this.barWidth[int_12];
         }
 
         public int GetResizedRawHeight(string description, int defHeight)
@@ -2511,7 +2511,7 @@
         }  */
 
         ///WYJ fix, code from ILSpy, original name method_1
-        private void doRender(Bars bars_1, Graphics graphics_0, int int_12, int int_13, ChartStyle chartStyle_1, bool bool_15, int int_14, string string_4, bool bool_16)
+        private void doRender(Bars bars_1, Graphics graphics, int argWidth, int argHeight, ChartStyle chartStyle_1, bool paneResizing, int int_14, string paneDesc, bool bool_16)
         {
             if (this.Executing)
             {
@@ -2532,11 +2532,11 @@
                 this.chartStyle.Bars = bars_1;
                 this.chartStyle.Renderer = this;
             }
-            graphics_0.Clear(this.BackgroundColor);
-            if (this.width != int_12 || this.height != int_13 || this.string_3 != this.string_2)
+            graphics.Clear(this.BackgroundColor);
+            if (this.width != argWidth || this.height != argHeight || this.string_3 != this.string_2)
             {
-                this.width = int_12;
-                this.height = int_13;
+                this.width = argWidth;
+                this.height = argHeight;
                 this.bool_14 = true;
                 this.string_3 = this.string_2;
             }
@@ -2551,10 +2551,10 @@
             if (bars_1 == null || bars_1.Count == 0)
             {
                 Font font = new Font("Arial", 12f);
-                graphics_0.DrawString("No Data Available", font, this.ReverseBackgroundBrush, new Point(20, 20));
+                graphics.DrawString("No Data Available", font, this.ReverseBackgroundBrush, new Point(20, 20));
                 return;
             }
-            if (this.bars != bars_1 || bars_1.Count != this.int_0.Length)
+            if (this.bars != bars_1 || bars_1.Count != this.barWidth.Length)
             {
                 if (this.bars != bars_1 || bars_1.Count != this.int_11)
                 {
@@ -2585,43 +2585,43 @@
             this.chartStyle = chartStyle_1;
             if (this.bool_14)
             {
-                this.int_1 = new int[bars_1.Count];
-                this.int_0 = new int[bars_1.Count];
+                this.barCenterX = new int[bars_1.Count];
+                this.barWidth = new int[bars_1.Count];
                 for (int i = 0; i < bars_1.Count; i++)
                 {
-                    this.int_0[i] = this.BarSpacing;
-                    this.int_1[i] = -1;
+                    this.barWidth[i] = this.BarSpacing;
+                    this.barCenterX[i] = -1;
                 }
                 chartStyle_1.InitializeBarWidths();
-                this.rightEdgeBar = this.method_7();
-                this.leftEdgeBar = this.method_6();
+                this.rightEdgeBar = this.calcRightEdgeBar();
+                this.leftEdgeBar = this.calcLeftEdgeBar();
                 int num = this.RightPaddingBars - this.scrollOffset;
                 if (num < 0)
                 {
                     num = 0;
                 }
-                int num2 = int_12 - this.MarginRightWidth - this.int_0[this.rightEdgeBar] / 2 - num * this.BarSpacing;
+                int num2 = argWidth - this.MarginRightWidth - this.barWidth[this.rightEdgeBar] / 2 - num * this.BarSpacing;
                 for (int j = this.rightEdgeBar; j >= this.leftEdgeBar; j--)
                 {
-                    this.int_1[j] = num2 - this.int_0[j] / 2;
-                    num2 -= this.int_0[j];
+                    this.barCenterX[j] = num2 - this.barWidth[j] / 2;
+                    num2 -= this.barWidth[j];
                 }
-                if (this.leftEdgeBar < this.int_1.Length)
+                if (this.leftEdgeBar < this.barCenterX.Length)
                 {
-                    num2 = this.int_1[this.leftEdgeBar];
+                    num2 = this.barCenterX[this.leftEdgeBar];
                     for (int k = this.leftEdgeBar - 1; k >= 0; k--)
                     {
-                        num2 -= this.int_0[k + 1];
-                        this.int_1[k] = num2;
+                        num2 -= this.barWidth[k + 1];
+                        this.barCenterX[k] = num2;
                     }
                 }
-                if (this.rightEdgeBar < this.int_1.Length)
+                if (this.rightEdgeBar < this.barCenterX.Length)
                 {
-                    num2 = this.int_1[this.rightEdgeBar];
+                    num2 = this.barCenterX[this.rightEdgeBar];
                     for (int l = this.rightEdgeBar + 1; l < bars_1.Count; l++)
                     {
-                        num2 += this.int_0[l - 1];
-                        this.int_1[l] = num2;
+                        num2 += this.barWidth[l - 1];
+                        this.barCenterX[l] = num2;
                     }
                 }
                 this.bool_14 = false;
@@ -2660,7 +2660,7 @@
                 {
                     chartPane.LowestValue = chartPane.MinValue;
                     chartPane.HighestValue = chartPane.MaxValue;
-                    if (bool_15 && string_4 == chartPane.Description)
+                    if (paneResizing && paneDesc == chartPane.Description)
                     {
                         int num7 = Math.Max(10, chartPane.HiddenHeight);
                         ChartPane chartPane2;
@@ -2730,16 +2730,16 @@
                     num6 += chartPane.Height;
                     foreach (PlottedIndicator current3 in chartPane.PlottedIndicators)
                     {
-                        chartPane.method_1(current3.Series);
+                        chartPane.adjustRange(current3.Series);
                     }
                     foreach (PlottedSymbol current4 in chartPane.PlottedSymbols)
                     {
-                        chartPane.method_1(current4.Bars.High);
-                        chartPane.method_1(current4.Bars.Low);
+                        chartPane.adjustRange(current4.Bars.High);
+                        chartPane.adjustRange(current4.Bars.Low);
                     }
                 }
             }
-            if (bool_15)
+            if (paneResizing)
             {
                 this.dictionary_2.Clear();
                 foreach (ChartPane current5 in this.panes)
@@ -2748,20 +2748,20 @@
                 }
                 this.bool_13 = true;
             }
-            this.PricePane.method_1(bars_1.High);
-            this.PricePane.method_1(bars_1.Low);
+            this.PricePane.adjustRange(bars_1.High);
+            this.PricePane.adjustRange(bars_1.Low);
             if (!double.IsNaN(this.bars.High.PartialValue) && this.rightEdgeBar == bars_1.Count - 1)
             {
-                this.PricePane.method_2(bars_1.High.PartialValue);
-                this.PricePane.method_2(bars_1.Low.PartialValue);
+                this.PricePane.updateHighestLowest(bars_1.High.PartialValue);
+                this.PricePane.updateHighestLowest(bars_1.Low.PartialValue);
             }
             if (!double.IsNaN(this.bars.Volume.PartialValue) && this.rightEdgeBar == bars_1.Count - 1)
             {
-                this.VolumePane.method_2(bars_1.Volume.PartialValue);
+                this.VolumePane.updateHighestLowest(bars_1.Volume.PartialValue);
             }
             if (this.VolumePane.Visible)
             {
-                this.VolumePane.method_1(bars_1.Volume);
+                this.VolumePane.adjustRange(bars_1.Volume);
             }
             if (this.VolumePane.LowestValue > 0.0)
             {
@@ -2777,20 +2777,21 @@
             }
             foreach (ChartPane current7 in this.Panes)
             {
-                current7.method_9();
+                current7.linearScaleIfLogScaleNotApplicable();
             }
             if (this.WealthScript != null)
             {
-                this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle, PaintHookStage.AfterBackgroundRender);
+                this.WealthScript.PaintHook(bars_1, graphics, this.chartStyle, PaintHookStage.AfterBackgroundRender);
             }
+            ///WYJ note, fill with background color
             if (this.barBackgroundColors != null)
             {
                 for (int n = this.leftEdgeBar; n <= this.rightEdgeBar; n++)
                 {
                     if (this.barBackgroundColors[n] != Color.Empty)
                     {
-                        int num11 = this.int_1[n] - this.int_0[n] / 2;
-                        graphics_0.FillRectangle(new SolidBrush(this.barBackgroundColors[n]), num11, 0, this.int_0[n], int_13);
+                        int num11 = this.barCenterX[n] - this.barWidth[n] / 2;
+                        graphics.FillRectangle(new SolidBrush(this.barBackgroundColors[n]), num11, 0, this.barWidth[n], argHeight);
                     }
                 }
             }
@@ -2802,16 +2803,16 @@
                     {
                         if (current8.barBackgroundColors[num12] != Color.Empty)
                         {
-                            int num11 = this.int_1[num12] - this.int_0[num12] / 2;
-                            graphics_0.FillRectangle(new SolidBrush(current8.barBackgroundColors[num12]), num11, current8.Top, this.int_0[num12], current8.Height);
+                            int num11 = this.barCenterX[num12] - this.barWidth[num12] / 2;
+                            graphics.FillRectangle(new SolidBrush(current8.barBackgroundColors[num12]), num11, current8.Top, this.barWidth[num12], current8.Height);
                         }
                     }
                 }
             }
             Brush brush = new SolidBrush(this.MarginRightColor);
-            graphics_0.FillRectangle(brush, this.width - this.MarginRightWidth, 0, this.MarginRightWidth, this.height);
+            graphics.FillRectangle(brush, this.width - this.MarginRightWidth, 0, this.MarginRightWidth, this.height);
             Brush brush2 = new SolidBrush(this.MarginBottomColor);
-            graphics_0.FillRectangle(brush2, 0, this.height - this.MarginBottomHeight, this.width, this.MarginBottomHeight);
+            graphics.FillRectangle(brush2, 0, this.height - this.MarginBottomHeight, this.width, this.MarginBottomHeight);
             if (this.HorizontalGridines)
             {
                 Brush brush3 = new SolidBrush(ChartRenderer.ReverseColor(this.MarginRightColor));
@@ -2835,12 +2836,12 @@
                             {
                                 if (num14 < current9.Top + current9.Height)
                                 {
-                                    graphics_0.DrawLine(pen, 0, num14, this.width - this.MarginRightWidth, num14);
+                                    graphics.DrawLine(pen, 0, num14, this.width - this.MarginRightWidth, num14);
                                     if (num14 > current9.Top + this.AxisFont.Height)
                                     {
                                         int num15 = this.width - this.MarginRightWidth + 2;
                                         int num16 = (int)((double)num14 - (double)this.AxisFont.Height * 0.5);
-                                        graphics_0.DrawString(current9.FormatChartValue(num13), this.AxisFont, brush3, (float)num15, (float)num16);
+                                        graphics.DrawString(current9.FormatChartValue(num13), this.AxisFont, brush3, (float)num15, (float)num16);
                                     }
                                 }
                                 num13 += this.gridLines_0.GridIncrement;
@@ -2866,8 +2867,8 @@
                     if (bars_1.Date[num18].Day != bars_1.Date[num18 - 1].Day)
                     {
                         text = bars_1.Date[num18].ToShortDateString();
-                        int num11 = this.int_1[num18];
-                        int num19 = (int)graphics_0.MeasureString(text, this.AxisFont).Width;
+                        int num11 = this.barCenterX[num18];
+                        int num19 = (int)graphics.MeasureString(text, this.AxisFont).Width;
                         Rectangle item = default(Rectangle);
                         item.X = num11 - num19 / 2;
                         item.Width = num19;
@@ -2884,20 +2885,20 @@
                         }
                         if (flag)
                         {
-                            graphics_0.DrawString(text, this.AxisFont, brush4, (float)item.Left, (float)item.Top);
+                            graphics.DrawString(text, this.AxisFont, brush4, (float)item.Left, (float)item.Top);
                             this.list_4.Add(item);
                         }
                         if (this.VerticalGridlines)
                         {
-                            graphics_0.DrawLine(pen, num11, 0, num11, this.height - this.MarginBottomHeight);
+                            graphics.DrawLine(pen, num11, 0, num11, this.height - this.MarginBottomHeight);
                         }
                     }
                 }
             }
             pen.Width = 1f;
-            if (this.leftEdgeBar < this.int_1.Length)
+            if (this.leftEdgeBar < this.barCenterX.Length)
             {
-                int num11 = this.int_1[this.leftEdgeBar];
+                int num11 = this.barCenterX[this.leftEdgeBar];
                 for (int num20 = this.leftEdgeBar; num20 <= this.rightEdgeBar; num20++)
                 {
                     string text = "";
@@ -2934,9 +2935,9 @@
                     {
                         if (this.VerticalGridlines)
                         {
-                            graphics_0.DrawLine(pen, num11, 0, num11, this.height - this.MarginBottomHeight);
+                            graphics.DrawLine(pen, num11, 0, num11, this.height - this.MarginBottomHeight);
                         }
-                        int num19 = (int)graphics_0.MeasureString(text, this.AxisFont).Width;
+                        int num19 = (int)graphics.MeasureString(text, this.AxisFont).Width;
                         int num21 = num11 - num19 / 2;
                         if (num21 > num17)
                         {
@@ -2951,34 +2952,34 @@
                             }
                             if (flag)
                             {
-                                graphics_0.DrawString(text, this.AxisFont, brush4, (float)num21, (float)(this.height - this.MarginBottomHeight));
+                                graphics.DrawString(text, this.AxisFont, brush4, (float)num21, (float)(this.height - this.MarginBottomHeight));
                             }
                             num17 = num21 + num19;
                         }
                     }
-                    num11 += this.int_0[num20];
+                    num11 += this.barWidth[num20];
                 }
             }
             if (this.WealthScript != null)
             {
-                this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle, PaintHookStage.BeforeBarsRender);
+                this.WealthScript.PaintHook(bars_1, graphics, this.chartStyle, PaintHookStage.BeforeBarsRender);
             }
             foreach (ChartPane current12 in this.Panes)
             {
-                this.ClipToPane(graphics_0, current12);
-                this.method_9(current12, current12.list_2, graphics_0);
+                this.ClipToPane(graphics, current12);
+                this.renderObjects(current12, current12.wsdObjList_BehindBars, graphics);
             }
-            this.ClipToPane(graphics_0, null);
+            this.ClipToPane(graphics, null);
             try
             {
-                chartStyle_1.RenderBars(graphics_0);
+                chartStyle_1.RenderBars(graphics);
                 foreach (ChartPane current13 in this.Panes)
                 {
                     if (current13.Visible && !current13.Hidden)
                     {
                         foreach (PlottedSymbol current14 in current13.PlottedSymbols)
                         {
-                            chartStyle_1.method_0(current14, current13, graphics_0);
+                            chartStyle_1.method_0(current14, current13, graphics);
                         }
                     }
                 }
@@ -2990,8 +2991,8 @@
             {
                 if (current15.Visible && !current15.Hidden)
                 {
-                    this.ClipToPane(graphics_0, current15);
-                    this.method_9(current15, current15.list_4, graphics_0);
+                    this.ClipToPane(graphics, current15);
+                    this.renderObjects(current15, current15.wsdObjList_DragDropped, graphics);
                     foreach (PlottedIndicator current16 in current15.PlottedIndicators)
                     {
                         Pen pen4 = new Pen(current16.Color);
@@ -3019,9 +3020,9 @@
                                                 brush5 = new SolidBrush(barColor);
                                                 right = barColor;
                                             }
-                                            int num11 = this.int_1[num22];
+                                            int num11 = this.barCenterX[num22];
                                             int num14 = current15.ConvertValueToY(current16.Series[num22]);
-                                            graphics_0.FillEllipse(brush5, num11, num14, current16.Width, current16.Width);
+                                            graphics.FillEllipse(brush5, num11, num14, current16.Width, current16.Width);
                                         }
                                     }
                                     if (brush5 != null)
@@ -3065,13 +3066,13 @@
                                                 int num26 = 0;
                                                 for (int num27 = num23; num27 >= num25 - 1; num27--)
                                                 {
-                                                    Point point = new Point(this.int_1[num27], current15.ConvertValueToY(current16.Series[num27]));
+                                                    Point point = new Point(this.barCenterX[num27], current15.ConvertValueToY(current16.Series[num27]));
                                                     array[num26] = point;
                                                     num26++;
                                                 }
                                                 try
                                                 {
-                                                    graphics_0.DrawLines(pen4, array);
+                                                    graphics.DrawLines(pen4, array);
                                                     goto IL_1819;
                                                 }
                                                 catch (OverflowException)
@@ -3091,14 +3092,14 @@
                         if (current16.Selected)
                         {
                             Brush brush6 = new SolidBrush(current16.Color);
-                            for (int num28 = 0; num28 <= int_12 - this.marginRightWidth; num28 += 20)
+                            for (int num28 = 0; num28 <= argWidth - this.marginRightWidth; num28 += 20)
                             {
                                 int num29 = this.ConvertXToBar(num28);
                                 if (num29 >= 0)
                                 {
                                     int num11 = this.ConvertBarToX(num29);
                                     int num14 = current15.ConvertValueToY(current16.Series[num29]);
-                                    graphics_0.FillEllipse(brush6, num11 - 3, num14 - 3, 7, 7);
+                                    graphics.FillEllipse(brush6, num11 - 3, num14 - 3, 7, 7);
                                 }
                             }
                             brush6.Dispose();
@@ -3120,7 +3121,7 @@
                         {
                             if (num31 >= current16.Series.FirstValidValue)
                             {
-                                int num11 = this.int_1[num31];
+                                int num11 = this.barCenterX[num31];
                                 int y;
                                 if (current15.LogScale)
                                 {
@@ -3139,7 +3140,7 @@
                                 }
                                 int y2 = current15.ConvertValueToY(current16.Series[num31]);
                                 pen4.Color = current16.GetBarColor(num31);
-                                graphics_0.DrawLine(pen4, num11, y, num11, y2);
+                                graphics.DrawLine(pen4, num11, y, num11, y2);
                             }
                         }
                         if (current16.Series == this.bars.Volume && !double.IsNaN(this.bars.Volume.PartialValue) && this.ScrollOffset == 0)
@@ -3155,12 +3156,12 @@
                             int num11 = this.ChartWidth - this.MarginRightWidth - this.RightPaddingBars * this.BarSpacing;
                             int y = current15.ConvertValueToY(0.0);
                             int y2 = current15.ConvertValueToY(this.bars.Volume.PartialValue);
-                            graphics_0.DrawLine(pen4, num11, y, num11, y2);
+                            graphics.DrawLine(pen4, num11, y, num11, y2);
                             goto IL_1795;
                         }
                         goto IL_1795;
                     }
-                    this.ClipToPane(graphics_0, null);
+                    this.ClipToPane(graphics, null);
                 }
             }
             if (this.tradingSystemExecutor != null)
@@ -3189,20 +3190,20 @@
                                 }
                                 object obj = text2;
                                 text2 = string.Concat(new object[]
-						{
-							obj,
-							current17.Shares,
-							" @",
-							current17.Bars.FormatValue(current17.EntryPrice)
-						});
-                                ChartGlyph chartGlyph = this.method_8(bitmap_, current17.EntryBar, text2, current17.PositionType == PositionType.Short, Color.Black, false);
+						            {
+							            obj,
+							            current17.Shares,
+							            " @",
+							            current17.Bars.FormatValue(current17.EntryPrice)
+						            });
+                                ChartGlyph chartGlyph = this.createAndAddChartGlyph(bitmap_, current17.EntryBar, text2, current17.PositionType == PositionType.Short, Color.Black, false);
                                 chartGlyph.Position = current17;
                             }
                             if (this.TradeCirclesVisible)
                             {
                                 int num32 = this.PricePane.ConvertValueToY(current17.EntryPrice);
-                                int num33 = this.int_1[current17.EntryBar];
-                                graphics_0.DrawEllipse(pen5, num33 - 3, num32 - 3, 6, 6);
+                                int num33 = this.barCenterX[current17.EntryBar];
+                                graphics.DrawEllipse(pen5, num33 - 3, num32 - 3, 6, 6);
                             }
                         }
                         if (!current17.Active && current17.ExitBar >= this.leftEdgeBar && current17.ExitBar <= this.rightEdgeBar && this.TradeArrowsVisible)
@@ -3235,17 +3236,17 @@
                             }
                             object obj = text2;
                             text2 = string.Concat(new object[]
-					{
-						obj,
-						current17.Shares,
-						" @",
-						current17.Bars.FormatValue(current17.ExitPrice),
-						"\n",
-						current17.NetProfit.ToString("C"),
-						"\n",
-						current17.NetProfitPercent.ToString("N2"),
-						"%"
-					});
+					            {
+						            obj,
+						            current17.Shares,
+						            " @",
+						            current17.Bars.FormatValue(current17.ExitPrice),
+						            "\n",
+						            current17.NetProfit.ToString("C"),
+						            "\n",
+						            current17.NetProfitPercent.ToString("N2"),
+						            "%"
+					            });
                             Color color_;
                             if (current17.NetProfit > 0.0)
                             {
@@ -3255,13 +3256,13 @@
                             {
                                 color_ = Color.Red;
                             }
-                            ChartGlyph chartGlyph2 = this.method_8(bitmap_, current17.ExitBar, text2, current17.PositionType == PositionType.Long, color_, false);
+                            ChartGlyph chartGlyph2 = this.createAndAddChartGlyph(bitmap_, current17.ExitBar, text2, current17.PositionType == PositionType.Long, color_, false);
                             chartGlyph2.Position = current17;
                             if (this.TradeCirclesVisible)
                             {
                                 int num32 = this.PricePane.ConvertValueToY(current17.ExitPrice);
-                                int num33 = this.int_1[current17.ExitBar];
-                                graphics_0.DrawEllipse(pen6, num33 - 3, num32 - 3, 6, 6);
+                                int num33 = this.barCenterX[current17.ExitBar];
+                                graphics.DrawEllipse(pen6, num33 - 3, num32 - 3, 6, 6);
                             }
                         }
                     }
@@ -3269,23 +3270,25 @@
                 pen5.Dispose();
                 pen6.Dispose();
             }
-            this.ClipToPane(graphics_0, this.PricePane);
-            foreach (Class33 current18 in this.list_2)
+            this.ClipToPane(graphics, this.PricePane);
+
+            ///WYJ note, draw the circles indicating the buy and 
+            foreach (Class33 marker in this.tradePriceMarkers)
             {
-                if (current18.method_0() >= this.leftEdgeBar && current18.method_0() <= this.rightEdgeBar)
+                if (marker.getBarNum() >= this.leftEdgeBar && marker.getBarNum() <= this.rightEdgeBar)
                 {
                     try
                     {
-                        int num11 = this.ConvertBarToX(current18.method_0());
-                        int num14 = this.PricePane.ConvertValueToY(current18.method_1());
-                        graphics_0.FillEllipse(current18.method_2(), num11, num14, 2, 2);
+                        int markerX = this.ConvertBarToX(marker.getBarNum());
+                        int markerY = this.PricePane.ConvertValueToY(marker.getPrice());
+                        graphics.FillEllipse(marker.getBrush(), markerX, markerY, 2, 2);
                     }
                     catch
                     {
                     }
                 }
             }
-            this.ClipToPane(graphics_0, null);
+            this.ClipToPane(graphics, null);
             if (this.Fundamentals != null && this.FundamentalsVisible)
             {
                 string[] array2 = this.FundamentalGlyphs.Split(new char[]
@@ -3303,7 +3306,7 @@
                         {
                             if (current19.Bar >= this.leftEdgeBar && current19.Bar <= this.rightEdgeBar)
                             {
-                                this.method_8(current19.Glyph, current19.Bar, current19.FormatValue(), true, Color.Black, true);
+                                this.createAndAddChartGlyph(current19.Glyph, current19.Bar, current19.FormatValue(), true, Color.Black, true);
                             }
                         }
                     }
@@ -3325,11 +3328,11 @@
                     text3 = text3 + bars_1.BarInterval.ToString() + " ";
                 }
                 text3 += bars_1.Scale.ToString();
-                SizeF sizeF = graphics_0.MeasureString(text3, this.titleFont);
+                SizeF sizeF = graphics.MeasureString(text3, this.titleFont);
                 Rectangle rect = new Rectangle(2, this.PricePane.Top + 2, (int)(sizeF.Width + 8f), (int)(sizeF.Height + 4f));
-                graphics_0.FillRectangle(this.backgroundBrush, rect);
-                graphics_0.DrawRectangle(pen3, rect);
-                graphics_0.DrawString(text3, this.titleFont, this.reverseBackgroundBrush, 4f, (float)(this.PricePane.Top + 4));
+                graphics.FillRectangle(this.backgroundBrush, rect);
+                graphics.DrawRectangle(pen3, rect);
+                graphics.DrawString(text3, this.titleFont, this.reverseBackgroundBrush, 4f, (float)(this.PricePane.Top + 4));
                 this.PricePane.LabelOffset = rect.Bottom + 2 - this.PricePane.Top;
             }
             if (this.IndicatorLabelsVisible)
@@ -3338,19 +3341,19 @@
                 {
                     if (current21.Visible)
                     {
-                        current21.method_6(graphics_0);
+                        current21.drawAllLabels(graphics);
                     }
                 }
             }
             foreach (ChartPane current22 in this.Panes)
             {
-                if (current22.list_3 != null)
+                if (current22.wsdObjList_BeforeBars != null)
                 {
-                    this.ClipToPane(graphics_0, current22);
-                    this.method_9(current22, current22.list_3, graphics_0);
+                    this.ClipToPane(graphics, current22);
+                    this.renderObjects(current22, current22.wsdObjList_BeforeBars, graphics);
                 }
             }
-            this.ClipToPane(graphics_0, null);
+            this.ClipToPane(graphics, null);
             foreach (ChartPane current23 in this.Panes)
             {
                 if (current23.Visible && !current23.Hidden)
@@ -3359,11 +3362,11 @@
                     {
                         if (current24.Series == this.bars.Volume && !double.IsNaN(this.bars.Volume.PartialValue) && this.rightEdgeBar == this.bars.Count - 1)
                         {
-                            current23.method_5(graphics_0, this.bars.Volume.PartialValue, current24.Color);
+                            current23.drawLastBarValue(graphics, this.bars.Volume.PartialValue, current24.Color);
                         }
                         else
                         {
-                            current23.method_5(graphics_0, current24.Series[this.rightEdgeBar], current24.Color);
+                            current23.drawLastBarValue(graphics, current24.Series[this.rightEdgeBar], current24.Color);
                         }
                     }
                 }
@@ -3373,14 +3376,14 @@
             {
                 double_ = this.Bars.Close.PartialValue;
             }
-            this.PricePane.method_5(graphics_0, double_, Color.Black);
+            this.PricePane.drawLastBarValue(graphics, double_, Color.Black);
             if (this.WealthScript != null)
             {
-                this.WealthScript.PaintHook(bars_1, graphics_0, this.chartStyle, PaintHookStage.AfterBarsRender);
+                this.WealthScript.PaintHook(bars_1, graphics, this.chartStyle, PaintHookStage.AfterBarsRender);
             }
             foreach (ChartGlyph current25 in this.glyphs)
             {
-                graphics_0.DrawImage(current25.Glyph, current25.X, current25.Y, current25.Width, current25.Height);
+                graphics.DrawImage(current25.Glyph, current25.X, current25.Y, current25.Width, current25.Height);
             }
             if (this.PaneSeparatorVisible)
             {
@@ -3392,7 +3395,7 @@
                         if (current26.Visible)
                         {
                             int num14 = current26.Top + current26.Height;
-                            graphics_0.DrawLine(pen7, 0, num14, this.width, num14);
+                            graphics.DrawLine(pen7, 0, num14, this.width, num14);
                         }
                     }
                 }
@@ -3404,10 +3407,11 @@
         }
 
 
-        internal void method_10()
+        ///WYJ fix, original signature: internal void method_10()
+        internal void addVolumeIndicatorsToPane()
         {
             this.volumePane.PlottedIndicators.Clear();
-            PlottedIndicator item = new PlottedIndicator(this, this.bars.Volume) {
+            PlottedIndicator volume = new PlottedIndicator(this, this.bars.Volume) {
                 Style = LineStyle.Histogram,
                 Width = 20,
                 Color = this.UpBarVolumeColor
@@ -3416,17 +3420,18 @@
             {
                 if (this.bars.Close[i] > this.bars.Open[i])
                 {
-                    item.SetBarColor(i, this.UpBarVolumeColor);
+                    volume.SetBarColor(i, this.UpBarVolumeColor);
                 }
                 else
                 {
-                    item.SetBarColor(i, this.DownBarVolumeColor);
+                    volume.SetBarColor(i, this.DownBarVolumeColor);
                 }
             }
-            this.volumePane.PlottedIndicators.Add(item);
+            this.volumePane.PlottedIndicators.Add(volume);
         }
 
-        internal void method_11(PlottedSymbol plottedSymbol_0, ChartPane chartPane_4)
+        ///WYJ fix, original signature: internal void method_11(PlottedSymbol plottedSymbol_0, ChartPane chartPane_4)
+        internal void backupAndSetColorsAndPane(PlottedSymbol plottedSymbol_0, ChartPane chartPane_4)
         {
             this.color_11 = this.barColors;
             this.barColors = null;
@@ -3438,7 +3443,8 @@
             this.pricePane = chartPane_4;
         }
 
-        internal void method_12()
+        ///WYJ fix, original signature: internal void method_12()
+        internal void restoreColorsAndPane()
         {
             this.barColors = this.color_11;
             this.color_11 = null;
@@ -3447,69 +3453,75 @@
             this.pricePane = this.chartPane_3;
         }
 
-        internal void method_13(int int_12, double double_0, TradeType tradeType_0)
+        ///WYJ fix, original signature: internal void method_13(int int_12, double double_0, TradeType tradeType_0)
+        internal void addTradePriceMarker(int barNum, double double_0, TradeType tradeType_0)
         {
-            Brush black = Brushes.Black;
+            Brush brush = Brushes.Black;
             switch (tradeType_0)
             {
                 case TradeType.Buy:
-                    black = Brushes.Blue;
+                    brush = Brushes.Blue;
                     break;
 
                 case TradeType.Sell:
-                    black = Brushes.Red;
+                    brush = Brushes.Red;
                     break;
 
                 case TradeType.Short:
-                    black = Brushes.Fuchsia;
+                    brush = Brushes.Fuchsia;
                     break;
 
                 case TradeType.Cover:
-                    black = Brushes.Green;
+                    brush = Brushes.Green;
                     break;
             }
-            Class33 item = new Class33(int_12, double_0, black);
-            this.list_2.Add(item);
+            Class33 item = new Class33(barNum, double_0, brush);
+            this.tradePriceMarkers.Add(item);
         }
 
-        internal int method_2(string string_4)
+        ///WYJ fix, original signature: internal int method_2(string string_4)
+        internal int getHiddenPaneHeight(string string_4)
         {
-            if (!string.IsNullOrEmpty(string_4) && this.dictionary_3.ContainsKey(string_4))
+            if (!string.IsNullOrEmpty(string_4) && this.dict_HiddenPanesHeights.ContainsKey(string_4))
             {
-                return this.dictionary_3[string_4];
+                return this.dict_HiddenPanesHeights[string_4];
             }
             return -1;
         }
 
-        internal void method_3(string string_4, int int_12)
+        ///WYJ fix, original signature: internal void method_3(string string_4, int int_12)
+        internal void saveHiddenPaneHeight(string string_4, int int_12)
         {
             if (!string.IsNullOrEmpty(string_4))
             {
-                if (this.dictionary_3.ContainsKey(string_4))
+                if (this.dict_HiddenPanesHeights.ContainsKey(string_4))
                 {
-                    this.dictionary_3[string_4] = int_12;
+                    this.dict_HiddenPanesHeights[string_4] = int_12;
                 }
                 else
                 {
-                    this.dictionary_3.Add(string_4, int_12);
+                    this.dict_HiddenPanesHeights.Add(string_4, int_12);
                 }
             }
         }
 
-        internal void method_4(string string_4)
+        ///WYJ fix, original signature: internal void method_4(string string_4)
+        internal void clearHiddenPaneHeight(string string_4)
         {
             if (!string.IsNullOrEmpty(string_4))
             {
-                this.dictionary_3.Remove(string_4);
+                this.dict_HiddenPanesHeights.Remove(string_4);
             }
         }
 
-        internal bool method_5(string string_4)
+        ///WYJ fix, original signature: internal bool method_5(string string_4)
+        internal bool hiddenPanesHeightsContain(string string_4)
         {
-            return (!string.IsNullOrEmpty(string_4) && this.dictionary_3.ContainsKey(string_4));
+            return (!string.IsNullOrEmpty(string_4) && this.dict_HiddenPanesHeights.ContainsKey(string_4));
         }
 
-        private int method_6()
+        ///WYJ fix, original signature: private int method_6()
+        private int calcLeftEdgeBar()
         {
             int num = this.RightPaddingBars - this.scrollOffset;
             if (num < 0)
@@ -3525,7 +3537,7 @@
             }
             while (num2 >= 0)
             {
-                num2 -= this.int_0[index];
+                num2 -= this.barWidth[index];
                 index--;
                 if ((index <= 0) && (num2 >= 0))
                 {
@@ -3535,7 +3547,9 @@
             return (index + 1);
         }
 
-        private int method_7()
+        ///WYJ fix, original signature: private int method_7()
+        ///WYJ note, when used, calcRightEdgeBar() should be called before calcLeftEdgeBar() 
+        private int calcRightEdgeBar()
         {
             if (this.bars != null)
             {
@@ -3548,7 +3562,7 @@
                 {
                     while (index >= 0)
                     {
-                        if (this.int_0[index] != 0)
+                        if (this.barWidth[index] != 0)
                         {
                             return index;
                         }
@@ -3561,56 +3575,60 @@
             return 0;
         }
 
-        private ChartGlyph method_8(Bitmap bitmap_0, int int_12, string string_4, bool bool_15, Color color_14, bool bool_16)
+
+        ///WYJ fix, original signature: private ChartGlyph method_8(Bitmap bitmap_0, int int_12, string string_4, bool bool_15, Color color_14, bool bool_16)
+        ///
+        private ChartGlyph createAndAddChartGlyph(Bitmap bitmap, int bar, string rolloverText, bool aboveBar, Color color_14, bool belowBarIfOverTop)
         {
-            if (bitmap_0.Tag == null)
+            if (bitmap.Tag == null)
             {
-                bitmap_0.Tag = "T";
-                bitmap_0.MakeTransparent(Color.Fuchsia);
+                bitmap.Tag = "T";
+                bitmap.MakeTransparent(Color.Fuchsia);
             }
-            ChartGlyph item = new ChartGlyph(bitmap_0, string_4, color_14, int_12, bool_15) {
-                X = this.int_1[int_12] - (bitmap_0.Width / 2)
+            ChartGlyph glyph = new ChartGlyph(bitmap, rolloverText, color_14, bar, aboveBar) {
+                X = this.barCenterX[bar] - (bitmap.Width / 2)
             };
-            if (bool_15)
+            if (aboveBar)
             {
-                item.Y = (this.PricePane.ConvertValueToY(this.bars.High[int_12]) - 4) - bitmap_0.Height;
+                glyph.Y = (this.PricePane.ConvertValueToY(this.bars.High[bar]) - 4) - bitmap.Height;
                 foreach (ChartGlyph glyph3 in this.glyphs)
                 {
-                    if ((glyph3.Bar == int_12) && (glyph3.AboveBar == bool_15))
+                    if ((glyph3.Bar == bar) && (glyph3.AboveBar == aboveBar))
                     {
-                        item.Y -= glyph3.Glyph.Height + 2;
+                        glyph.Y -= glyph3.Glyph.Height + 2;
                     }
                 }
-                if (bool_16 && (item.Y < this.PricePane.Top))
+                if (belowBarIfOverTop && (glyph.Y < this.PricePane.Top))
                 {
-                    item.AboveBar = false;
-                    bool_15 = false;
+                    glyph.AboveBar = false;
+                    aboveBar = false;
                 }
             }
-            if (!bool_15)
+            if (!aboveBar)
             {
-                item.Y = this.PricePane.ConvertValueToY(this.bars.Low[int_12]) + 4;
+                glyph.Y = this.PricePane.ConvertValueToY(this.bars.Low[bar]) + 4;
                 foreach (ChartGlyph glyph2 in this.glyphs)
                 {
-                    if ((glyph2.Bar == int_12) && (glyph2.AboveBar == bool_15))
+                    if ((glyph2.Bar == bar) && (glyph2.AboveBar == aboveBar))
                     {
-                        item.Y += glyph2.Glyph.Height + 2;
+                        glyph.Y += glyph2.Glyph.Height + 2;
                     }
                 }
             }
-            this.glyphs.Add(item);
-            return item;
+            this.glyphs.Add(glyph);
+            return glyph;
         }
 
-        private void method_9(ChartPane chartPane_4, List<WSDrawingObject> list_5, Graphics graphics_0)
+        ///WYJ fix, original signature: private void method_9(ChartPane chartPane_4, List<WSDrawingObject> list_5, Graphics graphics_0)
+        private void renderObjects(ChartPane chartPane, List<WSDrawingObject> list_Objs, Graphics graphics)
         {
-            if (list_5 != null)
+            if (list_Objs != null)
             {
-                foreach (WSDrawingObject obj2 in list_5)
+                foreach (WSDrawingObject obj in list_Objs)
                 {
-                    if (obj2 != null)
+                    if (obj != null)
                     {
-                        obj2.Render(graphics_0, chartPane_4, this);
+                        obj.Render(graphics, chartPane, this);
                     }
                 }
             }
@@ -3658,11 +3676,11 @@
                     WSDPlottedFundamentalItem item = new WSDPlottedFundamentalItem(items, color, style, width);
                     if (dragDrop)
                     {
-                        pane.method_3(item);
+                        pane.addDragDroppedWSDObject(item);
                     }
                     else
                     {
-                        pane.method_4(item, true);
+                        pane.addWSDObject(item, true);
                     }
                 }
             }
@@ -3678,11 +3696,11 @@
         {
             if (fromDragDrop)
             {
-                pane.method_3(wsdrawingObject_0);
+                pane.addDragDroppedWSDObject(wsdrawingObject_0);
             }
             else
             {
-                pane.method_4(wsdrawingObject_0, behindBars);
+                pane.addWSDObject(wsdrawingObject_0, behindBars);
             }
         }
 
@@ -3698,7 +3716,7 @@
                     {
                         ///goto  Label_0030;  ///WYJ fix, simplify the flow
                         this.panes.Remove(current);
-                        this.method_4(current.Description);
+                        this.clearHiddenPaneHeight(current.Description);
                         return;
                     }
                 }
@@ -3720,13 +3738,13 @@
         {
             if (!string.IsNullOrEmpty(string_4))
             {
-                this.dictionary_3.Clear();
+                this.dict_HiddenPanesHeights.Clear();
                 foreach (string str in string_4.Split(new char[] { ';' }))
                 {
                     int num2;
                     string[] strArray3 = str.Split(new char[] { '=' });
                     int.TryParse(strArray3[1], out num2);
-                    this.dictionary_3.Add(strArray3[0], num2);
+                    this.dict_HiddenPanesHeights.Add(strArray3[0], num2);
                 }
             }
         }
@@ -3757,7 +3775,7 @@
         {
             StringBuilder builder = new StringBuilder();
             bool flag = true;
-            foreach (KeyValuePair<string, int> pair in this.dictionary_3)
+            foreach (KeyValuePair<string, int> pair in this.dict_HiddenPanesHeights)
             {
                 if (!flag)
                 {
@@ -3836,7 +3854,7 @@
 
         public void SetBarWidth(int int_12, int width)
         {
-            this.int_0[int_12] = width;
+            this.barWidth[int_12] = width;
         }
 
         public static void SetPenStyle(Pen pen_0, LineStyle style)

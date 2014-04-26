@@ -119,7 +119,8 @@
             this.systemResultsBuyHold.method_0();
         }
 
-        internal void method_1(WealthLab.Bars bars_1)
+        ///WYJ fix, original signature: internal void method_1(WealthLab.Bars bars_1)
+        internal void addToBarsList(WealthLab.Bars bars_1)
         {
             this.barsList.Add(bars_1);
         }

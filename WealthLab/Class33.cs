@@ -1,32 +1,36 @@
 ﻿using System;
 using System.Drawing;
 
-internal class Class33
+internal class Class33   ///WYJ note, TradePriceMarker
 {
-    private Brush brush_0;
-    private double double_0;
-    private int int_0;
+    private Brush brush;   ///WYJ fix, original name: brush_0
+    private double price;   ///WYJ fix, original name: double_0
+    private int barNum;   ///WYJ fix, original name: int_0
 
-    public Class33(int int_1, double double_1, Brush brush_1)
+    ///WYJ fix, original signature: public Class33(int int_1, double double_1, Brush brush_1)
+    public Class33(int barNum, double price, Brush brush)
     {
-        this.int_0 = int_1;
-        this.double_0 = double_1;
-        this.brush_0 = brush_1;
+        this.barNum = barNum;
+        this.price = price;
+        this.brush = brush;
     }
 
-    public int method_0()
+    ///WYJ fix, original signature: public int method_0()
+    public int getBarNum()
     {
-        return this.int_0;
+        return this.barNum;
     }
 
-    public double method_1()
+    ///WYJ fir, original signature: public double method_1()
+    public double getPrice()
     {
-        return this.double_0;
+        return this.price;
     }
 
-    public Brush method_2()
+    ///WYJ fir, original signature: public Brush method_2()
+    public Brush getBrush()
     {
-        return this.brush_0;
+        return this.brush;
     }
 }
 

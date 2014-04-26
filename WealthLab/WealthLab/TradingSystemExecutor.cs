@@ -35,7 +35,7 @@
         private bool applyCommission;
         private ChartRenderer chartRenderer;
         private WealthLab.Commission commission;
-        private DataSource dataSource_0;
+        private DataSource dataSource;   ///WYJ fix, original name: dataSource_0
         private Dictionary<string, Bars> dictionary_0;
         private double slippageUnits;
         private double overrideShareSize;
@@ -55,13 +55,13 @@
         [CompilerGenerated]
         private int pricingDecimalPlaces;
         private List<string> debugStrings;
-        private List<Bars> list_1;
-        private List<Bars> list_2;
+        private List<Bars> barsList_Sync;   ///WYJ fix, original signature: list_1; the two lists here are lists for external symbols?
+        private List<Bars> barsList;   ///WYJ fix, original signature: list_2
         private List<Position> masterPositions;
         private List<Alert> masterAlerts;
         private List<Position> currentPositions;
         private List<Alert> currentAlerts;
-        private List<Bars> list_7;
+        private List<Bars> barsList_Raw;   ///WYJ fix, raw bars list, added to this list after retrieved, before any other processing, like synch. Original signature: list_7
         [CompilerGenerated]
         private object tag;
         private Position position_0;
@@ -81,25 +81,25 @@
 
         private EventHandler<DataSourceLookupEventArgs> eventHandler_1;
 
-        private EventHandler<LoadSymbolEventArgs> eventHandler_2;
+        private EventHandler<LoadSymbolEventArgs> eventHandler_ExternalSymbolRequested;   ///WYJ fix, original name: eventHandler_2
 
-        private EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler_3;
+        private EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler_ExternalSymbolFromDataSetRequested;   ///WYJ fix, original name: eventHandler_3
 
         private EventHandler<BarsEventArgs> eventHandler_4;
 
-        private EventHandler<BarsEventArgs> eventHandler_5;
+        private EventHandler<BarsEventArgs> eventHandler_ExecutionCompletedForChildStrategySymbol;   ///WYJ fix, original name: eventHandler_5
 
         private EventHandler<WSExceptionEventArgs> eventHandler_6;
 
-        private EventHandler<EventArgs> eventHandler_7;
+        private EventHandler<EventArgs> eventHandler_FlushDebugWindow;   ///WYJ fix, original name: eventHandler_7
 
-        private EventHandler<EventArgs> eventHandler_8;
+        private EventHandler<EventArgs> eventHandler_ClearDebugWindow;   ///WYJ fix, original name: eventHandler_8
 
-        private EventHandler<DebugStringEventArgs> eventHandler_9;
+        private EventHandler<DebugStringEventArgs> eventHandler_PrintToStatusBar;   ///WYJ fix, original name: eventHandler_9
 
-        private EventHandler<ChartBitmapEventArgs> eventHandler_10;
+        private EventHandler<ChartBitmapEventArgs> eventHandler_ChartBitmapRequested;   ///WYJ fix, original name: eventHandler_10
 
-        private EventHandler<TrendLineEventArgs> eventHandler_11;
+        private EventHandler<TrendLineEventArgs> eventHandler_TrendlineGetValue;   ///WYJ fix, original name: eventHandler_11
 
         private EventHandler<StrategyParameterEventArgs> eventHandler_12;
 
@@ -108,24 +108,24 @@
             add
             {
                 EventHandler<ChartBitmapEventArgs> eventHandler;
-                EventHandler<ChartBitmapEventArgs> eventHandler10 = this.eventHandler_10;
+                EventHandler<ChartBitmapEventArgs> eventHandler10 = this.eventHandler_ChartBitmapRequested;
                 do
                 {
                     eventHandler = eventHandler10;
                     EventHandler<ChartBitmapEventArgs> eventHandler1 = (EventHandler<ChartBitmapEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler10 = Interlocked.CompareExchange<EventHandler<ChartBitmapEventArgs>>(ref this.eventHandler_10, eventHandler1, eventHandler);
+                    eventHandler10 = Interlocked.CompareExchange<EventHandler<ChartBitmapEventArgs>>(ref this.eventHandler_ChartBitmapRequested, eventHandler1, eventHandler);
                 }
                 while (eventHandler10 != eventHandler);
             }
             remove
             {
                 EventHandler<ChartBitmapEventArgs> eventHandler;
-                EventHandler<ChartBitmapEventArgs> eventHandler10 = this.eventHandler_10;
+                EventHandler<ChartBitmapEventArgs> eventHandler10 = this.eventHandler_ChartBitmapRequested;
                 do
                 {
                     eventHandler = eventHandler10;
                     EventHandler<ChartBitmapEventArgs> eventHandler1 = (EventHandler<ChartBitmapEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler10 = Interlocked.CompareExchange<EventHandler<ChartBitmapEventArgs>>(ref this.eventHandler_10, eventHandler1, eventHandler);
+                    eventHandler10 = Interlocked.CompareExchange<EventHandler<ChartBitmapEventArgs>>(ref this.eventHandler_ChartBitmapRequested, eventHandler1, eventHandler);
                 }
                 while (eventHandler10 != eventHandler);
             }
@@ -136,24 +136,24 @@
             add
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler8 = this.eventHandler_8;
+                EventHandler<EventArgs> eventHandler8 = this.eventHandler_ClearDebugWindow;
                 do
                 {
                     eventHandler = eventHandler8;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler8 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_8, eventHandler1, eventHandler);
+                    eventHandler8 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_ClearDebugWindow, eventHandler1, eventHandler);
                 }
                 while (eventHandler8 != eventHandler);
             }
             remove
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler8 = this.eventHandler_8;
+                EventHandler<EventArgs> eventHandler8 = this.eventHandler_ClearDebugWindow;
                 do
                 {
                     eventHandler = eventHandler8;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler8 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_8, eventHandler1, eventHandler);
+                    eventHandler8 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_ClearDebugWindow, eventHandler1, eventHandler);
                 }
                 while (eventHandler8 != eventHandler);
             }
@@ -164,24 +164,24 @@
             add
             {
                 EventHandler<BarsEventArgs> eventHandler;
-                EventHandler<BarsEventArgs> eventHandler5 = this.eventHandler_5;
+                EventHandler<BarsEventArgs> eventHandler5 = this.eventHandler_ExecutionCompletedForChildStrategySymbol;
                 do
                 {
                     eventHandler = eventHandler5;
                     EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler5 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_ExecutionCompletedForChildStrategySymbol, eventHandler1, eventHandler);
                 }
                 while (eventHandler5 != eventHandler);
             }
             remove
             {
                 EventHandler<BarsEventArgs> eventHandler;
-                EventHandler<BarsEventArgs> eventHandler5 = this.eventHandler_5;
+                EventHandler<BarsEventArgs> eventHandler5 = this.eventHandler_ExecutionCompletedForChildStrategySymbol;
                 do
                 {
                     eventHandler = eventHandler5;
                     EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler5 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_ExecutionCompletedForChildStrategySymbol, eventHandler1, eventHandler);
                 }
                 while (eventHandler5 != eventHandler);
             }
@@ -220,24 +220,24 @@
             add
             {
                 EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler;
-                EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler3 = this.eventHandler_3;
+                EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler3 = this.eventHandler_ExternalSymbolFromDataSetRequested;
                 do
                 {
                     eventHandler = eventHandler3;
                     EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler1 = (EventHandler<LoadSymbolFromDataSetEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler3 = Interlocked.CompareExchange<EventHandler<LoadSymbolFromDataSetEventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<LoadSymbolFromDataSetEventArgs>>(ref this.eventHandler_ExternalSymbolFromDataSetRequested, eventHandler1, eventHandler);
                 }
                 while (eventHandler3 != eventHandler);
             }
             remove
             {
                 EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler;
-                EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler3 = this.eventHandler_3;
+                EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler3 = this.eventHandler_ExternalSymbolFromDataSetRequested;
                 do
                 {
                     eventHandler = eventHandler3;
                     EventHandler<LoadSymbolFromDataSetEventArgs> eventHandler1 = (EventHandler<LoadSymbolFromDataSetEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler3 = Interlocked.CompareExchange<EventHandler<LoadSymbolFromDataSetEventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<LoadSymbolFromDataSetEventArgs>>(ref this.eventHandler_ExternalSymbolFromDataSetRequested, eventHandler1, eventHandler);
                 }
                 while (eventHandler3 != eventHandler);
             }
@@ -248,24 +248,24 @@
             add
             {
                 EventHandler<LoadSymbolEventArgs> eventHandler;
-                EventHandler<LoadSymbolEventArgs> eventHandler2 = this.eventHandler_2;
+                EventHandler<LoadSymbolEventArgs> eventHandler2 = this.eventHandler_ExternalSymbolRequested;
                 do
                 {
                     eventHandler = eventHandler2;
                     EventHandler<LoadSymbolEventArgs> eventHandler1 = (EventHandler<LoadSymbolEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler2 = Interlocked.CompareExchange<EventHandler<LoadSymbolEventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<LoadSymbolEventArgs>>(ref this.eventHandler_ExternalSymbolRequested, eventHandler1, eventHandler);
                 }
                 while (eventHandler2 != eventHandler);
             }
             remove
             {
                 EventHandler<LoadSymbolEventArgs> eventHandler;
-                EventHandler<LoadSymbolEventArgs> eventHandler2 = this.eventHandler_2;
+                EventHandler<LoadSymbolEventArgs> eventHandler2 = this.eventHandler_ExternalSymbolRequested;
                 do
                 {
                     eventHandler = eventHandler2;
                     EventHandler<LoadSymbolEventArgs> eventHandler1 = (EventHandler<LoadSymbolEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler2 = Interlocked.CompareExchange<EventHandler<LoadSymbolEventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<LoadSymbolEventArgs>>(ref this.eventHandler_ExternalSymbolRequested, eventHandler1, eventHandler);
                 }
                 while (eventHandler2 != eventHandler);
             }
@@ -276,24 +276,24 @@
             add
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler7 = this.eventHandler_7;
+                EventHandler<EventArgs> eventHandler7 = this.eventHandler_FlushDebugWindow;
                 do
                 {
                     eventHandler = eventHandler7;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler7 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_7, eventHandler1, eventHandler);
+                    eventHandler7 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_FlushDebugWindow, eventHandler1, eventHandler);
                 }
                 while (eventHandler7 != eventHandler);
             }
             remove
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler7 = this.eventHandler_7;
+                EventHandler<EventArgs> eventHandler7 = this.eventHandler_FlushDebugWindow;
                 do
                 {
                     eventHandler = eventHandler7;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler7 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_7, eventHandler1, eventHandler);
+                    eventHandler7 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_FlushDebugWindow, eventHandler1, eventHandler);
                 }
                 while (eventHandler7 != eventHandler);
             }
@@ -360,24 +360,24 @@
             add
             {
                 EventHandler<DebugStringEventArgs> eventHandler;
-                EventHandler<DebugStringEventArgs> eventHandler9 = this.eventHandler_9;
+                EventHandler<DebugStringEventArgs> eventHandler9 = this.eventHandler_PrintToStatusBar;
                 do
                 {
                     eventHandler = eventHandler9;
                     EventHandler<DebugStringEventArgs> eventHandler1 = (EventHandler<DebugStringEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler9 = Interlocked.CompareExchange<EventHandler<DebugStringEventArgs>>(ref this.eventHandler_9, eventHandler1, eventHandler);
+                    eventHandler9 = Interlocked.CompareExchange<EventHandler<DebugStringEventArgs>>(ref this.eventHandler_PrintToStatusBar, eventHandler1, eventHandler);
                 }
                 while (eventHandler9 != eventHandler);
             }
             remove
             {
                 EventHandler<DebugStringEventArgs> eventHandler;
-                EventHandler<DebugStringEventArgs> eventHandler9 = this.eventHandler_9;
+                EventHandler<DebugStringEventArgs> eventHandler9 = this.eventHandler_PrintToStatusBar;
                 do
                 {
                     eventHandler = eventHandler9;
                     EventHandler<DebugStringEventArgs> eventHandler1 = (EventHandler<DebugStringEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler9 = Interlocked.CompareExchange<EventHandler<DebugStringEventArgs>>(ref this.eventHandler_9, eventHandler1, eventHandler);
+                    eventHandler9 = Interlocked.CompareExchange<EventHandler<DebugStringEventArgs>>(ref this.eventHandler_PrintToStatusBar, eventHandler1, eventHandler);
                 }
                 while (eventHandler9 != eventHandler);
             }
@@ -416,24 +416,24 @@
             add
             {
                 EventHandler<TrendLineEventArgs> eventHandler;
-                EventHandler<TrendLineEventArgs> eventHandler11 = this.eventHandler_11;
+                EventHandler<TrendLineEventArgs> eventHandler11 = this.eventHandler_TrendlineGetValue;
                 do
                 {
                     eventHandler = eventHandler11;
                     EventHandler<TrendLineEventArgs> eventHandler1 = (EventHandler<TrendLineEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler11 = Interlocked.CompareExchange<EventHandler<TrendLineEventArgs>>(ref this.eventHandler_11, eventHandler1, eventHandler);
+                    eventHandler11 = Interlocked.CompareExchange<EventHandler<TrendLineEventArgs>>(ref this.eventHandler_TrendlineGetValue, eventHandler1, eventHandler);
                 }
                 while (eventHandler11 != eventHandler);
             }
             remove
             {
                 EventHandler<TrendLineEventArgs> eventHandler;
-                EventHandler<TrendLineEventArgs> eventHandler11 = this.eventHandler_11;
+                EventHandler<TrendLineEventArgs> eventHandler11 = this.eventHandler_TrendlineGetValue;
                 do
                 {
                     eventHandler = eventHandler11;
                     EventHandler<TrendLineEventArgs> eventHandler1 = (EventHandler<TrendLineEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler11 = Interlocked.CompareExchange<EventHandler<TrendLineEventArgs>>(ref this.eventHandler_11, eventHandler1, eventHandler);
+                    eventHandler11 = Interlocked.CompareExchange<EventHandler<TrendLineEventArgs>>(ref this.eventHandler_TrendlineGetValue, eventHandler1, eventHandler);
                 }
                 while (eventHandler11 != eventHandler);
             }
@@ -477,17 +477,17 @@
             this.strategyName = "";
             this.redcuceQtyPct = 10.0;
             this.bool_16 = true;
-            this.list_1 = new List<Bars>();
-            this.list_2 = new List<Bars>();
+            this.barsList_Sync = new List<Bars>();
+            this.barsList = new List<Bars>();
             this.positionSize = new PositionSize();
             this.masterPositions = new List<Position>();
             this.masterAlerts = new List<Alert>();
             this.currentPositions = new List<Position>();
             this.currentAlerts = new List<Alert>();
             this.dictionary_0 = new Dictionary<string, Bars>();
-            this.list_7 = new List<Bars>();
+            this.barsList_Raw = new List<Bars>();
             this.systemPerformance = new SystemPerformance(null);
-            this.method_21();
+            this.initIContainer();
         }
 
         public TradingSystemExecutor(IContainer container)
@@ -500,18 +500,18 @@
             this.strategyName = "";
             this.redcuceQtyPct = 10.0;
             this.bool_16 = true;
-            this.list_1 = new List<Bars>();
-            this.list_2 = new List<Bars>();
+            this.barsList_Sync = new List<Bars>();
+            this.barsList = new List<Bars>();
             this.positionSize = new PositionSize();
             this.masterPositions = new List<Position>();
             this.masterAlerts = new List<Alert>();
             this.currentPositions = new List<Position>();
             this.currentAlerts = new List<Alert>();
             this.dictionary_0 = new Dictionary<string, Bars>();
-            this.list_7 = new List<Bars>();
+            this.barsList_Raw = new List<Bars>();
             this.systemPerformance = new SystemPerformance(null);
             container.Add(this);
-            this.method_21();
+            this.initIContainer();
         }
 
         public void ApplyPositionSize()
@@ -522,12 +522,12 @@
                 if (this.DataSet != null)
                 {
                     executor.ApplySettings(this);
-                    Bars source = this.DataSet.Provider.RequestData(this.DataSet, this.BenchmarkSymbol, DateTime.MinValue, DateTime.MaxValue, 0, false);
-                    if (source.Count == 0)
+                    Bars benchmarkData = this.DataSet.Provider.RequestData(this.DataSet, this.BenchmarkSymbol, DateTime.MinValue, DateTime.MaxValue, 0, false);
+                    if (benchmarkData.Count == 0)
                     {
-                        source = this.method_10(this.BenchmarkSymbol, false);
+                        benchmarkData = this.findBarsDataInPool2(this.BenchmarkSymbol, false);
                     }
-                    source.SymbolInfo.SecurityType = SecurityType.MutualFund;
+                    benchmarkData.SymbolInfo.SecurityType = SecurityType.MutualFund;
                     int count = this.ilist_0.Count;
                     DateTime minValue = DateTime.MinValue;
                     minValue = this.ilist_0[0].Date[0];
@@ -539,20 +539,20 @@
                             num2 = count;
                         }
                     }
-                    if (source.Count != 0)
+                    if (benchmarkData.Count != 0)
                     {
-                        source = BarScaleConverter.Synchronize(source, this.ilist_0[num2]);
+                        benchmarkData = BarScaleConverter.Synchronize(benchmarkData, this.ilist_0[num2]);
                     }
-                    Bars[] barsArray = new Bars[] { source };
+                    Bars[] barsArray = new Bars[] { benchmarkData };
                     executor.ilist_0 = barsArray;
                     foreach (Bars bars6 in executor.ilist_0)
                     {
                         if (bars6.Count > 0)
                         {
-                            executor.Performance.method_1(bars6);
+                            executor.Performance.addToBarsList(bars6);
                         }
                     }
-                    this.Performance.BenchmarkSymbolbars = source;
+                    this.Performance.BenchmarkSymbolbars = benchmarkData;
                 }
             }
             else
@@ -631,7 +631,7 @@
         ///Label_0400: ///WYJ fix, simplify the code
             foreach (Bars bars7 in this.ilist_0)
             {
-                this.systemPerformance.method_1(bars7);
+                this.systemPerformance.addToBarsList(bars7);
             }
             this.systemPerformance.Results.BuildEquityCurve(this.ilist_0, this, true, this.posSizer);
             this.systemPerformance.Results.method_7(true);
@@ -681,7 +681,7 @@
             }
             bool reduceQtyBasedOnVolume = this.ReduceQtyBasedOnVolume;
             this.ReduceQtyBasedOnVolume = false;
-            int num = 0;
+            int barsCount = 0;
             if (!this.BenchmarkBuyAndHoldON)
             {
                 if (this.Strategy.StrategyType != StrategyType.CombinedStrategy)
@@ -690,7 +690,7 @@
                     {
                         if (bars.Count > 1)
                         {
-                            num++;
+                            barsCount++;
                         }
                     }
                     foreach (Bars bars5 in this.ilist_0)
@@ -704,8 +704,8 @@
                             }
                             else
                             {
-                                double num9 = (this.PosSize.StartingCapital * this.PosSize.MarginFactor) / ((double) num);
-                                position5.Shares = this.method_3(bars5, num9);
+                                double capital = (this.PosSize.StartingCapital * this.PosSize.MarginFactor) / ((double) barsCount);
+                                position5.Shares = this.getSharesForBars(bars5, capital);
                             }
                             if (position5.Shares > 0.0)
                             {
@@ -728,7 +728,7 @@
                 {
                     if (bars3.Count > 1)
                     {
-                        num++;
+                        barsCount++;
                     }
                 }
                 foreach (Bars bars4 in executor.ilist_0)
@@ -753,8 +753,8 @@
                     }
                     else
                     {
-                        double num7 = (this.PosSize.StartingCapital * this.PosSize.MarginFactor) / ((double) num);
-                        position3.Shares = this.method_3(bars4, num7);
+                        double num7 = (this.PosSize.StartingCapital * this.PosSize.MarginFactor) / ((double) barsCount);
+                        position3.Shares = this.getSharesForBars(bars4, num7);
                     }
                     if (position3.Shares > 0.0)
                     {
@@ -858,7 +858,7 @@
             {
                 overrideShareSize = this.PosSize.OverrideShareSize;
             }
-            return this.method_4(bars, int_3, basisPrice, positionType_0, riskStopLevel, currentEquity, overrideShareSize, 0.0, comingFromWealthScript);
+            return this.doCalcPositionSize(bars, int_3, basisPrice, positionType_0, riskStopLevel, currentEquity, overrideShareSize, 0.0, comingFromWealthScript);
         }
 
         public double CalcPositionSize(Bars bars, int int_3, double basisPrice, PositionType positionType_0, double riskStopLevel, double equity)
@@ -873,7 +873,7 @@
 
         public double CalcPositionSize(Bars bars, int int_3, double basisPrice, PositionType positionType_0, double riskStopLevel, double equity, double overrideShareSize, double currentCash)
         {
-            return this.method_4(bars, int_3, basisPrice, positionType_0, riskStopLevel, equity, overrideShareSize, currentCash, false);
+            return this.doCalcPositionSize(bars, int_3, basisPrice, positionType_0, riskStopLevel, equity, overrideShareSize, currentCash, false);
         }
 
         public double CalcPositionSize(Position position_1, Bars bars, int int_3, double basisPrice, PositionType positionType_0, double riskStopLevel, bool useOverRide, double overrideShareSize, double thisBarCash)
@@ -898,8 +898,8 @@
             this.masterPositions.Clear();
             this.masterAlerts.Clear();
             this.systemPerformance.method_2();
-            this.list_1.Clear();
-            this.list_2.Clear();
+            this.barsList_Sync.Clear();
+            this.barsList.Clear();
         }
 
         public int Compare(Position position_1, Position position_2)
@@ -1241,7 +1241,7 @@
             }
             this.Strategy = strategy_1;
             this.systemPerformance.Strategy = strategy_1;
-            this.list_7.Clear();
+            this.barsList_Raw.Clear();
             GC.Collect();
             this.riskStopLevel = 0;
             this.autoProfitLevel = 0;
@@ -1257,7 +1257,7 @@
                 this.ilist_0 = barsCollection;
                 foreach (Bars bar1 in barsCollection)
                 {
-                    this.Performance.method_1(bar1);
+                    this.Performance.addToBarsList(bar1);
                 }
                 this.Performance.Scale = barsCollection[0].Scale;
                 this.Performance.BarInterval = barsCollection[0].BarInterval;
@@ -1290,7 +1290,7 @@
                     finally
                     {
                         this.PosSize = posSize;
-                        this.list_7.Clear();
+                        this.barsList_Raw.Clear();
                     }
                 }
                 else
@@ -1429,11 +1429,11 @@
                                 }
                                 strategy.UsePreferredValues = combinedStrategyChild.UsePreferredValues;
                             }
-                            tradingSystemExecutor.ExecutionCompletedForSymbol += new EventHandler<BarsEventArgs>(this.method_0);
-                            tradingSystemExecutor.ExternalSymbolRequested += this.eventHandler_2;
-                            tradingSystemExecutor.ExternalSymbolFromDataSetRequested += this.eventHandler_3;
+                            tradingSystemExecutor.ExecutionCompletedForSymbol += new EventHandler<BarsEventArgs>(this.executionCompletedForChildStrategySymbolEventHandler);
+                            tradingSystemExecutor.ExternalSymbolRequested += this.eventHandler_ExternalSymbolRequested;
+                            tradingSystemExecutor.ExternalSymbolFromDataSetRequested += this.eventHandler_ExternalSymbolFromDataSetRequested;
                             tradingSystemExecutor.ExceptionEvents = true;
-                            tradingSystemExecutor.WealthScriptException += new EventHandler<WSExceptionEventArgs>(this.method_1);
+                            tradingSystemExecutor.WealthScriptException += new EventHandler<WSExceptionEventArgs>(this.wealthScriptExceptionEventHandler);
                             try
                             {
                                 tradingSystemExecutor.Execute(strategy, tag, null, bars1);
@@ -1441,13 +1441,13 @@
                             catch (Exception exception1)
                             {
                                 Exception exception = exception1;
-                                tradingSystemExecutor.method_15(string.Concat("Exception in Combination Strategy Child: ", strategy.Name));
-                                tradingSystemExecutor.method_15(exception.Message);
+                                tradingSystemExecutor.addDebugString(string.Concat("Exception in Combination Strategy Child: ", strategy.Name));
+                                tradingSystemExecutor.addDebugString(exception.Message);
                             }
-                            tradingSystemExecutor.ExecutionCompletedForSymbol -= new EventHandler<BarsEventArgs>(this.method_0);
-                            tradingSystemExecutor.ExternalSymbolRequested -= this.eventHandler_2;
-                            tradingSystemExecutor.ExternalSymbolFromDataSetRequested -= this.eventHandler_3;
-                            tradingSystemExecutor.WealthScriptException -= new EventHandler<WSExceptionEventArgs>(this.method_1);
+                            tradingSystemExecutor.ExecutionCompletedForSymbol -= new EventHandler<BarsEventArgs>(this.executionCompletedForChildStrategySymbolEventHandler);
+                            tradingSystemExecutor.ExternalSymbolRequested -= this.eventHandler_ExternalSymbolRequested;
+                            tradingSystemExecutor.ExternalSymbolFromDataSetRequested -= this.eventHandler_ExternalSymbolFromDataSetRequested;
+                            tradingSystemExecutor.WealthScriptException -= new EventHandler<WSExceptionEventArgs>(this.wealthScriptExceptionEventHandler);
                             strs.AddRange(tradingSystemExecutor.DebugStrings);
                             foreach (Position list3 in tradingSystemExecutor.masterPositions)
                             {
@@ -1494,7 +1494,7 @@
                     finally
                     {
                         this.PosSize = posSize;
-                        this.list_7.Clear();
+                        this.barsList_Raw.Clear();
                         TradingSystemExecutor.bool_0 = false;
                     }
                 }
@@ -1514,23 +1514,26 @@
             this.systemPerformance.Results.CurrentEquity = this.PosSize.StartingCapital;
         }
 
-        private void method_0(object sender, BarsEventArgs e)
+        ///WYJ fix, original signature: private void method_0(object sender, BarsEventArgs e)
+        private void executionCompletedForChildStrategySymbolEventHandler(object sender, BarsEventArgs e)
         {
-            if (this.eventHandler_5 != null)
+            if (this.eventHandler_ExecutionCompletedForChildStrategySymbol != null)
             {
-                this.eventHandler_5(this, e);
+                this.eventHandler_ExecutionCompletedForChildStrategySymbol(this, e);
             }
         }
 
-        private void method_1(object sender, WSExceptionEventArgs e)
+        ///WYJ fix, original signature: private void method_1(object sender, WSExceptionEventArgs e)
+        private void wealthScriptExceptionEventHandler(object sender, WSExceptionEventArgs e)
         {
             TradingSystemExecutor executor = sender as TradingSystemExecutor;
-            executor.method_15("Exception in Combination Strategy Child: " + e.Strategy.Name);
-            executor.method_15(e.Exception.Message);
+            executor.addDebugString("Exception in Combination Strategy Child: " + e.Strategy.Name);
+            executor.addDebugString(e.Exception.Message);
         }
 
         ///WYJ fix, original signature: internal Bars method_10(string string_2, bool bool_19)
-        internal Bars method_10(string symbol, bool synchronize)
+        ///WYJ note, find in barsList_Raw, if not found, try to fetch it
+        internal Bars findBarsDataInPool2(string symbol, bool synchronize)
         {
             Bars bars = this.wealthScriptExecuting.Bars;
             Bars item = null;
@@ -1538,7 +1541,7 @@
             {
                 return bars;
             }
-            using (List<Bars>.Enumerator enumerator = this.list_7.GetEnumerator())
+            using (List<Bars>.Enumerator enumerator = this.barsList_Raw.GetEnumerator())
             {
                 Bars current;
                 while (enumerator.MoveNext())
@@ -1559,8 +1562,8 @@
                     this.BarsLoader.OverrideOnDemand = true;
                     this.BarsLoader.OverrideOnDemandValue = true;
                 }
-                this.BarsLoader.method_2(this.dataSource_0);
-                this.dataSource_0.Provider.IsStreamingRequest = this.IsStreaming;
+                this.BarsLoader.setDataSource(this.dataSource);
+                this.dataSource.Provider.IsStreamingRequest = this.IsStreaming;
                 BarDataScale barDataScale = this.BarsLoader.BarDataScale;
                 this.BarsLoader.Scale = bars.Scale;
                 this.BarsLoader.BarInterval = bars.BarInterval;
@@ -1568,20 +1571,20 @@
                 item = this.BarsLoader.GetData(symbol);   ///WYJ note: load the symbol data
                 if ((item != null) && (item.Count > 0))
                 {
-                    this.list_7.Add(item);
+                    this.barsList_Raw.Add(item);
                 }
                 this.BarsLoader.AutoConvertScale = true;
                 this.BarsLoader.OverrideOnDemand = false;
                 this.BarsLoader.BarDataScale = barDataScale;
             }
-            if (((item == null) || (item.Count == 0)) && (this.eventHandler_2 != null))
+            if (((item == null) || (item.Count == 0)) && (this.eventHandler_ExternalSymbolRequested != null))
             {
                 LoadSymbolEventArgs e = new LoadSymbolEventArgs(symbol, bars.Scale, bars.BarInterval);
-                this.eventHandler_2(this, e);
+                this.eventHandler_ExternalSymbolRequested(this, e);
                 item = e.SymbolData;
                 if ((item != null) && (item.Count > 0))
                 {
-                    this.list_7.Add(item);
+                    this.barsList_Raw.Add(item);
                 }
             }
             Bars bars3 = new Bars(item);
@@ -1596,19 +1599,20 @@
                 item.lockBars();
                 if (synchronize)
                 {
-                    this.list_1.Add(item);
+                    this.barsList_Sync.Add(item);
                     return item;
                 }
-                this.list_2.Add(item);
+                this.barsList.Add(item);
             }
             return item;
         }
 
+        ///WYJ fix, original signature: internal int method_11()
         internal int method_11()
         {
-            int num = this.list_1.Count + this.list_2.Count;
-            this.list_1.Clear();
-            this.list_2.Clear();
+            int num = this.barsList_Sync.Count + this.barsList.Count;
+            this.barsList_Sync.Clear();
+            this.barsList.Clear();
             return num;
         }
 
@@ -1616,19 +1620,19 @@
         internal int method_12(string symbol)   ///WYJ note, remove symbol data
         {
             int num = 0;
-            for (int i = this.list_1.Count - 1; i >= 0; i--)
+            for (int i = this.barsList_Sync.Count - 1; i >= 0; i--)
             {
-                if (this.list_1[i].Symbol == symbol)
+                if (this.barsList_Sync[i].Symbol == symbol)
                 {
-                    this.list_1.RemoveAt(i);
+                    this.barsList_Sync.RemoveAt(i);
                     num++;
                 }
             }
-            for (int j = this.list_2.Count - 1; j >= 0; j--)
+            for (int j = this.barsList.Count - 1; j >= 0; j--)
             {
-                if (this.list_2[j].Symbol == symbol)
+                if (this.barsList[j].Symbol == symbol)
                 {
-                    this.list_2.RemoveAt(j);
+                    this.barsList.RemoveAt(j);
                     num++;
                 }
             }
@@ -1641,82 +1645,88 @@
             bars_1.lockBars();
             if (synchronize)
             {
-                this.list_1.Add(bars_1);
+                this.barsList_Sync.Add(bars_1);
             }
             else
             {
-                this.list_2.Add(bars_1);
+                this.barsList.Add(bars_1);
             }
         }
 
-        internal double method_14(double double_10, bool bool_19, Bars bars_1)
+        ///WYJ fix, original signature: internal double method_14(double double_10, bool bool_19, Bars bars_1)
+        internal double priceSlip(double price, bool limitOrder, Bars argBars)
         {
             if (!this.EnableSlippage)
             {
                 return 0.0;
             }
-            if (bool_19 && !this.LimitOrderSlippage)
+            if (limitOrder && !this.LimitOrderSlippage)
             {
                 return 0.0;
             }
-            if (bars_1.SymbolInfo.SecurityType == SecurityType.Future)
+            if (argBars.SymbolInfo.SecurityType == SecurityType.Future)
             {
-                return (this.SlippageTicks * bars_1.SymbolInfo.Tick);
+                return (this.SlippageTicks * argBars.SymbolInfo.Tick);
             }
-            return ((0.01 * this.SlippageUnits) * double_10);
+            return ((0.01 * this.SlippageUnits) * price);
         }
 
-        internal void method_15(string string_2)
+        ///WYJ fix, original signature: internal void method_15(string string_2)
+        internal void addDebugString(string argStr)
         {
-            this.debugStrings.Add(string_2);
+            this.debugStrings.Add(argStr);
         }
 
-        internal void method_16()
+        ///WYJ fix, original signature: internal void method_16()
+        internal void flushDebugWindow()
         {
-            if (this.eventHandler_7 != null)
+            if (this.eventHandler_FlushDebugWindow != null)
             {
-                this.eventHandler_7(this, EventArgs.Empty);
+                this.eventHandler_FlushDebugWindow(this, EventArgs.Empty);
             }
         }
 
-        internal void method_17()
+        ///WYJ fix, original signature: internal void method_17()
+        internal void clearDebugWindow()
         {
             this.debugStrings.Clear();
-            if (this.eventHandler_8 != null)
+            if (this.eventHandler_ClearDebugWindow != null)
             {
-                this.eventHandler_8(this, EventArgs.Empty);
+                this.eventHandler_ClearDebugWindow(this, EventArgs.Empty);
             }
         }
 
-        internal void method_18(string string_2)
+        ///WYJ fix, original signature: internal void method_18(string string_2)
+        internal void printToStatusBar(string string_2)
         {
-            if (this.eventHandler_9 != null)
+            if (this.eventHandler_PrintToStatusBar != null)
             {
-                this.eventHandler_9(this, new DebugStringEventArgs(string_2));
+                this.eventHandler_PrintToStatusBar(this, new DebugStringEventArgs(string_2));
             }
         }
 
-        internal Bitmap method_19(int int_3, int int_4)
+        ///WYJ fix, original signature: internal Bitmap method_19(int int_3, int int_4)
+        internal Bitmap getChartBitmap(int width, int height)
         {
             Bitmap image = null;
             if (this.chartRenderer == null)
             {
                 return null;
             }
-            if (this.eventHandler_10 != null)
+            if (this.eventHandler_ChartBitmapRequested != null)
             {
-                ChartBitmapEventArgs e = new ChartBitmapEventArgs(int_3, int_4);
-                this.eventHandler_10(this, e);
+                ChartBitmapEventArgs e = new ChartBitmapEventArgs(width, height);
+                this.eventHandler_ChartBitmapRequested(this, e);
                 image = e.Bitmap;
             }
             if (image == null)
             {
-                image = new Bitmap(int_3, int_4);
+                image = new Bitmap(width, height);
                 Graphics graphics = Graphics.FromImage(image);
                 using (graphics)
                 {
                     this.chartRenderer.Executing = false;
-                    this.chartRenderer.Render(this.barsBeingProcessed, graphics, int_3, int_4, this.chartRenderer.ChartStyle);
+                    this.chartRenderer.Render(this.barsBeingProcessed, graphics, width, height, this.chartRenderer.ChartStyle);
                     this.chartRenderer.Executing = true;
                 }
             }
@@ -1745,7 +1755,7 @@
                 {
                     this.Strategy.LoadPreferredValues(bars.Symbol, wealthScript);
                 }
-                wealthScript.prepareAndExecute(bars, chartRenderer, this, this.dataSource_0);
+                wealthScript.prepareAndExecute(bars, chartRenderer, this, this.dataSource);
                 wealthScript.RestoreScale();
                 bars.unlockBars();
             }
@@ -1770,41 +1780,45 @@
             }
         }
 
-        internal double method_20(int int_3, string string_2)
+        ///WYJ fix, original signature: internal double method_20(int int_3, string string_2)
+        internal double trendlineGetValue(int int_3, string string_2)
         {
-            if (this.eventHandler_11 == null)
+            if (this.eventHandler_TrendlineGetValue == null)
             {
                 return 0.0;
             }
             TrendLineEventArgs e = new TrendLineEventArgs(string_2, int_3);
-            this.eventHandler_11(this, e);
+            this.eventHandler_TrendlineGetValue(this, e);
             return e.Value;
         }
 
-        private void method_21()
+        ///WYJ fix, original signature: private void method_21()
+        private void initIContainer()
         {
             this.icontainer_0 = new Container();
         }
 
-        private int method_3(Bars bars_1, double double_10)
+        ///WYJ fix, original signature: private int method_3(Bars bars_1, double double_10)
+        private int getSharesForBars(Bars bars_1, double capital)
         {
-            int num = 0;
+            int shares = 0;
             if (WealthLab.BarsLoader.FuturesMode)
             {
                 SymbolInfo symbolInfo = bars_1.SymbolInfo;
                 if ((symbolInfo.SecurityType == SecurityType.Future) && (symbolInfo.Margin > 0.0))
                 {
-                    num = (int) (double_10 / symbolInfo.Margin);
+                    shares = (int) (capital / symbolInfo.Margin);
                 }
             }
-            if (num == 0)
+            if (shares == 0)
             {
-                num = (int) (double_10 / bars_1.Close[0]);
+                shares = (int) (capital / bars_1.Close[0]);
             }
-            return num;
+            return shares;
         }
 
-        internal double method_4(Bars bars_1, int int_3, double double_10, PositionType positionType_0, double double_11, double double_12, double double_13, double double_14, bool bool_19)
+        ///WYJ fix, original signature: internal double method_4(Bars bars_1, int int_3, double double_10, PositionType positionType_0, double double_11, double double_12, double double_13, double double_14, bool bool_19)
+        internal double doCalcPositionSize(Bars bars_1, int int_3, double double_10, PositionType positionType_0, double double_11, double double_12, double double_13, double double_14, bool bool_19)
         {
             double rawProfitShareSize = 0.0;
             if ((bars_1.SymbolInfo.SecurityType == SecurityType.Future) && (bars_1.SymbolInfo.Margin <= 0.0))
@@ -1943,20 +1957,22 @@
             return a;
         }
 
-        internal void method_5(Position position_1)
+        ///WYJ fix, original signature: internal void method_5(Position position_1)
+        internal void addPosition(Position position)
         {
-            this.MasterPositions.Add(position_1);
-            this.CurrentPositions.Add(position_1);
-            this.ActivePositions.Add(position_1);
+            this.MasterPositions.Add(position);
+            this.CurrentPositions.Add(position);
+            this.ActivePositions.Add(position);
         }
 
-        internal void method_6(Alert alert_0)
+        ///WYJ fix, original signature: internal void method_6(Alert alert_0)
+        internal void addAlert(Alert alert)
         {
-            if (alert_0.Shares > 0.0)
+            if (alert.Shares > 0.0)
             {
-                alert_0.PosSize = this.PosSize;
-                this.MasterAlerts.Add(alert_0);
-                this.CurrentAlerts.Add(alert_0);
+                alert.PosSize = this.PosSize;
+                this.MasterAlerts.Add(alert);
+                this.CurrentAlerts.Add(alert);
             }
         }
 
@@ -1965,9 +1981,9 @@
         {
             if (synchronize)
             {
-                return this.findBarsData(symbol, barScale_0, barInterval, this.list_1);
+                return this.findBarsData(symbol, barScale_0, barInterval, this.barsList_Sync);
             }
-            return this.findBarsData(symbol, barScale_0, barInterval, this.list_2);
+            return this.findBarsData(symbol, barScale_0, barInterval, this.barsList);
         }
 
 
@@ -1992,30 +2008,32 @@
             }
         }
 
-        internal Bars method_9(string string_2, string string_3, bool bool_19)
+        
+        ///WYJ fix, original signature: internal Bars method_9(string string_2, string string_3, bool bool_19)
+        internal Bars getExternalSymbol(string datasetName, string symbol, bool synchronize)
         {
             Bars bars = this.wealthScriptExecuting.Bars;
-            Bars source = null;
-            string key = string_2 + "|" + string_3;
+            Bars result = null;
+            string key = datasetName + "|" + symbol;
             if (this.dictionary_0.ContainsKey(key))
             {
-                source = this.dictionary_0[key];
+                result = this.dictionary_0[key];
             }
-            if ((source == null) && (this.eventHandler_3 != null))
+            if ((result == null) && (this.eventHandler_ExternalSymbolFromDataSetRequested != null))
             {
-                LoadSymbolFromDataSetEventArgs e = new LoadSymbolFromDataSetEventArgs(string_2, string_3);
-                this.eventHandler_3(this, e);
-                source = e.Bars;
-                if (source != null)
+                LoadSymbolFromDataSetEventArgs e = new LoadSymbolFromDataSetEventArgs(datasetName, symbol);
+                this.eventHandler_ExternalSymbolFromDataSetRequested(this, e);
+                result = e.Bars;
+                if (result != null)
                 {
-                    this.dictionary_0[key] = source;
+                    this.dictionary_0[key] = result;
                 }
             }
-            if ((bool_19 && (source != null)) && (source.Count > 0))
+            if ((synchronize && (result != null)) && (result.Count > 0))
             {
-                source = BarScaleConverter.Synchronize(source, bars);
+                result = BarScaleConverter.Synchronize(result, bars);
             }
-            return source;
+            return result;
         }
 
         private static double _secureCode
@@ -2194,11 +2212,11 @@
         {
             get
             {
-                return this.dataSource_0;
+                return this.dataSource;
             }
             set
             {
-                this.dataSource_0 = value;
+                this.dataSource = value;
             }
         }
 

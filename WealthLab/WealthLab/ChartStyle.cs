@@ -39,7 +39,7 @@
         {
             WealthLab.Bars bars = this.bars;
             this.bars = plottedSymbol_0.Bars;
-            this.chartRenderer.method_11(plottedSymbol_0, chartPane_0);
+            this.chartRenderer.backupAndSetColorsAndPane(plottedSymbol_0, chartPane_0);
             try
             {
                 this.RenderBars(graphics_0);
@@ -47,7 +47,7 @@
             finally
             {
                 this.bars = bars;
-                this.chartRenderer.method_12();
+                this.chartRenderer.restoreColorsAndPane();
             }
         }
 

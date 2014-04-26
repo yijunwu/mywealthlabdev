@@ -28,7 +28,7 @@
                 int num = pane.ConvertValueToY(this.double_0);
                 graphics_0.DrawLine(pen, 0, num, chartRenderer_0.Width - chartRenderer_0.MarginRightWidth, num);
                 chartRenderer_0.ClipToPane(graphics_0, pane, true);
-                pane.method_5(graphics_0, this.double_0, this.color_0);
+                pane.drawLastBarValue(graphics_0, this.double_0, this.color_0);
                 chartRenderer_0.ClipToPane(graphics_0, pane);
             }
         }

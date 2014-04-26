@@ -17,7 +17,7 @@
 
         internal override void Render(Graphics graphics_0, ChartPane pane, ChartRenderer chartRenderer_0)
         {
-            pane.method_7(graphics_0, this.string_0, this.color_0);
+            pane.drawLabel(graphics_0, this.string_0, this.color_0);
         }
     }
 }

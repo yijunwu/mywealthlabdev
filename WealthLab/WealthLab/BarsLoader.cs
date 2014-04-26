@@ -21,7 +21,7 @@
         private bool autoCreateProvider;
         private static bool futuresMode = true;
         private bool autoConvertScale;
-        private DataSource dataSource_0;
+        private DataSource dataSource;   ///WYJ fix, original signature: dataSource_0
         private DateTime startDate;
         private DateTime endDate;
         private Dictionary<Type, StaticDataProvider> dictionary_0;
@@ -35,32 +35,32 @@
         private StaticDataProvider staticDataProvider_0;
         private static string rootPath = "";
 
-        private EventHandler<BarsEventArgs> eventHandler_0;
-        private EventHandler<UnhandledExceptionEventArgs> eventHandler_1;
+        private EventHandler<BarsEventArgs> eventHandler_ASynchDataCompleted;   ///WYJ fix, original signature: eventHandler_0
+        private EventHandler<UnhandledExceptionEventArgs> eventHandler_ASynchDataException;   ///WYJ fix, original signature: eventHandler_1
 
         public event EventHandler<BarsEventArgs> ASynchDataCompleted
         {
             add
             {
                 EventHandler<BarsEventArgs> eventHandler;
-                EventHandler<BarsEventArgs> eventHandler0 = this.eventHandler_0;
+                EventHandler<BarsEventArgs> eventHandler0 = this.eventHandler_ASynchDataCompleted;
                 do
                 {
                     eventHandler = eventHandler0;
                     EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler0 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_ASynchDataCompleted, eventHandler1, eventHandler);
                 }
                 while (eventHandler0 != eventHandler);
             }
             remove
             {
                 EventHandler<BarsEventArgs> eventHandler;
-                EventHandler<BarsEventArgs> eventHandler0 = this.eventHandler_0;
+                EventHandler<BarsEventArgs> eventHandler0 = this.eventHandler_ASynchDataCompleted;
                 do
                 {
                     eventHandler = eventHandler0;
                     EventHandler<BarsEventArgs> eventHandler1 = (EventHandler<BarsEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler0 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<BarsEventArgs>>(ref this.eventHandler_ASynchDataCompleted, eventHandler1, eventHandler);
                 }
                 while (eventHandler0 != eventHandler);
             }
@@ -71,24 +71,24 @@
             add
             {
                 EventHandler<UnhandledExceptionEventArgs> eventHandler;
-                EventHandler<UnhandledExceptionEventArgs> eventHandler1 = this.eventHandler_1;
+                EventHandler<UnhandledExceptionEventArgs> eventHandler1 = this.eventHandler_ASynchDataException;
                 do
                 {
                     eventHandler = eventHandler1;
                     EventHandler<UnhandledExceptionEventArgs> eventHandler2 = (EventHandler<UnhandledExceptionEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler1 = Interlocked.CompareExchange<EventHandler<UnhandledExceptionEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<UnhandledExceptionEventArgs>>(ref this.eventHandler_ASynchDataException, eventHandler2, eventHandler);
                 }
                 while (eventHandler1 != eventHandler);
             }
             remove
             {
                 EventHandler<UnhandledExceptionEventArgs> eventHandler;
-                EventHandler<UnhandledExceptionEventArgs> eventHandler1 = this.eventHandler_1;
+                EventHandler<UnhandledExceptionEventArgs> eventHandler1 = this.eventHandler_ASynchDataException;
                 do
                 {
                     eventHandler = eventHandler1;
                     EventHandler<UnhandledExceptionEventArgs> eventHandler2 = (EventHandler<UnhandledExceptionEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler1 = Interlocked.CompareExchange<EventHandler<UnhandledExceptionEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<UnhandledExceptionEventArgs>>(ref this.eventHandler_ASynchDataException, eventHandler2, eventHandler);
                 }
                 while (eventHandler1 != eventHandler);
             }
@@ -1159,28 +1159,30 @@
             this.icontainer_0 = new Container();
         }
 
+        ///WYJ fix, original signature: private void method_1(IAsyncResult iasyncResult_0)
         private void method_1(IAsyncResult iasyncResult_0)
         {
             try
             {
                 Bars bars = ((Delegate5) iasyncResult_0.AsyncState).EndInvoke(iasyncResult_0);
-                if (this.eventHandler_0 != null)
+                if (this.eventHandler_ASynchDataCompleted != null)
                 {
-                    this.eventHandler_0(this, new BarsEventArgs(bars));
+                    this.eventHandler_ASynchDataCompleted(this, new BarsEventArgs(bars));
                 }
             }
             catch (Exception exception)
             {
-                if (this.eventHandler_1 != null)
+                if (this.eventHandler_ASynchDataException != null)
                 {
-                    this.eventHandler_1(this, new UnhandledExceptionEventArgs(exception, false));
+                    this.eventHandler_ASynchDataException(this, new UnhandledExceptionEventArgs(exception, false));
                 }
             }
         }
 
-        internal void method_2(DataSource dataSource_1)
+        ///WYJ fix, original signature: internal void method_2(DataSource dataSource_1)
+        internal void setDataSource(DataSource dataSource_1)
         {
-            this.dataSource_0 = dataSource_1;
+            this.dataSource = dataSource_1;
         }
 
         private StaticDataProvider method_3(DataSource dataSource_1)
@@ -1208,7 +1210,7 @@
             if ((provider != null) && (dataSource_1 != null))
             {
                 this.staticDataProvider_0 = provider;
-                this.dataSource_0 = dataSource_1;
+                this.dataSource = dataSource_1;
             }
             provider.IsStreamingRequest = dataSource_1.Provider.IsStreamingRequest;
             return provider;
@@ -1217,7 +1219,7 @@
         ///WYJ fix, original signature: internal Bars method_4(string string_1)
         internal Bars GetData(string symbol)
         {
-            return this.GetData(this.dataSource_0, symbol);
+            return this.GetData(this.dataSource, symbol);
         }
 
         public static void SaveSymbolInfo()

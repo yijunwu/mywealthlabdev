@@ -8,7 +8,7 @@
     public sealed class ChartPane
     {
         private bool visible;
-        private bool bool_1;
+        private bool scaleUpdateNeeded;   ///WYJ fix, original name: bool_1
         private bool displayGrid;
         private bool isPricePane;
         private bool logScale;
@@ -18,9 +18,9 @@
         internal Color[] barBackgroundColors;
         private double highestValue;
         private double lowestValue;
-        private double double_2;
-        private double double_3;
-        private double double_4;
+        private double scale;   ///WYJ fix, original name: double_2; WYJ note, how much height per value
+        private double bottomValue;   ///WYJ fix, original name: double_3
+        private double topValue;   ///WYJ fix, original name: double_4
         private double minValue;
         private double maxValue;
         private int rawHeight;
@@ -28,23 +28,23 @@
         private int height;
         private int decimals;
         private int labelOffset;
-        private int int_5;
-        private int int_6;
-        private int int_7;
-        private int int_8;
+        private int buttonHeight;   ///WYJ fix, original name: int_5
+        private int buttonWidth;   ///WYJ fix, original name: int_6
+        private int buttonY;   ///WYJ fix, original name: int_7
+        private int buttonX;   ///WYJ fix, original name: int_8
         private int heightBeforeHidden;
         private List<PlottedIndicator> plottedIndicators;
         private List<PlottedSymbol> plottedSymbols;
-        internal List<WSDrawingObject> list_2;
-        internal List<WSDrawingObject> list_3;
-        internal List<WSDrawingObject> list_4;
+        internal List<WSDrawingObject> wsdObjList_BehindBars;   ///WYJ fix, original name: list_2
+        internal List<WSDrawingObject> wsdObjList_BeforeBars;   ///WYJ fix, original name: list_3
+        internal List<WSDrawingObject> wsdObjList_DragDropped;   ///WYJ fix, original name: list_4
         private string description;
 
         public ChartPane()
         {
             this.visible = true;
             this.rawHeight = 100;
-            this.bool_1 = true;
+            this.scaleUpdateNeeded = true;
             this.decimals = 2;
             this.plottedIndicators = new List<PlottedIndicator>();
             this.displayGrid = true;
@@ -57,7 +57,7 @@
         {
             this.visible = true;
             this.rawHeight = 100;
-            this.bool_1 = true;
+            this.scaleUpdateNeeded = true;
             this.decimals = 2;
             this.plottedIndicators = new List<PlottedIndicator>();
             this.displayGrid = true;
@@ -82,7 +82,7 @@
             string str;
             this.visible = true;
             this.rawHeight = 100;
-            this.bool_1 = true;
+            this.scaleUpdateNeeded = true;
             this.decimals = 2;
             this.plottedIndicators = new List<PlottedIndicator>();
             this.displayGrid = true;
@@ -116,9 +116,9 @@
                 renderer.Panes.Add(this);
                 this.abovePricePane = false;
             }
-            if (renderer.method_5(this.Description))
+            if (renderer.hiddenPanesHeightsContain(this.Description))
             {
-                this.Height = renderer.method_2(this.Description);
+                this.Height = renderer.getHiddenPaneHeight(this.Description);
                 this.Hidden = true;
             }
         }
@@ -127,7 +127,7 @@
         {
             this.visible = true;
             this.rawHeight = 100;
-            this.bool_1 = true;
+            this.scaleUpdateNeeded = true;
             this.decimals = 2;
             this.plottedIndicators = new List<PlottedIndicator>();
             this.displayGrid = true;
@@ -147,32 +147,32 @@
                 renderer.Panes.Add(this);
                 this.abovePricePane = false;
             }
-            if (renderer.method_5(description))
+            if (renderer.hiddenPanesHeightsContain(description))
             {
-                this.Height = renderer.method_2(description);
+                this.Height = renderer.getHiddenPaneHeight(description);
                 this.Hidden = true;
             }
         }
 
         public int ConvertValueToY(double value)
         {
-            this.method_0();
-            if (this.LogScale && (this.double_3 != 0.0))
+            this.updateScale();
+            if (this.LogScale && (this.bottomValue != 0.0))
             {
                 value = Math.Log10(value);
             }
-            return (((int) ((this.double_4 - value) * this.double_2)) + this.top);
+            return (((int) ((this.topValue - value) * this.scale)) + this.top);
         }
 
-        public double ConvertYToValue(int int_10)
+        public double ConvertYToValue(int y)
         {
-            this.method_0();
-            double y = ((((double) (int_10 - this.top)) / this.double_2) - this.double_4) * -1.0;
-            if (this.LogScale && (this.double_3 != 0.0))
+            this.updateScale();
+            double value = ((((double) (y - this.top)) / this.scale) - this.topValue) * -1.0;
+            if (this.LogScale && (this.bottomValue != 0.0))
             {
-                y = Math.Pow(10.0, y);
+                value = Math.Pow(10.0, value);
             }
-            return y;
+            return value;
         }
 
         public string FormatChartValue(double value)
@@ -234,55 +234,58 @@
             return this.barBackgroundColors[int_10];
         }
 
-        public bool HideDisplayPaneButton(int int_10, int int_11)
+        ///WYJ fix, original signature: public bool HideDisplayPaneButton(int int_10, int int_11)
+        public bool HideDisplayPaneButton(int x, int y)
         {
             if (this.IsPricePane || !this.Visible)
             {
                 return false;
             }
-            return (((int_10 >= this.int_8) && (int_10 <= (this.int_8 + this.int_6))) && ((int_11 >= this.int_7) && (int_11 <= (this.int_7 + this.int_5))));
+            return (((x >= this.buttonX) && (x <= (this.buttonX + this.buttonWidth))) && ((y >= this.buttonY) && (y <= (this.buttonY + this.buttonHeight))));
         }
 
-        private void method_0()
+        ///WYJ fix, original signature: private void method_0()
+        private void updateScale()
         {
-            if (this.bool_1)
+            if (this.scaleUpdateNeeded)
             {
-                double num = this.HighestValue - this.LowestValue;
-                double num2 = num * 0.05;
+                double diff = this.HighestValue - this.LowestValue;
+                double num2 = diff * 0.05;
                 if (this.LogScale)
                 {
                     num2 = 0.0;
                 }
-                this.double_4 = this.HighestValue + num2;
-                this.double_3 = (this.LowestValue == 0.0) ? this.LowestValue : (this.LowestValue - num2);
-                if (this.LogScale && (this.double_3 != 0.0))
+                this.topValue = this.HighestValue + num2;
+                this.bottomValue = (this.LowestValue == 0.0) ? this.LowestValue : (this.LowestValue - num2);
+                if (this.LogScale && (this.bottomValue != 0.0))
                 {
-                    if (this.double_3 > 0.0)
+                    if (this.bottomValue > 0.0)
                     {
-                        this.double_3 = Math.Log10(this.double_3);
+                        this.bottomValue = Math.Log10(this.bottomValue);
                     }
-                    if (this.double_4 > 0.0)
+                    if (this.topValue > 0.0)
                     {
-                        this.double_4 = Math.Log10(this.double_4);
+                        this.topValue = Math.Log10(this.topValue);
                     }
                 }
-                if (this.double_4 == this.double_3)
+                if (this.topValue == this.bottomValue)
                 {
-                    this.double_2 = 1.0;
+                    this.scale = 1.0;
                 }
                 else if (this.LogScale)
                 {
-                    this.double_2 = ((double) (this.Height - 20)) / (this.double_4 - this.double_3);
+                    this.scale = ((double) (this.Height - 20)) / (this.topValue - this.bottomValue);
                 }
                 else
                 {
-                    this.double_2 = ((double) this.Height) / (this.double_4 - this.double_3);
+                    this.scale = ((double) this.Height) / (this.topValue - this.bottomValue);
                 }
-                this.bool_1 = false;
+                this.scaleUpdateNeeded = false;
             }
         }
 
-        internal void method_1(DataSeries dataSeries_0)
+        ///WYJ fix, original signature: internal void method_1(DataSeries dataSeries_0)
+        internal void adjustRange(DataSeries dataSeries_0)
         {
             for (int i = this.Renderer.RightEdgeBar; i >= this.Renderer.LeftEdgeBar; i--)
             {
@@ -306,143 +309,155 @@
             {
                 this.HighestValue = this.LowestValue + 0.1;
             }
-            this.bool_1 = true;
+            this.scaleUpdateNeeded = true;
         }
 
-        internal void method_2(double double_7)
+        ///WYJ fix, original signature: internal void method_2(double double_7)
+        internal void updateHighestLowest(double value)
         {
-            if (double_7 > this.HighestValue)
+            if (value > this.HighestValue)
             {
-                this.bool_1 = true;
-                this.HighestValue = double_7;
+                this.scaleUpdateNeeded = true;
+                this.HighestValue = value;
             }
-            if (double_7 < this.LowestValue)
+            if (value < this.LowestValue)
             {
-                this.bool_1 = true;
-                this.LowestValue = double_7;
+                this.scaleUpdateNeeded = true;
+                this.LowestValue = value;
             }
         }
 
-        internal void method_3(WSDrawingObject wsdrawingObject_0)
+        ///WYJ fix, original signature: internal void method_3(WSDrawingObject wsdrawingObject_0)
+        internal void addDragDroppedWSDObject(WSDrawingObject wsdrawingObject_0)
         {
-            if (this.list_4 == null)
+            if (this.wsdObjList_DragDropped == null)
             {
-                this.list_4 = new List<WSDrawingObject>();
+                this.wsdObjList_DragDropped = new List<WSDrawingObject>();
             }
-            this.list_4.Add(wsdrawingObject_0);
+            this.wsdObjList_DragDropped.Add(wsdrawingObject_0);
         }
 
-        internal void method_4(WSDrawingObject wsdrawingObject_0, bool bool_7)
+        ///WYJ fix, original signature: internal void method_4(WSDrawingObject wsdrawingObject_0, bool bool_7)
+        internal void addWSDObject(WSDrawingObject wsdrawingObject_0, bool behindBars)
         {
-            if (bool_7)
+            if (behindBars)
             {
-                if (this.list_2 == null)
+                if (this.wsdObjList_BehindBars == null)
                 {
-                    this.list_2 = new List<WSDrawingObject>();
+                    this.wsdObjList_BehindBars = new List<WSDrawingObject>();
                 }
-                this.list_2.Add(wsdrawingObject_0);
+                this.wsdObjList_BehindBars.Add(wsdrawingObject_0);
             }
             else
             {
-                if (this.list_3 == null)
+                if (this.wsdObjList_BeforeBars == null)
                 {
-                    this.list_3 = new List<WSDrawingObject>();
+                    this.wsdObjList_BeforeBars = new List<WSDrawingObject>();
                 }
-                this.list_3.Add(wsdrawingObject_0);
+                this.wsdObjList_BeforeBars.Add(wsdrawingObject_0);
             }
         }
 
-        internal void method_5(Graphics graphics_0, double double_7, Color color_1)
+        ///WYJ fix, original signature: internal void method_5(Graphics graphics_0, double double_7, Color color_1)
+        ///WYJ note, draw the last bar's value text, showing on the right side of the pane
+        internal void drawLastBarValue(Graphics graphics, double value, Color bgrColor)
         {
-            string text = this.FormatChartValue(double_7);
-            Color color = ChartRenderer.TextColorForBackground(color_1);
-            SizeF ef = graphics_0.MeasureString(text, this.chartRenderer.AxisFont);
-            int num = (this.chartRenderer.Width - this.chartRenderer.MarginRightWidth) + 2;
-            int num2 = this.ConvertValueToY(double_7) - ((int) (ef.Height / 2f));
-            Brush brush = new SolidBrush(color_1);
-            Brush brush2 = new SolidBrush(color);
+            string text = this.FormatChartValue(value);
+            Color color = ChartRenderer.TextColorForBackground(bgrColor);
+            SizeF ef = graphics.MeasureString(text, this.chartRenderer.AxisFont);
+
+            int x = (this.chartRenderer.Width - this.chartRenderer.MarginRightWidth) + 2;
+            int y = this.ConvertValueToY(value) - ((int) (ef.Height / 2f));
+            Brush bgrBrush = new SolidBrush(bgrColor);
+            Brush brush = new SolidBrush(color);
             try
             {
-                graphics_0.FillRectangle(brush, new RectangleF((float) num, (float) num2, ef.Width, ef.Height));
-                graphics_0.DrawString(text, this.chartRenderer.AxisFont, brush2, (float) num, (float) (num2 + 1));
+                graphics.FillRectangle(bgrBrush, new RectangleF((float) x, (float) y, ef.Width, ef.Height));
+                graphics.DrawString(text, this.chartRenderer.AxisFont, brush, (float) x, (float) (y + 1));
             }
             catch (OverflowException)
             {
             }
+            bgrBrush.Dispose();
             brush.Dispose();
-            brush2.Dispose();
         }
 
-        internal void method_6(Graphics graphics_0)
+        ///WYJ fix, original signature: internal void method_6(Graphics graphics_0)
+        internal void drawAllLabels(Graphics graphics_0)
         {
             foreach (PlottedIndicator indicator in this.PlottedIndicators)
             {
-                this.method_7(graphics_0, indicator.Series.Description, indicator.Color);
+                this.drawLabel(graphics_0, indicator.Series.Description, indicator.Color);
             }
             foreach (PlottedSymbol symbol in this.PlottedSymbols)
             {
-                this.method_7(graphics_0, symbol.Bars.Symbol, symbol.UpColor);
+                this.drawLabel(graphics_0, symbol.Bars.Symbol, symbol.UpColor);
             }
         }
 
-        internal void method_7(Graphics graphics_0, string string_1, Color color_1)
+        ///WYJ fix, original signature: internal void method_7(Graphics graphics_0, string string_1, Color color_1)
+        ///WYJ note, draw the symbol or indicator name of the pane, along with the hide/show recangle
+        internal void drawLabel(Graphics graphics, string labelStr, Color color)
         {
-            bool flag = this.LabelOffset != 0;
-            if (!this.Hidden || !flag)
+            bool notFirst = this.LabelOffset != 0;
+            if (!this.Hidden || !notFirst)
             {
                 string str;
                 if (this.Hidden && ((this.PlottedIndicators.Count + this.PlottedSymbols.Count) > 1))
                 {
-                    str = string_1 + " ...";
+                    str = labelStr + " ...";
                 }
                 else
                 {
-                    str = string_1;
+                    str = labelStr;
                 }
-                SizeF ef = graphics_0.MeasureString(str, this.chartRenderer.AxisFont);
-                if (!this.IsPricePane && !flag)
+                SizeF ef = graphics.MeasureString(str, this.chartRenderer.AxisFont);
+                if (!this.IsPricePane && !notFirst)
                 {
-                    this.method_8(graphics_0, color_1, (int) ef.Height, (this.Top + 2) + this.LabelOffset);
+                    this.drawHideShowButton(graphics, color, (int) ef.Height, (this.Top + 2) + this.LabelOffset);
                 }
-                Rectangle rect = new Rectangle(6 + this.int_6, (this.Top + 2) + this.LabelOffset, (int) ef.Width, (int) ef.Height);
-                graphics_0.FillRectangle(this.chartRenderer.BackgroundBrush, rect);
-                using (Brush brush = new SolidBrush(color_1))
+                Rectangle rect = new Rectangle(6 + this.buttonWidth, (this.Top + 2) + this.LabelOffset, (int) ef.Width, (int) ef.Height);
+                graphics.FillRectangle(this.chartRenderer.BackgroundBrush, rect);
+                using (Brush brush = new SolidBrush(color))
                 {
-                    graphics_0.DrawString(str, this.chartRenderer.AxisFont, brush, (float) rect.Left, (float) rect.Top);
+                    graphics.DrawString(str, this.chartRenderer.AxisFont, brush, (float) rect.Left, (float) rect.Top);
                     this.LabelOffset += rect.Height;
                 }
             }
         }
 
-        private void method_8(Graphics graphics_0, Color color_1, int int_10, int int_11)
+        ///WYJ fix, original signature: private void method_8(Graphics graphics_0, Color color_1, int int_10, int int_11)
+        ///WYJ note, draw the hide/show button(the +/- surrounded with rectangle)
+        private void drawHideShowButton(Graphics graphics, Color color, int argWidth, int argY)
         {
-            int width = ((int_10 % 2) == 0) ? (int_10 - 2) : (int_10 - 3);
+            int width = ((argWidth % 2) == 0) ? (argWidth - 2) : (argWidth - 3);
             int x = 2;
-            int num5 = 2 + width;
-            int y = int_11;
-            int num4 = y + width;
-            this.int_5 = width;
-            this.int_6 = width;
-            this.int_8 = 2;
-            this.int_7 = int_11;
-            using (Pen pen = new Pen(color_1))
+            int rightX = 2 + width;
+            int y = argY;
+            int bottomY = y + width;
+            this.buttonHeight = width;
+            this.buttonWidth = width;
+            this.buttonX = 2;
+            this.buttonY = argY;
+            using (Pen pen = new Pen(color))
             {
-                graphics_0.FillRectangle(this.chartRenderer.BackgroundBrush, x, y, width, width);
-                graphics_0.DrawLine(pen, new Point(x, y), new Point(x, num4));
-                graphics_0.DrawLine(pen, new Point(num5, y), new Point(num5, num4));
-                graphics_0.DrawLine(pen, new Point(x, y), new Point(num5, y));
-                graphics_0.DrawLine(pen, new Point(x, num4), new Point(num5, num4));
-                int num6 = y + (width / 2);
-                graphics_0.DrawLine(pen, new Point(x + 2, num6), new Point(num5 - 2, num6));
+                graphics.FillRectangle(this.chartRenderer.BackgroundBrush, x, y, width, width);
+                graphics.DrawLine(pen, new Point(x, y), new Point(x, bottomY));
+                graphics.DrawLine(pen, new Point(rightX, y), new Point(rightX, bottomY));
+                graphics.DrawLine(pen, new Point(x, y), new Point(rightX, y));
+                graphics.DrawLine(pen, new Point(x, bottomY), new Point(rightX, bottomY));
+                int centerY = y + (width / 2);
+                graphics.DrawLine(pen, new Point(x + 2, centerY), new Point(rightX - 2, centerY));
                 if (this.Hidden)
                 {
-                    int num7 = x + (width / 2);
-                    graphics_0.DrawLine(pen, new Point(num7, y + 2), new Point(num7, num4 - 2));
+                    int centerX = x + (width / 2);
+                    graphics.DrawLine(pen, new Point(centerX, y + 2), new Point(centerX, bottomY - 2));
                 }
             }
         }
 
-        internal void method_9()
+        ///WYJ fix, original signature: internal void method_9()
+        internal void linearScaleIfLogScaleNotApplicable()
         {
             if (this.LogScale)
             {
@@ -534,7 +549,7 @@
             internal set
             {
                 this.height = value;
-                this.bool_1 = true;
+                this.scaleUpdateNeeded = true;
             }
         }
 
@@ -560,11 +575,11 @@
                     if (this.hidden)
                     {
                         this.heightBeforeHidden = this.Height;
-                        this.Renderer.method_3(this.Description, this.heightBeforeHidden);
+                        this.Renderer.saveHiddenPaneHeight(this.Description, this.heightBeforeHidden);
                     }
                     else
                     {
-                        this.Renderer.method_4(this.Description);
+                        this.Renderer.clearHiddenPaneHeight(this.Description);
                     }
                 }
             }
@@ -635,7 +650,7 @@
             set
             {
                 this.logScale = value;
-                this.bool_1 = true;
+                this.scaleUpdateNeeded = true;
             }
         }
 
@@ -700,7 +715,7 @@
             set
             {
                 this.rawHeight = value;
-                this.bool_1 = true;
+                this.scaleUpdateNeeded = true;
             }
         }
 
@@ -752,7 +767,7 @@
             internal set
             {
                 this.top = value;
-                this.bool_1 = true;
+                this.scaleUpdateNeeded = true;
             }
         }
 

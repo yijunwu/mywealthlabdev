@@ -12,15 +12,16 @@
         private int y;
         private int bar;
         private WealthLab.Position position;
-        private string string_0;
+        private string rolloverText;
 
-        internal ChartGlyph(Image image_1, string string_1, Color color_1, int int_3, bool bool_1)
+        ///WYJ fix, original signature: internal ChartGlyph(Image image_1, string string_1, Color color_1, int int_3, bool bool_1)
+        internal ChartGlyph(Image image, string rolloverText, Color fontColor, int bar, bool aboveBar)
         {
-            this.image = image_1;
-            this.string_0 = string_1;
-            this.fontColor = color_1;
-            this.bar = int_3;
-            this.aboveBar = bool_1;
+            this.image = image;
+            this.rolloverText = rolloverText;
+            this.fontColor = fontColor;
+            this.bar = bar;
+            this.aboveBar = aboveBar;
         }
 
         public bool AboveBar
@@ -91,7 +92,7 @@
         {
             get
             {
-                return this.string_0;
+                return this.rolloverText;
             }
         }
 
