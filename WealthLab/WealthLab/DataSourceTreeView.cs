@@ -28,36 +28,36 @@
         private ToolStripSeparator sepSymbol;
         private TreeNode treeNode_0;
 
-        private EventHandler<DataSourceEventArgs> eventHandler_0;
-        private EventHandler<DataSourceSymbolEventArgs> eventHandler_1;
-        private EventHandler<EventArgs> eventHandler_2;
-        private EventHandler<EventArgs> eventHandler_3;
-        private EventHandler<EventArgs> eventHandler_4;
-        private EventHandler<EventArgs> eventHandler_5;
+        private EventHandler<DataSourceEventArgs> eventHandler_DataSourceSelected;   ///WYJ fix, original name: eventHandler_0
+        private EventHandler<DataSourceSymbolEventArgs> eventHandler_SymbolSelected;   ///WYJ fix, original name: eventHandler_1
+        private EventHandler<EventArgs> eventHandler_NewDataSourceClicked;   ///WYJ fix, original name: eventHandler_2
+        private EventHandler<EventArgs> eventHandler_DataManagerClicked;   ///WYJ fix, original name: eventHandler_3
+        private EventHandler<EventArgs> eventHandler_IndexManagerClicked;   ///WYJ fix, original name: eventHandler_4
+        private EventHandler<EventArgs> eventHandler_DataSourceTreeViewRenameClicked;   ///WYJ fix, original name: eventHandler_5
 
         public event EventHandler<EventArgs> DataManagerClicked
         {
             add
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler3 = this.eventHandler_3;
+                EventHandler<EventArgs> eventHandler3 = this.eventHandler_DataManagerClicked;
                 do
                 {
                     eventHandler = eventHandler3;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler3 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_DataManagerClicked, eventHandler1, eventHandler);
                 }
                 while (eventHandler3 != eventHandler);
             }
             remove
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler3 = this.eventHandler_3;
+                EventHandler<EventArgs> eventHandler3 = this.eventHandler_DataManagerClicked;
                 do
                 {
                     eventHandler = eventHandler3;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler3 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_3, eventHandler1, eventHandler);
+                    eventHandler3 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_DataManagerClicked, eventHandler1, eventHandler);
                 }
                 while (eventHandler3 != eventHandler);
             }
@@ -68,24 +68,24 @@
             add
             {
                 EventHandler<DataSourceEventArgs> eventHandler;
-                EventHandler<DataSourceEventArgs> eventHandler0 = this.eventHandler_0;
+                EventHandler<DataSourceEventArgs> eventHandler0 = this.eventHandler_DataSourceSelected;
                 do
                 {
                     eventHandler = eventHandler0;
                     EventHandler<DataSourceEventArgs> eventHandler1 = (EventHandler<DataSourceEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler0 = Interlocked.CompareExchange<EventHandler<DataSourceEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<DataSourceEventArgs>>(ref this.eventHandler_DataSourceSelected, eventHandler1, eventHandler);
                 }
                 while (eventHandler0 != eventHandler);
             }
             remove
             {
                 EventHandler<DataSourceEventArgs> eventHandler;
-                EventHandler<DataSourceEventArgs> eventHandler0 = this.eventHandler_0;
+                EventHandler<DataSourceEventArgs> eventHandler0 = this.eventHandler_DataSourceSelected;
                 do
                 {
                     eventHandler = eventHandler0;
                     EventHandler<DataSourceEventArgs> eventHandler1 = (EventHandler<DataSourceEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler0 = Interlocked.CompareExchange<EventHandler<DataSourceEventArgs>>(ref this.eventHandler_0, eventHandler1, eventHandler);
+                    eventHandler0 = Interlocked.CompareExchange<EventHandler<DataSourceEventArgs>>(ref this.eventHandler_DataSourceSelected, eventHandler1, eventHandler);
                 }
                 while (eventHandler0 != eventHandler);
             }
@@ -96,24 +96,24 @@
             add
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler5 = this.eventHandler_5;
+                EventHandler<EventArgs> eventHandler5 = this.eventHandler_DataSourceTreeViewRenameClicked;
                 do
                 {
                     eventHandler = eventHandler5;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler5 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_DataSourceTreeViewRenameClicked, eventHandler1, eventHandler);
                 }
                 while (eventHandler5 != eventHandler);
             }
             remove
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler5 = this.eventHandler_5;
+                EventHandler<EventArgs> eventHandler5 = this.eventHandler_DataSourceTreeViewRenameClicked;
                 do
                 {
                     eventHandler = eventHandler5;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler5 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_5, eventHandler1, eventHandler);
+                    eventHandler5 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_DataSourceTreeViewRenameClicked, eventHandler1, eventHandler);
                 }
                 while (eventHandler5 != eventHandler);
             }
@@ -124,24 +124,24 @@
             add
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler4 = this.eventHandler_4;
+                EventHandler<EventArgs> eventHandler4 = this.eventHandler_IndexManagerClicked;
                 do
                 {
                     eventHandler = eventHandler4;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler4 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_IndexManagerClicked, eventHandler1, eventHandler);
                 }
                 while (eventHandler4 != eventHandler);
             }
             remove
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler4 = this.eventHandler_4;
+                EventHandler<EventArgs> eventHandler4 = this.eventHandler_IndexManagerClicked;
                 do
                 {
                     eventHandler = eventHandler4;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler4 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_4, eventHandler1, eventHandler);
+                    eventHandler4 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_IndexManagerClicked, eventHandler1, eventHandler);
                 }
                 while (eventHandler4 != eventHandler);
             }
@@ -152,24 +152,24 @@
             add
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler2 = this.eventHandler_2;
+                EventHandler<EventArgs> eventHandler2 = this.eventHandler_NewDataSourceClicked;
                 do
                 {
                     eventHandler = eventHandler2;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler2 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_NewDataSourceClicked, eventHandler1, eventHandler);
                 }
                 while (eventHandler2 != eventHandler);
             }
             remove
             {
                 EventHandler<EventArgs> eventHandler;
-                EventHandler<EventArgs> eventHandler2 = this.eventHandler_2;
+                EventHandler<EventArgs> eventHandler2 = this.eventHandler_NewDataSourceClicked;
                 do
                 {
                     eventHandler = eventHandler2;
                     EventHandler<EventArgs> eventHandler1 = (EventHandler<EventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler2 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_2, eventHandler1, eventHandler);
+                    eventHandler2 = Interlocked.CompareExchange<EventHandler<EventArgs>>(ref this.eventHandler_NewDataSourceClicked, eventHandler1, eventHandler);
                 }
                 while (eventHandler2 != eventHandler);
             }
@@ -180,24 +180,24 @@
             add
             {
                 EventHandler<DataSourceSymbolEventArgs> eventHandler;
-                EventHandler<DataSourceSymbolEventArgs> eventHandler1 = this.eventHandler_1;
+                EventHandler<DataSourceSymbolEventArgs> eventHandler1 = this.eventHandler_SymbolSelected;
                 do
                 {
                     eventHandler = eventHandler1;
                     EventHandler<DataSourceSymbolEventArgs> eventHandler2 = (EventHandler<DataSourceSymbolEventArgs>)Delegate.Combine(eventHandler, value);
-                    eventHandler1 = Interlocked.CompareExchange<EventHandler<DataSourceSymbolEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<DataSourceSymbolEventArgs>>(ref this.eventHandler_SymbolSelected, eventHandler2, eventHandler);
                 }
                 while (eventHandler1 != eventHandler);
             }
             remove
             {
                 EventHandler<DataSourceSymbolEventArgs> eventHandler;
-                EventHandler<DataSourceSymbolEventArgs> eventHandler1 = this.eventHandler_1;
+                EventHandler<DataSourceSymbolEventArgs> eventHandler1 = this.eventHandler_SymbolSelected;
                 do
                 {
                     eventHandler = eventHandler1;
                     EventHandler<DataSourceSymbolEventArgs> eventHandler2 = (EventHandler<DataSourceSymbolEventArgs>)Delegate.Remove(eventHandler, value);
-                    eventHandler1 = Interlocked.CompareExchange<EventHandler<DataSourceSymbolEventArgs>>(ref this.eventHandler_1, eventHandler2, eventHandler);
+                    eventHandler1 = Interlocked.CompareExchange<EventHandler<DataSourceSymbolEventArgs>>(ref this.eventHandler_SymbolSelected, eventHandler2, eventHandler);
                 }
                 while (eventHandler1 != eventHandler);
             }
@@ -436,9 +436,9 @@
         private void mniAddSymbols_Click(object sender, EventArgs e)
         {
             WealthLab.DataSource dataSource = this.DataSource;
-            if ((this.eventHandler_4 != null) && dataSource.IsIndexLabDataset)
+            if ((this.eventHandler_IndexManagerClicked != null) && dataSource.IsIndexLabDataset)
             {
-                this.eventHandler_4(this, EventArgs.Empty);
+                this.eventHandler_IndexManagerClicked(this, EventArgs.Empty);
             }
             else if ((dataSource != null) && !dataSource.IsIndexLabDataset)
             {
@@ -448,9 +448,9 @@
 
         private void mniDataManager_Click(object sender, EventArgs e)
         {
-            if (this.eventHandler_3 != null)
+            if (this.eventHandler_DataManagerClicked != null)
             {
-                this.eventHandler_3(this, EventArgs.Empty);
+                this.eventHandler_DataManagerClicked(this, EventArgs.Empty);
             }
         }
 
@@ -465,9 +465,9 @@
 
         private void mniNewDataSource_Click(object sender, EventArgs e)
         {
-            if (this.eventHandler_2 != null)
+            if (this.eventHandler_NewDataSourceClicked != null)
             {
-                this.eventHandler_2(this, EventArgs.Empty);
+                this.eventHandler_NewDataSourceClicked(this, EventArgs.Empty);
             }
         }
 
@@ -487,9 +487,9 @@
             {
                 this.dataSourceManager_0.RenameDataSource(dataSource);
             }
-            if ((this.eventHandler_5 != null) && dataSource.IsIndexLabDataset)
+            if ((this.eventHandler_DataSourceTreeViewRenameClicked != null) && dataSource.IsIndexLabDataset)
             {
-                this.eventHandler_5(this, EventArgs.Empty);
+                this.eventHandler_DataSourceTreeViewRenameClicked(this, EventArgs.Empty);
             }
         }
 
@@ -521,14 +521,14 @@
                 this.mniRemoveSymbol.Enabled = this.mniAddSymbols.Enabled && (this.Symbol != "");
                 if (treeNodeMouseClickEventArgs_0.Node.ImageIndex > 0)
                 {
-                    if (this.eventHandler_0 != null)
+                    if (this.eventHandler_DataSourceSelected != null)
                     {
-                        this.eventHandler_0(this, new DataSourceEventArgs(tag));
+                        this.eventHandler_DataSourceSelected(this, new DataSourceEventArgs(tag));
                     }
                 }
-                else if (this.eventHandler_1 != null && prevNode != this.treeNode_0)
+                else if (this.eventHandler_SymbolSelected != null && prevNode != this.treeNode_0)
                 {
-                    this.eventHandler_1(this, new DataSourceSymbolEventArgs(tag, treeNodeMouseClickEventArgs_0.Node.Text));
+                    this.eventHandler_SymbolSelected(this, new DataSourceSymbolEventArgs(tag, treeNodeMouseClickEventArgs_0.Node.Text));
                 }
             }
             base.OnNodeMouseClick(treeNodeMouseClickEventArgs_0);

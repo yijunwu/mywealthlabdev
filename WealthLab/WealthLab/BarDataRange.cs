@@ -49,7 +49,11 @@
         public static BarDataRange Parse(string string_0)
         {
             string[] strArray = string_0.Split(new char[] { ';' });
-            return new BarDataRange { Range = (BarRange) Enum.Parse(typeof(BarRange), strArray[0]), FixedBars = int.Parse(strArray[1]), RecentValue = int.Parse(strArray[2]), StartDate = DateTime.Parse(strArray[3]), EndDate = DateTime.Parse(strArray[4]) };
+            return new BarDataRange { Range = (BarRange) Enum.Parse(typeof(BarRange), strArray[0]), 
+                FixedBars = int.Parse(strArray[1]), 
+                RecentValue = int.Parse(strArray[2]), 
+                StartDate = DateTime.Parse(strArray[3]), 
+                EndDate = DateTime.Parse(strArray[4]) };
         }
 
         public override string ToString()
