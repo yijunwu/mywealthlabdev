@@ -136,7 +136,7 @@
 
         private void btnApplyChanges_Click(object sender, EventArgs e)
         {
-            this.method_12();
+            this.updateEditorForParameters();
             this.ApplyNeeded = false;
         }
 
@@ -493,7 +493,7 @@
             builder.Append(this.dataSource_0.BarDataScale.ToString());
             builder.Append(str);
             builder.Append("Data Range: ");
-            builder.Append(this.chartForm_0.barRange.DataRange.Text);
+            builder.Append(this.chartForm_0.barRangeSelector.DataRange.Text);
             builder.Append(str);
             builder.Append("Position Sizing: ");
             builder.Append(this.positionSize_0.Text);
@@ -533,7 +533,7 @@
                 }
             }
             this.LoadParameterList();
-            this.tradingSystemExecutor_0.BarsLoader = this.chartForm_0.barsLoader_0;
+            this.tradingSystemExecutor_0.BarsLoader = this.chartForm_0.barsLoader;
             this.tradingSystemExecutor_0.FundamentalsLoader = this.chartForm_0.fundamentalsLoader_0;
             this.tradingSystemExecutor_0.StrategyName = this.chartForm_0.Strategy.Name;
             this.assemblyLoader_0.Path = MainModule.Instance.AppPath;
@@ -1182,8 +1182,8 @@
             this.tradingSystemExecutor_0.SlippageUnits = 1.0;
             this.tradingSystemExecutor_0.StrategyName = "";
             this.tradingSystemExecutor_0.WorstTradeSimulation = false;
-            this.tradingSystemExecutor_0.ExternalSymbolFromDataSetRequested += new EventHandler<LoadSymbolFromDataSetEventArgs>(this.method_20);
-            this.tradingSystemExecutor_0.ExternalSymbolRequested += new EventHandler<LoadSymbolEventArgs>(this.method_19);
+            this.tradingSystemExecutor_0.ExternalSymbolFromDataSetRequested += new EventHandler<LoadSymbolFromDataSetEventArgs>(this.externalSymbolFromDataSetRequestedEventHandler);
+            this.tradingSystemExecutor_0.ExternalSymbolRequested += new EventHandler<LoadSymbolEventArgs>(this.externalSymbolRequestedEventHandler);
             this.tradingSystemExecutor_0.TrendlineGetValue += new EventHandler<TrendLineEventArgs>(this.trendLineGetValueEventHandler);
             this.tradingSystemExecutor_0.LookupStrategy += new EventHandler<StrategyEventArgs>(this.method_22);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
@@ -1315,11 +1315,12 @@
             return false;
         }
 
-        private void method_12()
+        ///WYJ fix, original signature: private void method_12()
+        private void updateEditorForParameters()
         {
             try
             {
-                this.chartForm_0.method_68();
+                this.chartForm_0.updateEditorForParameters();
                 this.chartForm_0.NeedSave = true;
                 this.chartForm_0.MyMainForm.BuildParameterSliders();
                 MessageBox.Show("Your changes have been applied to the Editor Code.");
@@ -1447,14 +1448,15 @@
             new PrintReport(reportTemplate, bool_5) { ShowPrintPreview = this.ShowPrintPreview(), ShowPrintDialog = this.ShowPrintDialog() }.PrintGraphicReport(this._pageSettings);
         }
 
-        private void method_19(object sender, LoadSymbolEventArgs e)
+        ///WYJ fix, original signature: private void method_19(object sender, LoadSymbolEventArgs e)
+        private void externalSymbolRequestedEventHandler(object sender, LoadSymbolEventArgs e)
         {
-            this.chartForm_0.method_34(sender, e);
+            this.chartForm_0.externalSymbolRequestedEventHandler(sender, e);
         }
 
         private void method_2()
         {
-            this.chartForm_0.barRange.DataRange.ConfigureBarsLoader(this.tradingSystemExecutor_0.BarsLoader);
+            this.chartForm_0.barRangeSelector.DataRange.ConfigureBarsLoader(this.tradingSystemExecutor_0.BarsLoader);
             this.tradingSystemExecutor_0.PosSize = this.chartForm_0.posSize.PositionSize;
             this.list_0.Clear();
             if (this.string_0 == "")
@@ -1470,9 +1472,10 @@
             }
         }
 
-        private void method_20(object sender, LoadSymbolFromDataSetEventArgs e)
+        ///WYJ fix, original signature: private void method_20(object sender, LoadSymbolFromDataSetEventArgs e)
+        private void externalSymbolFromDataSetRequestedEventHandler(object sender, LoadSymbolFromDataSetEventArgs e)
         {
-            this.chartForm_0.method_67(sender, e);
+            this.chartForm_0.externalSymbolFromDataSetRequestedEventHandler(sender, e);
         }
 
         ///WYJ fix, original signature: private void method_21(object sender, TrendLineEventArgs e)
@@ -1488,7 +1491,7 @@
 
         private void method_3(string string_1)
         {
-            Bars data = this.chartForm_0.barsLoader_0.GetData(this.chartForm_0.DataSource, string_1);
+            Bars data = this.chartForm_0.barsLoader.GetData(this.chartForm_0.DataSource, string_1);
             this.list_0.Add(data);
         }
 
@@ -2107,7 +2110,7 @@
                     this.WealthScript.Parameters[i].DefaultValue = tag.ParameterValues[i];
                 }
                 this.LoadParameterList();
-                this.method_12();
+                this.updateEditorForParameters();
             }
         }
 

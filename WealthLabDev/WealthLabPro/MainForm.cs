@@ -997,18 +997,18 @@
                     if ((activeMdiChild as IWealthScriptProvider).ParametersNeedSave)
                     {
                         this.lblParameters.ForeColor = Color.Red;
-                        this.method_35(true);
+                        this.enableParamLinkButtons(true);
                     }
                     else
                     {
                         this.lblParameters.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-                        this.method_35(false);
+                        this.enableParamLinkButtons(false);
                     }
                 }
                 else
                 {
                     this.lblParameters.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-                    this.method_35(false);
+                    this.enableParamLinkButtons(false);
                 }
             }
         }
@@ -3567,11 +3567,11 @@
             this.treeDataSources.Size = new System.Drawing.Size(199, 120);
             this.treeDataSources.TabIndex = 8;
             this.treeDataSources.DataManagerClicked += new System.EventHandler<System.EventArgs>(this.btnDataManager_Click);
-            this.treeDataSources.DataSourceSelected += new System.EventHandler<WealthLab.DataSourceEventArgs>(this.method_13);
-            this.treeDataSources.DataSourceTreeViewRenameClicked += new System.EventHandler<System.EventArgs>(this.method_46);
-            this.treeDataSources.IndexManagerClicked += new System.EventHandler<System.EventArgs>(this.method_45);
+            this.treeDataSources.DataSourceSelected += new System.EventHandler<WealthLab.DataSourceEventArgs>(this.dataSourceSelectedEventHandler);
+            this.treeDataSources.DataSourceTreeViewRenameClicked += new System.EventHandler<System.EventArgs>(this.dataSourceTreeViewRenameClickedEventHandler);
+            this.treeDataSources.IndexManagerClicked += new System.EventHandler<System.EventArgs>(this.indexManagerClickedEventHandler);
             this.treeDataSources.NewDataSourceClicked += new System.EventHandler<System.EventArgs>(this.linkNewDataSet_Click);
-            this.treeDataSources.SymbolSelected += new System.EventHandler<WealthLab.DataSourceSymbolEventArgs>(this.method_15);
+            this.treeDataSources.SymbolSelected += new System.EventHandler<WealthLab.DataSourceSymbolEventArgs>(this.symbolSelectionChangeEventHandler);
             this.treeDataSources.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeDataSources_ItemDrag);
             this.treeDataSources.DragOver += new System.Windows.Forms.DragEventHandler(this.treeDataSources_DragOver);
             this.treeDataSources.DoubleClick += new System.EventHandler(this.treeDataSources_DoubleClick);
@@ -3699,8 +3699,8 @@
             this.paramSliders.Size = new System.Drawing.Size(193, 87);
             this.paramSliders.TabIndex = 2;
             this.paramSliders.WealthScript = null;
-            this.paramSliders.SliderMouseDown += new System.EventHandler<System.EventArgs>(this.method_43);
-            this.paramSliders.SliderValueChanged += new System.EventHandler<System.EventArgs>(this.method_34);
+            this.paramSliders.SliderMouseDown += new System.EventHandler<System.EventArgs>(this.sliderMouseDownEventHandler);
+            this.paramSliders.SliderValueChanged += new System.EventHandler<System.EventArgs>(this.sliderValueChangedEventHandler);
             // 
             // popupPreferredValues
             // 
@@ -3735,7 +3735,7 @@
             this.scale.Size = new System.Drawing.Size(124, 20);
             this.scale.SM = false;
             this.scale.TabIndex = 11;
-            this.scale.ScaleChanged += new System.EventHandler<System.EventArgs>(this.method_33);
+            this.scale.ScaleChanged += new System.EventHandler<System.EventArgs>(this.scaleChangedEventHandler);
             // 
             // cmbSymbol
             // 
@@ -3801,7 +3801,7 @@
             this.posSize.Name = "posSize";
             this.posSize.Size = new System.Drawing.Size(124, 20);
             this.posSize.TabIndex = 3;
-            this.posSize.PositionSizeChanged += new System.EventHandler<System.EventArgs>(this.method_10);
+            this.posSize.PositionSizeChanged += new System.EventHandler<System.EventArgs>(this.positionSizeChangedEventHandler);
             // 
             // dataRange
             // 
@@ -3813,7 +3813,7 @@
             this.dataRange.Name = "dataRange";
             this.dataRange.Size = new System.Drawing.Size(124, 20);
             this.dataRange.TabIndex = 1;
-            this.dataRange.DataRangeChanged += new System.EventHandler<System.EventArgs>(this.method_9);
+            this.dataRange.DataRangeChanged += new System.EventHandler<System.EventArgs>(this.dataRangeChangedEventHandler);
             // 
             // toolbarDrawing
             // 
@@ -4531,7 +4531,7 @@
                     MainModule.Instance.Strategies.SaveParameterValues(activeMdiChild.Strategy, activeMdiChild.WealthScript);
                     activeMdiChild.ParametersNeedSave = false;
                     this.lblParameters.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-                    this.method_35(activeMdiChild.ParametersNeedSave);
+                    this.enableParamLinkButtons(activeMdiChild.ParametersNeedSave);
                 }
             }
         }
@@ -4673,8 +4673,8 @@
             {
                 this.mniViewTradeTicket.Checked = MainModule.Instance.Settings.Get("ShowTradeTicket", true);
                 AuthenticationProvider authProvider = MainModule.Instance.AuthProvider;
-                authProvider.OnInstallerDownloadComplete += new AuthenticationProvider._DownloadFileCompleted(this.method_36);
-                authProvider.OnInstallerDownloadProgressChanged += new AuthenticationProvider._DownloadProgressChanged(this.method_37);
+                authProvider.OnInstallerDownloadComplete += new AuthenticationProvider._DownloadFileCompleted(this.authProviderInstallerDownloadCompleteEventHandler);
+                authProvider.OnInstallerDownloadProgressChanged += new AuthenticationProvider._DownloadProgressChanged(this.authProviderInstallerDownloadProgrChangedEventHandler);
                 this.btnLogin.Text = authProvider.LoginPhrase;
                 this.btnLogin.Visible = authProvider.LoginButtonVisible;
                 this.mniSoftwareUpgrade.Visible = authProvider.SupportsSoftwareUpgrade;
@@ -5034,7 +5034,8 @@
             new StrategyRanking { MdiParent = this }.Show();
         }
 
-        private void method_10(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_10(object sender, EventArgs e)
+        private void positionSizeChangedEventHandler(object sender, EventArgs e)
         {
             MainModule.Instance.Executor.PosSize = this.posSize.PositionSize;
             ChartForm activeChartWindow = this.ActiveChartWindow;
@@ -5079,7 +5080,7 @@
             }
         }
 
-        private void method_13(object sender, DataSourceEventArgs e)
+        private void dataSourceSelectedEventHandler(object sender, DataSourceEventArgs e)
         {
             this.btnGo.Enabled = true;
             this.cmbSymbol.Text = "";
@@ -5115,7 +5116,8 @@
             this.treeDataSources.SelectedNode = this.treeDataSources.Nodes[0];
         }
 
-        private void method_15(object sender, DataSourceSymbolEventArgs e)
+        ///WYJ fix, original signature: private void method_15(object sender, DataSourceSymbolEventArgs e)
+        private void symbolSelectionChangeEventHandler(object sender, DataSourceSymbolEventArgs e)
         {
             if (!this.dataSourceTreeSelectedNodeLocked)
             {
@@ -5737,7 +5739,8 @@
             this.statusStreamingStatus.Text = message;
         }
 
-        private void method_33(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_33(object sender, EventArgs e)
+        private void scaleChangedEventHandler(object sender, EventArgs e)
         {
             if (this.DataSource != null)
             {
@@ -5753,7 +5756,8 @@
             this.ChangeScale(this.scale.DataScale.Scale, this.scale.DataScale.BarInterval);
         }
 
-        private void method_34(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_34(object sender, EventArgs e)
+        private void sliderValueChangedEventHandler(object sender, EventArgs e)
         {
             if ((this.ActiveChartWindow == null) || !this.ActiveChartWindow.IsBusy)
             {
@@ -5784,7 +5788,7 @@
                         }
                         this.ActiveChartWindow.ParametersNeedSave = true;
                         this.lblParameters.ForeColor = Color.Red;
-                        this.method_35(true);
+                        this.enableParamLinkButtons(true);
                         this.ActiveChartWindow.RefreshOptimizerViews();
                     }
                     else if (base.ActiveMdiChild is IWealthScriptProvider)
@@ -5795,7 +5799,7 @@
                             MainModule.Instance.PlaySound(Resources.shortbep, false);
                         }
                         this.lblParameters.ForeColor = Color.Red;
-                        this.method_35(true);
+                        this.enableParamLinkButtons(true);
                     }
                 }
                 catch
@@ -5804,19 +5808,22 @@
             }
         }
 
-        private void method_35(bool bool_10)
+        ///WYJ fix, original signature: private void method_35(bool bool_10)
+        private void enableParamLinkButtons(bool enable)
         {
-            this.linkSaveParams.Enabled = bool_10;
-            this.linkResetParams.Enabled = bool_10;
+            this.linkSaveParams.Enabled = enable;
+            this.linkResetParams.Enabled = enable;
         }
 
-        private void method_36(object sender, AsyncCompletedEventArgs e)
+        ///WYJ fix, original signature: private void method_36(object sender, AsyncCompletedEventArgs e)
+        private void authProviderInstallerDownloadCompleteEventHandler(object sender, AsyncCompletedEventArgs e)
         {
             this.statusSofwareDownload.Visible = false;
             this.statusDownloadProgressBar.Visible = false;
         }
 
-        private void method_37(object sender, DownloadProgressChangedEventArgs e)
+        ///WYJ fix, original signature: private void method_37(object sender, DownloadProgressChangedEventArgs e)
+        private void authProviderInstallerDownloadProgrChangedEventHandler(object sender, DownloadProgressChangedEventArgs e)
         {
             this.statusSofwareDownload.Visible = true;
             this.statusDownloadProgressBar.Visible = true;
@@ -5954,7 +5961,8 @@
             }
         }
 
-        private void method_43(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_43(object sender, EventArgs e)
+        private void sliderMouseDownEventHandler(object sender, EventArgs e)
         {
             if (!MainModule.Instance.Settings.Get("DontShowOptMessage", false))
             {
@@ -5982,16 +5990,19 @@
             }
         }
 
-        private void method_45(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_45(object sender, EventArgs e)
+        private void indexManagerClickedEventHandler(object sender, EventArgs e)
         {
             this.CreateIndexManager();
         }
 
-        private void method_46(object sender, EventArgs e)
+        ///WYJ fix, original name: private void method_46(object sender, EventArgs e)
+        private void dataSourceTreeViewRenameClickedEventHandler(object sender, EventArgs e)
         {
         }
 
-        internal void method_47()
+        ///WYJ fix, original name: internal void method_47()
+        internal void checkUncheckDataPanelMniAndBtn()
         {
             this.btnDataWindow.Checked = DataWindowForm.Instance != null;
             this.mniDataWindow.Checked = DataWindowForm.Instance != null;
@@ -6171,7 +6182,8 @@
             }
         }
 
-        private void method_9(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_9(object sender, EventArgs e)
+        private void dataRangeChangedEventHandler(object sender, EventArgs e)
         {
             MainModule.Instance.DataRange = this.dataRange.DataRange;
             ChartForm activeChartWindow = this.ActiveChartWindow;
@@ -6809,12 +6821,12 @@
                     if (strategy_0.Symbol != "")
                     {
                         this.treeDataSources.SelectSymbol(source, strategy_0.Symbol);
-                        this.method_15(this.treeDataSources, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.treeDataSources.Symbol));
+                        this.symbolSelectionChangeEventHandler(this.treeDataSources, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.treeDataSources.Symbol));
                     }
                     else
                     {
                         this.treeDataSources.SelectDataSource(source);
-                        this.method_13(this.treeDataSources, new DataSourceEventArgs(this.treeDataSources.DataSource));
+                        this.dataSourceSelectedEventHandler(this.treeDataSources, new DataSourceEventArgs(this.treeDataSources.DataSource));
                     }
                 }
             }
@@ -6823,11 +6835,11 @@
                 if ((this.treeDataSources.Symbol != null) && (this.treeDataSources.Symbol != ""))
                 {
                     this.SelectingNodeForFormCreation = true;
-                    this.method_15(this.treeDataSources, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.treeDataSources.Symbol));
+                    this.symbolSelectionChangeEventHandler(this.treeDataSources, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.treeDataSources.Symbol));
                 }
                 else
                 {
-                    this.method_13(this.treeDataSources, new DataSourceEventArgs(this.treeDataSources.DataSource));
+                    this.dataSourceSelectedEventHandler(this.treeDataSources, new DataSourceEventArgs(this.treeDataSources.DataSource));
                 }
             }
             this.SetDataPanelState(true, true, true, true, strategy_0.StrategyType == StrategyType.CombinedStrategy);
@@ -6879,13 +6891,13 @@
         {
             if ((this.treeDataSources.DataSource != null) && (this.cmbSymbol.Text != string.Empty))
             {
-                this.method_15(this, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.cmbSymbol.Text));
+                this.symbolSelectionChangeEventHandler(this, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.cmbSymbol.Text));
             }
             else if (this.treeDataSources.Nodes.Count > 0)
             {
                 if (this.treeDataSources.Symbol != "")
                 {
-                    this.method_15(this, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.treeDataSources.Symbol));
+                    this.symbolSelectionChangeEventHandler(this, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.treeDataSources.Symbol));
                 }
                 else
                 {
@@ -6942,7 +6954,7 @@
             }
             color3 = parameters ? red : color2;
             this.lblParameters.ForeColor = color3;
-            this.method_35(color3 == Color.Red);
+            this.enableParamLinkButtons(color3 == Color.Red);
         }
 
         public void SetLogScaleButtonState(bool logScale)
@@ -7302,7 +7314,7 @@
                     {
                         this.CreateChartWindow(false);
                         this.treeDataSources.SelectSymbol(this.DataSource, selectedNode.Text);
-                        this.method_15(this, new DataSourceSymbolEventArgs(this.DataSource, selectedNode.Text));
+                        this.symbolSelectionChangeEventHandler(this, new DataSourceSymbolEventArgs(this.DataSource, selectedNode.Text));
                     }
                     else
                     {

@@ -20,11 +20,11 @@
 
     public partial class ChartForm : Form, IWorkspace, IConnectionStatus, ICDOBehavior, IVisualizerHost, IWealthScriptProvider
     {
-        private Alerts alerts_0;
+        private Alerts alerts;   ///WYJ fix, original name: alerts_0
         private AutoResetEvent autoResetEvent_0 = new AutoResetEvent(false);
         private WealthLab.Bars bars_0;
         private WealthLab.Bars bars_1;
-        internal BarsLoader barsLoader_0;
+        internal BarsLoader barsLoader;   ///WYJ fix, original name: barsLoader_0
         private bool needSave;
         private bool parametersNeedSave;
         private bool multiSymbolMode;  ///WYJ fix, original name: bool_10
@@ -37,7 +37,7 @@
         private bool sliderValueChanging;
         [CompilerGenerated]
         private bool isOptimizing;
-        private bool bool_2;   ///WYJ note, useless member variable, always false
+        private bool resultPagesAdded;   ///WYJ fix, original name: bool_2; WYJ note, to ensure addAlertsAndPerformanceVisualizerPages() is run only once
         private bool streaming;   ///WYJ fix, original name: bool_3
         private bool bool_4;
         private bool streamingSwitchChanging;   ///WYJ fix, original name: bool_5
@@ -70,7 +70,7 @@
         private IContainer components;  ///WYJ fix, renamed from icontainer_0 to components, according to: http://blog.stephencleary.com/2009/11/reverse-compiling-windows-forms.html
         private static readonly ILog ilog_0 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ImageList imageList_0;
-        private IndicatorDragDropManager indicatorDragDropManager_0;
+        private IndicatorDragDropManager indicatorDragDropManager;
         private static int countForWindows = 0;   ///WYJ fix, original name: int_0
         private int strategyWindowId;   ///WYJ fix, original name: int_1
         private int barNum = -1;   ///WYJ fix, original name: int_2
@@ -78,9 +78,9 @@
         private int barNumSaved = -1;   ///WYJ fix, original name: int_4
         [CompilerGenerated]
         private int childScrollBar;
-        private List<WealthLab.Bars> list_0 = new List<WealthLab.Bars>();
-        private List<TabPage> list_1 = new List<TabPage>();
-        private List<TabPage> list_2 = new List<TabPage>();
+        private List<WealthLab.Bars> list_SymbolsToTest = new List<WealthLab.Bars>();   ///WYJ fix, original name: list_0
+        private List<TabPage> list_PerfVisualizerPages1 = new List<TabPage>();   ///WYJ fix, original name: list_1 
+        private List<TabPage> list_PerfVisualizerPages2 = new List<TabPage>();   ///WYJ fix, original name: list_2
         private MarketHours marketHours_0;
         private ToolStripMenuItem mniAddDifferent;
         private ToolStripMenuItem mniAddStrategy;
@@ -152,7 +152,7 @@
         private TextBox txtSymbol;
         private Label lblSymbol;
         private Panel pnlMultiSymbol;
-        internal BarDataRangeSelecter barRange;
+        internal BarDataRangeSelecter barRangeSelector;   ///WYJ fix, original name: barRange
         private GroupBox grpMultiSymbol;
         private Button btnRunAllCancel;
         private Label lblRunAllStatus;
@@ -329,9 +329,9 @@
                 this.thread_0 = null;
             }
             this.tradingSystemExecutor_1.IsStreaming = this.btnStreaming.Checked;
-            if (this.alerts_0 != null)
+            if (this.alerts != null)
             {
-                this.alerts_0.IsStreaming = this.btnStreaming.Checked;
+                this.alerts.IsStreaming = this.btnStreaming.Checked;
             }
             if (this.description_0 != null)
             {
@@ -375,13 +375,13 @@
 
         private void chart_DoubleClick(object sender, EventArgs e)
         {
-            if (!this.method_66())
+            if (!this.noData())
             {
                 if (this.drawingObjectManager_0.SelectedDrawingObject != null)
                 {
                     this.mniDrawingObjectProperties_Click(this, EventArgs.Empty);
                 }
-                else if (this.indicatorDragDropManager_0.SelectedIndicator != null)
+                else if (this.indicatorDragDropManager.SelectedIndicator != null)
                 {
                     this.mniIndicatorProperties_Click(this, EventArgs.Empty);
                 }
@@ -445,7 +445,7 @@
                 this.thread_0 = null;
             }
             this.MyMainForm.ItemRemoved(this);
-            this.list_0.Clear();
+            this.list_SymbolsToTest.Clear();
             this.tradingSystemExecutor_0.Clear();
             this.tradingSystemExecutor_1.Clear();
             if (this.IsStreaming && (this.streamingChartManager_0.Provider != null))
@@ -503,21 +503,21 @@
         private void ChartForm_Load(object sender, EventArgs e)
         {
             this.btnStreaming.Visible = MainModule.Instance.AuthProvider.AllowStreaming;
-            this.barsLoader_0.StartDate = DateTime.MinValue;
-            this.barsLoader_0.EndDate = DateTime.MaxValue;
+            this.barsLoader.StartDate = DateTime.MinValue;
+            this.barsLoader.EndDate = DateTime.MaxValue;
             this.UpdateChartColorsAndStyle(false);
             this.chart.Renderer = this.chartRenderer;
-            this.indicatorDragDropManager_0.Fundamentals = this.fundamentalsLoader_0;
+            this.indicatorDragDropManager.Fundamentals = this.fundamentalsLoader_0;
             this.drawingObjectManager_0.RootPath = MainModule.Instance.DataPath;
             this.drawingObjectManager_1.RootPath = MainModule.Instance.DataPath;
             this.drawingObjectManager_0.SettingsHost = MainModule.Instance.Settings;
-            this.indicatorDragDropManager_0.SettingsHost = MainModule.Instance.Settings;
+            this.indicatorDragDropManager.SettingsHost = MainModule.Instance.Settings;
             this.fundamentalsLoader_0.DataHost = MainModule.Instance.DataSources;
             if (!this.fundamentalsLoader_0.HasDragDropFundamentals)
             {
                 this.plotAFundamentalDataItemOnTheChartToolStripMenuItem.Visible = false;
             }
-            this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+            this.mniPushCode.Visible = this.indicatorDragDropManager.HasDragDroppedIndicators;
             this.MyMainForm.ItemAdded(this);
             if (MainModule.Instance.StreamingWasClicked)
             {
@@ -600,11 +600,11 @@
                 }
                 if (this.dictionary_0.ContainsKey(dataSource_3))
                 {
-                    this.barsLoader_0.BarDataScale = this.dictionary_0[dataSource_3];
+                    this.barsLoader.BarDataScale = this.dictionary_0[dataSource_3];
                 }
                 else if (dataSource_3.IsIntraday)
                 {
-                    this.barsLoader_0.BarDataScale = dataSource_3.BarDataScale;
+                    this.barsLoader.BarDataScale = dataSource_3.BarDataScale;
                 }
                 else
                 {
@@ -612,11 +612,11 @@
                     WealthLab.BarDataScale scale2 = this.MyMainForm.BarDataScale;
                     if (barDataScale.CanConvertTo(scale2))
                     {
-                        this.barsLoader_0.BarDataScale = scale2;
+                        this.barsLoader.BarDataScale = scale2;
                     }
                     else
                     {
-                        this.barsLoader_0.BarDataScale = barDataScale;
+                        this.barsLoader.BarDataScale = barDataScale;
                     }
                 }
             }
@@ -673,9 +673,9 @@
                 {
                     this.description_0.CopyToClipboard();
                 }
-                if ((this.alerts_0 != null) && this.tabChart.SelectedTab.Text.Contains("Alert"))
+                if ((this.alerts != null) && this.tabChart.SelectedTab.Text.Contains("Alert"))
                 {
-                    this.alerts_0.CopyToClipboard();
+                    this.alerts.CopyToClipboard();
                 }
                 if ((this.editor != null) && (this.tabChart.SelectedTab.Text == "Editor"))
                 {
@@ -866,7 +866,7 @@
             this.stlblVolume = new System.Windows.Forms.ToolStripStatusLabel();
             this.stlblMouse = new System.Windows.Forms.ToolStripStatusLabel();
             this.chart = new WealthLab.ChartControl.Chart();
-            this.indicatorDragDropManager_0 = new WealthLab.ChartControl.IndicatorDragDropManager(this.components);
+            this.indicatorDragDropManager = new WealthLab.ChartControl.IndicatorDragDropManager(this.components);
             this.drawingObjectManager_0 = new WealthLab.ChartControl.DrawingObjectManager(this.components);
             this.chart2 = new WealthLab.ChartControl.Chart();
             this.pnlMultiSymbol = new System.Windows.Forms.Panel();
@@ -883,13 +883,13 @@
             this.timer_0 = new System.Windows.Forms.Timer(this.components);
             this.chartRenderer = new WealthLab.ChartRenderer(this.components);
             this.tradingSystemExecutor_1 = new WealthLab.TradingSystemExecutor(this.components);
-            this.barsLoader_0 = new WealthLab.BarsLoader(this.components);
+            this.barsLoader = new WealthLab.BarsLoader(this.components);
             this.fundamentalsLoader_0 = new WealthLab.FundamentalsLoader(this.components);
             this.tradingSystemExecutor_0 = new WealthLab.TradingSystemExecutor(this.components);
             this.streamingChartManager_0 = new WealthLab.StreamingChartManager(this.components);
             this.marketHours_0 = new WealthLab.MarketHours(this.components);
             this.drawingObjectManager_1 = new WealthLab.ChartControl.DrawingObjectManager(this.components);
-            this.barRange = new WealthLabPro.BarDataRangeSelecter();
+            this.barRangeSelector = new WealthLabPro.BarDataRangeSelecter();
             this.posSize = new WealthLabPro.PositionSizeSelecter();
             this.status.SuspendLayout();
             this.popupChart.SuspendLayout();
@@ -1515,7 +1515,7 @@
             this.chart.ContextMenuStrip = this.popupChart;
             this.chart.Cursor = System.Windows.Forms.Cursors.Default;
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chart.DragDropManager = this.indicatorDragDropManager_0;
+            this.chart.DragDropManager = this.indicatorDragDropManager;
             this.chart.DrawingManager = this.drawingObjectManager_0;
             this.chart.FundamentalTooltipVisible = true;
             this.chart.HandleFont = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1529,19 +1529,19 @@
             this.chart.Size = new System.Drawing.Size(609, 405);
             this.chart.TabIndex = 0;
             this.chart.Text = "chart1";
-            this.chart.DrawingObjectOperationCompleted += new System.EventHandler<System.EventArgs>(this.method_29);
+            this.chart.DrawingObjectOperationCompleted += new System.EventHandler<System.EventArgs>(this.drawingObjectOperationCompletedEventHandler);
             this.chart.MouseMoveBarNumber += new System.EventHandler<WealthLab.ChartControl.BarNumberEventArgs>(this.UpdateCurrentDayDataDisplay);
             this.chart.MouseWheelMoved += new System.EventHandler<System.Windows.Forms.MouseEventArgs>(this.mouseWheelHandler);
-            this.chart.OnException += new System.EventHandler<WealthLab.ChartControl.ExceptionEventArgs>(this.method_72);
+            this.chart.OnException += new System.EventHandler<WealthLab.ChartControl.ExceptionEventArgs>(this.chartExceptionEventHandler);
             this.chart.Click += new System.EventHandler(this.chart_Click);
             this.chart.DoubleClick += new System.EventHandler(this.chart_DoubleClick);
             this.chart.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.chart_KeyPress);
             this.chart.MouseLeave += new System.EventHandler(this.chart_MouseLeave);
             // 
-            // indicatorDragDropManager_0
+            // indicatorDragDropManager
             // 
-            this.indicatorDragDropManager_0.Fundamentals = null;
-            this.indicatorDragDropManager_0.IndicatorDropped += new System.EventHandler<WealthLab.ChartControl.DroppedIndicatorEventArgs>(this.droppedIndicatorEventHandler);
+            this.indicatorDragDropManager.Fundamentals = null;
+            this.indicatorDragDropManager.IndicatorDropped += new System.EventHandler<WealthLab.ChartControl.DroppedIndicatorEventArgs>(this.droppedIndicatorEventHandler);
             // 
             // drawingObjectManager_0
             // 
@@ -1568,7 +1568,7 @@
             // pnlMultiSymbol
             // 
             this.pnlMultiSymbol.BackColor = System.Drawing.SystemColors.Control;
-            this.pnlMultiSymbol.Controls.Add(this.barRange);
+            this.pnlMultiSymbol.Controls.Add(this.barRangeSelector);
             this.pnlMultiSymbol.Controls.Add(this.grpMultiSymbol);
             this.pnlMultiSymbol.Controls.Add(this.posSize);
             this.pnlMultiSymbol.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1732,7 +1732,7 @@
             this.tradingSystemExecutor_1.ApplyCommission = false;
             this.tradingSystemExecutor_1.ApplyDividends = false;
             this.tradingSystemExecutor_1.ApplyInterest = false;
-            this.tradingSystemExecutor_1.BarsLoader = this.barsLoader_0;
+            this.tradingSystemExecutor_1.BarsLoader = this.barsLoader;
             this.tradingSystemExecutor_1.BenchmarkBuyAndHoldON = false;
             this.tradingSystemExecutor_1.BenchmarkSymbol = null;
             this.tradingSystemExecutor_1.BuildEquityCurves = true;
@@ -1771,38 +1771,38 @@
             this.tradingSystemExecutor_1.StrategyName = "";
             this.tradingSystemExecutor_1.WorstTradeSimulation = false;
             this.tradingSystemExecutor_1.ChartBitmapRequested += new System.EventHandler<WealthLab.ChartBitmapEventArgs>(this.chartBitmapRequestedEventHandler);
-            this.tradingSystemExecutor_1.ClearDebugWindow += new System.EventHandler<System.EventArgs>(this.method_52);
+            this.tradingSystemExecutor_1.ClearDebugWindow += new System.EventHandler<System.EventArgs>(this.clearDebugWindowEventHandler);
             this.tradingSystemExecutor_1.ExecutionCompletedForChildStrategySymbol += new System.EventHandler<WealthLab.BarsEventArgs>(this.onChildStrategyCompletion);
             this.tradingSystemExecutor_1.ExecutionCompletedForSymbol += new System.EventHandler<WealthLab.BarsEventArgs>(this.executionCompletedForSymbolEventHandler);
-            this.tradingSystemExecutor_1.ExternalSymbolFromDataSetRequested += new System.EventHandler<WealthLab.LoadSymbolFromDataSetEventArgs>(this.method_67);
-            this.tradingSystemExecutor_1.ExternalSymbolRequested += new System.EventHandler<WealthLab.LoadSymbolEventArgs>(this.method_34);
+            this.tradingSystemExecutor_1.ExternalSymbolFromDataSetRequested += new System.EventHandler<WealthLab.LoadSymbolFromDataSetEventArgs>(this.externalSymbolFromDataSetRequestedEventHandler);
+            this.tradingSystemExecutor_1.ExternalSymbolRequested += new System.EventHandler<WealthLab.LoadSymbolEventArgs>(this.externalSymbolRequestedEventHandler);
             this.tradingSystemExecutor_1.FlushDebugWindow += new System.EventHandler<System.EventArgs>(this.flushDebugWindowEventHandler);
-            this.tradingSystemExecutor_1.LookupDataSource += new System.EventHandler<DataSourceLookupEventArgs>(this.method_74);
+            this.tradingSystemExecutor_1.LookupDataSource += new System.EventHandler<DataSourceLookupEventArgs>(this.lookupDataSourceEventHandler);
             this.tradingSystemExecutor_1.LookupStrategy += new System.EventHandler<StrategyEventArgs>(this.LookUpStrategyById);
             this.tradingSystemExecutor_1.PrintToStatusBar += new System.EventHandler<WealthLab.DebugStringEventArgs>(this.printToStatusBarEventHandler);
-            this.tradingSystemExecutor_1.SetParameterValues += new System.EventHandler<WealthLab.StrategyParameterEventArgs>(this.method_69);
+            this.tradingSystemExecutor_1.SetParameterValues += new System.EventHandler<WealthLab.StrategyParameterEventArgs>(this.setParameterValuesEventHandler);
             this.tradingSystemExecutor_1.TrendlineGetValue += new System.EventHandler<WealthLab.TrendLineEventArgs>(this.trendLineGetValueEventHandler);
             this.tradingSystemExecutor_1.WealthScriptException += new System.EventHandler<WealthLab.WSExceptionEventArgs>(this.wealthScriptExceptionEventHandler);
             // 
             // barsLoader_0
             // 
-            this.barsLoader_0.AutoConvertScale = true;
-            this.barsLoader_0.AutoCreateProvider = true;
-            this.barsLoader_0.BarInterval = 0;
-            this.barsLoader_0.EndDate = new System.DateTime(((long)(0)));
-            this.barsLoader_0.IncludePartialBar = false;
-            this.barsLoader_0.MaxBars = 0;
-            this.barsLoader_0.OverrideOnDemand = false;
-            this.barsLoader_0.OverrideOnDemandValue = false;
-            this.barsLoader_0.Scale = WealthLab.BarScale.Daily;
-            this.barsLoader_0.StartDate = new System.DateTime(1995, 1, 1, 0, 0, 0, 0);
+            this.barsLoader.AutoConvertScale = true;
+            this.barsLoader.AutoCreateProvider = true;
+            this.barsLoader.BarInterval = 0;
+            this.barsLoader.EndDate = new System.DateTime(((long)(0)));
+            this.barsLoader.IncludePartialBar = false;
+            this.barsLoader.MaxBars = 0;
+            this.barsLoader.OverrideOnDemand = false;
+            this.barsLoader.OverrideOnDemandValue = false;
+            this.barsLoader.Scale = WealthLab.BarScale.Daily;
+            this.barsLoader.StartDate = new System.DateTime(1995, 1, 1, 0, 0, 0, 0);
             // 
             // tradingSystemExecutor_0
             // 
             this.tradingSystemExecutor_0.ApplyCommission = false;
             this.tradingSystemExecutor_0.ApplyDividends = false;
             this.tradingSystemExecutor_0.ApplyInterest = false;
-            this.tradingSystemExecutor_0.BarsLoader = this.barsLoader_0;
+            this.tradingSystemExecutor_0.BarsLoader = this.barsLoader;
             this.tradingSystemExecutor_0.BenchmarkBuyAndHoldON = false;
             this.tradingSystemExecutor_0.BenchmarkSymbol = null;
             this.tradingSystemExecutor_0.BuildEquityCurves = false;
@@ -1840,9 +1840,9 @@
             this.tradingSystemExecutor_0.Strategy = null;
             this.tradingSystemExecutor_0.StrategyName = "";
             this.tradingSystemExecutor_0.WorstTradeSimulation = false;
-            this.tradingSystemExecutor_0.ExternalSymbolFromDataSetRequested += new System.EventHandler<WealthLab.LoadSymbolFromDataSetEventArgs>(this.method_67);
-            this.tradingSystemExecutor_0.ExternalSymbolRequested += new System.EventHandler<WealthLab.LoadSymbolEventArgs>(this.method_34);
-            this.tradingSystemExecutor_0.SetParameterValues += new System.EventHandler<WealthLab.StrategyParameterEventArgs>(this.method_69);
+            this.tradingSystemExecutor_0.ExternalSymbolFromDataSetRequested += new System.EventHandler<WealthLab.LoadSymbolFromDataSetEventArgs>(this.externalSymbolFromDataSetRequestedEventHandler);
+            this.tradingSystemExecutor_0.ExternalSymbolRequested += new System.EventHandler<WealthLab.LoadSymbolEventArgs>(this.externalSymbolRequestedEventHandler);
+            this.tradingSystemExecutor_0.SetParameterValues += new System.EventHandler<WealthLab.StrategyParameterEventArgs>(this.setParameterValuesEventHandler);
             // 
             // streamingChartManager_0
             // 
@@ -1856,13 +1856,13 @@
             // 
             // barRange
             // 
-            this.barRange.BackColor = System.Drawing.Color.AliceBlue;
-            this.barRange.IsStreaming = false;
-            this.barRange.Location = new System.Drawing.Point(5, 152);
-            this.barRange.Name = "barRange";
-            this.barRange.Size = new System.Drawing.Size(95, 20);
-            this.barRange.TabIndex = 13;
-            this.barRange.Visible = false;
+            this.barRangeSelector.BackColor = System.Drawing.Color.AliceBlue;
+            this.barRangeSelector.IsStreaming = false;
+            this.barRangeSelector.Location = new System.Drawing.Point(5, 152);
+            this.barRangeSelector.Name = "barRange";
+            this.barRangeSelector.Size = new System.Drawing.Size(95, 20);
+            this.barRangeSelector.TabIndex = 13;
+            this.barRangeSelector.Visible = false;
             // 
             // posSize
             // 
@@ -1918,21 +1918,21 @@
 
         public void LoadDragDropIndicators(string indicatorString)
         {
-            this.indicatorDragDropManager_0.Clear();
+            this.indicatorDragDropManager.Clear();
             if ((indicatorString != "") && (indicatorString != null))
             {
                 MemoryStream stream = new MemoryStream(Convert.FromBase64String(indicatorString));
                 try
                 {
                     stream.Position = 0L;
-                    this.indicatorDragDropManager_0.ReadFromStream(stream);
+                    this.indicatorDragDropManager.ReadFromStream(stream);
                 }
                 finally
                 {
                     stream.Close();
                 }
             }
-            this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+            this.mniPushCode.Visible = this.indicatorDragDropManager.HasDragDroppedIndicators;
         }
 
         public void LoadWorkspaceItems(IList<string> items, int version)
@@ -1968,17 +1968,17 @@
             }
             if ((version >= 3) && (flag2 = bool.Parse(items[12])))
             {
-                if (this.alerts_0 == null)
+                if (this.alerts == null)
                 {
                     this.addAlertsPage();
                 }
-                this.alerts_0.AutoStage = flag2;
+                this.alerts.AutoStage = flag2;
             }
             int num = 13;
             if (version >= 4)
             {
                 int num2 = int.Parse(items[num++]) + num;
-                this.list_1.Clear();
+                this.list_PerfVisualizerPages1.Clear();
                 while (num < num2)
                 {
                     string str = items[num];
@@ -2032,11 +2032,11 @@
             }
             if (((version >= 7) && (num < items.Count)) && (flag = bool.Parse(items[num++])))
             {
-                if (this.alerts_0 == null)
+                if (this.alerts == null)
                 {
                     this.addAlertsPage();
                 }
-                this.alerts_0.EmailAlerts = flag;
+                this.alerts.EmailAlerts = flag;
             }
             if ((version >= 8) && (num < items.Count))
             {
@@ -2058,7 +2058,7 @@
         ///WYJ note, event is dispatched from Chart, see Chart.handleScaleChangeEvent()
         private void scaleChangeEventHandler(object sender, ScaleChangeEventArgs e)
         {
-            if (this.method_17(e.ChartScale))
+            if (this.checkIfCancelScaleChange(e.ChartScale))
             {
                 this.chart.CancelScaleChange();
             }
@@ -2231,7 +2231,7 @@
                     MessageBox.Show("The Child Strategies assigned to this Combined Strategy would create a never-ending circular reference if executed, please remove one or more of the Child Strategies.");
                     throw new Exception("CS Error");
                 }
-                base.Invoke(new Delegate43(this.method_14));
+                base.Invoke(new Delegate43(this.assignMaxToProgressCtrlForCombStrategy));
             }
             
             this.CSDataSource = this.DataSource;
@@ -2246,7 +2246,7 @@
                 tradingSystemExecutor_2.StrategyWindowID = this.strategyWindowId;
                 if (multiSymbol)
                 {
-                    tradingSystemExecutor_2.Execute(this.Strategy, this.WealthScript, bars_2, this.list_0);
+                    tradingSystemExecutor_2.Execute(this.Strategy, this.WealthScript, bars_2, this.list_SymbolsToTest);
                 }
                 else
                 {
@@ -2295,7 +2295,8 @@
             }
         }
 
-        private void method_14()
+        ///WYJ fix, original signature: private void method_14()
+        private void assignMaxToProgressCtrlForCombStrategy()
         {
             this.combinationStrategyBuilder_0.AssignMaxToProgressControl();
         }
@@ -2327,7 +2328,7 @@
             if (this.multiSymbolMode)
             {
                 object obj2 = str;
-                str = string.Concat(new object[] { obj2, " - ", this.DataSource.Name, " (", this.DataSource.Symbols.Count, " Symbols) " }) + this.barsLoader_0.BarDataScale.ToString();
+                str = string.Concat(new object[] { obj2, " - ", this.DataSource.Name, " (", this.DataSource.Symbols.Count, " Symbols) " }) + this.barsLoader.BarDataScale.ToString();
             }
             else if (this.Bars != null)
             {
@@ -2358,10 +2359,10 @@
                     this.mniReload.Enabled = false;
                     this.mniStockSplit.Enabled = false;
                 }
-                if (!this.method_17(this.BarDataScale) && (this.DataSource != null))
+                if (!this.checkIfCancelScaleChange(this.BarDataScale) && (this.DataSource != null))
                 {
                     this.dataSource_0 = this.DataSource;
-                    this.list_0.Clear();
+                    this.list_SymbolsToTest.Clear();
                     if (this.multiSymbolMode && !this.streaming)
                     {
                         this.dataSource_1 = this.DataSource;
@@ -2394,7 +2395,7 @@
                         this.tradingSystemExecutor_1.PosSize.StartingCapital = this.combinationStrategyBuilder_0.StartingEquity;
                         this.tradingSystemExecutor_1.PosSize.MarginFactor = this.combinationStrategyBuilder_0.MarginFactor;
                     }
-                    this.method_19().ConfigureBarsLoader(this.barsLoader_0);
+                    this.getDataRange_AdjustedIfStreaming().ConfigureBarsLoader(this.barsLoader);
                     this.chartRenderer.UpBarColor = MainModule.Instance.Renderer.UpBarColor;
                     this.chartRenderer.DownBarColor = MainModule.Instance.Renderer.DownBarColor;
                     if (this.editor != null)
@@ -2412,48 +2413,53 @@
             }
         }
 
+        ///WYJ fix, original signature: private bool method_17(WealthLab.BarDataScale barDataScale_0)
         ///WYJ note, if returns true, cancel scale change
-        private bool method_17(WealthLab.BarDataScale barDataScale_0)
+        private bool checkIfCancelScaleChange(WealthLab.BarDataScale barDataScale)
         {
             if (!this.IsStreaming)
             {
-                if (barDataScale_0.Scale != BarScale.Minute)
+                if (barDataScale.Scale != BarScale.Minute)
                 {
                     return false;
                 }
-                if ((!this.IsStreaming && MainModule.Instance.DataSources.OnDemandUpdatesEnabled) && ((this.DataSource != null) && this.DataSource.Provider.WarnUserAboutDelay(this.Symbol, barDataScale_0.Scale, barDataScale_0.BarInterval)))
+                if ((!this.IsStreaming && MainModule.Instance.DataSources.OnDemandUpdatesEnabled) 
+                    && ((this.DataSource != null) && this.DataSource.Provider.WarnUserAboutDelay(this.Symbol, barDataScale.Scale, barDataScale.BarInterval)))
                 {
-                    if ((this.barsLoader_0.StartDate == DateTime.MinValue) && (this.barsLoader_0.EndDate == DateTime.MaxValue))
+                    if ((this.barsLoader.StartDate == DateTime.MinValue) && (this.barsLoader.EndDate == DateTime.MaxValue))
                     {
-                        return this.method_18();
+                        return this.ifCancelScaleChangeBecauseDownloadIsNeeded();
                     }
                 }
                 else if ((((MainModule.Instance.DataSources.OnDemandUpdatesEnabled && (this.DataSource.Provider != null)) 
                     && ((this.DataSource.Provider.DataStore != null) && (this.Symbol != ""))) 
-                    && (!this.DataSource.Provider.DataStore.ContainsSymbol(this.Symbol, this.BarDataScale.Scale, this.BarDataScale.BarInterval) && 
-                    (((this.barsLoader_0.EndDate != DateTime.MaxValue) || (this.barsLoader_0.StartDate != DateTime.MinValue)) || (this.barsLoader_0.MaxBars > 0)))
+                    && (!this.DataSource.Provider.DataStore.ContainsSymbol(this.Symbol, this.BarDataScale.Scale, this.BarDataScale.BarInterval) 
+                    && (((this.barsLoader.EndDate != DateTime.MaxValue) || (this.barsLoader.StartDate != DateTime.MinValue)) || (this.barsLoader.MaxBars > 0)))
                     ) 
-                    && (this.DataSource.Provider.GetChunkCount(this.DataSource, this.Symbol, this.barsLoader_0.StartDate, this.barsLoader_0.EndDate) > 1))
+                    && (this.DataSource.Provider.GetChunkCount(this.DataSource, this.Symbol, this.barsLoader.StartDate, this.barsLoader.EndDate) > 1))
                 {
-                    return this.method_18();
+                    return this.ifCancelScaleChangeBecauseDownloadIsNeeded();
                 }
             }
             return false;
         }
 
-        private bool method_18()
+        ///WYJ fix, original signature: private bool method_18()
+        ///WYJ note, warn user downloading needed and delay may happen, return true if user click cancel downloading
+        ///downloading is actually done in MainForm.ChangeScale, which is called by ChartForm.scaleChangeEventHandler
+        private bool ifCancelScaleChangeBecauseDownloadIsNeeded()
         {
             if (!MainModule.Instance.Settings.Get("DataDownloadWarning", false))
             {
                 DontShowAgainForm form = new DontShowAgainForm("About to Download Data", "It may take a few minutes to download all of the data for this Symbol.  You can avoid delays by creating and updating a DataSet that contains the Symbols you want to maintain.  Press Cancel below to cancel the request.") {
                     CancelButtonVisible = true
                 };
-                bool flag = form.ShowDialog() == DialogResult.OK;
+                bool toDownload = form.ShowDialog() == DialogResult.OK;
                 if (form.DontShowAgain)
                 {
                     MainModule.Instance.Settings.Set("DataDownloadWarning", true);
                 }
-                if (!flag)
+                if (!toDownload)
                 {
                     if (this.Bars != null)
                     {
@@ -2468,15 +2474,17 @@
             return false;
         }
 
-        private BarDataRange method_19()
+        ///WYJ fix, original signature: private BarDataRange method_19()
+        ///WYJ note, there is a property DataRange, for more access of general data range value. This method is adjusted if it's streaming
+        private BarDataRange getDataRange_AdjustedIfStreaming()
         {
             if (this.IsStreaming)
             {
-                BarDataRange range = BarDataRange.Parse(this.barRange.DataRange.ToString());
+                BarDataRange range = BarDataRange.Parse(this.barRangeSelector.DataRange.ToString());
                 range.EndDate = DateTime.Now.Date.AddDays(1.0);
                 return range;
             }
-            return this.barRange.DataRange;
+            return this.barRangeSelector.DataRange;
         }
 
         private void showOrHideStatusOptimize()
@@ -2484,7 +2492,8 @@
             this.statusOptimize.Visible = ((!this.IsStreaming && (this.optimization == null)) && (this.Strategy != null)) && (this.Strategy.StrategyType != StrategyType.CombinedStrategy);
         }
 
-        private void method_20()
+        ///WYJ fix, original signature: private void method_20()
+        private void setCursorToWait()
         {
             this.tabChart.SelectedTab.Cursor = Cursors.WaitCursor;
         }
@@ -2495,28 +2504,28 @@
             Exception exception = null;
             try
             {
-                base.Invoke(new Delegate46(this.method_20));
-                this.list_0.Clear();
+                base.Invoke(new Delegate46(this.setCursorToWait));
+                this.list_SymbolsToTest.Clear();
                 if (this.streaming)
                 {
                     if (this.bars_1 == null)
                     {
-                        this.bars_1 = this.streamingChartManager_0.StartStreaming(this.DataSource, this.Symbol, this.BarDataScale, this.method_19());
+                        this.bars_1 = this.streamingChartManager_0.StartStreaming(this.DataSource, this.Symbol, this.BarDataScale, this.getDataRange_AdjustedIfStreaming());
                     }
                     this.initProgressForRunOnAllSymbols(this.bars_1);
-                    this.list_0.Add(this.bars_1);
+                    this.list_SymbolsToTest.Add(this.bars_1);
                     this.increaseProgressForRunOnAllSymbols();
                 }
                 else if (this.multiSymbolMode)
                 {
                     foreach (string str in this.dataSource_0.Symbols)
                     {
-                        WealthLab.Bars data = this.barsLoader_0.GetData(this.dataSource_0, str);
+                        WealthLab.Bars data = this.barsLoader.GetData(this.dataSource_0, str);
                         if ((this.Bars != null) && (this.Bars.Symbol == data.Symbol))
                         {
                             this.initProgressForRunOnAllSymbols(data);
                         }
-                        this.list_0.Add(data);
+                        this.list_SymbolsToTest.Add(data);
                         this.increaseProgressForRunOnAllSymbols();
                         if (this.cancel)
                         {
@@ -2526,9 +2535,9 @@
                 }
                 else
                 {
-                    WealthLab.Bars bars = this.barsLoader_0.GetData(this.dataSource_0, this.Symbol);
+                    WealthLab.Bars bars = this.barsLoader.GetData(this.dataSource_0, this.Symbol);
                     this.initProgressForRunOnAllSymbols(bars);
-                    this.list_0.Add(bars);
+                    this.list_SymbolsToTest.Add(bars);
                     this.increaseProgressForRunOnAllSymbols();
                 }
                 if ((this.WealthScript != null || (this.Strategy != null && this.Strategy.StrategyType == StrategyType.CombinedStrategy)) && !this.cancel)
@@ -2543,7 +2552,7 @@
                     }
                 }
                 this.increaseProgressForRunOnAllSymbols();
-                this.barsLoader_0.OverrideOnDemand = false;
+                this.barsLoader.OverrideOnDemand = false;
             }
             catch (Exception exception2)
             {
@@ -2565,11 +2574,11 @@
         ///WYJ fix, original signature: private void method_22()
         private void updateStatusAndResult()
         {
-            int num;
-            bool flag;
-            PositionType positionType = PositionType.Long;
-            bool flag1;
-            bool flag2;
+            ///int num;
+            ///bool flag;
+            ///PositionType positionType = PositionType.Long;
+            ///bool flag1;
+            ///bool flag2;
             this.btnRunAllCancel.Enabled = false;
             if (!this.multiSymbolMode)
             {
@@ -2577,7 +2586,7 @@
             }
             else
             {
-                this.lblRunAllStatus.Text = string.Concat("Tested on ", this.list_0.Count, " Symbols");
+                this.lblRunAllStatus.Text = string.Concat("Tested on ", this.list_SymbolsToTest.Count, " Symbols");
             }
             this.progRunAll.Value = 0;
             this.progRunAll.Enabled = false;
@@ -2587,7 +2596,7 @@
             }
             if (this.chart.Bars != null)
             {
-                this.indicatorDragDropManager_0.CreateDragDropIndicators();
+                this.indicatorDragDropManager.CreateDragDropIndicators();
                 this.drawingObjectManager_0.LoadDrawingObjects(this.chart.Bars);
             }
             if (this.chartRenderer.PricePane != null && this.chartRenderer.PricePane.LogScale != this.chartRenderer.LogScale)
@@ -2606,9 +2615,9 @@
             {
                 DialogResult dialogResult = MessageBox.Show("Strategy code must set RiskStopLevel in order to use Maximum Risk position size.");
             }
-            if (this.alerts_0 != null)
+            if (this.alerts != null)
             {
-                this.alerts_0.Clear();
+                this.alerts.Clear();
             }
             if (this.WealthScript != null || this.combinationStrategyBuilder_0 != null)
             {
@@ -2639,20 +2648,20 @@
                     this.setStatusLabelForeColors(results.ProfitPerBar, resultsBuyHold.ProfitPerBar);
                 }
                 this.addAlertsAndPerformanceVisualizerPages();
-                this.list_2.Clear();
-                foreach (TabPage list1 in this.list_1)
+                this.list_PerfVisualizerPages2.Clear();
+                foreach (TabPage page in this.list_PerfVisualizerPages1)
                 {
-                    UserControl item = list1.Controls[0] as UserControl;
+                    UserControl item = page.Controls[0] as UserControl;
                     IPerformanceVisualizer performanceVisualizer = item as IPerformanceVisualizer;
-                    flag = (!this.multiSymbolMode ? (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) > 0 : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) > 0);
+                    bool flag = (!this.multiSymbolMode ? (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.SingleSymbol) > 0 : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.MultiSymbol) > 0);
                     if (!this.posSize.PositionSize.RawProfitMode)
                     {
-                        flag1 = (!flag ? false : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) > 0);
+                        bool flag1 = (!flag ? false : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.PortfolioSim) > 0);
                         flag = flag1;
                     }
                     else
                     {
-                        flag2 = (!flag ? false : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.RawProfit) > 0);
+                        bool flag2 = (!flag ? false : (int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.RawProfit) > 0);
                         flag = flag2;
                     }
                     if ((int)(performanceVisualizer.AppliesTo & VisualizerAppliesTo.CombinationStrategy) > 0 && this.Strategy.StrategyType != StrategyType.CombinedStrategy)
@@ -2670,7 +2679,8 @@
                             if (attribute is PVComboProhibitor)
                             {
                                 flag = false;
-                                goto Label0;
+                                ///goto Label0;   ///WYJ fix, simplify the flow
+                                break;
                             }
                             else
                             {
@@ -2678,19 +2688,17 @@
                             }
                         }
                     }
-                Label0:
-                    if (!flag)
+                    if (flag)
                     {
-                        continue;
+                        this.list_PerfVisualizerPages2.Add(page);
                     }
-                    this.list_2.Add(list1);
                 }
-                num = (this.Strategy == null || this.Strategy.StrategyType != StrategyType.Compiled ? 4 : 3);
+                int nonPerfVisualizerPageCount = (this.Strategy == null || this.Strategy.StrategyType != StrategyType.Compiled ? 4 : 3);
                 bool flag3 = false;
-                int num2 = 0;
+                int optimizationPageCount = 0;
                 if (this.optimization != null)
                 {
-                    num2 = 1;
+                    optimizationPageCount = 1;
                     IEnumerator enumerator = this.tabChart.TabPages.GetEnumerator();
                     try
                     {
@@ -2702,7 +2710,7 @@
                                 if (current.Text == "Optimization" && current != this.tabChart.TabPages[this.tabChart.TabPages.Count - 1])
                                 {
                                     flag3 = true;
-                                    num++;
+                                    nonPerfVisualizerPageCount++;
                                     break;
                                 }
                             }
@@ -2721,7 +2729,7 @@
                         }
                     }
                 }
-                bool tabCount = this.tabChart.TabCount != this.list_2.Count + num + num2;
+                bool tabCount = this.tabChart.TabCount != this.list_PerfVisualizerPages2.Count + nonPerfVisualizerPageCount + optimizationPageCount;
                 if (flag3)
                 {
                     tabCount = true;
@@ -2729,9 +2737,9 @@
                 if (!tabCount)
                 {
                     int num3 = 0;
-                    while (num3 < this.list_2.Count)
+                    while (num3 < this.list_PerfVisualizerPages2.Count)
                     {
-                        if (this.list_2[num3] == this.tabChart.TabPages[num3 + num])
+                        if (this.list_PerfVisualizerPages2[num3] == this.tabChart.TabPages[num3 + nonPerfVisualizerPageCount])
                         {
                             num3++;
                         }
@@ -2746,7 +2754,7 @@
                 if (tabCount)
                 {
                     List<TabPage> tabPages = new List<TabPage>();
-                    for (int i = 0; i < num; i++)
+                    for (int i = 0; i < nonPerfVisualizerPageCount; i++)
                     {
                         if (this.tabChart.TabPages[i].Text != "Optimization")
                         {
@@ -2759,9 +2767,9 @@
                     {
                         this.tabChart.TabPages.Add(tabPages[j]);
                     }
-                    foreach (TabPage list2 in this.list_2)
+                    foreach (TabPage page in this.list_PerfVisualizerPages2)
                     {
-                        this.tabChart.TabPages.Add(list2);
+                        this.tabChart.TabPages.Add(page);
                     }
                     if (this.optimization != null)
                     {
@@ -2825,12 +2833,12 @@
                     alert.DataRange = this.DataRange;
                     alert.PosSize = this.PositionSize;
                 }
-                this.alerts_0.Populate(results);
+                this.alerts.Populate(results);
                 if (results.Alerts.Count > 0)
                 {
                     this.playSoundForAlert();
                 }
-                if (this.alerts_0.AutoStage && this.IsStreaming)
+                if (this.alerts.AutoStage && this.IsStreaming)
                 {
                     if (results.Alerts.Count <= 0)
                     {
@@ -2844,7 +2852,7 @@
                         MainModule.Instance.TradeManager.AddAlerts(results.Alerts, MainModule.Instance.ShouldOrderBePlaced(results.Alerts[0]), true);
                     }
                 }
-                if (this.alerts_0.EmailAlerts && this.IsStreaming && results.Alerts.Count > 0)
+                if (this.alerts.EmailAlerts && this.IsStreaming && results.Alerts.Count > 0)
                 {
                     MainModule.Instance.emailAlerts(results.Alerts);
                 }
@@ -2900,6 +2908,8 @@
                 }
                 this.tradingSystemExecutor_1.RiskStopLevelNotSet = false;
                 this.tradingSystemExecutor_1.PosSize = this.posSize.PositionSize;
+
+                PositionType positionType = PositionType.Long;
                 if (tradeType != TradeType.Buy)
                 {
                     if (tradeType == TradeType.Sell)   ///WYJ fix, simplify the flow
@@ -2918,13 +2928,13 @@
                 }
                 this.addAlertsPage();
                 positionSize.Account = MainModule.Instance.DefaultAccountNumber;
-                this.alerts_0.AddAlert(positionSize);
+                this.alerts.AddAlert(positionSize);
                 this.playSoundForAlert();
-                if (this.alerts_0.AutoStage && this.IsStreaming)
+                if (this.alerts.AutoStage && this.IsStreaming)
                 {
                     MainModule.Instance.TradeManager.AddAlert(positionSize, MainModule.Instance.ShouldOrderBePlaced(positionSize), true);
                 }
-                if (!this.alerts_0.EmailAlerts || !this.IsStreaming)
+                if (!this.alerts.EmailAlerts || !this.IsStreaming)
                 {
                     continue;
                 }
@@ -2934,9 +2944,9 @@
             {
                 MessageBox.Show("Tradable Trendlines cannot use Maximum Risk position size.");
             }
-            if (this.alerts_0 != null)
+            if (this.alerts != null)
             {
-                this.alerts_0.UpdateStatus();
+                this.alerts.UpdateStatus();
             }
             this.enableControls(true);
             if (this.multiSymbolMode && this.tabChart.SelectedIndex == 0)
@@ -3090,9 +3100,9 @@
                 catch (ArgumentOutOfRangeException)
                 {
                 }
-                if ((this.progRunAll.Value < this.DataSource.Symbols.Count) && (this.list_0[this.list_0.Count - 1] != null))
+                if ((this.progRunAll.Value < this.DataSource.Symbols.Count) && (this.list_SymbolsToTest[this.list_SymbolsToTest.Count - 1] != null))
                 {
-                    this.lblRunAllStatus.Text = "Collecting Data ... " + this.list_0[this.list_0.Count - 1].Symbol;
+                    this.lblRunAllStatus.Text = "Collecting Data ... " + this.list_SymbolsToTest[this.list_SymbolsToTest.Count - 1].Symbol;
                 }
                 else if (this.progRunAll.Value == this.DataSource.Symbols.Count)
                 {
@@ -3113,7 +3123,8 @@
             this.autoResetEvent_0.WaitOne();
         }
 
-        private void method_29(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_29(object sender, EventArgs e)
+        private void drawingObjectOperationCompletedEventHandler(object sender, EventArgs e)
         {
             this.MyMainForm.ClearDrawingObjectSelectedTool();
         }
@@ -3146,7 +3157,7 @@
                 TabPage item = new TabPage(iperformanceVisualizer_0.TabText);
                 item.Controls.Add(control);
                 item.Tag = control;
-                this.list_1.Add(item);
+                this.list_PerfVisualizerPages1.Add(item);
             }
         }
 
@@ -3185,7 +3196,8 @@
             this.updateProgressForRunOnAllSymbols(-100, e.Exception);
         }
 
-        internal void method_34(object sender, LoadSymbolEventArgs e)
+        ///WYJ fix, original signature: internal void method_34(object sender, LoadSymbolEventArgs e)
+        internal void externalSymbolRequestedEventHandler(object sender, LoadSymbolEventArgs e)
         {
             e.SymbolData = MainModule.Instance.LoadExternalSymbol(e.Symbol, e.Scale, e.BarInterval, this.btnStreaming.Checked);
         }
@@ -3299,7 +3311,7 @@
             }
             this.NeedSave = true;
             this.drawingObjectManager_0.LoadDrawingObjects(this.chart.Bars);
-            this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+            this.mniPushCode.Visible = this.indicatorDragDropManager.HasDragDroppedIndicators;
         }
 
         ///WYJ fix, original signature: private void method_43()
@@ -3316,7 +3328,7 @@
             }
             catch (Exception exception)
             {
-                base.Invoke(new Delegate44(this.method_45), new object[] { exception });
+                base.Invoke(new Delegate44(this.onReloadException), new object[] { exception });
             }
         }
 
@@ -3331,7 +3343,8 @@
             this.GoButtonPressed(this.Symbol, true);
         }
 
-        private void method_45(Exception exception_0)
+        ///WYJ fix, original signature: private void method_45(Exception exception_0)
+        private void onReloadException(Exception exception_0)
         {
             this.Cursor = Cursors.Default;
             this.chart.Mode = ChartMode.Normal;
@@ -3374,7 +3387,8 @@
             this.Strategy.PanelSize = this.chartRenderer.SavePaneSizes();
         }
 
-        private void method_48()
+        ///WYJ fix, original name: private void method_48()
+        private void setStrategyIndicators()
         {
             string str;
             this.saveDragDropIndicatorsToString(out str);
@@ -3387,7 +3401,7 @@
             MemoryStream stream = new MemoryStream();
             try
             {
-                this.indicatorDragDropManager_0.SaveToStream(stream);
+                this.indicatorDragDropManager.SaveToStream(stream);
                 stream.Position = 0L;
                 byte[] buffer = new byte[stream.Length];
                 stream.Read(buffer, 0, (int) stream.Length);
@@ -3402,8 +3416,8 @@
         ///WYJ fix, original signature: internal void method_5()
         internal void clearDragDropIndicators()
         {
-            this.indicatorDragDropManager_0.Clear();
-            this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+            this.indicatorDragDropManager.Clear();
+            this.mniPushCode.Visible = this.indicatorDragDropManager.HasDragDroppedIndicators;
             this.chart.DoInvalidate();
             if (DataWindowForm.Instance != null)
             {
@@ -3427,24 +3441,26 @@
         ///WYJ fix, original signature: private void method_51()
         private void addAlertsPage()
         {
-            if (this.alerts_0 == null)
+            if (this.alerts == null)
             {
                 this.tabChart.TabPages.Add("Alerts");
-                this.alerts_0 = new Alerts(this);
-                this.alerts_0.Page = this.tabChart.TabPages[this.tabChart.TabPages.Count - 1];
-                this.alerts_0.IsStreaming = this.IsStreaming;
-                this.alerts_0.Dock = DockStyle.Fill;
+                this.alerts = new Alerts(this);
+                this.alerts.Page = this.tabChart.TabPages[this.tabChart.TabPages.Count - 1];
+                this.alerts.IsStreaming = this.IsStreaming;
+                this.alerts.Dock = DockStyle.Fill;
                 this.tabPage_0 = this.tabChart.TabPages[this.tabChart.TabCount - 1];
-                this.tabPage_0.Controls.Add(this.alerts_0);
+                this.tabPage_0.Controls.Add(this.alerts);
             }
         }
 
-        private void method_52(object sender, EventArgs e)
+        ///WYJ fix, original signature: private void method_52(object sender, EventArgs e)
+        private void clearDebugWindowEventHandler(object sender, EventArgs e)
         {
-            base.Invoke(new Delegate51(this.method_53));
+            base.Invoke(new Delegate51(this.doClearDebugWindow));
         }
 
-        private void method_53()
+        ///WYJ fix, original signature: private void method_53()
+        private void doClearDebugWindow()
         {
             if (DebugForm.Instance != null)
             {
@@ -3452,7 +3468,8 @@
             }
         }
 
-        private Bitmap method_54()
+        ///WYJ fix, original signature: private Bitmap method_54()
+        private Bitmap getChartBitmap()
         {
             return this.chart.GetChartBitmap();
         }
@@ -3511,19 +3528,19 @@
         {
             PageSettings pageSettings = new PageSettings();
             this.GetPageSettings(ref pageSettings);
-            DataObject obj2 = new DataObject();
-            obj2.SetData(PrintReport.fmtBaseTitle.Name, MainModule.Instance.AuthProvider.ApplicationName);
+            DataObject obj = new DataObject();
+            obj.SetData(PrintReport.fmtBaseTitle.Name, MainModule.Instance.AuthProvider.ApplicationName);
             if (this.Strategy != null)
             {
-                obj2.SetData(PrintReport.fmtTitle.Name, "Strategy");
+                obj.SetData(PrintReport.fmtTitle.Name, "Strategy");
             }
             else
             {
-                obj2.SetData(PrintReport.fmtTitle.Name, "Chart");
+                obj.SetData(PrintReport.fmtTitle.Name, "Chart");
             }
-            this.setDataObjectForPrintingChart(ref obj2);
-            obj2.SetData(PrintReport.fmtGraphic.Name, this.method_54());
-            PrintReport report = new PrintReport(obj2, true) {
+            this.setDataObjectForPrintingChart(ref obj);
+            obj.SetData(PrintReport.fmtGraphic.Name, this.getChartBitmap());
+            PrintReport report = new PrintReport(obj, true) {
                 BasePrintTitle = MainModule.Instance.AuthProvider.ApplicationName
             };
             report.UseDefaultDisclosure();
@@ -3811,7 +3828,7 @@
         
         IL_4CC:
             this.DataSource.Provider.SaveEditedSymbolDataFile(this.DataSource, bars);
-            this.barsLoader_0.OverrideOnDemand = true;
+            this.barsLoader.OverrideOnDemand = true;
             this.GoButtonPressed(this.Symbol, true);
         }
 
@@ -3819,7 +3836,7 @@
         ///WYJ fix, original signature: internal void method_6()
         internal void pushCode()
         {
-            if (this.indicatorDragDropManager_0.HasDragDroppedIndicators)
+            if (this.indicatorDragDropManager.HasDragDroppedIndicators)
             {
                 if (!MainModule.Instance.Settings.Get("DontShowPushIndicatorWarning", false))
                 {
@@ -3844,7 +3861,7 @@
                             Strategy strategy = new Strategy();
                             strategy.StrategyType = StrategyType.Script;
                             strategy.Code = this.builder_0.GenerateCode();
-                            strategy.Code = this.indicatorDragDropManager_0.PushIndicatorsCode(strategy.Code);
+                            strategy.Code = this.indicatorDragDropManager.PushIndicatorsCode(strategy.Code);
                             ChartForm chartForm = this.MyMainForm.CreateNewStrategyWindow(true);
                             chartForm.Strategy = strategy;
                             chartForm.Show();
@@ -3866,13 +3883,13 @@
                     strategyTemplateCode.StrategyType = StrategyType.Script;
                     strategyTemplateCode.Code = MainModule.Instance.StrategyTemplateCode;
                     this.strategy = strategyTemplateCode;
-                    this.method_48();
+                    this.setStrategyIndicators();
                     this.Strategy = strategyTemplateCode;
                 }
-                string str = this.indicatorDragDropManager_0.PushIndicatorsCode(this.editor.Code);
+                string str = this.indicatorDragDropManager.PushIndicatorsCode(this.editor.Code);
                 if (string.Compare(str, this.editor.Code) != 0)
                 {
-                    this.indicatorDragDropManager_0.Clear();
+                    this.indicatorDragDropManager.Clear();
                     this.editor.Code = str;
                     this.CompileSource();
                     this.GoButtonPressed(this.Symbol, true);
@@ -3880,7 +3897,7 @@
                     this.NeedSave = true;
                     this.ParametersNeedSave = true;
                 }
-                this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+                this.mniPushCode.Visible = this.indicatorDragDropManager.HasDragDroppedIndicators;
                 return;
             }
             else
@@ -4409,25 +4426,30 @@
             return -1;
         }
 
-        private bool method_66()
+        ///WYJ fix, original signature: private bool method_66()
+        private bool noData()
         {
-            return (((this.DataSource == null) && string.IsNullOrEmpty(this.Symbol)) || (this.Bars == null));
+            return ((this.DataSource == null && string.IsNullOrEmpty(this.Symbol)) || this.Bars == null);
         }
 
-        internal void method_67(object sender, LoadSymbolFromDataSetEventArgs e)
+        ///WYJ fix, original signature: internal void method_67(object sender, LoadSymbolFromDataSetEventArgs e)
+        ///ExternalSymbolFromDataSetRequested
+        internal void externalSymbolFromDataSetRequestedEventHandler(object sender, LoadSymbolFromDataSetEventArgs e)
         {
             e.Bars = MainModule.Instance.LoadExternalSymbol(e.DataSetName, e.Symbol);
         }
 
-        internal void method_68()
+        ///WYJ fix, original signature: internal void method_68()
+        internal void updateEditorForParameters()
         {
             if (this.editor != null)
             {
-                this.editor.method_1(this.WealthScript);
+                this.editor.updateForParameters(this.WealthScript);
             }
         }
 
-        private void method_69(object sender, StrategyParameterEventArgs e)
+        ///WYJ fix, original signature: private void method_69(object sender, StrategyParameterEventArgs e)
+        private void setParameterValuesEventHandler(object sender, StrategyParameterEventArgs e)
         {
             if ((!this.IsOptimizing && !this.SliderValueChanging) && this.btnPV.Checked)
             {
@@ -4464,13 +4486,14 @@
         {
             if ((this.Bars != null) && (this.chartRenderer.PricePane != null))
             {
-                this.indicatorDragDropManager_0.ProcessDroppedFundamentalItem(draggedFundamentalItem_0);
-                this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+                this.indicatorDragDropManager.ProcessDroppedFundamentalItem(draggedFundamentalItem_0);
+                this.mniPushCode.Visible = this.indicatorDragDropManager.HasDragDroppedIndicators;
                 this.NeedSave = true;
             }
         }
 
-        private void method_72(object sender, ExceptionEventArgs e)
+        ///WYJ fix, original signature: private void method_72(object sender, ExceptionEventArgs e)
+        private void chartExceptionEventHandler(object sender, ExceptionEventArgs e)
         {
             if (ilog_0.IsErrorEnabled)
             {
@@ -4486,7 +4509,8 @@
             e.Strategy.Tag = wealthScriptObject;
         }
 
-        private void method_74(object sender, DataSourceLookupEventArgs e)
+        ///WYJ fix, original signature: private void method_74(object sender, DataSourceLookupEventArgs e)
+        private void lookupDataSourceEventHandler(object sender, DataSourceLookupEventArgs e)
         {
             e.DataSource = MainModule.Instance.DataSources.FindDataSource(e.DataSourceName);
         }
@@ -4500,9 +4524,9 @@
         ///WYJ fix, original signature: private void method_8()
         private void addAlertsAndPerformanceVisualizerPages()
         {
-            if (!this.bool_2)
+            if (!this.resultPagesAdded)
             {
-                this.bool_2 = true;
+                this.resultPagesAdded = true;
                 this.addAlertsPage();
                 if (!this.bool_13)
                 {
@@ -4578,7 +4602,7 @@
                     selectedDrawingObject.RegisterExtendedBehaviors(this);
                 }
             }
-            this.mniDeleteIndicator.Visible = (this.indicatorDragDropManager_0.SelectedIndicator != null) && this.indicatorDragDropManager_0.SelectedIndicator.DragAndDrop;
+            this.mniDeleteIndicator.Visible = (this.indicatorDragDropManager.SelectedIndicator != null) && this.indicatorDragDropManager.SelectedIndicator.DragAndDrop;
             this.mniIndicatorProperties.Visible = this.mniDeleteIndicator.Visible;
             this.sepIndicators.Visible = this.mniDeleteIndicator.Visible;
         }
@@ -4764,10 +4788,10 @@
 
         private void mniDeleteIndicator_Click(object sender, EventArgs e)
         {
-            PlottedIndicator selectedIndicator = this.indicatorDragDropManager_0.SelectedIndicator;
+            PlottedIndicator selectedIndicator = this.indicatorDragDropManager.SelectedIndicator;
             if (selectedIndicator != null)
             {
-                this.indicatorDragDropManager_0.RemoveIndicator(selectedIndicator);
+                this.indicatorDragDropManager.RemoveIndicator(selectedIndicator);
                 this.chart.DoInvalidate();
                 if (MainModule.Instance.Settings.Get("SoundsIndicators", true))
                 {
@@ -4779,7 +4803,7 @@
                     this.updateDataWindow(this.barNum, false, true);
                 }
             }
-            this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+            this.mniPushCode.Visible = this.indicatorDragDropManager.HasDragDroppedIndicators;
         }
 
         private void mniDrawingObjectProperties_Click(object sender, EventArgs e)
@@ -4793,8 +4817,8 @@
 
         private void mniIndicatorProperties_Click(object sender, EventArgs e)
         {
-            PlottedIndicator selectedIndicator = this.indicatorDragDropManager_0.SelectedIndicator;
-            if ((selectedIndicator != null) && this.indicatorDragDropManager_0.EditIndicator(selectedIndicator))
+            PlottedIndicator selectedIndicator = this.indicatorDragDropManager.SelectedIndicator;
+            if ((selectedIndicator != null) && this.indicatorDragDropManager.EditIndicator(selectedIndicator))
             {
                 this.chart.DoInvalidate();
                 this.NeedSave = true;
@@ -4874,15 +4898,15 @@
         {
             if ((this.Bars != null) && (this.chartRenderer.PricePane != null))
             {
-                this.indicatorDragDropManager_0.ProcessDroppedIndicatorHelper(helper, this.chartRenderer.PricePane);
-                this.mniPushCode.Visible = this.indicatorDragDropManager_0.HasDragDroppedIndicators;
+                this.indicatorDragDropManager.ProcessDroppedIndicatorHelper(helper, this.chartRenderer.PricePane);
+                this.mniPushCode.Visible = this.indicatorDragDropManager.HasDragDroppedIndicators;
                 this.NeedSave = true;
             }
         }
 
         private void popupChart_Opening(object sender, CancelEventArgs e)
         {
-            if (this.method_66())
+            if (this.noData())
             {
                 e.Cancel = true;
             }
@@ -4899,7 +4923,7 @@
             {
                 if (this.multiSymbolMode)
                 {
-                    if (this.list_0 != null)
+                    if (this.list_SymbolsToTest != null)
                     {
                         this.enableControls(false);
                         this.Cursor = Cursors.WaitCursor;
@@ -4961,9 +4985,9 @@
             }
             else if (this.tabChart.SelectedTab.Text.Contains("Alert"))
             {
-                if (this.alerts_0 != null)
+                if (this.alerts != null)
                 {
-                    this.alerts_0.Print();
+                    this.alerts.Print();
                 }
             }
             else if ((this.Strategy != null) && (this.SelectedVisualizer != null))
@@ -4995,9 +5019,9 @@
                     }
                     else if (page.Text.Contains("Alert"))
                     {
-                        if (this.alerts_0 != null)
+                        if (this.alerts != null)
                         {
-                            this.alerts_0.Print();
+                            this.alerts.Print();
                         }
                     }
                     else if (this.strategy != null)
@@ -5168,7 +5192,7 @@
                         }
                         this.builder_0.PushRulesToStrategy(this.Strategy);
                     }
-                    this.method_48();
+                    this.setStrategyIndicators();
                     this.savePanelSize();
                     this.RememberStrategySettings();
                     if (this.ParametersNeedSave && MainModule.Instance.Settings.Get("RememberParameterSliders", false))
@@ -5208,7 +5232,7 @@
                         MainModule.Instance.Strategies.Strategies.Add(strategy3);
                     }
                     this.strategy = item;
-                    this.method_48();
+                    this.setStrategyIndicators();
                     this.savePanelSize();
                     this.Strategy = item;
                     flag = true;
@@ -5261,7 +5285,7 @@
                 this.description_0.Strategy = this.strategy;
                 MainModule.Instance.AddStrategyToMRU(this.Strategy);
                 this.RememberStrategySettings();
-                this.method_48();
+                this.setStrategyIndicators();
                 this.savePanelSize();
                 MainModule.Instance.Strategies.SaveStrategy(this.strategy, form.FolderName, form.NetworkPath);
                 if (this.ParametersNeedSave && MainModule.Instance.Settings.Get("RememberParameterSliders", false))
@@ -5310,8 +5334,8 @@
             }
             items.Add(this.chartRenderer.LogScale.ToString());
             items.Add(this.AutoStage.ToString());
-            items.Add(this.list_2.Count.ToString());
-            foreach (TabPage page in this.list_2)
+            items.Add(this.list_PerfVisualizerPages2.Count.ToString());
+            foreach (TabPage page in this.list_PerfVisualizerPages2)
             {
                 UserControl control = page.Controls[0] as UserControl;
                 IPerformanceVisualizer visualizer = control as IPerformanceVisualizer;
@@ -5555,17 +5579,17 @@
 
         public void ShowAutoTradingState(AutoTradingMode mode)
         {
-            if (this.alerts_0 != null)
+            if (this.alerts != null)
             {
-                this.alerts_0.ShowAutoTradingState(mode);
+                this.alerts.ShowAutoTradingState(mode);
             }
         }
 
         public void ShowLoggedInState(bool loggedIn)
         {
-            if (this.alerts_0 != null)
+            if (this.alerts != null)
             {
-                this.alerts_0.ShowLoggedInState(loggedIn);
+                this.alerts.ShowLoggedInState(loggedIn);
             }
         }
 
@@ -5666,9 +5690,9 @@
                 this.ShowMultiSymbolControls(false);
             }
             this.chart.MultiSymbolMode = this.multiSymbolMode;
-            if (this.multiSymbolMode)
+            if (this.multiSymbolMode)   ///WYJ note, SymbolSelected is triggered by DataSourceTreeView.OnNodeMouseClick(), which triggers SymbolSelected only when it's not multiple symbol case, so this branch should never be reached
             {
-                using (List<WealthLab.Bars>.Enumerator enumerator = this.list_0.GetEnumerator())
+                using (List<WealthLab.Bars>.Enumerator enumerator = this.list_SymbolsToTest.GetEnumerator())
                 {
                     WealthLab.Bars current;
                     while (enumerator.MoveNext())
@@ -5684,7 +5708,7 @@
                             }
                             this.executeStrategy(this.tradingSystemExecutor_0, current, false);
                             this.tradingSystemExecutor_0.Clear();
-                            this.indicatorDragDropManager_0.CreateDragDropIndicators();
+                            this.indicatorDragDropManager.CreateDragDropIndicators();
                             this.chart.DoInvalidate();
                             this.updateTitle();
                             return;
@@ -5763,7 +5787,7 @@
         {
             get
             {
-                if (this.method_66())
+                if (this.noData())
                 {
                     return false;
                 }
@@ -5781,11 +5805,11 @@
         {
             get
             {
-                if (this.alerts_0 == null)
+                if (this.alerts == null)
                 {
                     return false;
                 }
-                return this.alerts_0.AutoStage;
+                return this.alerts.AutoStage;
             }
             set
             {
@@ -5800,11 +5824,11 @@
         {
             get
             {
-                return this.barsLoader_0.BarDataScale;
+                return this.barsLoader.BarDataScale;
             }
             set
             {
-                this.barsLoader_0.BarDataScale = value;
+                this.barsLoader.BarDataScale = value;
             }
         }
 
@@ -5929,12 +5953,12 @@
         {
             get
             {
-                return BarDataRange.Parse(this.barRange.DataRange.ToString());
+                return BarDataRange.Parse(this.barRangeSelector.DataRange.ToString());
             }
             set
             {
                 BarDataRange range = BarDataRange.Parse(value.ToString());
-                this.barRange.DataRange = range;
+                this.barRangeSelector.DataRange = range;
             }
         }
 
@@ -5981,11 +6005,11 @@
         {
             get
             {
-                if (this.alerts_0 == null)
+                if (this.alerts == null)
                 {
                     return false;
                 }
-                return this.alerts_0.EmailAlerts;
+                return this.alerts.EmailAlerts;
             }
             set
             {

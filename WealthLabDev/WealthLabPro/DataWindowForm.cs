@@ -27,7 +27,8 @@
             MainModule.Instance.Settings.Set("DataWindowForm.Column1.Width", this.lvDataWindow.Columns[1].Width);
             MainModule.Instance.Settings.SaveSettings();
             Instance = null;
-            smethod_0();
+            ///smethod_0();   ///WYJ fix, inline this method call
+            MainModule.Instance.FirstMainForm.checkUncheckDataPanelMniAndBtn();
         }
 
         private void DataWindowForm_Load(object sender, EventArgs e)
@@ -36,7 +37,8 @@
             MainModule.Instance.Settings.Get(this, "DataWindowForm");
             this.lvDataWindow.Columns[0].Width = MainModule.Instance.Settings.Get("DataWindowForm.Column0.Width", this.lvDataWindow.Columns[0].Width);
             this.lvDataWindow.Columns[1].Width = MainModule.Instance.Settings.Get("DataWindowForm.Column1.Width", this.lvDataWindow.Columns[1].Width);
-            smethod_0();
+            ///smethod_0();   ///WYJ fix, inline this method call
+            MainModule.Instance.FirstMainForm.checkUncheckDataPanelMniAndBtn();
         }
 
         protected override void Dispose(bool disposing)
@@ -134,10 +136,12 @@
             }
         }
 
+        ///WYJ fix, method inlined, this method is never used anymore
+        /*
         private static void smethod_0()
         {
-            MainModule.Instance.FirstMainForm.method_47();
-        }
+            MainModule.Instance.FirstMainForm.checkUncheckDataPanelMniAndBtn();
+        } */
     }
 }
 

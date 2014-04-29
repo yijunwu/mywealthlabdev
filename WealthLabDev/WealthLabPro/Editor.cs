@@ -459,7 +459,8 @@
             }
         }
 
-        internal void method_1(WealthScript wealthScript_0)
+        ///WYJ fix, original signature: internal void method_1(WealthScript wealthScript_0)
+        internal void updateForParameters(WealthScript wealthScript_0)
         {
             bool flag;
             int num6;
@@ -510,7 +511,7 @@
                         current = enumerator4.Current;
                         if (current.Trim().StartsWith("public class"))
                         {
-                            ///goto  Label_0175; ///WYJ fix, simplify the flow 
+                            ///goto  Label_0175;   ///WYJ fix, simplify the flow 
                             str7 = current.Trim().Split(new char[] { ' ' })[2];
                             index = num4;
                             break;
