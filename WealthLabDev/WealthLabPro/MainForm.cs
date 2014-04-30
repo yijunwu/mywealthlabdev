@@ -6710,15 +6710,15 @@
             };
             switch (form.ShowDialog())
             {
-                case DialogResult.Yes:
+                case DialogResult.Yes:   ///New strategy from code
                     this.CreateNewStrategyWindow(true).Show();
                     return;
 
-                case DialogResult.No:
+                case DialogResult.No:   ///New strategy from rules
                     this.CreateNewStrategyWindow(false).Show();
                     break;
 
-                case DialogResult.OK:
+                case DialogResult.OK:   ///open existing strategy
                     foreach (Strategy strategy in form.StrategiesSelected)
                     {
                         Strategy strategy2;
@@ -6743,10 +6743,10 @@
                         {
                             strategy2 = strategy;
                         }
-                        ChartForm form2 = this.OpenStrategyWindow(strategy2);
+                        ChartForm chartForm = this.OpenStrategyWindow(strategy2);
                         MainModule.Instance.Strategies.Strategies.Add(strategy2);
-                        form2.Show();
-                        MainModule.Instance.Strategies.LoadStrategyParameters(form2.Strategy, form2.WealthScript);
+                        chartForm.Show();
+                        MainModule.Instance.Strategies.LoadStrategyParameters(chartForm.Strategy, chartForm.WealthScript);
                     }
                     this.BuildParameterSliders();
                     return;
@@ -6768,23 +6768,25 @@
             }
         }
 
-        public ChartForm OpenStrategyWindow(Strategy strategy_0)
+        public ChartForm OpenStrategyWindow(Strategy strategy)
         {
-            return this.OpenStrategyWindow(strategy_0, true);
+            //return this.OpenStrategyWindow(strategy_0, true);   ///WYJ fix, inline the method call
+            return this.OpenStrategyWindow(strategy, true, true);
         }
 
-        public ChartForm OpenStrategyWindow(Strategy strategy_0, bool executeOnSelectedSymbol)
+        public ChartForm OpenStrategyWindow(Strategy strategy, bool executeOnSelectedSymbol)
         {
-            return this.OpenStrategyWindow(strategy_0, executeOnSelectedSymbol, true);
+            return this.OpenStrategyWindow(strategy, executeOnSelectedSymbol, true);
         }
 
-        public ChartForm OpenStrategyWindow(Strategy strategy_0, bool executeOnSelectedSymbol, bool useAdvancedSettings)
+        ///WYJ fix, original signature: public ChartForm OpenStrategyWindow(Strategy strategy_0, bool executeOnSelectedSymbol, bool useAdvancedSettings)
+        public ChartForm OpenStrategyWindow(Strategy strategy, bool executeOnSelectedSymbol, bool useAdvancedSettings)
         {
             ChartForm form = this.CreateChartWindow(false);
-            form.Strategy = strategy_0;
+            form.Strategy = strategy;
             
             this.showOrToolStripItemsForMdiChild("S");
-            if (strategy_0.StrategyType == StrategyType.CombinedStrategy)
+            if (strategy.StrategyType == StrategyType.CombinedStrategy)
             {
                 form.SelectTab("Combination Strategy");
             }
@@ -6794,33 +6796,33 @@
             }
             if (useAdvancedSettings && MainModule.Instance.Settings.Get("RememberStrategyScale", false))
             {
-                this.BarDataScale = strategy_0.DataScale;
-                form.SetBarDataScaleForDataSource(this.DataSource, strategy_0.DataScale);
+                this.BarDataScale = strategy.DataScale;
+                form.SetBarDataScaleForDataSource(this.DataSource, strategy.DataScale);
             }
             if (useAdvancedSettings && MainModule.Instance.Settings.Get("RememberStrategyPositionSize", false))
             {
-                this.posSize.PositionSize = strategy_0.PositionSize;
-                form.PositionSize = strategy_0.PositionSize;
+                this.posSize.PositionSize = strategy.PositionSize;
+                form.PositionSize = strategy.PositionSize;
             }
             if (useAdvancedSettings && MainModule.Instance.Settings.Get("RememberStrategyRange", false))
             {
-                this.dataRange.DataRange = strategy_0.DataRange;
-                form.DataRange = strategy_0.DataRange;
+                this.dataRange.DataRange = strategy.DataRange;
+                form.DataRange = strategy.DataRange;
             }
             bool flag = false;
-            if ((useAdvancedSettings && MainModule.Instance.Settings.Get("RememberStrategyData", false)) && (strategy_0.DataSetName != ""))
+            if ((useAdvancedSettings && MainModule.Instance.Settings.Get("RememberStrategyData", false)) && (strategy.DataSetName != ""))
             {
-                WealthLab.DataSource source = MainModule.Instance.DataSources.FindDataSource(strategy_0.DataSetName);
+                WealthLab.DataSource source = MainModule.Instance.DataSources.FindDataSource(strategy.DataSetName);
                 if (source != null)
                 {
                     if (MainModule.Instance.Settings.Get("RememberStrategyScale", false))
                     {
-                        form.SetBarDataScaleForDataSource(source, strategy_0.DataScale);
+                        form.SetBarDataScaleForDataSource(source, strategy.DataScale);
                     }
                     flag = true;
-                    if (strategy_0.Symbol != "")
+                    if (strategy.Symbol != "")
                     {
-                        this.treeDataSources.SelectSymbol(source, strategy_0.Symbol);
+                        this.treeDataSources.SelectSymbol(source, strategy.Symbol);
                         this.symbolSelectionChangeEventHandler(this.treeDataSources, new DataSourceSymbolEventArgs(this.treeDataSources.DataSource, this.treeDataSources.Symbol));
                     }
                     else
@@ -6842,8 +6844,8 @@
                     this.dataSourceSelectedEventHandler(this.treeDataSources, new DataSourceEventArgs(this.treeDataSources.DataSource));
                 }
             }
-            this.SetDataPanelState(true, true, true, true, strategy_0.StrategyType == StrategyType.CombinedStrategy);
-            MainModule.Instance.AddStrategyToMRU(strategy_0);
+            this.SetDataPanelState(true, true, true, true, strategy.StrategyType == StrategyType.CombinedStrategy);
+            MainModule.Instance.AddStrategyToMRU(strategy);
             return form;
         }
 

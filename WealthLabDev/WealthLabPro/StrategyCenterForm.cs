@@ -2002,21 +2002,21 @@
         {
             if (strategyCenterItem_0 != null)
             {
-                ChartForm dataSet = this.MyMainForm.FindStrategyFormByTag(strategyCenterItem_0.Strategy, this);
-                if (dataSet == null)
+                ChartForm chartForm = this.MyMainForm.FindStrategyFormByTag(strategyCenterItem_0.Strategy, this);
+                if (chartForm == null)
                 {
-                    dataSet = this.MyMainForm.OpenStrategyWindow(strategyCenterItem_0.Strategy, false, false);
-                    dataSet.Tag = this;
+                    chartForm = this.MyMainForm.OpenStrategyWindow(strategyCenterItem_0.Strategy, false, false);
+                    chartForm.Tag = this;
                 }
-                dataSet.BringToFront();
-                dataSet.WindowState = FormWindowState.Normal;
-                dataSet.DataSource = strategyCenterItem_0.DataSet;
-                dataSet.Symbol = strategyCenterItem_0.Symbol;
-                dataSet.DataRange = strategyCenterItem_0.DataRange;
-                dataSet.PositionSize = strategyCenterItem_0.PositionSize;
-                dataSet.BarDataScale = strategyCenterItem_0.DataScale;
-                dataSet.SetBarDataScaleForDataSource(strategyCenterItem_0.DataSet, strategyCenterItem_0.DataScale);
-                WealthScript wealthScript = dataSet.WealthScript;
+                chartForm.BringToFront();
+                chartForm.WindowState = FormWindowState.Normal;
+                chartForm.DataSource = strategyCenterItem_0.DataSet;
+                chartForm.Symbol = strategyCenterItem_0.Symbol;
+                chartForm.DataRange = strategyCenterItem_0.DataRange;
+                chartForm.PositionSize = strategyCenterItem_0.PositionSize;
+                chartForm.BarDataScale = strategyCenterItem_0.DataScale;
+                chartForm.SetBarDataScaleForDataSource(strategyCenterItem_0.DataSet, strategyCenterItem_0.DataScale);
+                WealthScript wealthScript = chartForm.WealthScript;
                 if (wealthScript != null && strategyCenterItem_0.WealthScript != null)
                 {
                     for (int i = 0; i < wealthScript.Parameters.Count; i++)

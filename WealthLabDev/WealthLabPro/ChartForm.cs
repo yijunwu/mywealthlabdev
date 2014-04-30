@@ -2560,7 +2560,7 @@
             }
             try
             {
-                base.Invoke(new Delegate47(this.checkExceptionAndRunStrategy), new object[] { exception });
+                base.Invoke(new Delegate47(this.checkExceptionAndShowResult), new object[] { exception });
             }
             catch (InvalidOperationException)
             {
@@ -2984,7 +2984,7 @@
         }
 
         ///WYJ fix, original signature: private void method_24(Exception exception_0)
-        private void checkExceptionAndRunStrategy(Exception exception_0)
+        private void checkExceptionAndShowResult(Exception exception_0)   ///previous name: checkExceptionAndRunStrategy
         {
             if (exception_0 != null)
             {
