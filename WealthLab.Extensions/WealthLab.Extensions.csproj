@@ -46,9 +46,7 @@
     <Compile Include="WealthLab\Cryptography\RSACryptography.cs" />
     <Compile Include="WealthLab\Cryptography\RijndaelCryptography.cs" />
     <Compile Include="WealthLab\Cryptography\HashAlgorithmEngine.cs" />
-    <Compile Include="WealthLab\Extensions\Server\ExtensionManager.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="WealthLab\Extensions\Server\ExtensionManager.cs" />
     <Compile Include="WealthLab\Extensions\Server\GetMoreExtensionsUrlCompletedEventHandler.cs" />
     <Compile Include="WealthLab\Extensions\Server\GetMoreExtensionsUrlCompletedEventArgs.cs" />
     <Compile Include="WealthLab\Extensions\Server\GetChangeLogUrlCompletedEventHandler.cs" />

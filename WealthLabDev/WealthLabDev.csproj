@@ -345,9 +345,7 @@
     <Compile Include="WealthLabPro\WLPException.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WealthLabPro\MainModule.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="WealthLabPro\MainModule.cs" />
     <Compile Include="WealthLabPro\BarDataRangeSelecterForm.cs">
       <SubType>Form</SubType>
     </Compile>

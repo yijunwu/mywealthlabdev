@@ -10,6 +10,7 @@
     using System.IO;
     using System.Media;
     using System.Net.NetworkInformation;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Threading;
@@ -19,6 +20,155 @@
     using WealthLab.Commissions;
     using WealthLab.PosSizers;
     using WealthLabPro.Properties;
+    using static System.Windows.Forms.DataFormats;
+
+    public class DummyWealthLabAuthProvider : AuthenticationProvider
+    {
+
+        public DummyWealthLabAuthProvider()
+        {
+        }
+
+        public override bool Authenticate(ref int daysBeforeNextAuthRequired, ref string string_0)
+        {
+            return true;
+        }
+
+        public override void Initialize(IDataHost dataHost, IAuthenticationHost authHost)
+        {
+            base.Initialize(dataHost, authHost);
+            //authHost.AddMenuItem(ActivateTrialCompletedEventArgs.smethod_0("紷䈹䠻嬽⸿ㅁⵃ⥅♇橉ŋ⽍㹏㍑㍓㍕⩗", 12), ActivateTrialCompletedEventArgs.smethod_0("ḷ渹医儽ⰿㅁ", 12), ActivateTrialCompletedEventArgs.smethod_0("欷䌹儻尽⼿⹁摃恅Ň⑉⩋⅍灏ὑ㕓㡕㥗㵙㥛ⱝ", 12), new ClickMenuItem(this.method_6), Resources.package);
+        }
+
+        public override void PreInitialize()
+        {
+            base.PreInitialize();
+        }
+
+        public override string ApplicationName
+        {
+            get
+            {
+                return FullProductName;
+            }
+        }
+
+        public override string ApplicationVersion
+        {
+            get
+            {
+                return "6.1";
+            }
+        }
+
+        public static string FullProductName
+        {
+            get
+            {
+                return "Wealth-Lab Developer 6.1";
+            }
+        }
+
+        public override DateTime GetCurrentDateTime
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+        }
+
+        public override Bitmap Glyph
+        {
+            get
+            {
+                return null; //TODO WYJ fix it
+            }
+        }
+
+        public override int GracePeriod
+        {
+            get
+            {
+                return 30000;
+            }
+        }
+
+        public override string LoggedInPhrase
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public override string LoginPhrase
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public override DateTime NextAuthRequired
+        {
+            get
+            {
+                int num = 0x10;
+                DateTime time2 = DateTime.Now.AddDays(10000);
+                base.AllowStreaming = true;
+                
+                return time2;
+            }
+        }
+
+        public static int ProductId
+        {
+            get
+            {
+                return 8;
+            }
+        }
+
+        public static string ProductName
+        {
+            get
+            {
+                return "Wealth-Lab Developer 6.1";
+            }
+        }
+
+        public override string ThirdPartySiteWarning
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public static System.Version Version
+        {
+            get
+            {
+                return new Version(6, 1, 1, 0);
+            }
+        }
+
+        public override string WhatsNewLink
+        {
+            get
+            {
+                return "";
+            }
+        }
+    }
 
     [ToolboxItem(false)]
     public class MainModule : UserControl, IComparer<StaticDataProvider>, IConnectionStatus, IAuthenticationHost, IMenuItemAdder
@@ -112,7 +262,8 @@
                     MessageBox.Show("Could not find an Authentication Provider, terminating");
                     Environment.Exit(2);
                 }
-                this.authenticationProvider = (AuthenticationProvider) loader.CreateInstance(loader.Types[0]);
+                //this.authenticationProvider = (AuthenticationProvider) loader.CreateInstance(loader.Types[0]);
+                this.authenticationProvider = new DummyWealthLabAuthProvider();
                 this.authenticationProvider.PreInitialize();
             }
             this.accountFile = this.DataPath + @"\Accounts.txt";
@@ -208,41 +359,41 @@
                     }
                 }
             }
-            bool authRequiredNow = (DateTime.Now > this.NextAuthRequired) || this.AuthProvider.ForceAuthentication;
-            bool chooseToAuthNow = false;
-            if (!authRequiredNow)
-            {
-                chooseToAuthNow = (this.NextAuthRequired - DateTime.Now.Date) <= new TimeSpan(5, 0, 0, 0);
-                TimeSpan span = (TimeSpan) (this.NextAuthRequired - DateTime.Now.Date);
-                int days = span.Days;
-                if (chooseToAuthNow)
-                {
-                    if (this.AuthProvider.ShowGracePeriodWarning)
-                    {
-                        if (MessageBox.Show("You must log in within the next " + days.ToString() + " days to continue to use " + Instance.AuthProvider.ApplicationName + ".  Do you want to Log in now?", "Log In", MessageBoxButtons.YesNo) == DialogResult.No)
-                        {
-                            chooseToAuthNow = false;
-                        }
-                    }
-                    else
-                    {
-                        chooseToAuthNow = false;
-                    }
-                }
-            }
-            if (authRequiredNow | chooseToAuthNow)
-            {
-                if (authRequiredNow && this.AuthProvider.ShowGracePeriodWarning)
-                {
-                    //MessageBox.Show("You must log in to continue using " + Instance.AuthProvider.ApplicationName + ".", "Log In", MessageBoxButtons.OK); ///WYJ fix
-                }
-                if (!this.Authenticate() && false ) //&& flag2) ///WYJ fix
-                {
-                    MessageBox.Show("Log in required, terminating");
-                    this.authenticationProvider.Close();
-                    Environment.Exit(1);
-                }
-            }
+            //bool authRequiredNow = (DateTime.Now > this.NextAuthRequired) || this.AuthProvider.ForceAuthentication;
+            //bool chooseToAuthNow = false;
+            //if (!authRequiredNow)
+            //{
+            //    chooseToAuthNow = (this.NextAuthRequired - DateTime.Now.Date) <= new TimeSpan(5, 0, 0, 0);
+            //    TimeSpan span = (TimeSpan) (this.NextAuthRequired - DateTime.Now.Date);
+            //    int days = span.Days;
+            //    if (chooseToAuthNow)
+            //    {
+            //        if (this.AuthProvider.ShowGracePeriodWarning)
+            //        {
+            //            if (MessageBox.Show("You must log in within the next " + days.ToString() + " days to continue to use " + Instance.AuthProvider.ApplicationName + ".  Do you want to Log in now?", "Log In", MessageBoxButtons.YesNo) == DialogResult.No)
+            //            {
+            //                chooseToAuthNow = false;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            chooseToAuthNow = false;
+            //        }
+            //    }
+            //}
+            //if (authRequiredNow | chooseToAuthNow)
+            //{
+            //    if (authRequiredNow && this.AuthProvider.ShowGracePeriodWarning)
+            //    {
+            //        //MessageBox.Show("You must log in to continue using " + Instance.AuthProvider.ApplicationName + ".", "Log In", MessageBoxButtons.OK); ///WYJ fix
+            //    }
+            //    if (!this.Authenticate() && false ) //&& flag2) ///WYJ fix
+            //    {
+            //        MessageBox.Show("Log in required, terminating");
+            //        this.authenticationProvider.Close();
+            //        Environment.Exit(1);
+            //    }
+            //}
             if (this.dataSourceManager.DataSources.Count == 0)
             {
                 StaticDataProvider provider = this.dataSourceManager.FindProvider("FidelityStaticProvider");
@@ -1972,7 +2123,7 @@
         {
             get
             {
-                return this.isAuthenticated;
+                return this.isAuthenticated || true; //WYJ fix, always return true
             }
             internal set
             {
