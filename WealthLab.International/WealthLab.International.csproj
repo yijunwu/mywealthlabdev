@@ -97,9 +97,7 @@
     <Compile Include="WealthLab\International\DataBaseException.cs" />
     <Compile Include="WealthLab\International\ButtonBehaviour.cs" />
     <Compile Include="WealthLab\International\Config.cs" />
-    <Compile Include="WealthLab\International\CustomersWebService\CustomersWebService.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="WealthLab\International\CustomersWebService\CustomersWebService.cs" />
     <Compile Include="WealthLab\International\CustomersWebService\ServiceHeader.cs" />
     <Compile Include="WealthLab\International\CustomersWebService\AuthEducationalParams.cs" />
     <Compile Include="WealthLab\International\CustomersWebService\AuthEducationalResult.cs" />
