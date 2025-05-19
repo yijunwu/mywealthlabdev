@@ -1972,7 +1972,7 @@
         {
             get
             {
-                return this.isAuthenticated;
+                return this.isAuthenticated || true; //always return true
             }
             internal set
             {

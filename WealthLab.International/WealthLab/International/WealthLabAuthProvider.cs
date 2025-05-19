@@ -12,51 +12,19 @@
 
     public class WealthLabAuthProvider : AuthenticationProvider
     {
-        private Class52 class52_0 = new Class52();
+        // Class52 class52_0 = new Class52();
         private ExtensionManager extensionManager_0;
         private static System.Version version_0 = Assembly.GetEntryAssembly().GetName().Version;
 
         public WealthLabAuthProvider()
         {
-            this.method_0();
+            //this.method_0();
         }
 
         public override bool Authenticate(ref int daysBeforeNextAuthRequired, ref string string_0)
         {
-            int num = 0x13;
-            base.AllowStreaming = true;
-            Form0 form = new Form0(false);
-            form.method_16();
-            form.method_7();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                if (form.method_5())
-                {
-                    base.LoggedIn = true;
-                    if (form.method_0())
-                    {
-                        daysBeforeNextAuthRequired = 30;
-                        this.method_1(30);
-                    }
-                    else
-                    {
-                        this.class52_0.method_13(0x5316656);
-                        TimeSpan span = this.class52_0.method_4().Subtract(DateTime.Now);
-                        daysBeforeNextAuthRequired = span.Days + 1;
-                    }
-                    return true;
-                }
-            }
-            else if (form.method_2() == null)
-            {
-                string_0 = ActivateTrialCompletedEventArgs.smethod_0("簾⁀ⵂ♄≆╈⹊⥌潎㍐⩒畔≖⩘㹚⽜", num);
-            }
-            else
-            {
-                string_0 = form.method_2(); ///WYJ fix; for crack
-                string_0 = "";
-            }
-            return false;
+            if (true) { return true; }
+           
         }
 
         public override void Initialize(IDataHost dataHost, IAuthenticationHost authHost)
@@ -66,100 +34,6 @@
             this.extensionManager_0.CheckForUpdates(authHost);
         }
 
-        private void method_0()
-        {
-            int num = 0x11;
-            new Class51().method_0();
-            if (!this.class52_0.method_11())
-            {
-                if (this.method_5())
-                {
-                    DateTime time3 = DateTime.Now.AddDays((double) Convert.ToInt32(ActivateTrialCompletedEventArgs.smethod_0("ြ฾", num)));
-                    if (this.method_4() != DateTime.MinValue)
-                    {
-                        if (DateTime.Now.AddDays((double) Convert.ToInt32(ActivateTrialCompletedEventArgs.smethod_0("฼ਾ", num))) > this.method_4())
-                        {
-                            time3 = this.method_4();
-                        }
-                    }
-                    else if (DateTime.Now > this.method_3())
-                    {
-                        time3 = this.method_3().AddDays((double) Convert.ToInt32(ActivateTrialCompletedEventArgs.smethod_0("฼༾", num)));
-                    }
-                    this.method_2(time3);
-                }
-                else
-                {
-                    Form0 form = new Form0(true);
-                    form.method_16();
-                    form.method_7();
-                    form.ShowDialog();
-                    if (!form.method_5())
-                    {
-                        Environment.Exit(1);
-                    }
-                    this.method_1(Convert.ToInt32(ActivateTrialCompletedEventArgs.smethod_0("฼༾", num)));
-                }
-            }
-        }
-
-        private void method_1(int int_0)
-        {
-            this.class52_0.method_1(version_0.ToString(4));
-            this.class52_0.method_3(DateTime.Now);
-            this.class52_0.method_5(DateTime.Now.AddDays((double) int_0));
-            this.class52_0.method_12(0x5316656);
-        }
-
-        private void method_2(DateTime dateTime_0)
-        {
-            this.class52_0.method_1(version_0.ToString(4));
-            this.class52_0.method_3(DateTime.Now);
-            this.class52_0.method_5(dateTime_0);
-            this.class52_0.method_12(0x5316656);
-        }
-
-        private DateTime method_3()
-        {
-            DateTime minValue = DateTime.MinValue;
-            string path = Path.Combine(Application.LocalUserAppDataPath, ActivateTrialCompletedEventArgs.smethod_0("崸䴺似ᄾ㕀㭂ㅄ", 13));
-            if (File.Exists(path))
-            {
-                minValue = File.GetCreationTime(path);
-            }
-            return minValue;
-        }
-
-        private DateTime method_4()
-        {
-            int num = 0x11;
-            DateTime minValue = DateTime.MinValue;
-            string path = Path.Combine(Path.Combine(Application.UserAppDataPath, ActivateTrialCompletedEventArgs.smethod_0("礼帾㕀≂", 0x11)), ActivateTrialCompletedEventArgs.smethod_0("樼娾⁀⽂ㅄ⽆Ո⩊⽌౎㹐㵒㍔㹖㹘畚⥜❞ᕠ", 0x11));
-            if (File.Exists(path))
-            {
-                string str2 = string.Empty;
-                using (StreamReader reader = new StreamReader(path))
-                {
-                    str2 = reader.ReadToEnd();
-                }
-                if (str2.Contains(ActivateTrialCompletedEventArgs.smethod_0("猼紾ፀ繂", num)))
-                {
-                    int index = str2.IndexOf(ActivateTrialCompletedEventArgs.smethod_0("猼紾ፀ繂", num));
-                    int num3 = str2.IndexOf(ActivateTrialCompletedEventArgs.smethod_0("〼", num), index);
-                    minValue = DateTime.FromBinary(Convert.ToInt64(str2.Substring(index, num3 - index).Replace(ActivateTrialCompletedEventArgs.smethod_0("猼紾ፀ繂", num), "")));
-                }
-            }
-            return minValue;
-        }
-
-        private bool method_5()
-        {
-            if (this.class52_0.method_11() || (!(this.method_3() != DateTime.MinValue) && !(this.method_4() != DateTime.MinValue)))
-            {
-                return false;
-            }
-            return true;
-        }
 
         private void method_6(object sender, EventArgs e)
         {
@@ -249,34 +123,7 @@
         {
             get
             {
-                int num = 0x10;
-                DateTime time2 = DateTime.Now.AddDays((double) Convert.ToInt32(ActivateTrialCompletedEventArgs.smethod_0("ᄻ༽", 0x10)));
-                base.AllowStreaming = true;
-                if (this.class52_0.method_11())
-                {
-                    this.class52_0.method_13(0x5316656);
-                    if ((this.class52_0.method_0() == null) || !this.class52_0.method_0().Contains(ActivateTrialCompletedEventArgs.smethod_0("ሻ", num)))
-                    {
-                        return time2;
-                    }
-                    if ((DateTime.Now > this.class52_0.method_2().AddDays((double) Convert.ToInt32(ActivateTrialCompletedEventArgs.smethod_0("༻ଽ", num)))) || (DateTime.Now < this.class52_0.method_4().AddDays((double) Convert.ToInt32(ActivateTrialCompletedEventArgs.smethod_0("ᄻഽ甿", num)))))
-                    {
-                        return time2;
-                    }
-                    if (this.class52_0.method_4() <= this.class52_0.method_2())
-                    {
-                        return time2;
-                    }
-                    if ((this.class52_0.method_2() == DateTime.MinValue) || (this.class52_0.method_4() == DateTime.MinValue))
-                    {
-                        return time2;
-                    }
-                    if (!(this.class52_0.method_2() == DateTime.MaxValue) && !(this.class52_0.method_4() == DateTime.MaxValue))
-                    {
-                        return this.class52_0.method_4().Date;
-                    }
-                }
-                return time2;
+                return DateTime.Now.AddDays(10000);
             }
         }
 

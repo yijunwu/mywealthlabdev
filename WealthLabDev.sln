@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WealthLabDev", "WealthLabDev\WealthLabDev.csproj", "{ED6F8325-407F-4155-9990-261DB936B6EA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0C6FD616-ABEC-449B-A6AF-DD5230B41D6C} = {0C6FD616-ABEC-449B-A6AF-DD5230B41D6C}
@@ -94,8 +96,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WealthLab.Visualizers.Extensions", "WealthLab.Visualizers.Extensions\WealthLab.Visualizers.Extensions.csproj", "{8468727E-97ED-4B7B-8686-3F9A3D195605}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WealthLab.Email", "WealthLab.Email\WealthLab.Email.csproj", "{AA84851F-A838-4F49-8C78-01C5B7FBCB25}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WLDDatabaseProvider", "WLDDatabaseProvider\WLDDatabaseProvider.csproj", "{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeeChart", "TeeChart\TeeChart.csproj", "{DD030632-81E4-4843-BB14-68C7C96CBD26}"
 EndProject
@@ -493,16 +493,6 @@ Global
 		{AA84851F-A838-4F49-8C78-01C5B7FBCB25}.Release|Mixed Platforms.Build.0 = Release|x86
 		{AA84851F-A838-4F49-8C78-01C5B7FBCB25}.Release|x86.ActiveCfg = Release|x86
 		{AA84851F-A838-4F49-8C78-01C5B7FBCB25}.Release|x86.Build.0 = Release|x86
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{8F1EC0DB-34E7-4E51-AE43-D0D1EF7111F2}.Release|x86.ActiveCfg = Release|Any CPU
 		{DD030632-81E4-4843-BB14-68C7C96CBD26}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{DD030632-81E4-4843-BB14-68C7C96CBD26}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{DD030632-81E4-4843-BB14-68C7C96CBD26}.Debug|Mixed Platforms.Build.0 = Debug|x86
