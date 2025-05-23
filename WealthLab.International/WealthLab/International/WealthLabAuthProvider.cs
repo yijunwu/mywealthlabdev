@@ -67,7 +67,6 @@
         {
             get
             {
-                FindKeySeedForWealth();
                 return string.Format(ActivateTrialCompletedEventArgs.smethod_0("Wealth-Lab Developer 6.4", 0x13), version_0.Major, version_0.Minor);
             }
         }
