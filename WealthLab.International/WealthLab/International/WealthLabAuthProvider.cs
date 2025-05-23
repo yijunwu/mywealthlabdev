@@ -67,7 +67,7 @@
         {
             get
             {
-                return string.Format(ActivateTrialCompletedEventArgs.smethod_0("栾⑀≂⥄㍆ⅈ晊Ō⹎㍐獒ᅔ㉖⽘㹚ㅜぞᅠ٢ᝤ䝦ቨ孪ၬ䅮ੰ䉲ࡴ", 0x13), version_0.Major, version_0.Minor);
+                return string.Format(ActivateTrialCompletedEventArgs.smethod_0("Wealth-Lab Developer 6.4", 0x13), version_0.Major, version_0.Minor);
             }
         }
 
@@ -99,7 +99,15 @@
         {
             get
             {
-                return ActivateTrialCompletedEventArgs.smethod_0("簼䨾㕀⭂⁄⥆㵈≊⹌⹎═㙒ㅔ", 0x11);
+                return ActivateTrialCompletedEventArgs.smethod_0("Authenticate", 0x11);
+            }
+        }
+
+        public virtual bool LoginButtonVisible
+        {
+            get
+            {
+                return false;
             }
         }
 
@@ -107,7 +115,7 @@
         {
             get
             {
-                return ActivateTrialCompletedEventArgs.smethod_0("砸为䤼圾⑀ⵂㅄ⹆⩈⩊㥌⩎", 13);
+                return ActivateTrialCompletedEventArgs.smethod_0("Authenticate", 13);
             }
         }
 
@@ -139,7 +147,7 @@
         {
             get
             {
-                return string.Format(ActivateTrialCompletedEventArgs.smethod_0("戴制堸场䤼圾汀ག⑄╆楈ཊ⡌㥎㑐㽒㩔❖㱘⥚絜⑞兠Ṣ", 9), version_0.Major);
+                return string.Format(ActivateTrialCompletedEventArgs.smethod_0("Wealth-Lab Developer 6", 9), version_0.Major);
             }
         }
 

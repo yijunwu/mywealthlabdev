@@ -2631,7 +2631,7 @@
             // 
             this.mniAbout.Name = "mniAbout";
             this.mniAbout.Size = new System.Drawing.Size(230, 22);
-            this.mniAbout.Text = "&About Wealth-Lab Pro ...";
+            this.mniAbout.Text = "&About Wealth-Lab Developer ...";
             this.mniAbout.Click += new System.EventHandler(this.mniAbout_Click);
             // 
             // status

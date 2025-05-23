@@ -53,7 +53,7 @@
         }
 
         internal static string smethod_0(string string_0, int int_0)
-        {   if (true) { return DecryptString(string_0, int_0); }
+        {   if (true) { return string_0; } // DecryptString(string_0, int_0); }
             int num2=0; ///WYJ fix
             char[] chArray = string_0.ToCharArray();
             int num = (((((((((((0x5311a12b - 0) << 0) + 0) - 0) + 0) + 0) | 0) - 0) + 0) + 0) + 0) + int_0;
