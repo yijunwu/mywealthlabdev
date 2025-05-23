@@ -1700,7 +1700,6 @@
             this.btnPushCode = new System.Windows.Forms.ToolStripButton();
             this.btnTradeTicket = new System.Windows.Forms.ToolStripButton();
             this.btnPreferencesTB = new System.Windows.Forms.ToolStripButton();
-            this.mniCrossHair = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlTree = new System.Windows.Forms.Panel();
             this.splitContainerDataPane = new System.Windows.Forms.SplitContainer();
             this.treeDataSources = new WealthLab.DataSourceTreeView();
@@ -1730,7 +1729,6 @@
             this.btnClearDrawingObjects = new System.Windows.Forms.ToolStripButton();
             this.btnCrossHair = new System.Windows.Forms.ToolStripButton();
             this.sepDeleteDrawing = new System.Windows.Forms.ToolStripSeparator();
-            this.btnTrendline = new System.Windows.Forms.ToolStripButton();
             this.splitter = new System.Windows.Forms.Splitter();
             this.saveFileDialog_0 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog_0 = new System.Windows.Forms.OpenFileDialog();
@@ -3494,17 +3492,6 @@
             this.btnPreferencesTB.Text = "Preferences";
             this.btnPreferencesTB.Click += new System.EventHandler(this.btnPreferencesTB_Click);
             // 
-            // mniCrossHair
-            // 
-            this.mniCrossHair.Image = ((System.Drawing.Image)(resources.GetObject("mniCrossHair.Image")));
-            this.mniCrossHair.ImageTransparentColor = System.Drawing.Color.Fuchsia;
-            this.mniCrossHair.Name = "mniCrossHair";
-            this.mniCrossHair.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.mniCrossHair.Size = new System.Drawing.Size(113, 25);
-            this.mniCrossHair.Text = "New DataSet ...";
-            this.mniCrossHair.Visible = false;
-            this.mniCrossHair.Click += new System.EventHandler(this.btnCrossHair_Click);
-            // 
             // pnlTree
             // 
             this.pnlTree.Controls.Add(this.splitContainerDataPane);
@@ -3821,9 +3808,7 @@
             this.toolbarDrawing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnClearDrawingObjects,
             this.btnCrossHair,
-            this.sepDeleteDrawing,
-            this.btnTrendline,
-            this.mniCrossHair});
+            this.sepDeleteDrawing});
             this.toolbarDrawing.Location = new System.Drawing.Point(206, 77);
             this.toolbarDrawing.Name = "toolbarDrawing";
             this.toolbarDrawing.Size = new System.Drawing.Size(822, 25);
@@ -3855,11 +3840,6 @@
             // 
             this.sepDeleteDrawing.Name = "sepDeleteDrawing";
             this.sepDeleteDrawing.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnTrendline
-            // 
-            this.btnTrendline.Name = "btnTrendline";
-            this.btnTrendline.Size = new System.Drawing.Size(23, 22);
             // 
             // splitter
             // 
