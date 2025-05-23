@@ -67,7 +67,73 @@
         {
             get
             {
+                FindKeySeedForWealth();
                 return string.Format(ActivateTrialCompletedEventArgs.smethod_0("Wealth-Lab Developer 6.4", 0x13), version_0.Major, version_0.Minor);
+            }
+        }
+
+        public static void FindKeySeedForWealth()
+        {
+            string ciphertext = "栾⑀≂⥄㍆ⅈ晊Ō⹎㍐獒ᅔ㉖⽘㹚ㅜぞᅠ٢ᝤ䝦ቨ孪ၬ䅮ੰ䉲ࡴ";
+            string crib = "Wealth"; // 已知明文中包含的子串
+
+            Console.WriteLine($"Ciphertext: {ciphertext}");
+            Console.WriteLine($"Searching for keySeed where plaintext contains: \"{crib}\"");
+            Console.WriteLine("--------------------------------------------------");
+
+            // 定义 keySeed 的搜索范围
+            int minKeySeed = 0;
+            int maxKeySeed = 20000; // 初始尝试范围，可以根据需要调整
+            bool found = false;
+
+            for (int currentSeedAttempt = minKeySeed; currentSeedAttempt <= maxKeySeed; currentSeedAttempt++)
+            {
+                string plaintext = ActivateTrialCompletedEventArgs.smethod_0(ciphertext, currentSeedAttempt);
+                if (plaintext.Contains(crib))
+                {
+                    Console.WriteLine($"SUCCESS! Found matching keySeed: {currentSeedAttempt}");
+                    Console.WriteLine($"Plaintext: {plaintext}");
+                    Console.WriteLine("--------------------------------------------------");
+                    found = true;
+                    // 如果你只期望一个结果，可以在这里 break;
+                    // break; 
+                }
+
+                // 可以每隔N次尝试打印一次进度，以防搜索时间过长
+                if (currentSeedAttempt % 1000 == 0 && currentSeedAttempt != minKeySeed)
+                {
+                    Console.WriteLine($"... still searching, tried up to keySeed: {currentSeedAttempt}");
+                }
+            }
+
+            // 如果在正数范围内没有找到，可以尝试负数范围
+            if (!found)
+            {
+                Console.WriteLine($"Crib not found in positive range {minKeySeed} to {maxKeySeed}. Trying negative range...");
+                minKeySeed = -maxKeySeed; // 例如 -20000
+                maxKeySeed = -1;
+                for (int currentSeedAttempt = maxKeySeed; currentSeedAttempt >= minKeySeed; currentSeedAttempt--)
+                {
+                    string plaintext = ActivateTrialCompletedEventArgs.smethod_0(ciphertext, currentSeedAttempt);
+                    if (plaintext.Contains(crib))
+                    {
+                        Console.WriteLine($"SUCCESS! Found matching keySeed: {currentSeedAttempt}");
+                        Console.WriteLine($"Plaintext: {plaintext}");
+                        Console.WriteLine("--------------------------------------------------");
+                        found = true;
+                        // break;
+                    }
+                    if (currentSeedAttempt % 1000 == 0)
+                    {
+                        Console.WriteLine($"... still searching (negative), tried down to keySeed: {currentSeedAttempt}");
+                    }
+                }
+            }
+
+
+            if (!found)
+            {
+                Console.WriteLine($"Failed to find a keySeed that decrypts to a plaintext containing \"{crib}\" within the tested ranges.");
             }
         }
 
