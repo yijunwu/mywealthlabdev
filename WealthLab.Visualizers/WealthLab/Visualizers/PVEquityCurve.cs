@@ -491,11 +491,22 @@
                     index++;
                 }
             }
-            this.marksTip_0 = new MarksTip();
-            this.chart.Tools.Add(this.marksTip_0);
-            this.marksTip_0.HideDelay = 0x1388;
-            this.marksTip_0.MouseDelay = 100;
-            this.marksTip_0.Style = MarksStyles.LabelValue;
+            bool toolsContainMarksTip = false;
+            for(int i = 0; i < this.chart.Tools.Count; i ++)
+            {
+                if (this.chart.Tools[i].GetType().Equals(this.marksTip_0.GetType())) {
+                    toolsContainMarksTip = true;
+                }
+            }
+            if (!toolsContainMarksTip) 
+            {
+                this.marksTip_0 = new MarksTip(this.chart.Chart);
+                this.marksTip_0.HideDelay = 0x1388;
+                this.marksTip_0.MouseDelay = 100;
+                this.marksTip_0.Style = MarksStyles.LabelValue;
+                this.chart.Tools.Add(this.marksTip_0);                
+            }
+            
             if (systemPerformance_1.BenchmarkSymbolbars != null)
             {
                 this.chart.Header.Lines = new string[] { "Strategy Equity Curve (With Benchmark Buy & Hold (" + systemPerformance_1.BenchmarkSymbolbars.Symbol + ") comparison)" };
