@@ -119,7 +119,7 @@
                 if (((i >= this.Options.IgnoreFirstLines) && (i <= (num - this.Options.IgnoreLastLines))) && (str != ""))
                 {
                     string[] separator = this.Options.FieldSeparator.Split(new char[] { '&', '+' });
-                    string[] strArray = str.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    string[] strArray = str.Split(separator, StringSplitOptions.None); //Keep empty entries
                     object[] item = new object[count];
                     if (this.Fields.Items.Count > strArray.Length)
                     {
