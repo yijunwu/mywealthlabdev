@@ -76,6 +76,12 @@
             chartBounds.X = point.X;
             chartBounds.Y = point.Y;
             rectangle.Intersect(chartBounds);
+
+            bool adjustForLegacyApp = true;
+            if (adjustForLegacyApp)
+            {
+                rectangle = new Rectangle((int)(rectangle.X * 1.5), (int)(rectangle.Y * 1.5), (int)(rectangle.Width * 1.5), (int)(rectangle.Height * 1.5));
+            }
             return rectangle;
         }
 
